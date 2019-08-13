@@ -14,3 +14,15 @@ For contributing members see the
 
 [Submit an issue](https://github.com/solid/data-interoperability-panel/issues/new)
 to propose a project for the panel to undertake.
+
+## Meetings
+
+| Date | Agenda | Minutes |
+| ---- | ------ | ------- |
+| [8/13/2019](https://github.com/solid/data-interoperability-panel/meetings/01-08132019.md) | [Agenda](https://github.com/solid/data-interoperability-panel/meetings/01-08132019.md) |  |
+
+## Communication Channels
+
+| Type | Location |
+| ---- | ---- |
+| Chat | <https://gitter.im/solid/data-interoperability-panel> |
