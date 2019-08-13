@@ -21,7 +21,7 @@ to propose a project for the panel to undertake.
 
 | Date | Agenda | Minutes |
 | ---- | ------ | ------- |
-| [8/13/2019](https://github.com/solid/data-interoperability-panel/meetings/01-08132019.md) | [Agenda](https://github.com/solid/data-interoperability-panel/meetings/01-08132019.md) |  |
+| [8/13/2019](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-08132019.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-08132019.md#agenda) |  |
 
 ## Communication Channels
 
