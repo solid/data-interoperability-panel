@@ -10,7 +10,8 @@ This list in in no particular order.
 * Age 
 * Address 
 * Nationality 
-* Passport Number 
+* Passport Number(s) 
+* Social security number(s) 
 * Contacts
 * Facial composition 
 * Fingerprint 
