@@ -14,6 +14,11 @@ For contributing members see the
 
 ## Projects
 
+- [Data Validation](https://github.com/solid/data-validation/README.md)
+- [Data Discovery](https://github.com/solid/data-discovery/README.md)
+- [Data Portability](https://github.com/solid/data-portability/README.md)
+- [User Profile Data Model](https://github.com/solid/user-profile/README.md)
+
 [Submit an issue](https://github.com/solid/data-interoperability-panel/issues/new)
 to propose a project for the panel to undertake.
 
