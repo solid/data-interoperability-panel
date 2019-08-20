@@ -4,7 +4,7 @@ A project undertaken by the [Data Interoperability Panel](https://github.com/sol
 
 ## Goal
 
-The aim of this project is to The aim of this effort is to produce a candidate proposal to the [Solid Specification](https://github.com/solid/specification) that defines a mechanism for how one migrates their data, including the "meta" information around it (i.e. access control, audit history, shape constraints) from one Solid pod to another, or from one Solid pod to a different medium altogether.
+The aim of this project is to produce a candidate proposal to the [Solid Specification](https://github.com/solid/specification) that defines a mechanism for how one migrates their data, including the "meta" information around it (i.e. access control, audit history, shape constraints) from one Solid pod to another, or from one Solid pod to a different medium altogether.
 
 ## Milestones
 
