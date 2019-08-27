@@ -14,10 +14,10 @@ The following use cases must be considered when designing a system for shape-bas
 
 ## References
 
-1. Shape Expressions - http://shex.io/shex-semantics
+* [Linked Data Shapes, Forms, and Footprints](https://www.w3.org/DesignIssues/Footprints.html)
 
-1. Shapes Constraint Language - https://www.w3.org/TR/shacl/
+* [Shape Expressions](http://shex.io/shex-semantics)
 
-1. Linked Data Shapes, Forms, and Footprints - https://www.w3.org/DesignIssues/Footprints.html
+* [Shapes Constraint Language](https://www.w3.org/TR/shacl/)
 
-1. Shaping Linked Data - https://ruben.verborgh.org/blog/2019/06/17/shaping-linked-data-apps/
+* [Shaping Linked Data](https://ruben.verborgh.org/blog/2019/06/17/shaping-linked-data-apps/)
