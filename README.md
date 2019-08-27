@@ -35,3 +35,11 @@ to propose a project for the panel to undertake.
 | Type | Location |
 | ---- | ---- |
 | Chat | <https://gitter.im/solid/data-interoperability-panel> |
+
+## Process
+
+Project proposals must be [submitted as issues](https://github.com/solid/data-interoperability-panel/issues/new), and receive support from members of the panel. At least three panelists (not including the panelist proposing the project) must support creation of the project, with no panel members actively rejecting it. Project proposals with support will be undertaken by the panel.
+
+Substantive changes submitted to active panel projects should be submitted as pull requests, and must receive at least two approved reviews from panelists, with no one actively rejecting. These pulls should be open for at least one week before they are merged.
+
+Panel members should work together to settle deadlocks. It may be helpful to request the perspective of a Solid Editor that would ultimately be responsible for accepting submitted candidate proposals to settle deadlocks.
