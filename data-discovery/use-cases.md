@@ -23,4 +23,8 @@ provide cool functionality to create and mange web annotations.
 
 #### Example approach
 
-Using the [bookmark file](https://anvil1.inrupt.net/public/bookmarks.ttl)
+1. Set-up:
+
+- [Bookmarks](https://anvil1.inrupt.net/public/bookmarks.ttl)
+- [Original Bookmark Shape](https://storage.googleapis.com/anvil_apps_support_data/BookmarkShape.ttl)
+- [New Bookmark Shape](https://storage.googleapis.com/anvil_apps_support_data/WebAnnotationShape.ttl)
