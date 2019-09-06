@@ -15,16 +15,8 @@ whereas `AncientBookmarks` used a proprietary ontology to define its data.
 
 Alice needs to authorise `MyThoughtsOnIt` to upgrade and possibly move the bookmarks created by `AncientBookmarks`.
 
-#### WebAnnotations.exmaple
+#### WebAnnotations.example
 
 **WebAnnotations.example** needs to locate Alice's data; reconcile the bespoke ontology to its own; 
 convert the data; (possibly) move the data to new location; 
 provide cool functionality to create and mange web annotations.
-
-#### Example approach
-
-1. Set-up:
-
-- [Bookmarks](https://anvil1.inrupt.net/public/bookmarks.ttl)
-- [Original Bookmark Shape](https://storage.googleapis.com/anvil_apps_support_data/BookmarkShape.ttl)
-- [New Bookmark Shape](https://storage.googleapis.com/anvil_apps_support_data/WebAnnotationShape.ttl)
