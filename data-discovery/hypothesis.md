@@ -16,6 +16,6 @@ This hypothesis will be validated and refined through critical review and protot
 
 The example used to illustrate the hypothesised approach relies on the following `.ttl` files.
 
-- [Bookmarks](https://anvil1.inrupt.net/public/bookmarks.ttl)
-- [Original Bookmark Shape](https://storage.googleapis.com/anvil_apps_support_data/BookmarkShape.ttl)
-- [New Bookmark Shape](https://storage.googleapis.com/anvil_apps_support_data/WebAnnotationShape.ttl)
+- [Bookmarks](https://anvil1.inrupt.net/public/bookmarks.ttl) (the data on the user's POD)
+- [Original Bookmark Shape](https://storage.googleapis.com/anvil_apps_support_data/BookmarkShape.ttl) (the shape of the data used by oldApp)
+- [New Bookmark Shape](https://storage.googleapis.com/anvil_apps_support_data/WebAnnotationShape.ttl) (the shape of the data used by newApp)
