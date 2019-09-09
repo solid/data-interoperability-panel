@@ -14,10 +14,11 @@ For contributing members see the
 
 ## Projects
 
-- [Data Validation](https://github.com/solid/data-validation/README.md)
-- [Data Discovery](https://github.com/solid/data-discovery/README.md)
-- [Data Portability](https://github.com/solid/data-portability/README.md)
-- [User Profile Data Model](https://github.com/solid/user-profile/README.md)
+- [Data Validation](https://github.com/solid/data-interoperability-panel/tree/master/data-validation)
+- [Data Discovery](https://github.com/solid/data-interoperability-panel/tree/master/data-discovery)
+- [Data Portability](https://github.com/solid/data-interoperability-panel/tree/master/data-portability)
+- [User Profile Data Model](https://github.com/solid/data-interoperability-panel/tree/master/user-profile)
+- [User Preferences Data Model](https://github.com/solid/data-interoperability-panel/tree/master/user-preferences)
 
 [Submit an issue](https://github.com/solid/data-interoperability-panel/issues/new)
 to propose a project for the panel to undertake.
@@ -26,10 +27,19 @@ to propose a project for the panel to undertake.
 
 | Date | Agenda | Minutes |
 | ---- | ------ | ------- |
-| [8/13/2019](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-08132019.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-08132019.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-08132019.md#minutes) |
+| [2019-08-13](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-20190813.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-20190813.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-20190813.md#minutes) |
+| [2019-08-26](https://github.com/solid/data-interoperability-panel/blob/master/meetings/2-20190826.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/2-20190826.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/2-20190826.md#minutes) |
 
 ## Communication Channels
 
 | Type | Location |
 | ---- | ---- |
 | Chat | <https://gitter.im/solid/data-interoperability-panel> |
+
+## Process
+
+Project proposals must be [submitted as issues](https://github.com/solid/data-interoperability-panel/issues/new), and receive support from members of the panel. At least three panelists (not including the panelist proposing the project) must support creation of the project, with no panel members actively rejecting it. Project proposals with support will be undertaken by the panel.
+
+Substantive changes submitted to active panel projects should be submitted as pull requests, and must receive at least two approved reviews from panelists, with no one actively rejecting. These pulls should be open for at least one week before they are merged.
+
+Panel members should work together to settle deadlocks. It may be helpful to request the perspective of a Solid Editor that would ultimately be responsible for accepting submitted candidate proposals to settle deadlocks.
