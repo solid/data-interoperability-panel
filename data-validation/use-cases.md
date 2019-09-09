@@ -2,11 +2,11 @@
 
 ## Introduction
 
-Server-side data validation is an essential factor to the seamless interoperability promised by Solid. Two applications that manipulate the same kind of data, developed with no knowledge of each other, should be able to write that data without breaking each other. Using common linked data vocabularies is not enough to satisfy this fundamental need. Data Shape languages like [ShEx](http://shex.io/shex-semantics) and [SHACL](https://www.w3.org/TR/shacl/) help us solve this.
+Server-side data validation is an essential factor to the seamless interoperability promised by Solid. Multiple applications that manipulate the same kind of data, developed with no knowledge of each other, should be able to write that data without breaking each other. This requires all applications to conform to a common schema. Data Shape languages like [ShEx](http://shex.io/shex-semantics) and [SHACL](https://www.w3.org/TR/shacl/) help us solve this.
 
 Shapes allow us to define schema models with attributes from different linked data vocabularies. We can then test input data against those shape schemas and determine whether that input conforms to the shape or not. In other words, if we have a shape for a comment, and an application tries to write a comment, we can use that shape to validate whether that comment adheres to our expectation (the shape) of how a comment should be structured. Now we can use many different applications to safely read and write comments, just by adhering to the comment shape schema.
 
-Unfortunately, we cannot trust that all clients will write conformant data on their own. Consequently, we must be able to enforce conformance to a given shape at the pod, as the client writes the data.
+Schema validators are an enormous aid to application developers, but we cannot trust that all clients will write conformant data all the time. Consequently, we must be able to enforce conformance to a given shape at the pod, as the client writes the data.
 
 ## Problem Cases
 
@@ -18,9 +18,9 @@ __An application breaks interoperability around a common set of related data.__
 - Unfortunately, this version of BarChat has a bug, and writes messages in a format that FooChat cannot parse, and modifies the meta-data associated with the chatroom in a manner that breaks the linkages between the chat and the messages associated with it.
 - Bob is no longer able to chat with Alice and Mary because FooChat can't parse or even see the new messages.
 - Alice and Mary both see an error in FooChat because the chatroom metadata has been corrupted.
-- Most importantly, they don't have much recourse. Fixing the problem involves manually editing linked data. They are savvy, but they aren't experts in RDF.
+- Most importantly, they don't have much recourse. Fixing the problem involves manually editing linked data, possibly requiring information lost when BarChat wrote malformed data. They are savvy, but they aren't experts in RDF.
 
-__An application *migrates* data, and creates breaking changes for other applications.__  
+__An application *migrates* data, and creates breaking changes for other applications.__
 - Alice uses FooHealth to manage all of her personal health data, which is stored in her Solid pod.
 - FooHealth has a major update. For that update to work, it needs to cycle through all of her existing data and make structural changes.
 - FooHealth was already granted write access to Alice's health data because it is her primary tool for managing the data inside.
@@ -36,9 +36,9 @@ __An application prompts a user to make decisions about shape constraints__
 
 ## Use Cases
 
-### Enabling shape validation
+### Enabling schema validation
 
-These use cases are focused on *setting* or *enabling* shape validation for resources or containers.
+These use cases are focused on *setting* or *enabling* schema validation for resources or containers.
 
 #### Enabling shape validation on a resource
 
@@ -58,9 +58,9 @@ These use cases are focused on *setting* or *enabling* shape validation for reso
 - __Scenario A - Setting blanket validation on a container__
   - FooChat turns on shape validation for https://bob.example/chats/maryalice/ to ensure that all data written in that container, and in any containers within it, conforms to the Message shape.
 - __Scenario B - Setting validation based on regular expression__
-  - FooChat turns on shape validation for https://bob.example/chats/maryalice/%d*/%d*/%d.ttl to ensure that only the data written in the month/day subordinate containers conform to the message shape.
+  - FooChat turns on shape validation for https://bob.example/chats/maryalice/%d*/%d*/%d.ttl to more narrowly ensure that data written in the month/day subordinate containers conform to the message shape.
 
-#### Enabling shape validation as data is written
+#### Enabling shape validation as data is created
 
 - Alice uses FooHealth to manage her Personal Health Data.
 - FooHealth is able to consume an export of health data from the EHR system at her primary care provider.   
@@ -91,7 +91,7 @@ These use cases are focused on *validating* data as it is written to resources o
 
 - Mary uses ExampleTask to manage her projects and their associated tasks
 - She is working on a Supply Chain project. ExampleTask stores both the project metadata, and the associated tasks for it at https://alice.example/projects/supply-chain.ttl.
-- There are multiple validators set on https://alice.example/projects/supply-chain.ttl. Specifically, data written to this resource must conform to https://shapes.example/project.shex or https://shapes.example/task.shex.
+- There are multiple validators set on https://alice.example/projects/supply-chain.ttl. Specifically, data written to this resource must conform to both https://shapes.example/project.shex and https://shapes.example/task.shex.
 
 #### Validating sets of data
 
@@ -112,7 +112,7 @@ These use cases are focused on *modifying* validations that are already in place
 - BarEHR maintains a care plan resource at https://alice.example/phr/care-plan.ttl that maps to a number of other resources such as prescribed diagnostics, prescriptions for medication, and other required activities.
 - This care plan resource has a validator set that ensures it conforms to https://shapes.example/care-plan.shex.
 - A new version of BarEHR allows it to canonicalize and sign the care plan data, then store the results in the same resource, conforming to the https://shapes.example/data-signature.shex shape.
-- BarEHR must add https://shapes.example/data-signature.shex to the allowed validators for https://alice.example/phr/care-plan.ttl, such that both must be present (the care plan is always signed) to pass validation.
+- BarEHR adds https://shapes.example/data-signature.shex to the allowed validators for https://alice.example/phr/care-plan.ttl, such that both must be present (the care plan is always signed) to pass validation.
 
 #### Adding additional shape validations to a container
 
@@ -120,16 +120,16 @@ These use cases are focused on *modifying* validations that are already in place
 - Bob creates a chatroom where he can talk to his colleague Rob
 - Rob uses WhoChat instead of FooChat
 - WhoChat is able to interpret the chat shape for the room at https://bob.example/chats/bobandrob.ttl.
-- It is also able to read the the messages associated with it in https://bob.example/chats/bobandrob/. That container has one validator set on it to ensure that data written conforms to https://shapes.example/message.shex.
-- WhoChat is able to weave polls into chatroom streams, and wants to be able to store data conforming to poll shapes in https://bob.example/chats/bobandrob/, which only allows messages.
+- It is also able to read the the messages associated with it in https://bob.example/chats/bobandrob/. That container has one registered shape, https://shapes.example/message.shex#MessageContainerShape.
+- Because #MessageContainerShape already permitted additional ldp:contains to non-messages, WhoChat is able to weave polls into chatroom streams by registering https://whochat.example/poll.shex#PollContainerShape for the same container.
 
 #### Modifying shape validations
 
 - Alice switches to a new care network which uses FooEHR instead of BarEHR to manage her Personal Health Record.
-- FooEHR attempts to update her care plan at resource at https://alice.example/phr/care-plan.ttl.
-- This care plan resource has two validators set that ensures it conforms to https://shapes.example/care-plan.shex and https://shapes.example/data-signature.shex.
+- This care plan resource has two registered validators that ensure that it conforms to both  https://shapes.example/care-plan.shex and https://shapes.example/data-signature.shex.
+- FooEHR attempts to update her care plan at https://alice.example/phr/care-plan.ttl, but without including a signature.
 - FooEHR is unable to write this update because it doesn't have support for signing the care plan data and storing it in https://shapes.example/data-signature.shex.
-- FooEHR would like to remove this validator so that it can write updates to Alice's care plan.
+- FooEHR would like to remove this validator so that it can write updates to Alice's care plan. Static analysis reveals that this would break BarEHR.
 
 #### Updating to a new version of a shape
 - Rob uses PondStat to record the temperature of his pond.
