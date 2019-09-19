@@ -1,9 +1,7 @@
 # Use Cases for the User Profile
 
 The following use cases must be considered when designing the data model for the Solid User Profile.
-
 ## Solid Data Interoperability Panel Use Case: Semantic Interoperability
----
 ### Purpose: To demonstrate how a shared ontology will enable: 
 1) A standard Solid User Profile to be specified, which app developers can understand and read data from.
 2) App developers to understand and reuse pre-existing data from a user’s pod.
@@ -21,13 +19,11 @@ Preconditions: SolidUser has a Solid Pod with their User Profile data entered.
 1) SolidDeveloper-2 develops a new app for users to post and sell vehicles.
 2) SolidDeveloper-2 reuses the Vehicle-Data extension ontology, but extends it further to include new terms representing data such as advertised price and bargaining range.
 3) SolidUser uses SolidDeveloper-1’s and SolidDeveloper-2’s apps, which leverage a common set of standard and vehicle information, and only needs to add a few new pieces of data to post their vehicle for resale.
-Shared Ontology:
+### Shared Ontology:
+
 To demonstrate this use case, the U.S. Army Avatar Team will use the Common Core Ontologies (CCO)<sup>1</sup> , which are a suite of logically consistent mid-level ontologies that extend from Basic Formal Ontology (BFO)<sup>2</sup> .   BFO is in final committee balloting as ISO/IEC JTC1 21838-2 Top Level Ontology.  Note: Solid extension ontologies will extend from CCO, not directly from BFO.
----
+
+
+## References
 <sup>1</sup> https://github.com/CommonCoreOntology/CommonCoreOntologies<br>
 <sup>2</sup> https://github.com/BFO-ontology/BFO
-
-
-
-
-
