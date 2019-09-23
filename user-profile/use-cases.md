@@ -7,7 +7,8 @@ The following use cases must be considered when designing the data model for the
 2) App developers to understand and reuse pre-existing data from a user’s pod.
 3) App developers to leverage a standard set of shapes to validate both the structure and meaning of data being inserted into a user’s pod.
 4) New terms to be created as extensions of the shared ontology to enable interoperability and semantic consistency with the higher (i.e. parent) level.
-Preconditions: SolidUser has a Solid Pod with their User Profile data entered.
+
+### Preconditions: SolidUser has a Solid Pod with their User Profile data entered.
 
 ### Use Case-1:
 1) SolidDeveloper-1 begins work on a new application to enable a user to easily obtain quotes for multiple auto insurance vendors.
