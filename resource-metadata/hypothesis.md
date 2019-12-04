@@ -54,9 +54,17 @@ String-based link relations, such as in the examples above, must be registered w
 
 ### Web Access Control
 
-ACL resources as defined by Web Access Control. MUST be supported. MUST be deleted when resource is deleted.
+Related Issues:  
+https://github.com/solid/specification/issues/58
+https://github.com/solid/specification/issues/42
+https://github.com/solid/specification/issues/31
+https://github.com/solid/specification/issues/131
 
-Authorization: acl:Control
+ACL resources as defined by [Web Access Control](https://github.com/solid/web-access-control-spec) MUST be supported.
+
+MUST be deleted when resource is deleted.
+
+Authorization Model:
 
 Discovered via ```rel=acl``` and ```rel=http://www.w3.org/ns/solid/terms#resource```
 
@@ -64,7 +72,7 @@ Discovered via ```rel=acl``` and ```rel=http://www.w3.org/ns/solid/terms#resourc
 
 Resource description provides a general mechanism for resource annotation, such as for providing descriptive metadata for a binary file. MUST be supported. MUST be deleted when resource is deleted.
 
-Authorization: acl:Read, acl:Write
+Authorization Model:
 
 Discovered via ```rel=describedby``` and ```rel=describes```
 
@@ -72,7 +80,7 @@ Discovered via ```rel=describedby``` and ```rel=describes```
 
 Enforces conformance of the resource to an associated SHACL or ShEx data shape. MUST be supported. MUST be deleted when resource is deleted.
 
-Authorization: acl:Control
+Authorization Model:
 
 Discovered via ```rel=http://www.w3.org/ns/solid/terms#shape``` and ```rel=http://www.w3.org/ns/solid/terms#resource```
 
@@ -88,7 +96,7 @@ Discovered via ```rel=http://www.w3.org/ns/solid/terms#metadata``` and ```rel=ht
 
 Configuration metadata, e.g. settings for memento creation. MUST be supported. MUST be deleted when resource is deleted.
 
-Authorization: acl:Control
+Authorization Model:
 
 Discovered via ```rel=http://www.w3.org/ns/solid/terms#configuration```
 
@@ -110,3 +118,4 @@ There are many ways a server could implement these features. A file-based server
 * Can all clients see links to all metadata associated with a given document as a general rule, or should this be something defined for each individual type of metadata?
 * Should anchor= be used rather than rel= for the discovery of an annotated resource (see [RFC 5988](https://tools.ietf.org/html/rfc5988))
 * Should there be portability requirements for certain metadata types? For example, acls should be portable so that if a given user moves their data from once implementation to another, their acl should go along, but certain implementation specific metadata may not.
+* How do you connect the resource with an ACL when you create it
