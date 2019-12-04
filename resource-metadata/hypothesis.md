@@ -54,20 +54,25 @@ String-based link relations, such as in the examples above, must be registered w
 
 ### Web Access Control
 
-ACL resources as defined by Web Access Control. MUST be supported.
+ACL resources as defined by Web Access Control. MUST be supported. MUST be deleted when resource is deleted.
 
-Discovered via ```rel=acl```
-and ```rel=http://www.w3.org/ns/solid/terms#resource```
+Authorization: acl:Control
+
+Discovered via ```rel=acl``` and ```rel=http://www.w3.org/ns/solid/terms#resource```
 
 ### Resource Description
 
-Resource description provides a general mechanism for resource annotation, such as for providing descriptive metadata for a binary file. MUST be supported.
+Resource description provides a general mechanism for resource annotation, such as for providing descriptive metadata for a binary file. MUST be supported. MUST be deleted when resource is deleted.
+
+Authorization: acl:Read, acl:Write
 
 Discovered via ```rel=describedby``` and ```rel=describes```
 
 ### Shape Constraint
 
-Enforces conformance of the resource to an associated SHACL or ShEx data shape. MUST be supported.
+Enforces conformance of the resource to an associated SHACL or ShEx data shape. MUST be supported. MUST be deleted when resource is deleted.
+
+Authorization: acl:Control
 
 Discovered via ```rel=http://www.w3.org/ns/solid/terms#shape``` and ```rel=http://www.w3.org/ns/solid/terms#resource```
 
@@ -75,11 +80,15 @@ Discovered via ```rel=http://www.w3.org/ns/solid/terms#shape``` and ```rel=http:
 
 Server-managed metadata not otherwise included in HTTP headers. MUST be supported.
 
+__Note: This may be too broad to be able to properly determine what the authorization rule, or lifecycle should be. May need to consider breaking this up into specific types.__
+
 Discovered via ```rel=http://www.w3.org/ns/solid/terms#metadata``` and ```rel=http://www.w3.org/ns/solid/terms#resource```
 
 ### Configuration
 
-Configuration metadata, e.g. settings for memento creation. MUST be supported.
+Configuration metadata, e.g. settings for memento creation. MUST be supported. MUST be deleted when resource is deleted.
+
+Authorization: acl:Control
 
 Discovered via ```rel=http://www.w3.org/ns/solid/terms#configuration```
 
