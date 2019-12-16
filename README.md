@@ -34,6 +34,7 @@ to propose a project for the panel to undertake.
 | [2019-10-07](https://github.com/solid/data-interoperability-panel/blob/master/meetings/5-20191007.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/5-20191007.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/5-20191007.md#minutes) |
 | [2019-10-21](https://github.com/solid/data-interoperability-panel/blob/master/meetings/6-20191021.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/6-20191021.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/6-20191021.md#minutes) |
 | [2019-11-18](https://github.com/solid/data-interoperability-panel/blob/master/meetings/7-20191118.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/7-20191118.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/7-20191118.md#minutes) |
+| [2019-12-16](https://github.com/solid/data-interoperability-panel/blob/master/meetings/8-20191216.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/8-20191216.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/8-20191216.md#minutes) |
 
 ## Communication Channels
 
