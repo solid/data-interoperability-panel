@@ -50,7 +50,7 @@ and:
 Link: <https://example.com/resource>;
         rel="https://example.org/ns#isMetadataOf"
 
-String-based link relations, such as in the examples above, must be registered with IANA. But it is also possible to use custom relation types by using a full IRI. The Linked Data Platform, the Linked Data Notification and the Web Annotation specifications make use of full IRIs in the rel attribute.
+String-based link relations, such as in the examples above, must be registered with IANA. But it is also possible to use custom relation types by using a full IRI. The [Linked Data Platform](https://www.w3.org/TR/ldp/), the [Linked Data Notifications](https://www.w3.org/TR/ldn/), and the [Web Annotation Protocol](http://www.w3.org/TR/annotation-protocol/) specifications make use of full IRIs in the `rel` attribute.
 
 ## Metadata Characteristics
 
