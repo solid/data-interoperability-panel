@@ -30,6 +30,8 @@ For any defined metadata type available for a given resource, all representation
 
 Link: <https://example.com/resource?acl>; rel="acl"
 
+Metadata discovered through a Link header for a given resource is considered to be *directly associated* with that resource.
+
 ### Discovery of Annotated Resource
 
 Certain metadata resource types MAY require the server to include a link back to the annotated resource using an appropriate link relation. For example, LDP defines a bidirectional discovery mechanism for RDF descriptions of NonRDF resources, via Link headers:
@@ -56,7 +58,7 @@ String-based link relations, such as in the examples above, must be registered w
 
 A given resource MAY Link to metadata on a different server.
 
-Metadata resources on the same Solid server MUST follow the [LDPR interaction model](https://www.w3.org/TR/ldp/#ldpr-gen-linktypehdr).
+Metadata resources on the same Solid server MUST adhere to the same interaction model used by standard Solid resources.
 
 ## Reserved Metadata Types
 
@@ -64,9 +66,9 @@ Metadata resources on the same Solid server MUST follow the [LDPR interaction mo
 
 ACL resources as defined by [Web Access Control](https://github.com/solid/web-access-control-spec) MUST be supported as a resource metadata type by Solid servers.
 
-ACL metadata resources are discoverable by the client via ```rel=acl``` and ```rel=http://www.w3.org/ns/solid/terms#resource```
+ACL metadata resources are discoverable by the client via ```rel=acl```.
 
-An ACL metadata resource MUST be deleted when the resource it is directly associated with is also deleted and the two resources reside on the same Solid server.
+An ACL metadata resource MUST be deleted when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
 
 To access or manage an ACL meta resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
@@ -76,9 +78,9 @@ A Solid server SHOULD sanity check ACL metadata resources upon creation or updat
 
 Resource description is a general mechanism to provide descriptive metadata for a given resource. It MUST be supported as a resource metadata type by Solid servers.
 
-The Descriptive metadata resource for a given resource is discovered via ```rel=describedby```. Conversely, the resource being described by a Descriptive metadata resource is discovered via ```rel=describes```.
+The Descriptive metadata resource for a given resource is discovered via ```rel=describedby```. Conversely, the resource being described by a Descriptive metadata resource is discovered via ```rel=http://www.w3.org/ns/solid/terms#resource```.
 
-A Descriptive metadata resource MUST be deleted when the resource it is directly associated with is also deleted and the two resources reside on the same Solid server.
+A Descriptive metadata resource MUST be deleted when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
 
 Access or management of a Descriptive metadata resource by a given [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) is subject to the [modes of access](https://github.com/solid/web-access-control-spec#modes-of-access) granted per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
@@ -86,11 +88,9 @@ Access or management of a Descriptive metadata resource by a given [acl:agent](h
 
 Shape Validation ensures that any data changes in a given resource conform to an associated [SHACL](https://www.w3.org/TR/shacl/) or [ShEx](https://shex.io/shex-semantics/index.html) data shape. It MUST be supported as a resource metadata type by Solid servers.
 
-The Shape validation metadata resource for a given resource is discovered via ```rel=http://www.w3.org/ns/solid/terms#shape``` and ```rel=http://www.w3.org/ns/solid/terms#resource```.
+The Shape validation metadata resource for a given resource is discovered via ```rel=http://www.w3.org/ns/solid/terms#shape```. Conversely, the resource being described by a Shape validation metadata resource is discovered via ```rel=http://www.w3.org/ns/solid/terms#resource```.
 
-.```OPEN QUESTION - Should the link be directly to the shape resource (which is often not going to be on the same server)? Should it be to a local resource that in turn points to the shape (wherever it is), but can also include configuration parameters on the nature of the validation? The latter would seem to provide much more flexibility in the long run.```
-
-A Shape validation metadata resource MUST be deleted when the resource it is directly associated with is also deleted and the two resources reside on the same Solid server. ```Note: Assumes that we follow the local resource pointing to shape approach```
+A Shape validation metadata resource MUST be deleted when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
 
 To access or manage a Shape validation metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
@@ -98,19 +98,23 @@ A Solid server SHOULD sanity check Shape validation metadata resources upon crea
 
 ### Server Managed
 
-*This section is still in process*
+A Solid server stores information about a resource that clients can read but not change in Server Managed metadata. It MUST be supported as a resource metadata type by Solid servers.
 
-Server-managed metadata not otherwise included in HTTP headers. MUST be supported.
+A Server Managed metadata resource is Discovered via ```rel=http://www.w3.org/ns/solid/terms#server```. Conversely, the resource being described by a Server Managed metadata resource is discovered via ```rel=http://www.w3.org/ns/solid/terms#resource```.
 
-Discovered via ```rel=http://www.w3.org/ns/solid/terms#server``` and ```rel=http://www.w3.org/ns/solid/terms#resource```
+A Server Managed metadata resource MUST be deleted when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
+
+To access a Server Managed metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Read](https://github.com/solid/web-access-control-spec#aclread) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
 ### Configuration
 
-*This section is still in process*
+Configuration metadata is used to store configurable parameters for a given resource. It MUST be supported as a resource metadata type by Solid servers.
 
-Configuration metadata, e.g. settings for memento creation. MUST be supported. MUST be deleted when resource is deleted.
+A configuration metadata resource is discovered via ```rel=http://www.w3.org/ns/solid/terms#configuration```. Conversely, the resource being described by a Configuration metadata resource is discovered via ```rel=http://www.w3.org/ns/solid/terms#resource```.
 
-Discovered via ```rel=http://www.w3.org/ns/solid/terms#configuration```
+A Configuration metadata resource MUST be deleted when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
+
+To access or manage a Configuration metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
 ## Non-Reserved Types
 
@@ -127,14 +131,6 @@ A server needs to maintain a working knowledge of which resources are metadata, 
 # Draft Resources
 
 This section and the content inside it is meant to aid in the drafting process, and will not be included in the candidate proposal submitted to the specification. The purpose of this section is to aid those contributing to or reviewing this document.
-
-## Open Questions
-
-* Should we stipulate whether metadata resources MUST or SHOULD be RDF?
-* Can all clients see links to all metadata associated with a given document as a general rule, or should this be something defined for each individual type of metadata?
-* Should anchor= be used rather than rel= for the discovery of an annotated resource (see [RFC 5988](https://tools.ietf.org/html/rfc5988))
-* Should there be portability requirements for certain metadata types? For example, acls should be portable so that if a given user moves their data from once implementation to another, their acl should go along, but certain implementation specific metadata may not.
-* How do you connect the resource with an ACL when you create it
 
 ## Additional References
 
