@@ -68,7 +68,7 @@ ACL resources as defined by [Web Access Control](https://github.com/solid/web-ac
 
 ACL metadata resources are discoverable by the client via ```rel=acl```.
 
-An ACL metadata resource MUST be deleted when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
+An ACL metadata resource MUST be deleted when the resource it is directly associated with is deleted and the Solid server is authoritative for both resources.
 
 To access or manage an ACL meta resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
@@ -80,7 +80,7 @@ Resource description is a general mechanism to provide descriptive metadata for 
 
 The Descriptive metadata resource for a given resource is discovered via ```rel=describedby```. Conversely, the resource being described by a Descriptive metadata resource is discovered via ```rel=http://www.w3.org/ns/solid/terms#resource```.
 
-A Descriptive metadata resource MUST be deleted when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
+A Descriptive metadata resource MUST be deleted when the resource it is directly associated with is deleted and the Solid server is authoritative for both resources.
 
 Access or management of a Descriptive metadata resource by a given [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) is subject to the [modes of access](https://github.com/solid/web-access-control-spec#modes-of-access) granted per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
@@ -90,7 +90,7 @@ Shape Validation ensures that any data changes in a given resource conform to an
 
 The Shape validation metadata resource for a given resource is discovered via ```rel=http://www.w3.org/ns/solid/terms#shape```. Conversely, the resource being described by a Shape validation metadata resource is discovered via ```rel=http://www.w3.org/ns/solid/terms#resource```.
 
-A Shape validation metadata resource MUST be deleted when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
+A Shape validation metadata resource MUST be deleted when the resource it is directly associated with is deleted and the Solid server is authoritative for both resources.
 
 To access or manage a Shape validation metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
@@ -102,7 +102,7 @@ A Solid server stores information about a resource that clients can read but not
 
 A Server Managed metadata resource is Discovered via ```rel=http://www.w3.org/ns/solid/terms#server```. Conversely, the resource being described by a Server Managed metadata resource is discovered via ```rel=http://www.w3.org/ns/solid/terms#resource```.
 
-A Server Managed metadata resource MUST be deleted when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
+A Server Managed metadata resource MUST be deleted when the resource it is directly associated with is deleted and the Solid server is authoritative for both resources.
 
 To access a Server Managed metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Read](https://github.com/solid/web-access-control-spec#aclread) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
@@ -112,7 +112,7 @@ Configuration metadata is used to store configurable parameters for a given reso
 
 A configuration metadata resource is discovered via ```rel=http://www.w3.org/ns/solid/terms#configuration```. Conversely, the resource being described by a Configuration metadata resource is discovered via ```rel=http://www.w3.org/ns/solid/terms#resource```.
 
-A Configuration metadata resource MUST be deleted when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
+A Configuration metadata resource MUST be deleted when the resource it is directly associated with is deleted and the Solid server is authoritative for both resources.
 
 To access or manage a Configuration metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
