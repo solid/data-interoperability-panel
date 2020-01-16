@@ -24,8 +24,7 @@ Some examples include:
 Access to different categories of metadata may require different levels of privilege, which must be specified as part of the definition for a given metadata type.
 
 ## Metadata Discovery
-
-Given the URL of a resource, a client can discover the metadata resources by issuing a GET (or HEAD) request and inspecting the Link headers in the response. The [rel= attribute](https://tools.ietf.org/html/rfc8288) will define the relationship to the target URL.
+Given the URL of a resource, a client can discover the metadata resources by issuing a `GET` (or `HEAD`) request and inspecting the `Link` headers in the response. The [`rel={attribute}`](https://tools.ietf.org/html/rfc8288) will define the relationship to the target URL.
 
 For any defined metadata type available for a given resource, all representations of that resource MUST include a Link header pointing to the location of each metadata resource. For example, as defined by the Solid [Web Access Control specification](https://github.com/solid/web-access-control-spec), a client can use this mechanism to discover the location of an ACL resource:
 
