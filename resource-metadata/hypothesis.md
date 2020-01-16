@@ -69,6 +69,8 @@ ACL resources as defined by [Web Access Control](https://github.com/solid/web-ac
 
 ACL metadata resources are discoverable by the client via ```rel=acl```.
 
+A given Solid resource MUST NOT be directly associated with more than one ACL metadata resource.
+
 An ACL metadata resource MUST be deleted by the Solid server when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
 
 To access or manage an ACL metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
@@ -81,6 +83,8 @@ Resource description is a general mechanism to provide descriptive metadata for 
 
 The Descriptive metadata resource for a given resource is discovered by the client via ```rel=describedby```. Conversely, the resource being described by a Descriptive metadata resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#resource```.
 
+A given Solid resource MUST NOT be directly associated with more than one Descriptive metadata resource.
+
 A Descriptive metadata resource MUST be deleted by the Solid server when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
 
 Access or management of a Descriptive metadata resource by a given [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) is subject to the [modes of access](https://github.com/solid/web-access-control-spec#modes-of-access) granted per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
@@ -90,6 +94,8 @@ Access or management of a Descriptive metadata resource by a given [acl:agent](h
 Shape Validation ensures that any data changes in a given resource conform to an associated [SHACL](https://www.w3.org/TR/shacl/) or [ShEx](https://shex.io/shex-semantics/index.html) data shape. It MUST be supported as a resource metadata type by Solid servers.
 
 The Shape validation metadata resource for a given resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#shape```. Conversely, the resource being described by a Shape validation metadata resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#resource```.
+
+A given Solid resource MUST NOT be directly associated with more than one Descriptive metadata resource.
 
 A Shape validation metadata resource MUST be deleted by the Solid server when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
 
@@ -103,6 +109,8 @@ A Solid server stores information about a resource that clients can read but not
 
 A Server Managed metadata resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#servermanaged```. Conversely, the resource being described by a Server Managed metadata resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#resource```.
 
+A given Solid resource MUST NOT be directly associated with more than one Server Managed metadata resource.
+
 A Server Managed metadata resource MUST be deleted by the Solid server when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
 
 To access a Server Managed metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Read](https://github.com/solid/web-access-control-spec#aclread) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
@@ -112,6 +120,8 @@ To access a Server Managed metadata resource, an [acl:agent](https://github.com/
 Configuration metadata is used to store configurable parameters for a given resource. It MUST be supported as a resource metadata type by Solid servers.
 
 A configuration metadata resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#configuration```. Conversely, the resource being described by a Configuration metadata resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#resource```.
+
+A given Solid resource MUST NOT be directly associated with more than one Configuration metadata resource.
 
 A Configuration metadata resource MUST be deleted by the Solid server when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
 
