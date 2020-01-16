@@ -32,7 +32,7 @@ Notable issues:
 Items/themes that are raised in the issues above and should be addressed in some form:
 
 - Reconfirm use of describedby as a way to get to meta information (#63)
-- Specify whether or not metadata should be handled as regular rdf resources (it should be) - probably should put this in the opening section.
+- Specify that metadata should be handled as regular RDF resources - probably should put this in the opening section.
 - Specify the semantics of meta information for containers (#63)
   - Take a look at current NSS use of .meta for containers
 - Clarify whether metadata for a container counts towards it being empty or not (#63)
