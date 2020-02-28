@@ -4,56 +4,44 @@
 
 *This section is non-normative*
 
-This document introduces a mechanism for linking to metadata about resources in the Solid Ecosystem using HTTP Link headers. Examples of this linking mechanism include:
+This document introduces a mechanism for linking to metadata about resources in the Solid Ecosystem using HTTP Link headers. The metadata may serve as supplementary descriptions or, when supported by a Solid server implementation, may influence the behavior of the resources. It is not meant to supplant the ability for the directly associated resource to self-describe.
+
+Examples of this mechanism in use include:
 
 - A binary JPEG image with a Link header, pointing to a description that has an RDF representation.
-- An LDP container with a Link header, pointing to an ACL resource that governs access controls for the contained resources.
+- A container with a Link header, pointing to an ACL resource that governs access controls for the contained resources.
 - A resource whose shape is constrained by a ShEx schema includes a Link header that points to a metadata resource defining that constraint.
-- A resource may keep an audit trail of modification events. A client could follow the URI in a Link header to access that audit trail.
+- A resource with an associated set of configurable parameters includes a Link header that points to a resource where those configurable parameters reside.
 
-A given resource might link to zero or more such related metadata representations. Having a unified model to describe how clients and Solid servers interact with and process these resources will help clarify expectations, while also providing a shared pattern for extending the features of Solid server implementations.
+A given resource might link to zero or more such related metadata representations.
 
-The metadata model described in this document makes it possible for clients to decorate resources with structured descriptive data. Those metadata may serve as supplementary descriptions or, when supported by a Solid server implementation, they may influence the behavior of the resources.
-
-Some examples include:
-
-- An ACL resource controls how a Solid server makes authorization decisions for a container and any child resources.
-- A shape constraint resource may limit the RDF structures that can be added to a resource or container.
-- A “configuration” resource may control how a resource is versioned, or which indexes are exposed for it.
-
-Access to different categories of metadata may require different levels of privilege, which must be specified as part of the definition for a given metadata type.
+Access to different types of metadata may require varying levels of privilege, which must be specified as part of the definition for a given metadata type.
 
 ## Metadata Discovery
-Given the URL of a resource, a client can discover the metadata resources by issuing a `GET` (or `HEAD`) request and inspecting the `Link` headers in the response. The [`rel={attribute}`](https://tools.ietf.org/html/rfc8288) will define the relationship to the target URL.
+
+Given the URL of a resource, a client can discover the metadata resources by issuing a `GET`, `HEAD`, or `OPTIONS` request and inspecting the `Link` headers in the response. The [`rel={relation-type}`](https://tools.ietf.org/html/rfc8288) will define the relationship to the target URL. Refer to [RFC8288](https://tools.ietf.org/html/rfc8288) for allowed [link relation types](https://tools.ietf.org/html/rfc8288#section-2.1).
 
 For any defined metadata type available for a given resource, all representations of that resource MUST include a Link header pointing to the location of each metadata resource. For example, as defined by the Solid [Web Access Control specification](https://github.com/solid/web-access-control-spec), a client can use this mechanism to discover the location of an ACL resource:
 
-Link: <https://example.com/acls/resource.acl>; rel="acl"
+Link: <https://server.example/acls/resource.acl>; rel="acl"
 
 Metadata discovered through a Link header for a given resource is considered to be *directly associated* with that resource.
 
-For cases where link relations are not defined by IANA, a URL can be used. For example:
-
-Link: <https://example.com/metadata/resource>;
-        rel="https://example.org/ns#metadata"
-
-String-based link relations, such as in the examples above, must be registered with IANA. But it is also possible to use custom relation types by using a full IRI. The [Linked Data Platform](https://www.w3.org/TR/ldp/), the [Linked Data Notifications](https://www.w3.org/TR/ldn/), and the [Web Annotation Protocol](http://www.w3.org/TR/annotation-protocol/) specifications make use of full IRIs in the `rel` attribute.
-
 ### Discovery of Annotated Resource
 
-Certain metadata resource types MAY require the Solid server to include a link back to the annotated resource it is directly associated with using an appropriate link relation. For example, LDP defines a bidirectional discovery mechanism for RDF descriptions of NonRDF resources, via Link headers:
+Certain metadata resource types require the Solid server to link back to the annotated resource that the metadata is directly associated with, via Link headers. In these instances, the link relation ```rel=describes``` MUST be used.
 
-Link: <https://example.com/metadata/resource.meta>; rel="describes"
+For example, a metadata resource ```<https://server.example/metadata/resource.meta>``` directly associated with ```<https://server.example/resource.ttl>``` whose type requires linking back to the annotated resource MUST have the following included in its Link headers:
 
-along with:
-
-Link: <https://example.com/binary>; rel="describedby"
+Link: <https://server.example/resource.ttl>; rel="describes"
 
 ## Metadata Characteristics
 
 A given resource MAY Link to metadata on a different server.
 
 Metadata resources on the same Solid server MUST adhere to the same interaction model used by standard Solid resources.
+
+A metadata resource MUST be deleted by the Solid server when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
 
 ## Reserved Metadata Types
 
@@ -64,8 +52,6 @@ ACL resources as defined by [Web Access Control](https://github.com/solid/web-ac
 The ACL metadata resource directly associated with a given resource is discovered by the client via ```rel=acl```.
 
 A given Solid resource MUST NOT be directly associated with more than one ACL metadata resource.
-
-An ACL metadata resource MUST be deleted by the Solid server when the resource it is directly associated with is deleted and the Solid server is authoritative for both resources.
 
 To access or manage an ACL metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
@@ -79,8 +65,6 @@ The Descriptive metadata resource directly associated with a given resource is d
 
 A given Solid resource MUST NOT be directly associated with more than one Descriptive metadata resource.
 
-A Descriptive metadata resource MUST be deleted by the Solid server when the resource it is directly associated with is deleted and the Solid server is authoritative for both resources.
-
 Access or management of a Descriptive metadata resource by a given [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) is subject to the [modes of access](https://github.com/solid/web-access-control-spec#modes-of-access) granted per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
 ### Shape Validation
@@ -90,8 +74,6 @@ Shape Validation ensures that any data changes in a given resource conform to an
 The Shape validation metadata resource directly associated with a given resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#shape```. Conversely, the resource being described by a Shape validation metadata resource is discovered by the client via ```rel=describes```.
 
 A given Solid resource MUST NOT be directly associated with more than one Descriptive metadata resource.
-
-A Shape validation metadata resource MUST be deleted by the Solid server when the resource it is directly associated with is deleted and the Solid server is authoritative for both resources.
 
 To access or manage a Shape validation metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
@@ -105,8 +87,6 @@ A Server Managed metadata resource directly associated with a given resource is 
 
 A given Solid resource MUST NOT be directly associated with more than one Server Managed metadata resource.
 
-A Server Managed metadata resource MUST be deleted by the Solid server when the resource it is directly associated with is deleted and the Solid server is authoritative for both resources.
-
 To access a Server Managed metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Read](https://github.com/solid/web-access-control-spec#aclread) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
 ### Configuration
@@ -116,8 +96,6 @@ Configuration metadata is used to store configurable parameters for a given reso
 A configuration metadata resource directly associated with a given resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#configuration```. Conversely, the resource being described by a Configuration metadata resource is discovered by the client via ```rel=describes```.
 
 A given Solid resource MUST NOT be directly associated with more than one Configuration metadata resource.
-
-A Configuration metadata resource MUST be deleted by the Solid server when the resource it is directly associated with is deleted and the Solid server is authoritative for both resources.
 
 To access or manage a Configuration metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
