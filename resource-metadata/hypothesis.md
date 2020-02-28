@@ -8,7 +8,7 @@ This document introduces a mechanism for linking to metadata about resources in 
 
 - A binary JPEG image with a Link header, pointing to a description that has an RDF representation.
 - An LDP container with a Link header, pointing to an ACL resource that governs access controls for the contained resources.
-- A resource whose shape is constrained by a ShEx document includes a Link header that points to that ShEx resource.
+- A resource whose shape is constrained by a ShEx schema includes a Link header that points to a metadata resource defining that constraint.
 - A resource may keep an audit trail of modification events. A client could follow the URI in a Link header to access that audit trail.
 
 A given resource might link to zero or more such related metadata representations. Having a unified model to describe how clients and Solid servers interact with and process these resources will help clarify expectations, while also providing a shared pattern for extending the features of Solid server implementations.
@@ -28,31 +28,26 @@ Given the URL of a resource, a client can discover the metadata resources by iss
 
 For any defined metadata type available for a given resource, all representations of that resource MUST include a Link header pointing to the location of each metadata resource. For example, as defined by the Solid [Web Access Control specification](https://github.com/solid/web-access-control-spec), a client can use this mechanism to discover the location of an ACL resource:
 
-Link: <https://example.com/resource?acl>; rel="acl"
+Link: <https://example.com/acls/resource.acl>; rel="acl"
 
 Metadata discovered through a Link header for a given resource is considered to be *directly associated* with that resource.
 
+For cases where link relations are not defined by IANA, a URL can be used. For example:
+
+Link: <https://example.com/metadata/resource>;
+        rel="https://example.org/ns#metadata"
+
+String-based link relations, such as in the examples above, must be registered with IANA. But it is also possible to use custom relation types by using a full IRI. The [Linked Data Platform](https://www.w3.org/TR/ldp/), the [Linked Data Notifications](https://www.w3.org/TR/ldn/), and the [Web Annotation Protocol](http://www.w3.org/TR/annotation-protocol/) specifications make use of full IRIs in the `rel` attribute.
+
 ### Discovery of Annotated Resource
 
-Certain metadata resource types MAY require the Solid server to include a link back to the annotated resource using an appropriate link relation. For example, LDP defines a bidirectional discovery mechanism for RDF descriptions of NonRDF resources, via Link headers:
+Certain metadata resource types MAY require the Solid server to include a link back to the annotated resource it is directly associated with using an appropriate link relation. For example, LDP defines a bidirectional discovery mechanism for RDF descriptions of NonRDF resources, via Link headers:
 
-Link: <https://example.com/binary?description>; rel="description"
+Link: <https://example.com/metadata/resource.meta>; rel="describes"
 
 along with:
 
 Link: <https://example.com/binary>; rel="describedby"
-
-For cases where link relations are not defined by IANA, a URL can be used. For example:
-
-Link: <https://example.com/resource?meta>;
-        rel="https://example.org/ns#hasMetadata"
-
-and:
-
-Link: <https://example.com/resource>;
-        rel="https://example.org/ns#isMetadataOf"
-
-String-based link relations, such as in the examples above, must be registered with IANA. But it is also possible to use custom relation types by using a full IRI. The [Linked Data Platform](https://www.w3.org/TR/ldp/), the [Linked Data Notifications](https://www.w3.org/TR/ldn/), and the [Web Annotation Protocol](http://www.w3.org/TR/annotation-protocol/) specifications make use of full IRIs in the `rel` attribute.
 
 ## Metadata Characteristics
 
@@ -66,7 +61,7 @@ Metadata resources on the same Solid server MUST adhere to the same interaction 
 
 ACL resources as defined by [Web Access Control](https://github.com/solid/web-access-control-spec) MUST be supported as a resource metadata type by Solid servers.
 
-ACL metadata resources are discoverable by the client via ```rel=acl```.
+The ACL metadata resource directly associated with a given resource is discovered by the client via ```rel=acl```.
 
 A given Solid resource MUST NOT be directly associated with more than one ACL metadata resource.
 
@@ -80,7 +75,7 @@ A Solid server SHOULD sanity check ACL metadata resources upon creation or updat
 
 Resource description is a general mechanism to provide descriptive metadata for a given resource. It MUST be supported as a resource metadata type by Solid servers.
 
-The Descriptive metadata resource for a given resource is discovered by the client via ```rel=describedby```. Conversely, the resource being described by a Descriptive metadata resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#resource```.
+The Descriptive metadata resource directly associated with a given resource is discovered by the client via ```rel=describedby```. Conversely, the resource being described by a Descriptive metadata resource is discovered by the client via ```rel=describes```.
 
 A given Solid resource MUST NOT be directly associated with more than one Descriptive metadata resource.
 
@@ -92,7 +87,7 @@ Access or management of a Descriptive metadata resource by a given [acl:agent](h
 
 Shape Validation ensures that any data changes in a given resource conform to an associated [SHACL](https://www.w3.org/TR/shacl/) or [ShEx](https://shex.io/shex-semantics/index.html) data shape. It MUST be supported as a resource metadata type by Solid servers.
 
-The Shape validation metadata resource for a given resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#shape```. Conversely, the resource being described by a Shape validation metadata resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#resource```.
+The Shape validation metadata resource directly associated with a given resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#shape```. Conversely, the resource being described by a Shape validation metadata resource is discovered by the client via ```rel=describes```.
 
 A given Solid resource MUST NOT be directly associated with more than one Descriptive metadata resource.
 
@@ -106,7 +101,7 @@ A Solid server SHOULD sanity check Shape validation metadata resources upon crea
 
 A Solid server stores information about a resource that clients can read but not change in Server Managed metadata. It MUST be supported as a resource metadata type by Solid servers.
 
-A Server Managed metadata resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#servermanaged```. Conversely, the resource being described by a Server Managed metadata resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#resource```.
+A Server Managed metadata resource directly associated with a given resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#servermanaged```. Conversely, the resource being described by a Server Managed metadata resource is discovered by the client via ```rel=describes```.
 
 A given Solid resource MUST NOT be directly associated with more than one Server Managed metadata resource.
 
@@ -118,7 +113,7 @@ To access a Server Managed metadata resource, an [acl:agent](https://github.com/
 
 Configuration metadata is used to store configurable parameters for a given resource. It MUST be supported as a resource metadata type by Solid servers.
 
-A configuration metadata resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#configuration```. Conversely, the resource being described by a Configuration metadata resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#resource```.
+A configuration metadata resource directly associated with a given resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#configuration```. Conversely, the resource being described by a Configuration metadata resource is discovered by the client via ```rel=describes```.
 
 A given Solid resource MUST NOT be directly associated with more than one Configuration metadata resource.
 
