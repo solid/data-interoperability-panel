@@ -47,9 +47,9 @@ Link: <https://server.example/resource.ttl>; rel="describes"
 
 ## Metadata Characteristics
 
-A given resource MAY Link to metadata on a different server.
+A given resource MAY Link to metadata on a different server under a different authority, per the configuration of the Solid server on which the resource resides.
 
-Metadata resources on the same Solid server MUST adhere to the same interaction model used by standard Solid resources.
+Metadata resources that reside on a Solid server MUST adhere to the same interaction model used by standard Solid resources, except where specified in the [definition](#reserved-metadata-types) of the metadata type.
 
 A metadata resource MUST be deleted by the Solid server when the resource it is directly associated with is also deleted and the Solid server is authoritative for both resources.
 
