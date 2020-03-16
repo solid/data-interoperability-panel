@@ -27,6 +27,16 @@ Link: <https://server.example/acls/resource.acl>; rel="acl"
 
 Metadata discovered through a Link header for a given resource is considered to be *directly associated* with that resource.
 
+The following are [reserved metadata types](#reserved-metadata-types) and the associated link relation URIs that are used for discovery. Other metadata types and relations may also be used, and may be added to the reserved set in the future.
+
+| Metadata Type | Link Relation |
+| :------------- |:-------------|
+| [Web Access Control](#web-access-control) | ```acl``` or ```http://www.w3.org/ns/solid/terms#acl``` |
+| [Resource Description](#resource-description) | ```describedby``` or ```https://www.w3.org/ns/iana/link-relations/relation#describedby``` |
+| [Shape Validation](#shape-validation) | ```http://www.w3.org/ns/solid/terms#shape``` |
+| [Server Managed](#server-managed) | ```http://www.w3.org/ns/solid/terms#servermanaged``` |
+| [Configuration](#configuration) | ```http://www.w3.org/ns/solid/terms#configuration``` |
+
 ### Discovery of Annotated Resource
 
 Certain metadata resource types require the Solid server to link back to the annotated resource that the metadata is directly associated with, via Link headers. In these instances, the link relation ```rel=describes``` MUST be used.
