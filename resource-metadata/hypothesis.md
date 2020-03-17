@@ -91,13 +91,13 @@ A Solid server SHOULD sanity check Shape validation metadata resources upon crea
 
 ### Server Managed
 
-A Solid server stores information about a resource that clients can read but not change in Server Managed metadata. It MUST be supported as a resource metadata type by Solid servers.
+A Solid server stores information about a resource that clients can read but not change in Server Managed metadata. Examples of Server Managed metadata could include resource creation or modification timestamps, identity of the agent that created the resource, etc. It MUST be supported as a resource metadata type by Solid servers.
 
-A Server Managed metadata resource directly associated with a given resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#servermanaged```. Conversely, the resource being described by a Server Managed metadata resource is discovered by the client via ```rel=describes```.
+A Server Managed metadata resource directly associated with a given resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#managed```. Conversely, the resource being described by a Server Managed metadata resource is discovered by the client via ```rel=describes```.
 
 A given Solid resource MUST NOT be directly associated with more than one Server Managed metadata resource.
 
-To access a Server Managed metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Read](https://github.com/solid/web-access-control-spec#aclread) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
+To read a Server Managed metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Read](https://github.com/solid/web-access-control-spec#aclread) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it. Modes of access beyond [acl:Read](https://github.com/solid/web-access-control-spec#aclread) MUST NOT be permitted on a Server Managed metadata resource.
 
 ### Configuration
 
