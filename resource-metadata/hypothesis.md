@@ -111,14 +111,14 @@ A given Solid resource MUST NOT be directly associated with more than one Config
 
 To access or manage a Configuration metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
-## Non-Reserved Types
+## Extending with Additional Metadata Types
 
-A Solid server may support other metadata types.
+A Solid server may support additional resource metadata types. Any additional types must follow the base [Metadata Discovery](#metadata-discovery) and [Metadata Characteristics](#metadata-characteristics) criteria detailed herein.
 
 ## Implementation Patterns
 
 *This section is non-normative.*
 
-There are many ways a Solid server could implement these features. A file-based Solid server could have a special naming scheme reserved for these metadata resources. Alternatively, a Solid server could represent every resource internally as a dataset, storing each separate type of metadata in its own named graph.
+There are many ways a Solid server could implement these features. A file-based Solid server could have a special naming scheme reserved for metadata resources. Alternatively, a Solid server could represent every resource internally as a dataset, storing each separate type of metadata in its own named graph.
 
 A Solid server needs to maintain a working knowledge of which resources are metadata, because it tells the clients where to find them. This means that it can similarly apply this knowledge to know when someone is writing to a known metadata resource, such as an ACL, and can apply the appropriate validation and sanity checks to ensure the changes are valid.
