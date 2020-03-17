@@ -85,7 +85,9 @@ The Shape validation metadata resource directly associated with a given resource
 
 A given Solid resource MUST NOT be directly associated with more than one Descriptive metadata resource.
 
-To access or manage a Shape validation metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
+To create or modify a Shape validation metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Write](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
+
+To read a Shape validation metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Read](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
 A Solid server SHOULD sanity check Shape validation metadata resources upon creation or update to restrict invalid changes.
 
@@ -101,7 +103,7 @@ To read a Server Managed metadata resource, an [acl:agent](https://github.com/so
 
 ### Configuration
 
-Configuration metadata is used to store configurable parameters for a given resource. It MUST be supported as a resource metadata type by Solid servers.
+Configuration metadata is used to store configurable parameters for a given resource. For example, whether to maintain [Mementos](https://tools.ietf.org/html/rfc7089) for a given resource, or how the data within a given resource should be rendered or indexed. It MUST be supported as a resource metadata type by Solid servers.
 
 A configuration metadata resource directly associated with a given resource is discovered by the client via ```rel=http://www.w3.org/ns/solid/terms#configuration```. Conversely, the resource being described by a Configuration metadata resource is discovered by the client via ```rel=describes```.
 
