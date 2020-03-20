@@ -19,7 +19,11 @@ Access to different types of metadata may require varying levels of privilege, w
 
 ## Metadata Discovery
 
-Given the URL of a resource, a client can discover the metadata resources by issuing a `GET`, `HEAD`, or `OPTIONS` request and inspecting the `Link` headers in the response. The [`rel={relation-type}`](https://tools.ietf.org/html/rfc8288) will define the relationship to the target URL. Refer to [RFC8288](https://tools.ietf.org/html/rfc8288) for allowed [link relation types](https://tools.ietf.org/html/rfc8288#section-2.1).
+Given the URL of a resource, a client can discover the metadata resources by issuing a `HEAD` or `GET` request and inspecting the `Link` headers in the response. The [`rel={relation-type}`](https://tools.ietf.org/html/rfc8288) will define the relationship to the target URL. Refer to [RFC8288](https://tools.ietf.org/html/rfc8288) for allowed [link relation types](https://tools.ietf.org/html/rfc8288#section-2.1).
+
+The client may also make an HTTP `GET` request on the target resource URL to retrieve an RDF representation, whose encoded RDF graph contains a relation of a given metadata type.
+
+These may be carried out in either order, but if the first fails to result in discovering the metadata resource or the described resource, the second MUST be tried.
 
 For any defined metadata type available for a given resource, all representations of that resource MUST include a Link header pointing to the location of each metadata resource. For example, as defined by the Solid [Web Access Control specification](https://github.com/solid/web-access-control-spec), a client can use this mechanism to discover the location of an ACL resource:
 
