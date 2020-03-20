@@ -65,7 +65,7 @@ ACL resources as defined by [Web Access Control](https://github.com/solid/web-ac
 
 The ACL metadata resource directly associated with a given resource is discovered by the client via ```rel=acl```.
 
-A given Solid resource MUST NOT be directly associated with more than one ACL metadata resource.
+A given Solid resource MUST NOT be directly associated with more than one ACL metadata resource. A given ACL metadata resource MUST NOT be directly associated with more than one Solid resource.
 
 To discover, read, create, or modify an ACL metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
