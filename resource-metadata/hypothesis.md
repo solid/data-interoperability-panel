@@ -69,6 +69,8 @@ A given Solid resource MUST NOT be directly associated with more than one ACL me
 
 To access or manage an ACL metadata resource, an [acl:agent](https://github.com/solid/web-access-control-spec#describing-agents) MUST have [acl:Control](https://github.com/solid/web-access-control-spec#aclcontrol) privileges per the [ACL inheritance algorithm](https://github.com/solid/web-access-control-spec#acl-inheritance-algorithm) on the resource directly associated with it.
 
+An ACL metadata resource MUST NOT be deleted unless the resource directly associated with it is deleted.
+
 A Solid server SHOULD sanity check ACL metadata resources upon creation or update to restrict invalid changes, such as by performing shape validation against authorization statements therein.
 
 ### Resource Description
