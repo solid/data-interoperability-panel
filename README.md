@@ -14,6 +14,7 @@ For contributing members see the
 
 ## Projects
 
+- [Resource Metadata](https://github.com/solid/data-interoperability-panel/tree/master/resource-metadata)
 - [Data Validation](https://github.com/solid/data-interoperability-panel/tree/master/data-validation)
 - [Data Discovery](https://github.com/solid/data-interoperability-panel/tree/master/data-discovery)
 - [Data Portability](https://github.com/solid/data-interoperability-panel/tree/master/data-portability)
