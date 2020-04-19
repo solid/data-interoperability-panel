@@ -1,10 +1,10 @@
 # Problems and Goals for Interoperability, Collaboration, and Security in a Solid Pod
 
-**Primary Contributors:**  
-Justin Bingham (Janeiro Digital, Solid Editorial Team)  
-Eric Prud'hommeaux (Janeiro Digital, W3C)  
-Jamie Fiedler (Janeiro Digital)  
-Josh Collins  (Janeiro Digital)  
+**Main Contributors:**  
+Justin Bingham - [@justinwb](https://github.com/justinwb)   
+Eric Prud'hommeaux - [@ericprud](https://github.com/ericprud)  
+Jamie Fiedler - [@jamiefiedler](https://github.com/jamiefiedler)  
+Josh Collins - [@joshdcollins](https://github.com/joshdcollins)  
 
 for the [Solid Interoperability Panel](https://github.com/solid/interoperability-panel)
 
