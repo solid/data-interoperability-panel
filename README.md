@@ -2,29 +2,34 @@
 
 [![Join the chat at https://gitter.im/solid/data-interoperability-panel](https://badges.gitter.im/solid/data-interoperability-panel.svg)](https://gitter.im/solid/data-interoperability-panel?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Focused on ensuring the seamless and safe interoperability of data as
-it is read and written by different users and/or applications.
+## Focus
 
-Areas of interest include vocabularies, shapes, footprints, indexes,
-and the mechanisms through which these things (and others) work together
-to achieve interoperability.
+We must be able to support data interoperability across applications while enabling secure collaboration and query using intuitive data boundaries.
+
+Diversity in how the same data will be accessed and manipulated by different entities and applications exacerbates the need for reliable mechanisms that protect against data corruption, data leakage, or broken workflows
+
+Standard methods and mechanisms for interoperability, collaboration, and security of data in a Solid Pod must realize these needs, and it must be done without changing the fundamentals of Solid.
+
+Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth understanding of the panel's focus.
+
+Join the chat on [gitter](https://gitter.im/solid/data-interoperability-panel).
 
 For contributing members see the
 [Panels List](https://github.com/solid/process/blob/master/panels.md#data-interoperability).
 
-## Projects
-
-- [Resource Metadata](https://github.com/solid/data-interoperability-panel/tree/master/resource-metadata)
-- [Data Validation](https://github.com/solid/data-interoperability-panel/tree/master/data-validation)
-- [Data Discovery](https://github.com/solid/data-interoperability-panel/tree/master/data-discovery)
-- [Data Portability](https://github.com/solid/data-interoperability-panel/tree/master/data-portability)
-- [User Profile Data Model](https://github.com/solid/data-interoperability-panel/tree/master/user-profile)
-- [User Preferences Data Model](https://github.com/solid/data-interoperability-panel/tree/master/user-preferences)
-
 [Submit an issue](https://github.com/solid/data-interoperability-panel/issues/new)
 to propose a project for the panel to undertake.
 
+
+## Completed Work
+
+[Resource Metadata](https://github.com/solid/data-interoperability-panel/tree/master/archive/resource-metadata) - Resource Metadata was [submitted](solid/specification#156) as a candidate proposal to the solid/specification. It was renamed to Auxiliary Resources during Editorial Review.
+
 ## Meetings
+
+Panel meetings are held most Mondays at 3:30PM EST / 8:30PM BST / 9:30PM CEST. Check-in on [gitter](https://gitter.im/solid/data-interoperability-panel) for weekly agenda. Minutes are posted below.
+
+Meeting URL: https://global.gotomeeting.com/join/620786365  
 
 | Date | Agenda | Minutes |
 | ---- | ------ | ------- |
@@ -38,12 +43,6 @@ to propose a project for the panel to undertake.
 | [2019-12-16](https://github.com/solid/data-interoperability-panel/blob/master/meetings/8-20191216.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/8-20191216.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/8-20191216.md#minutes) |
 | [2020-04-13](https://github.com/solid/data-interoperability-panel/blob/master/meetings/11-20200413.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/11-20200413.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/11-20200413.md#minutes) |
 | [2020-04-20](https://github.com/solid/data-interoperability-panel/blob/master/meetings/12-20200420.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/12-20200420.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/12-20200420.md#minutes) |
-
-## Communication Channels
-
-| Type | Location |
-| ---- | ---- |
-| Chat | <https://gitter.im/solid/data-interoperability-panel> |
 
 ## Process
 
