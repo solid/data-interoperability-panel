@@ -24,7 +24,7 @@ Consider the operating system on your personal computer. You have a diverse set 
 
 While Solid is the perfect foundation to facilitate this decentralized web-scale interoperability, to date the recipe has been missing a small but important assortment of ingredients to get it right.
 
-### Goal - Seamless data interoperability across disparate applications
+### Goal #1 - Seamless data interoperability across disparate applications
 
 Decoupling data from applications and making it fully interoperable across any of them is a core goal of Solid, not an afterthought. Our aim is for nearly all of the data to be interoperable and reusable. Our Linked Data model is extremely expressive. We can store all kinds of information about real-world entities and digital artifacts, including the relationships between them. Interoperability across applications means they must be able understand and manipulate these complex representations of things in concert with other applications that are reading and writing them at the same time.
 
@@ -44,7 +44,7 @@ Machine to machine interoperability between applications is essential, but human
 
 Linked Data affords us the capability to store anything, with data ranging from the extremely simple to the highly complex. Yet while developers, engineers, and data scientists may be comfortable working with hierarchies of resources decorated with rich metadata, or graphs of information, regular users are not. People think in terms of concrete things they understand. Photo albums, medical records, notebooks, and chat rooms have meaning to people. Files and folders do not. When people are working with their data, or making decisions about it, they must do so based on intuitive data boundaries that they fully comprehend. Solid has struggled up to this point to represent people’s data in an intuitive way that makes sense to them. As a consequence, it’s difficult for them to manage that data or use it effectively.
 
-### Goal - Use intuitive data boundaries to provide human to machine interoperability
+### Goal #2 - Use intuitive data boundaries to provide human to machine interoperability
 
 Our first goal from Problem #1  is to support machine to machine interoperability so that applications can consistently interoperate. Solving that problem and this one (#2) requires us to support human to machine interoperability at the same time. This means that people must consistently understand the data they have, so they can use it and share it effectively across their collection of preferred applications. To do so requires us to find one way to express information that both people and machines understand.
 
@@ -72,7 +72,7 @@ When deciding whether to authorize another entity or application, to access data
 
 This is a complex decision-set that must be made by Alice continuously over time, across a diverse spectrum of data and application workflows. We are challenged to ensure Alice is making secure and informed choices, while maintaining an optimal user experience.
 
-### Goal - Secure collaboration over intuitive data boundaries
+### Goal #3 - Secure collaboration over intuitive data boundaries
 
 Sharing magnifies the importance of Problem #2, which states that people must understand their data to use it effectively. Without a firm understanding of what they have, people are ill-equipped to make smart and secure decisions about what data should be shared and who it should be shared with. Consequently, the goal to use intuitive data boundaries to provide human to machine interoperability through shape trees is the key to solving this problem.
 
@@ -100,7 +100,7 @@ Should entities and clients be able to read vs. write? Should they have control 
 
 People struggle to choose organizational models for even the simplest types of data, especially when it falls into multiple contexts, which happens often. Regular users will not invest the time to maintain a complex hierarchy of resources, and the similarly complex set of access control rules associated with it. They shouldn’t need to worry about where a particular type of data needs to be stored, nor should they have to hunt around to find the data they want. Data must be organized in such a way that people can work with their things in an intuitive and natural way, or they may abandon Solid for more convenient alternatives.
 
-### Goal - Standard and flexible organizing model for data
+### Goal #4 - Standard and flexible organizing model for data
 
 People shouldn’t need to think about how things are stored if they don’t want to. They should have as much freedom as they like to make and modify how they categorize their data, but shouldn’t be required to move it around to do so. Things change and evolve, and they need a way to do this easily and safely over the lifetime of their data without needing to worry about reorganizing trees and breaking links.
 
@@ -108,7 +108,7 @@ People shouldn’t need to think about how things are stored if they don’t wan
 
 Users must be able to query across their data, unencumbered by anything but lack of authorization. This includes the ability to ask for any kind of things, including new representations of data they already have, which may have been stored and organized using different base models and data boundaries.
 
-### Goal - Flexibility and support for different and evolving query mechanisms
+### Goal #5 - Flexibility and support for different and evolving query mechanisms
 
 Any organizing model must ensure that data is available for simple lookups and complex queries alike. Organized correctly, we can facilitate rich lookups while maintaining strong and logical authorization boundaries.
 
@@ -122,7 +122,7 @@ The scope of this effort will not be to design such a query infrastructure, but 
 
 Solid’s versatility and power come from the inherent simplicity of its design. It is easy to make a complex system that can do a few things very well. It is hard to make a simple system that can do many things well. Like the web, the fundamental simplicity of Solid’s design is a strength, and should be protected. While it should be acceptable to extend and optimize Solid, it should not be acceptable to change any of the fundamentals core to its operation.
 
-### Goal - Optimize and extend, but do not change Solid fundamentals
+### Goal #6 - Optimize and extend, but do not change Solid fundamentals
 
 Any proposal to solve the stated problem areas must not do so at the expense of changing fundamental attributes of the Solid specification. In general, a fundamental change would mean that any MUST requirements of the Solid specification should not be altered. Some optimizations can be proposed, but none that would negate any of the base Solid requirements without extremely legitimate reasons and overwhelming community support.
 
