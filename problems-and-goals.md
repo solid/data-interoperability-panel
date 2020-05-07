@@ -16,7 +16,7 @@ Solid allows information and media of all types to be stored, connected, and acc
 
 This relatively simple foundation establishes a basis for us to decouple data from applications. Solid affords us the opportunity to create a valuable and powerful ecosystem where people and organizations retain control of their data, but are also able to put it to work and use it to its full potential. The fundamentals of Solid make this possible, but further definition of standard methods and mechanisms must be established to make it practical, intuitive, and secure.
 
-## <a name="problem-1">Problem #1 - Disparate applications cannot practically interoperate over the same data safely and effectively</a>
+## Problem #1 - Disparate applications cannot practically interoperate over the same data safely and effectively
 
 An individual who stores data in their Pod needs the ability to use different applications to manipulate some or all of the same information, even if those applications were developed without any knowledge of each other.
 
