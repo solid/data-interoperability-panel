@@ -6,6 +6,8 @@ Status: w3c/ED
 Group: w3c
 URL: http://example.com/url-this-spec-will-live-at
 Editor: Justin Bingham
+Editor: Eric Prud'hommeaux
+Editor: Josh Collins
 Markup Shorthands: markdown yes
 Abstract:
   A proposal for a Solid ecosystem that supports data interoperability across
@@ -76,6 +78,411 @@ without changing the fundamentals of Solid.
 Note: See [[PROBLEMS-AND-GOALS]] for a detailed explanation of each discrete
 goal.
 
+Proposal {#proposal}
+=====================
+
+In this proposal, we aim to address the stated problems and associated goals
+by providing straightforward patterns that can be used in concert to realize
+an interoperable ecosystem for Solid. To ensure the proposal is as easy to
+understand as possible, we structure it in the form of an end-to-end use case.
+
+We introduce [[SHAPETREES]] as a fundamental means through which we model,
+validate, organize, and authorize data stored in a Solid pod. Data becomes
+durable, interoperable, and available to be discovered through any query
+mechanism.
+
+Data is accessed, shared, and communicated using intuitive data boundaries
+provided by shape trees, making it easy for Alice, Bob, and their respective
+applications to interoperate with each other in a way they all understand.
+Nowhere in this proposal does a person or application need to worry about
+where to store data, or where to find it.
+
+Data is fully compartmentalized using rational authorization boundaries
+provided by shape trees, which allows for compartmentalized access by any
+combination of authorized entities and/or client applications. We adhere to
+the principle of least privilege, originally defined by Jerome Saltzer:
+
+> Every program and every privileged user of the system should operate
+> using the least amount of privilege necessary to complete the job.
+
+Alice is able to compartmentalize her data between different applications she
+"pilots", in spite of using them with her own credentials which afford her full
+access to her data. Alice also exposes much less data to the public through
+the profile document associated with her WebID.
+
+We introduce [=Trusted Agents=], which operate on behalf of Alice with escalated
+privileges to help her securely manage her data and make informed, intuitive,
+and secure decisions.
+
+Authorization is performed using regular [[WAC]]. For added security,
+and as the replacement for the current “trusted apps” mechanism, we
+utilize a newly proposed predicate to a [[WAC]] authorization statement that can
+identify authorized client applications in addition to authorized agents using
+the application equivalent of a WebID.
+
+Most importantly, this profile document can work with Solid as it exists today
+keeping in mind the following considerations:
+
+* A user can use this convention, alongside others, without issue in their Pod.
+* Identifying the Application ID in WAC rules requires WAC extension and IdP
+    support. The approach still works without that, but you would no longer be
+    able to constrain access by application, which reduces the overall strength
+    of the data boundaries.
+* Requires on-pod shape validation for durable interoperability
+* Doesn’t require the server to perform shape tree validation, though more
+    reliable and durable interoperability would be achieved with server-side
+    support.
+
+Use Case Summary {#summary}
+=====================
+
+In our use case, Alice wants to use a new application to record and manage both
+her personal and professional notes. She does a Web search and finds
+NeverNote (https://nevernote.example), a web-based application that advertises
+itself as Solid Enabled. Alice is excited about this because she recently
+created a Solid Pod for herself at https://alice.pod.example.
+
+We follow Alice (and then Bob) through the following sequence:
+
+1. Alice decides to use a Solid-enabled web application called NeverNote
+1. NeverNote checks to see if it has been registered with Alice’s Pod already
+1. NeverNote is registered with Alice’s Pod through the help of Alice’s
+    Authorization Agent
+1. Through the help of her Authorization Agent, Alice grants NeverNote the
+    following privileges:
+1. Access to Notes that already existed in her Pod
+1. Ability to create new Notes that NeverNote will have permission to manage
+1. Ability to create new Notebooks that NeverNote will have permission to manage
+1. Alice later expands NeverNote’s access to include her Contacts
+1. Alice and Bob collaborate on a Notebook in Alice’s Pod. Bob is using a
+    different application than NeverNote called OtherNote.
+
+
+Use Case Environment {#environment}
+=====================
+
+## People ## {#env-people}
+
+### Alice ### {#env-alice}
+
+<table>
+  <tbody>
+    <tr>
+      <td><th>Alice's Pod URL</th></td>
+      <td>https://alice.pod.example</td>
+    </tr>
+    <tr>
+      <td><th>Alice's WebID</th></td>
+      <td>https://alice.pod.example/id#me</td>
+    </tr>
+  </tbody>
+</table>
+
+**Resource hierarchy of Alice's pod at https://alice.pod.example:**
+
+Issue: Work out a better style to represent resource trees
+
+Issue: NeverNote's application registry entry should actually be a container
+which is NeverNote's private space, with the application registry entry
+inside of it. We should use a shape tree to define application registry and
+shapes for the registry entries.
+
+Issue: Add an example showing the contents of Alice's data registry resource
+
+Issue Add an example showing the contents of Alice's app registry resource
+
+<div class = "note">
+* **id** - Alice’s profile document
+* **registries** - Alice’s registries document
+* **applications** - application registry declared in /registries
+    * **registry** - index of applications in this application registry
+    * **ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae** -
+        application registry entry for NeverNote
+* **data** - data registry declared in /registries
+    * **registry** - index of shape trees that have been registered in this registry set
+    * **d9e11f42-cd85-4191-a272-c974a54ef602** - Local UUID for Notebook Shape Tree
+        * **58c851c1-ef76-4d4b-8868-7472b632bfff** - Notebook Instance UUID
+        * **9fdbd6cc-5994-436a-a0d7-aaa87d401e1e** - Notebook Instance UUID
+        * **45eb3ead-ceb7-4628-8cd3-e9c0b6555b7a** - Notebook Instance UUID
+    * **0d7a50e6-9fe8-4f43-8682-0c990ea46bca** - Local UUID for Note Shape Tree
+        * **b94ad7c1-7f15-496c-b36d-e23eb1ba2327** - Note Instance UUID
+        * **57c3c536-f997-41cf-95d1-a86a8d04311f** - Note Instance UUID
+        * **53fa2198-e88d-4b46-8afa-d975c0882eb3** - Note Instance UUID
+        * **a2f0e442-846d-4308-8eb5-5beea8f7f7e7** - Note Instance UUID
+        * **3d26e6e5-17b7-437c-bb2b-2998b03b4009** - Note Instance UUID
+    * **746dd0ad-9e6e-4e31-8fa3-843d38a9db86** - Local UUID for Contact Shape Tree
+        * **aca1c96f-ea89-4965-abec-d46504f75344** - Contact Instance UUID
+        * **5f330889-04a7-471f-9df8-f75b99453468** - Contact Instance UUID
+        * **e288fd77-ffc6-4747-a0ff-7ad3592abc54** - Contact Instance UUID
+        * **f2dcc56d-7ecd-4af5-94bd-c1fb0fc73b6c** - Contact Instance UUID
+        * **bfe3493b-d26b-473a-8bca-7884d79c8295** - Contact Instance UUID
+* **access** - Alice’s access inbox
+    * **9908fb51-e3e6-46ee-b124-86ddbc02bcef** - Access-related Message
+    * **1e13e429-84fd-4a6f-8aad-ed68e638cc85** - Access-related Message
+* **granted** - Access grant registry declared in /registries
+    * **ce173414-efb5-4971-bb0b-142f94230e9d** - Access Grant Record
+    * **13ccb76c-16e2-4c95-9309-430dd22a78bf** - Access Grant Record
+    * **502869ad-8a0d-4833-9e47-d27365ec03a1** - Access Grant Record
+* **remote** - Registry of remote resources shared with Alice declared in /registries
+    * **d9e11f42-cd85-4191-a272-c974a54ef602** - Local UUID for Notebook Shape Tree
+    * **eb71f9ca-0177-4e19-b35a-0ad20c6ab112** - Reference to instance of Notebook Shape Tree on Tom’s Pod
+
+</div>
+
+**Contents of Alice’s profile document at
+https://alice.pod.example/id#me:**
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+
+<#me>
+    solid:oidcIssuer &lt;https://idp.example&gt;;
+    solid:hasRegistries &lt;https://alice.pod.example/registries&gt;;
+    solid:hasAuthorizationAgent &lt;https://trusted.example/authorization/&gt;;
+    solid:hasAccessInbox &lt;https://alice.pod.example/access/inbox&gt;.
+</pre>
+
+**Contents of Alice’s registries document at
+https://alice.pod.example/registries:**
+
+Issue: Probably better to split up the registries document by type, so instead
+have https://alice.pod.example/application#registries, etc.
+
+Issue: Consider collapsing individual registry entries into single IRIs
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+
+<#application>
+    a solid:applicationRegistry;
+    solid:applicationRegistryHost &lt;https://alice.pod.example&gt;;
+    solid:applicationRegistryPath “/applications”;
+    solid:applicationRegistryIndex “registry”.
+
+<#data>
+    a solid:dataRegistry;
+    solid:dataRegistryHost &lt;https://alice.pod.example&gt;;
+    solid:dataRegistryPath “/data”;
+    solid:dataRegistryIndex “registry”.
+
+<#access>
+    a solid:accessRegistry;
+    solid:accessRegistryHost &lt;https://alice.pod.example&gt;;
+    solid:accessRegistryPath “/granted”;
+    solid:accessRegistryIndex “index”.
+
+<#remote>
+    a solid:remoteRegistry;
+    solid:remoteRegistryHost &lt;https://alice.pod.example&gt;;
+    solid:remoteRegistryPath “/remote”;
+    solid:remoteRegistryIndex “index”.
+</pre>
+
+### Bob ### {#env-bob}
+
+<table>
+  <tbody>
+    <tr>
+      <td><th>Bob's Pod URL</th></td>
+      <td>https://bob.pod.example</td>
+    </tr>
+    <tr>
+      <td><th>Bob's WebID</th></td>
+      <td>https://bob.pod.example/id#me</td>
+    </tr>
+  </tbody>
+</table>
+
+**Contents of Bob’s profile document at
+https://bob.pod.example/id#me:**
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+
+<#me>
+    solid:oidcIssuer &lt;https://idp.example&gt;;
+    solid:hasRegistries &lt;https://bob.pod.example/registries&gt;;
+    solid:hasAuthorizationAgent &lt;https://trusted.example/authorization/&gt;;
+    solid:hasAccessInbox &lt;https://bob.pod.example/access/inbox&gt;.
+</pre>
+
+**Contents of Bob’s registries document at
+https://bob.pod.example/registries:**
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+
+<#application>
+    a solid:applicationRegistry;
+    solid:applicationRegistryHost &lt;https://bob.pod.example&gt;;
+    solid:applicationRegistryPath “/applications”;
+    solid:applicationRegistryIndex “registry”.
+
+<#data>
+    a solid:dataRegistry;
+    solid:dataRegistryHost &lt;https://bob.pod.example&gt;;
+    solid:dataRegistryPath “/data”;
+    solid:dataRegistryIndex “registry”.
+
+<#access>
+    a solid:accessRegistry;
+    solid:accessRegistryHost &lt;https://bob.pod.example&gt;;
+    solid:accessRegistryPath “/granted”;
+    solid:accessRegistryIndex “index”.
+
+<#remote>
+    a solid:remoteRegistry;
+    solid:remoteRegistryHost &lt;https://bob.pod.example&gt;;
+    solid:remoteRegistryPath “/remote”;
+    solid:remoteRegistryIndex “index”.
+</pre>
+
+## Applications ## {#env-apps}
+
+### NeverNote ### {#nevernote}
+
+<table>
+  <tbody>
+    <tr>
+      <td><th>Application URL</th></td>
+      <td>https://nevernote.example</td>
+    </tr>
+    <tr>
+      <td><th>Application ID (AppID)</th></td>
+      <td>https://nevernote.example/id#agent</td>
+    </tr>
+    <tr>
+      <td><th>SHA3-256 Hash of AppID</th></td>
+      <td>ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae</td>
+    </tr>
+  </tbody>
+</table>
+
+**Contents of NeverNote’s Profile Document at
+https://nevernote.example/id#agent:**
+
+Issue: We may want a more robust description of application type than only
+schema:softwareApplication, especially given the different types of client and
+their associated security considerations.
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+@prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt;.
+@prefix schema: &lt;http://www.schema.org&gt;.
+
+<#agent>
+    # this is an application, not a person
+    a schema:softwareApplication;
+    # redirect to this URL after going through trusted agent workflows
+    solid:authorizationCallback <https://nevernote.example/callback>;
+
+# Declaration of the type of access this application needs
+# UUID randomly generated for subject value
+<#33116309-1667-4a7b-a91f-4dbf177e3f95>
+    a solid:accessNeed;
+    # Access needs related to notebook shape trees
+    solid:shapetree <https://shapetrees.example/notebook#shapetree>;
+    # Request permission create new notebook shape trees
+    solid:shapetreeCreate true;
+    # Request permission to read and write created notebook shape trees
+    solid:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    # Request access to any existing notebook shape trees
+    solid:shapetreeExistingAccess true;
+    # Request permission to read and write existing notebook shape trees
+    solid:shapetreeExistingAccess [ acl:Read, acl:Write ].
+
+<#75054942-b8b4-4e3a-84e4-7b564ca1ae7a>
+    a solid:accessNeed;
+    solid:shapetree <https://shapetrees.example/note>;
+    solid:shapetreeCreate true;
+    solid:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    solid:shapetreeExistingAccess true;
+    solid:shapetreeExistingAccess [ acl:Read, acl:Write ].
+</pre>
+
+### OtherNote ### {#othernote}
+
+**Contents of OtherNote’s Profile Document at
+https://othernote.example/id#agent:**
+
+Issue: Might be worthwhile to make OtherNote's access needs slightly different
+than NeverNote's to show more diversity.
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+@prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt;.
+@prefix schema: &lt;http://www.schema.org&gt;.
+
+<#agent>
+    # this is an application, not a person
+    a schema:softwareApplication;
+    # redirect to this URL after going through trusted agent workflows
+    solid:authorizationCallback <https://othernote.example/callback>;
+
+# Declaration of the type of access this application needs
+# UUID randomly generated for subject value
+<#df56606d-ce80-4c99-bf8f-88c87559f8b7>
+    a solid:accessNeed;
+    solid:shapetree <https://shapetrees.example/notebook#shapetree>;
+    solid:shapetreeCreate true;
+    solid:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    solid:shapetreeExistingAccess true;
+    solid:shapetreeExistingAccess [ acl:Read, acl:Write ].
+
+<#759a272e-05d9-415e-a460-20acbdcab9b8>
+    a solid:accessNeed;
+    solid:shapetree <https://shapetrees.example/note>;
+    solid:shapetreeCreate true;
+    solid:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    solid:shapetreeExistingAccess true;
+    solid:shapetreeExistingAccess [ acl:Read, acl:Write ].
+</pre>
+
+## Shape Trees ## {#env-shapetrees}
+
+Issue: Include the entire document for https://shapetrees.example/commonnote
+
+### Notebook Shape Tree ### {#env-notebook}
+
+<table>
+  <tbody>
+    <tr>
+      <td><th>Notebook Shape Tree URL</th></td>
+      <td>https://shapetrees.example/commonnote#notebook</td>
+    </tr>
+  </tbody>
+</table>
+
+<pre highlight="turtle">
+<#notebook> tree:type ldp:Resource ;
+  tree:uriTemplate "{notebookName}" ;
+  tree:shape &lt;https://shapes.example/commonnote#notebook&gt;;
+  tree:uses &lt;https://shapetrees.example/commonnote#note&gt;.
+</pre>
+
+### Note Shape Tree ### {#env-note}
+
+<table>
+  <tbody>
+    <tr>
+      <td><th>Note Shape Tree URL</th></td>
+      <td>https://shapetrees.example/commonnote#note</td>
+    </tr>
+  </tbody>
+</table>
+
+<pre highlight="turtle">
+<#note> tree:expectedType ldp:Container;
+  tree:uriTemplate "{noteName}";
+  tree:shape <https://shapes.example/commonnote#note>;
+  tree:contents &lt;https://shapetrees.example/commonnote#citation&gt;,
+                &lt;https://shapetrees.example/commonnote#image&gt;.
+</pre>
+
+### Contact Shape Tree ### {#env-contact}
+
+Issue: Add definition for contact shape tree
+
 <pre class=biblio>
 {
   "problems-and-goals": {
@@ -87,6 +494,20 @@ goal.
       "Jamie Fiedler",
       "Josh Collins"
     ]
+  },
+  "shapetrees": {
+    "href": "https://shapetrees.org",
+    "title": "Shape Trees",
+    "authors": [
+      "Justin Bingham",
+      "Eric Prud'hommeaux",
+      "Jamie Fiedler",
+      "Josh Collins"
+    ]
+  },
+  "wac": {
+    "href": "https://solid.github.io/specification/wac/",
+    "title": "Web Access Control"
   }
 }
 </pre>
