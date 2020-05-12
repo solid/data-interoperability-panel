@@ -120,10 +120,10 @@ utilize a newly proposed predicate to a [[WAC]] authorization statement that can
 identify authorized client applications in addition to authorized agents using
 the application equivalent of a WebID.
 
-Most importantly, this profile document can work with Solid as it exists today
-keeping in mind the following considerations:
+Most importantly, this proposal can work with Solid as it exists today, on its
+own or alongside other conventions, keeping in mind the following
+considerations:
 
-* A user can use this convention, alongside others, without issue in their Pod.
 * Identifying the Application ID in WAC rules requires WAC extension and IdP
     support. The approach still works without that, but you would no longer be
     able to constrain access by application, which reduces the overall strength
@@ -132,6 +132,55 @@ keeping in mind the following considerations:
 * Doesn’t require the server to perform shape tree validation, though more
     reliable and durable interoperability would be achieved with server-side
     support.
+
+<div class="note">
+
+**Note: Compartmentalizing data between Client Applications**
+
+Throughout this proposal, we see cases where Alice compartmentalizes access
+to her data based on who is accessing it -
+*the authenticated agent*, and in certain cases, the application they're
+using to do so - *the client application*. Limiting access to data based on
+the client application in use is only reliable in certain instances when
+the client application can be identified with confidence.
+
+**Identifying clients**
+
+Clients applications in use across the world today fall into two buckets;
+*strongly identifiable* and *weakly identifiable*.
+
+**Strongly identifiable clients** can be identified by 3rd parties independently
+from their user/controller. Only server-side web apps are strongly identifiable.
+As confidential clients, they can keep secrets and can present attestations
+and third-party credentials via DNS / domain certificates.
+
+**Weakly identifiable clients** include in-browser JS apps and native desktop
+or mobile applications. They are considered weakly identifiable because they
+are not able to keep secrets on an instance level. They are often referred to
+as public clients. Native apps should be strongly-identifiable in theory
+(since they are able to keep secrets on an instance level), but not in
+practice because the OS manufacturers do not make their trust
+infrastructure available. *Weakly identifiable clients are only strongly
+identifiable to the user controlling them*.
+
+**Limiting access by client application**
+
+In the case of a strongly identifiable server-side web application or bot,
+the authenticated agent and the client application are the same. The client
+application has its own identity that can be strongly authenticated. Alice
+chooses which data that client application's identity can access, in the same
+way that she chooses which data Bob can access.
+
+In the case of piloted client applications, the ability for a Solid pod to
+limit access to data by the client application in use is only as strong as
+the trustworthiness of the user piloting that application, and their ability
+to avoid using malicious applications. The client identifier can be manipulated
+by the user in control of the app. This means that Alice can strongly control
+the applications that she uses to compartmentalize her own data, but has
+limited ability to control the applications that Bob uses to access the data
+she shares with him.
+
+</div>
 
 Use Case Summary {#summary}
 =====================
