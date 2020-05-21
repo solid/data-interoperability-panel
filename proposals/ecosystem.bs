@@ -2,6 +2,7 @@
 Title: Proposal for an Interoperable Solid Ecosystem
 Shortname: your-spec
 Level: 1
+Max ToC Depth: 2
 Status: w3c/ED
 Group: w3c
 URL: http://example.com/url-this-spec-will-live-at
@@ -261,13 +262,301 @@ We follow Alice (and then Bob) through the following sequence:
 1. Alice and Bob collaborate on a Notebook in Alice’s Pod. Bob is using a
     different application than NeverNote called OtherNote.
 
+Application Registration {#appreg}
+=====================
+
+Issue: Consider incorporating a little bit of text here on *why* it is
+important for an application to be registered.
+
+## Checking registration status ## {#reg-status}
+
+When Alice arrives at NeverNote (`https://nevernote.example`) in her
+web browser, she is prompted to login with her WebID because NeverNote
+doesn’t know who she is yet. She could be a completely new user of
+NeverNote, or a returning user that has already registered NeverNote
+and authorized it to access her Notebooks and Notes.
+
+Alice logs into her Identity Provider (`https://idp.example`) with her
+WebID (`https://alice.pod.example/id#me`) and ultimately ends up with
+a bearer token that NeverNote can use to make requests to her Pod.
+The token identifies her as Alice (`https://alice.pod.example/id#me`),
+using the NeverNote application (`https://nevernote.example/id#agent`).
+
+First NeverNote needs to check Alice’s application registries to see if
+there is already an entry for it in one of them. If there is, than
+Nevernote is already registered, and doesn't need to go through the process
+again. If there is not, NeverNote will engage Alice's trusted application
+registration agent to register itself.
+
+### Discovering application registries ### {#reg-discovery}
+
+To discover Alice’s application registry, NeverNote must first dereference
+Alice's WebID to access [[#alice-profile]]. In the profile document,
+NeverNote will look for a `solid:applicationRegistrySet`.
+There are registry sets of varying types listed in [[#alice-profile]].
+Each registry set of a given type lists one or more
+registries of that type in different locations.
+
+<b>Excerpt from [[#alice-profile]]</b>
+<pre highlight="turtle">
+  <#me>
+    solid:applicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt;.
+</pre>
+
+Alice’s application registry set document is separate from her public profile
+document. This allows it to have a separate set of permissions.
+Registry set documents are not publicly accessible. They can be accessed
+by Alice using any application she likes (such as NeverNote), or by an
+autonomous trusted agent where applicable.
+
+NeverNote sees that Alice has a `solid:applicationRegistry` at
+`<https://alice.pod.example/applications/>` in [[#alice-appregset]]
+document (depicted in the excerpt below).
+
+<b>Excerpt from [[#alice-appregset]] Document</b>
+<pre highlight="turtle">
+<#set>
+  a solid:applicationRegistrySet;
+  # Alice only has one application registry. If she had more than one
+  # there would be multiple members of the registry set
+  solid:registrySetMember &lt;#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e&gt;.
+
+# Individual application registry
+<#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e>
+  a solid:applicationRegistry;
+  # Where to storage registry data
+  solid:registryStorage &lt;https://alice.pod.example/applications/&gt;;
+  # Index of applications in the registry
+  solid:registryIndex &lt;https://alice.pod.example/applications/index&gt;.
+</pre>
+
+### Finding a specific registered application ### {#reg-findapp}
+
+Every registered
+application has a `solid:applicationRegistration` entry in a
+`solid:applicationRegistry`. NeverNote needs to determine if it is
+already registered, so it needs to
+find an entry for itself in the `solid:applicationRegistry` at
+`<https://alice.pod.example/applications/>`.
+
+Only Alice and her trusted agents should have visibility and control
+of her application registry sets and registries. Just because Alice
+uses a given application like NeverNote doesn't mean that NeverNote should
+be allowed to know every other application she uses.
+Consequently, we do not
+allow NeverNote to access the
+`solid:RegistryIndex`, which links to every
+`solid:ApplicationRegistration` entry in the application registry.
+Nor do we allow NeverNote to directly access any of the
+`solid:applicationRegistration` entries, or to register itself.
+
+We do allow NeverNote (piloted by Alice), to directly access its own
+`solid:ApplicationRegistration` entry. However, Nevernote must know how
+to find it using information it already has. We solve this by naming
+`solid:ApplicationRegistration` containers using a SHA3-256 hash
+of the ApplicationID.
+
+Since NeverNote knows its own ApplicationID, it looks for
+a SHA3-256 hash of `https://nevernote.example/id#agent` in
+`https://alice.pod.example/applications/`.
+
+<pre>
+GET https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae
+</pre>
+
+If NeverNote is unable to access that entry, then it knows that it
+needs to be registered. If NeverNote can read the
+`solid:ApplicationRegistration` entry, then it can confirm that it
+is already a registered application in Alice’s Pod.
+
+In this use case, NeverNote cannot access a `solid:ApplicationRegistration`
+for itself, which means that it isn't registered. It needs to go through
+an application registration workflow, and that must be facilitated through
+Alice’s trusted agent for application registration.
+
+
+## Registering the application ## {#appreg-registration}
+
+NeverNote has determined that it needs to be registered in Alice’s
+Pod. It cannot register itself, so it need the help of Alice's trusted
+application registration agent. It must first dereference Alice's WebID to
+access [[#alice-profile]]. It will then look for her
+trusted application registration agent, identified by the
+`solid:applicationRegistrationAgent` predicate in the contents
+of her profile document.
+
+<b>Excerpt from [[#alice-profile]]</b>
+<pre highlight="turtle">
+  <#me> solid:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt;.
+</pre>
+
+NeverNote redirects Alice via the Synchronous flow to
+the `solid:applicationRegistrationAgent` at `https://trusted.example/ar/`,
+supplying its ApplicationID
+(`https://nevernote.example/id#agent`) as a parameter. The
+ApplicationID uniquely identifies the application, and leads to an
+RDF document containing information required to complete the
+registration process when it is dereferenced.
+
+Issue: Provide a sequence diagram here, and a bit more about what
+the end user experience is for Alice in this registration flow.
+
+The trusted application registration agent is now expected to dereference
+(i.e. perform an HTTP GET on) the ApplicationID IRI. The contents of
+[[#nevernote-profile]]
+helps the agent determine whether NeverNote is suitable for
+approval.
+
+For example, verification of a verifiable credential
+stored in [[#nevernote-profile]], issued by a third party that Alice
+trusts is a good indicator of the application’s trustworthiness.
+Similarly, an application, or the identity provider it uses, may
+be listed on a trusted whitelist that the application registration
+agent consults. The application registration agent is able to raise
+issues related to these checks (or others) to Alice as part of
+her decision making process.
+
+Assuming suitability, and after confirmation from Alice, the
+Application Registration Agent will proceed in [[#appreg-creating]] for
+NeverNote in Alice’s Pod. When it is finished, it will return her to
+NeverNote at the `solid:applicationRegistrationCallback` address in
+[[#nevernote-profile]].
+
+
+<b>Excerpt from [[#nevernote-profile]]:</b>
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+@prefix schema: &lt;http://www.schema.org&gt;.
+
+<#agent>
+    a schema:softwareApplication;
+    solid:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt;;
+</pre>
+
+### Creating the application registration entry ### {#appreg-creating}
+
+Creating the `solid:applicationRegistration` entry for NeverNote requires
+the Application Registration agent to first create and populate
+the resources, then update the `solid:registryIndex` to include NeverNote.
+
+Each `solid:applicationRegistration` entry is a container, which allows
+important metadata about the application to be stored, and also gives
+NeverNote the [[#appreg-privateuse]] that it may need for certain
+non-interoperable data important to its own internal functions, but isn’t
+pertinent to others.
+
+<b>Excerpt from [[#alice-appregset]] Document</b>
+<pre highlight="turtle">
+<#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e>
+  a solid:applicationRegistry;
+  # Where to store registry data
+  solid:registryStorage &lt;https://alice.pod.example/applications/&gt;;
+  # Index of applications in the registry
+  solid:registryIndex &lt;https://alice.pod.example/applications/index&gt;.
+</pre>
+
+Per the location defined by `solid:RegistryStorage`, NeverNote’s
+application space will be provisioned at
+`https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae`,
+using the SHA3-256 hash of NeverNote’s ApplicationID
+(`https://nevernote.example/id#agent`) to uniquely
+identify the space. NeverNote will always know where to find this, because
+it knows its own ApplicationID.
+
+The `solid:applicationRegistration` is then created and populated at
+`https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/application#registration`.
+
+<b>Excerpt from [[#alice-appregnevernote]]</b>
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>&gt;.
+
+<#registration>
+  a solid:applicationRegistration;
+  solid:registeringAgent <https://alice.pod.example/id#me>;
+  solid:registeringApplication <https://trusted.example/ar> ;
+  solid:applicationID <https://nevernote.example/id#agent>;
+  solid:applicationName "NeverNote";
+  solid:applicationDescription "Decentralized note management"
+  solid:registrationTime "2020-04-04T20:15:47.000Z"^^xsd:dateTime.
+</pre>
+
+NeverNote is provided read access to the registration resource
+maintained by the registration agent, and read write access to the remainder
+of the container. This gives NeverNote as much freedom as it
+likes to store data in its own application space, but not the ability
+to change permissions or alter the registration data maintained by
+the Application Registration Agent.
+
+Issue: Include a shape tree, shapes, and explicit detail on the
+access control settings for every resource in the application
+registration entry.
+
+
+* **/applications** - Alice and trusted agents have full control.
+    * **index** - Alice and trusted agents have have full control.
+    * **ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae** -
+        SHA3-256 Hash of NeverNote AppID - NeverNote can read.
+        Alice and trusted agents have full control.
+          * **application** - application registration resource - NeverNote can read.
+              Alice and trusted agents have full control.
+          * **..internal application space..** - NeverNote can read and write.
+              Alice and trusted agents have full control.
+
+
+Using the information from the registries document, the Authorization
+Agent updates [[#alice-appregindex]] to include NeverNote.
+
+<b>Excerpt from [[#alice-appregnevernote]]</b>
+<pre highlight="turtle">
+<#f76a2c92-f687-4fd2-9498-83e1c057e35d>
+  solid:applicationRegistryMember &lt;https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/application#registration&gt;.
+</pre>
+
+#### Use of private application space #### {#appreg-privateuse}
+
+There is a legitimate argument that giving applications their own
+private data space in Solid is counterintuitive to Solid’s proposition to
+decouple data and applications. This is a good argument, and is correct
+in the vast majority of cases.
+
+However, there exists certain slices of data that are very specific to
+the function of a particular application, and have no value to other
+applications. This may include but not be limited to preferences,
+configurations, caches, or indexes that are absolutely specific to
+that application. Forcing that data into shape trees and shapes meant
+to be consumable and interoperable by other applications, stored in the
+general data registry, can lead to
+frankenstein-like shape trees and shapes that no one wants to use.
+Giving applications a private space where they can store data that falls
+into this category is therefore a key element in broader interoperability,
+because it protects interoperable data from pollution by narrowly
+focused elements.
+
+Ultimately, if applications don't want to be interoperable, there's
+no reasonable convention that could prevent it. For example, they could
+work within the convention but decide to use proprietary vocabularies,
+shapes, and shape trees. However, there are motivating factors to
+be interoperable, because in doing so they become compatible with a
+slew of data that already exists in the ecosystem, including data within
+their competitive landscape. Providing a private space allows applications
+to separate some internals from the interoperable data so that the
+interoperable data is cleaner and more usable. Our belief is that
+this helps avoid the creation of application-specific silos. In that
+regard, it is a bit like a vaccination.
+
+Because this space is private to an application and not meant to
+be interoperable, the application may or may not decide to utilize
+data validation facilities like shape trees or shapes.
+
 
 Use Case Environment {#environment}
 =====================
 
-## People ## {#env-people}
+## People ## {#people}
 
-### Alice ### {#env-alice}
+### Alice ### {#alice}
 
 <table>
   <tbody>
@@ -281,6 +570,8 @@ Use Case Environment {#environment}
     </tr>
   </tbody>
 </table>
+
+#### Alice's Pod Hierarchy #### {#alice-pod}
 
 **Resource hierarchy of Alice's pod at https://alice.pod.example:**
 
@@ -297,13 +588,17 @@ Issue: Add an example showing the contents of Alice's app registry resource
 
 <div class = "note">
 * **id** - Alice’s profile document
-* **registries** - Alice’s registries document
-* **applications** - application registry declared in /registries
-    * **registry** - index of applications in this application registry
+* **registries** - Container for registry listings of various types
+    * **application** - Application registries document
+    * **data** - Data registries document
+    * **access** - Access registries document
+    * **remote** - Remote registries document
+* **applications** - Registry of application
+    * **index** - index of applications in this registry
     * **ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae** -
         application registry entry for NeverNote
-* **data** - data registry declared in /registries
-    * **registry** - index of shape trees that have been registered in this registry set
+* **data** - Registry of data
+    * **index** - index of shape trees in this registry
     * **d9e11f42-cd85-4191-a272-c974a54ef602** - Local UUID for Notebook Shape Tree
         * **58c851c1-ef76-4d4b-8868-7472b632bfff** - Notebook Instance UUID
         * **9fdbd6cc-5994-436a-a0d7-aaa87d401e1e** - Notebook Instance UUID
@@ -323,15 +618,19 @@ Issue: Add an example showing the contents of Alice's app registry resource
 * **access** - Alice’s access inbox
     * **9908fb51-e3e6-46ee-b124-86ddbc02bcef** - Access-related Message
     * **1e13e429-84fd-4a6f-8aad-ed68e638cc85** - Access-related Message
-* **granted** - Access grant registry declared in /registries
+* **granted** - Registry of Access Grants
+    * **index** - index of access grants in this registry
     * **ce173414-efb5-4971-bb0b-142f94230e9d** - Access Grant Record
     * **13ccb76c-16e2-4c95-9309-430dd22a78bf** - Access Grant Record
     * **502869ad-8a0d-4833-9e47-d27365ec03a1** - Access Grant Record
-* **remote** - Registry of remote resources shared with Alice declared in /registries
+* **remote** - Registry of remote resources shared with Alice
+    * **index** - index of remote resources in this registry
     * **d9e11f42-cd85-4191-a272-c974a54ef602** - Local UUID for Notebook Shape Tree
     * **eb71f9ca-0177-4e19-b35a-0ad20c6ab112** - Reference to instance of Notebook Shape Tree on Tom’s Pod
 
 </div>
+
+#### Alice's Profile Document #### {#alice-profile}
 
 **Contents of Alice’s profile document at
 https://alice.pod.example/id#me:**
@@ -341,48 +640,118 @@ https://alice.pod.example/id#me:**
 
 <#me>
     solid:oidcIssuer &lt;https://idp.example&gt;;
-    solid:hasRegistries &lt;https://alice.pod.example/registries&gt;;
-    solid:hasAuthorizationAgent &lt;https://trusted.example/authorization/&gt;;
+    solid:applicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt;;
+    solid:dataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt;;
+    solid:accessRegistrySet &lt;https://alice.pod.example/registries/access#set&gt;;
+    solid:remoteRegistrySet &lt;https://alice.pod.example/registries/remote#set&gt;;
+    solid:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt;;
     solid:hasAccessInbox &lt;https://alice.pod.example/access/inbox&gt;.
 </pre>
 
-**Contents of Alice’s registries document at
-https://alice.pod.example/registries:**
+#### Alice's Application Registry Set #### {#alice-appregset}
 
-Issue: Probably better to split up the registries document by type, so instead
-have https://alice.pod.example/application#registries, etc.
-
-Issue: Consider collapsing individual registry entries into single IRIs
+**Contents of Alice’s application registry set document at
+https://alice.pod.example/registries/application:**
 
 <pre highlight="turtle">
 @prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
 
-<#application>
-    a solid:applicationRegistry;
-    solid:applicationRegistryHost &lt;https://alice.pod.example&gt;;
-    solid:applicationRegistryPath “/applications”;
-    solid:applicationRegistryIndex “registry”.
+<#set>
+  a solid:applicationRegistrySet;
+  solid:registrySetMember <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e>.
 
-<#data>
-    a solid:dataRegistry;
-    solid:dataRegistryHost &lt;https://alice.pod.example&gt;;
-    solid:dataRegistryPath “/data”;
-    solid:dataRegistryIndex “registry”.
-
-<#access>
-    a solid:accessRegistry;
-    solid:accessRegistryHost &lt;https://alice.pod.example&gt;;
-    solid:accessRegistryPath “/granted”;
-    solid:accessRegistryIndex “index”.
-
-<#remote>
-    a solid:remoteRegistry;
-    solid:remoteRegistryHost &lt;https://alice.pod.example&gt;;
-    solid:remoteRegistryPath “/remote”;
-    solid:remoteRegistryIndex “index”.
+<#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e>
+  a solid:applicationRegistry;
+  solid:registryStorage &lt;https://alice.pod.example/applications/&gt;;
+  solid:registryIndex &lt;https://alice.pod.example/applications/index&gt;.
 </pre>
 
-### Bob ### {#env-bob}
+#### Alice's Application Registry Index #### {#alice-appregindex}
+
+**Contents of Alice’s application registry index document at
+https://alice.pod.example/applications/index:**
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+
+<#f76a2c92-f687-4fd2-9498-83e1c057e35d>
+  solid:applicationRegistryMember &lt;https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/application#registration&gt;.
+</pre>
+
+#### Alice's Application Registrion for Nevernote #### {#alice-appregnevernote}
+
+**Contents of Alice’s application regitration for NeverNote at
+https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/application:**
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>&gt;.
+
+<#registration>
+  a solid:applicationRegistration;
+  solid:registeringAgent <https://alice.pod.example/id#me>;
+  solid:registeringApplication <https://trusted.example/ar> ;
+  solid:applicationID <https://nevernote.example/id#agent>;
+  solid:applicationName "NeverNote";
+  solid:applicationDescription "Decentralized note management"
+  solid:registrationTime "2020-04-04T20:15:47.000Z"^^xsd:dateTime.
+</pre>
+
+#### Alice's Data Registry Set #### {#alice-dataregset}
+
+**Contents of Alice’s data registry set document at
+https://alice.pod.example/registries/data:**
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+
+<#set>
+  a solid:dataRegistrySet;
+  solid:registrySetMember <#75139b60-f196-4f47-9ea1-91a21d19fd1e>.
+
+<#75139b60-f196-4f47-9ea1-91a21d19fd1e>
+  a solid:dataRegistry;
+  solid:registryStorage &lt;https://alice.pod.example/data/&gt;;
+  solid:registryIndex &lt;https://alice.pod.example/data/index&gt;.
+</pre>
+
+#### Alice's Access Registry Set #### {#alice-accessregset}
+
+**Contents of Alice’s access registry set document at
+https://alice.pod.example/registries/access:**
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+
+<#set>
+  a solid:accessRegistrySet;
+  solid:registrySetMember <#de553f35-232a-4834-ae7f-4b82ec442a42>.
+
+<#de553f35-232a-4834-ae7f-4b82ec442a42>
+  a solid:accessRegistry;
+  solid:registryStorage &lt;https://alice.pod.example/access/&gt;;
+  solid:registryIndex &lt;https://alice.pod.example/access/index&gt;.
+</pre>
+
+#### Alice's Remote Registry Set #### {#alice-remoteregset}
+
+**Contents of Alice’s access registry set document at
+https://alice.pod.example/registries/remote:**
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+
+<#set>
+  a solid:remoteRegistrySet;
+  solid:registrySetMember <#53cfc5a4-4854-4438-b0ec-82c7183013e3>.
+
+<#53cfc5a4-4854-4438-b0ec-82c7183013e3>
+  a solid:remoteRegistry;
+  solid:registryStorage &lt;https://alice.pod.example/remote/&gt;;
+  solid:registryIndex &lt;https://alice.pod.example/remote/index&gt;.
+</pre>
+
+### Bob ### {#bob}
 
 <table>
   <tbody>
@@ -397,6 +766,8 @@ Issue: Consider collapsing individual registry entries into single IRIs
   </tbody>
 </table>
 
+#### Bob's Profile Document #### {#bob-profile}
+
 **Contents of Bob’s profile document at
 https://bob.pod.example/id#me:**
 
@@ -405,43 +776,15 @@ https://bob.pod.example/id#me:**
 
 <#me>
     solid:oidcIssuer &lt;https://idp.example&gt;;
-    solid:hasRegistries &lt;https://bob.pod.example/registries&gt;;
-    solid:hasAuthorizationAgent &lt;https://trusted.example/authorization/&gt;;
+    solid:registrySet &lt;https://bob.pod.example/registries/application#set&gt;;
+    solid:registrySet &lt;https://bob.pod.example/registries/data#set&gt;;
+    solid:registrySet &lt;https://bob.pod.example/registries/access#set&gt;;
+    solid:registrySet &lt;https://bob.pod.example/registries/remote#set&gt;;
+    solid:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt;;
     solid:hasAccessInbox &lt;https://bob.pod.example/access/inbox&gt;.
 </pre>
 
-**Contents of Bob’s registries document at
-https://bob.pod.example/registries:**
-
-<pre highlight="turtle">
-@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
-
-<#application>
-    a solid:applicationRegistry;
-    solid:applicationRegistryHost &lt;https://bob.pod.example&gt;;
-    solid:applicationRegistryPath “/applications”;
-    solid:applicationRegistryIndex “registry”.
-
-<#data>
-    a solid:dataRegistry;
-    solid:dataRegistryHost &lt;https://bob.pod.example&gt;;
-    solid:dataRegistryPath “/data”;
-    solid:dataRegistryIndex “registry”.
-
-<#access>
-    a solid:accessRegistry;
-    solid:accessRegistryHost &lt;https://bob.pod.example&gt;;
-    solid:accessRegistryPath “/granted”;
-    solid:accessRegistryIndex “index”.
-
-<#remote>
-    a solid:remoteRegistry;
-    solid:remoteRegistryHost &lt;https://bob.pod.example&gt;;
-    solid:remoteRegistryPath “/remote”;
-    solid:remoteRegistryIndex “index”.
-</pre>
-
-## Applications ## {#env-apps}
+## Applications ## {#applications}
 
 ### NeverNote ### {#nevernote}
 
@@ -462,6 +805,8 @@ https://bob.pod.example/registries:**
   </tbody>
 </table>
 
+#### NeverNote's Profile Document #### {#nevernote-profile}
+
 **Contents of NeverNote’s Profile Document at
 https://nevernote.example/id#agent:**
 
@@ -477,8 +822,11 @@ their associated security considerations.
 <#agent>
     # this is an application, not a person
     a schema:softwareApplication;
-    # redirect to this URL after going through trusted agent workflows
-    solid:authorizationCallback <https://nevernote.example/callback>;
+    # redirect to this URL after going through authorization agent workflow
+    solid:authorizationCallback <https://nevernote.example/data-authorization>;
+    # redirect to this URL after going through application registration
+    # agent workflow
+    solid:applicationRegistrationCallback <https://nevernote.example/app-registration>;
 
 # Declaration of the type of access this application needs
 # UUID randomly generated for subject value
@@ -505,6 +853,8 @@ their associated security considerations.
 </pre>
 
 ### OtherNote ### {#othernote}
+
+#### OtherNote's Profile Document #### {#othernote-profile}
 
 **Contents of OtherNote’s Profile Document at
 https://othernote.example/id#agent:**
@@ -542,11 +892,11 @@ than NeverNote's to show more diversity.
     solid:shapetreeExistingAccess [ acl:Read, acl:Write ].
 </pre>
 
-## Shape Trees ## {#env-shapetrees}
+## Shape Trees ## {#shapetrees}
 
 Issue: Include the entire document for https://shapetrees.example/commonnote
 
-### Notebook Shape Tree ### {#env-notebook}
+### Notebook Shape Tree ### {#notebook}
 
 <table>
   <tbody>
@@ -564,7 +914,7 @@ Issue: Include the entire document for https://shapetrees.example/commonnote
   tree:uses &lt;https://shapetrees.example/commonnote#note&gt;.
 </pre>
 
-### Note Shape Tree ### {#env-note}
+### Note Shape Tree ### {#note}
 
 <table>
   <tbody>
@@ -583,7 +933,7 @@ Issue: Include the entire document for https://shapetrees.example/commonnote
                 &lt;https://shapetrees.example/commonnote#image&gt;.
 </pre>
 
-### Contact Shape Tree ### {#env-contact}
+### Contact Shape Tree ### {#contact}
 
 Issue: Add definition for contact shape tree
 
