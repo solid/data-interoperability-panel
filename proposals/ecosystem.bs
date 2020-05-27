@@ -292,7 +292,7 @@ Registration Agent to register itself.
 
 To discover Alice’s application registries, NeverNote must first dereference
 Alice's WebID to access [[#alice-profile]]. In the profile document,
-NeverNote will look for a `solid:applicationRegistrySet`.
+NeverNote will look for a `solid-ecosystem:applicationRegistrySet`.
 There are registry sets of varying types listed in [[#alice-profile]].
 Each registry set of a given type lists one or more
 registries of that type in different locations.
@@ -300,7 +300,7 @@ registries of that type in different locations.
 <b>Excerpt from [[#alice-profile]]</b>
 <pre highlight="turtle">
   <#me>
-    solid:applicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; .
+    solid-ecosystem:applicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; .
 </pre>
 
 Alice’s application registry set document is separate from her public profile
@@ -309,32 +309,34 @@ Registry set documents are not publicly accessible. They can only be accessed
 by Alice, or by an autonomous trusted agent where applicable.
 
 In [[#alice-appregset]] document, NeverNote sees that Alice has a
-`solid:applicationRegistry` that stores registration entries in
+`solid-ecosystem:applicationRegistry` that stores registration entries in
 `<https://alice.pod.example/applications/>`.
 
 <b>Excerpt from [[#alice-appregset]] Document</b>
 <pre highlight="turtle">
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+
 <#set>
-  a solid:applicationRegistrySet ;
+  a solid-ecosystem:registrySet ;
+  solid-ecosystem:registryType solid-ecosystem:ApplicationRegistry ;
   # Alice only has one application registry. If she had more than one
   # there would be multiple members of the registry set
-  solid:registrySetMember &lt;#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e&gt; .
+  solid-ecosystem:registrySetMember <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e> .
 
-# Individual application registry
 <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e>
-  a solid:applicationRegistry ;
+  solid-ecosystem:registryType solid-ecosystem:ApplicationRegistry ;
   # Where to storage registry data
-  solid:registryStorage &lt;https://alice.pod.example/applications/&gt; ;
+  solid-ecosystem:registryStorage &lt;https://alice.pod.example/applications/&gt; .
 </pre>
 
 ### Finding a specific registered application ### {#reg-findapp}
 
 Every registered
-application has a `solid:applicationRegistration` entry stored in
-the `solid:registryStorage` location of a
-`solid:applicationRegistry`. NeverNote needs to determine if it is
+application has a `solid-ecosystem:applicationRegistration` entry stored in
+the `solid-ecosystem:registryStorage` location of a
+`solid-ecosystem:applicationRegistry`. NeverNote needs to determine if it is
 already registered, so it needs to
-find an entry for itself in the `solid:registryStorage` at
+find an entry for itself in the `solid-ecosystem:registryStorage` at
 `<https://alice.pod.example/applications/>`.
 
 Only Alice and her trusted agents should have visibility and control
@@ -342,14 +344,14 @@ of her application registry sets and registries. Just because Alice
 uses a given application like NeverNote doesn't mean that NeverNote should
 be allowed to know every other application she uses.
 Consequently, we do not give NeverNote read access to the
-`solid:registryStorage` container, we do not allow it to directly access any
-of the `solid:applicationRegistration` entries, and we do not
+`solid-ecosystem:registryStorage` container, we do not allow it to directly access any
+of the `solid-ecosystem:applicationRegistration` entries, and we do not
 let it register itself.
 
 We do allow NeverNote (piloted by Alice), to directly access its own
-`solid:ApplicationRegistration` entry. However, Nevernote must know how
+`solid-ecosystem:applicationRegistration` entry. However, Nevernote must know how
 to find it using information it already has. We solve this by naming
-`solid:ApplicationRegistration` containers using a SHA3-256 hash
+`solid-ecosystem:applicationRegistration` containers using a SHA3-256 hash
 of the ApplicationID.
 
 Since NeverNote knows its own ApplicationID, it looks for
@@ -362,11 +364,11 @@ GET https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2
 
 If NeverNote is unable to access that entry, then it knows that it
 needs to be registered. If NeverNote can read the
-`solid:ApplicationRegistration` entry, then it can confirm that it
+`solid-ecosystem:applicationRegistration` entry, then it can confirm that it
 is already a registered application in Alice’s Pod.
 
 In this use case, NeverNote isn't registered yet, so it cannot
-access a `solid:ApplicationRegistration` for itself. It needs to be
+access a `solid-ecosystem:applicationRegistration` for itself. It needs to be
 registered, and that must be facilitated through
 Alice’s trusted Application Registration agent.
 
@@ -378,16 +380,16 @@ Pod. It cannot register itself, so it needs the help of Alice's trusted
 Application Registration agent. It must first dereference Alice's WebID to
 access [[#alice-profile]]. It will then look for her
 trusted Application Registration Agent, identified by the
-`solid:applicationRegistrationAgent` predicate in the contents
+`solid-ecosystem:applicationRegistrationAgent` predicate in the contents
 of [[#alice-profile]].
 
 <b>Excerpt from [[#alice-profile]]</b>
 <pre highlight="turtle">
-  <#me> solid:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt; .
+  <#me> solid-ecosystem:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt; .
 </pre>
 
 NeverNote redirects Alice via the Synchronous flow to
-the `solid:applicationRegistrationAgent` at `https://trusted.example/ar/`,
+the `solid-ecosystem:applicationRegistrationAgent` at `https://trusted.example/ar/`,
 supplying its ApplicationID
 (`https://nevernote.example/id#agent`) as a parameter. The
 ApplicationID uniquely identifies the application, and leads to
@@ -415,7 +417,7 @@ her decision making process.
 Assuming suitability, and after confirmation from Alice, the
 Application Registration Agent will proceed in [[#appreg-creating]] for
 NeverNote in Alice’s Pod. When it is finished, it will return her to
-NeverNote at the `solid:applicationRegistrationCallback` address in
+NeverNote at the `solid-ecosystem:applicationRegistrationCallback` address in
 [[#nevernote-profile]].
 
 
@@ -423,12 +425,12 @@ NeverNote at the `solid:applicationRegistrationCallback` address in
 
 <pre highlight="turtle">
 <#agent>
-    solid:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt; ;
+    solid-ecosystem:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt; ;
 </pre>
 
 ### Creating the application registration entry ### {#appreg-creating}
 
-Each `solid:applicationRegistration` entry is a container, which allows
+Each `solid-ecosystem:applicationRegistration` entry is a container, which allows
 important metadata about the application to be stored, and also gives
 NeverNote the [[#appreg-privateuse]] that it may need for certain
 non-interoperable data important to its own internal functions, but not
@@ -437,31 +439,32 @@ pertinent to other applications'.
 <b>Excerpt from [[#alice-appregset]] Document</b>
 <pre highlight="turtle">
 <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e>
-  a solid:applicationRegistry ;
+  a solid-ecosystem:applicationRegistry ;
   # Where application registrations are stored
-  solid:registryStorage &lt;https://alice.pod.example/applications/&gt; ;
+  solid-ecosystem:registryStorage &lt;https://alice.pod.example/applications/&gt; ;
 </pre>
 
 The SHA3-256 hash of NeverNote’s ApplicationID
 (`https://nevernote.example/id#agent`) will be used to name the container
-and uniquely identify it. Per the location defined by `solid:registryStorage`,
+and uniquely identify it. Per the location defined by `solid-ecosystem:registryStorage`,
 NeverNote’s application registration will be provisioned at
 `https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae`.
 NeverNote will always know where to find this, because it knows its
 own ApplicationID.
 
-The `solid:applicationRegistration` is then created and populated at
+The `solid-ecosystem:applicationRegistration` is then created and populated at
 `https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/application#registration`.
 
 <b>Excerpt from [[#alice-appregnevernote]]</b>
 <pre highlight="turtle">
 <#registration>
-  a solid:applicationRegistration ;
-  solid:registeringAgent &lt;https://alice.pod.example/id#me&gt; ;
-  solid:registeringApplication &lt;https://trusted.example/ar&gt; ;
-  solid:applicationID &lt;https://nevernote.example/id#agent&gt; ;
-  solid:registrationTime "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+  a solid-ecosystem:applicationRegistration ;
+  solid-ecosystem:applicationRegisteredBy &lt;https://alice.pod.example/id#me&gt; ;
+  solid-ecosystem:registeringApplication &lt;https://trusted.example/ar&gt; ;
+  solid-ecosystem:applicationRegistered &lt;https://nevernote.example/id#agent&gt; ;
+  solid-ecosystem:registrationTime "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
 </pre>
+
 
 NeverNote is provided read access to the registration resource
 maintained by the registration agent, and read/write access to the remainder
@@ -479,9 +482,12 @@ registration entry.
     * **ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae** -
         SHA3-256 Hash of NeverNote AppID - NeverNote can read.
         Alice and trusted agents have full control.
-          * **application** - application registration resource - NeverNote can read.
+          * **entry** - application registration resource - NeverNote can read.
               Alice and trusted agents have full control.
-          * **..internal application space..** - NeverNote can read and write.
+          * **access** - what access the application has been authorized
+              to have - NeverNote can read. Alice and trusted agents have
+              full control.
+          * **internal** - NeverNote can read and write.
               Alice and trusted agents have full control.
 
 #### Use of private application space #### {#appreg-privateuse}
@@ -521,6 +527,8 @@ data validation facilities like shape trees or shapes.
 Use Case Environment {#environment}
 =====================
 
+Issue: Add the contents of the solid-ecosystem vocabulary
+
 ## People ## {#people}
 
 ### Alice ### {#alice}
@@ -542,25 +550,19 @@ Use Case Environment {#environment}
 
 **Resource hierarchy of Alice's pod at https://alice.pod.example:**
 
-Issue: Work out a better style to represent resource trees
-
-Issue: NeverNote's application registry entry should actually be a container
-which is NeverNote's private space, with the application registry entry
-inside of it. We should use a shape tree to define application registry and
-shapes for the registry entries.
-
-Issue: Add an example showing the contents of Alice's data registry resource
-
-<div class = "note">
-* **id** - Alice’s profile document
-* **registries** - Container for registry listings of various types
-    * **application** - Application registries document
-    * **data** - Data registries document
-    * **access** - Access registries document
-    * **remote** - Remote registries document
-* **applications** - Registry of application
+<div class = "assertion">
+* **id** - [[#alice-profile]]
+* **registries** - Container for registry set documents of each type -
+    validated by the `#container` shape tree in [[#reg-tree]].
+    * **application** - [[#alice-appregset]]
+    * **data** - [[#alice-dataregset]]
+    * **access** - [[#alice-accessregset]]
+    * **remote** - [[#alice-remoteregset]]
+* **applications** - Container where application registration entries are
+    stored, validated by the `#container` shape tree in [[#application-tree]]
     * **ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae** -
-        application registry entry for NeverNote
+        [[#alice-appregnevernote]], validated by the `#registration` shape tree
+        in [[#application-tree]]
 * **data** - Registry of data
     * **d9e11f42-cd85-4191-a272-c974a54ef602** - Local UUID for Notebook Shape Tree
         * **58c851c1-ef76-4d4b-8868-7472b632bfff** - Notebook Instance UUID
@@ -601,31 +603,37 @@ with use cases.
 https://alice.pod.example/id#me:**
 
 <pre highlight="turtle">
-@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#me>
-    solid:oidcIssuer &lt;https://idp.example&gt;;
-    solid:applicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt;;
-    solid:dataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt;;
-    solid:accessRegistrySet &lt;https://alice.pod.example/registries/access#set&gt;;
-    solid:remoteRegistrySet &lt;https://alice.pod.example/registries/remote#set&gt;;
-    solid:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt;;
-    solid:hasAccessInbox &lt;https://alice.pod.example/access/inbox&gt;.
+    # Identity Provider
+    solid:oidcIssuer &lt;https://idp.example&gt; ;
+    # Registry Sets
+    solid-ecosystem:applicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; ;
+    solid-ecosystem:dataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; ;
+    solid-ecosystem:accessRegistrySet &lt;https://alice.pod.example/registries/access#set&gt; ;
+    solid-ecosystem:remoteRegistrySet &lt;https://alice.pod.example/registries/remote#set&gt; ;
+    # Trusted Agents
+    solid-ecosystem:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt; ;
+    # Notification Endpoints
+    solid-ecosystem:hasAccessInbox &lt;https://alice.pod.example/access/inbox&gt; .
 </pre>
 
 #### Alice's Application Registry Set #### {#alice-appregset}
+
+[Validate this](https://tinyurl.com/y94ttyow) against [[#reg-shape]].
 
 **Contents of Alice’s application registry set document at
 https://alice.pod.example/registries/application:**
 
 <pre highlight="turtle">
-PREFIX registry-shapes: <https://shapes.pub/drafts/ns/solid/registry#>
-PREFIX solid-ecosystem: <http://www.w3.org/ns/solid/ecosystem#>
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#set>
-  a registry-shapes:registrySet ;
+  a solid-ecosystem:registrySet ;
   solid-ecosystem:registryType solid-ecosystem:ApplicationRegistry ;
-  registry-shapes:registrySetMember <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e> .
+  solid-ecosystem:registrySetMember <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e> .
 
 <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e>
   solid-ecosystem:registryType solid-ecosystem:ApplicationRegistry ;
@@ -634,19 +642,21 @@ PREFIX solid-ecosystem: <http://www.w3.org/ns/solid/ecosystem#>
 
 #### Alice's Application Registration for Nevernote #### {#alice-appregnevernote}
 
+[Validate this](https://tinyurl.com/yaas3427) against [[#app-shape]].
+
 **Contents of Alice’s application regitration for NeverNote at
-https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/application:**
+https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/entry:**
 
 <pre highlight="turtle">
-@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
-@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#>&gt;.
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
 
 <#registration>
-  a solid:applicationRegistration;
-  solid:registeringAgent &lt;https://alice.pod.example/id#me&gt;;
-  solid:registeringApplication &lt;https://trusted.example/ar&gt;;
-  solid:applicationID &lt;https://nevernote.example/id#agent&gt;;
-  solid:registrationTime "2020-04-04T20:15:47.000Z"^^xsd:dateTime.
+  a solid-ecosystem:applicationRegistration ;
+  solid-ecosystem:applicationRegisteredBy &lt;https://alice.pod.example/id#me&gt; ;
+  solid-ecosystem:registeringApplication &lt;https://trusted.example/ar&gt; ;
+  solid-ecosystem:applicationRegistered &lt;https://nevernote.example/id#agent&gt; ;
+  solid-ecosystem:registrationTime "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
 </pre>
 
 #### Alice's Data Registry Set #### {#alice-dataregset}
@@ -655,20 +665,20 @@ https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeed
 https://alice.pod.example/registries/data:**
 
 <pre highlight="turtle">
-@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#set>
-  a solid:dataRegistrySet ;
-  solid:registrySetMember <#75139b60-f196-4f47-9ea1-91a21d19fd1e>, <#cd72a56e-bd0b-4aef-af63-a77d1b147fdd> .
+  a solid-ecosystem:dataRegistrySet ;
+  solid-ecosystem:registrySetMember <#75139b60-f196-4f47-9ea1-91a21d19fd1e>, <#cd72a56e-bd0b-4aef-af63-a77d1b147fdd> .
 
 <#75139b60-f196-4f47-9ea1-91a21d19fd1e>
-  a solid:dataRegistry ;
-  solid:registryStorage &lt;https://alice.pod.example/data/&gt; ;
+  a solid-ecosystem:dataRegistry ;
+  solid-ecosystem:registryStorage &lt;https://alice.pod.example/data/&gt; ;
   rdfs:label "Collaborative data storage" .
 
 <#cd72a56e-bd0b-4aef-af63-a77d1b147fdd>
-  a solid:dataRegistry ;
-  solid:registryStorage &lt;https://alice.home.example/data/&gt; ;
+  a solid-ecosystem:dataRegistry ;
+  solid-ecosystem:registryStorage &lt;https://alice.home.example/data/&gt; ;
   rdfs:label "Data pod for home media" .
 </pre>
 
@@ -678,15 +688,15 @@ https://alice.pod.example/registries/data:**
 https://alice.pod.example/registries/access:**
 
 <pre highlight="turtle">
-@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#set>
-  a solid:accessRegistrySet;
-  solid:registrySetMember <#de553f35-232a-4834-ae7f-4b82ec442a42>.
+  a solid-ecosystem:accessRegistrySet;
+  solid-ecosystem:registrySetMember <#de553f35-232a-4834-ae7f-4b82ec442a42>.
 
 <#de553f35-232a-4834-ae7f-4b82ec442a42>
-  a solid:accessRegistry;
-  solid:registryStorage &lt;https://alice.pod.example/access/&gt;;
+  a solid-ecosystem:accessRegistry;
+  solid-ecosystem:registryStorage &lt;https://alice.pod.example/access/&gt;;
 </pre>
 
 #### Alice's Remote Registry Set #### {#alice-remoteregset}
@@ -695,15 +705,15 @@ https://alice.pod.example/registries/access:**
 https://alice.pod.example/registries/remote:**
 
 <pre highlight="turtle">
-@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#set>
-  a solid:remoteRegistrySet;
-  solid:registrySetMember <#53cfc5a4-4854-4438-b0ec-82c7183013e3>.
+  a solid-ecosystem:remoteRegistrySet;
+  solid-ecosystem:registrySetMember <#53cfc5a4-4854-4438-b0ec-82c7183013e3>.
 
 <#53cfc5a4-4854-4438-b0ec-82c7183013e3>
-  a solid:remoteRegistry;
-  solid:registryStorage &lt;https://alice.pod.example/remote/&gt;;
+  a solid-ecosystem:remoteRegistry;
+  solid-ecosystem:registryStorage &lt;https://alice.pod.example/remote/&gt;;
 </pre>
 
 ### Bob ### {#bob}
@@ -727,16 +737,17 @@ https://alice.pod.example/registries/remote:**
 https://bob.pod.example/id#me:**
 
 <pre highlight="turtle">
-@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#me>
     solid:oidcIssuer &lt;https://idp.example&gt;;
-    solid:registrySet &lt;https://bob.pod.example/registries/application#set&gt;;
-    solid:registrySet &lt;https://bob.pod.example/registries/data#set&gt;;
-    solid:registrySet &lt;https://bob.pod.example/registries/access#set&gt;;
-    solid:registrySet &lt;https://bob.pod.example/registries/remote#set&gt;;
-    solid:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt;;
-    solid:hasAccessInbox &lt;https://bob.pod.example/access/inbox&gt;.
+    solid-ecosystem:registrySet &lt;https://bob.pod.example/registries/application#set&gt;;
+    solid-ecosystem:registrySet &lt;https://bob.pod.example/registries/data#set&gt;;
+    solid-ecosystem:registrySet &lt;https://bob.pod.example/registries/access#set&gt;;
+    solid-ecosystem:registrySet &lt;https://bob.pod.example/registries/remote#set&gt;;
+    solid-ecosystem:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt;;
+    solid-ecosystem:hasAccessInbox &lt;https://bob.pod.example/access/inbox&gt;.
 </pre>
 
 ## Applications ## {#applications}
@@ -770,41 +781,42 @@ schema:softwareApplication, especially given the different types of client and
 their associated security considerations.
 
 <pre highlight="turtle">
-@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
-@prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt;.
-@prefix schema: &lt;http://www.schema.org&gt;.
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt; .
+@prefix schema: &lt;http://www.schema.org&gt; .
 
 <#agent>
     # this is an application, not a person
     a schema:softwareApplication;
     # redirect to this URL after going through authorization agent workflow
-    solid:authorizationCallback <https://nevernote.example/data-authorization>;
+    solid-ecosystem:authorizationCallback <https://nevernote.example/data-authorization>;
     # redirect to this URL after going through application registration
     # agent workflow
-    solid:applicationRegistrationCallback <https://nevernote.example/app-registration>;
+    solid-ecosystem:applicationRegistrationCallback <https://nevernote.example/app-registration>;
 
 # Declaration of the type of access this application needs
 # UUID randomly generated for subject value
 <#33116309-1667-4a7b-a91f-4dbf177e3f95>
-    a solid:accessNeed;
+    a solid-ecosystem:accessNeed;
     # Access needs related to notebook shape trees
-    solid:shapetree &lt;https://shapetrees.example/commonnote#notebook&gt;
+    solid-ecosystem:shapetree &lt;https://shapetrees.example/commonnote#notebook&gt;
     # Request permission create new notebook shape trees
-    solid:shapetreeCreate true;
+    solid-ecosystem:shapetreeCreate true;
     # Request permission to read and write created notebook shape trees
-    solid:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    solid-ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
     # Request access to any existing notebook shape trees
-    solid:shapetreeExistingAccess true;
+    solid-ecosystem:shapetreeExistingAccess true;
     # Request permission to read and write existing notebook shape trees
-    solid:shapetreeExistingAccess [ acl:Read, acl:Write ].
+    solid-ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
 
 <#75054942-b8b4-4e3a-84e4-7b564ca1ae7a>
-    a solid:accessNeed;
-    solid:shapetree &lt;https://shapetrees.example/commonnote#note&gt;;
-    solid:shapetreeCreate true;
-    solid:shapetreeCreateAccess [ acl:Read, acl:Write ];
-    solid:shapetreeExistingAccess true;
-    solid:shapetreeExistingAccess [ acl:Read, acl:Write ].
+    a solid-ecosystem:accessNeed;
+    solid-ecosystem:shapetree &lt;https://shapetrees.example/commonnote#note&gt;;
+    solid-ecosystem:shapetreeCreate true;
+    solid-ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    solid-ecosystem:shapetreeExistingAccess true;
+    solid-ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
 </pre>
 
 ### OtherNote ### {#othernote}
@@ -818,32 +830,33 @@ Issue: Might be worthwhile to make OtherNote's access needs slightly different
 than NeverNote's to show more diversity.
 
 <pre highlight="turtle">
-@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt;.
-@prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt;.
-@prefix schema: &lt;http://www.schema.org&gt;.
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt; .
+@prefix schema: &lt;http://www.schema.org&gt; .
 
 <#agent>
     # this is an application, not a person
     a schema:softwareApplication;
     # redirect to this URL after going through trusted agent workflows
-    solid:authorizationCallback <https://othernote.example/callback>;
+    solid-ecosystem:authorizationCallback <https://othernote.example/callback>;
 
 # Declaration of the type of access this application needs
 # UUID randomly generated for subject value
 <#df56606d-ce80-4c99-bf8f-88c87559f8b7>
-    a solid:accessNeed;
-    solid:shapetree <https://shapetrees.example/notebook#shapetree>;
-    solid:shapetreeCreate true;
-    solid:shapetreeCreateAccess [ acl:Read, acl:Write ];
-    solid:shapetreeExistingAccess true;
-    solid:shapetreeExistingAccess [ acl:Read, acl:Write ].
+    a solid-ecosystem:accessNeed;
+    solid-ecosystem:shapetree <https://shapetrees.example/notebook#shapetree>;
+    solid-ecosystem:shapetreeCreate true;
+    solid-ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    solid-ecosystem:shapetreeExistingAccess true;
+    solid-ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
 
 <#759a272e-05d9-415e-a460-20acbdcab9b8>
-    a solid:accessNeed;
-    solid:shapetree <https://shapetrees.example/note>;
-    solid:shapetreeCreate true;
-    solid:shapetreeCreateAccess [ acl:Read, acl:Write ];
-    solid:shapetreeExistingAccess true;
+    a solid-ecosystem:accessNeed;
+    solid-ecosystem:shapetree <https://shapetrees.example/note>;
+    solid-ecosystem:shapetreeCreate true;
+    solid-ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    solid-ecosystem:shapetreeExistingAccess true;
     solid:shapetreeExistingAccess [ acl:Read, acl:Write ].
 </pre>
 
@@ -864,7 +877,7 @@ https://shapetrees.pub/drafts/ns/solid/registry:**
 <pre highlight="turtle">
 @prefix tree: &lt;http://www.w3.org/ns/shapetree#&gt; .
 @prefix registry-trees: &lt;https://shapetrees.pub/drafts/ns/solid/registry#&gt; .
-@prefix registry-shapes: &lt;https://shapes.pub/drafts/ns/solid/registry#&gt;
+@prefix registry-shapes: &lt;https://shapes.pub/drafts/ns/solid/registry#&gt; .
 
 # Shape tree for a registry set
 <#set> tree:expectedType ldp:Resource ;
@@ -880,41 +893,40 @@ https://shapetrees.pub/drafts/ns/solid/registry:**
 This document provides ShEx shape definitions for
 RegistrySet and Registry shapes.
 
-[Validate this](https://tinyurl.com/ydb6p9ma) against [[#alice-appregset]].
+[Apply this](https://tinyurl.com/y94ttyow) against [[#alice-appregset]].
 
 **Contents of Solid Registries Shape document at
 https://shapes.pub/drafts/ns/solid/registry:**
 
 <pre highlight="turtle">
-PREFIX registry-shapes: &lt;https://shapes.pub/drafts/ns/solid/registry#&gt;
 PREFIX solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt;
 
 # RegistrySet shape definition supporting each type of registry set
 <#RegistrySet> {
-  a [registry-shapes:registrySet] ;
+  a [solid-ecosystem:registrySet] ;
   solid-ecosystem:registryType [solid-ecosystem:ApplicationRegistry solid-ecosystem:DataRegistry solid-ecosystem:AccessRegistry solid-ecosystem:RemoteRegistry] ;
-  registry-shapes:registrySetMember @<#Registry> ;
+  solid-ecosystem:registrySetMember @<#Registry> ;
 } AND (
   { solid-ecosystem:registryType [solid-ecosystem:ApplicationRegistry] ;
-    registry-shapes:registrySetMember {
+    solid-ecosystem:registrySetMember {
       solid-ecosystem:registryType [solid-ecosystem:ApplicationRegistry] ;
     } +
   }
   OR
   { solid-ecosystem:registryType [solid-ecosystem:DataRegistry] ;
-    registry-shapes:registrySetMember {
+    solid-ecosystem:registrySetMember {
       solid-ecosystem:registryType [solid-ecosystem:DataRegistry] ;
     } +
   }
   OR
   { solid-ecosystem:registryType [solid-ecosystem:AccessRegistry] ;
-    registry-shapes:registrySetMember {
+    solid-ecosystem:registrySetMember {
       solid-ecosystem:registryType [solid-ecosystem:AccessRegistry] ;
     } +
   }
   OR
   { solid-ecosystem:registryType [solid-ecosystem:RemoteRegistry] ;
-    registry-shapes:registrySetMember {
+    solid-ecosystem:registrySetMember {
       solid-ecosystem:registryType [solid-ecosystem:RemoteRegistry] ;
     } +
   }
@@ -927,9 +939,75 @@ PREFIX solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt;
 }
 </pre>
 
-Issue: Include the entire document for https://shapetrees.example/commonnote
+### Application Registration Shape Tree Document ### {#application-tree}
+
+This shape tree document provides two shape tree definitions.
+
+* **<#registration>** provides a shape tree to validate an individual
+    application registration entry
+* **<#container>** provides a shape tree that can be applied to a container
+    to ensure that anything that isn't a <#registration> cannot be stored
+    in the container. This is useful for ensuring that only application
+    registration entries can be stored in a given application registry's
+    storage area.
+
+**Contents of Solid Application Registration Shape Tree document at
+https://shapetrees.pub/drafts/ns/solid/application:**
+
+<pre highlight="turtle">
+@prefix tree: &lt;http://www.w3.org/ns/shapetree#&gt; .
+@prefix application-shapes: &lt;https://shapes.pub/drafts/ns/solid/application&gt; .
+
+# Shape tree for an application registration
+<#registration> tree:expectedType ldp:container ;
+  tree:contents &lt;#entry&gt; ;    # entry for the registration itself
+  tree:contents &lt;#access&gt; ;   # information about what it can access
+  tree:contents &lt;#internal&gt; . # internal area of application specific data
+
+# Shape tree for a resource in <#registration> containing registration entry data
+<#entry> tree:expectedType ldp:Resource ;
+  tree:uriTemplate "entry" ;
+  tree:shape &lt;application-shapes:Registration&gt; .
+
+# Shape tree for a resource in <#registration> with information about what
+# the application is authorized to access
+<#access> tree:expectedType ldp:Resource ;
+  tree:uriTemplate "access-authorized" ;
+  tree:shape &lt;application-shapes:accessAuthorized&gt; .
+
+# Shape tree for a container in <#registration> where the app can put whatever
+# it likes
+<#internal> tree:expectedType ldp:Container ;
+  tree:uriTemplate "internal" .
+
+# Shape tree for container of application registrations
+<#container> tree:expectedType ldp:Container ;
+  tree:contents &lt;#registration&gt; .
+</pre>
+
+### Application Shapes Document ### {#app-shape}
+
+[Apply this](https://tinyurl.com/yaas3427) against [[#alice-appregnevernote]].
+
+**Contents of Solid Application Shape document at
+https://shapes.pub/drafts/ns/solid/application:**
+
+<pre highlight="turtle">
+PREFIX solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+
+<#Registration> {
+  a [solid-ecosystem:applicationRegistration] ;
+  solid-ecosystem:applicationRegisteredBy IRI ;
+  solid-ecosystem:registeringApplication IRI ;
+  solid-ecosystem:applicationRegistered IRI ;
+  solid-ecosystem:registrationTime xsd:dateTime
+}
+</pre>
 
 ### Notebook Shape Tree ### {#notebook}
+
+Issue: Include the entire document for https://shapetrees.example/commonnote
 
 <table>
   <tbody>
