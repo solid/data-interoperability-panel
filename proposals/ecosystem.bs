@@ -291,7 +291,7 @@ Registration Agent to register itself.
 ### Discovering application registries ### {#reg-discovery}
 
 To discover Alice’s application registries, NeverNote must first dereference
-Alice's WebID to access [[#alice-profile]]. In the profile document,
+Alice's WebID to access [[#alice-profile]]. In that profile document,
 NeverNote will look for a `solid-ecosystem:applicationRegistrySet`.
 There are registry sets of varying types listed in [[#alice-profile]].
 Each registry set of a given type lists one or more
@@ -668,18 +668,18 @@ https://alice.pod.example/registries/data:**
 @prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#set>
-  a solid-ecosystem:dataRegistrySet ;
+  a solid-ecosystem:registrySet ;
+  solid-ecosystem:registryType solid-ecosystem:DataRegistry ;
   solid-ecosystem:registrySetMember <#75139b60-f196-4f47-9ea1-91a21d19fd1e>, <#cd72a56e-bd0b-4aef-af63-a77d1b147fdd> .
 
 <#75139b60-f196-4f47-9ea1-91a21d19fd1e>
-  a solid-ecosystem:dataRegistry ;
-  solid-ecosystem:registryStorage &lt;https://alice.pod.example/data/&gt; ;
-  rdfs:label "Collaborative data storage" .
+  solid-ecosystem:registryType solid-ecosystem:DataRegistry ;
+  solid-ecosystem:registryStorage &lt;https://alice.pod.example/data/&gt; .
 
 <#cd72a56e-bd0b-4aef-af63-a77d1b147fdd>
-  a solid-ecosystem:dataRegistry ;
-  solid-ecosystem:registryStorage &lt;https://alice.home.example/data/&gt; ;
-  rdfs:label "Data pod for home media" .
+  solid-ecosystem:registryType solid-ecosystem:DataRegistry ;
+  solid-ecosystem:registryStorage &lt;https://alice.home.example/data/&gt; .
+
 </pre>
 
 #### Alice's Access Registry Set #### {#alice-accessregset}
@@ -691,12 +691,13 @@ https://alice.pod.example/registries/access:**
 @prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#set>
-  a solid-ecosystem:accessRegistrySet;
-  solid-ecosystem:registrySetMember <#de553f35-232a-4834-ae7f-4b82ec442a42>.
+  a solid-ecosystem:registrySet ;
+  solid-ecosystem:registryType solid-ecosystem:AccessRegistry ;
+  solid-ecosystem:registrySetMember <#de553f35-232a-4834-ae7f-4b82ec442a42> .
 
 <#de553f35-232a-4834-ae7f-4b82ec442a42>
-  a solid-ecosystem:accessRegistry;
-  solid-ecosystem:registryStorage &lt;https://alice.pod.example/access/&gt;;
+  solid-ecosystem:registryType solid-ecosystem:AccessRegistry ;
+  solid-ecosystem:registryStorage &lt;https://alice.pod.example/access/&gt; .
 </pre>
 
 #### Alice's Remote Registry Set #### {#alice-remoteregset}
@@ -708,12 +709,13 @@ https://alice.pod.example/registries/remote:**
 @prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#set>
-  a solid-ecosystem:remoteRegistrySet;
-  solid-ecosystem:registrySetMember <#53cfc5a4-4854-4438-b0ec-82c7183013e3>.
+  a solid-ecosystem:registrySet ;
+  solid-ecosystem:registryType solid-ecosystem:RemoteRegistry ;
+  solid-ecosystem:registrySetMember <#53cfc5a4-4854-4438-b0ec-82c7183013e3> .
 
 <#53cfc5a4-4854-4438-b0ec-82c7183013e3>
-  a solid-ecosystem:remoteRegistry;
-  solid-ecosystem:registryStorage &lt;https://alice.pod.example/remote/&gt;;
+  solid-ecosystem:registryType solid-ecosystem:RemoteRegistry ;
+  solid-ecosystem:registryStorage &lt;https://alice.pod.example/remote/&gt; .
 </pre>
 
 ### Bob ### {#bob}
