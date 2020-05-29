@@ -186,79 +186,78 @@ have elected to use.
 
 A <dfn>data registry</dfn> is...
 
-A <dfn>access registry</dfn> is...
+An <dfn>access registry</dfn> is...
 
-a <dfn>remote registry</dfn> is...
-
-
+A <dfn>remote registry</dfn> is...
 
 Proposal {#proposal}
 =====================
 
 In this proposal, we aim to address the stated problems and associated goals
 by providing straightforward patterns that can be used in concert to realize
-an interoperable ecosystem for [=Solid=]. To ensure the proposal is as easy to
-understand as possible, we structure it in the form of an end-to-end use case.
+an [=interoperable ecosystem=] for [=Solid=]. To aid in understanding,
+we structure the proposal in the form of an end-to-end use case.
 
 We introduce [=shape trees=] as a fundamental means through which we model,
 validate, organize, and authorize data stored in a Solid [=pod=]. Data becomes
-durable, interoperable, and available to be discovered through any query
-mechanism.
+durable, interoperable, and available to be retrieved in different
+representations or discovered through any query mechanism.
 
-Data is accessed, shared, and communicated using intuitive data boundaries
-provided by shape trees, making it easy for Alice, Bob, and their respective
-applications to interoperate with each other in a way they all understand.
-Nowhere in this proposal does a person or application need to worry about
-where to store data, or where to find it.
+Nowhere in this proposal does an [=agent=] or
+[=application=] need to worry about where to store data, or where to find it.
+Data is organized and shared using intuitive data boundaries
+provided by [=shape trees=], making it easy for Alice, Bob, and their respective
+applications to interoperate with each other in a way that they all understand.
+In concert with [=acl resources=], this organization scheme facilitates
+straightforward compartmentalized access by [=authenticated agents=] and
+[=applications=], and allows them to operate using the least amount of
+privilege necessary to complete their tasks.
 
-Data is fully compartmentalized using rational authorization boundaries
-provided by shape trees, which allows for compartmentalized access by any
-combination of authorized entities and/or client applications. We adhere to
-the principle of least privilege, originally defined by Jerome Saltzer:
 
-> Every program and every privileged user of the system should operate
-> using the least amount of privilege necessary to complete the job.
-
-Alice is able to compartmentalize her data between different applications she
-"pilots", in spite of using them with her own credentials which afford her full
-access to her data. Alice also exposes much less data to the public through
-the profile document associated with her WebID.
-
-We introduce [=trusted agents=], which operate on behalf of Alice with escalated
-privileges to help her securely manage her data and make informed, intuitive,
-and secure decisions.
-
-Authorization is performed using regular [[WAC]]. For added security,
-and as the replacement for the current “trusted apps” mechanism, we
-utilize a newly proposed predicate to a [[WAC]] authorization statement that can
-identify authorized client applications in addition to authorized agents using
-the application equivalent of a WebID.
+We introduce patterns for [[#appreg|registering applications]], authorizing
+access to data, keeping track of access grants, and of remote resources
+for which access has been granted to the [=resource controller=].
+[=trusted agents|Trusted Agents=] operate on the [=resource controller's=] behalf
+with escalated privileges to help her securely manage her data and make
+informed, intuitive, and secure decisions.
 
 Most importantly, this proposal can work with Solid as it exists today, on its
-own or alongside other conventions, keeping in mind the following
-considerations:
+own or alongside other conventions, with some caveats.
 
-* Identifying the Application ID in WAC rules requires WAC extension and IdP
-    support. The approach still works without that, but you would no longer be
-    able to constrain access by application, which reduces the overall strength
-    of the data boundaries.
-* Requires on-pod shape validation for durable interoperability
-* Doesn’t require the server to perform shape tree validation, though more
-    reliable and durable interoperability would be achieved with server-side
-    support.
+<div class="assertion">
 
-<div class="note">
+* Identifying the [=ApplicationID=] in an [=acl resource=] statement
+    requires [[WAC]] extension and IdP support. This proposal still works
+    without this, but you would no longer be able to compartmentalize
+    access between [=user-piloted applications=] in use by the
+    [=resource controller=].
+* This proposal assumes support for [=shape=] validation on the [=Solid=]
+    server. It will still work without this support, but will significantly
+    hamper data durability, integrity, and interoperability. Similarly,
+    it doesn't require the server to perform [=shape tree=] validation,
+    but more reliable and durable interoperability would be achieved with
+    server-side support.
 
-**Note: Compartmentalizing data between Client Applications**
+</div>
+
+Client Identification {#client}
+=====================
 
 Throughout this proposal, we see cases where Alice compartmentalizes access
-to her data based on who is accessing it -
-*the authenticated agent*, and in certain cases, the application they're
-using to do so - *the client application*. Limiting access to data based on
-the client application in use is only reliable in certain instances when
-the client application can be identified with confidence.
+to her data based on who or what is access it - the [=authenticated agent=].
+In certain cases, we also limit access based on the application in use
+by Alice - the
+[=user-piloted application=].
 
-**Identifying clients**
+We utilize a new optional predicate in an [=acl resource=] statement to
+restrict access to permitted [=user-piloted applications=], identified by their
+[=ApplicationIDs=].
+
+Limiting access to data based on
+the [=user-piloted application=] in use is only reliable in certain
+instances when the [=application=] can be identified with confidence.
+
+## Identifying clients ## {#client-id}
 
 Clients applications in use across the world today fall into two buckets;
 *strongly identifiable* and *weakly identifiable*.
@@ -277,7 +276,7 @@ practice because the OS manufacturers do not make their trust
 infrastructure available. *Weakly identifiable clients are only strongly
 identifiable to the user controlling them*.
 
-**Limiting access by client application**
+## Limiting access by client application ## {#client-limit}
 
 In the case of a strongly identifiable server-side web application or bot,
 the authenticated agent and the client application are the same. The client
@@ -293,8 +292,6 @@ by the user in control of the app. This means that Alice can strongly control
 the applications that she uses to compartmentalize her own data, but has
 limited ability to control the applications that Bob uses to access the data
 she shares with him.
-
-</div>
 
 Trusted Agents {#trusted}
 =====================
@@ -474,6 +471,8 @@ a SHA3-256 hash of `https://nevernote.example/id#agent` in
 <pre>
 GET https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae
 </pre>
+
+Issue: Change to 404 or 403 on entry access
 
 If NeverNote is unable to access that entry, then it knows that it
 needs to be registered. If NeverNote can read the
