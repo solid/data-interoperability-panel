@@ -134,6 +134,10 @@ thing, data model, abstract entity, etc.) with a DID document,
 equivalent to an [=identity profile document=], to allow trustable
 interactions with that subject. [[DID]]
 
+An <dfn>identity provider</dfn> is...
+
+A <dfn>bearer token</dfn> is...
+
 An <dfn>ApplicationID</dfn> is a web resource at an HTTP URI uniquely associated
 with a given [=application=]. For [=server-side applications=], it may also
 serve as an [=identity=]. An [=application profile document=] can be
@@ -182,13 +186,18 @@ An <dfn>application registry</dfn> is a collection of
 An <dfn>application registration</dfn> provides the [=resource controller=]
 of a [=pod=] with a place to maintain metadata, state, preferences, and
 other application-specific data associated with a given [=application=] they
-have elected to use.
+have elected to use. An application registration is an instantiation of the
+`<#registration>` shape tree in the [[#application-tree]].
 
 A <dfn>data registry</dfn> is...
 
 An <dfn>access registry</dfn> is...
 
 A <dfn>remote registry</dfn> is...
+
+An <dfn>application registration agent</dfn> is...
+
+
 
 Proposal {#proposal}
 =====================
@@ -257,15 +266,16 @@ Limiting access to data based on
 the [=user-piloted application=] in use is only reliable in certain
 instances when the [=application=] can be identified with confidence.
 
-## Identifying clients ## {#client-id}
+## Identifying client applications ## {#client-id}
 
-Clients applications in use across the world today fall into two buckets;
-*strongly identifiable* and *weakly identifiable*.
+For identification purposes, client [=applications=] in use across the world
+today fall into two buckets; *strongly identifiable* and *weakly identifiable*.
 
 **Strongly identifiable clients** can be identified by 3rd parties independently
-from their user/controller. Only server-side web apps are strongly identifiable.
-As confidential clients, they can keep secrets and can present attestations
-and third-party credentials via DNS / domain certificates.
+from their user/controller. Only [=server-side applications=] are
+strongly identifiable. As confidential clients, they can keep secrets
+and can present attestations and third-party credentials
+via DNS / domain certificates.
 
 **Weakly identifiable clients** include in-browser JS apps and native desktop
 or mobile applications. They are considered weakly identifiable because they
@@ -273,21 +283,21 @@ are not able to keep secrets on an instance level. They are often referred to
 as public clients. Native apps should be strongly-identifiable in theory
 (since they are able to keep secrets on an instance level), but not in
 practice because the OS manufacturers do not make their trust
-infrastructure available. *Weakly identifiable clients are only strongly
-identifiable to the user controlling them*.
+infrastructure available. **Weakly identifiable clients are only strongly
+identifiable to the user controlling them**.
 
 ## Limiting access by client application ## {#client-limit}
 
-In the case of a strongly identifiable server-side web application or bot,
-the authenticated agent and the client application are the same. The client
-application has its own identity that can be strongly authenticated. Alice
+In the case of a strongly identifiable [=server-side application=],
+the [=authenticated agent=] and the client application are the same. The client
+application has its own [=identity=] that can be strongly authenticated. Alice
 chooses which data that client application's identity can access, in the same
 way that she chooses which data Bob can access.
 
-In the case of piloted client applications, the ability for a Solid pod to
+In the case of [=user-piloted applications=], the ability for a Solid pod to
 limit access to data by the client application in use is only as strong as
 the trustworthiness of the user piloting that application, and their ability
-to avoid using malicious applications. The client identifier can be manipulated
+to avoid using malicious applications. The [=ApplicationID=] can be manipulated
 by the user in control of the app. This means that Alice can strongly control
 the applications that she uses to compartmentalize her own data, but has
 limited ability to control the applications that Bob uses to access the data
@@ -296,34 +306,25 @@ she shares with him.
 Trusted Agents {#trusted}
 =====================
 
-Some of the most common use cases in Solid revolve around a given
-individual using applications to access, utilize, and manage data in
-their own pod. In these scenarios, the individual is typically the
-*resource controller* of the entire pod, giving them "super-user"
-permissions on all of the data within. By extension, the client applications
-these individuals pilot operate unchecked with the same elevated privileges
-
-In this proposal, we introduce a pattern that allows
-a resource controller to compartmentalize their data between the
-different client applications they pilot. As a complement, we also introduce
-*Trusted Agents*. A Trusted Agent is an application that acts on someone's
+A [=Trusted Agent=] is an application that acts on someone's
 behalf with full privilege, much like their Identity Provider. They can be
 trusted to help a resource controller to make smart decisions related to
 their data, and even operate or perform actions on the resource controller's
 behalf.
 
 There's no limit to what a Trusted Agent can
-assist with, but registering applications and authorizing access to
+assist with, but [[#appreg|registering applications]] and authorizing access to
 data are two critical operations covered in this proposal.
 
-An trusted agent for application registration helps the resource controller
+An trusted agent for application registration helps the [=resource controller=]
 make smart decisions about the applications they choose to utilize, and
 ensure they get provisioned appropriately.
 
 A trusted agent for data authorization is needed in cases where the resource
 controller wishes to grant limited access to data in her Pod to another
-individual, group, and/or application, but needs assistance to determine
-what access is needed, and help to provision that access.
+[=authenticated agent=] or [=user-piloted application=], but needs
+assistance to determine what access is needed, and help to provision
+that access.
 
 There are three typical patterns to interact with a Trusted Agent;
 *Embedded*, *Synchronous*, and *Asynchronous*.
@@ -351,7 +352,7 @@ A given Trusted Agent may employ one or more of these patterns.
 Use Case Summary {#summary}
 =====================
 
-In our use case, Alice wants to use a new application to record and manage both
+In our use case, Alice wants to use a new application to record and manage
 her personal and professional notes. She does a Web search and finds
 NeverNote (https://nevernote.example), a web-based application that advertises
 itself as Solid Enabled. Alice is excited about this because she recently
@@ -362,7 +363,7 @@ We follow Alice (and then Bob) through the following sequence:
 1. Alice decides to use a Solid-enabled web application called NeverNote
 1. NeverNote checks to see if it has been registered with Alice’s Pod already
 1. NeverNote is registered with Alice’s Pod through the help of Alice’s
-    Authorization Agent
+    Application Registration Agent.
 1. Through the help of her Authorization Agent, Alice grants NeverNote the
     following privileges:
     * Access to Notes that already existed in her Pod
@@ -381,30 +382,31 @@ important for an application to be registered.
 ## Checking registration status ## {#reg-status}
 
 When Alice arrives at NeverNote (`https://nevernote.example`) in her
-web browser, she is prompted to login with her WebID because NeverNote
+web browser, she is prompted to login with her [=WebID=] because NeverNote
 doesn’t know who she is yet. She could be a completely new user of
 NeverNote, or a returning user that has already registered NeverNote
 and authorized it to access her Notebooks and Notes.
 
-Alice logs into her Identity Provider (`https://idp.example`) with her
+Alice logs into her [=identity provider=] (`https://idp.example`) with her
 WebID (`https://alice.pod.example/id#me`) and ultimately ends up with
-a bearer token that NeverNote can use to make requests to her Pod.
+a [=bearer=] token that NeverNote can use to make requests to her Pod.
 The token identifies her as Alice (`https://alice.pod.example/id#me`),
-using the NeverNote application (`https://nevernote.example/id#agent`).
+using NeverNote (`https://nevernote.example/id#agent`) as a
+[=user-piloted application=].
 
-First NeverNote needs to check Alice’s application registries to see if
-there is already an entry for it in one of them. If there is, than
-Nevernote is already registered, and doesn't need to go through the process
-again. If there is not, NeverNote will engage Alice's trusted Application
-Registration Agent to register itself.
+First NeverNote needs to check Alice’s [=application registries=] to see if
+there is already an [=application registration=] for NeverNote in one of
+them. If there is, than Nevernote is already registered, and doesn't
+need to go through the process again. If there is not, NeverNote will
+engage Alice's trusted [=application registration agent=] to register itself.
 
 ### Discovering application registries ### {#reg-discovery}
 
 To discover Alice’s application registries, NeverNote must first dereference
-Alice's WebID to access [[#alice-profile]]. In that profile document,
-NeverNote will look for a `solid-ecosystem:applicationRegistrySet`.
-There are registry sets of varying types listed in [[#alice-profile]].
-Each registry set of a given type lists one or more
+Alice's WebID to access [[#alice-profile]]. In that
+[=identity profile document=], NeverNote will look for an application
+[=registry set=]. There are registry sets of varying types listed
+in [[#alice-profile]]. Each registry set of a given type lists one or more
 registries of that type in different locations.
 
 <b>Excerpt from [[#alice-profile]]</b>
@@ -413,13 +415,14 @@ registries of that type in different locations.
     solid-ecosystem:applicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; .
 </pre>
 
-Alice’s application registry set document is separate from her public profile
-document. This allows it to have a separate set of permissions.
-Registry set documents are not publicly accessible. They can only be accessed
-by Alice, or by an autonomous trusted agent where applicable.
+Alice’s application registry set document is separate from her public
+identity profile document.
+This allows it to have a separate set of permissions.
+Registry set documents are not publicly accessible. They can only be
+accessed by Alice, or by a [=trusted agent=] where applicable.
 
-In [[#alice-appregset]] document, NeverNote sees that Alice has a
-`solid-ecosystem:applicationRegistry` that stores registration entries in
+In [[#alice-appregset]] document, NeverNote sees that Alice has an
+application registry that stores application registrations in
 `<https://alice.pod.example/applications/>`.
 
 <b>Excerpt from [[#alice-appregset]] Document</b>
@@ -442,27 +445,28 @@ In [[#alice-appregset]] document, NeverNote sees that Alice has a
 ### Finding a specific registered application ### {#reg-findapp}
 
 Every registered
-application has a `solid-ecosystem:applicationRegistration` entry stored in
-the `solid-ecosystem:registryStorage` location of a
-`solid-ecosystem:applicationRegistry`. NeverNote needs to determine if it is
-already registered, so it needs to
-find an entry for itself in the `solid-ecosystem:registryStorage` at
+application has an [=application registration=] stored in
+an [=application registry=]. The object value of
+`solid-ecosystem:registryStorage` identifies where these are stored.
+NeverNote needs to determine if it is already registered, so it needs to
+see if there is an entry for itself at
 `<https://alice.pod.example/applications/>`.
 
-Only Alice and her trusted agents should have visibility and control
+Only the [=resource controller=] (Alice) and her trusted agents should have
+visibility and control
 of her application registry sets and registries. Just because Alice
 uses a given application like NeverNote doesn't mean that NeverNote should
 be allowed to know every other application she uses.
 Consequently, we do not give NeverNote read access to the
-`solid-ecosystem:registryStorage` container, we do not allow it to directly access any
-of the `solid-ecosystem:applicationRegistration` entries, and we do not
-let it register itself.
+entire application registry. Nor do we allow it to directly access any
+other application registration entries, or allow it to register itself.
 
-We do allow NeverNote (piloted by Alice), to directly access its own
-`solid-ecosystem:applicationRegistration` entry. However, Nevernote must know how
-to find it using information it already has. We solve this by naming
-`solid-ecosystem:applicationRegistration` containers using a SHA3-256 hash
-of the ApplicationID.
+We do allow NeverNote (as a [=user-piloted application=] used by Alice),
+to directly access its own
+application registration entry. However, Nevernote must know how
+to find that entry using information it already has. We solve this by using
+a SHA3-256 hash of NeverNote's ApplicationID to name the container
+of the application registration entry.
 
 Since NeverNote knows its own ApplicationID, it looks for
 a SHA3-256 hash of `https://nevernote.example/id#agent` in
@@ -472,66 +476,73 @@ a SHA3-256 hash of `https://nevernote.example/id#agent` in
 GET https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae
 </pre>
 
-Issue: Change to 404 or 403 on entry access
+If NeverNote is unable to access the registration entry, then it knows that it
+needs to be registered. Inability to access would be for one of the following
+reasons:
 
-If NeverNote is unable to access that entry, then it knows that it
-needs to be registered. If NeverNote can read the
-`solid-ecosystem:applicationRegistration` entry, then it can confirm that it
+* **There is no application registration for NeverNote.** The server may return
+    either a 403 or 404 depending on server or user privacy preference.
+* **There is an application registration at the target URL, but NeverNote
+    cannot access it because it is associated with another application's
+    identity.** The server may return either a 403 or 404 depending on
+    server or user privacy preference.
+
+If NeverNote can read the
+application registration entry, then it can confirm that it
 is already a registered application in Alice’s Pod.
 
-In this use case, NeverNote isn't registered yet, so it cannot
-access a `solid-ecosystem:applicationRegistration` for itself. It needs to be
+In the proposed use case, Alice hasn't registered NeverNote yet,
+so it cannot access an application registration entry for itself. It needs to be
 registered, and that must be facilitated through
-Alice’s trusted Application Registration agent.
+Alice’s trusted [=application registration agent=].
 
 
 ## Registering the application ## {#appreg-registration}
 
 NeverNote has determined that it needs to be registered in Alice’s
-Pod. It cannot register itself, so it needs the help of Alice's trusted
-Application Registration agent. It must first dereference Alice's WebID to
-access [[#alice-profile]]. It will then look for her
-trusted Application Registration Agent, identified by the
+Pod. It cannot register itself, so it needs the help of Alice's
+[=application registration agent=]. It must first dereference Alice's WebID to
+access [[#alice-profile]]. It will then look for the
 `solid-ecosystem:applicationRegistrationAgent` predicate in the contents
-of [[#alice-profile]].
+of her identity profile document to discover the
+application registration agent she trusts.
 
 <b>Excerpt from [[#alice-profile]]</b>
 <pre highlight="turtle">
   <#me> solid-ecosystem:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt; .
 </pre>
 
-NeverNote redirects Alice via the Synchronous flow to
+NeverNote redirects Alice via the synchronous trusted agent pattern to
 the `solid-ecosystem:applicationRegistrationAgent` at `https://trusted.example/ar/`,
-supplying its ApplicationID
+supplying its [=ApplicationID=]
 (`https://nevernote.example/id#agent`) as a parameter. The
 ApplicationID uniquely identifies the application, and leads to
 [[#nevernote-profile]], an RDF document containing data required to
 complete the registration process.
 
-Issue: Provide a sequence diagram here, and a bit more about what
-the end user experience is for Alice in this registration flow.
+Issue: Provide a sequence diagram for application registration, and incorporate
+specific detail about the end user experience during that flow.
 
-The Application Registration Agent is now expected to dereference
-(i.e. perform an HTTP GET on) the ApplicationID IRI to receive
-[[#nevernote-profile]]. The contents of [[#nevernote-profile]]
-helps the agent determine whether NeverNote is suitable for
+The application registration agent is now expected to dereference
+(i.e. perform an HTTP GET on) the ApplicationID to retrieve
+[[#nevernote-profile]]. The contents of an [=application profile document=]
+help the agent determine whether that application is suitable for
 approval.
 
 For example, verification of a verifiable credential
 stored in [[#nevernote-profile]], issued by a third party that Alice
 trusts, is a good indicator of the application’s trustworthiness.
-Similarly, an application, or the identity provider it uses, may
+Similarly, an application, or the [=identity provider=] it uses, may
 be listed on a trusted whitelist that the Application Registration
 Agent consults. The Application Registration Agent is able to raise
 issues related to these checks (or others) to Alice as part of
 her decision making process.
 
-Assuming suitability, and after confirmation from Alice, the
-Application Registration Agent will proceed in [[#appreg-creating]] for
+Assuming suitability and confirmation from Alice, the
+application registration agent will proceed in [[#appreg-creating]] for
 NeverNote in Alice’s Pod. When it is finished, it will return her to
 NeverNote at the `solid-ecosystem:applicationRegistrationCallback` address in
 [[#nevernote-profile]].
-
 
 <b>Excerpt from [[#nevernote-profile]]:</b>
 
@@ -542,29 +553,29 @@ NeverNote at the `solid-ecosystem:applicationRegistrationCallback` address in
 
 ### Creating the application registration entry ### {#appreg-creating}
 
-Each `solid-ecosystem:applicationRegistration` entry is a container, which allows
+[=Application registrations=] are instances of
+[[#application-tree|application registration shape trees]].
+Each application registration is a container, which allows
 important metadata about the application to be stored, and also gives
-NeverNote the [[#appreg-privateuse]] that it may need for certain
-non-interoperable data important to its own internal functions, but not
+an application the [[#appreg-internaluse]] that it may need for certain
+non-interoperable data important to its own internal operations, but not
 pertinent to other applications'.
 
-<b>Excerpt from [[#alice-appregset]] Document</b>
-<pre highlight="turtle">
-<#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e>
-  a solid-ecosystem:applicationRegistry ;
-  # Where application registrations are stored
-  solid-ecosystem:registryStorage &lt;https://alice.pod.example/applications/&gt; ;
-</pre>
+NeverNote’s ApplicationID: `https://nevernote.example/id#agent`
 
-The SHA3-256 hash of NeverNote’s ApplicationID
-(`https://nevernote.example/id#agent`) will be used to name the container
-and uniquely identify it. Per the location defined by `solid-ecosystem:registryStorage`,
-NeverNote’s application registration will be provisioned at
+SHA3-256 hash: `ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae`
+
+The hash of NeverNote’s ApplicationID will be used to name the
+application registration container and uniquely identify it. Per the location
+defined by `solid-ecosystem:registryStorage` in [[#alice-appregset]],
+the [=application registration=] will be provisioned at:
+
 `https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae`.
+
 NeverNote will always know where to find this, because it knows its
 own ApplicationID.
 
-The `solid-ecosystem:applicationRegistration` is then created and populated at
+The following resource contains the registration detail:
 `https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/application#registration`.
 
 <b>Excerpt from [[#alice-appregnevernote]]</b>
@@ -578,23 +589,18 @@ The `solid-ecosystem:applicationRegistration` is then created and populated at
 </pre>
 
 
-NeverNote is provided read access to the registration resource
-maintained by the registration agent, and read/write access to the remainder
-of the container. This gives NeverNote as much freedom as it
-likes to store data in its own application space, but not the ability
+NeverNote is provided read access to the application registration,
+and read/write access to the internal space. This gives NeverNote as
+much freedom as it
+likes to store data in its own internal space, but not the ability
 to change permissions or alter the registration data maintained by
-the Application Registration Agent.
-
-Issue: Include a shape tree, shapes, and explicit detail on the
-access control settings for every resource in the application
-registration entry.
-
+the [=application registration agent=].
 
 * **/applications** - Alice and trusted agents have full control.
     * **ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae** -
         SHA3-256 Hash of NeverNote AppID - NeverNote can read.
         Alice and trusted agents have full control.
-          * **entry** - application registration resource - NeverNote can read.
+          * **application** - application registration resource - NeverNote can read.
               Alice and trusted agents have full control.
           * **access** - what access the application has been authorized
               to have - NeverNote can read. Alice and trusted agents have
@@ -602,7 +608,7 @@ registration entry.
           * **internal** - NeverNote can read and write.
               Alice and trusted agents have full control.
 
-#### Use of private application space #### {#appreg-privateuse}
+#### Use of internal application space #### {#appreg-internaluse}
 
 There is a legitimate argument that giving applications their own
 private data space in Solid is counterintuitive to Solid’s proposition to
@@ -756,8 +762,8 @@ https://alice.pod.example/registries/application:**
 
 [Validate this](https://tinyurl.com/yaas3427) against [[#app-shape]].
 
-**Contents of Alice’s application regitration for NeverNote at
-https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/entry:**
+**Contents of Alice’s application registration for NeverNote at
+https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/application:**
 
 <pre highlight="turtle">
 @prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
@@ -904,10 +910,10 @@ their associated security considerations.
     # this is an application, not a person
     a schema:softwareApplication;
     # redirect to this URL after going through authorization agent workflow
-    solid-ecosystem:authorizationCallback <https://nevernote.example/data-authorization>;
+    solid-ecosystem:authorizationCallback &lt;https://nevernote.example/data-authorization&gt; ;
     # redirect to this URL after going through application registration
     # agent workflow
-    solid-ecosystem:applicationRegistrationCallback <https://nevernote.example/app-registration>;
+    solid-ecosystem:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt; ;
 
 # Declaration of the type of access this application needs
 # UUID randomly generated for subject value
@@ -1074,13 +1080,13 @@ https://shapetrees.pub/drafts/ns/solid/application:**
 
 # Shape tree for an application registration
 <#registration> tree:expectedType ldp:container ;
-  tree:contents &lt;#entry&gt; ;    # entry for the registration itself
-  tree:contents &lt;#access&gt; ;   # information about what it can access
-  tree:contents &lt;#internal&gt; . # internal area of application specific data
+  tree:contents &lt;#application&gt; ; # entry for the registration itself
+  tree:contents &lt;#access&gt; ;      # information about what it can access
+  tree:contents &lt;#internal&gt; .    # internal area of application specific data
 
 # Shape tree for a resource in <#registration> containing registration entry data
-<#entry> tree:expectedType ldp:Resource ;
-  tree:uriTemplate "entry" ;
+<#application> tree:expectedType ldp:Resource ;
+  tree:uriTemplate "application" ;
   tree:shape &lt;application-shapes:Registration&gt; .
 
 # Shape tree for a resource in <#registration> with information about what
