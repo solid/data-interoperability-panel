@@ -1,4 +1,4 @@
-<pre class='metadata'>
+<pre class="metadata">
 Title: Proposal for an Interoperable Solid Ecosystem
 Shortname: your-spec
 Level: 1
@@ -17,7 +17,7 @@ Abstract:
   form of an end-to-end use case.
 </pre>
 
-Problems {#problems}
+Problems and Goals {#problems-goals}
 =====================
 
 Solid affords us the opportunity to create a valuable and
@@ -27,30 +27,51 @@ fundamentals of Solid make this possible, but further definition of standard
 methods and mechanisms must be established to make it practical, intuitive, and
 secure.
 
-* [Problem #1](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-1---disparate-applications-cannot-practically-interoperate-over-the-same-data-safely-and-effectively) -
+<div class="assertion">
+
+[Problem #1](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-1---disparate-applications-cannot-practically-interoperate-over-the-same-data-safely-and-effectively) -
     Disparate applications cannot practically interoperate over the same data
     safely and effectively.
-* [Problem #2](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-2---people-must-be-able-to-understand-what-data-they-have-to-effectively-use-it-or-share-it-safely) -
+
+* <b>[Goal](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-1---seamless-data-interoperability-across-disparate-applications) -
+    Seamless data interoperability across disparate applications.</b>
+
+[Problem #2](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-2---people-must-be-able-to-understand-what-data-they-have-to-effectively-use-it-or-share-it-safely) -
     People must be able to understand what data they have to effectively use it
     or share it safely.
-* [Problem #3](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-3---disparate-entities-using-different-applications-must-be-able-to-safely-and-effectively-interoperate-within-their-scope-of-authorization) -
+
+* <b>[Goal](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-2---use-intuitive-data-boundaries-to-provide-human-to-machine-interoperability) -
+    Use intuitive data boundaries to provide human to machine interoperability.</b>
+
+[Problem #3](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-3---disparate-entities-using-different-applications-must-be-able-to-safely-and-effectively-interoperate-within-their-scope-of-authorization) -
     Disparate entities using different applications must be able to
     safely and effectively interoperate within their scope of authorization.
-* [Problem #4](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-4---people-shouldnt-need-to-think-about-how-to-physically-organize-their-data-to-use-solid) -
+
+* <b>[Goal](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-3---secure-collaboration-over-intuitive-data-boundaries) -
+    Secure collaboration over intuitive data boundaries.</b>
+
+[Problem #4](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-4---people-shouldnt-need-to-think-about-how-to-physically-organize-their-data-to-use-solid) -
     People shouldn’t need to think about how to physically organize
     their data to use Solid.
-* [Problem #5](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-5---when-data-is-stored-and-secure-it-should-be-queryable-using-any-mechanism-and-able-to-be-requested-in-different-representations) -
+
+* <b>[Goal](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-4---standard-and-flexible-organizing-model-for-data) -
+    Standard and flexible organizing model for data.</b>
+
+[Problem #5](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-5---when-data-is-stored-and-secure-it-should-be-queryable-using-any-mechanism-and-able-to-be-requested-in-different-representations) -
     When data is stored and secure, it should be queryable using any
     mechanism, and able to be requested in different representations.
-* [Problem #6](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-6---these-problems-must-be-solvable-using-the-fundamentals-of-solid-as-it-exists-today) -
+
+* <b>[Goal](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-5---flexibility-and-support-for-different-and-evolving-query-mechanisms) -
+    Flexibility and support for different and evolving query mechanisms.</b>
+
+[Problem #6](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-6---these-problems-must-be-solvable-using-the-fundamentals-of-solid-as-it-exists-today) -
     These problems must be solvable using the fundamentals of Solid
     as it exists today.
 
-Note: See [[PROBLEMS-AND-GOALS]] for a detailed explanation of each discrete
-problem.
+* <b>[Goal](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-6---optimize-and-extend-but-do-not-change-solid-fundamentals) -
+    Optimize and extend, but do not change Solid fundamentals.</b>
 
-Goals {#goals}
-=====================
+</div>
 
 We must be able to support data interoperability across applications while
 enabling secure collaboration and query using intuitive data boundaries.
@@ -63,21 +84,8 @@ Standard methods and mechanisms for interoperability, collaboration, and
 security of data in a Solid Pod must realize these needs, and it must be done
 without changing the fundamentals of Solid.
 
-* [Goal #1](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-1---seamless-data-interoperability-across-disparate-applications) -
-    Seamless data interoperability across disparate applications.
-* [Goal #2](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-2---use-intuitive-data-boundaries-to-provide-human-to-machine-interoperability) -
-    Use intuitive data boundaries to provide human to machine interoperability.
-* [Goal #3](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-3---secure-collaboration-over-intuitive-data-boundaries) -
-    Secure collaboration over intuitive data boundaries.
-* [Goal #4](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-4---standard-and-flexible-organizing-model-for-data) -
-    Standard and flexible organizing model for data.
-* [Goal #5](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-5---flexibility-and-support-for-different-and-evolving-query-mechanisms) -
-    Flexibility and support for different and evolving query mechanisms.
-* [Goal #6](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-6---optimize-and-extend-but-do-not-change-solid-fundamentals) -
-    Optimize and extend, but do not change Solid fundamentals.
-
 Note: See [[PROBLEMS-AND-GOALS]] for a detailed explanation of each discrete
-goal.
+problem.
 
 Definitions {#definitions}
 =====================
@@ -186,8 +194,8 @@ An <dfn>application registry</dfn> is a collection of
 An <dfn>application registration</dfn> provides the [=resource controller=]
 of a [=pod=] with a place to maintain metadata, state, preferences, and
 other application-specific data associated with a given [=application=] they
-have elected to use. An application registration is an instantiation of the
-`<#registration>` shape tree in the [[#application-tree]].
+have elected to use. An application registration is a [=shape tree instance=]
+of the `<#registration>` shape tree in the [[#application-tree]].
 
 A <dfn>data registry</dfn> is...
 
@@ -389,7 +397,7 @@ and authorized it to access her Notebooks and Notes.
 
 Alice logs into her [=identity provider=] (`https://idp.example`) with her
 WebID (`https://alice.pod.example/id#me`) and ultimately ends up with
-a [=bearer=] token that NeverNote can use to make requests to her Pod.
+a [=bearer token=] that NeverNote can use to make requests to her Pod.
 The token identifies her as Alice (`https://alice.pod.example/id#me`),
 using NeverNote (`https://nevernote.example/id#agent`) as a
 [=user-piloted application=].
@@ -668,7 +676,8 @@ Issue: Add the contents of the solid-ecosystem vocabulary
 
 **Resource hierarchy of Alice's pod at https://alice.pod.example:**
 
-<div class = "assertion">
+<div class="assertion">
+
 * **id** - [[#alice-profile]]
 * **registries** - Container for registry set documents of each type -
     validated by the `#container` shape tree in [[#reg-tree]].
@@ -1168,7 +1177,7 @@ Issue: Include the entire document for https://shapetrees.example/commonnote
 
 Issue: Add definition for contact shape tree
 
-<pre class=biblio>
+<pre class="biblio">
 {
   "problems-and-goals": {
     "href": "https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md",
