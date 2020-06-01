@@ -87,126 +87,6 @@ without changing the fundamentals of Solid.
 Note: See [[PROBLEMS-AND-GOALS]] for a detailed explanation of each discrete
 problem.
 
-Definitions {#definitions}
-=====================
-
-<b>All definitions as stated below should be considered in the context of
-an [=interoperable ecosystem=] for [=Solid=], whether explicitly stated
-or not.</b>
-
-<dfn>Solid</dfn> is a protocol made up of a number of open web standards
-aimed at decentralizing data on the web.
-
-A Solid <dfn>pod</dfn> is a place for storing and accessing data via
-the [=Solid=] protocol, with mechanisms for controlling who or what can
-access that data.
-
-An <dfn>interoperable ecosystem</dfn> is a collection of
-[=Solid=] compatible [=applications=] developed by one or more entities,
-used by a community of users, that can safely access and manipulate the same
-kinds of data in [=pods=].
-
-An <dfn>application</dfn> is a piece of software that interfaces with a
-Solid pod, either as a [=server-side application=], or as a
-[=user-piloted application=].
-
-A <dfn>server-side application</dfn> runs on a dedicated server. They may
-also act as autonomous [=authenticated agents=].
-
-A <dfn>user-piloted application</dfn> runs on a user's device, with the user
-as the [=authenticated agent=]. They include in-browser javascript
-applications, native desktop applications, and mobile applications.
-
-An <dfn>agent</dfn> is a distinct individual, group, organization, or piece
-of software with an identity that can be strongly authenticated.
-
-An <dfn>identity</dfn> in Solid is a unique URI that can be dereferenced to
-return an [=identity profile document=]. Compatible identity systems
-include [=WebID=] and [=DID=].
-
-An <dfn>identity profile document</dfn> is a linked data document obtained
-by dereferencing the URI for a given [=identity=]. It provides information
-that can be used to prove that a given [=agent=] controls the document.
-
-An <dfn>authenticated agent</dfn> is an [=agent=] that has strongly
-authenticated their [=identity=] by proving control of the
-[=identity profile document=] via an authentication protocol such as
-[[WEBID-OIDC]].
-
-A <dfn>WebID</dfn> is a web resource at an HTTP URI which refers to an
-[=agent=]. An [=identity profile document=] can be accessed by
-dereferencing the WebID. [[WEBID]]
-
-A <dfn>DID</dfn> is a URI that associates a DID subject (e.g. an [=agent=],
-thing, data model, abstract entity, etc.) with a DID document,
-equivalent to an [=identity profile document=], to allow trustable
-interactions with that subject. [[DID]]
-
-An <dfn>identity provider</dfn> is...
-
-A <dfn>bearer token</dfn> is...
-
-An <dfn>ApplicationID</dfn> is a web resource at an HTTP URI uniquely associated
-with a given [=application=]. For [=server-side applications=], it may also
-serve as an [=identity=]. An [=application profile document=] can be
-accessed by dereferencing the ApplicationID.
-
-An <dfn>application profile document</dfn> is a linked data document
-obtained by dereferencing the URI for a given [=ApplicationID=]. It contains
-useful information about an application that can be employed in
-various workflows including application registration and data authorization.
-
-A <dfn>resource controller</dfn> is an [=authenticated agent=] with full
-privileges and control over a given resource or set of resources.
-
-An <dfn>acl resource</dfn> as defined by [[WAC]] may be directly
-associated with a resource or indirectly associated with a resource
-through inheritance. It determines which [=agents=] can access a
-resource, and the modes of access they have for it.
-
-A <dfn>trusted agent</dfn> is any [=application=] that a
-[=resource controller=] trusts to perform actions on their behalf. These
-actions typically require some level of escalated privileges.
-
-A <dfn>shape</dfn> provides a schema that RDF data graphs must meet in order
-to be considered conformant. A shape associated with a given resource in a
-[=pod=] ensures that any data stored in that resource must conform to the
-associated shape. Shape languages include [[SHEX]] and [[SHACL]].
-
-A <dfn>shape tree</dfn> defines a prospective tree of related resources
-which can be read and written by applications. The shape tree associates
-each of these resources with a shape. This allows one to treat a set of
-related resources as a single grouping, and apply that to a range of
-operations including access control, data organization, data validation,
-and data migration. [[SHAPETREES]]
-
-A <dfn>shape tree instance</dfn> is one or more resources in a [=pod=]
-that conform to a [=shape tree=] definition. Also referred to as a
-*planted shape tree*.
-
-A <dfn>registry set</dfn> is a collection of one or more registries of a
-specific type, including [=application registries=], [=data registries=],
-[=access registries=], and [=remote registries=].
-
-An <dfn>application registry</dfn> is a collection of
-[=application registrations=] stored in a specific location in a [=pod=].
-
-An <dfn>application registration</dfn> provides the [=resource controller=]
-of a [=pod=] with a place to maintain metadata, state, preferences, and
-other application-specific data associated with a given [=application=] they
-have elected to use. An application registration is a [=shape tree instance=]
-of the `<#registration>` shape tree in the [[#application-tree]].
-
-A <dfn>data registry</dfn> is...
-
-An <dfn>access registry</dfn> is...
-
-A <dfn>remote registry</dfn> is...
-
-An <dfn>application registration agent</dfn> is...
-
-
-
 Proposal {#proposal}
 =====================
 
@@ -234,9 +114,9 @@ privilege necessary to complete their tasks.
 We introduce patterns for [[#appreg|registering applications]], authorizing
 access to data, keeping track of access grants, and of remote resources
 for which access has been granted to the [=resource controller=].
-[=trusted agents|Trusted Agents=] operate on the [=resource controller's=] behalf
-with escalated privileges to help her securely manage her data and make
-informed, intuitive, and secure decisions.
+[=trusted agents|Trusted Agents=] perform important actions for the
+[=resource controller's=] with escalated privileges to help her securely
+manage her data and make informed, intuitive, and secure decisions.
 
 Most importantly, this proposal can work with Solid as it exists today, on its
 own or alongside other conventions, with some caveats.
@@ -314,17 +194,16 @@ she shares with him.
 Trusted Agents {#trusted}
 =====================
 
-A [=Trusted Agent=] is an application that acts on someone's
-behalf with full privilege, much like their Identity Provider. They can be
+A [=trusted Agent=] is an application that a [=resource controller=] trusts
+to perform actions for them with elevated privilege. They can be
 trusted to help a resource controller to make smart decisions related to
-their data, and even operate or perform actions on the resource controller's
-behalf.
+their data.
 
-There's no limit to what a Trusted Agent can
+There's no limit to what a trusted agent can
 assist with, but [[#appreg|registering applications]] and authorizing access to
 data are two critical operations covered in this proposal.
 
-An trusted agent for application registration helps the [=resource controller=]
+A trusted [=application registration agent=] helps the [=resource controller=]
 make smart decisions about the applications they choose to utilize, and
 ensure they get provisioned appropriately.
 
@@ -334,7 +213,7 @@ controller wishes to grant limited access to data in her Pod to another
 assistance to determine what access is needed, and help to provision
 that access.
 
-There are three typical patterns to interact with a Trusted Agent;
+There are three typical patterns to interact with a trusted agent;
 *Embedded*, *Synchronous*, and *Asynchronous*.
 
 The **Embedded pattern** is employed when the application in question has full
@@ -344,9 +223,9 @@ this category would be a Pod management application installed by default
 by the user’s Pod provider.
 
 The **Synchronous pattern** utilizes a web-based redirect flow much like an
-OAuth2 grant flow. The user is redirected to the Trusted Agent URL, with
+OAuth2 grant flow. The user is redirected to the trusted agent URL, with
 a callback parameter provided as part of the request. When the
-Trusted Agent is finished, it sends the user back to the provided
+trusted agent is finished, it sends the user back to the provided
 callback URL. This is an excellent pattern for application registration
 and data authorization.
 
@@ -355,7 +234,7 @@ sent to the Trusted Agent through some mechanism (direct, pubsub, etc).
 This flow is most typical for server-side/bot applications or any piloted
 clients that can make use of asynchronous notification processing.
 
-A given Trusted Agent may employ one or more of these patterns.
+A given trusted agent may employ one or more of these patterns.
 
 Use Case Summary {#summary}
 =====================
@@ -397,7 +276,7 @@ and authorized it to access her Notebooks and Notes.
 
 Alice logs into her [=identity provider=] (`https://idp.example`) with her
 WebID (`https://alice.pod.example/id#me`) and ultimately ends up with
-a [=bearer token=] that NeverNote can use to make requests to her Pod.
+a [=token=] that NeverNote can use to make requests to her Pod.
 The token identifies her as Alice (`https://alice.pod.example/id#me`),
 using NeverNote (`https://nevernote.example/id#agent`) as a
 [=user-piloted application=].
@@ -648,6 +527,128 @@ this helps avoid the creation of application-specific silos.
 Because this space is private to an application and not meant to
 be interoperable, the application may or may not decide to utilize
 data validation facilities like shape trees or shapes.
+
+Definitions {#definitions}
+=====================
+
+<b>All definitions as stated below should be considered in the context of
+an [=interoperable ecosystem=] for [=Solid=], whether explicitly stated
+or not.</b>
+
+<dfn>Solid</dfn> is a protocol made up of a number of open web standards
+aimed at decentralizing data on the web.
+
+A Solid <dfn>pod</dfn> is a place for storing and accessing data via
+the [=Solid=] protocol, with mechanisms for controlling who or what can
+access that data.
+
+An <dfn>interoperable ecosystem</dfn> is a collection of
+[=Solid=] compatible [=applications=] developed by one or more entities,
+used by a community of users, that can safely access and manipulate the same
+kinds of data in [=pods=].
+
+An <dfn>application</dfn> is a piece of software that interfaces with a
+Solid pod, either as a [=server-side application=], or as a
+[=user-piloted application=].
+
+A <dfn>server-side application</dfn> runs on a dedicated server. They may
+also act as autonomous [=authenticated agents=].
+
+A <dfn>user-piloted application</dfn> runs on a user's device, with the user
+as the [=authenticated agent=]. They include in-browser javascript
+applications, native desktop applications, and mobile applications.
+
+An <dfn>agent</dfn> is a distinct individual, group, organization, or piece
+of software with an identity that can be strongly authenticated.
+
+An <dfn>identity</dfn> in Solid is a unique URI that can be dereferenced to
+return an [=identity profile document=]. Compatible identity systems
+include [=WebID=] and [=DID=].
+
+An <dfn>identity profile document</dfn> is a linked data document obtained
+by dereferencing the URI for a given [=identity=]. It provides information
+that can be used to prove that a given [=agent=] controls the document.
+
+An <dfn>authenticated agent</dfn> is an [=agent=] that has strongly
+authenticated their [=identity=] by proving control of the
+[=identity profile document=] via an authentication protocol such as
+[[WEBID-OIDC]].
+
+A <dfn>WebID</dfn> is a web resource at an HTTP URI which refers to an
+[=agent=]. An [=identity profile document=] can be accessed by
+dereferencing the WebID. [[WEBID]]
+
+A <dfn>DID</dfn> is a URI that associates a DID subject (e.g. an [=agent=],
+thing, data model, abstract entity, etc.) with a DID document,
+equivalent to an [=identity profile document=], to allow trustable
+interactions with that subject. [[DID]]
+
+An <dfn>identity provider</dfn> furnishes an [=agent=] with authenticated
+credentials that prove agent is who it says it is, across the web.
+
+A <dfn>token</dfn> is used to make authenticated requests to the [=Solid=]
+server for a given [=authenticated agent=].
+
+An <dfn>ApplicationID</dfn> is a web resource at an HTTP URI uniquely associated
+with a given [=application=]. For [=server-side applications=], it may also
+serve as an [=identity=]. An [=application profile document=] can be
+accessed by dereferencing the ApplicationID.
+
+An <dfn>application profile document</dfn> is a linked data document
+obtained by dereferencing the URI for a given [=ApplicationID=]. It contains
+useful information about an application that can be employed in
+various workflows including application registration and data authorization.
+
+A <dfn>resource controller</dfn> is an [=authenticated agent=] with full
+privileges and control over a given resource or set of resources.
+
+An <dfn>acl resource</dfn> as defined by [[WAC]] may be directly
+associated with a resource or indirectly associated with a resource
+through inheritance. It determines which [=agents=] can access a
+resource, and the modes of access they have for it.
+
+A <dfn>trusted agent</dfn> is any [=application=] that a
+[=resource controller=] trusts to perform actions for them. These
+actions typically require some level of escalated privileges.
+
+A <dfn>shape</dfn> provides a schema that RDF data graphs must meet in order
+to be considered conformant. A shape associated with a given resource in a
+[=pod=] ensures that any data stored in that resource must conform to the
+associated shape. Shape languages include [[SHEX]] and [[SHACL]].
+
+A <dfn>shape tree</dfn> defines a prospective tree of related resources
+which can be read and written by applications. The shape tree associates
+each of these resources with a shape. This allows one to treat a set of
+related resources as a single grouping, and apply that to a range of
+operations including access control, data organization, data validation,
+and data migration. [[SHAPETREES]]
+
+A <dfn>shape tree instance</dfn> is one or more resources in a [=pod=]
+that conform to a [=shape tree=] definition. Also referred to as a
+*planted shape tree*.
+
+A <dfn>registry set</dfn> is a collection of one or more registries of a
+specific type, including [=application registries=], [=data registries=],
+[=access registries=], and [=remote registries=].
+
+An <dfn>application registry</dfn> is a collection of
+[=application registrations=] stored in a specific location in a [=pod=].
+
+An <dfn>application registration</dfn> provides the [=resource controller=]
+of a [=pod=] with a place to maintain metadata, state, preferences, and
+other application-specific data associated with a given [=application=] they
+have elected to use. An application registration is a [=shape tree instance=]
+of the `<#registration>` shape tree in the [[#application-tree]].
+
+An <dfn>application registration agent</dfn> is a type of [=trusted agent=]
+that a [=resource controller=] uses to register and manage applications that
+interface with their [=pod=].
+
+A <dfn>data registry</dfn> is...
+
+An <dfn>access registry</dfn> is...
+
+A <dfn>remote registry</dfn> is...
 
 
 Use Case Environment {#environment}
