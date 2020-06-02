@@ -1,10 +1,10 @@
 # Problems and Goals for Interoperability, Collaboration, and Security in a Solid Pod
 
-**Main Contributors:**  
-Justin Bingham - [@justinwb](https://github.com/justinwb)   
-Eric Prud'hommeaux - [@ericprud](https://github.com/ericprud)  
-Jamie Fiedler - [@jamiefiedler](https://github.com/jamiefiedler)  
-Josh Collins - [@joshdcollins](https://github.com/joshdcollins)  
+**Main Contributors:**
+Justin Bingham - [@justinwb](https://github.com/justinwb)
+Eric Prud'hommeaux - [@ericprud](https://github.com/ericprud)
+Jamie Fiedler - [@jamiefiedler](https://github.com/jamiefiedler)
+Josh Collins - [@joshdcollins](https://github.com/joshdcollins)
 
 for the [Solid Interoperability Panel](https://github.com/solid/interoperability-panel)
 
@@ -36,6 +36,8 @@ __Data must be discoverable.__ Applications must know where to write the data th
 
 __Data must be durable.__ One application cannot break or corrupt the data being used by others. The hippocratic oath swears doctors to “first, do no harm”, and in similar fashion we must incorporate mechanics to prevent data corruption, either through accident or malicious intent. We must also have ready mechanisms in place to recover from data loss or corruption when it inevitably happens, despite our best efforts. Some of the same schemas and shape trees used to facilitate a shared understanding of data should be employed to validate the same for durability.
 
+__Data must be portable.__ Data should be moveable between pods, across conformant server implementations, without negatively affecting interoperable use by the users' applications.
+
 __Data and applications may evolve.__ Data and Applications must have room to evolve independently without negatively affecting the other key elements of interoperability, hampering the end user experience, or violating secure data boundaries already in place.
 
 ## Problem #2 - People must be able to understand what data they have to effectively use it or share it safely.
@@ -60,12 +62,11 @@ Making data interoperable when one person is using multiple applications is chal
 
 These disparate entities may only be authorized to access or manipulate specific subsets of data. They’re also likely to have different needs based on different patterns of use. Because Solid uses a hierarchical resource model, this means that **any organizing scheme that we use for data in Solid must be designed with authorization as the common denominator**. The controller of data must authorize who and what can access that data, and we fail if they cannot do that in a way that provides rational compartmentalization through an intuitive experience.
 
-Take a common use case, where a Solid Pod is *controlled* by one person; i.e. Alice. The data stored inside of that Pod is Alice’s. As a controller of the Pod, Alice needs the ability to authorize other people, applications, and/or agents to access some or all of the data inside it.
+Take a common use case, where a Solid Pod is *controlled* by one person; i.e. Alice. The data stored inside of that Pod is Alice’s. As a controller of the Pod, Alice needs the ability to authorize other agents (people and/or applications) to access some or all of the data inside it.
 
-When deciding whether to authorize another entity or application, to access data in her Pod, Alice is faced with five considerations:
+When deciding whether to authorize another person or application to access data in her Pod, Alice is faced with four considerations:
 
-1. Is this entity (person or agent) credible and trustworthy?
-1. What client(s) do I trust them to use to access my data?
+1. Is this entity (person or application) credible and trustworthy?
 1. What data should they be authorized to access?
 1. What level of access should they have?
 1. What will they use the data for?
@@ -80,21 +81,19 @@ Comprehension of data boundaries that are defined by shape trees aids collaborat
 
 #### Determining trustworthiness of entities
 
-Determining whether an entity is credible or trustworthy is a complex and multi-faceted problem. It can require assurances as to the integrity of an individual, organization, or application at multiple levels, a problem which demands rigorous and dedicated focus. Rather than propose a specific method to determine trustworthiness, it is important to identify a framework through which different and/or complementary measures for trustworthiness can be employed.
+Determining whether an entity is credible or trustworthy is a multi-faceted problem. It can require assurances as to the integrity of an individual, organization, or application at multiple levels. It is important to establish patterns and frameworks through which different and/or complementary measures for trustworthiness can be employed.
 
-#### Determining what clients can be used
-
-Determining which clients the data controller trusts to access their data is critical. They may trust a given entity, but that entity may be unknowingly using an application that is insecure or deliberately malicious. The data controller must have the ability to exert control (if they desire) to ensure that only trustworthy applications can interface with their data.
+Trusting an entity also extends to the applications used by that entity to access shared data. If that entity is a server-side application, the application and the entity are one and the same. If that entity is an individual, then the applications they use or "pilot" must also factor into the estimation of their trustworthiness.
 
 #### Determining what data can be shared with entities and clients
 
 Alice must be equipped with the right amount of information, presented in an intuitive manner, to make safe decisions when she grants access to her data. She must prevent undue exposure to her data by giving out too much access, but at the same time she needs to provide enough to support the workflows that led her to share her data in the first place.
 
-Authorization must be intuitive. Applications and services must be able to communicate the data they need access to in ways people understand, that map to their understanding of the data they have. People’s intuitive data boundaries are logical units of sharing and/or collaboration. Intuitive means that people understand what they are sharing, the ramifications of what they are sharing, and how the data will be used. We must avoid inadvertent access, where someone doesn’t realize what they’re giving access to and exposes private details.
+Authorization must be intuitive. Applications and services must be able to communicate the data they need access to in ways people understand, that map to their understanding of the data they have. Intuitive data boundaries are logical units of sharing and/or collaboration. Intuitive means that people understand what they are sharing, the ramifications of what they are sharing, and how the data will be used. We must avoid inadvertent access, where someone doesn’t realize what they’re giving access to and exposes private data.
 
 #### Determining what level of access to provide entities and clients
 
-Should entities and clients be able to read vs. write? Should they have control access that allows them to change permissions? That should be reserved only for a minority of applications that are supremely trusted. The application should be able to stipulate what modes of access it needs when expressing the kind of things it requires access to. This should allow requests to be presented to the user in an intuitive way, and limit the ability for an application or entity to gain more access than it needs to operate.
+Should entities and clients be able to read vs. write? Should they have control access that allows them to change permissions? Elevated privileges should be reserved for a minority of people and applications that are supremely trusted. The application should be able to stipulate what modes of access it needs when expressing the kind of things it requires access to. This should allow requests to be presented to the user in an intuitive way, and limit the ability for an application or entity to gain more access than it needs to operate.
 
 ## Problem #4 - People shouldn’t need to think about how to physically organize their data to use Solid.
 
