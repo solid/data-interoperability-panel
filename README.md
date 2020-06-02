@@ -46,6 +46,7 @@ Meeting URL: https://global.gotomeeting.com/join/620786365
 | [2020-04-27](https://github.com/solid/data-interoperability-panel/blob/master/meetings/13-20200427.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/13-20200427.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/13-20200427.md#minutes) |
 | [2020-05-11](https://github.com/solid/data-interoperability-panel/blob/master/meetings/14-20200511.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/14-20200511.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/14-20200511.md#minutes) |
 | [2020-05-18](https://github.com/solid/data-interoperability-panel/blob/master/meetings/15-20200518.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/15-20200518.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/15-20200518.md#minutes) |
+| [2020-06-01](https://github.com/solid/data-interoperability-panel/blob/master/meetings/16-20200601.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/16-20200601.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/16-20200601.md#minutes) |
 
 ## Process
 
