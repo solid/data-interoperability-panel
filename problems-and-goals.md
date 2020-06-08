@@ -1,10 +1,10 @@
 # Problems and Goals for Interoperability, Collaboration, and Security in a Solid Pod
 
 **Main Contributors:**
-Justin Bingham - [@justinwb](https://github.com/justinwb)
-Eric Prud'hommeaux - [@ericprud](https://github.com/ericprud)
-Jamie Fiedler - [@jamiefiedler](https://github.com/jamiefiedler)
-Josh Collins - [@joshdcollins](https://github.com/joshdcollins)
+Justin Bingham - [@justinwb](https://github.com/justinwb)  
+Eric Prud'hommeaux - [@ericprud](https://github.com/ericprud)  
+Jamie Fiedler - [@jamiefiedler](https://github.com/jamiefiedler)  
+Josh Collins - [@joshdcollins](https://github.com/joshdcollins)  
 
 for the [Solid Interoperability Panel](https://github.com/solid/interoperability-panel)
 
