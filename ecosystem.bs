@@ -1,0 +1,1254 @@
+<pre class="metadata">
+Title: Proposal for an Interoperable Solid Ecosystem
+Shortname: your-spec
+Level: 1
+Max ToC Depth: 2
+Status: w3c/ED
+Group: w3c
+URL: http://example.com/url-this-spec-will-live-at
+Editor: Justin Bingham
+Editor: Eric Prud'hommeaux
+Editor: Josh Collins
+Markup Shorthands: markdown yes
+Abstract:
+  A proposal for a Solid ecosystem that supports data interoperability across
+  applications while enabling secure collaboration and query using intuitive
+  data boundaries without changing the fundamentals of Solid, presented in the
+  form of an end-to-end use case.
+</pre>
+
+Problems and Goals {#problems-goals}
+=====================
+
+Solid affords us the opportunity to create a valuable and
+powerful ecosystem where people and organizations retain control of their data,
+but are also able to put it to work and use it to its full potential. The
+fundamentals of Solid make this possible, but further definition of standard
+methods and mechanisms must be established to make it practical, intuitive, and
+secure.
+
+<div class="assertion">
+
+[Problem #1](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-1---disparate-applications-cannot-practically-interoperate-over-the-same-data-safely-and-effectively) -
+    Disparate applications cannot practically interoperate over the same data
+    safely and effectively.
+
+* <b>[Goal](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-1---seamless-data-interoperability-across-disparate-applications) -
+    Seamless data interoperability across disparate applications.</b>
+
+[Problem #2](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-2---people-must-be-able-to-understand-what-data-they-have-to-effectively-use-it-or-share-it-safely) -
+    People must be able to understand what data they have to effectively use it
+    or share it safely.
+
+* <b>[Goal](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-2---use-intuitive-data-boundaries-to-provide-human-to-machine-interoperability) -
+    Use intuitive data boundaries to provide human to machine interoperability.</b>
+
+[Problem #3](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-3---disparate-entities-using-different-applications-must-be-able-to-safely-and-effectively-interoperate-within-their-scope-of-authorization) -
+    Disparate entities using different applications must be able to
+    safely and effectively interoperate within their scope of authorization.
+
+* <b>[Goal](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-3---secure-collaboration-over-intuitive-data-boundaries) -
+    Secure collaboration over intuitive data boundaries.</b>
+
+[Problem #4](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-4---people-shouldnt-need-to-think-about-how-to-physically-organize-their-data-to-use-solid) -
+    People shouldn’t need to think about how to physically organize
+    their data to use Solid.
+
+* <b>[Goal](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-4---standard-and-flexible-organizing-model-for-data) -
+    Standard and flexible organizing model for data.</b>
+
+[Problem #5](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-5---when-data-is-stored-and-secure-it-should-be-queryable-using-any-mechanism-and-able-to-be-requested-in-different-representations) -
+    When data is stored and secure, it should be queryable using any
+    mechanism, and able to be requested in different representations.
+
+* <b>[Goal](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-5---flexibility-and-support-for-different-and-evolving-query-mechanisms) -
+    Flexibility and support for different and evolving query mechanisms.</b>
+
+[Problem #6](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#problem-6---these-problems-must-be-solvable-using-the-fundamentals-of-solid-as-it-exists-today) -
+    These problems must be solvable using the fundamentals of Solid
+    as it exists today.
+
+* <b>[Goal](https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md#goal-6---optimize-and-extend-but-do-not-change-solid-fundamentals) -
+    Optimize and extend, but do not change Solid fundamentals.</b>
+
+</div>
+
+We must be able to support data interoperability across applications while
+enabling secure collaboration and query using intuitive data boundaries.
+
+Diversity in how the same data will be accessed and manipulated by different
+entities and applications exacerbates the need for reliable mechanisms that
+protect against data corruption, data leakage, or broken workflows
+
+Standard methods and mechanisms for interoperability, collaboration, and
+security of data in a Solid Pod must realize these needs, and it must be done
+without changing the fundamentals of Solid.
+
+Note: See [[PROBLEMS-AND-GOALS]] for a detailed explanation of each discrete
+problem.
+
+Proposal {#proposal}
+=====================
+
+In this proposal, we aim to address the stated problems and associated goals
+by providing straightforward patterns that can be used in concert to realize
+an [=interoperable ecosystem=] for [=Solid=]. To aid in understanding,
+we structure the proposal in the form of an end-to-end use case.
+
+We introduce [=shape trees=] as a fundamental means through which we model,
+validate, organize, and authorize data stored in a Solid [=pod=]. Data becomes
+durable, interoperable, and available to be retrieved in different
+representations or discovered through any query mechanism.
+
+Nowhere in this proposal does an [=agent=] or
+[=application=] need to worry about where to store data, or where to find it.
+Data is organized and shared using intuitive data boundaries
+provided by [=shape trees=], making it easy for Alice, Bob, and their respective
+applications to interoperate with each other in a way that they all understand.
+In concert with [=acl resources=], this organization scheme facilitates
+straightforward compartmentalized access by [=authenticated agents=] and
+[=applications=], and allows them to operate using the least amount of
+privilege necessary to complete their tasks.
+
+
+We introduce patterns for [[#appreg|registering applications]], authorizing
+access to data, keeping track of access grants, and of remote resources
+for which access has been granted to the [=resource controller=].
+[=trusted agents|Trusted Agents=] perform important actions for the
+[=resource controller's=] with escalated privileges to help her securely
+manage her data and make informed, intuitive, and secure decisions.
+
+Most importantly, this proposal can work with Solid as it exists today, on its
+own or alongside other conventions, with some caveats.
+
+<div class="assertion">
+
+* Identifying the [=ApplicationID=] in an [=acl resource=] statement
+    requires [[WAC]] extension and IdP support. This proposal still works
+    without this, but you would no longer be able to compartmentalize
+    access between [=user-piloted applications=] in use by the
+    [=resource controller=].
+* This proposal assumes support for [=shape=] validation on the [=Solid=]
+    server. It will still work without this support, but will significantly
+    hamper data durability, integrity, and interoperability. Similarly,
+    it doesn't require the server to perform [=shape tree=] validation,
+    but more reliable and durable interoperability would be achieved with
+    server-side support.
+
+</div>
+
+Client Identification {#client}
+=====================
+
+Throughout this proposal, we see cases where Alice compartmentalizes access
+to her data based on who or what is access it - the [=authenticated agent=].
+In certain cases, we also limit access based on the application in use
+by Alice - the
+[=user-piloted application=].
+
+We utilize a new optional predicate in an [=acl resource=] statement to
+restrict access to permitted [=user-piloted applications=], identified by their
+[=ApplicationIDs=].
+
+Limiting access to data based on
+the [=user-piloted application=] in use is only reliable in certain
+instances when the [=application=] can be identified with confidence.
+
+## Identifying client applications ## {#client-id}
+
+For identification purposes, client [=applications=] in use across the world
+today fall into two buckets; *strongly identifiable* and *weakly identifiable*.
+
+**Strongly identifiable clients** can be identified by 3rd parties independently
+from their user/controller. Only [=server-side applications=] are
+strongly identifiable. As confidential clients, they can keep secrets
+and can present attestations and third-party credentials
+via DNS / domain certificates.
+
+**Weakly identifiable clients** include in-browser JS apps and native desktop
+or mobile applications. They are considered weakly identifiable because they
+are not able to keep secrets on an instance level. They are often referred to
+as public clients. Native apps should be strongly-identifiable in theory
+(since they are able to keep secrets on an instance level), but not in
+practice because the OS manufacturers do not make their trust
+infrastructure available. **Weakly identifiable clients are only strongly
+identifiable to the user controlling them**.
+
+## Limiting access by client application ## {#client-limit}
+
+In the case of a strongly identifiable [=server-side application=],
+the [=authenticated agent=] and the client application are the same. The client
+application has its own [=identity=] that can be strongly authenticated. Alice
+chooses which data that client application's identity can access, in the same
+way that she chooses which data Bob can access.
+
+In the case of [=user-piloted applications=], the ability for a Solid pod to
+limit access to data by the client application in use is only as strong as
+the trustworthiness of the user piloting that application, and their ability
+to avoid using malicious applications. The [=ApplicationID=] can be manipulated
+by the user in control of the app. This means that Alice can strongly control
+the applications that she uses to compartmentalize her own data, but has
+limited ability to control the applications that Bob uses to access the data
+she shares with him.
+
+Trusted Agents {#trusted}
+=====================
+
+A [=trusted Agent=] is an application that a [=resource controller=] trusts
+to perform actions for them with elevated privilege. They can be
+trusted to help a resource controller to make smart decisions related to
+their data.
+
+There's no limit to what a trusted agent can
+assist with, but [[#appreg|registering applications]] and authorizing access to
+data are two critical operations covered in this proposal.
+
+A trusted [=application registration agent=] helps the [=resource controller=]
+make smart decisions about the applications they choose to utilize, and
+ensure they get provisioned appropriately.
+
+A trusted agent for data authorization is needed in cases where the resource
+controller wishes to grant limited access to data in her Pod to another
+[=authenticated agent=] or [=user-piloted application=], but needs
+assistance to determine what access is needed, and help to provision
+that access.
+
+There are three typical patterns to interact with a trusted agent;
+*Embedded*, *Synchronous*, and *Asynchronous*.
+
+The **Embedded pattern** is employed when the application in question has full
+control privileges, and the trusted agent capabilities can
+be executed directly. An example of an application that could fall into
+this category would be a Pod management application installed by default
+by the user’s Pod provider.
+
+The **Synchronous pattern** utilizes a web-based redirect flow much like an
+OAuth2 grant flow. The user is redirected to the trusted agent URL, with
+a callback parameter provided as part of the request. When the
+trusted agent is finished, it sends the user back to the provided
+callback URL. This is an excellent pattern for application registration
+and data authorization.
+
+The **Asynchronous pattern** utilizes an event based model, where a message is
+sent to the Trusted Agent through some mechanism (direct, pubsub, etc).
+This flow is most typical for server-side/bot applications or any piloted
+clients that can make use of asynchronous notification processing.
+
+A given trusted agent may employ one or more of these patterns.
+
+Use Case Summary {#summary}
+=====================
+
+In our use case, Alice wants to use a new application to record and manage
+her personal and professional notes. She does a Web search and finds
+NeverNote (https://nevernote.example), a web-based application that advertises
+itself as Solid Enabled. Alice is excited about this because she recently
+created a Solid Pod for herself at https://alice.pod.example.
+
+We follow Alice (and then Bob) through the following sequence:
+
+1. Alice decides to use a Solid-enabled web application called NeverNote
+1. NeverNote checks to see if it has been registered with Alice’s Pod already
+1. NeverNote is registered with Alice’s Pod through the help of Alice’s
+    Application Registration Agent.
+1. Through the help of her Authorization Agent, Alice grants NeverNote the
+    following privileges:
+    * Access to Notes that already existed in her Pod
+    * Ability to create new Notes that NeverNote will have permission to manage
+    * Ability to create new Notebooks that NeverNote will have permission to manage
+1. Alice later expands NeverNote’s access to include her Contacts
+1. Alice and Bob collaborate on a Notebook in Alice’s Pod. Bob is using a
+    different application than NeverNote called OtherNote.
+
+Application Registration {#appreg}
+=====================
+
+Issue: Consider incorporating a little bit of text here on *why* it is
+important for an application to be registered.
+
+## Checking registration status ## {#reg-status}
+
+When Alice arrives at NeverNote (`https://nevernote.example`) in her
+web browser, she is prompted to login with her [=WebID=] because NeverNote
+doesn’t know who she is yet. She could be a completely new user of
+NeverNote, or a returning user that has already registered NeverNote
+and authorized it to access her Notebooks and Notes.
+
+Alice logs into her [=identity provider=] (`https://idp.example`) with her
+WebID (`https://alice.pod.example/id#me`) and ultimately ends up with
+a [=token=] that NeverNote can use to make requests to her Pod.
+The token identifies her as Alice (`https://alice.pod.example/id#me`),
+using NeverNote (`https://nevernote.example/id#agent`) as a
+[=user-piloted application=].
+
+First NeverNote needs to check Alice’s [=application registries=] to see if
+there is already an [=application registration=] for NeverNote in one of
+them. If there is, than Nevernote is already registered, and doesn't
+need to go through the process again. If there is not, NeverNote will
+engage Alice's trusted [=application registration agent=] to register itself.
+
+### Discovering application registries ### {#reg-discovery}
+
+To discover Alice’s application registries, NeverNote must first dereference
+Alice's WebID to access [[#alice-profile]]. In that
+[=identity profile document=], NeverNote will look for an application
+[=registry set=]. There are registry sets of varying types listed
+in [[#alice-profile]]. Each registry set of a given type lists one or more
+registries of that type in different locations.
+
+<b>Excerpt from [[#alice-profile]]</b>
+<pre highlight="turtle">
+  <#me>
+    solid-ecosystem:applicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; .
+</pre>
+
+Alice’s application registry set document is separate from her public
+identity profile document.
+This allows it to have a separate set of permissions.
+Registry set documents are not publicly accessible. They can only be
+accessed by Alice, or by a [=trusted agent=] where applicable.
+
+In [[#alice-appregset]] document, NeverNote sees that Alice has an
+application registry that stores application registrations in
+`<https://alice.pod.example/applications/>`.
+
+<b>Excerpt from [[#alice-appregset]] Document</b>
+<pre highlight="turtle">
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+
+<#set>
+  a solid-ecosystem:registrySet ;
+  solid-ecosystem:registryType solid-ecosystem:ApplicationRegistry ;
+  # Alice only has one application registry. If she had more than one
+  # there would be multiple members of the registry set
+  solid-ecosystem:registrySetMember <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e> .
+
+<#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e>
+  solid-ecosystem:registryType solid-ecosystem:ApplicationRegistry ;
+  # Where to storage registry data
+  solid-ecosystem:registryStorage &lt;https://alice.pod.example/applications/&gt; .
+</pre>
+
+### Finding a specific registered application ### {#reg-findapp}
+
+Every registered
+application has an [=application registration=] stored in
+an [=application registry=]. The object value of
+`solid-ecosystem:registryStorage` identifies where these are stored.
+NeverNote needs to determine if it is already registered, so it needs to
+see if there is an entry for itself at
+`<https://alice.pod.example/applications/>`.
+
+Only the [=resource controller=] (Alice) and her trusted agents should have
+visibility and control
+of her application registry sets and registries. Just because Alice
+uses a given application like NeverNote doesn't mean that NeverNote should
+be allowed to know every other application she uses.
+Consequently, we do not give NeverNote read access to the
+entire application registry. Nor do we allow it to directly access any
+other application registration entries, or allow it to register itself.
+
+We do allow NeverNote (as a [=user-piloted application=] used by Alice),
+to directly access its own
+application registration entry. However, Nevernote must know how
+to find that entry using information it already has. We solve this by using
+a SHA3-256 hash of NeverNote's ApplicationID to name the container
+of the application registration entry.
+
+Since NeverNote knows its own ApplicationID, it looks for
+a SHA3-256 hash of `https://nevernote.example/id#agent` in
+`https://alice.pod.example/applications/`.
+
+<pre>
+GET https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae
+</pre>
+
+If NeverNote is unable to access the registration entry, then it knows that it
+needs to be registered. Inability to access would be for one of the following
+reasons:
+
+* **There is no application registration for NeverNote.** The server may return
+    either a 403 or 404 depending on server or user privacy preference.
+* **There is an application registration at the target URL, but NeverNote
+    cannot access it because it is associated with another application's
+    identity.** The server may return either a 403 or 404 depending on
+    server or user privacy preference.
+
+If NeverNote can read the
+application registration entry, then it can confirm that it
+is already a registered application in Alice’s Pod.
+
+In the proposed use case, Alice hasn't registered NeverNote yet,
+so it cannot access an application registration entry for itself. It needs to be
+registered, and that must be facilitated through
+Alice’s trusted [=application registration agent=].
+
+
+## Registering the application ## {#appreg-registration}
+
+NeverNote has determined that it needs to be registered in Alice’s
+Pod. It cannot register itself, so it needs the help of Alice's
+[=application registration agent=]. It must first dereference Alice's WebID to
+access [[#alice-profile]]. It will then look for the
+`solid-ecosystem:applicationRegistrationAgent` predicate in the contents
+of her identity profile document to discover the
+application registration agent she trusts.
+
+<b>Excerpt from [[#alice-profile]]</b>
+<pre highlight="turtle">
+  <#me> solid-ecosystem:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt; .
+</pre>
+
+NeverNote redirects Alice via the synchronous trusted agent pattern to
+the `solid-ecosystem:applicationRegistrationAgent` at `https://trusted.example/ar/`,
+supplying its [=ApplicationID=]
+(`https://nevernote.example/id#agent`) as a parameter. The
+ApplicationID uniquely identifies the application, and leads to
+[[#nevernote-profile]], an RDF document containing data required to
+complete the registration process.
+
+Issue: Provide a sequence diagram for application registration, and incorporate
+specific detail about the end user experience during that flow.
+
+The application registration agent is now expected to dereference
+(i.e. perform an HTTP GET on) the ApplicationID to retrieve
+[[#nevernote-profile]]. The contents of an [=application profile document=]
+help the agent determine whether that application is suitable for
+approval.
+
+For example, verification of a verifiable credential
+stored in [[#nevernote-profile]], issued by a third party that Alice
+trusts, is a good indicator of the application’s trustworthiness.
+Similarly, an application, or the [=identity provider=] it uses, may
+be listed on a trusted whitelist that the Application Registration
+Agent consults. The Application Registration Agent is able to raise
+issues related to these checks (or others) to Alice as part of
+her decision making process.
+
+Assuming suitability and confirmation from Alice, the
+application registration agent will proceed in [[#appreg-creating]] for
+NeverNote in Alice’s Pod. When it is finished, it will return her to
+NeverNote at the `solid-ecosystem:applicationRegistrationCallback` address in
+[[#nevernote-profile]].
+
+<b>Excerpt from [[#nevernote-profile]]:</b>
+
+<pre highlight="turtle">
+<#agent>
+    solid-ecosystem:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt; ;
+</pre>
+
+### Creating the application registration entry ### {#appreg-creating}
+
+[=Application registrations=] are instances of
+[[#application-tree|application registration shape trees]].
+Each application registration is a container, which allows
+important metadata about the application to be stored, and also gives
+an application the [[#appreg-internaluse]] that it may need for certain
+non-interoperable data important to its own internal operations, but not
+pertinent to other applications'.
+
+NeverNote’s ApplicationID: `https://nevernote.example/id#agent`
+
+SHA3-256 hash: `ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae`
+
+The hash of NeverNote’s ApplicationID will be used to name the
+application registration container and uniquely identify it. Per the location
+defined by `solid-ecosystem:registryStorage` in [[#alice-appregset]],
+the [=application registration=] will be provisioned at:
+
+`https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae`.
+
+NeverNote will always know where to find this, because it knows its
+own ApplicationID.
+
+The following resource contains the registration detail:
+`https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/application#registration`.
+
+<b>Excerpt from [[#alice-appregnevernote]]</b>
+<pre highlight="turtle">
+<#registration>
+  a solid-ecosystem:applicationRegistration ;
+  solid-ecosystem:applicationRegisteredBy &lt;https://alice.pod.example/id#me&gt; ;
+  solid-ecosystem:registeringApplication &lt;https://trusted.example/ar&gt; ;
+  solid-ecosystem:applicationRegistered &lt;https://nevernote.example/id#agent&gt; ;
+  solid-ecosystem:registrationTime "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+</pre>
+
+
+NeverNote is provided read access to the application registration,
+and read/write access to the internal space. This gives NeverNote as
+much freedom as it
+likes to store data in its own internal space, but not the ability
+to change permissions or alter the registration data maintained by
+the [=application registration agent=].
+
+* **/applications** - Alice and trusted agents have full control.
+    * **ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae** -
+        SHA3-256 Hash of NeverNote AppID - NeverNote can read.
+        Alice and trusted agents have full control.
+          * **application** - application registration resource - NeverNote can read.
+              Alice and trusted agents have full control.
+          * **access** - what access the application has been authorized
+              to have - NeverNote can read. Alice and trusted agents have
+              full control.
+          * **internal** - NeverNote can read and write.
+              Alice and trusted agents have full control.
+
+#### Use of internal application space #### {#appreg-internaluse}
+
+There is a legitimate argument that giving applications their own
+private data space in Solid is counterintuitive to Solid’s proposition to
+decouple data and applications.
+
+However, there are certain slices of data that are very specific to
+the function of a particular application, and have no value to other
+applications. This may include but not be limited to application-specific
+preferences, configurations, caches, or indexes. Forcing that data into
+shape trees and shapes stored in the data registry that are supposed
+to be consumable and interoperable by other applications can lead to
+frankenstein-like shape trees and shapes that no one wants to use.
+Giving applications a private space where they can store internal data
+is therefore a key factor in broad interoperability,
+because it protects interoperable data from pollution by narrowly
+focused elements.
+
+Ultimately, if applications don't want to be interoperable, there's
+no reasonable convention that could prevent it. For example, they could
+decide to use proprietary vocabularies, shapes, and shape trees.
+However, there are motivating factors to
+be interoperable, because in doing so they become compatible with a
+slew of data that already exists in the ecosystem, including data within
+their competitive landscape. Providing a private space allows applications
+to separate some internals from true interoperable data so that the
+interoperable data is cleaner and more usable. Our belief is that
+this helps avoid the creation of application-specific silos.
+
+Because this space is private to an application and not meant to
+be interoperable, the application may or may not decide to utilize
+data validation facilities like shape trees or shapes.
+
+Definitions {#definitions}
+=====================
+
+<b>All definitions as stated below should be considered in the context of
+an [=interoperable ecosystem=] for [=Solid=], whether explicitly stated
+or not.</b>
+
+<dfn>Solid</dfn> is a protocol made up of a number of open web standards
+aimed at decentralizing data on the web.
+
+A Solid <dfn>pod</dfn> is a place for storing and accessing data via
+the [=Solid=] protocol, with mechanisms for controlling who or what can
+access that data.
+
+An <dfn>interoperable ecosystem</dfn> is a collection of
+[=Solid=] compatible [=applications=] developed by one or more entities,
+used by a community of users, that can safely access and manipulate the same
+kinds of data in [=pods=].
+
+An <dfn>application</dfn> is a piece of software that interfaces with a
+Solid pod, either as a [=server-side application=], or as a
+[=user-piloted application=].
+
+A <dfn>server-side application</dfn> runs on a dedicated server. They may
+also act as autonomous [=authenticated agents=].
+
+A <dfn>user-piloted application</dfn> runs on a user's device, with the user
+as the [=authenticated agent=]. They include in-browser javascript
+applications, native desktop applications, and mobile applications.
+
+An <dfn>agent</dfn> is a distinct individual, group, organization, or piece
+of software with an identity that can be strongly authenticated.
+
+An <dfn>identity</dfn> in Solid is a unique URI that can be dereferenced to
+return an [=identity profile document=]. Compatible identity systems
+include [=WebID=] and [=DID=].
+
+An <dfn>identity profile document</dfn> is a linked data document obtained
+by dereferencing the URI for a given [=identity=]. It provides information
+that can be used to prove that a given [=agent=] controls the document.
+
+An <dfn>authenticated agent</dfn> is an [=agent=] that has strongly
+authenticated their [=identity=] by proving control of the
+[=identity profile document=] via an authentication protocol such as
+[[WEBID-OIDC]].
+
+A <dfn>WebID</dfn> is a web resource at an HTTP URI which refers to an
+[=agent=]. An [=identity profile document=] can be accessed by
+dereferencing the WebID. [[WEBID]]
+
+A <dfn>DID</dfn> is a URI that associates a DID subject (e.g. an [=agent=],
+thing, data model, abstract entity, etc.) with a DID document,
+equivalent to an [=identity profile document=], to allow trustable
+interactions with that subject. [[DID]]
+
+An <dfn>identity provider</dfn> furnishes an [=agent=] with authenticated
+credentials that prove agent is who it says it is, across the web.
+
+A <dfn>token</dfn> is used to make authenticated requests to the [=Solid=]
+server for a given [=authenticated agent=].
+
+An <dfn>ApplicationID</dfn> is a web resource at an HTTP URI uniquely associated
+with a given [=application=]. For [=server-side applications=], it may also
+serve as an [=identity=]. An [=application profile document=] can be
+accessed by dereferencing the ApplicationID.
+
+An <dfn>application profile document</dfn> is a linked data document
+obtained by dereferencing the URI for a given [=ApplicationID=]. It contains
+useful information about an application that can be employed in
+various workflows including application registration and data authorization.
+
+A <dfn>resource controller</dfn> is an [=authenticated agent=] with full
+privileges and control over a given resource or set of resources.
+
+An <dfn>acl resource</dfn> as defined by [[WAC]] may be directly
+associated with a resource or indirectly associated with a resource
+through inheritance. It determines which [=agents=] can access a
+resource, and the modes of access they have for it.
+
+A <dfn>trusted agent</dfn> is any [=application=] that a
+[=resource controller=] trusts to perform actions for them. These
+actions typically require some level of escalated privileges.
+
+A <dfn>shape</dfn> provides a schema that RDF data graphs must meet in order
+to be considered conformant. A shape associated with a given resource in a
+[=pod=] ensures that any data stored in that resource must conform to the
+associated shape. Shape languages include [[SHEX]] and [[SHACL]].
+
+A <dfn>shape tree</dfn> defines a prospective tree of related resources
+which can be read and written by applications. The shape tree associates
+each of these resources with a shape. This allows one to treat a set of
+related resources as a single grouping, and apply that to a range of
+operations including access control, data organization, data validation,
+and data migration. [[SHAPETREES]]
+
+A <dfn>shape tree instance</dfn> is one or more resources in a [=pod=]
+that conform to a [=shape tree=] definition. Also referred to as a
+*planted shape tree*.
+
+A <dfn>registry set</dfn> is a collection of one or more registries of a
+specific type, including [=application registries=], [=data registries=],
+[=access registries=], and [=remote registries=].
+
+An <dfn>application registry</dfn> is a collection of
+[=application registrations=] stored in a specific location in a [=pod=].
+
+An <dfn>application registration</dfn> provides the [=resource controller=]
+of a [=pod=] with a place to maintain metadata, state, preferences, and
+other application-specific data associated with a given [=application=] they
+have elected to use. An application registration is a [=shape tree instance=]
+of the `<#registration>` shape tree in the [[#application-tree]].
+
+An <dfn>application registration agent</dfn> is a type of [=trusted agent=]
+that a [=resource controller=] uses to register and manage applications that
+interface with their [=pod=].
+
+A <dfn>data registry</dfn> is...
+
+An <dfn>access registry</dfn> is...
+
+A <dfn>remote registry</dfn> is...
+
+
+Use Case Environment {#environment}
+=====================
+
+Issue: Add the contents of the solid-ecosystem vocabulary
+
+## People ## {#people}
+
+### Alice ### {#alice}
+
+<table>
+  <tbody>
+    <tr>
+      <td><th>Alice's Pod URL</th></td>
+      <td>https://alice.pod.example</td>
+    </tr>
+    <tr>
+      <td><th>Alice's WebID</th></td>
+      <td>https://alice.pod.example/id#me</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Alice's Pod Hierarchy #### {#alice-pod}
+
+**Resource hierarchy of Alice's pod at https://alice.pod.example:**
+
+<div class="assertion">
+
+* **id** - [[#alice-profile]]
+* **registries** - Container for registry set documents of each type -
+    validated by the `#container` shape tree in [[#reg-tree]].
+    * **application** - [[#alice-appregset]]
+    * **data** - [[#alice-dataregset]]
+    * **access** - [[#alice-accessregset]]
+    * **remote** - [[#alice-remoteregset]]
+* **applications** - Container where application registration entries are
+    stored, validated by the `#container` shape tree in [[#application-tree]]
+    * **ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae** -
+        [[#alice-appregnevernote]], validated by the `#registration` shape tree
+        in [[#application-tree]]
+* **data** - Registry of data
+    * **d9e11f42-cd85-4191-a272-c974a54ef602** - Local UUID for Notebook Shape Tree
+        * **58c851c1-ef76-4d4b-8868-7472b632bfff** - Notebook Instance UUID
+        * **9fdbd6cc-5994-436a-a0d7-aaa87d401e1e** - Notebook Instance UUID
+        * **45eb3ead-ceb7-4628-8cd3-e9c0b6555b7a** - Notebook Instance UUID
+    * **0d7a50e6-9fe8-4f43-8682-0c990ea46bca** - Local UUID for Note Shape Tree
+        * **b94ad7c1-7f15-496c-b36d-e23eb1ba2327** - Note Instance UUID
+        * **57c3c536-f997-41cf-95d1-a86a8d04311f** - Note Instance UUID
+        * **53fa2198-e88d-4b46-8afa-d975c0882eb3** - Note Instance UUID
+        * **a2f0e442-846d-4308-8eb5-5beea8f7f7e7** - Note Instance UUID
+        * **3d26e6e5-17b7-437c-bb2b-2998b03b4009** - Note Instance UUID
+    * **746dd0ad-9e6e-4e31-8fa3-843d38a9db86** - Local UUID for Contact Shape Tree
+        * **aca1c96f-ea89-4965-abec-d46504f75344** - Contact Instance UUID
+        * **5f330889-04a7-471f-9df8-f75b99453468** - Contact Instance UUID
+        * **e288fd77-ffc6-4747-a0ff-7ad3592abc54** - Contact Instance UUID
+        * **f2dcc56d-7ecd-4af5-94bd-c1fb0fc73b6c** - Contact Instance UUID
+        * **bfe3493b-d26b-473a-8bca-7884d79c8295** - Contact Instance UUID
+* **access** - Alice’s access inbox
+    * **9908fb51-e3e6-46ee-b124-86ddbc02bcef** - Access-related Message
+    * **1e13e429-84fd-4a6f-8aad-ed68e638cc85** - Access-related Message
+* **granted** - Registry of Access Grants
+    * **ce173414-efb5-4971-bb0b-142f94230e9d** - Access Grant Record
+    * **13ccb76c-16e2-4c95-9309-430dd22a78bf** - Access Grant Record
+    * **502869ad-8a0d-4833-9e47-d27365ec03a1** - Access Grant Record
+* **remote** - Registry of remote resources shared with Alice
+    * **d9e11f42-cd85-4191-a272-c974a54ef602** - Local UUID for Notebook Shape Tree
+    * **eb71f9ca-0177-4e19-b35a-0ad20c6ab112** - Reference to instance of Notebook Shape Tree on Tom’s Pod
+
+</div>
+
+#### Alice's Profile Document #### {#alice-profile}
+
+Issue: Need to provide more detail around *how* applications, data, access,
+remote registry items get organized into different registries with a set along
+with use cases.
+
+**Contents of Alice’s profile document at
+https://alice.pod.example/id#me:**
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+
+<#me>
+    # Identity Provider
+    solid:oidcIssuer &lt;https://idp.example&gt; ;
+    # Registry Sets
+    solid-ecosystem:applicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; ;
+    solid-ecosystem:dataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; ;
+    solid-ecosystem:accessRegistrySet &lt;https://alice.pod.example/registries/access#set&gt; ;
+    solid-ecosystem:remoteRegistrySet &lt;https://alice.pod.example/registries/remote#set&gt; ;
+    # Trusted Agents
+    solid-ecosystem:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt; ;
+    # Notification Endpoints
+    solid-ecosystem:hasAccessInbox &lt;https://alice.pod.example/access/inbox&gt; .
+</pre>
+
+#### Alice's Application Registry Set #### {#alice-appregset}
+
+[Validate this](https://tinyurl.com/y94ttyow) against [[#reg-shape]].
+
+**Contents of Alice’s application registry set document at
+https://alice.pod.example/registries/application:**
+
+<pre highlight="turtle">
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+
+<#set>
+  a solid-ecosystem:registrySet ;
+  solid-ecosystem:registryType solid-ecosystem:ApplicationRegistry ;
+  solid-ecosystem:registrySetMember <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e> .
+
+<#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e>
+  solid-ecosystem:registryType solid-ecosystem:ApplicationRegistry ;
+  solid-ecosystem:registryStorage &lt;https://alice.pod.example/applications/&gt; .
+</pre>
+
+#### Alice's Application Registration for Nevernote #### {#alice-appregnevernote}
+
+[Validate this](https://tinyurl.com/yaas3427) against [[#app-shape]].
+
+**Contents of Alice’s application registration for NeverNote at
+https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/application:**
+
+<pre highlight="turtle">
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+
+<#registration>
+  a solid-ecosystem:applicationRegistration ;
+  solid-ecosystem:applicationRegisteredBy &lt;https://alice.pod.example/id#me&gt; ;
+  solid-ecosystem:registeringApplication &lt;https://trusted.example/ar&gt; ;
+  solid-ecosystem:applicationRegistered &lt;https://nevernote.example/id#agent&gt; ;
+  solid-ecosystem:registrationTime "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+</pre>
+
+#### Alice's Data Registry Set #### {#alice-dataregset}
+
+**Contents of Alice’s data registry set document at
+https://alice.pod.example/registries/data:**
+
+<pre highlight="turtle">
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+
+<#set>
+  a solid-ecosystem:registrySet ;
+  solid-ecosystem:registryType solid-ecosystem:DataRegistry ;
+  solid-ecosystem:registrySetMember <#75139b60-f196-4f47-9ea1-91a21d19fd1e>, <#cd72a56e-bd0b-4aef-af63-a77d1b147fdd> .
+
+<#75139b60-f196-4f47-9ea1-91a21d19fd1e>
+  solid-ecosystem:registryType solid-ecosystem:DataRegistry ;
+  solid-ecosystem:registryStorage &lt;https://alice.pod.example/data/&gt; .
+
+<#cd72a56e-bd0b-4aef-af63-a77d1b147fdd>
+  solid-ecosystem:registryType solid-ecosystem:DataRegistry ;
+  solid-ecosystem:registryStorage &lt;https://alice.home.example/data/&gt; .
+
+</pre>
+
+#### Alice's Access Registry Set #### {#alice-accessregset}
+
+**Contents of Alice’s access registry set document at
+https://alice.pod.example/registries/access:**
+
+<pre highlight="turtle">
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+
+<#set>
+  a solid-ecosystem:registrySet ;
+  solid-ecosystem:registryType solid-ecosystem:AccessRegistry ;
+  solid-ecosystem:registrySetMember <#de553f35-232a-4834-ae7f-4b82ec442a42> .
+
+<#de553f35-232a-4834-ae7f-4b82ec442a42>
+  solid-ecosystem:registryType solid-ecosystem:AccessRegistry ;
+  solid-ecosystem:registryStorage &lt;https://alice.pod.example/access/&gt; .
+</pre>
+
+#### Alice's Remote Registry Set #### {#alice-remoteregset}
+
+**Contents of Alice’s access registry set document at
+https://alice.pod.example/registries/remote:**
+
+<pre highlight="turtle">
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+
+<#set>
+  a solid-ecosystem:registrySet ;
+  solid-ecosystem:registryType solid-ecosystem:RemoteRegistry ;
+  solid-ecosystem:registrySetMember <#53cfc5a4-4854-4438-b0ec-82c7183013e3> .
+
+<#53cfc5a4-4854-4438-b0ec-82c7183013e3>
+  solid-ecosystem:registryType solid-ecosystem:RemoteRegistry ;
+  solid-ecosystem:registryStorage &lt;https://alice.pod.example/remote/&gt; .
+</pre>
+
+### Bob ### {#bob}
+
+<table>
+  <tbody>
+    <tr>
+      <td><th>Bob's Pod URL</th></td>
+      <td>https://bob.pod.example</td>
+    </tr>
+    <tr>
+      <td><th>Bob's WebID</th></td>
+      <td>https://bob.pod.example/id#me</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Bob's Profile Document #### {#bob-profile}
+
+**Contents of Bob’s profile document at
+https://bob.pod.example/id#me:**
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+
+<#me>
+    solid:oidcIssuer &lt;https://idp.example&gt;;
+    solid-ecosystem:registrySet &lt;https://bob.pod.example/registries/application#set&gt;;
+    solid-ecosystem:registrySet &lt;https://bob.pod.example/registries/data#set&gt;;
+    solid-ecosystem:registrySet &lt;https://bob.pod.example/registries/access#set&gt;;
+    solid-ecosystem:registrySet &lt;https://bob.pod.example/registries/remote#set&gt;;
+    solid-ecosystem:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt;;
+    solid-ecosystem:hasAccessInbox &lt;https://bob.pod.example/access/inbox&gt;.
+</pre>
+
+## Applications ## {#applications}
+
+### NeverNote ### {#nevernote}
+
+<table>
+  <tbody>
+    <tr>
+      <td><th>Application URL</th></td>
+      <td>https://nevernote.example</td>
+    </tr>
+    <tr>
+      <td><th>Application ID (AppID)</th></td>
+      <td>https://nevernote.example/id#agent</td>
+    </tr>
+    <tr>
+      <td><th>SHA3-256 Hash of AppID</th></td>
+      <td>ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae</td>
+    </tr>
+  </tbody>
+</table>
+
+#### NeverNote's Profile Document #### {#nevernote-profile}
+
+**Contents of NeverNote’s Profile Document at
+https://nevernote.example/id#agent:**
+
+Issue: We may want a more robust description of application type than only
+schema:softwareApplication, especially given the different types of client and
+their associated security considerations.
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt; .
+@prefix schema: &lt;http://www.schema.org&gt; .
+
+<#agent>
+    # this is an application, not a person
+    a schema:softwareApplication;
+    # redirect to this URL after going through authorization agent workflow
+    solid-ecosystem:authorizationCallback &lt;https://nevernote.example/data-authorization&gt; ;
+    # redirect to this URL after going through application registration
+    # agent workflow
+    solid-ecosystem:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt; ;
+
+# Declaration of the type of access this application needs
+# UUID randomly generated for subject value
+<#33116309-1667-4a7b-a91f-4dbf177e3f95>
+    a solid-ecosystem:accessNeed;
+    # Access needs related to notebook shape trees
+    solid-ecosystem:shapetree &lt;https://shapetrees.example/commonnote#notebook&gt;
+    # Request permission create new notebook shape trees
+    solid-ecosystem:shapetreeCreate true;
+    # Request permission to read and write created notebook shape trees
+    solid-ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    # Request access to any existing notebook shape trees
+    solid-ecosystem:shapetreeExistingAccess true;
+    # Request permission to read and write existing notebook shape trees
+    solid-ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
+
+<#75054942-b8b4-4e3a-84e4-7b564ca1ae7a>
+    a solid-ecosystem:accessNeed;
+    solid-ecosystem:shapetree &lt;https://shapetrees.example/commonnote#note&gt;;
+    solid-ecosystem:shapetreeCreate true;
+    solid-ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    solid-ecosystem:shapetreeExistingAccess true;
+    solid-ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
+</pre>
+
+### OtherNote ### {#othernote}
+
+#### OtherNote's Profile Document #### {#othernote-profile}
+
+**Contents of OtherNote’s Profile Document at
+https://othernote.example/id#agent:**
+
+Issue: Might be worthwhile to make OtherNote's access needs slightly different
+than NeverNote's to show more diversity.
+
+<pre highlight="turtle">
+@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
+@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt; .
+@prefix schema: &lt;http://www.schema.org&gt; .
+
+<#agent>
+    # this is an application, not a person
+    a schema:softwareApplication;
+    # redirect to this URL after going through trusted agent workflows
+    solid-ecosystem:authorizationCallback <https://othernote.example/callback>;
+
+# Declaration of the type of access this application needs
+# UUID randomly generated for subject value
+<#df56606d-ce80-4c99-bf8f-88c87559f8b7>
+    a solid-ecosystem:accessNeed;
+    solid-ecosystem:shapetree <https://shapetrees.example/notebook#shapetree>;
+    solid-ecosystem:shapetreeCreate true;
+    solid-ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    solid-ecosystem:shapetreeExistingAccess true;
+    solid-ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
+
+<#759a272e-05d9-415e-a460-20acbdcab9b8>
+    a solid-ecosystem:accessNeed;
+    solid-ecosystem:shapetree <https://shapetrees.example/note>;
+    solid-ecosystem:shapetreeCreate true;
+    solid-ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    solid-ecosystem:shapetreeExistingAccess true;
+    solid:shapetreeExistingAccess [ acl:Read, acl:Write ].
+</pre>
+
+## Shapes and Shape Trees ## {#shapetrees}
+
+### Solid Registry Shape Tree Document ### {#reg-tree}
+
+This shape tree document provides two shape tree definitions.
+
+* **<#set>** provides a shape tree to validate an individual registry set of a
+    given type, like a collection of data registries.
+* **<#container>** provides a shape tree that can be applied to a container
+    to keep anything that isn't a <#set> from being stored inside.
+
+**Contents of Solid Registry Shape Tree document at
+https://shapetrees.pub/drafts/ns/solid/registry:**
+
+<pre highlight="turtle">
+@prefix tree: &lt;http://www.w3.org/ns/shapetree#&gt; .
+@prefix registry-trees: &lt;https://shapetrees.pub/drafts/ns/solid/registry#&gt; .
+@prefix registry-shapes: &lt;https://shapes.pub/drafts/ns/solid/registry#&gt; .
+
+# Shape tree for a registry set
+<#set> tree:expectedType ldp:Resource ;
+    tree:shape &lt;registry-shapes:registrySet&gt; .
+
+# Shape tree for container of registry sets
+<#container> tree:expectedType ldp:Container ;
+  tree:contents <#set> .
+</pre>
+
+### Solid Registries Shape Document ### {#reg-shape}
+
+This document provides ShEx shape definitions for
+RegistrySet and Registry shapes.
+
+[Apply this](https://tinyurl.com/y94ttyow) against [[#alice-appregset]].
+
+**Contents of Solid Registries Shape document at
+https://shapes.pub/drafts/ns/solid/registry:**
+
+<pre highlight="turtle">
+PREFIX solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt;
+
+# RegistrySet shape definition supporting each type of registry set
+<#RegistrySet> {
+  a [solid-ecosystem:registrySet] ;
+  solid-ecosystem:registryType [solid-ecosystem:ApplicationRegistry solid-ecosystem:DataRegistry solid-ecosystem:AccessRegistry solid-ecosystem:RemoteRegistry] ;
+  solid-ecosystem:registrySetMember @<#Registry> ;
+} AND (
+  { solid-ecosystem:registryType [solid-ecosystem:ApplicationRegistry] ;
+    solid-ecosystem:registrySetMember {
+      solid-ecosystem:registryType [solid-ecosystem:ApplicationRegistry] ;
+    } +
+  }
+  OR
+  { solid-ecosystem:registryType [solid-ecosystem:DataRegistry] ;
+    solid-ecosystem:registrySetMember {
+      solid-ecosystem:registryType [solid-ecosystem:DataRegistry] ;
+    } +
+  }
+  OR
+  { solid-ecosystem:registryType [solid-ecosystem:AccessRegistry] ;
+    solid-ecosystem:registrySetMember {
+      solid-ecosystem:registryType [solid-ecosystem:AccessRegistry] ;
+    } +
+  }
+  OR
+  { solid-ecosystem:registryType [solid-ecosystem:RemoteRegistry] ;
+    solid-ecosystem:registrySetMember {
+      solid-ecosystem:registryType [solid-ecosystem:RemoteRegistry] ;
+    } +
+  }
+)
+
+# Registry shape definition supporting each type of registry
+<#Registry> {
+  solid-ecosystem:registryType [solid-ecosystem:ApplicationRegistry solid-ecosystem:DataRegistry solid-ecosystem:AccessRegistry solid-ecosystem:RemoteRegistry] ;
+  solid-ecosystem:registryStorage .
+}
+</pre>
+
+### Application Registration Shape Tree Document ### {#application-tree}
+
+This shape tree document provides two shape tree definitions.
+
+* **<#registration>** provides a shape tree to validate an individual
+    application registration entry
+* **<#container>** provides a shape tree that can be applied to a container
+    to ensure that anything that isn't a <#registration> cannot be stored
+    in the container. This is useful for ensuring that only application
+    registration entries can be stored in a given application registry's
+    storage area.
+
+**Contents of Solid Application Registration Shape Tree document at
+https://shapetrees.pub/drafts/ns/solid/application:**
+
+<pre highlight="turtle">
+@prefix tree: &lt;http://www.w3.org/ns/shapetree#&gt; .
+@prefix application-shapes: &lt;https://shapes.pub/drafts/ns/solid/application&gt; .
+
+# Shape tree for an application registration
+<#registration> tree:expectedType ldp:container ;
+  tree:contents &lt;#application&gt; ; # entry for the registration itself
+  tree:contents &lt;#access&gt; ;      # information about what it can access
+  tree:contents &lt;#internal&gt; .    # internal area of application specific data
+
+# Shape tree for a resource in <#registration> containing registration entry data
+<#application> tree:expectedType ldp:Resource ;
+  tree:uriTemplate "application" ;
+  tree:shape &lt;application-shapes:Registration&gt; .
+
+# Shape tree for a resource in <#registration> with information about what
+# the application is authorized to access
+<#access> tree:expectedType ldp:Resource ;
+  tree:uriTemplate "access-authorized" ;
+  tree:shape &lt;application-shapes:accessAuthorized&gt; .
+
+# Shape tree for a container in <#registration> where the app can put whatever
+# it likes
+<#internal> tree:expectedType ldp:Container ;
+  tree:uriTemplate "internal" .
+
+# Shape tree for container of application registrations
+<#container> tree:expectedType ldp:Container ;
+  tree:contents &lt;#registration&gt; .
+</pre>
+
+### Application Shapes Document ### {#app-shape}
+
+[Apply this](https://tinyurl.com/yaas3427) against [[#alice-appregnevernote]].
+
+**Contents of Solid Application Shape document at
+https://shapes.pub/drafts/ns/solid/application:**
+
+<pre highlight="turtle">
+PREFIX solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+
+<#Registration> {
+  a [solid-ecosystem:applicationRegistration] ;
+  solid-ecosystem:applicationRegisteredBy IRI ;
+  solid-ecosystem:registeringApplication IRI ;
+  solid-ecosystem:applicationRegistered IRI ;
+  solid-ecosystem:registrationTime xsd:dateTime
+}
+</pre>
+
+### Notebook Shape Tree ### {#notebook}
+
+Issue: Include the entire document for https://shapetrees.example/commonnote
+
+<table>
+  <tbody>
+    <tr>
+      <td><th>Notebook Shape Tree URL</th></td>
+      <td>https://shapetrees.example/commonnote#notebook</td>
+    </tr>
+  </tbody>
+</table>
+
+<pre highlight="turtle">
+<#notebook> tree:type ldp:Resource ;
+  tree:uriTemplate "{notebookName}" ;
+  tree:shape &lt;https://shapes.example/commonnote#notebook&gt;;
+  tree:uses &lt;https://shapetrees.example/commonnote#note&gt;.
+</pre>
+
+### Note Shape Tree ### {#note}
+
+<table>
+  <tbody>
+    <tr>
+      <td><th>Note Shape Tree URL</th></td>
+      <td>https://shapetrees.example/commonnote#note</td>
+    </tr>
+  </tbody>
+</table>
+
+<pre highlight="turtle">
+<#note> tree:expectedType ldp:Container;
+  tree:uriTemplate "{noteName}";
+  tree:shape <https://shapes.example/commonnote#note>;
+  tree:contents &lt;https://shapetrees.example/commonnote#citation&gt;,
+                &lt;https://shapetrees.example/commonnote#image&gt;.
+</pre>
+
+### Contact Shape Tree ### {#contact}
+
+Issue: Add definition for contact shape tree
+
+<pre class="biblio">
+{
+  "problems-and-goals": {
+    "href": "https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md",
+    "title": "Problems and Goals for Interoperability, Collaboration, and Security in a Solid Pod",
+    "authors": [
+      "Justin Bingham",
+      "Eric Prud'hommeaux",
+      "Jamie Fiedler",
+      "Josh Collins"
+    ]
+  },
+  "shapetrees": {
+    "href": "https://shapetrees.org",
+    "title": "Shape Trees",
+    "authors": [
+      "Justin Bingham",
+      "Eric Prud'hommeaux",
+      "Jamie Fiedler",
+      "Josh Collins"
+    ]
+  },
+  "wac": {
+    "href": "https://solid.github.io/specification/wac/",
+    "title": "Web Access Control"
+  },
+  "webid": {
+    "href": "https://www.w3.org/2005/Incubator/webid/spec/identity/",
+    "title": "WebID 1.0",
+    "authors": [
+      "Tim Berners-Lee",
+      "Henry Story",
+      "Andrei Sambra"
+    ]
+  },
+  "did": {
+    "href": "https://www.w3.org/TR/did-core/",
+    "title": "Decentralized Identifiers (DIDs) v1.0",
+    "authors": [
+      "Drummond Reed",
+      "Manu Sporney",
+      "Dave Longley",
+      "Christopher Allen",
+      "Ryan Grant",
+      "Markus Sabadello"
+    ]
+  },
+  "shex": {
+    "href": "http://shex.io/shex-semantics/index.html",
+    "title": "Shape Expressions Language 2.1",
+    "authors": [
+      "Eric Prud'hommeaux",
+      "Iovka Boneva",
+      "Jose Emilio Labra Gayo",
+      "Gregg Kellogg"
+    ]
+  },
+  "shacl": {
+    "href": "https://www.w3.org/TR/shacl/",
+    "title": "Shapes Constraint Language (SHACL)",
+    "authors": [
+      "Holger Knublauch",
+      "Dimitris Kontokostas"
+    ]
+  },
+  "webid-oidc": {
+    "href": "https://github.com/solid/webid-oidc-spec",
+    "title": "WebID-OIDC Authentication Specification",
+    "authors": [
+      "Dmitri Zagidulin"
+    ]
+  }
+}
+</pre>
