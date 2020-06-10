@@ -29,12 +29,12 @@ jobs:
           python3 -m pip install --upgrade bikeshed
           bikeshed update
           
-        - name: generate html
-        - run: bikeshed spec proposals/ecosystem.bs
+      - name: generate html
+        run: bikeshed spec proposals/ecosystem.bs
           
-        - name: deploy
-          uses: peaceiris/actions-gh-pages@v3
-          with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_dir: ./proposals
-            publish_branch: master
+      - name: deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./proposals
+          publish_branch: master
