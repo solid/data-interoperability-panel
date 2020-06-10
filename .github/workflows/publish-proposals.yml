@@ -30,12 +30,12 @@ jobs:
           bikeshed update
           
       - name: generate html
-        run: bikeshed spec **/*.bs
+        run: for index in proposals/*/index.bs; do; bikeshed spec $index; done
           
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           #github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: ./proposals
           #publish_branch: master
           personal_token: ${{ secrets.GITHUB_TOKEN }} 
