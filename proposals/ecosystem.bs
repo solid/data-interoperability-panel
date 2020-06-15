@@ -299,7 +299,7 @@ registries of that type in different locations.
 <b>Excerpt from [[#alice-profile]]</b>
 <pre highlight="turtle">
   <#me>
-    solid-ecosystem:applicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; .
+    ecosystem:hasApplicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; .
 </pre>
 
 Alice’s application registry set document is separate from her public
@@ -314,19 +314,19 @@ application registry that stores application registrations in
 
 <b>Excerpt from [[#alice-appregset]] Document</b>
 <pre highlight="turtle">
-@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#set>
-  a solid-ecosystem:registrySet ;
-  solid-ecosystem:registryType solid-ecosystem:ApplicationRegistry ;
+  a ecosystem:registrySet ;
+  ecosystem:registryType ecosystem:ApplicationRegistry ;
   # Alice only has one application registry. If she had more than one
   # there would be multiple members of the registry set
-  solid-ecosystem:registrySetMember <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e> .
+  ecosystem:registrySetMember <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e> .
 
 <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e>
-  solid-ecosystem:registryType solid-ecosystem:ApplicationRegistry ;
+  ecosystem:registryType ecosystem:ApplicationRegistry ;
   # Where to storage registry data
-  solid-ecosystem:registryStorage &lt;https://alice.pod.example/applications/&gt; .
+  ecosystem:registryStorage &lt;https://alice.pod.example/applications/&gt; .
 </pre>
 
 ### Finding a specific registered application ### {#reg-findapp}
@@ -334,7 +334,7 @@ application registry that stores application registrations in
 Every registered
 application has an [=application registration=] stored in
 an [=application registry=]. The object value of
-`solid-ecosystem:registryStorage` identifies where these are stored.
+`ecosystem:registryStorage` identifies where these are stored.
 NeverNote needs to determine if it is already registered, so it needs to
 see if there is an entry for itself at
 `<https://alice.pod.example/applications/>`.
@@ -390,18 +390,18 @@ NeverNote has determined that it needs to be registered in Alice’s
 Pod. It cannot register itself, so it needs the help of Alice's
 [=application registration agent=]. It must first dereference Alice's WebID to
 access [[#alice-profile]]. It will then look for the
-`solid-ecosystem:applicationRegistrationAgent` predicate in the contents
+`ecosystem:trustsForApplicationRegistration` predicate in the contents
 of her identity profile document to discover the
 application registration agent she trusts.
 
 <b>Excerpt from [[#alice-profile]]</b>
 <pre highlight="turtle">
-  <#me> solid-ecosystem:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt; .
+  <#me> ecosystem:trustsForApplicationRegistration &lt;https://trusted.example/ar/&gt; .
 </pre>
 
 NeverNote redirects Alice via the synchronous trusted agent pattern to
-the `solid-ecosystem:applicationRegistrationAgent` at `https://trusted.example/ar/`,
-supplying its [=ApplicationID=]
+the `ecosystem:trustsForApplicationRegistration`
+at `https://trusted.example/ar/`, supplying its [=ApplicationID=]
 (`https://nevernote.example/id#agent`) as a parameter. The
 ApplicationID uniquely identifies the application, and leads to
 [[#nevernote-profile]], an RDF document containing data required to
@@ -428,14 +428,14 @@ her decision making process.
 Assuming suitability and confirmation from Alice, the
 application registration agent will proceed in [[#appreg-creating]] for
 NeverNote in Alice’s Pod. When it is finished, it will return her to
-NeverNote at the `solid-ecosystem:applicationRegistrationCallback` address in
+NeverNote at the `ecosystem:applicationRegistrationCallback` address in
 [[#nevernote-profile]].
 
 <b>Excerpt from [[#nevernote-profile]]:</b>
 
 <pre highlight="turtle">
 <#agent>
-    solid-ecosystem:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt; ;
+    ecosystem:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt; ;
 </pre>
 
 ### Creating the application registration entry ### {#appreg-creating}
@@ -454,7 +454,7 @@ SHA3-256 hash: `ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae
 
 The hash of NeverNote’s ApplicationID will be used to name the
 application registration container and uniquely identify it. Per the location
-defined by `solid-ecosystem:registryStorage` in [[#alice-appregset]],
+defined by `ecosystem:registryStorage` in [[#alice-appregset]],
 the [=application registration=] will be provisioned at:
 
 `https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae`.
@@ -468,11 +468,11 @@ The following resource contains the registration detail:
 <b>Excerpt from [[#alice-appregnevernote]]</b>
 <pre highlight="turtle">
 <#registration>
-  a solid-ecosystem:applicationRegistration ;
-  solid-ecosystem:applicationRegisteredBy &lt;https://alice.pod.example/id#me&gt; ;
-  solid-ecosystem:registeringApplication &lt;https://trusted.example/ar&gt; ;
-  solid-ecosystem:applicationRegistered &lt;https://nevernote.example/id#agent&gt; ;
-  solid-ecosystem:registrationTime "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+  a ecosystem:applicationRegistration ;
+  ecosystem:registeredBy &lt;https://alice.pod.example/id#me&gt; ;
+  ecosystem:registeredWith &lt;https://trusted.example/ar&gt; ;
+  ecosystem:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
+  ecosystem:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
 </pre>
 
 
@@ -527,6 +527,84 @@ this helps avoid the creation of application-specific silos.
 Because this space is private to an application and not meant to
 be interoperable, the application may or may not decide to utilize
 data validation facilities like shape trees or shapes.
+
+Data Registration {#data-reg}
+=====================
+
+A [=data registry=] is a specific location in a Solid [=pod=] where
+data of various types is organized and stored in a uniform way to aid
+authorization, interoperability, and discovery.
+
+Data is registered as [=shape trees=], and [=shape tree instances=] are
+organized and stored into containers by type. We avoid deep and
+complex hierarchies of data that hinder flexibility and interoperability
+by employing a flat hierarchy. This creates natural [=data boundaries=] that
+make [[#data-authz]] extremely intuitive.
+
+A data registry can be used for basic discovery, but it is not designed
+nor intended to be an efficient means to query or index data. However, it is
+intended to be used as reliable source data for any query engine or
+indexing scheme.
+
+## Data registry structure ## {#datareg-structure}
+
+A given agent may have multiple data registries across multiple pods.
+An [=agent’s=] data registries can be discovered through the data
+[=registry set=] linked from the agent’s [=identity profile document=].
+
+<b>Excerpt from [[#alice-profile]]</b>
+<pre highlight="turtle">
+  <#me>
+    ecosystem:dataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; .
+</pre>
+
+Alice’s data registry set document is separate from her public
+identity profile document, and is not publically accessible.
+
+In [[#alice-dataregset]] document, Alice has two data registries in the set
+where data can be registered, stored, and discovered.
+
+<b>Excerpt from [[#alice-dataregset]] Document</b>
+<pre highlight="turtle">
+@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+
+<#set>
+  a ecosystem:registrySet ;
+  ecosystem:registryType ecosystem:DataRegistry ;
+  ecosystem:registrySetMember <#75139b60-f196-4f47-9ea1-91a21d19fd1e>, <#cd72a56e-bd0b-4aef-af63-a77d1b147fdd> .
+
+<#75139b60-f196-4f47-9ea1-91a21d19fd1e>
+  ecosystem:registryType ecosystem:DataRegistry ;
+  ecosystem:registryStorage &lt;https://alice.pod.example/data/&gt; .
+
+<#cd72a56e-bd0b-4aef-af63-a77d1b147fdd>
+  ecosystem:registryType ecosystem:DataRegistry ;
+  ecosystem:registryStorage &lt;https://alice.home.example/data/&gt; .
+</pre>
+
+
+
+* **/id** - Profile document
+* **/registries** - Container of registry sets
+    * **data** - Data registry set
+* **/data** - Data registry
+    * **sML2JBPsdAyPSniZ93XH8vdWcwGXnyTCgcoGqBWVKivg1f6C7snmMZHmCxjBZw8k** - Shape tree registration
+        * **adc9fd06-dc41-44fe-ab11-cf4b93e9e7f7** - Shape tree instance
+
+## Registering and storing data ## {#datareg-registering}
+
+
+
+## Finding registered data ## {#datareg-lookup}
+
+
+## Permission model ## {#datareg-permissions}
+
+
+
+Data Authorization {#data-authz}
+=====================
+
 
 Definitions {#definitions}
 =====================
@@ -646,6 +724,8 @@ interface with their [=pod=].
 
 A <dfn>data registry</dfn> is...
 
+A <dfn>data boundary</dfn> is...
+
 An <dfn>access registry</dfn> is...
 
 A <dfn>remote registry</dfn> is...
@@ -654,7 +734,7 @@ A <dfn>remote registry</dfn> is...
 Use Case Environment {#environment}
 =====================
 
-Issue: Add the contents of the solid-ecosystem vocabulary
+Issue: Add the contents of the ecosystem vocabulary
 
 ## People ## {#people}
 
@@ -732,59 +812,58 @@ https://alice.pod.example/id#me:**
 
 <pre highlight="turtle">
 @prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
-@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#me>
     # Identity Provider
     solid:oidcIssuer &lt;https://idp.example&gt; ;
     # Registry Sets
-    solid-ecosystem:applicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; ;
-    solid-ecosystem:dataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; ;
-    solid-ecosystem:accessRegistrySet &lt;https://alice.pod.example/registries/access#set&gt; ;
-    solid-ecosystem:remoteRegistrySet &lt;https://alice.pod.example/registries/remote#set&gt; ;
+    ecosystem:hasApplicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; ;
+    ecosystem:hasDataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; ;
+    ecosystem:hasAccessRegistrySet &lt;https://alice.pod.example/registries/access#set&gt; ;
+    ecosystem:hasRemoteRegistrySet &lt;https://alice.pod.example/registries/remote#set&gt; ;
     # Trusted Agents
-    solid-ecosystem:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt; ;
+    ecosystem:trustsForApplicationRegistration &lt;https://trusted.example/ar/&gt; ;
     # Notification Endpoints
-    solid-ecosystem:hasAccessInbox &lt;https://alice.pod.example/access/inbox&gt; .
+    ecosystem:hasAccessInbox &lt;https://alice.pod.example/access/inbox&gt; .
 </pre>
 
 #### Alice's Application Registry Set #### {#alice-appregset}
 
 [Validate this](https://tinyurl.com/y94ttyow) against [[#reg-shape]].
 
+Issue: Fix this shape validation
+
 **Contents of Alice’s application registry set document at
 https://alice.pod.example/registries/application:**
 
 <pre highlight="turtle">
-@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#set>
-  a solid-ecosystem:registrySet ;
-  solid-ecosystem:registryType solid-ecosystem:ApplicationRegistry ;
-  solid-ecosystem:registrySetMember <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e> .
-
-<#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e>
-  solid-ecosystem:registryType solid-ecosystem:ApplicationRegistry ;
-  solid-ecosystem:registryStorage &lt;https://alice.pod.example/applications/&gt; .
+  a ecosystem:ApplicationRegistrySet ;
+  ecosystem:hasRegistry &lt;https://alice.pod.example/applications/#registry&gt; .
 </pre>
 
 #### Alice's Application Registration for Nevernote #### {#alice-appregnevernote}
 
 [Validate this](https://tinyurl.com/yaas3427) against [[#app-shape]].
 
+Issue: Fix this shape validation
+
 **Contents of Alice’s application registration for NeverNote at
-https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/application:**
+https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/#registration:**
 
 <pre highlight="turtle">
-@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 @prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
 
 <#registration>
-  a solid-ecosystem:applicationRegistration ;
-  solid-ecosystem:applicationRegisteredBy &lt;https://alice.pod.example/id#me&gt; ;
-  solid-ecosystem:registeringApplication &lt;https://trusted.example/ar&gt; ;
-  solid-ecosystem:applicationRegistered &lt;https://nevernote.example/id#agent&gt; ;
-  solid-ecosystem:registrationTime "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+  a ecosystem:ApplicationRegistration ;
+  ecosystem:registeredBy &lt;https://alice.pod.example/id#me&gt; ;
+  ecosystem:registeredWith &lt;https://trusted.example/ar&gt; ;
+  ecosystem:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
+  ecosystem:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
 </pre>
 
 #### Alice's Data Registry Set #### {#alice-dataregset}
@@ -793,20 +872,20 @@ https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeed
 https://alice.pod.example/registries/data:**
 
 <pre highlight="turtle">
-@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#set>
-  a solid-ecosystem:registrySet ;
-  solid-ecosystem:registryType solid-ecosystem:DataRegistry ;
-  solid-ecosystem:registrySetMember <#75139b60-f196-4f47-9ea1-91a21d19fd1e>, <#cd72a56e-bd0b-4aef-af63-a77d1b147fdd> .
+  a ecosystem:registrySet ;
+  ecosystem:registryType ecosystem:DataRegistry ;
+  ecosystem:registrySetMember <#75139b60-f196-4f47-9ea1-91a21d19fd1e>, <#cd72a56e-bd0b-4aef-af63-a77d1b147fdd> .
 
 <#75139b60-f196-4f47-9ea1-91a21d19fd1e>
-  solid-ecosystem:registryType solid-ecosystem:DataRegistry ;
-  solid-ecosystem:registryStorage &lt;https://alice.pod.example/data/&gt; .
+  ecosystem:registryType ecosystem:DataRegistry ;
+  ecosystem:registryStorage &lt;https://alice.pod.example/data/&gt; .
 
 <#cd72a56e-bd0b-4aef-af63-a77d1b147fdd>
-  solid-ecosystem:registryType solid-ecosystem:DataRegistry ;
-  solid-ecosystem:registryStorage &lt;https://alice.home.example/data/&gt; .
+  ecosystem:registryType ecosystem:DataRegistry ;
+  ecosystem:registryStorage &lt;https://alice.home.example/data/&gt; .
 
 </pre>
 
@@ -816,16 +895,16 @@ https://alice.pod.example/registries/data:**
 https://alice.pod.example/registries/access:**
 
 <pre highlight="turtle">
-@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#set>
-  a solid-ecosystem:registrySet ;
-  solid-ecosystem:registryType solid-ecosystem:AccessRegistry ;
-  solid-ecosystem:registrySetMember <#de553f35-232a-4834-ae7f-4b82ec442a42> .
+  a ecosystem:registrySet ;
+  ecosystem:registryType ecosystem:AccessRegistry ;
+  ecosystem:registrySetMember <#de553f35-232a-4834-ae7f-4b82ec442a42> .
 
 <#de553f35-232a-4834-ae7f-4b82ec442a42>
-  solid-ecosystem:registryType solid-ecosystem:AccessRegistry ;
-  solid-ecosystem:registryStorage &lt;https://alice.pod.example/access/&gt; .
+  ecosystem:registryType ecosystem:AccessRegistry ;
+  ecosystem:registryStorage &lt;https://alice.pod.example/access/&gt; .
 </pre>
 
 #### Alice's Remote Registry Set #### {#alice-remoteregset}
@@ -834,16 +913,16 @@ https://alice.pod.example/registries/access:**
 https://alice.pod.example/registries/remote:**
 
 <pre highlight="turtle">
-@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#set>
-  a solid-ecosystem:registrySet ;
-  solid-ecosystem:registryType solid-ecosystem:RemoteRegistry ;
-  solid-ecosystem:registrySetMember <#53cfc5a4-4854-4438-b0ec-82c7183013e3> .
+  a ecosystem:registrySet ;
+  ecosystem:registryType ecosystem:RemoteRegistry ;
+  ecosystem:registrySetMember <#53cfc5a4-4854-4438-b0ec-82c7183013e3> .
 
 <#53cfc5a4-4854-4438-b0ec-82c7183013e3>
-  solid-ecosystem:registryType solid-ecosystem:RemoteRegistry ;
-  solid-ecosystem:registryStorage &lt;https://alice.pod.example/remote/&gt; .
+  ecosystem:registryType ecosystem:RemoteRegistry ;
+  ecosystem:registryStorage &lt;https://alice.pod.example/remote/&gt; .
 </pre>
 
 ### Bob ### {#bob}
@@ -868,16 +947,16 @@ https://bob.pod.example/id#me:**
 
 <pre highlight="turtle">
 @prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
-@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
 <#me>
     solid:oidcIssuer &lt;https://idp.example&gt;;
-    solid-ecosystem:registrySet &lt;https://bob.pod.example/registries/application#set&gt;;
-    solid-ecosystem:registrySet &lt;https://bob.pod.example/registries/data#set&gt;;
-    solid-ecosystem:registrySet &lt;https://bob.pod.example/registries/access#set&gt;;
-    solid-ecosystem:registrySet &lt;https://bob.pod.example/registries/remote#set&gt;;
-    solid-ecosystem:applicationRegistrationAgent &lt;https://trusted.example/ar/&gt;;
-    solid-ecosystem:hasAccessInbox &lt;https://bob.pod.example/access/inbox&gt;.
+    ecosystem:registrySet &lt;https://bob.pod.example/registries/application#set&gt;;
+    ecosystem:registrySet &lt;https://bob.pod.example/registries/data#set&gt;;
+    ecosystem:registrySet &lt;https://bob.pod.example/registries/access#set&gt;;
+    ecosystem:registrySet &lt;https://bob.pod.example/registries/remote#set&gt;;
+    ecosystem:trustsForApplicationRegistration &lt;https://trusted.example/ar/&gt;;
+    ecosystem:hasAccessInbox &lt;https://bob.pod.example/access/inbox&gt;.
 </pre>
 
 ## Applications ## {#applications}
@@ -912,7 +991,7 @@ their associated security considerations.
 
 <pre highlight="turtle">
 @prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
-@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 @prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt; .
 @prefix schema: &lt;http://www.schema.org&gt; .
 
@@ -920,33 +999,33 @@ their associated security considerations.
     # this is an application, not a person
     a schema:softwareApplication;
     # redirect to this URL after going through authorization agent workflow
-    solid-ecosystem:authorizationCallback &lt;https://nevernote.example/data-authorization&gt; ;
+    ecosystem:authorizationCallback &lt;https://nevernote.example/data-authorization&gt; ;
     # redirect to this URL after going through application registration
     # agent workflow
-    solid-ecosystem:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt; ;
+    ecosystem:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt; ;
 
 # Declaration of the type of access this application needs
 # UUID randomly generated for subject value
 <#33116309-1667-4a7b-a91f-4dbf177e3f95>
-    a solid-ecosystem:accessNeed;
+    a ecosystem:accessNeed;
     # Access needs related to notebook shape trees
-    solid-ecosystem:shapetree &lt;https://shapetrees.example/commonnote#notebook&gt;
+    ecosystem:shapetree &lt;https://shapetrees.example/commonnote#notebook&gt;
     # Request permission create new notebook shape trees
-    solid-ecosystem:shapetreeCreate true;
+    ecosystem:shapetreeCreate true;
     # Request permission to read and write created notebook shape trees
-    solid-ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
     # Request access to any existing notebook shape trees
-    solid-ecosystem:shapetreeExistingAccess true;
+    ecosystem:shapetreeExistingAccess true;
     # Request permission to read and write existing notebook shape trees
-    solid-ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
+    ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
 
 <#75054942-b8b4-4e3a-84e4-7b564ca1ae7a>
-    a solid-ecosystem:accessNeed;
-    solid-ecosystem:shapetree &lt;https://shapetrees.example/commonnote#note&gt;;
-    solid-ecosystem:shapetreeCreate true;
-    solid-ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
-    solid-ecosystem:shapetreeExistingAccess true;
-    solid-ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
+    a ecosystem:accessNeed;
+    ecosystem:shapetree &lt;https://shapetrees.example/commonnote#note&gt;;
+    ecosystem:shapetreeCreate true;
+    ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    ecosystem:shapetreeExistingAccess true;
+    ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
 </pre>
 
 ### OtherNote ### {#othernote}
@@ -961,7 +1040,7 @@ than NeverNote's to show more diversity.
 
 <pre highlight="turtle">
 @prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
-@prefix solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 @prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt; .
 @prefix schema: &lt;http://www.schema.org&gt; .
 
@@ -969,24 +1048,24 @@ than NeverNote's to show more diversity.
     # this is an application, not a person
     a schema:softwareApplication;
     # redirect to this URL after going through trusted agent workflows
-    solid-ecosystem:authorizationCallback <https://othernote.example/callback>;
+    ecosystem:authorizationCallback <https://othernote.example/callback>;
 
 # Declaration of the type of access this application needs
 # UUID randomly generated for subject value
 <#df56606d-ce80-4c99-bf8f-88c87559f8b7>
-    a solid-ecosystem:accessNeed;
-    solid-ecosystem:shapetree <https://shapetrees.example/notebook#shapetree>;
-    solid-ecosystem:shapetreeCreate true;
-    solid-ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
-    solid-ecosystem:shapetreeExistingAccess true;
-    solid-ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
+    a ecosystem:accessNeed;
+    ecosystem:shapetree <https://shapetrees.example/notebook#shapetree>;
+    ecosystem:shapetreeCreate true;
+    ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    ecosystem:shapetreeExistingAccess true;
+    ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
 
 <#759a272e-05d9-415e-a460-20acbdcab9b8>
-    a solid-ecosystem:accessNeed;
-    solid-ecosystem:shapetree <https://shapetrees.example/note>;
-    solid-ecosystem:shapetreeCreate true;
-    solid-ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
-    solid-ecosystem:shapetreeExistingAccess true;
+    a ecosystem:accessNeed;
+    ecosystem:shapetree <https://shapetrees.example/note>;
+    ecosystem:shapetreeCreate true;
+    ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
+    ecosystem:shapetreeExistingAccess true;
     solid:shapetreeExistingAccess [ acl:Read, acl:Write ].
 </pre>
 
@@ -1029,43 +1108,43 @@ RegistrySet and Registry shapes.
 https://shapes.pub/drafts/ns/solid/registry:**
 
 <pre highlight="turtle">
-PREFIX solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt;
+PREFIX ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt;
 
 # RegistrySet shape definition supporting each type of registry set
 <#RegistrySet> {
-  a [solid-ecosystem:registrySet] ;
-  solid-ecosystem:registryType [solid-ecosystem:ApplicationRegistry solid-ecosystem:DataRegistry solid-ecosystem:AccessRegistry solid-ecosystem:RemoteRegistry] ;
-  solid-ecosystem:registrySetMember @<#Registry> ;
+  a [ecosystem:registrySet] ;
+  ecosystem:registryType [ecosystem:ApplicationRegistry ecosystem:DataRegistry ecosystem:AccessRegistry ecosystem:RemoteRegistry] ;
+  ecosystem:registrySetMember @<#Registry> ;
 } AND (
-  { solid-ecosystem:registryType [solid-ecosystem:ApplicationRegistry] ;
-    solid-ecosystem:registrySetMember {
-      solid-ecosystem:registryType [solid-ecosystem:ApplicationRegistry] ;
+  { ecosystem:registryType [ecosystem:ApplicationRegistry] ;
+    ecosystem:registrySetMember {
+      ecosystem:registryType [ecosystem:ApplicationRegistry] ;
     } +
   }
   OR
-  { solid-ecosystem:registryType [solid-ecosystem:DataRegistry] ;
-    solid-ecosystem:registrySetMember {
-      solid-ecosystem:registryType [solid-ecosystem:DataRegistry] ;
+  { ecosystem:registryType [ecosystem:DataRegistry] ;
+    ecosystem:registrySetMember {
+      ecosystem:registryType [ecosystem:DataRegistry] ;
     } +
   }
   OR
-  { solid-ecosystem:registryType [solid-ecosystem:AccessRegistry] ;
-    solid-ecosystem:registrySetMember {
-      solid-ecosystem:registryType [solid-ecosystem:AccessRegistry] ;
+  { ecosystem:registryType [ecosystem:AccessRegistry] ;
+    ecosystem:registrySetMember {
+      ecosystem:registryType [ecosystem:AccessRegistry] ;
     } +
   }
   OR
-  { solid-ecosystem:registryType [solid-ecosystem:RemoteRegistry] ;
-    solid-ecosystem:registrySetMember {
-      solid-ecosystem:registryType [solid-ecosystem:RemoteRegistry] ;
+  { ecosystem:registryType [ecosystem:RemoteRegistry] ;
+    ecosystem:registrySetMember {
+      ecosystem:registryType [ecosystem:RemoteRegistry] ;
     } +
   }
 )
 
 # Registry shape definition supporting each type of registry
 <#Registry> {
-  solid-ecosystem:registryType [solid-ecosystem:ApplicationRegistry solid-ecosystem:DataRegistry solid-ecosystem:AccessRegistry solid-ecosystem:RemoteRegistry] ;
-  solid-ecosystem:registryStorage .
+  ecosystem:registryType [ecosystem:ApplicationRegistry ecosystem:DataRegistry ecosystem:AccessRegistry ecosystem:RemoteRegistry] ;
+  ecosystem:registryStorage .
 }
 </pre>
 
@@ -1123,15 +1202,15 @@ https://shapetrees.pub/drafts/ns/solid/application:**
 https://shapes.pub/drafts/ns/solid/application:**
 
 <pre highlight="turtle">
-PREFIX solid-ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt;
+PREFIX ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt;
 PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
 <#Registration> {
-  a [solid-ecosystem:applicationRegistration] ;
-  solid-ecosystem:applicationRegisteredBy IRI ;
-  solid-ecosystem:registeringApplication IRI ;
-  solid-ecosystem:applicationRegistered IRI ;
-  solid-ecosystem:registrationTime xsd:dateTime
+  a [ecosystem:applicationRegistration] ;
+  ecosystem:registeredBy IRI ;
+  ecosystem:registeredWith IRI ;
+  ecosystem:registeredApplication IRI ;
+  ecosystem:registeredAt xsd:dateTime
 }
 </pre>
 
