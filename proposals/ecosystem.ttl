@@ -73,7 +73,7 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:isDefinedBy <> ;
   rdfs:domain :RegistrySet ;
   rdfs:range :Registry ;
-  rdfs:label "Trusts for application registration"@en .
+  rdfs:label "Has registry"@en .
 
 # ApplicationRegistrySet Class
 #############################################################################
@@ -105,6 +105,16 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:comment "A collection of things pertinent to the operation of the Solid ecosystem"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Registry"@en .
+
+# Properties in domain of Registry
+#############################################################################
+:hasRegistration
+  a rdf:property ;
+  rdfs:comment "Links to a registration in a given registry"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :Registry ;
+  rdfs:range :Registration ;
+  rdfs:label "Has registration"@en .
 
 # ApplicationRegistry Class
 #############################################################################

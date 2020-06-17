@@ -582,8 +582,6 @@ where data can be registered, stored, and discovered.
   ecosystem:registryStorage &lt;https://alice.home.example/data/&gt; .
 </pre>
 
-
-
 * **/id** - Profile document
 * **/registries** - Container of registry sets
     * **data** - Data registry set
@@ -592,7 +590,6 @@ where data can be registered, stored, and discovered.
         * **adc9fd06-dc41-44fe-ab11-cf4b93e9e7f7** - Shape tree instance
 
 ## Registering and storing data ## {#datareg-registering}
-
 
 
 ## Finding registered data ## {#datareg-lookup}
@@ -845,6 +842,22 @@ https://alice.pod.example/registries/application:**
   ecosystem:hasRegistry &lt;https://alice.pod.example/applications/#registry&gt; .
 </pre>
 
+#### Alice's Application Registry #### {#alice-appregistry}
+
+**Contents of Alice’s application registry document at
+https://alice.pod.example/registries/applications/#registry:**
+
+*Note that #registry is stored in the RDF graph of the container resource
+itself (https://alice.pod.example/registries/applications/)*
+
+<pre highlight="turtle">
+@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+
+<#registry>
+  a ecosystem:ApplicationRegistry ;
+  ecosystem:hasRegistration &lt;https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/#registration&gt; .
+</pre>
+
 #### Alice's Application Registration for Nevernote #### {#alice-appregnevernote}
 
 [Validate this](https://tinyurl.com/yaas3427) against [[#app-shape]].
@@ -853,6 +866,9 @@ Issue: Fix this shape validation
 
 **Contents of Alice’s application registration for NeverNote at
 https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/#registration:**
+
+*Note that #registration is stored in the RDF graph of the container resource
+itself (https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/)*
 
 <pre highlight="turtle">
 @prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
