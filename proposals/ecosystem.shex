@@ -1,0 +1,55 @@
+PREFIX ecosystem: <http://www.w3.org/ns/solid/ecosystem#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+################################################################
+# Application Registries
+################################################################
+
+# Registrar
+<#RegistrarShape> {
+  a [ ecosystem:Registrar ] ;
+  ecosystem:hasApplicationRegistrySet IRI ;
+  ecosystem:hasDataRegistrySet IRI
+}
+
+# Application Registry Set
+################################################################
+<#ApplicationRegistrySetShape> {
+  a [ ecosystem:ApplicationRegistrySet ] ;
+  ecosystem:hasApplicationRegistry IRI+
+}
+
+# Application Registry
+################################################################
+<#ApplicationRegistryShape> {
+  a [ ecosystem:ApplicationRegistry ] ;
+  ecosystem:hasApplicationRegistration IRI*
+}
+
+# Application Registration
+################################################################
+<#ApplicationRegistrationShape> {
+  a [ ecosystem:ApplicationRegistration ] ;
+  ecosystem:registeredBy IRI ;
+  ecosystem:registeredWith IRI ;
+  ecosystem:registeredApplication IRI ;
+  ecosystem:registeredAt xsd:dateTime
+}
+
+################################################################
+# Data Registries
+################################################################
+
+# Data Registry Set
+################################################################
+<#DataRegistrySetShape> {
+  a [ ecosystem:DataRegistrySet ] ;
+  ecosystem:hasDataRegistry IRI+
+}
+
+# Data Registry
+################################################################
+<#DataRegistryShape> {
+  a [ ecosystem:DataRegistry ] ;
+  ecosystem:hasDataRegistration IRI*
+}

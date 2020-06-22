@@ -19,41 +19,69 @@ rdfs:label "Solid ecosystem terms"@en .
   a rdfs:Class ;
   rdfs:comment "An agent profile for the Solid Ecosystem"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Agent Profile"@en .
+  rdfs:label "Agent"@en .
 
 # Properties in domain of Agent
-#############################################################################
-:hasRegistrySet
+#########################################################
+:hasRegistrar
   a rdf:property ;
-  rdfs:comment "Links an agent's profile to a registry set"@en ;
+  rdfs:comment "Links an Agent to a registrar"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :Agent ;
-  rdfs:range :RegistrySet ;
-  rdfs:label "Has registry set"@en .
+  rdfs:range :Registrar ;
+  rdfs:label "Has registrar"@en .
 
-:hasApplicationRegistrySet
+:trustsApplication
   a rdf:property ;
-  rdfs:comment "Links an agent's profile to an application registry set"@en ;
+  rdfs:comment "Links to an Application the Agent trusts"@en
   rdfs:isDefinedBy <> ;
   rdfs:domain :Agent ;
-  rdfs:range :ApplicationRegistrySet ;
-  rdfs:label "Has application registry set"@en .
-
-:hasDataRegistrySet
-  a rdf:property ;
-  rdfs:comment "Links an agent's profile to a data registry set"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :Agent ;
-  rdfs:range :DataRegistrySet ;
-  rdfs:label "Has data registry set"@en .
+  rdfs:range :Application ;
+  rdfs:label "Trusts application"@en
 
 :trustsForApplicationRegistration
-  a rdf:property ;
+  a rdfs:subPropertyOf :trustsApplication ;
   rdfs:comment "Links to an application the agent trusts to assist with registering applications"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :Agent ;
   rdfs:range :Application ;
   rdfs:label "Trusts for application registration"@en .
+
+# Registrar
+#############################################################################
+# Used by an Agent to organize a collection of Registry Sets
+#############################################################################
+:Registrar
+  a rdfs:Class ;
+  rdfs:comment "A collection of an Agent's registry sets"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Registrar"@en .
+
+# Properties in domain of Registrar
+#########################################################
+:hasRegistrySet
+  a rdf:property ;
+  rdfs:comment "Links an agent's registrar to a registry set"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :Registrar ;
+  rdfs:range :RegistrySet ;
+  rdfs:label "Has registry set"@en .
+
+:hasApplicationRegistrySet
+  a rdfs:subPropertyOf :hasRegistrySet ;
+  rdfs:comment "Links an agent's registrar to an application registry set"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :Registrar ;
+  rdfs:range :ApplicationRegistrySet ;
+  rdfs:label "Has application registry set"@en .
+
+:hasDataRegistrySet
+  a rdfs:subPropertyOf :hasRegistrySet ;
+  rdfs:comment "Links an agent's registrar to a data registry set"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :Registrar ;
+  rdfs:range :DataRegistrySet ;
+  rdfs:label "Has data registry set"@en .
 
 # RegistrySet Class
 #############################################################################
@@ -66,7 +94,7 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:label "Registry Set"@en .
 
 # Properties in domain of RegistrySet
-#############################################################################
+#########################################################
 :hasRegistry
   a rdf:property ;
   rdfs:comment "Links to a registry in a registry set"@en ;
@@ -85,6 +113,16 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Application Registry"@en .
 
+# Properties in domain of ApplicationRegistrySet
+#########################################################
+:hasApplicationRegistry
+  a rdfs:subPropertyOf :hasRegistry ;
+  rdfs:comment "Links to an application registry in an application registry set"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :ApplicationRegistrySet ;
+  rdfs:range :ApplicationRegistry ;
+  rdfs:label "Has application registry"@en .
+
 # DataRegistrySet Class
 #############################################################################
 # SubClassOf RegistrySet used for DataRegistry Instances
@@ -94,6 +132,16 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:comment "A collection of Data Registry instances"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Data Registry"@en .
+
+# Properties in domain of DataRegistrySet
+#########################################################
+:hasDataRegistry
+  a rdfs:subPropertyOf :hasRegistry ;
+  rdfs:comment "Links to a data registry in a data registry set"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :DataRegistrySet ;
+  rdfs:range :DataRegistry ;
+  rdfs:label "Has data registry"@en .
 
 # Registry Class
 #############################################################################
@@ -107,7 +155,7 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:label "Registry"@en .
 
 # Properties in domain of Registry
-#############################################################################
+#########################################################
 :hasRegistration
   a rdf:property ;
   rdfs:comment "Links to a registration in a given registry"@en ;
@@ -126,6 +174,16 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Application Registry"@en .
 
+# Properties in domain of ApplicationRegistry
+#########################################################
+:hasApplicationRegistration
+  a rdfs:subPropertyOf :hasRegistration ;
+  rdfs:comment "Links to an application registration in a given application registry"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :ApplicationRegistry ;
+  rdfs:range :ApplicationRegistration ;
+  rdfs:label "Has application registration"@en .
+
 # DataRegistry Class
 #############################################################################
 # SubClassOf Registry used for DataRegistration instances
@@ -135,6 +193,16 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:comment "A collection of Data Registration instances"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Data Registry"@en .
+
+# Properties in domain of DataRegistry
+#########################################################
+:hasDataRegistration
+  a rdfs:subPropertyOf :hasRegistration ;
+  rdfs:comment "Links to a data registration in a given data registry"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :DataRegistry ;
+  rdfs:range :DataRegistration ;
+  rdfs:label "Has data registration"@en .
 
 # Registration Class
 #############################################################################
@@ -147,7 +215,7 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:label "Registration"@en .
 
 # Properties in domain of Registration
-#############################################################################
+#########################################################
 :registeredBy
   a rdf:property ;
   rdfs:comment "Links to the Agent that created the registration"@en ;
@@ -183,7 +251,7 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:label "Application Registration"@en .
 
 # Properties in domain of ApplicationRegistration
-#############################################################################
+#########################################################
 :registeredApplication
   a rdf:property ;
   rdfs:comment "Links to the Application registered by an ApplicationRegistration"@en ;

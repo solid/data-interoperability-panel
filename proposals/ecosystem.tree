@@ -1,0 +1,44 @@
+@prefix tree: <http://www.w3.org/ns/shapetree#> .
+@prefix ecoshapes: <https://shapes.pub/drafts/ns/solid/ecosystem#> .
+
+# Registrar
+##############################################################################
+# Ensure the only resource in the container are registry
+# sets that conform to the RegistrySetShape
+##############################################################################
+<#registrar-tree>
+  tree:expectedType ldp:Container ;
+  tree:shape <ecoshapes#RegistrarShape> ;
+  tree:contents <#application-registry-set-tree> ;
+  tree:contents <#data-registry-set-tree> ;
+
+<#application-registry-set-tree>
+  tree:expectedType ldp:Resource ;
+  tree:shape <ecoshapes#ApplicationRegistrySetShape> ;
+  tree:label "application" ;
+
+<#data-registry-set-tree>
+  tree:expectedType ldp:Resource ;
+  tree:shape <ecoshapes#DataRegistrySetShape> ;
+  tree:label "data" ;
+
+# Application Registry
+##############################################################################
+# Ensure the registry container graph contains a valid
+# ApplicationRegistry instance, and the resource inside of
+# it are valid ApplicationRegistration instances.
+##############################################################################
+<#application-registry-tree>
+  tree:expectedType ldp:Container ;
+  tree:shape <ecoshapes#ApplicationRegistryShape> ;
+  tree:contents <#application-registration-tree> ;
+
+# Application Registration
+##############################################################################
+# Ensure the registration container graph contains a valid
+# ApplicationRegistration instance. Applications have freedom to store
+# whatever data internal to their operation that they like within
+##############################################################################
+<#application-registration-tree>
+  tree:expectedType ldp:Container ;
+  tree:shape <ecoshapes#ApplicationRegistrationShape> ;
