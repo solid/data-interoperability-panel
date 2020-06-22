@@ -17,6 +17,22 @@ Abstract:
   form of an end-to-end use case.
 </pre>
 
+<!-- For bikeshed style overrides -->
+<style>
+table.permissions thead tr {
+  font-size: 12px;
+}
+
+table.permissions tbody tr:nth-child(even) {
+  background-color: lightgray;
+  font-size: 10px;
+}
+
+table.permissions tbody td {
+  font-size: 10px;
+}
+</style>
+
 Problems and Goals {#problems-goals}
 =====================
 
@@ -301,8 +317,10 @@ a [=registrar=], represented by the class `ecosystem:Registrar`.
   </pre>
 </figure>
 
-[=Registry sets=] are collections of one or more registries of a specific type,
-represented by the class `ecosystem:RegistrySet`, or type-specific
+A registrar links to a number of [=Registry sets=]. Registry sets are
+represented by the class `ecosystem:RegistrySet`. They are collections of
+one or more linked [=registries=]. They are almost always focused on a single
+registry type, through type-specific
 subclasses (e.g. `ecosystem:ApplicationRegistrySet`).
 
 A given `ecosystem:Registar` is linked to an `ecosystem:RegistrySet` via the
@@ -382,7 +400,8 @@ properties except for `ecosystem:registeredApplication` are inherited from
 Instances of the classes and properties in the [[#reg-model]]
 are organized across different resources and containers in
 a conformant pod hierarchy. The instance data in resources are
-validated by shapes, which are associated through [=shape trees=].
+validated by shapes, which are associated with those resources
+through [=shape trees=].
 
 <figure>
   <figcaption align="left">Example Registrar structure for an Agent.
@@ -398,13 +417,14 @@ the figure above as `/id`.
 
 The `ecosystem:Registrar` instance is stored in the RDF graph of the
 `/registeries` container at `https://alice.pod.example/registries/#registrar`.
-It links to a collection of `ecosystem:RegistrySet` instances stored in
-the `/registries` container.
+The `ecosystem:Registrar` instance links to a collection of
+`ecosystem:RegistrySet` instances stored in the `/registries` container.
 
 The shape tree `<#registrar-tree>` associated with the `/registries` container
-specifies this resource structure. It assigns a shape to validate
+specifies this resource structure. It assigns the `#RegistrarShape` to validate
 an `ecosystem:Registrar` instance in the container resource. It also
-assigns shapes to validate the  `ecosystem:ApplicationRegistrySet` and
+assigns `#ApplicationRegistrySetShape` and `#DataRegistrySetShape`
+to validate the  `ecosystem:ApplicationRegistrySet` and
 `ecosystem:DataRegistrySet` instances in the contained resources.
 
 <figure>
@@ -429,9 +449,11 @@ the `/applications` container.
 
 The shape tree `<#application-registry-tree>` associated with the
 `/applications` container specifies this resource structure. It assigns
-a shape to validate the `ecosystem:ApplicationRegistry` instance in the
-container resource. It also assigns a shape to validate
-an `ecosystem:ApplicationRegistration` in every contained resource.
+the `#ApplicationRegistryShape` to validate the
+`ecosystem:ApplicationRegistry` instance in the
+container resource. It also assigns a `ApplicationRegistrationShape`
+to validate an `ecosystem:ApplicationRegistration` in every
+contained resource.
 
 <figure>
   <figcaption align="left">Shape trees, shapes, and ApplicationRegistration
@@ -441,22 +463,141 @@ an `ecosystem:ApplicationRegistration` in every contained resource.
 
 ## Permission Model ## {#reg-permissions}
 
-Alice’s application registry set document is separate from her public
-identity profile document. This allows it to have a separate set of
-permissions. Registry set documents are not publicly accessible.
-They can only be accessed by Alice, or by a [=trusted agent=] where
-applicable.
+The permission model for the registrar resources detailed in [[#reg-structure]]
+are illustrated in the table below. That said, the following key points
+are worth noting:
 
+* The [=identity profile document=] at `/id` is the only resource that is
+    publicly accessible (with read-only privileges).
+* The only information exposed is a link to Alice's registrar at
+    `/registries`, which is a protected document.
+* Neither the types or locations of Alice's registries are
+    ever publicly exposed.
+
+<figure>
+<figcaption align="left">Permission model for registrar resources</figcaption>
+  <table class="data permissions" align="left">
+    <col>
+    <colgroup span=2></colgroup>
+    <colgroup span=2></colgroup>
+    <colgroup span=2></colgroup>
+    <thead>
+      <tr>
+        <th></th>
+        <th colspan=2 scope="colgroup">Public</th>
+        <th colspan=2 scope="colgroup">Selectively Trusted</th>
+        <th colspan=2 scope="colgroup">Selectively Granted</th>
+      </tr>
+      <tr>
+        <th scope="col">Resource</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`/id`</td>
+        <td>Everyone</td>
+        <td>Read</td>
+        <td>Identity Agent</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`/registries/`</td>
+        <td>Everyone</td>
+        <td>Read</td>
+        <td>Identity Agent</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- /registries/application`</td>
+        <td>-</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Trusted Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- /registries/data`</td>
+        <td>-</td>
+        <td>-</td>
+        <td>Data Authorization Agent</td>
+        <td>Trusted Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`/applications/`</td>
+        <td>-</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Trusted Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- /applications/registration-123/`</td>
+        <td>-</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Trusted Control</td>
+        <td>Registered App.</td>
+        <td>Granted Read</td>
+      </tr>
+      <tr>
+        <td>`-- /applications/registration-123/*`</td>
+        <td>-</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Trusted Control</td>
+        <td>Registered App.</td>
+        <td>Granted Write</td>
+      </tr>
+      <tr>
+        <td>`/data`</td>
+        <td>-</td>
+        <td>-</td>
+        <td>Data Authorization Agent</td>
+        <td>Trusted Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- /data/registration-456/`</td>
+        <td>-</td>
+        <td>-</td>
+        <td>Data Authorization Agent</td>
+        <td>Trusted Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`-- /data/registration-456/*`</td>
+        <td>-</td>
+        <td>-</td>
+        <td>Data Authorization Agent</td>
+        <td>Trusted Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
 
 Application Registration {#appreg}
 =====================
 
 Issue: Consider incorporating a little bit of text here on *why* it is
 important for an application to be registered.
-
-## Application registry structure ## {#appreg-structure}
-
-
 
 ## Checking registration status ## {#appreg-status}
 
@@ -888,11 +1029,13 @@ A <dfn>shape tree instance</dfn> is one or more resources in a [=pod=]
 that conform to a [=shape tree=] definition. Also referred to as a
 *planted shape tree*.
 
-A <dfn>Registrar</dfn> is ...
+A <dfn>registrar</dfn> is ...
 
 A <dfn>registry set</dfn> is a collection of one or more registries of a
 specific type, including [=application registries=], [=data registries=],
 [=access registries=], and [=remote registries=].
+
+A <dfn>registry</dfn> is ...
 
 An <dfn>application registry</dfn> is a collection of
 [=application registrations=] stored in a specific location in a [=pod=].
