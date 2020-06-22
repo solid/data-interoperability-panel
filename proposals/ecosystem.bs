@@ -31,6 +31,14 @@ table.permissions tbody tr:nth-child(even) {
 table.permissions tbody td {
   font-size: 10px;
 }
+
+pre {
+  font-size: .8em;
+}
+
+figcaption {
+  text-align: left;
+}
 </style>
 
 Problems and Goals {#problems-goals}
@@ -286,7 +294,7 @@ organizing and tracking data, and more.
 
 * [[#appreg]] uses [=application registries=] to manage
     [=application registrations=].
-* [[#datareg]] relies on [=data registries=] to organize,
+* Data Registration relies on [=data registries=] to organize,
     store, and find registered data.
 * [=Access registries=] let agents track and communicate access grants to
     resources they control.
@@ -308,7 +316,7 @@ are represented by the class `ecosystem:Agent`. Each `ecosystem:Agent` has
 a [=registrar=], represented by the class `ecosystem:Registrar`.
 
 <figure>
-  <figcaption align="left">Agent at https://alice.pod.example/id#me linking to
+  <figcaption>Agent at https://alice.pod.example/id#me linking to
   registrar</figcaption>
   <pre highlight="turtle">
   <#me>
@@ -328,7 +336,7 @@ A given `ecosystem:Registar` is linked to an `ecosystem:RegistrySet` via the
 (e.g. `ecosystem:hasApplicationRegistrySet`).
 
 <figure>
-  <figcaption align="left">Registrar at
+  <figcaption>Registrar at
   https://alice.pod.example/registries/#registrar linking to
   application and data registry sets</figcaption>
   <pre highlight="turtle">
@@ -346,7 +354,7 @@ An `ecosystem:RegistrySet`, or a type-specific subclass
 or through type-specific sub-properties (e.g. `ecosystem:hasDataRegistry`).
 
 <figure>
-  <figcaption align="left">ApplicationRegistrySet linking to two different
+  <figcaption>ApplicationRegistrySet linking to two different
   ApplicationRegistry instances in two pods</figcaption>
   <pre highlight="turtle">
   <#set>
@@ -364,7 +372,7 @@ property, or through type-specific sub-properties
 (e.g. `ecosystem:hasApplicationRegistration`).
 
 <figure>
-  <figcaption align="left">ApplicationRegistry linking to three
+  <figcaption>ApplicationRegistry linking to three
   ApplicationRegistration instances</figcaption>
   <pre highlight="turtle">
   <#registry>
@@ -383,7 +391,7 @@ properties except for `ecosystem:registeredApplication` are inherited from
 `ecosystem:Registration`.
 
 <figure>
-  <figcaption align="left">Instance data for
+  <figcaption>Instance data for
   an ApplicationRegistration </figcaption>
   <pre highlight="turtle" line-highlight="5" line-numbers="true">
   <#registration>
@@ -404,7 +412,7 @@ validated by shapes, which are associated with those resources
 through [=shape trees=].
 
 <figure>
-  <figcaption align="left">Example Registrar structure for an Agent.
+  <figcaption>Example Registrar structure for an Agent.
   Excludes some registry types for clarity.</figcaption>
   <img src="registrar-tree.svg" width=100%/>
 </figure>
@@ -428,7 +436,7 @@ to validate the  `ecosystem:ApplicationRegistrySet` and
 `ecosystem:DataRegistrySet` instances in the contained resources.
 
 <figure>
-  <figcaption align="left">Shape trees, shapes, and RegistrySet resources
+  <figcaption>Shape trees, shapes, and RegistrySet resources
   associated with a Registrar container</figcaption>
   <img src="registrar-registries.svg" width=100%/>
 </figure>
@@ -456,7 +464,7 @@ to validate an `ecosystem:ApplicationRegistration` in every
 contained resource.
 
 <figure>
-  <figcaption align="left">Shape trees, shapes, and ApplicationRegistration
+  <figcaption>Shape trees, shapes, and ApplicationRegistration
   resources associated with an ApplicationRegistry container</figcaption>
   <img src="registrar-applications.svg" width=100%/>
 </figure>
@@ -475,7 +483,7 @@ are worth noting:
     ever publicly exposed.
 
 <figure>
-<figcaption align="left">Permission model for registrar resources</figcaption>
+<figcaption>Permission model for registrar resources</figcaption>
   <table class="data permissions" align="left">
     <col>
     <colgroup span=2></colgroup>
@@ -855,80 +863,6 @@ Because this space is private to an application and not meant to
 be interoperable, the application may or may not decide to utilize
 data validation facilities like shape trees or shapes.
 
-Data Registration {#datareg}
-=====================
-
-A [=data registry=] is a specific location in a Solid [=pod=] where
-data of various types is organized and stored in a uniform way to aid
-authorization, interoperability, and discovery.
-
-Data is registered as [=shape trees=], and [=shape tree instances=] are
-organized and stored into containers by type. We avoid deep and
-complex hierarchies of data that hinder flexibility and interoperability
-by employing a flat hierarchy. This creates natural [=data boundaries=] that
-make [[#data-authz]] extremely intuitive.
-
-A data registry can be used for basic discovery, but it is not designed
-nor intended to be an efficient means to query or index data. However, it is
-intended to be used as reliable source data for any query engine or
-indexing scheme.
-
-## Data registry structure ## {#datareg-structure}
-
-A given agent may have multiple data registries across multiple pods.
-An [=agent’s=] data registries can be discovered through the data
-[=registry set=] linked from the agent’s [=identity profile document=].
-
-<b>Excerpt from [[#alice-profile]]</b>
-<pre highlight="turtle">
-  <#me>
-    ecosystem:dataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; .
-</pre>
-
-Alice’s data registry set document is separate from her public
-identity profile document, and is not publically accessible.
-
-In [[#alice-dataregset]] document, Alice has two data registries in the set
-where data can be registered, stored, and discovered.
-
-<b>Excerpt from [[#alice-dataregset]] Document</b>
-<pre highlight="turtle">
-@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
-
-<#set>
-  a ecosystem:registrySet ;
-  ecosystem:registryType ecosystem:DataRegistry ;
-  ecosystem:registrySetMember <#75139b60-f196-4f47-9ea1-91a21d19fd1e>, <#cd72a56e-bd0b-4aef-af63-a77d1b147fdd> .
-
-<#75139b60-f196-4f47-9ea1-91a21d19fd1e>
-  ecosystem:registryType ecosystem:DataRegistry ;
-  ecosystem:registryStorage &lt;https://alice.pod.example/data/&gt; .
-
-<#cd72a56e-bd0b-4aef-af63-a77d1b147fdd>
-  ecosystem:registryType ecosystem:DataRegistry ;
-  ecosystem:registryStorage &lt;https://alice.home.example/data/&gt; .
-</pre>
-
-* **/id** - Profile document
-* **/registries** - Container of registry sets
-    * **data** - Data registry set
-* **/data** - Data registry
-    * **sML2JBPsdAyPSniZ93XH8vdWcwGXnyTCgcoGqBWVKivg1f6C7snmMZHmCxjBZw8k** - Shape tree registration
-        * **adc9fd06-dc41-44fe-ab11-cf4b93e9e7f7** - Shape tree instance
-
-## Registering and storing data ## {#datareg-registering}
-
-
-## Finding registered data ## {#datareg-lookup}
-
-
-## Permission model ## {#datareg-permissions}
-
-
-
-Data Authorization {#data-authz}
-=====================
-
 
 Definitions {#definitions}
 =====================
@@ -1052,8 +986,6 @@ interface with their [=pod=].
 
 A <dfn>data registry</dfn> is...
 
-A <dfn>data boundary</dfn> is...
-
 An <dfn>access registry</dfn> is...
 
 A <dfn>remote registry</dfn> is...
@@ -1088,42 +1020,41 @@ Issue: Add the contents of the ecosystem vocabulary
 <div class="assertion">
 
 * **id** - [[#alice-profile]]
-* **registries** - Container for registry sets.
+* **registries/** - Container for registry sets.
     * **application** - [[#alice-appregset]]
-    * **data** - [[#alice-dataregset]]
+    * **data** - Data Registry Set
     * **access** - Access Registry Set
     * **remote** - Remote Registry Set
-* **applications** - application registry - where application registration
-    entries are stored, validated by the TODO - application registry shape
-    tree.
-    * **ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae** -
+* **applications/** - application registry - where application registration
+    entries are stored.
+    * **ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/** -
         [[#alice-appregnevernote]], validated by the `#registration` shape tree
         in the application registry shape tree.
-* **data** - Registry of data
-    * **d9e11f42-cd85-4191-a272-c974a54ef602** - Local UUID for Notebook Shape Tree
-        * **58c851c1-ef76-4d4b-8868-7472b632bfff** - Notebook Instance UUID
-        * **9fdbd6cc-5994-436a-a0d7-aaa87d401e1e** - Notebook Instance UUID
-        * **45eb3ead-ceb7-4628-8cd3-e9c0b6555b7a** - Notebook Instance UUID
-    * **0d7a50e6-9fe8-4f43-8682-0c990ea46bca** - Local UUID for Note Shape Tree
-        * **b94ad7c1-7f15-496c-b36d-e23eb1ba2327** - Note Instance UUID
-        * **57c3c536-f997-41cf-95d1-a86a8d04311f** - Note Instance UUID
-        * **53fa2198-e88d-4b46-8afa-d975c0882eb3** - Note Instance UUID
-        * **a2f0e442-846d-4308-8eb5-5beea8f7f7e7** - Note Instance UUID
-        * **3d26e6e5-17b7-437c-bb2b-2998b03b4009** - Note Instance UUID
-    * **746dd0ad-9e6e-4e31-8fa3-843d38a9db86** - Local UUID for Contact Shape Tree
-        * **aca1c96f-ea89-4965-abec-d46504f75344** - Contact Instance UUID
-        * **5f330889-04a7-471f-9df8-f75b99453468** - Contact Instance UUID
-        * **e288fd77-ffc6-4747-a0ff-7ad3592abc54** - Contact Instance UUID
-        * **f2dcc56d-7ecd-4af5-94bd-c1fb0fc73b6c** - Contact Instance UUID
-        * **bfe3493b-d26b-473a-8bca-7884d79c8295** - Contact Instance UUID
-* **access** - Alice’s access inbox
+* **data/** - Registry of data
+    * **d9e11f42-cd85-4191-a272-c974a54ef602/** - Local UUID for Notebook Shape Tree
+        * **58c851c1-ef76-4d4b-8868-7472b632bfff/** - Notebook Instance UUID
+        * **9fdbd6cc-5994-436a-a0d7-aaa87d401e1e/** - Notebook Instance UUID
+        * **45eb3ead-ceb7-4628-8cd3-e9c0b6555b7a/** - Notebook Instance UUID
+    * **0d7a50e6-9fe8-4f43-8682-0c990ea46bca/** - Local UUID for Note Shape Tree
+        * **b94ad7c1-7f15-496c-b36d-e23eb1ba2327/** - Note Instance UUID
+        * **57c3c536-f997-41cf-95d1-a86a8d04311f/** - Note Instance UUID
+        * **53fa2198-e88d-4b46-8afa-d975c0882eb3/** - Note Instance UUID
+        * **a2f0e442-846d-4308-8eb5-5beea8f7f7e7/** - Note Instance UUID
+        * **3d26e6e5-17b7-437c-bb2b-2998b03b4009/** - Note Instance UUID
+    * **746dd0ad-9e6e-4e31-8fa3-843d38a9db86/** - Local UUID for Contact Shape Tree
+        * **aca1c96f-ea89-4965-abec-d46504f75344/** - Contact Instance UUID
+        * **5f330889-04a7-471f-9df8-f75b99453468/** - Contact Instance UUID
+        * **e288fd77-ffc6-4747-a0ff-7ad3592abc54/** - Contact Instance UUID
+        * **f2dcc56d-7ecd-4af5-94bd-c1fb0fc73b6c/** - Contact Instance UUID
+        * **bfe3493b-d26b-473a-8bca-7884d79c8295/** - Contact Instance UUID
+* **access/** - Alice’s access inbox
     * **9908fb51-e3e6-46ee-b124-86ddbc02bcef** - Access-related Message
     * **1e13e429-84fd-4a6f-8aad-ed68e638cc85** - Access-related Message
-* **granted** - Registry of Access Grants
+* **granted/** - Registry of Access Grants
     * **ce173414-efb5-4971-bb0b-142f94230e9d** - Access Grant Record
     * **13ccb76c-16e2-4c95-9309-430dd22a78bf** - Access Grant Record
     * **502869ad-8a0d-4833-9e47-d27365ec03a1** - Access Grant Record
-* **remote** - Registry of remote resources shared with Alice
+* **remote/** - Registry of remote resources shared with Alice
     * **d9e11f42-cd85-4191-a272-c974a54ef602** - Local UUID for Notebook Shape Tree
     * **eb71f9ca-0177-4e19-b35a-0ad20c6ab112** - Reference to instance of Notebook Shape Tree on Tom’s Pod
 
@@ -1135,117 +1066,85 @@ Issue: Need to provide more detail around *how* applications, data, access,
 remote registry items get organized into different registries with a set along
 with use cases.
 
-**Alice’s identity profile document at
-https://alice.pod.example/id:**
+<figure>
+  <figcaption>Alice’s identity profile document at
+  https://alice.pod.example/id</figcaption>
+  <pre highlight="turtle">
+  @prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
+  @prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
 
-<pre highlight="turtle">
-@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
-@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+  <#me>
+      a ecosystem:Agent;
+      ecosystem:hasRegistrar &lt;https://alice.pod.example/registries/#registrar&gt; ;
+      # Trusted Agents
+      ecosystem:trustsForApplicationRegistration &lt;https://trusted.example/ar/&gt; ;
+      # Notification Endpoints
+      ecosystem:hasAccessInbox &lt;https://alice.pod.example/access/inbox&gt; .
+      # Identity Provider
+      solid:oidcIssuer &lt;https://idp.example&gt; ;
+  </pre>
+</figure>
 
-<#me>
-    # Identity Provider
-    solid:oidcIssuer &lt;https://idp.example&gt; ;
-    # Registry Sets
+#### Alice's Registrar #### {#alice-registrar}
+
+<figure>
+  <figcaption>Alice’s registrar instance at
+  https://alice.pod.example/registries/application#set</figcaption>
+  <pre highlight="turtle">
+  <#registrar>
+    a ecosystem:Registrar;
     ecosystem:hasApplicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; ;
-    ecosystem:hasDataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; ;
-    ecosystem:hasAccessRegistrySet &lt;https://alice.pod.example/registries/access#set&gt; ;
-    ecosystem:hasRemoteRegistrySet &lt;https://alice.pod.example/registries/remote#set&gt; ;
-    # Trusted Agents
-    ecosystem:trustsForApplicationRegistration &lt;https://trusted.example/ar/&gt; ;
-    # Notification Endpoints
-    ecosystem:hasAccessInbox &lt;https://alice.pod.example/access/inbox&gt; .
-</pre>
-
-#### Alice's Registry Sets #### {#alice-appregsets}
-
-**Alice's registry sets are stored in https://alice.pod.example/registries
-and it's contents must conform to the #registries shape tree.**
-
-<pre highlight="turtle">
-<#registries> tree:expectedType ldp:Container ;
-  tree:shape &lt;ecoshapes#RegistrySetShape&gt; ;
-</pre>
+    ecosystem:hasDataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; .
+  </pre>
+</figure>
 
 #### Alice's Application Registry Set #### {#alice-appregset}
 
-**Alice’s application registry set resource at
-https://alice.pod.example/registries/application#set:**
-
-<pre highlight="turtle">
-<#set>
-  a ecosystem:ApplicationRegistrySet ;
-  ecosystem:hasRegistry &lt;https://alice.pod.example/applications/#registry&gt; .
-</pre>
-
-This data is validated
-against the ShEx RegistrySetShape:
-
-<pre highlight="turtle">
-<#RegistrySetShape> {
-  a [ ecosystem:ApplicationRegistrySet
-      ecosystem:DataRegistrySet
-      ecosystem:AccessRegistrySet
-      ecosystem:RemoteRegistrySet ] ;
-  ecosystem:hasRegistry IRI* ;
-}
-</pre>
+<figure>
+  <figcaption>Alice’s application registry set instance at
+  https://alice.pod.example/registries/application#set</figcaption>
+  <pre highlight="turtle">
+  <#set>
+    a ecosystem:ApplicationRegistrySet;
+    ecosystem:hasApplicationRegistry &lt;https://alice.pod.example/applications/#registry&gt; ,
+                                     &lt;https://alice.otherpod.example/applications/#registry&gt; .
+  </pre>
+</figure>
 
 #### Alice's Application Registry #### {#alice-appregistry}
 
-**Alice’s application registry resource at
-https://alice.pod.example/registries/applications/#registry:**
+<figure>
+  <figcaption>Alice's application registry instance at
+  https://alice.pod.example/applications/#registry</figcaption>
+  <pre highlight="turtle">
+  <#registry>
+    a ecosystem:ApplicationRegistry ;
+    ecosystem:hasRegistration &lt;https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/#registration&gt; .
+  </pre>
+</figure>
 
-Note that https://alice.pod.example/registries/applications/ is a container,
+Note that `https://alice.pod.example/applications/` is a container,
 and #registry is stored in the RDF graph of the container resource.
-
-<pre highlight="turtle">
-<#registry>
-  a ecosystem:ApplicationRegistry ;
-  ecosystem:hasRegistration &lt;https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/#registration&gt; .
-</pre>
-
-This data is validated
-against the ShEx RegistryShape:
-
-<pre highlight="turtle">
-<#ApplicationRegistryShape> {
-  a [ ecosystem:ApplicationRegistry ] ;
-  ecosystem:hasRegistration IRI*
-}
-</pre>
-
-#### Alice's Data Registry Set #### {#alice-dataregset}
 
 #### Alice's Application Registration for Nevernote #### {#alice-appregnevernote}
 
-**Alice’s application registration for NeverNote at
-https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/#registration:**
+<figure>
+  <figcaption>Alice’s application registration instance for NeverNote at
+  https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/#registration</figcaption>
+  <pre highlight="turtle">
+  <#registration>
+    a ecosystem:ApplicationRegistration ;
+    ecosystem:registeredBy &lt;https://alice.pod.example/id#me&gt; ;
+    ecosystem:registeredWith &lt;https://trusted.example/ar&gt; ;
+    ecosystem:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
+    ecosystem:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+  </pre>
+</figure>
 
-Note that https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/
+Note that
+`https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/`
 is a container, and #registration is stored in the RDF graph of the
 container resource.
-
-<pre highlight="turtle">
-<#registration>
-  a ecosystem:ApplicationRegistration ;
-  ecosystem:registeredBy &lt;https://alice.pod.example/id#me&gt; ;
-  ecosystem:registeredWith &lt;https://trusted.example/ar&gt; ;
-  ecosystem:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
-  ecosystem:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
-</pre>
-
-This data is validated
-against the ShEx ApplicationRegistrationShape:
-
-<pre highlight="turtle">
-<#ApplicationRegistrationShape> {
-  a [ ecosystem:ApplicationRegistration ] ;
-  ecosystem:registeredBy IRI ;
-  ecosystem:registeredWith IRI ;
-  ecosystem:registeredApplication IRI ;
-  ecosystem:registeredAt xsd:dateTime
-}
-</pre>
 
 ## Applications ## {#applications}
 
@@ -1270,51 +1169,52 @@ against the ShEx ApplicationRegistrationShape:
 
 #### NeverNote's Profile Document #### {#nevernote-profile}
 
-**Contents of NeverNote’s Profile Document at
-https://nevernote.example/id#agent:**
-
 Issue: We may want a more robust description of application type than only
 schema:softwareApplication, especially given the different types of client and
 their associated security considerations.
 
-<pre highlight="turtle">
-@prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
-@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
-@prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt; .
-@prefix schema: &lt;http://www.schema.org&gt; .
+<figure>
+  <figcaption>Contents of NeverNote’s Profile Document at
+  https://nevernote.example/id#agent</figcaption>
+  <pre highlight="turtle">
+  @prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
+  @prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+  @prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt; .
+  @prefix schema: &lt;http://www.schema.org&gt; .
 
-<#agent>
-    # this is an application, not a person
-    a schema:softwareApplication;
-    # redirect to this URL after going through authorization agent workflow
-    ecosystem:authorizationCallback &lt;https://nevernote.example/data-authorization&gt; ;
-    # redirect to this URL after going through application registration
-    # agent workflow
-    ecosystem:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt; ;
+  <#agent>
+      # this is an application, not a person
+      a ecosystem:Application;
+      # redirect to this URL after going through authorization agent workflow
+      ecosystem:authorizationCallback &lt;https://nevernote.example/data-authorization&gt; ;
+      # redirect to this URL after going through application registration
+      # agent workflow
+      ecosystem:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt; ;
 
-# Declaration of the type of access this application needs
-# UUID randomly generated for subject value
-<#33116309-1667-4a7b-a91f-4dbf177e3f95>
-    a ecosystem:accessNeed;
-    # Access needs related to notebook shape trees
-    ecosystem:shapetree &lt;https://shapetrees.example/commonnote#notebook&gt;
-    # Request permission create new notebook shape trees
-    ecosystem:shapetreeCreate true;
-    # Request permission to read and write created notebook shape trees
-    ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
-    # Request access to any existing notebook shape trees
-    ecosystem:shapetreeExistingAccess true;
-    # Request permission to read and write existing notebook shape trees
-    ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
+  # Declaration of the type of access this application needs
+  # UUID randomly generated for subject value
+  <#33116309-1667-4a7b-a91f-4dbf177e3f95>
+      a ecosystem:accessNeed;
+      # Access needs related to notebook shape trees
+      ecosystem:shapetree &lt;https://shapetrees.example/commonnote#notebook&gt;
+      # Request permission create new notebook shape trees
+      ecosystem:shapetreeCreate true;
+      # Request permission to read and write created notebook shape trees
+      ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
+      # Request access to any existing notebook shape trees
+      ecosystem:shapetreeExistingAccess true;
+      # Request permission to read and write existing notebook shape trees
+      ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
 
-<#75054942-b8b4-4e3a-84e4-7b564ca1ae7a>
-    a ecosystem:accessNeed;
-    ecosystem:shapetree &lt;https://shapetrees.example/commonnote#note&gt;;
-    ecosystem:shapetreeCreate true;
-    ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
-    ecosystem:shapetreeExistingAccess true;
-    ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
-</pre>
+  <#75054942-b8b4-4e3a-84e4-7b564ca1ae7a>
+      a ecosystem:accessNeed;
+      ecosystem:shapetree &lt;https://shapetrees.example/commonnote#note&gt;;
+      ecosystem:shapetreeCreate true;
+      ecosystem:shapetreeCreateAccess [ acl:Read, acl:Write ];
+      ecosystem:shapetreeExistingAccess true;
+      ecosystem:shapetreeExistingAccess [ acl:Read, acl:Write ].
+  </pre>
+</figure>
 
 <pre class="biblio">
 {
