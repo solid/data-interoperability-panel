@@ -78,6 +78,13 @@ Requirements {#requirements}
 
 ## Information about Clients (apps) to which users have granted access and what specific access they have delegated should not be made available to Resource Servers that do not enforce relevant access restrictions on those Clients.
 
+## Resource controller should be able to keep access rules confidential
+
+<div class="assertion" heading="Requirements">
+
+* [[#whistleblower]]
+
+</div>
 
 Use Cases {#use-cases}
 ======================
@@ -247,3 +254,15 @@ Issue: Each use case needs an author who can provide further clarifications as n
     - `storage.private.enterprise.example`'s TLS certificate is signed by Enterprise.Example's private Certificate Authority
     - Alice's web browser is configured to trust Enterprise.Example's private Certificate Authority
     - `storage.private.enterprise.example` is reachable from the public Internet, so Alice's Identity Provider and *photoOrganizer* could reach it; however, neither is configured to trust Enterprise.Example's private Certificate Authority
+
+## Whistleblower
+
+ - Alice acts as whistleblower and reports issues online
+ - Alice publishes her reports on site run by journalist organization she trusts
+ - Alice wants it kept confidential that she created those posts
+
+<div class="assertion" heading="Requirements">
+
+* [[#resource-controller-should-be-able-to-keep-access-rules-confidential]]
+
+</div>
