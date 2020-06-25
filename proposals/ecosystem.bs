@@ -481,6 +481,9 @@ are worth noting:
 * Neither the types or locations of Alice's registries are
     ever publicly exposed.
 
+The [=resource controller=] (Alice in our [[#usecase]]) should be assumed to
+have control-level access across her entire data space.
+
 <figure>
 <figcaption>Permission model for registrar resources</figcaption>
   <table class="data permissions" align="left">
@@ -517,9 +520,9 @@ are worth noting:
       </tr>
       <tr>
         <td>`/registries/`</td>
-        <td>Everyone</td>
-        <td>Read</td>
-        <td>Identity Agent</td>
+        <td>-</td>
+        <td>-</td>
+        <td>Trusted Agents</td>
         <td>Control</td>
         <td>-</td>
         <td>-</td>
@@ -607,19 +610,19 @@ Application Registration gives [=agents=] participating in the Solid
 ecosystem a way to register and track the applications they've elected
 to use with their data. It also provides each application with a place
 to store metadata, preferences, access grants, caches, and other internal
-data specific to the function of each application.
+data specific to the function of a given application.
 
 An [=application registry=] for storing individual
 [=application registrations=] is introduced, implemented through the [[#reg]].
 
 For example, in our [[#usecase]], Alice wants to use NeverNote
-(`https://nevernote.example`), an application
-that she's never used before.
+(`https://nevernote.example`), a solid compatible single-page
+(SPA) web application that she's never used before.
 
 When Alice arrives at NeverNote (`https://nevernote.example`) in her
 web browser, she is prompted to login with her [=WebID=] because NeverNote
 doesn’t know who she is yet. She could be a completely new user of
-NeverNote, or a returning user that has already registered.
+NeverNote, or a returning user with preferences, notes, notebooks, and more.
 
 Alice logs into her [=identity provider=] (`https://idp.example`) with her
 WebID (`https://alice.pod.example/id#me`), and receives
@@ -627,13 +630,13 @@ a [=token=] that NeverNote can use to make requests to her pod.
 The token identifies her as Alice (`https://alice.pod.example/id#me`),
 using NeverNote (`https://nevernote.example/id#agent`).
 
-NeverNote
+To determine whether Alice has already registered NeverNote, NeverNote
 [[#appreg-lookup|looks for an application registration]] for itself through
-Alice's registrar. If no registration is found, NeverNote will go through
+Alice's [=registrar=]. If no registration is found, NeverNote will go through
 a quick [[#appreg-new|registration process]]. If there is already an
 existing registration for NeverNote, no additional
-steps are necessary.
-
+steps are necessary, and NeverNote is able to access the registration entry
+subject to the limitations of the [[#appreg-permissions]].
 
 ## Data Model ## {#appreg-datamodel}
 
@@ -783,6 +786,21 @@ data validation facilities like shape trees or shapes.
 
 ## Permission Model ## {#appreg-permissions}
 
+There is no public access to any data in an `ecosystem:ApplicationRegistry`.
+
+Only `ecosystem:Agents` that have been selectively trusted to assist a
+given agent with Application Registration have the ability to manage
+contents and permissions across `ecosystem:ApplicationRegistry` instances,
+including the creation and modification of `ecosystem:ApplicationRegistration`
+instances.
+
+A given registered `ecosystem:Application` has read access to its
+`ecosystem:ApplicationRegistration` resource, and read/write access to
+the data space inside that container. It does not get control privileges.
+
+The [=resource controller=] (Alice in our [[#usecase]]) should be assumed to
+have control-level access across her entire data space.
+
 <figure>
 <figcaption>Permission model for application registry resources</figcaption>
   <table class="data permissions" align="left">
@@ -857,67 +875,59 @@ data validation facilities like shape trees or shapes.
   </table>
 </figure>
 
-There is no public access to any data in an `ecosystem:ApplicationRegistry`.
-
-Only `ecosystem:Agents` that have been selectively trusted to assist a
-given agent with Application Registration have the ability to manage
-contents and permissions across `ecosystem:ApplicationRegistry` instances,
-including the creation and modification of `ecosystem:ApplicationRegistration`
-instances.
-
-A given registered `ecosystem:Application` has read access to its
-`ecosystem:ApplicationRegistration` resource, and read/write access to
-the data space inside that container. It does not get control privileges.
-
 ## Looking up an Application Registration ## {#appreg-lookup}
 
-NeverNote needs to determine if it is already registered, so it needs to
-see if there is an entry for itself at
-`<https://alice.pod.example/applications/>`.
+There are a few reasons that different actors might lookup
+an `ecosystem:ApplicationRegistration`:
 
-Only the [=resource controller=] (Alice) and her trusted agents should have
-visibility and control
-of her application registry sets and registries. Just because Alice
-uses a given application like NeverNote doesn't mean that NeverNote should
-be allowed to know every other application she uses.
-Consequently, we do not give NeverNote read access to the
-entire application registry. Nor do we allow it to directly access any
-other application registration entries, or allow it to register itself.
+* The `ecosystem:Agent` that is the [=resource controller=] (e.g. Alice)
+    may want to view or manage their collection of registered
+    `ecosystem:Applications`.
+* Another `ecosystem:Agent` may act as a [=trusted agent=] to assist the
+    resource controller with management and registration of
+    `ecosystem:Application` instances.
+* An `ecosystem:Application` may want to see if it has been registered,
+    and access that `ecosystem:ApplicationRegistration` instance
+    if it exists. *This is the most frequently occuring scenario.*
 
-We do allow NeverNote (as a [=user-piloted application=] used by Alice),
-to directly access its own
-application registration entry. However, Nevernote must know how
-to find that entry using information it already has. We solve this by using
-a SHA-256 hash of NeverNote's ApplicationID to name the container
-of the application registration entry.
+Per the [[#appreg-permissions]], the [=resource controller=] and
+any [=trusted agents=] for application registration will have access and
+visibility across `ecosystem:ApplicationRegistry` and
+`ecosyste:ApplicationRegistration` instances. An
+`ecosystem:Application` will only have access to an
+`ecosystem:ApplicationRegistration` where it is
+the `ecosystem:registeredApplication` in question.
 
-Since NeverNote knows its own ApplicationID, it looks for
-a SHA-256 hash of `https://nevernote.example/id#agent` in
-`https://alice.pod.example/applications/`.
+Since an `ecosystem:Application` does not have access to any
+`ecosystem:AccessRegistry` instances, it can only perform direct
+lookups based on information it already has, or has access to. Since it
+can access the `ecosystem:ApplicationRegistrySet` and see the list
+of `ecosystem:ApplicationRegistry` instances linked through
+`ecosystem:hasRegistry`, it is able to perform a direct lookup on
+each registry, using the SHA-256 hash of it's [=applicationID=].
 
 <pre>
 GET https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3
 </pre>
 
-If NeverNote is unable to access the registration entry, then it knows that it
-needs to be registered. Inability to access would be for one of the following
-reasons:
+Inability to access the `ecosystem:ApplicationRegistration` would
+be a result of:
 
-* **There is no application registration for NeverNote.** The server may return
-    either a 403 or 404 depending on server or user privacy preference.
-* **There is an application registration at the target URL, but NeverNote
-    cannot access it because it is associated with another application's
-    identity.** The server may return either a 403 or 404 depending on
-    server or user privacy preference.
+* There is no `ecosystem:ApplicationRegistration` for that
+    `ecosystem:Application` in the registry.
+* There is an `ecosystem:ApplicationRegistration` at the target URL, but
+    it cannot be accessed because it associated with a
+    different `ecosystem:Application`.
 
-If NeverNote can read the
-application registration entry, then it can confirm that it
-is already a registered application in Alice’s Pod.
+In either case, the server may return either a 403 or 404 depending on
+server or user privacy preference.
 
-In the proposed use case, Alice hasn't registered NeverNote yet,
-so it cannot access an application registration entry for itself. It needs to be
-registered, and that must be facilitated through
-Alice’s trusted [=application registration agent=].
+If an `ecosystem:Application` can access the
+`ecosystem:ApplicationRegistration`, then it can confirm that it
+is already a registered application for the `ecosystem:Agent`.
+
+If an `ecosystem:Application` is not registered, and would like to be,
+it will need to go through the process of [[#appreg-new]].
 
 ## Registering an Application ## {#appreg-new}
 
