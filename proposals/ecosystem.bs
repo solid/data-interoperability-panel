@@ -161,7 +161,7 @@ own or alongside other conventions, with some caveats.
 
 </div>
 
-Use Case Summary {#summary}
+Reference Use Case {#usecase}
 =====================
 
 In our use case, Alice wants to use a new application to record and manage
@@ -305,7 +305,6 @@ organizing and tracking data, and more.
 ## Registrar Data Model ## {#reg-model}
 
 <figure>
-
   <img src="registrar-model.svg" width=90%/>
   <figcaption align="center">Top level registrar data model</figcaption>
 </figure>
@@ -350,8 +349,9 @@ A given `ecosystem:Registar` is linked to an `ecosystem:RegistrySet` via the
 
 An `ecosystem:RegistrySet`, or a type-specific subclass
 (e.g. `ecosystem:DataRegistrySet`) links to any number of
-`ecosystem:Registry` instances via the `ecosystem:hasRegistry` property,
-or through type-specific sub-properties (e.g. `ecosystem:hasDataRegistry`).
+`ecosystem:Registry` instances or type-specific subclasses
+(e.g. `ecosystem:ApplicationRegistry`) via the
+`ecosystem:hasRegistry` property.
 
 <figure>
   <figcaption>ApplicationRegistrySet linking to two different
@@ -359,17 +359,16 @@ or through type-specific sub-properties (e.g. `ecosystem:hasDataRegistry`).
   <pre highlight="turtle">
   <#set>
     a ecosystem:ApplicationRegistrySet;
-    ecosystem:hasApplicationRegistry &lt;https://alice.pod.example/applications/#registry&gt; ,
-                                     &lt;https://alice.otherpod.example/applications/#registry&gt; .
+    ecosystem:hasRegistry &lt;https://alice.pod.example/applications/#registry&gt; ,
+                          &lt;https://alice.otherpod.example/applications/#registry&gt; .
   </pre>
 </figure>
 
 An `ecosystem:Registry`, or a type-specific subclass
 (e.g. `ecosystem:ApplicationRegistry`) links to any number of
-`ecosystem:Registration` or type-specific subclass instances
-(e.g. `ecosystem:ApplicationRegistration`) via the `ecosystem:hasRegistration`
-property, or through type-specific sub-properties
-(e.g. `ecosystem:hasApplicationRegistration`).
+`ecosystem:Registration` instances or type-specific subclasses
+(e.g. `ecosystem:ApplicationRegistration`) via the
+`ecosystem:hasRegistration` property.
 
 <figure>
   <figcaption>ApplicationRegistry linking to three
@@ -377,9 +376,9 @@ property, or through type-specific sub-properties
   <pre highlight="turtle">
   <#registry>
     a ecosystem:ApplicationRegistry ;
-    ecosystem:hasApplicationRegistration &lt;https://alice.pod.example/applications/02f9d4221d9e5c0ae/#registration&gt ,
-                                         &lt;https://alice.pod.example/applications/6fe4221d0589d7bde/#registration&gt ,
-                                         &lt;https://alice.pod.example/applications/543ab04333ba5bcc2/#registration&gt .
+    ecosystem:hasRegistration &lt;https://alice.pod.example/applications/02f9d4221d9e5c0ae/#registration&gt ,
+                              &lt;https://alice.pod.example/applications/6fe4221d0589d7bde/#registration&gt ,
+                              &lt;https://alice.pod.example/applications/543ab04333ba5bcc2/#registration&gt .
   </pre>
 </figure>
 
@@ -530,7 +529,7 @@ are worth noting:
         <td>-</td>
         <td>-</td>
         <td>App. Registration Agent</td>
-        <td>Trusted Control</td>
+        <td>Control</td>
         <td>-</td>
         <td>-</td>
       </tr>
@@ -539,7 +538,7 @@ are worth noting:
         <td>-</td>
         <td>-</td>
         <td>Data Authorization Agent</td>
-        <td>Trusted Control</td>
+        <td>Control</td>
         <td>-</td>
         <td>-</td>
       </tr>
@@ -548,7 +547,7 @@ are worth noting:
         <td>-</td>
         <td>-</td>
         <td>App. Registration Agent</td>
-        <td>Trusted Control</td>
+        <td>Control</td>
         <td>-</td>
         <td>-</td>
       </tr>
@@ -557,25 +556,25 @@ are worth noting:
         <td>-</td>
         <td>-</td>
         <td>App. Registration Agent</td>
-        <td>Trusted Control</td>
+        <td>Control</td>
         <td>Registered App.</td>
-        <td>Granted Read</td>
+        <td>Read</td>
       </tr>
       <tr>
         <td>`-- /applications/registration-123/*`</td>
         <td>-</td>
         <td>-</td>
         <td>App. Registration Agent</td>
-        <td>Trusted Control</td>
+        <td>Control</td>
         <td>Registered App.</td>
-        <td>Granted Write</td>
+        <td>Write</td>
       </tr>
       <tr>
         <td>`/data`</td>
         <td>-</td>
         <td>-</td>
         <td>Data Authorization Agent</td>
-        <td>Trusted Control</td>
+        <td>Control</td>
         <td>-</td>
         <td>-</td>
       </tr>
@@ -584,7 +583,7 @@ are worth noting:
         <td>-</td>
         <td>-</td>
         <td>Data Authorization Agent</td>
-        <td>Trusted Control</td>
+        <td>Control</td>
         <td>Grantee</td>
         <td>Varies</td>
       </tr>
@@ -593,7 +592,7 @@ are worth noting:
         <td>-</td>
         <td>-</td>
         <td>Data Authorization Agent</td>
-        <td>Trusted Control</td>
+        <td>Control</td>
         <td>Grantee</td>
         <td>Varies</td>
       </tr>
@@ -604,72 +603,274 @@ are worth noting:
 Application Registration {#appreg}
 =====================
 
-Issue: Consider incorporating a little bit of text here on *why* it is
-important for an application to be registered.
+Application Registration gives [=agents=] participating in the Solid
+ecosystem a way to register and track the applications they've elected
+to use with their data. It also provides each application with a place
+to store metadata, preferences, access grants, caches, and other internal
+data specific to the function of each application.
 
-## Checking registration status ## {#appreg-status}
+An [=application registry=] for storing individual
+[=application registrations=] is introduced, implemented through the [[#reg]].
+
+For example, in our [[#usecase]], Alice wants to use NeverNote
+(`https://nevernote.example`), an application
+that she's never used before.
 
 When Alice arrives at NeverNote (`https://nevernote.example`) in her
 web browser, she is prompted to login with her [=WebID=] because NeverNote
 doesn’t know who she is yet. She could be a completely new user of
-NeverNote, or a returning user that has already registered NeverNote
-and authorized it to access her Notebooks and Notes.
+NeverNote, or a returning user that has already registered.
 
 Alice logs into her [=identity provider=] (`https://idp.example`) with her
-WebID (`https://alice.pod.example/id#me`) and ultimately ends up with
-a [=token=] that NeverNote can use to make requests to her Pod.
+WebID (`https://alice.pod.example/id#me`), and receives
+a [=token=] that NeverNote can use to make requests to her pod.
 The token identifies her as Alice (`https://alice.pod.example/id#me`),
-using NeverNote (`https://nevernote.example/id#agent`) as a
-[=user-piloted application=].
+using NeverNote (`https://nevernote.example/id#agent`).
 
-First NeverNote needs to check Alice’s [=application registries=] to see if
-there is already an [=application registration=] for NeverNote in one of
-them. If there is, than Nevernote is already registered, and doesn't
-need to go through the process again. If there is not, NeverNote will
-engage Alice's trusted [=application registration agent=] to register itself.
+NeverNote
+[[#appreg-lookup|looks for an application registration]] for itself through
+Alice's registrar. If no registration is found, NeverNote will go through
+a quick [[#appreg-new|registration process]]. If there is already an
+existing registration for NeverNote, no additional
+steps are necessary.
 
-### Discovering application registries ### {#appreg-discovery}
 
-To discover Alice’s application registries, NeverNote must first dereference
-Alice's WebID to access [[#alice-profile]]. In that
-[=identity profile document=], NeverNote will look for an application
-[=registry set=]. There are registry sets of varying types listed
-in [[#alice-profile]]. Each registry set of a given type lists one or more
-registries of that type in different locations.
+## Data Model ## {#appreg-datamodel}
 
-<b>Excerpt from [[#alice-profile]]</b>
-<pre highlight="turtle">
-  <#me>
-    ecosystem:hasApplicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; .
-</pre>
+<figure>
+  <img src="appreg-model.svg" width=100%/>
+  <figcaption>Data model for application registration</figcaption>
+</figure>
 
-In [[#alice-appregset]] document, NeverNote sees that Alice has an
-application registry that stores application registrations in
-`<https://alice.pod.example/applications/>`.
+Application Registration extends the [[#reg-model]] with type-specific
+subclasses and subproperties.
 
-<b>Excerpt from [[#alice-appregset]] Document</b>
-<pre highlight="turtle">
-@prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+* An `ecosystem:Agent` has an `ecosystem:Registrar`, which links to
+    `ecosystem:ApplicationRegistySet` instances.
 
-<#set>
-  a ecosystem:registrySet ;
-  ecosystem:registryType ecosystem:ApplicationRegistry ;
-  # Alice only has one application registry. If she had more than one
-  # there would be multiple members of the registry set
-  ecosystem:registrySetMember <#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e> .
+* An `ecosystem:ApplicationRegistrySet` links to any number of
+    `ecosystem:ApplicationRegistry` instances via the `ecosystem:hasRegistry`
+    property.
 
-<#1b6103ce-c8d7-4b88-b0d1-b9a44ad32f6e>
-  ecosystem:registryType ecosystem:ApplicationRegistry ;
-  # Where to storage registry data
-  ecosystem:registryStorage &lt;https://alice.pod.example/applications/&gt; .
-</pre>
+* An `ecosystem:ApplicationRegistry` links to any number of
+    `ecosystem:ApplicationRegistration` instances via the
+    `ecosystem:hasRegistration` property.
 
-### Finding a specific registered application ### {#appreg-findapp}
+* An `ecosystem:ApplicationRegistration` extends the `ecosystem:Registration`
+    class.
 
-Every registered
-application has an [=application registration=] stored in
-an [=application registry=]. The object value of
-`ecosystem:registryStorage` identifies where these are stored.
+The `ecosystem:ApplicationRegistration` subclass introduces the following
+subproperties:
+
+* **ecosystem:registeredApplication** - [=ApplicationID=] of the `ecosystem:Application`
+    that is being registered.
+
+<figure>
+  <figcaption>Instance data for
+  an ApplicationRegistration at
+  https://alice.pod.example/applications/02f9d4221d9e5c0ae/#registration
+  </figcaption>
+  <pre highlight="turtle" line-highlight="5" line-numbers="true">
+  <#registration>
+    a ecosystem:ApplicationRegistration ;
+    ecosystem:registeredBy &lt;https://alice.pod.example/id#me&gt; ;
+    ecosystem:registeredWith &lt;https://trusted.example/ar&gt; ;
+    ecosystem:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
+    ecosystem:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+  </pre>
+</figure>
+
+## Structure and Validation ## {#appreg-structure}
+
+A given `ecosystem:Agent` will have one or more
+`ecosystem:ApplicationRegistry` instances discoverable through the
+[[#reg-model]], via resources that implement
+[[#reg-structure|Registrar Structure and Validation]].
+
+<figure>
+  <figcaption>An ApplicationRegistry instance at
+  https://alice.pod.example/applications/#registry</figcaption>
+  <img src="registrar-applications.svg" width=100%/>
+</figure>
+
+The `ecosystem:ApplicationRegistry` instance is stored in the RDF graph
+of the `/applications` container at
+`https://alice.pod.example/applications/#registry`. It links to a
+collection of `ecosystem:ApplicationRegistration` instances stored in
+the `/applications` container.
+
+The shape tree `<#application-registry-tree>` associated with the
+`/applications` container specifies this resource structure. It assigns
+the `#ApplicationRegistryShape` to validate the
+`ecosystem:ApplicationRegistry` instance in the
+container resource, and says that the container includes
+instances of `<#application-registration-tree>`, which any
+resources added to the `/applications` container must conform to.
+
+Conforming to `<#application-registration-tree>` ensures that the
+`ecosystem:ApplicationRegistry` at `/applications` only contains
+valid `ecosystem:ApplicationRegistration` instances.
+
+Specifically:
+
+* Any resource added to the `/applications` container must be a
+    container (`tree:expectedType ldp:Container`)
+* An `ecosystem:ApplicationRegistration` instance must be stored in the
+    RDF graph of that container, to successfully pass shape validation via
+    `tree:shape <#ApplicationRegistrationShape>`.
+
+<figure>
+  <figcaption>An ApplicationRegistration instance at
+  https://alice.pod.example/applications/02f9d4221d9e5c0ae/#registration
+  </figcaption>
+  <img src="appregistration-structure.svg" width=100%/>
+</figure>
+
+These `ecosystem:ApplicationRegistration` instances are defined as
+containers so that the `ecosystem:Application` that has been registered
+has dedicated space to store internal data that is very specific to the function
+of that application. In the figure above, we can see an application-specific
+configuration resource (`config.ttl`) and a summary index file (`summary.idx`).
+
+### Naming application registration resources ### {#appreg-naming}
+
+In this proposal resource names for ecosystem instances are almost always
+randomly generated. However, when creating an `<#application-registration-tree>`
+for the `ecosystem:ApplicationRegistration` instance, the container
+must be named using a SHA-256 hash encoding of the [=ApplicationID=] for the
+`ecosystem:Application`, which is linked through the
+`ecosystem:registeredApplication` property.
+
+:: <b>NeverNote ApplicationID:</b> `https://nevernote.example/id#agent`
+:: <b>SHA-256 Hash:</b> `70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`
+
+In our [[#usecase]], the name of the container for NeverNote's
+`ecosystem:ApplicationRegistration` instance would be
+`70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`.
+
+### Use of internal application space ### {#appreg-internal}
+
+There is a legitimate argument that giving applications their own
+private data space in Solid is counterintuitive to Solid’s proposition to
+decouple data and applications.
+
+However, there are certain types of data that are very specific to
+the function of a particular application, and have no value to other
+applications. This may include but not be limited to application-specific
+preferences, configurations, caches, or indexes. Forcing that data into
+shape trees and shapes stored in the data registry that are supposed
+to be consumable and interoperable by other applications can lead to
+frankenstein-like shape trees and shapes that no one wants to use.
+Giving applications a private space where they can store internal data
+is therefore a key factor in broad interoperability,
+because it protects interoperable data from pollution by narrowly
+focused elements.
+
+Ultimately, if applications don't want to be interoperable, there's
+no reasonable convention that could prevent it. For example, they could
+decide to use proprietary vocabularies, shapes, and shape trees.
+However, there are motivating factors to
+be interoperable, because in doing so they become compatible with a
+slew of data that already exists in the ecosystem, including data within
+their competitive landscape. Providing a private space allows applications
+to separate some internals from true interoperable data so that the
+interoperable data is cleaner and more usable. Our belief is that
+this helps avoid the creation of application-specific silos.
+
+Because this space is private to an application and not meant to
+be interoperable, the application may or may not decide to utilize
+data validation facilities like shape trees or shapes.
+
+## Permission Model ## {#appreg-permissions}
+
+<figure>
+<figcaption>Permission model for application registry resources</figcaption>
+  <table class="data permissions" align="left">
+    <col>
+    <colgroup span=2></colgroup>
+    <colgroup span=2></colgroup>
+    <colgroup span=2></colgroup>
+    <thead>
+      <tr>
+        <th></th>
+        <th colspan=2 scope="colgroup">Public</th>
+        <th colspan=2 scope="colgroup">Selectively Trusted</th>
+        <th colspan=2 scope="colgroup">Selectively Granted</th>
+      </tr>
+      <tr>
+        <th scope="col">Resource</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`/applications/`</td>
+        <td>-</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- /applications/registration-14a/`</td>
+        <td>-</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>Registered App.</td>
+        <td>Read</td>
+      </tr>
+      <tr>
+        <td>`-- /applications/registration-c3b/*`</td>
+        <td>-</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>Registered App.</td>
+        <td>Write</td>
+      </tr>
+      <tr>
+        <td>`-- /applications/registration-12e/*`</td>
+        <td>-</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>Registered App.</td>
+        <td>Write</td>
+      </tr>
+      <tr>
+        <td>`-- /applications/registration-f8f/*`</td>
+        <td>-</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>Registered App.</td>
+        <td>Write</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+There is no public access to any data in an `ecosystem:ApplicationRegistry`.
+
+Only `ecosystem:Agents` that have been selectively trusted to assist a
+given agent with Application Registration have the ability to manage
+contents and permissions across `ecosystem:ApplicationRegistry` instances,
+including the creation and modification of `ecosystem:ApplicationRegistration`
+instances.
+
+A given registered `ecosystem:Application` has read access to its
+`ecosystem:ApplicationRegistration` resource, and read/write access to
+the data space inside that container. It does not get control privileges.
+
+## Looking up an Application Registration ## {#appreg-lookup}
+
 NeverNote needs to determine if it is already registered, so it needs to
 see if there is an entry for itself at
 `<https://alice.pod.example/applications/>`.
@@ -687,15 +888,15 @@ We do allow NeverNote (as a [=user-piloted application=] used by Alice),
 to directly access its own
 application registration entry. However, Nevernote must know how
 to find that entry using information it already has. We solve this by using
-a SHA3-256 hash of NeverNote's ApplicationID to name the container
+a SHA-256 hash of NeverNote's ApplicationID to name the container
 of the application registration entry.
 
 Since NeverNote knows its own ApplicationID, it looks for
-a SHA3-256 hash of `https://nevernote.example/id#agent` in
+a SHA-256 hash of `https://nevernote.example/id#agent` in
 `https://alice.pod.example/applications/`.
 
 <pre>
-GET https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae
+GET https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3
 </pre>
 
 If NeverNote is unable to access the registration entry, then it knows that it
@@ -718,8 +919,7 @@ so it cannot access an application registration entry for itself. It needs to be
 registered, and that must be facilitated through
 Alice’s trusted [=application registration agent=].
 
-
-## Registering the application ## {#appreg-registration}
+## Registering an Application ## {#appreg-new}
 
 NeverNote has determined that it needs to be registered in Alice’s
 Pod. It cannot register itself, so it needs the help of Alice's
@@ -779,26 +979,26 @@ NeverNote at the `ecosystem:applicationRegistrationCallback` address in
 application registration shape trees.
 Each application registration is a container, which allows
 important metadata about the application to be stored, and also gives
-an application the [[#appreg-internaluse]] that it may need for certain
+an application the [[#appreg-internal]] that it may need for certain
 non-interoperable data important to its own internal operations, but not
 pertinent to other applications'.
 
 NeverNote’s ApplicationID: `https://nevernote.example/id#agent`
 
-SHA3-256 hash: `ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae`
+SHA-256 hash: `70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`
 
 The hash of NeverNote’s ApplicationID will be used to name the
 application registration container and uniquely identify it. Per the location
 defined by `ecosystem:registryStorage` in [[#alice-appregset]],
 the [=application registration=] will be provisioned at:
 
-`https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae`.
+`https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`.
 
 NeverNote will always know where to find this, because it knows its
 own ApplicationID.
 
 The following resource contains the registration detail:
-`https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/application#registration`.
+`https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3/application#registration`.
 
 <b>Excerpt from [[#alice-appregnevernote]]</b>
 <pre highlight="turtle">
@@ -817,51 +1017,6 @@ much freedom as it
 likes to store data in its own internal space, but not the ability
 to change permissions or alter the registration data maintained by
 the [=application registration agent=].
-
-* **/applications** - Alice and trusted agents have full control.
-    * **ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae** -
-        SHA3-256 Hash of NeverNote AppID - NeverNote can read.
-        Alice and trusted agents have full control.
-          * **application** - application registration resource - NeverNote can read.
-              Alice and trusted agents have full control.
-          * **access** - what access the application has been authorized
-              to have - NeverNote can read. Alice and trusted agents have
-              full control.
-          * **internal** - NeverNote can read and write.
-              Alice and trusted agents have full control.
-
-#### Use of internal application space #### {#appreg-internaluse}
-
-There is a legitimate argument that giving applications their own
-private data space in Solid is counterintuitive to Solid’s proposition to
-decouple data and applications.
-
-However, there are certain slices of data that are very specific to
-the function of a particular application, and have no value to other
-applications. This may include but not be limited to application-specific
-preferences, configurations, caches, or indexes. Forcing that data into
-shape trees and shapes stored in the data registry that are supposed
-to be consumable and interoperable by other applications can lead to
-frankenstein-like shape trees and shapes that no one wants to use.
-Giving applications a private space where they can store internal data
-is therefore a key factor in broad interoperability,
-because it protects interoperable data from pollution by narrowly
-focused elements.
-
-Ultimately, if applications don't want to be interoperable, there's
-no reasonable convention that could prevent it. For example, they could
-decide to use proprietary vocabularies, shapes, and shape trees.
-However, there are motivating factors to
-be interoperable, because in doing so they become compatible with a
-slew of data that already exists in the ecosystem, including data within
-their competitive landscape. Providing a private space allows applications
-to separate some internals from true interoperable data so that the
-interoperable data is cleaner and more usable. Our belief is that
-this helps avoid the creation of application-specific silos.
-
-Because this space is private to an application and not meant to
-be interoperable, the application may or may not decide to utilize
-data validation facilities like shape trees or shapes.
 
 
 Definitions {#definitions}
@@ -973,6 +1128,9 @@ A <dfn>registry</dfn> is ...
 
 An <dfn>application registry</dfn> is a collection of
 [=application registrations=] stored in a specific location in a [=pod=].
+They are represented by the `ecosystem:ApplicationRegistry` class,
+and validated by the #ApplicationRegistryShape, through the
+<#application-registry-tree>.
 
 An <dfn>application registration</dfn> provides the [=resource controller=]
 of a [=pod=] with a place to maintain metadata, state, preferences, and
@@ -1027,7 +1185,7 @@ Issue: Add the contents of the ecosystem vocabulary
     * **remote** - Remote Registry Set
 * **applications/** - application registry - where application registration
     entries are stored.
-    * **ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/** -
+    * **70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3/** -
         [[#alice-appregnevernote]], validated by the `#registration` shape tree
         in the application registry shape tree.
 * **data/** - Registry of data
@@ -1119,7 +1277,7 @@ with use cases.
   <pre highlight="turtle">
   <#registry>
     a ecosystem:ApplicationRegistry ;
-    ecosystem:hasRegistration &lt;https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/#registration&gt; .
+    ecosystem:hasRegistration &lt;https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3/#registration&gt; .
   </pre>
 </figure>
 
@@ -1130,7 +1288,7 @@ and #registry is stored in the RDF graph of the container resource.
 
 <figure>
   <figcaption>Alice’s application registration instance for NeverNote at
-  https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/#registration</figcaption>
+  https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3/#registration</figcaption>
   <pre highlight="turtle">
   <#registration>
     a ecosystem:ApplicationRegistration ;
@@ -1142,7 +1300,7 @@ and #registry is stored in the RDF graph of the container resource.
 </figure>
 
 Note that
-`https://alice.pod.example/applications/ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae/`
+`https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3/`
 is a container, and #registration is stored in the RDF graph of the
 container resource.
 
@@ -1161,8 +1319,8 @@ container resource.
       <td>https://nevernote.example/id#agent</td>
     </tr>
     <tr>
-      <td><th>SHA3-256 Hash of AppID</th></td>
-      <td>ec0edcd4f8ac00afed60f9929647f65bc87a2aeedf82e4d02f9d4221d9e5c0ae</td>
+      <td><th>SHA-256 Hash of AppID</th></td>
+      <td>70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3</td>
     </tr>
   </tbody>
 </table>

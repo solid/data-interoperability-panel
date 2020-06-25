@@ -113,16 +113,6 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Application Registry"@en .
 
-# Properties in domain of ApplicationRegistrySet
-#########################################################
-:hasApplicationRegistry
-  a rdfs:subPropertyOf :hasRegistry ;
-  rdfs:comment "Links to an application registry in an application registry set"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :ApplicationRegistrySet ;
-  rdfs:range :ApplicationRegistry ;
-  rdfs:label "Has application registry"@en .
-
 # DataRegistrySet Class
 #############################################################################
 # SubClassOf RegistrySet used for DataRegistry Instances
@@ -132,16 +122,6 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:comment "A collection of Data Registry instances"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Data Registry"@en .
-
-# Properties in domain of DataRegistrySet
-#########################################################
-:hasDataRegistry
-  a rdfs:subPropertyOf :hasRegistry ;
-  rdfs:comment "Links to a data registry in a data registry set"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :DataRegistrySet ;
-  rdfs:range :DataRegistry ;
-  rdfs:label "Has data registry"@en .
 
 # Registry Class
 #############################################################################
@@ -174,16 +154,6 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Application Registry"@en .
 
-# Properties in domain of ApplicationRegistry
-#########################################################
-:hasApplicationRegistration
-  a rdfs:subPropertyOf :hasRegistration ;
-  rdfs:comment "Links to an application registration in a given application registry"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :ApplicationRegistry ;
-  rdfs:range :ApplicationRegistration ;
-  rdfs:label "Has application registration"@en .
-
 # DataRegistry Class
 #############################################################################
 # SubClassOf Registry used for DataRegistration instances
@@ -194,15 +164,6 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Data Registry"@en .
 
-# Properties in domain of DataRegistry
-#########################################################
-:hasDataRegistration
-  a rdfs:subPropertyOf :hasRegistration ;
-  rdfs:comment "Links to a data registration in a given data registry"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :DataRegistry ;
-  rdfs:range :DataRegistration ;
-  rdfs:label "Has data registration"@en .
 
 # Registration Class
 #############################################################################

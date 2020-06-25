@@ -16,14 +16,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 ################################################################
 <#ApplicationRegistrySetShape> {
   a [ ecosystem:ApplicationRegistrySet ] ;
-  ecosystem:hasApplicationRegistry IRI+
+  ecosystem:hasRegistry IRI+
 }
 
 # Application Registry
 ################################################################
 <#ApplicationRegistryShape> {
   a [ ecosystem:ApplicationRegistry ] ;
-  ecosystem:hasApplicationRegistration IRI*
+  ecosystem:hasRegistration IRI*
 }
 
 # Application Registration
@@ -44,12 +44,12 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 ################################################################
 <#DataRegistrySetShape> {
   a [ ecosystem:DataRegistrySet ] ;
-  ecosystem:hasDataRegistry IRI+
+  ecosystem:hasRegistry IRI+
 }
 
 # Data Registry
 ################################################################
 <#DataRegistryShape> {
   a [ ecosystem:DataRegistry ] ;
-  ecosystem:hasDataRegistration IRI*
+  ecosystem:hasRegistration IRI*
 }
