@@ -305,7 +305,7 @@ organizing and tracking data, and more.
 ## Registrar Data Model ## {#reg-model}
 
 <figure>
-  <img src="registrar-model.svg" width=90%/>
+  <img src="registrar-model.svg" width=100%/>
   <figcaption align="center">Top level registrar data model</figcaption>
 </figure>
 
@@ -488,19 +488,21 @@ have control-level access across her entire data space.
 <figcaption>Permission model for registrar resources</figcaption>
   <table class="data permissions" align="left">
     <col>
-    <colgroup span=2></colgroup>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
     <colgroup span=2></colgroup>
     <colgroup span=2></colgroup>
     <thead>
       <tr>
         <th></th>
-        <th colspan=2 scope="colgroup">Public</th>
+        <th scope="colgroup">Controller</th>
+        <th scope="colgroup">Public</th>
         <th colspan=2 scope="colgroup">Selectively Trusted</th>
         <th colspan=2 scope="colgroup">Selectively Granted</th>
       </tr>
       <tr>
         <th scope="col">Resource</th>
-        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
         <th scope="col">Access</th>
         <th scope="col">Subject</th>
         <th scope="col">Access</th>
@@ -511,7 +513,7 @@ have control-level access across her entire data space.
     <tbody>
       <tr>
         <td>`/id`</td>
-        <td>Everyone</td>
+        <td>Control</td>
         <td>Read</td>
         <td>Identity Agent</td>
         <td>Control</td>
@@ -520,7 +522,7 @@ have control-level access across her entire data space.
       </tr>
       <tr>
         <td>`/registries/`</td>
-        <td>-</td>
+        <td>Control</td>
         <td>-</td>
         <td>Trusted Agents</td>
         <td>Control</td>
@@ -529,7 +531,7 @@ have control-level access across her entire data space.
       </tr>
       <tr>
         <td>`-- /registries/application`</td>
-        <td>-</td>
+        <td>Control</td>
         <td>-</td>
         <td>App. Registration Agent</td>
         <td>Control</td>
@@ -538,7 +540,7 @@ have control-level access across her entire data space.
       </tr>
       <tr>
         <td>`-- /registries/data`</td>
-        <td>-</td>
+        <td>Control</td>
         <td>-</td>
         <td>Data Authorization Agent</td>
         <td>Control</td>
@@ -547,7 +549,7 @@ have control-level access across her entire data space.
       </tr>
       <tr>
         <td>`/applications/`</td>
-        <td>-</td>
+        <td>Control</td>
         <td>-</td>
         <td>App. Registration Agent</td>
         <td>Control</td>
@@ -556,7 +558,7 @@ have control-level access across her entire data space.
       </tr>
       <tr>
         <td>`-- /applications/registration-123/`</td>
-        <td>-</td>
+        <td>Control</td>
         <td>-</td>
         <td>App. Registration Agent</td>
         <td>Control</td>
@@ -565,7 +567,7 @@ have control-level access across her entire data space.
       </tr>
       <tr>
         <td>`-- /applications/registration-123/*`</td>
-        <td>-</td>
+        <td>Control</td>
         <td>-</td>
         <td>App. Registration Agent</td>
         <td>Control</td>
@@ -574,7 +576,7 @@ have control-level access across her entire data space.
       </tr>
       <tr>
         <td>`/data`</td>
-        <td>-</td>
+        <td>Control</td>
         <td>-</td>
         <td>Data Authorization Agent</td>
         <td>Control</td>
@@ -583,7 +585,7 @@ have control-level access across her entire data space.
       </tr>
       <tr>
         <td>`-- /data/registration-456/`</td>
-        <td>-</td>
+        <td>Control</td>
         <td>-</td>
         <td>Data Authorization Agent</td>
         <td>Control</td>
@@ -592,7 +594,7 @@ have control-level access across her entire data space.
       </tr>
       <tr>
         <td>`-- /data/registration-456/*`</td>
-        <td>-</td>
+        <td>Control</td>
         <td>-</td>
         <td>Data Authorization Agent</td>
         <td>Control</td>
@@ -751,6 +753,16 @@ In our [[#usecase]], the name of the container for NeverNote's
 `ecosystem:ApplicationRegistration` instance would be
 `70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`.
 
+There is a reasonable argument for whether or not a one-way hash alogorithm
+like SHA-256 is appropriate, as we are primarily using it as a mechanism
+for URL encoding to create uniform, opaque resource names,
+and the ApplicationID for a given `ecosystem:Application`
+is publicly shared. However, the use of one-way hash does add a modicum
+of additional privacy at a miniscule expense.
+
+Issue: Is it appropriate to use a one-way hash for application registration
+resource names. [Github issue](https://github.com/solid/data-interoperability-panel/issues/48)
+
 ### Use of internal application space ### {#appreg-internal}
 
 There is a legitimate argument that giving applications their own
@@ -798,26 +810,25 @@ A given registered `ecosystem:Application` has read access to its
 `ecosystem:ApplicationRegistration` resource, and read/write access to
 the data space inside that container. It does not get control privileges.
 
-The [=resource controller=] (Alice in our [[#usecase]]) should be assumed to
-have control-level access across her entire data space.
-
 <figure>
 <figcaption>Permission model for application registry resources</figcaption>
   <table class="data permissions" align="left">
     <col>
-    <colgroup span=2></colgroup>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
     <colgroup span=2></colgroup>
     <colgroup span=2></colgroup>
     <thead>
       <tr>
         <th></th>
-        <th colspan=2 scope="colgroup">Public</th>
+        <th scope="colgroup">Controller</th>
+        <th scope="colgroup">Public</th>
         <th colspan=2 scope="colgroup">Selectively Trusted</th>
         <th colspan=2 scope="colgroup">Selectively Granted</th>
       </tr>
       <tr>
         <th scope="col">Resource</th>
-        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
         <th scope="col">Access</th>
         <th scope="col">Subject</th>
         <th scope="col">Access</th>
@@ -828,7 +839,7 @@ have control-level access across her entire data space.
     <tbody>
       <tr>
         <td>`/applications/`</td>
-        <td>-</td>
+        <td>Control</td>
         <td>-</td>
         <td>App. Registration Agent</td>
         <td>Control</td>
@@ -837,7 +848,7 @@ have control-level access across her entire data space.
       </tr>
       <tr>
         <td>`-- /applications/registration-14a/`</td>
-        <td>-</td>
+        <td>Control</td>
         <td>-</td>
         <td>App. Registration Agent</td>
         <td>Control</td>
@@ -845,26 +856,26 @@ have control-level access across her entire data space.
         <td>Read</td>
       </tr>
       <tr>
-        <td>`-- /applications/registration-c3b/*`</td>
-        <td>-</td>
+        <td>`-- /applications/registration-14a/*`</td>
+        <td>Control</td>
         <td>-</td>
         <td>App. Registration Agent</td>
         <td>Control</td>
         <td>Registered App.</td>
         <td>Write</td>
+      </tr>
+      <tr>
+        <td>`-- /applications/registration-12e/`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>Registered App.</td>
+        <td>Read</td>
       </tr>
       <tr>
         <td>`-- /applications/registration-12e/*`</td>
-        <td>-</td>
-        <td>-</td>
-        <td>App. Registration Agent</td>
         <td>Control</td>
-        <td>Registered App.</td>
-        <td>Write</td>
-      </tr>
-      <tr>
-        <td>`-- /applications/registration-f8f/*`</td>
-        <td>-</td>
         <td>-</td>
         <td>App. Registration Agent</td>
         <td>Control</td>
@@ -895,11 +906,11 @@ any [=trusted agents=] for application registration will have access and
 visibility across `ecosystem:ApplicationRegistry` and
 `ecosyste:ApplicationRegistration` instances. An
 `ecosystem:Application` will only have access to an
-`ecosystem:ApplicationRegistration` where it is
+`ecosystem:ApplicationRegistration` when it is
 the `ecosystem:registeredApplication` in question.
 
 Since an `ecosystem:Application` does not have access to any
-`ecosystem:AccessRegistry` instances, it can only perform direct
+`ecosystem:ApplicationRegistry` instances, it can only perform direct
 lookups based on information it already has, or has access to. Since it
 can access the `ecosystem:ApplicationRegistrySet` and see the list
 of `ecosystem:ApplicationRegistry` instances linked through
@@ -931,103 +942,108 @@ it will need to go through the process of [[#appreg-new]].
 
 ## Registering an Application ## {#appreg-new}
 
-NeverNote has determined that it needs to be registered in Alice’s
-Pod. It cannot register itself, so it needs the help of Alice's
-[=application registration agent=]. It must first dereference Alice's WebID to
-access [[#alice-profile]]. It will then look for the
-`ecosystem:trustsForApplicationRegistration` predicate in the contents
-of her identity profile document to discover the
-application registration agent she trusts.
+In almost every case, an `ecosystem:Application` will not be permitted
+to register itself, and will need the
+assistance of a [=trusted agent=] that has been authorized to assist
+with application registration for a given `ecosystem:Agent`.
 
-<b>Excerpt from [[#alice-profile]]</b>
-<pre highlight="turtle">
-  <#me> ecosystem:trustsForApplicationRegistration &lt;https://trusted.example/ar/&gt; .
-</pre>
+Issue: Agents that can perform these capabilities will be discoverable
+through the registrar. Until that section is written, we'll use a
+hard-coded properties associated with the Agent for discovery.
 
-NeverNote redirects Alice via the synchronous trusted agent pattern to
-the `ecosystem:trustsForApplicationRegistration`
-at `https://trusted.example/ar/`, supplying its [=ApplicationID=]
-(`https://nevernote.example/id#agent`) as a parameter. The
-ApplicationID uniquely identifies the application, and leads to
-[[#nevernote-profile]], an RDF document containing data required to
-complete the registration process.
+The `ecosystem:Application` will look for another
+`ecosystem:Application` that is linked with the `ecosystem:Agent` through
+the `ecosystem:trustsForApplicationRegistration`property.
 
-Issue: Provide a sequence diagram for application registration, and incorporate
-specific detail about the end user experience during that flow.
+<figure>
+  <figcaption>Agent at https://alice.pod.example/id#me linking to Application
+  Registration Agent</figcaption>
+  <pre highlight="turtle">
+    <#me>
+      a eocsystem:Agent;
+      ecosystem:trustsForApplicationRegistration &lt;https://trusted.example/ar/&gt; .
+  </pre>
+</figure>
 
-The application registration agent is now expected to dereference
-(i.e. perform an HTTP GET on) the ApplicationID to retrieve
-[[#nevernote-profile]]. The contents of an [=application profile document=]
+The `ecosystem:Application` will redirect the [=resource controller=]
+via the synchronous
+[[#trusted|trusted agent]] pattern to
+the `ecosystem:Application` linked by
+`ecosystem:trustsForApplicationRegistration`, supplying its
+its [=ApplicationID=] as a parameter.
+
+The [=application registration agent=] is now expected to dereference
+(i.e. perform an HTTP GET on) the ApplicationID to retrieve an
+[=application profile document=]. The contents of that document
 help the agent determine whether that application is suitable for
 approval.
 
 For example, verification of a verifiable credential
-stored in [[#nevernote-profile]], issued by a third party that Alice
-trusts, is a good indicator of the application’s trustworthiness.
+stored in the application profile document, issued by a trusted third party,
+is a good indicator of the application’s trustworthiness.
 Similarly, an application, or the [=identity provider=] it uses, may
-be listed on a trusted whitelist that the Application Registration
-Agent consults. The Application Registration Agent is able to raise
-issues related to these checks (or others) to Alice as part of
-her decision making process.
+be listed on a trusted whitelist that the trusted agent
+consults. It is able to raise issues related to these checks (or others)
+to the resource controller as part of her decision making process.
 
-Assuming suitability and confirmation from Alice, the
-application registration agent will proceed in [[#appreg-creating]] for
-NeverNote in Alice’s Pod. When it is finished, it will return her to
-NeverNote at the `ecosystem:applicationRegistrationCallback` address in
-[[#nevernote-profile]].
-
-<b>Excerpt from [[#nevernote-profile]]:</b>
-
-<pre highlight="turtle">
-<#agent>
-    ecosystem:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt; ;
-</pre>
+Assuming suitability and confirmation from the resource controller, the
+application registration agent will proceed to create the
+`ecosystem:ApplicationRegistration` for
+the `ecosystem:Application` in the appropriate `ecosystem:ApplicationRegistry`.
+When it is finished, it will return her to
+the `ecosystem:Application` at the `ecosystem:applicationRegistrationCallback`
+provided in the application profile document.
 
 ### Creating the application registration entry ### {#appreg-creating}
 
-[=Application registrations=] are instances of
-application registration shape trees.
-Each application registration is a container, which allows
-important metadata about the application to be stored, and also gives
-an application the [[#appreg-internal]] that it may need for certain
-non-interoperable data important to its own internal operations, but not
-pertinent to other applications'.
+The [=application registration agent=] is responsible for creating
+the `ecosystem:ApplicationRegistration` in conformance with the
+documented [[#appreg-structure]] pattern.
 
-NeverNote’s ApplicationID: `https://nevernote.example/id#agent`
+Specifically, the <#application-registration-tree> stipulates that the
+`ecosystem:ApplicationRegistration` be a container via
+`tree:expectedType ldp:Container`.
 
-SHA-256 hash: `70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`
+The `ecosystem:ApplicationRegistration` instance must be added to the RDF
+graph of that container with a <#registration> subject, and pass validation
+against the <#ApplicationRegistrationShape>.
 
-The hash of NeverNote’s ApplicationID will be used to name the
-application registration container and uniquely identify it. Per the location
-defined by `ecosystem:registryStorage` in [[#alice-appregset]],
-the [=application registration=] will be provisioned at:
+The `ecosyste:ApplicationRegistration` properties must be set as follows:
 
-`https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`.
+* **ecosystem:registeredBy:** linked to the [=identity=] of the
+    [=authenticated agent=] that invoked the registration
+    (i.e. the [=webid=] of the [=resource controller=])
+* **ecosystem:registeredWith:** linked to the [=ApplicationID=] of the
+    [=trusted agent=] that facilitated the registration, typically the
+    [=application registration agent=].
+* **ecosystem:registeredApplication:** linked to the [=ApplicationID] of the
+    `ecosystem:Application` that is being registered.
+* **ecosystem:registeredAt:** the xsd:dateTime of the registration
 
-NeverNote will always know where to find this, because it knows its
-own ApplicationID.
+<figure>
+  <figcaption>Example ApplicationRegistration instance</figcaption>
+  <pre highlight="turtle">
+  <#registration>
+    a ecosystem:applicationRegistration ;
+    ecosystem:registeredBy &lt;https://alice.pod.example/id#me&gt; ;
+    ecosystem:registeredWith &lt;https://trusted.example/ar&gt; ;
+    ecosystem:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
+    ecosystem:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+  </pre>
+</figure>
 
-The following resource contains the registration detail:
-`https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3/application#registration`.
+The `ecosystem:ApplicationRegistration` container must be named in
+accordance with the instructions in [[#appreg-naming]].
 
-<b>Excerpt from [[#alice-appregnevernote]]</b>
-<pre highlight="turtle">
-<#registration>
-  a ecosystem:applicationRegistration ;
-  ecosystem:registeredBy &lt;https://alice.pod.example/id#me&gt; ;
-  ecosystem:registeredWith &lt;https://trusted.example/ar&gt; ;
-  ecosystem:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
-  ecosystem:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
-</pre>
+The `ecosystem:ApplicationRegistration` container must be added as a child
+member of the `ecosystem:ApplicationRegistry` container.
 
+Access to the `ecosystem:ApplicationRegistration` must be set per the
+instructions in [[#appreg-permissions]].
 
-NeverNote is provided read access to the application registration,
-and read/write access to the internal space. This gives NeverNote as
-much freedom as it
-likes to store data in its own internal space, but not the ability
-to change permissions or alter the registration data maintained by
-the [=application registration agent=].
-
+The `ecosystem:ApplicationRegistration` must be associated with the
+`ecosystem:ApplicationRegistry` through the `hasRegistry` property in
+the graph of the `ecosystem:ApplifcationRegistry`.
 
 Definitions {#definitions}
 =====================
