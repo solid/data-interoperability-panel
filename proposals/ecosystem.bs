@@ -5,7 +5,7 @@ Level: 1
 Max ToC Depth: 2
 Status: w3c/ED
 Group: w3c
-URL: http://example.com/url-this-spec-will-live-at
+URL: https://solid.github.io/data-interoperability-panel/ecosystem/
 Editor: Justin Bingham
 Editor: Eric Prud'hommeaux
 Editor: Josh Collins
@@ -116,7 +116,7 @@ Proposal {#proposal}
 
 In this proposal, we aim to address the stated problems and associated goals
 by providing straightforward patterns that can be used in concert to realize
-an [=interoperable ecosystem=] for [=Solid=]. To aid in understanding,
+an interoperable [=ecosystem=] for [=Solid=]. To aid in understanding,
 we structure the proposal in the form of an end-to-end use case.
 
 We introduce [=shape trees=] as a fundamental means through which we model,
@@ -166,123 +166,71 @@ Reference Use Case {#usecase}
 
 In our use case, Alice wants to use a new application to record and manage
 her personal and professional notes. She does a Web search and finds
-NeverNote (https://nevernote.example), a web-based application that advertises
-itself as Solid Enabled. Alice is excited about this because she recently
-created a Solid Pod for herself at https://alice.pod.example.
+NeverNote (https://nevernote.example), a single-page (SPA) web-based
+application that advertises itself as *solid enabled*. Alice is excited
+about this because she recently created a Solid Pod for herself
+at https://alice.pod.example.
 
-We follow Alice (and then Bob) through the following sequence:
+When Alice brings up NeverNote in her
+web browser, she is prompted to authenticate with her [=WebID=] because
+NeverNote doesn’t know who she is yet, nor is it permitted to send
+authenticated requests to her pod.
 
-1. Alice decides to use a Solid-enabled web application called NeverNote
-1. NeverNote checks to see if it has been registered with Alice’s Pod already
-1. NeverNote is registered with Alice’s Pod through the help of Alice’s
-    Application Registration Agent.
-1. Through the help of her Authorization Agent, Alice grants NeverNote the
+## Alice registers NeverNote ## {#alice-registers}
+
+Alice logs into her [=identity provider=] (`https://idp.example`) with her
+WebID (`https://alice.pod.example/id#me`), and receives
+a [=token=] that NeverNote can use to make requests to her pod.
+The token identifies her as Alice (`https://alice.pod.example/id#me`),
+using NeverNote (`https://nevernote.example/id#agent`).
+
+At this point, NeverNote isn't sure whether Alice is a brand new user of
+NeverNote, or an existing user with stored preferences and caches, who has
+granted NeverNote access to her notebook and note data.
+
+To determine whether Alice has already registered NeverNote, NeverNote
+[[#appreg-lookup|looks for an application registration]] for itself through
+Alice's [[#reg]]. If no registration is found, NeverNote will go through
+a quick [[#appreg-new|registration process]]. If there is already an
+existing registration for NeverNote, no additional
+steps are necessary, and NeverNote is able to access the registration entry
+subject to the limitations of the [[#appreg-permissions]], in accordance with
+the [[#appreg-structure]] of the resource hierarchy.
+
+## Alice grants NeverNote access to data ## {#alice-authorizes}
+
+Issue: Complete Data Registration and Data Authorization and update this
+section.
+
+* Through the help of her Authorization Agent, Alice grants NeverNote the
     following privileges:
-    * Access to Notes that already existed in her Pod
-    * Ability to create new Notes that NeverNote will have permission to manage
-    * Ability to create new Notebooks that NeverNote will have permission to manage
-1. Alice later expands NeverNote’s access to include her Contacts
-1. Alice and Bob collaborate on a Notebook in Alice’s Pod. Bob is using a
+  * Access to Notes that already existed in her Pod
+  * Ability to create new Notes that NeverNote will have permission to manage
+  * Ability to create new Notebooks that NeverNote will have permission to manage
+
+## Alice collaborates with Bob ## {#alice-collaborates}
+
+Issue: Complete Collaborative Access then update this section.
+
+* Alice and Bob collaborate on a Notebook in Alice’s Pod. Bob is using a
     different application than NeverNote called OtherNote.
 
-Client Identification {#client}
+
+Agent {#ecoagent}
 =====================
 
-Throughout this proposal, we see cases where Alice compartmentalizes access
-to her data based on who or what is access it - the [=authenticated agent=].
-In certain cases, we also limit access based on the application in use
-by Alice - the
-[=user-piloted application=].
+An [=agent=] is a distinct individual, group, or piece of
+software with an identity that can be strongly authenticated. They are
+the primary actors in the Solid [=ecosystem=].
 
-We utilize a new optional predicate in an [=acl resource=] statement to
-restrict access to permitted [=user-piloted applications=], identified by their
-[=ApplicationIDs=].
+Agents have [=identities=], and dereferencing those identities leads
+to [=identity profile documents=] that let other agents and applications
+participating in the ecosystem know how to interact with them.
 
-Limiting access to data based on
-the [=user-piloted application=] in use is only reliable in certain
-instances when the [=application=] can be identified with confidence.
+Even the applications that the agent uses directly find their way to
+the agent's data through the agent's identity.
 
-## Identifying client applications ## {#client-id}
-
-For identification purposes, client [=applications=] in use across the world
-today fall into two buckets; *strongly identifiable* and *weakly identifiable*.
-
-**Strongly identifiable clients** can be identified by 3rd parties independently
-from their user/controller. Only [=server-side applications=] are
-strongly identifiable. As confidential clients, they can keep secrets
-and can present attestations and third-party credentials
-via DNS / domain certificates.
-
-**Weakly identifiable clients** include in-browser JS apps and native desktop
-or mobile applications. They are considered weakly identifiable because they
-are not able to keep secrets on an instance level. They are often referred to
-as public clients. Native apps should be strongly-identifiable in theory
-(since they are able to keep secrets on an instance level), but not in
-practice because the OS manufacturers do not make their trust
-infrastructure available. **Weakly identifiable clients are only strongly
-identifiable to the user controlling them**.
-
-## Limiting access by client application ## {#client-limit}
-
-In the case of a strongly identifiable [=server-side application=],
-the [=authenticated agent=] and the client application are the same. The client
-application has its own [=identity=] that can be strongly authenticated. Alice
-chooses which data that client application's identity can access, in the same
-way that she chooses which data Bob can access.
-
-In the case of [=user-piloted applications=], the ability for a Solid pod to
-limit access to data by the client application in use is only as strong as
-the trustworthiness of the user piloting that application, and their ability
-to avoid using malicious applications. The [=ApplicationID=] can be manipulated
-by the user in control of the app. This means that Alice can strongly control
-the applications that she uses to compartmentalize her own data, but has
-limited ability to control the applications that Bob uses to access the data
-she shares with him.
-
-Trusted Agents {#trusted}
-=====================
-
-A [=trusted Agent=] is an application that a [=resource controller=] trusts
-to perform actions for them with elevated privilege. They can be
-trusted to help a resource controller to make smart decisions related to
-their data.
-
-There's no limit to what a trusted agent can
-assist with, but [[#appreg|registering applications]] and authorizing access to
-data are two critical operations covered in this proposal.
-
-A trusted [=application registration agent=] helps the [=resource controller=]
-make smart decisions about the applications they choose to utilize, and
-ensure they get provisioned appropriately.
-
-A trusted agent for data authorization is needed in cases where the resource
-controller wishes to grant limited access to data in her Pod to another
-[=authenticated agent=] or [=user-piloted application=], but needs
-assistance to determine what access is needed, and help to provision
-that access.
-
-There are three typical patterns to interact with a trusted agent;
-*Embedded*, *Synchronous*, and *Asynchronous*.
-
-The **Embedded pattern** is employed when the application in question has full
-control privileges, and the trusted agent capabilities can
-be executed directly. An example of an application that could fall into
-this category would be a Pod management application installed by default
-by the user’s Pod provider.
-
-The **Synchronous pattern** utilizes a web-based redirect flow much like an
-OAuth2 grant flow. The user is redirected to the trusted agent URL, with
-a callback parameter provided as part of the request. When the
-trusted agent is finished, it sends the user back to the provided
-callback URL. This is an excellent pattern for application registration
-and data authorization.
-
-The **Asynchronous pattern** utilizes an event based model, where a message is
-sent to the Trusted Agent through some mechanism (direct, pubsub, etc).
-This flow is most typical for server-side/bot applications or any piloted
-clients that can make use of asynchronous notification processing.
-
-A given trusted agent may employ one or more of these patterns.
+Agents are represented by the `ecosystem:Agent` class.
 
 Registrar {#reg}
 =====================
@@ -294,12 +242,12 @@ organizing and tracking data, and more.
 
 * [[#appreg]] uses [=application registries=] to manage
     [=application registrations=].
-* Data Registration relies on [=data registries=] to organize,
+* Data Registration relies on data registries to organize,
     store, and find registered data.
-* [=Access registries=] let agents track and communicate access grants to
+* Access registries let agents track and communicate access grants to
     resources they control.
 * Agents track and manage data that has been shared with them through
-    [=remote registries=].
+    remote registries.
 
 
 ## Registrar Data Model ## {#reg-model}
@@ -616,29 +564,6 @@ data specific to the function of a given application.
 
 An [=application registry=] for storing individual
 [=application registrations=] is introduced, implemented through the [[#reg]].
-
-For example, in our [[#usecase]], Alice wants to use NeverNote
-(`https://nevernote.example`), a solid compatible single-page
-(SPA) web application that she's never used before.
-
-When Alice arrives at NeverNote (`https://nevernote.example`) in her
-web browser, she is prompted to login with her [=WebID=] because NeverNote
-doesn’t know who she is yet. She could be a completely new user of
-NeverNote, or a returning user with preferences, notes, notebooks, and more.
-
-Alice logs into her [=identity provider=] (`https://idp.example`) with her
-WebID (`https://alice.pod.example/id#me`), and receives
-a [=token=] that NeverNote can use to make requests to her pod.
-The token identifies her as Alice (`https://alice.pod.example/id#me`),
-using NeverNote (`https://nevernote.example/id#agent`).
-
-To determine whether Alice has already registered NeverNote, NeverNote
-[[#appreg-lookup|looks for an application registration]] for itself through
-Alice's [=registrar=]. If no registration is found, NeverNote will go through
-a quick [[#appreg-new|registration process]]. If there is already an
-existing registration for NeverNote, no additional
-steps are necessary, and NeverNote is able to access the registration entry
-subject to the limitations of the [[#appreg-permissions]].
 
 ## Data Model ## {#appreg-datamodel}
 
@@ -1045,11 +970,110 @@ The `ecosystem:ApplicationRegistration` must be associated with the
 `ecosystem:ApplicationRegistry` through the `hasRegistry` property in
 the graph of the `ecosystem:ApplifcationRegistry`.
 
+Trusted Agents {#trusted}
+=====================
+
+A [=trusted Agent=] is an application that a [=resource controller=] trusts
+to perform actions for them with elevated privilege. They can be
+trusted to help a resource controller to make smart decisions related to
+their data.
+
+There's no limit to what a trusted agent can
+assist with, but [[#appreg|registering applications]] and authorizing access to
+data are two critical operations covered in this proposal.
+
+A trusted [=application registration agent=] helps the [=resource controller=]
+make smart decisions about the applications they choose to utilize, and
+ensure they get provisioned appropriately.
+
+A trusted agent for data authorization is needed in cases where the resource
+controller wishes to grant limited access to data in her Pod to another
+[=authenticated agent=] or [=user-piloted application=], but needs
+assistance to determine what access is needed, and help to provision
+that access.
+
+There are three typical patterns to interact with a trusted agent;
+*Embedded*, *Synchronous*, and *Asynchronous*.
+
+The **Embedded pattern** is employed when the application in question has full
+control privileges, and the trusted agent capabilities can
+be executed directly. An example of an application that could fall into
+this category would be a Pod management application installed by default
+by the user’s Pod provider.
+
+The **Synchronous pattern** utilizes a web-based redirect flow much like an
+OAuth2 grant flow. The user is redirected to the trusted agent URL, with
+a callback parameter provided as part of the request. When the
+trusted agent is finished, it sends the user back to the provided
+callback URL. This is an excellent pattern for application registration
+and data authorization.
+
+The **Asynchronous pattern** utilizes an event based model, where a message is
+sent to the Trusted Agent through some mechanism (direct, pubsub, etc).
+This flow is most typical for server-side/bot applications or any piloted
+clients that can make use of asynchronous notification processing.
+
+A given trusted agent may employ one or more of these patterns.
+
+Client Identification {#client}
+=====================
+
+Throughout this proposal, we see cases where Alice compartmentalizes access
+to her data based on who or what is access it - the [=authenticated agent=].
+In certain cases, we also limit access based on the application in use
+by Alice - the
+[=user-piloted application=].
+
+We utilize a new optional predicate in an [=acl resource=] statement to
+restrict access to permitted [=user-piloted applications=], identified by their
+[=ApplicationIDs=].
+
+Limiting access to data based on
+the [=user-piloted application=] in use is only reliable in certain
+instances when the [=application=] can be identified with confidence.
+
+## Identifying client applications ## {#client-id}
+
+For identification purposes, client [=applications=] in use across the world
+today fall into two buckets; *strongly identifiable* and *weakly identifiable*.
+
+**Strongly identifiable clients** can be identified by 3rd parties independently
+from their user/controller. Only [=server-side applications=] are
+strongly identifiable. As confidential clients, they can keep secrets
+and can present attestations and third-party credentials
+via DNS / domain certificates.
+
+**Weakly identifiable clients** include in-browser JS apps and native desktop
+or mobile applications. They are considered weakly identifiable because they
+are not able to keep secrets on an instance level. They are often referred to
+as public clients. Native apps should be strongly-identifiable in theory
+(since they are able to keep secrets on an instance level), but not in
+practice because the OS manufacturers do not make their trust
+infrastructure available. **Weakly identifiable clients are only strongly
+identifiable to the user controlling them**.
+
+## Limiting access by client application ## {#client-limit}
+
+In the case of a strongly identifiable [=server-side application=],
+the [=authenticated agent=] and the client application are the same. The client
+application has its own [=identity=] that can be strongly authenticated. Alice
+chooses which data that client application's identity can access, in the same
+way that she chooses which data Bob can access.
+
+In the case of [=user-piloted applications=], the ability for a Solid pod to
+limit access to data by the client application in use is only as strong as
+the trustworthiness of the user piloting that application, and their ability
+to avoid using malicious applications. The [=ApplicationID=] can be manipulated
+by the user in control of the app. This means that Alice can strongly control
+the applications that she uses to compartmentalize her own data, but has
+limited ability to control the applications that Bob uses to access the data
+she shares with him.
+
 Definitions {#definitions}
 =====================
 
 <b>All definitions as stated below should be considered in the context of
-an [=interoperable ecosystem=] for [=Solid=], whether explicitly stated
+an interoperable [=ecosystem=] for [=Solid=], whether explicitly stated
 or not.</b>
 
 <dfn>Solid</dfn> is a protocol made up of a number of open web standards
@@ -1059,10 +1083,10 @@ A Solid <dfn>pod</dfn> is a place for storing and accessing data via
 the [=Solid=] protocol, with mechanisms for controlling who or what can
 access that data.
 
-An <dfn>interoperable ecosystem</dfn> is a collection of
-[=Solid=] compatible [=applications=] developed by one or more entities,
-used by a community of users, that can safely access and manipulate the same
-kinds of data in [=pods=].
+An interoperable <dfn>ecosystem</dfn> is
+a collection of [=Solid=] compatible [=applications=] developed by one or more
+entities, used by a community of users, that can safely access and manipulate
+the same kinds of data in [=pods=].
 
 An <dfn>application</dfn> is a piece of software that interfaces with a
 Solid pod, either as a [=server-side application=], or as a
@@ -1144,13 +1168,15 @@ A <dfn>shape tree instance</dfn> is one or more resources in a [=pod=]
 that conform to a [=shape tree=] definition. Also referred to as a
 *planted shape tree*.
 
-A <dfn>registrar</dfn> is ...
+A <dfn>registrar</dfn> for a given [=agent=] provides [=registries=],
+organized in [=registry sets=].
 
 A <dfn>registry set</dfn> is a collection of one or more registries of a
-specific type, including [=application registries=], [=data registries=],
-[=access registries=], and [=remote registries=].
+specific type, including [=application registries=], data registries,
+access registries, and remote registries.
 
-A <dfn>registry</dfn> is ...
+A <dfn>registry</dfn> is a place where an [=agent=] can register, store,
+and lookup essential data needed to participate in the [=ecosystem=].
 
 An <dfn>application registry</dfn> is a collection of
 [=application registrations=] stored in a specific location in a [=pod=].
@@ -1167,12 +1193,6 @@ of the `<#registration>` shape tree in the TODO - application registries shape t
 An <dfn>application registration agent</dfn> is a type of [=trusted agent=]
 that a [=resource controller=] uses to register and manage applications that
 interface with their [=pod=].
-
-A <dfn>data registry</dfn> is...
-
-An <dfn>access registry</dfn> is...
-
-A <dfn>remote registry</dfn> is...
 
 
 Use Case Environment {#environment}
@@ -1353,10 +1373,6 @@ container resource.
 
 #### NeverNote's Profile Document #### {#nevernote-profile}
 
-Issue: We may want a more robust description of application type than only
-schema:softwareApplication, especially given the different types of client and
-their associated security considerations.
-
 <figure>
   <figcaption>Contents of NeverNote’s Profile Document at
   https://nevernote.example/id#agent</figcaption>
@@ -1364,7 +1380,6 @@ their associated security considerations.
   @prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
   @prefix ecosystem: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
   @prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt; .
-  @prefix schema: &lt;http://www.schema.org&gt; .
 
   <#agent>
       # this is an application, not a person
