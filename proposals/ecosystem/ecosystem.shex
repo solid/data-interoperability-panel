@@ -1,0 +1,77 @@
+PREFIX eco: <http://www.w3.org/ns/solid/ecosystem#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+################################################################
+# Agent
+################################################################
+
+# Validate an instance of the eco:Agent class
+<#AgentShape> {
+  a [ eco:Agent ] ;
+  eco:hasRegistrar IRI ;
+}
+
+################################################################
+# Registrar
+################################################################
+
+# Registrar
+# Validate an instance of the eco:Registrar class
+<#RegistrarShape> {
+  a [ eco:Registrar ] ;
+  eco:hasApplicationRegistrySet IRI ;
+  eco:hasDataRegistrySet IRI
+}
+
+# Application Registry Set
+# Validate an instance of the eco:ApplicationRegistrySet class
+################################################################
+<#ApplicationRegistrySetShape> {
+  a [ eco:ApplicationRegistrySet ] ;
+  eco:hasRegistry IRI+
+}
+
+# Application Registry
+# Validate an instance of the eco:ApplicationRegistry class
+################################################################
+<#ApplicationRegistryShape> {
+  a [ eco:ApplicationRegistry ] ;
+  eco:hasRegistration IRI*
+}
+
+# Application Registration
+# Validate an instance of the eco:ApplicationRegistration class
+################################################################
+<#ApplicationRegistrationShape> {
+  a [ eco:ApplicationRegistration ] ;
+  eco:registeredBy IRI ;
+  eco:registeredWith IRI ;
+  eco:registeredApplication IRI ;
+  eco:registeredAt xsd:dateTime
+}
+
+# Data Registry Set
+# Validate an instance of the eco:DataRegistrySet class
+################################################################
+<#DataRegistrySetShape> {
+  a [ eco:DataRegistrySet ] ;
+  eco:hasRegistry IRI+
+}
+
+# Data Registry
+# Validate an instance of the eco:DataRegistry class
+################################################################
+<#DataRegistryShape> {
+  a [ eco:DataRegistry ] ;
+  eco:hasRegistration IRI*
+}
+
+################################################################
+# Application
+################################################################
+
+# Validate an instance of the eco:Application class
+<#ApplicationShape> {
+  a [ eco:Application ] ;
+}
