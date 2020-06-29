@@ -30,7 +30,7 @@ jobs:
           bikeshed update
           
       - name: generate html
-        run: bikeshed spec proposals/ecosystem.bs
+        run: for index in proposals/*/index.bs; do bikeshed spec $index; done
           
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3

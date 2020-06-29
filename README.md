@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/solid/data-interoperability-panel](https://badges.gitter.im/solid/data-interoperability-panel.svg)](https://gitter.im/solid/data-interoperability-panel?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Focus
+## Purpose
 
 We must be able to support data interoperability across applications while enabling secure collaboration and query using intuitive data boundaries.
 
@@ -12,16 +12,14 @@ Standard methods and mechanisms for interoperability, collaboration, and securit
 
 Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth understanding of the panel's focus.
 
-Join the chat on [gitter](https://gitter.im/solid/data-interoperability-panel).
 
-For contributing members see the
-[Panels List](https://github.com/solid/process/blob/master/panels.md#data-interoperability).
+## Initiatives in Process
 
-[Submit an issue](https://github.com/solid/data-interoperability-panel/issues/new)
-to propose a project for the panel to undertake.
+* **Specification Template for Use Cases and Requirements** - [Source](https://github.com/solid/data-interoperability-panel/blob/master/proposals/use-cases-and-requirements/) - [Rendered](https://solid.github.io/data-interoperability-panel/use-cases-and-requirements/)
+* **Proposal for Interoperable Ecosystem** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/ecosystem) - [Rendered](https://solid.github.io/data-interoperability-panel/ecosystem/)
+* **Shape Trees** - [Spec](https://github.com/shapetrees/specification) - [Library](https://github.com/shapetrees/) - [Test Suite](https://github.com/shapetrees/test-suite) - [Playground](https://github.com/shapetrees/playground)
 
-
-## Completed Work
+## Completed Initiatives
 
 [Resource Metadata](https://github.com/solid/data-interoperability-panel/tree/master/archive/resource-metadata) - Resource Metadata was [submitted](solid/specification#156) as a candidate proposal to the solid/specification. It was renamed to Auxiliary Resources during Editorial Review.
 
@@ -31,27 +29,12 @@ Panel meetings are held most Mondays at 3:30PM EST / 8:30PM BST / 9:30PM CEST. C
 
 Meeting URL: https://global.gotomeeting.com/join/620786365  
 
-| Date | Agenda | Minutes |
-| ---- | ------ | ------- |
-| [2019-08-13](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-20190813.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-20190813.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-20190813.md#minutes) |
-| [2019-08-26](https://github.com/solid/data-interoperability-panel/blob/master/meetings/2-20190826.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/2-20190826.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/2-20190826.md#minutes) |
-| [2019-09-09](https://github.com/solid/data-interoperability-panel/blob/master/meetings/3-20190909.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/3-20190909.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/3-20190909.md#minutes) |
-| [2019-09-30](https://github.com/solid/data-interoperability-panel/blob/master/meetings/4-20190930.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/4-20190930.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/4-20190930.md#minutes) |
-| [2019-10-07](https://github.com/solid/data-interoperability-panel/blob/master/meetings/5-20191007.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/5-20191007.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/5-20191007.md#minutes) |
-| [2019-10-21](https://github.com/solid/data-interoperability-panel/blob/master/meetings/6-20191021.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/6-20191021.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/6-20191021.md#minutes) |
-| [2019-11-18](https://github.com/solid/data-interoperability-panel/blob/master/meetings/7-20191118.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/7-20191118.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/7-20191118.md#minutes) |
-| [2019-12-16](https://github.com/solid/data-interoperability-panel/blob/master/meetings/8-20191216.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/8-20191216.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/8-20191216.md#minutes) |
-| [2020-04-13](https://github.com/solid/data-interoperability-panel/blob/master/meetings/11-20200413.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/11-20200413.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/11-20200413.md#minutes) |
-| [2020-04-20](https://github.com/solid/data-interoperability-panel/blob/master/meetings/12-20200420.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/12-20200420.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/12-20200420.md#minutes) |
-| [2020-04-27](https://github.com/solid/data-interoperability-panel/blob/master/meetings/13-20200427.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/13-20200427.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/13-20200427.md#minutes) |
-| [2020-05-11](https://github.com/solid/data-interoperability-panel/blob/master/meetings/14-20200511.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/14-20200511.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/14-20200511.md#minutes) |
-| [2020-05-18](https://github.com/solid/data-interoperability-panel/blob/master/meetings/15-20200518.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/15-20200518.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/15-20200518.md#minutes) |
-| [2020-06-01](https://github.com/solid/data-interoperability-panel/blob/master/meetings/16-20200601.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/16-20200601.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/16-20200601.md#minutes) |
+Panel meeting minutes are recorded live and are [available here](https://github.com/solid/data-interoperability-panel/blob/master/meetings/)
 
 ## Process
 
-Project proposals must be [submitted as issues](https://github.com/solid/data-interoperability-panel/issues/new), and receive support from members of the panel. At least three panelists (not including the panelist proposing the project) must support creation of the project, with no panel members actively rejecting it. Project proposals with support will be undertaken by the panel.
+Initiative proposals must be [submitted as issues](https://github.com/solid/data-interoperability-panel/issues/new), and receive support from members of the panel. At least three panelists (not including the panelist proposing the project) must support creation of the project, with no panel members actively rejecting it. Initiative proposals with support will be prioritized and undertaken by the panel.
 
-Substantive changes submitted to active panel projects should be submitted as pull requests, and must receive at least two approved reviews from panelists, with no one actively rejecting. These pulls should be open for at least one week before they are merged.
+Substantive changes submitted to active panel initiatives should be submitted as pull requests, and should receive at least two approved reviews from panelists, with no one actively rejecting.
 
 Panel members should work together to settle deadlocks. It may be helpful to request the perspective of a Solid Editor that would ultimately be responsible for accepting submitted candidate proposals to settle deadlocks.
