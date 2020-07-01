@@ -247,3 +247,9 @@ Issue: Each use case needs an author who can provide further clarifications as n
     - `storage.private.enterprise.example`'s TLS certificate is signed by Enterprise.Example's private Certificate Authority
     - Alice's web browser is configured to trust Enterprise.Example's private Certificate Authority
     - `storage.private.enterprise.example` is reachable from the public Internet, so Alice's Identity Provider and *photoOrganizer* could reach it; however, neither is configured to trust Enterprise.Example's private Certificate Authority
+
+## Client Constraining Access Control
+ - Alice creates a chat and adds her friends Bob and Charlie.
+    - Alice does not want to allow Bob and Charlie to change the people in the chat
+    - Alice wants to allow Bob and Charlie to use any app they want to access the chat
+    - Alice wants to be aware of what apps Bob and Charlie have added
