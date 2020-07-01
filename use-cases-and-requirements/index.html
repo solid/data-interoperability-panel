@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 40de15f9, updated Thu Jun 11 17:47:04 2020 -0700" name="generator">
   <link href="http://example.com/url-this-spec-will-live-at" rel="canonical">
-  <meta content="4ec40dae03fd1f3cbb2f8eb289ceecccd9742031" name="document-revision">
+  <meta content="2a40d9d384b38c4e6930291fc244b863f2f779dd" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1375,7 +1375,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Solid Use Cases and Requirements</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-06-30">30 June 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-07-01">1 July 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1390,7 +1390,7 @@ dfn > a.self-link::before      { content: "#"; }</style>
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 30 June 2020,
+In addition, as of 1 July 2020,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1439,6 +1439,7 @@ Parts of this work may be from another specification document.  If so, those par
       <li><a href="#restaurants-tracker"><span class="secno">3.12</span> <span class="content">Restaurants tracker</span></a>
       <li><a href="#blogs"><span class="secno">3.13</span> <span class="content">Blogs</span></a>
       <li><a href="#custom-tls-ca"><span class="secno">3.14</span> <span class="content">Custom TLS CA</span></a>
+      <li><a href="#client-constraining-access-control"><span class="secno">3.15</span> <span class="content">Client Constraining Access Control</span></a>
      </ol>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
@@ -1783,6 +1784,19 @@ Parts of this work may be from another specification document.  If so, those par
        <p>Alice’s web browser is configured to trust Enterprise.Example’s private Certificate Authority</p>
       <li data-md>
        <p>`storage.private.enterprise.example` is reachable from the public Internet, so Alice’s Identity Provider and *photoOrganizer* could reach it; however, neither is configured to trust Enterprise.Example’s private Certificate Authority</p>
+     </ul>
+   </ul>
+   <h3 class="heading settled" data-level="3.15" id="client-constraining-access-control"><span class="secno">3.15. </span><span class="content">Client Constraining Access Control</span><a class="self-link" href="#client-constraining-access-control"></a></h3>
+   <ul>
+    <li data-md>
+     <p>Alice creates a chat and adds her friends Bob and Charlie.</p>
+     <ul>
+      <li data-md>
+       <p>Alice does not want to allow Bob and Charlie to change the people in the chat</p>
+      <li data-md>
+       <p>Alice wants to allow Bob and Charlie to use any app they want to access the chat</p>
+      <li data-md>
+       <p>Alice wants to be aware of what apps Bob and Charlie have added</p>
      </ul>
    </ul>
   </main>
