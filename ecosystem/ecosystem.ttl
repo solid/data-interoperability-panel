@@ -33,14 +33,14 @@ rdfs:label "Solid ecosystem terms"@en .
 
 :trustsApplication
   a rdf:property ;
-  rdfs:comment "Links to an Application the Agent trusts"@en
+  rdfs:comment "Links to an Application the Agent trusts"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :Agent ;
   rdfs:range :Application ;
-  rdfs:label "Trusts application"@en
+  rdfs:label "Trusts application"@en .
 
 :trustsForApplicationRegistration
-  a rdfs:subPropertyOf :trustsApplication ;
+  rdfs:subPropertyOf :trustsApplication ;
   rdfs:comment "Links to an application the agent trusts to assist with registering applications"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :Agent ;
@@ -68,7 +68,7 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:label "Has registry set"@en .
 
 :hasApplicationRegistrySet
-  a rdfs:subPropertyOf :hasRegistrySet ;
+  rdfs:subPropertyOf :hasRegistrySet ;
   rdfs:comment "Links an agent's registrar to an application registry set"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :Registrar ;
@@ -76,7 +76,7 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:label "Has application registry set"@en .
 
 :hasDataRegistrySet
-  a rdfs:subPropertyOf :hasRegistrySet ;
+  rdfs:subPropertyOf :hasRegistrySet ;
   rdfs:comment "Links an agent's registrar to a data registry set"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :Registrar ;
