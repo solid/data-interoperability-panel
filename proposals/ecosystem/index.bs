@@ -1025,6 +1025,151 @@ The [=Application Registration=] must be associated with the
 [eco:hasRegistry](ecosystem.ttl#hasRegistry) property in
 the graph of the [=Application Registry=].
 
+Data Registration {#datareg}
+=====================
+
+Data Registration gives [=Agents=] participating in the Solid [=ecosystem=]
+a way to register, organize, and subsequently manage the data they control.
+
+A [=Data Registry=] for storing individual [=Data Registrations=] is
+introduced, implemented through the [[#reg]].
+
+A [=Data Registry=] provides a specific location in a Solid [=pod=] where
+data of various types is organized and stored in a uniform way to aid
+authorization, interoperability, discovery, and more. It avoids complex
+hierarchies of data that hinder flexibility and interoperability by
+employing a relatively flat hierarchy. This creates natural data boundaries
+that make data authorization, amongst other things, extremely intuitive.
+
+A [=Data Registry=] can be used for basic discovery, but it is not
+designed nor intended to be an efficient means to query or index data.
+However, it is intended to be used as reliable source data for different
+query engines or indexing schemes.
+
+## Data Model ## {#datareg-model}
+
+<figure>
+  <img src="datareg-model.svg" width=100%/>
+  <figcaption>Data model for data registration</figcaption>
+</figure>
+
+Data Registration extends the [[#reg-model]] with type-specific subclasses
+and subproperties.
+
+An [=Agent=] has a [=Registrar=] that links to [=Data Registry Sets=]
+via the [eco:hasDataRegistrySet](ecosystem.ttl#hasDataRegistrySet) property.
+
+A [=Data Registry Set=] links to any number of [=Data Registries=] via
+the [eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
+
+A [=Data Registry=] links to any number of [=Data Registrations=]
+via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
+
+A [=Data Registration=] extends the
+[eco:Registration](ecosystem.ttl#Registration) class with the
+[eco:DataRegistration](ecosystem.ttl#DataRegistration) subclass.
+
+A [=Data Registration=] includes any number of [=Registered Data Instances=]
+via the
+[eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance)
+property.
+
+The [eco:DataRegistration](ecosystem.ttl#DataRegistration) subclass
+introduces the following properties:
+
+* [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) - URI of the
+    [=shape tree=] that is being registered.
+* [eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance) -
+    Any number of [=Registered Data Instances=] that conform to the
+    [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
+
+<figure>
+  <figcaption>Instance data for a [=Data Registration=] at https://alice.pod.example/data/foo/#registration
+  </figcaption>
+  <pre highlight="turtle" line-highlight="5" line-numbers="true">
+  <#registration>
+    a eco:DataRegistration ;
+    eco:registeredBy &lt;https://alice.pod.example/id#me&gt; ;
+    eco:registeredWith &lt;https://app.example/id#agent&gt; ;
+    eco:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+    eco:registeredShapeTree &lt;https://tree.example/commonnote#notebook-tree&gt; ;
+    eco:hasRegisteredDataInstance &lt;https://alice.pod.example/data/notebook-tree/49a4057a-6ade-4a9d-9869-085a00925259/#notebook&gt; ,
+                                  &lt;https://alice.pod.example/data/notebook-tree/3f56c32e-96c6-4b0c-b941-eadc2bf98b18/#notebook&gt; ,
+                                  &lt;https://alice.pod.example/data/notebook-tree/16e1eae9-20a5-489d-8380-8c07ca3805c4/#notebook&gt; ,
+                                  &lt;https://alice.pod.example/data/notebook-tree/886785d2-6c23-46ee-9e19-5ac36b7bcd71/#notebook&gt; ,
+                                  &lt;https://alice.pod.example/data/notebook-tree/dae5015c-d5f9-4ede-b9eb-7ca7a19854a9/#notebook&gt; .
+    </pre>
+</figure>
+
+Issue: Should we be using RDF Collections for things like eco:hasRegisteredDataInstance?
+
+## Structure and Validation ## {#datareg-structure}
+
+A given [=Agent=] will have one or more [=Data Registries=] discoverable
+through the [[#reg-model]], via resources that implement the
+Registrar [[#reg-structure]]. Following this path of discovery ultimately
+leads to [=Data Registries=], containing [=Data Registrations=], which
+in turn will contain [=Registered Data Instances=].
+
+<figure>
+  <figcaption>A [=Data Registry=] at
+  https://alice.pod.example/data/#registry</figcaption>
+  <img src="datareg-structure.svg" width=100%/>
+</figure>
+
+The [=Data Registry=] instance data is stored in the RDF graph
+of the `/data` container at
+`https://alice.pod.example/data/#registry`. It links to a
+collection of [=Data Registrations=] stored in
+the `/data` container. Each of these [=Data Registrations=] represents
+a [=shape tree=], which is identified by the object of the
+[eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) property.
+
+The shape tree
+[ecot:data-registry-tree](ecosystem.tree#data-registry-tree)
+associated with the `/data` container specifies this resource
+structure. It assigns the
+[ecos:DataRegistryShape](ecosystem.shex#DataRegistryShape)
+to validate the [=Data Registry=] instance data in the
+container resource, and says that the container includes instances of
+[ecot:data-registration-tree](ecosystem.tree#data-registration-tree),
+which any resources added to the `/data` container must conform to.
+
+Conforming to
+[ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+ensures that the container for the [=Data Registry=] at
+`/data#registry` only contains valid [=Data Registrations=].
+
+Specifically:
+
+* Any resource added to the `/data` container must be a
+    container (`tree:expectedType ldp:Container`)
+* A [=Data Registration=] must be stored in the
+    RDF graph of that container, to successfully pass shape validation via
+    `tree:shape <ecos#DataRegistrationShape>`.
+
+<figure>
+  <figcaption>A [=Data Registration=] at
+  https://alice.pod.example/data/49a4057a-6ade-4a9d-9869-085a00925259/#registration
+  </figcaption>
+  <img src="dataregistration-structure.svg" width=100%/>
+</figure>
+
+These [=Data Registrations=] contain registered data instances.....
+
+## Permission Model ## {#datareg-permissions}
+
+TBD
+
+## Registering Data ## {#datareg-registrations}
+
+TBD
+
+### Instances of Registered Data ### {#datareg-instances}
+
+TBD
+
+
 Trusted Agents {#trusted}
 =====================
 
@@ -1210,7 +1355,11 @@ resource, and the modes of access they have for it.
 
 A <dfn>trusted agent</dfn> is any [=application=] that a
 [=resource controller=] trusts to perform actions for them. These
-actions typically require some level of escalated privileges.
+actions typically require some leve
+
+An <dfn>application registration agent</dfn> is a type of [=trusted agent=]
+that a [=resource controller=] uses to register and manage applications that
+interface with their [=pod=].
 
 A <dfn>shape</dfn> provides a schema that RDF data graphs must meet in order
 to be considered conformant. A shape associated with a given resource in a
@@ -1236,6 +1385,14 @@ specific type, including [=Application Registries=], Data Registries,
 Access Registries, and Remote Registries. Represented by the
 [eco:RegistrySet](ecosystem.ttl#RegistrySet) class.
 
+A <dfn>Registry</dfn> is a collection of [=Registrations=] stored in a
+specific location in a [=pod=]. It provides a place where an [=Agent=]
+can register, store, and lookup essential data needed to participate in
+the [=ecosystem=]. Represented by the
+[eco:Registry](ecosystem.ttl#Registry) class.
+
+A <dfn>Registration</dfn> is the basic data unit of any [=Registry=].
+
 An <dfn>Application Registry Set</dfn> is a [=Registry Set=] specifically
 made up of [=Application Registries=]. Represented by the
 [eco:ApplicationRegistrySet](ecosystem.ttl#ApplicationRegistySet) class.
@@ -1244,35 +1401,55 @@ Validated by the
 Associated with resources by the
 [ecot:application-registry-set-tree](ecosystem.tree#application-registry-set-tree).
 
-A <dfn>Registry</dfn> is a place where an [=Agent=] can register, store,
-and lookup essential data needed to participate in the [=ecosystem=].
-Represented by the [eco:Registry](ecosystem.ttl#Registry) class.
-
-A <dfn>Registration</dfn> is...
-
 An <dfn>Application Registry</dfn> is a collection of
 [=Application Registrations=] stored in a specific location in a [=pod=].
 Represented by the
-[eco:ApplicationRegistry](ecosystem.ttl#ApplicationRegistry) class,
-and validated by the
-[ecos:ApplicationRegistryShape](ecosystem.shex#ApplicationRegistryShape),
-through the
+[eco:ApplicationRegistry](ecosystem.ttl#ApplicationRegistry) class.
+Validated by the
+[ecos:ApplicationRegistryShape](ecosystem.shex#ApplicationRegistryShape).
+Associated with resources by the
 [ecot:application-registry-tree](ecosystem.tree#application-registry-tree).
 
 An <dfn>Application Registration</dfn> provides the [=Agent=]
 with a place to maintain metadata, state, preferences, and
 other application-specific data associated with a given [=Application=] they
 have elected to use. Represented by the
-[eco:ApplicationRegistration](ecosystem.ttl#ApplicationRegistration) class,
-and validated by the
-[ecos:ApplicationRegistrationShape](ecosystem.shex#ApplicationRegistrationShape),
-through the
+[eco:ApplicationRegistration](ecosystem.ttl#ApplicationRegistration) class.
+Validated by the
+[ecos:ApplicationRegistrationShape](ecosystem.shex#ApplicationRegistrationShape).
+Associated with resources by the
 [ecot:application-registration-tree](ecosystem.tree#application-registration-tree).
 
+A <dfn>Data Registry Set</dfn> is a [=Registry Set=] specifically made up of
+[=Data Registries=]. Represented by the
+[eco:DataRegistrySet](ecosystem.ttl#DataRegistrySet) class.
+Validated by the
+[ecos:DataRegistrySetShape](ecosystem.shex#DataRegistrySetShape).
+Associated with resources by the
+[ecot:data-registry-set-tree](ecosystem.tree#data-registry-set-tree).
 
-An <dfn>application registration agent</dfn> is a type of [=trusted agent=]
-that a [=resource controller=] uses to register and manage applications that
-interface with their [=pod=].
+A <dfn>Data Registry</dfn> is a collection of [=Data Registrations=], each
+representing a unique type of data, stored in a specific location in a
+Solid [=pod=]. Represented by the
+[eco:DataRegistry](ecosystem.ttl#DataRegistry) class.
+Validated by the
+[ecos:DataRegistryShape](ecosystem.shex#DataRegistryShape).
+Associated with resources through the
+[ecot:data-registry-tree](ecosystem.tree#data-registry-tree).
+
+A <dfn>Data Registration</dfn> provides the [=Agent=] with a place to store
+[=Registered Data Instances=] of a particular type, conforming to a
+given [=shape tree=]. Represented by the
+[eco:DataRegistration](ecosystem.ttl#DataRegistration) class.
+Validated by the
+[ecos:DataRegistrationShape](ecosystem.shex#DataRegistrationShape).
+Associated with resources through the
+[ecot:data-registration-tree](ecosystem.tree#data-registration-tree).
+
+A <dfn>Registered Data Instance</dfn> is a unique, stored instance of a
+particular type of data conforming to a given [=shape tree=]. Each registered
+data instance is contained within a given [=Data Registration=].
+
 
 Use Case Environment {#environment}
 =====================
