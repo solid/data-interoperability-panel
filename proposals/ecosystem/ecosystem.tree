@@ -46,3 +46,24 @@
 <#application-registration-tree>
   tree:expectedType ldp:Container ;
   tree:shape <ecos#ApplicationRegistrationShape> ;
+
+# Data Registry
+##############################################################################
+# Ensure the registry container graph contains a valid
+# DataRegistry instance, and the resource inside of
+# it are valid DataRegistration instances.
+##############################################################################
+<#data-registry-tree>
+  tree:expectedType ldp:Container ;
+  tree:shape <ecos#DataRegistryShape> ;
+  tree:contents <#data-registration-tree> ;
+
+# Data Registration
+##############################################################################
+# Ensure the registration container graph contains a valid
+# DataRegistration instance, which will in turn contain instances of
+# whatever shape tree was registered by the eco:DataRegistration.
+##############################################################################
+<#data-registration-tree>
+  tree:expectedType ldp:Container ;
+  tree:shape <ecos#DataRegistrationShape> ;
