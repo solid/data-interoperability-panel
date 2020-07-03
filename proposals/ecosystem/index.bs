@@ -1107,7 +1107,9 @@ Issue: Should we be using RDF Collections for things like eco:hasRegisteredDataI
 
 A given [=Agent=] will have one or more [=Data Registries=] discoverable
 through the [[#reg-model]], via resources that implement the
-Registrar [[#reg-structure]]. Following this path of discovery ultimately
+Registrar [[#reg-structure]].
+
+Following this path of discovery ultimately
 leads to [=Data Registries=], containing [=Data Registrations=], which
 in turn will contain [=Registered Data Instances=].
 
@@ -1119,43 +1121,92 @@ in turn will contain [=Registered Data Instances=].
 
 The [=Data Registry=] instance data is stored in the RDF graph
 of the `/data` container at
-`https://alice.pod.example/data/#registry`. It links to a
+`https://alice.pod.example/data/#registry`.
+
+It links to a
 collection of [=Data Registrations=] stored in
-the `/data` container. Each of these [=Data Registrations=] represents
-a [=shape tree=], which is identified by the object of the
+the `/data` container. Each individual [=Data Registration=] represents
+a different [=shape tree=]. The [=shape tree=] associated with a given
+[=Data Registration=] is identified by the object of the
 [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) property.
 
-The shape tree
-[ecot:data-registry-tree](ecosystem.tree#data-registry-tree)
-associated with the `/data` container specifies this resource
-structure. It assigns the
-[ecos:DataRegistryShape](ecosystem.shex#DataRegistryShape)
-to validate the [=Data Registry=] instance data in the
-container resource, and says that the container includes instances of
-[ecot:data-registration-tree](ecosystem.tree#data-registration-tree),
-which any resources added to the `/data` container must conform to.
+The [ecot:data-registry-tree](ecosystem.tree#data-registry-tree)
+associated with the [=Data Registry=] at `/data/#registry` defines
+the resource structure for that [=Data Registry=], and the data validation
+rules across those resources.
+
+* It assigns the
+    [ecos:DataRegistryShape](ecosystem.shex#DataRegistryShape)
+    to validate the [=Data Registry=] instance data in the
+    container resource
+* It says that the container must include instances of
+    [ecot:data-registration-tree](ecosystem.tree#data-registration-tree),
+    which any resources added to the `/data` container must conform to.
 
 Conforming to
 [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
-ensures that the container for the [=Data Registry=] at
-`/data#registry` only contains valid [=Data Registrations=].
-
-Specifically:
+ensures that the [=Data Registry=] container at
+`/data` only contains valid [=Data Registrations=].
 
 * Any resource added to the `/data` container must be a
-    container (`tree:expectedType ldp:Container`)
-* A [=Data Registration=] must be stored in the
-    RDF graph of that container, to successfully pass shape validation via
-    `tree:shape <ecos#DataRegistrationShape>`.
+    container via `tree:expectedType ldp:Container`.
+* It assigns the
+    [ecos:DataRegistrationShape](ecosystem.shex#DataRegistrationShape)
+    to ensure there is a valid [=Data Registration=] instance in the
+    container resource graph.
+
+The most important element of [=Data Registry=] is the data that is actually
+stored inside of it, which take the form of [=Registered Data Instances=].
+
+A given [=Data Registration=] will contain any number of
+[=Registered Data Instances=], which must conform to the [=shape tree=]
+specified in the [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
+property of that [=Data Registration=].
+
+This leads us to a case where we have intersecting [=shape trees=] on the same
+resource (the [=Data Registration=]).
 
 <figure>
   <figcaption>A [=Data Registration=] at
-  https://alice.pod.example/data/49a4057a-6ade-4a9d-9869-085a00925259/#registration
+  https://alice.pod.example/data/49a4057a...5259/#registration
   </figcaption>
   <img src="dataregistration-structure.svg" width=100%/>
 </figure>
 
-These [=Data Registrations=] contain registered data instances.....
+In the figure above, we can observe the intersection of the
+[ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+and the [note:note-container-tree](note.tree#note-container-tree) on the
+[=Data Registration=] at
+`/data/49a4057a...5259/#registration`.
+
+* A [=Data Registration=] can't know which specific
+    [=shape tree=] will be registered in advance, so the
+    [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+    connect specify the expected contents of the container with `tree:contents`.
+* It is crucial that the contents of the [=Data Registration=] container
+    be conformant instances of the [=shape tree=] specified in the
+    [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
+    property of the [=Data Registration=].
+* Consequently, a second [=shape tree=] is associated with the
+    [=Data Registration=] to ensure that what is stored in the container
+    are conformant instances of the
+    [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
+* In the figure above,
+    [note:note-container-tree](note.tree#note-container-tree) is also added
+    to the [=Data Registration=] at `/data/49a4057a...5259/#registration`.
+    It adds the additional stipulation that the contents of the
+    [=Data Registration=] must conform to the
+    [note:note-tree](note.tree#note-tree).
+
+### Naming Registrations and Registered Data Instances ### {#datareg-naming}
+
+The name of the [=Data Registration=] container resource must be a
+generated \[UUID](https://www.ietf.org/rfc/rfc4122.txt).
+
+The name of a [=Registered Data Instance=] resource linked to a
+[=Data Registration=] through
+[eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance)
+must be a generated \[UUID](https://www.ietf.org/rfc/rfc4122.txt).
 
 ## Permission Model ## {#datareg-permissions}
 
