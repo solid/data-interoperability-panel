@@ -1210,7 +1210,215 @@ must be a generated \[UUID](https://www.ietf.org/rfc/rfc4122.txt).
 
 ## Permission Model ## {#datareg-permissions}
 
-TBD
+A majority of collaborative use cases and data sharing are facilitated
+through the [=Data Registry=]. Consequently, there is a signficant amount
+of variation in permissions for [=Data Registrations=] and
+[=Registered Data Instances=], based on the authorization decisions
+made by the [=resource controller=] during Data Authorization.
+
+<figure>
+<figcaption>Permission model for [=Data Registry=] resources</figcaption>
+  <table class="data permissions" align="left">
+    <col>
+    <col>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup span=2></colgroup>
+    <colgroup span=2></colgroup>
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th scope="colgroup">Controller</th>
+        <th scope="colgroup">Public</th>
+        <th colspan=2 scope="colgroup">Selectively Trusted</th>
+        <th colspan=2 scope="colgroup">Selectively Granted</th>
+      </tr>
+      <tr>
+        <th scope="col">Resource</th>
+        <th scope="col">Type</th>
+        <th scope="col">Access</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`/data/`</td>
+        <td>[=Data Registry=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Authorization Agent</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- /49a4057a...5259/`</td>
+        <td>[=Data Registration=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Authorization Agent</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`---- /168997f0...276a/`</td>
+        <td>[=Registered Data Instance=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Authorization Agent</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+### Access Scopes for Data Registrations ### {#datareg-scopes}
+
+Collaborative use cases where the [=resource controller=] is sharing data
+with other [=Agents=] and/or [=Applications=] frequent the [=Data Registry=].
+
+The [=resource controller=] specifies the [=Data Registrations=] and the
+[=Registered Data Instances=] within them that other
+[=Agents=] and/or [=Applications=] can access, then chooses what that mode
+of access will be.
+
+It is imperative that the permission model enable patterns that
+allow the [=resource controller=] to make intuitive decisions, without
+having to directly manipulate [=acl resources=] for individual documents
+and containers throughout the [=Data Registry=].
+
+Authorization is granted to an [=Authorization Subject=].
+
+There are two levels of access that must be considered for a given
+[=Data Registration=]:
+
+* **All Instances** - Applies to all existing and yet to be created
+      [=Registered Data Instances=] within that [=Data Registration=].
+* **Specific Instance** - Applies only to a specific
+      [=Registered Data Instances=] within that [=Data Registration=].
+
+Issue: Need to have a model that provides the context for an authorization
+access grant, and connects it to the authorization statements managed in this
+ecosystem.
+
+#### Permissions for All Registered Data Instances #### {#datareg-all}
+
+The [=access modes=] listed in the table below can be combined as needed and
+granted to a given [=Authorization Subject=].
+
+<figure>
+<figcaption>Modes of access for a [=Data Registration=]</figcaption>
+  <table class="data" align="left">
+    <col>
+    <col>
+    <thead>
+      <tr>
+        <th scope="col">Mode</th>
+        <th scope="col">Resultant Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Read</th>
+        <td>Can read all existing and yet to be created
+            [=Registered Data Instances=]. Includes being able to see the full
+            list of [=Registered Data Instances=] in the registration.</td>
+      </tr>
+      <tr>
+        <th scope="row">Write</th>
+        <td>Can modify the [=Data Registration=], and all existing
+            [=Registered Data Instances=] within it.
+            Can create new [=Registered Data Instances=],
+            and can delete them.</td>
+      </tr>
+      <tr>
+        <th scope="row">Control</th>
+        <td>Can change permissions on the [=Data Registration=], as well
+            as any [=Registered Data Instances=] within it.</td>
+      </tr>
+      <tr>
+        <th scope="row">Append</th>
+        <td>Can only create new [=Registered Data Instances=] within the
+            [=Data Registration=].</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+Issue: Must ensure that default permissions on created instances don't
+overcomplicate the experience for the user.
+
+**Default Permissions:** These determine the permissions assigned to
+[=Registered Data Instances=] created by the [=Authorization Subject=], when
+that [=Authorization Subject=] has been granted Write or Append
+[=access modes=].
+
+Issue: WAC doesn't have any mechanism extend inherited permissions. The presence
+of a specific ACL on a resource negates all inherited permissions,
+making it impossible to “slightly adjust” or “modify” a resource
+while maintaining the permissions inherited for it.
+
+Note: Given the current limitations of [[WAC]], specifically the inability
+to extend inherited permissions, it is likely that managing permissions
+across all [=Registered Data Instances=] of a [=Data Registrations=] will need
+to be managed directly in [[#datareg-specific]], rather than inheriting
+from the [=Data Registration=].
+
+#### Permissions for a Specific Registered Data Instance #### {#datareg-specific}
+
+The [=access modes=] listed in the table below can be combined as needed and
+granted to a given [=Authorization Subject=].
+
+<figure>
+<figcaption>Modes of access for a Specific
+[=Registered Data Instance=]</figcaption>
+  <table class="data" align="left">
+    <col>
+    <col>
+    <thead>
+      <tr>
+        <th scope="col">Mode</th>
+        <th scope="col">Resultant Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Read</th>
+        <td>Can list and read all resources within the
+        [=Registered Data Instance=].</td>
+      </tr>
+      <tr>
+        <th scope="row">Write</th>
+        <td>Can modify the [=Registered Data Instance=] and any resources
+            within it, including creating and deleting resources.</td>
+      </tr>
+      <tr>
+        <th scope="row">Control</th>
+        <td>Can change permissions on the [=Registered Data Instance=]
+            and any resources within it.</td>
+      </tr>
+      <tr>
+        <th scope="row">Append</th>
+        <td>Can create resources within the [=Registered Data Instance=].
+            Can add to a resource in the [=Registered Data Instance=] but cannot
+            remove anything from it, or delete it.</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+**Default Permissions:** These determine the permissions assigned to
+resources within the [=Registered Data Instance=] created by the
+[=Authorization Subject=], when that [=Authorization Subject=] has been granted
+Write or Append [=access modes=].
 
 ## Registering Data ## {#datareg-registrations}
 
@@ -1401,8 +1609,16 @@ privileges and control over a given resource or set of resources.
 
 An <dfn>acl resource</dfn> as defined by [[WAC]] may be directly
 associated with a resource or indirectly associated with a resource
-through inheritance. It determines which [=agents=] can access a
-resource, and the modes of access they have for it.
+through inheritance. It determines which [=authorization subjects=] can
+access a resource, and the modes of access they have for it.
+
+An <dfn>access mode</dfn> denotes operations (e.g. read, write)
+that a given [=authorization subject=] can perform on a resource.
+
+An <dfn>authorization subject</dfn> is the target of a given authorization
+statement in an [=acl resource=]. It is either an [=Agent=], a
+[=User-Piloted Application=] in use by *any* [=Agent=], or a combination of
+a specific [=Agent=] using a specific [=User-Piloted Application=].
 
 A <dfn>trusted agent</dfn> is any [=application=] that a
 [=resource controller=] trusts to perform actions for them. These
