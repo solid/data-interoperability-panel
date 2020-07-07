@@ -937,7 +937,7 @@ property.
   Registration Agent</figcaption>
   <pre highlight="turtle">
     <#me>
-      a eocsystem:Agent;
+      a eco:Agent;
       eco:trustsForApplicationRegistration &lt;https://trusted.example/ar/&gt; .
   </pre>
 </figure>
@@ -945,7 +945,7 @@ property.
 The [=Application=] will redirect the [=resource controller=] via the
 synchronous [[#trusted|trusted agent]] pattern to the [=Application=] linked by
 [eco:trustsForApplicationRegistration](ecosystem.ttl#trustsForApplicationRegistration),
-supplying its its [=ApplicationID=] as a parameter.
+supplying its [=ApplicationID=] as a parameter.
 
 The [=application registration agent=] is now expected to dereference
 (i.e. perform an HTTP GET on) the [=ApplicationID=] to retrieve an
@@ -1100,8 +1100,6 @@ introduces the following properties:
                                   &lt;https://alice.pod.example/data/notebook-tree/dae5015c-d5f9-4ede-b9eb-7ca7a19854a9/#notebook&gt; .
     </pre>
 </figure>
-
-Issue: Should we be using RDF Collections for things like eco:hasRegisteredDataInstance?
 
 ## Structure and Validation ## {#datareg-structure}
 
@@ -1422,12 +1420,121 @@ Write or Append [=access modes=].
 
 ## Registering Data ## {#datareg-registrations}
 
-TBD
+Registering data in a [=Data Registry=] is primarily concerned with the
+following two operations:
 
-### Instances of Registered Data ### {#datareg-instances}
+* Registering *types of data* - [=Data Registrations=]
+* Registering *instances of those data types* - [=Registered Data Instances=]
 
-TBD
+Managing [=Data Registrations=] or [=Registered Data Instances=]
+is inextricably linked with setting appropriate permissions on that data
+so that it can be used effectively and securely. Consequently, in this
+ecosystem the [=trusted agents=] that assist the [=resource controller=]
+with management of [=Data Registrations=] and [[#dataauth]]
+are one and the same.
 
+The [=Application=] in use will need the assistance of a
+[=data authorization agent=] if it is not trusted to assist the [=Agent=] with
+managment of [=Data Registrations=] and [[#dataauth]].
+
+The [=data authorization agent=] trusted by the [=Agent=] is listed in their
+[=identity profile document=] via the
+[eco:trustsForDataAuthorization](ecosystem.ttl#trustsForDataAuthorization)
+property.
+
+<figure>
+  <figcaption>[=Agent=] at https://alice.pod.example/id#me linking to Data
+  Authorization Agent</figcaption>
+  <pre highlight="turtle">
+    <#me>
+      a eco:Agent;
+      eco:trustsForDataAuthorization &lt;https://trusted.example/da/&gt; .
+  </pre>
+</figure>
+
+Anytime that [=Data Registrations=] need to be managed, or additional
+authorization is needed, an [=Application=] must do so through the
+[=data authorization agent=] of a given [=resource controller=].
+
+The [=Application=] will redirect the [=resource controller=] via the
+synchronous [=trusted agent=] pattern to the [=data authorization agent=],
+supplying its [=ApplicationID=] as a parameter.
+
+The [=data authorization agent=] is expected to dereference
+(i.e. perform an HTTP GET on) the [=ApplicationID=] to retrieve an
+[=application profile document=]. The contents of that document help the
+[=data authorization agent=], and in turn the [=resource controller=], make
+good decisions about management and access to their data. How that happens
+it covered in [[#dataauth]].
+
+Ultimately, the [=resource controller=] will decide to register new types of
+data in the form of [=Data Registrations=], with some combination of
+[=access modes=] that allow them to read, create, modify, or delete
+[=Registered Data Instances=]. The remainder of this section explains
+the mechanics of those operations.
+
+### Creating the data registration entry ### {#datareg-creating}
+
+The [=data authorization agent=] is responsible for creating
+[=Data Registrations=] in conformance with the
+documented [[#datareg-structure]] pattern.
+
+Specifically, the
+[ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+stipulates that the [=Data Registration=] be a container via
+`tree:expectedType ldp:Container`.
+
+The [=Data Registration=] must be added to the RDF
+graph of that container with a `<#registration>` subject, and pass validation
+against the
+[ecos:DataRegistrationShape](ecosystem.shex#DataRegistrationShape).
+
+The [=Data Registration's=] properties must be set as follows:
+
+* [eco:registeredBy](ecosystem.ttl#registeredBy): linked to the [=identity=]
+    of the [=authenticated agent=] that invoked the registration
+    (i.e. the [=webid=] of the [=resource controller=])
+* [eco:registeredWith](ecosystem.ttl#registeredWith): linked to the
+    [=ApplicationID=] of the [=trusted agent=] that facilitated the
+    registration, typically the [=data authorization agent=].
+* [eco:registeredAt](ecosystem.ttl#registeredAt): the `xsd:dateTime` of
+    the registration.
+* [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree): URI of the
+    [=shape tree=] that is being registered.
+
+The [eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance)
+property is not populated until the first [=Registered Data Instance=] is
+added to the [=Data Registration=].
+
+<figure>
+  <figcaption>Instance data for a [=Data Registration=] at
+  https://alice.pod.example/data/foo/#registration</figcaption>
+  <pre highlight="turtle">
+  <#registration>
+    a eco:DataRegistration ;
+    eco:registeredBy &lt;https://alice.pod.example/id#me&gt; ;
+    eco:registeredWith &lt;https://app.example/id#agent&gt; ;
+    eco:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+    eco:registeredShapeTree &lt;https://tree.example/commonnote#notebook-tree&gt; ;
+    </pre>
+</figure>
+
+The [=Data Registration=] container must be named in
+accordance with the instructions in [[#datareg-naming]].
+
+The [=Data Registration=] container must be added as a child
+member of the [=Data Registry=] container.
+
+Access to the [=Data Registration=] must be set per the
+instructions in [[#datareg-permissions]].
+
+The [=Data Registration=] must be associated with the
+[=Data Registry=] through the
+[eco:hasRegistry](ecosystem.ttl#hasRegistry) property in
+the graph of the [=Data Registry=].
+
+Data Authorization {#dataauth}
+=====================
 
 Trusted Agents {#trusted}
 =====================
@@ -1627,6 +1734,11 @@ actions typically require some leve
 An <dfn>application registration agent</dfn> is a type of [=trusted agent=]
 that a [=resource controller=] uses to register and manage applications that
 interface with their [=pod=].
+
+A <dfn>data authorization agent</dfn> is a type of [=trusted agent=]
+that assists a [=resource controller=] with the managing the data
+in their [=Data Registries=], and authorizing access to it from other
+[=authorization subjects=].
 
 A <dfn>shape</dfn> provides a schema that RDF data graphs must meet in order
 to be considered conformant. A shape associated with a given resource in a
