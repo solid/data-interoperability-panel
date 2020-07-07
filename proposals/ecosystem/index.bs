@@ -1430,14 +1430,12 @@ Managing [=Data Registrations=] or [=Registered Data Instances=]
 is inextricably linked with setting appropriate permissions on that data
 so that it can be used effectively and securely. Consequently, in this
 ecosystem the [=trusted agents=] that assist the [=resource controller=]
-with management of [=Data Registrations=] and [[#dataauth]]
-are one and the same.
+with managing [=Data Registrations=] and [[#dataauth]]
+are one and the same. If the [=Application=] in use is not trusted to
+assist with these operations, it will need the assistance of a
+[=Data Authorization Agent=].
 
-The [=Application=] in use will need the assistance of a
-[=data authorization agent=] if it is not trusted to assist the [=Agent=] with
-managment of [=Data Registrations=] and [[#dataauth]].
-
-The [=data authorization agent=] trusted by the [=Agent=] is listed in their
+The [=Agent=] specifies the [=Data Authorization Agent=] they trust in their
 [=identity profile document=] via the
 [eco:trustsForDataAuthorization](ecosystem.ttl#trustsForDataAuthorization)
 property.
@@ -1452,9 +1450,9 @@ property.
   </pre>
 </figure>
 
-Anytime that [=Data Registrations=] need to be managed, or additional
-authorization is needed, an [=Application=] must do so through the
-[=data authorization agent=] of a given [=resource controller=].
+An [=Application=] must work through the [=Data Authorization Agent=]
+anytime that [=Data Registrations=] need to be managed, or additional
+access is needed to a given [=Agent's=] data.
 
 The [=Application=] will redirect the [=resource controller=] via the
 synchronous [=trusted agent=] pattern to the [=data authorization agent=],
@@ -1483,6 +1481,12 @@ Specifically, the
 [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
 stipulates that the [=Data Registration=] be a container via
 `tree:expectedType ldp:Container`.
+
+Additionally, the [=shape tree=] associated with the [=Data Registration=] via
+[eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
+must also be assigned to the container resource of the [=Data Registration=],
+per the instructions in [[#datareg-structure]]. This ensures that only
+instances of that particular shape tree are added to the container.
 
 The [=Data Registration=] must be added to the RDF
 graph of that container with a `<#registration>` subject, and pass validation
@@ -1532,6 +1536,18 @@ The [=Data Registration=] must be associated with the
 [=Data Registry=] through the
 [eco:hasRegistry](ecosystem.ttl#hasRegistry) property in
 the graph of the [=Data Registry=].
+
+
+### Creating registered data instances ### {#datareg-instances}
+
+Creation of [=Registered Data Instances=] is extremely straightforward. For
+the most part, this is simply a matter of storing instance resources
+in conformance with the
+[eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree). The one
+additional operation required is to add the instance to the
+[=Data Registration=] via
+[eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance).
+
 
 Data Authorization {#dataauth}
 =====================
