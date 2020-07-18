@@ -3,28 +3,34 @@
 
 # Agent
 ##############################################################################
+<#profile-tree>
+  tree:expectsType tree:ShapeTreeContainer ;
+  tree:contains <#agent-tree> ,
+                tree:AllowAll .
+
 <#agent-tree>
-  tree:expectedType ldp:Resource ;
-  tree:shape <ecos#AgentShape> ;
-  tree:label "id" ;
+  tree:expectsType tree:ShapeTreeResource ;
+  tree:validatedBy <ecos#AgentShape> ;
+  tree:matchesUriTemplate "id" .
 
 # Registrar
 ##############################################################################
 <#registrar-tree>
-  tree:expectedType ldp:Container ;
-  tree:shape <ecos#RegistrarShape> ;
-  tree:contents <#application-registry-set-tree> ;
-  tree:contents <#data-registry-set-tree> ;
+  tree:expectsType tree:ShapeTreeContainer ;
+  tree:validatedBy <ecos#RegistrarShape> ;
+  tree:contains <#application-registry-set-tree> ,
+                <#data-registry-set-tree> ,
+                tree:AllowNone .
 
 <#application-registry-set-tree>
-  tree:expectedType ldp:Resource ;
-  tree:shape <ecos#ApplicationRegistrySetShape> ;
-  tree:label "application" ;
+  tree:expectsType tree:ShapeTreeResource ;
+  tree:validatedBy <ecos#ApplicationRegistrySetShape> ;
+  tree:matchesUriTemplate "application" ;
 
 <#data-registry-set-tree>
-  tree:expectedType ldp:Resource ;
-  tree:shape <ecos#DataRegistrySetShape> ;
-  tree:label "data" ;
+  tree:expectsType tree:ShapeTreeResource ;
+  tree:validatedBy <ecos#DataRegistrySetShape> ;
+  tree:matchesUriTemplate "data" ;
 
 # Application Registry
 ##############################################################################
@@ -33,9 +39,10 @@
 # it are valid ApplicationRegistration instances.
 ##############################################################################
 <#application-registry-tree>
-  tree:expectedType ldp:Container ;
-  tree:shape <ecos#ApplicationRegistryShape> ;
-  tree:contents <#application-registration-tree> ;
+  tree:expectsType tree:ShapeTreeContainer ;
+  tree:validatedBy <ecos#ApplicationRegistryShape> ;
+  tree:contains <#application-registration-tree> ,
+                tree:AllowNone .
 
 # Application Registration
 ##############################################################################
@@ -44,8 +51,8 @@
 # whatever data internal to their operation that they like within
 ##############################################################################
 <#application-registration-tree>
-  tree:expectedType ldp:Container ;
-  tree:shape <ecos#ApplicationRegistrationShape> ;
+  tree:expectsType tree:ShapeTreeContainer ;
+  tree:validatedBy <ecos#ApplicationRegistrationShape> .
 
 # Data Registry
 ##############################################################################
@@ -54,9 +61,10 @@
 # it are valid DataRegistration instances.
 ##############################################################################
 <#data-registry-tree>
-  tree:expectedType ldp:Container ;
-  tree:shape <ecos#DataRegistryShape> ;
-  tree:contents <#data-registration-tree> ;
+  tree:expectsType tree:ShapeTreeContainer ;
+  tree:validatedBy <ecos#DataRegistryShape> ;
+  tree:contains <#data-registration-tree> ,
+                tree:AllowNone .
 
 # Data Registration
 ##############################################################################
@@ -65,5 +73,5 @@
 # whatever shape tree was registered by the eco:DataRegistration.
 ##############################################################################
 <#data-registration-tree>
-  tree:expectedType ldp:Container ;
-  tree:shape <ecos#DataRegistrationShape> ;
+  tree:expectsType tree:ShapeTreeContainer ;
+  tree:validatedBy <ecos#DataRegistrationShape> .
