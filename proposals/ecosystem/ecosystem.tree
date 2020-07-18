@@ -52,7 +52,8 @@
 ##############################################################################
 <#application-registration-tree>
   tree:expectsType tree:ShapeTreeContainer ;
-  tree:validatedBy <ecos#ApplicationRegistrationShape> .
+  tree:validatedBy <ecos#ApplicationRegistrationShape> ;
+  tree:matchesUriTemplate "{id}" .
 
 # Data Registry
 ##############################################################################
@@ -74,4 +75,5 @@
 ##############################################################################
 <#data-registration-tree>
   tree:expectsType tree:ShapeTreeContainer ;
-  tree:validatedBy <ecos#DataRegistrationShape> .
+  tree:validatedBy <ecos#DataRegistrationShape> ;
+  tree:matchesUriTemplate "{id}" .
