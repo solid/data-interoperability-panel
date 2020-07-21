@@ -160,7 +160,7 @@ We introduce patterns for [[#appreg|registering applications]], authorizing
 access to data, keeping track of access grants, and of remote resources
 for which access has been granted to the [=resource controller=].
 [=trusted agents|Trusted Agents=] perform important actions for the
-[=resource controller's=] with escalated privileges to help her securely
+[=resource controller=] with escalated privileges to help her securely
 manage her data and make informed, intuitive, and secure decisions.
 
 Most importantly, this proposal can work with Solid as it exists today, on its
@@ -187,10 +187,10 @@ Reference Use Case {#usecase}
 
 In our use case, Alice wants to use a new application to record and manage
 her personal and professional notes. She does a Web search and finds
-NeverNote (https://nevernote.example), a single-page (SPA) web-based
+NeverNote (`https://nevernote.example`), a single-page (SPA) web-based
 application that advertises itself as *solid enabled*. Alice is excited
-about this because she recently created a Solid Pod for herself
-at https://alice.pod.example.
+about this because she recently created a Solid pod for herself
+at `https://alice.pod.example`.
 
 When Alice brings up NeverNote in her
 web browser, she is prompted to authenticate with her [=WebID=] because
@@ -1034,7 +1034,7 @@ a way to register, organize, and subsequently manage the data they control.
 A [=Data Registry=] for storing individual [=Data Registrations=] is
 introduced, implemented through the [[#reg]].
 
-A [=Data Registry=] provides a specific location in a Solid [=pod=] where
+A given [=Data Registry=] provides a specific location in a Solid [=pod=] where
 data of various types is organized and stored in a uniform way to aid
 authorization, interoperability, discovery, and more. It avoids complex
 hierarchies of data that hinder flexibility and interoperability by
@@ -1104,7 +1104,7 @@ introduces the following properties:
 ## Structure and Validation ## {#datareg-structure}
 
 A given [=Agent=] will have one or more [=Data Registries=] discoverable
-through the [[#reg-model]], via resources that implement the
+through the [[#reg-model]], via resources that implement
 Registrar [[#reg-structure]].
 
 Following this path of discovery ultimately
