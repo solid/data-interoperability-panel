@@ -1046,7 +1046,7 @@ query engines or indexing schemes.
 
 ## Data Model ## {#datareg-model}
 
-<figure>
+<figure id="fig-datareg-model">
   <img src="datareg-model.svg" width=100%/>
   <figcaption>Data model for data registration</figcaption>
 </figure>
@@ -1063,6 +1063,42 @@ the [eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
 A [=Data Registry=] links to any number of [=Data Registrations=]
 via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
 
+<figure id="fig-datareg-registrar">
+  <figcaption>A [=Registrar=] at https://alice.pod.example/registries/#registrar
+  linking to a [=Data Registry Set=]</figcaption>
+  <pre highlight="turtle">
+  <#registrar>
+    a eco:Registrar;
+    eco:hasDataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; .
+  </pre>
+  </figure>
+</figure>
+
+
+<figure id ="fig-datareg-registry-set">
+   <figcaption>A [=Data Registry Set=] at
+   https://alice.pod.example/registries/data#set linking to two different
+  [=Data Registries=]</figcaption>
+  <pre highlight="turtle">
+  <#set>
+    a eco:DataRegistrySet;
+    eco:hasRegistry &lt;https://alice.pod.example/data/#registry&gt; ,
+                    &lt;https://alice.otherpod.example/data/#registry&gt; .
+  </pre>
+</figure>
+
+<figure id="fig-datareg-registry">
+  <figcaption>A [=Data Registry=] at https://alice.pod.example/data/#registry
+  linking to several [=Data Registrations=]</figcaption>
+  <pre highlight="turtle">
+  <#registry>
+    a eco:DataRegistry ;
+    eco:hasRegistration &lt;49a4057a-6ade-4a9d-9869-085a00925259/#registration&gt ,
+                        &lt;cf2d40d3-858e-42f7-8b11-d021b5989ed2/#registration&gt ,
+                        &lt;628a7371-3a9b-49f9-a7aa-2e9c93e0150b/#registration&gt .
+  </pre>
+</figure>
+
 A [=Data Registration=] extends the
 [eco:Registration](ecosystem.ttl#Registration) class with the
 [eco:DataRegistration](ecosystem.ttl#DataRegistration) subclass.
@@ -1073,7 +1109,8 @@ via the
 property.
 
 The [eco:DataRegistration](ecosystem.ttl#DataRegistration) subclass
-introduces the following properties:
+extends the [eco:Registration](ecosystem.ttl#Registration) class with
+the following properties:
 
 * [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) - URI of the
     [=shape tree=] that is being registered.
@@ -1083,9 +1120,10 @@ introduces the following properties:
     [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
 
 
-<figure>
-  <figcaption>Instance of a [=Data Registration=] at
-  https://alice.pod.example/data/foo/#registration</figcaption>
+<figure id="fig-datareg-registration">
+  <figcaption>A [=Data Registration=] at
+  https://alice.pod.example/data/49a4057a-6ade-4a9d-9869-085a00925259/#registration
+  linking to several [=Registered Data Instances=]</figcaption>
   <pre highlight="turtle" line-highlight="5" line-numbers="true">
   <#registration>
     a eco:DataRegistration ;
@@ -1093,60 +1131,87 @@ introduces the following properties:
     eco:registeredWith &lt;https://app.example/id#agent&gt; ;
     eco:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
     eco:registeredShapeTree &lt;https://tree.example/commonnote#notebook-tree&gt; ;
-    eco:hasRegisteredDataInstance &lt;https://alice.pod.example/data/notebook-tree/49a4057a-6ade-4a9d-9869-085a00925259/#notebook&gt; ,
-                                  &lt;https://alice.pod.example/data/notebook-tree/3f56c32e-96c6-4b0c-b941-eadc2bf98b18/#notebook&gt; ,
-                                  &lt;https://alice.pod.example/data/notebook-tree/16e1eae9-20a5-489d-8380-8c07ca3805c4/#notebook&gt; ,
-                                  &lt;https://alice.pod.example/data/notebook-tree/886785d2-6c23-46ee-9e19-5ac36b7bcd71/#notebook&gt; ,
-                                  &lt;https://alice.pod.example/data/notebook-tree/dae5015c-d5f9-4ede-b9eb-7ca7a19854a9/#notebook&gt; .
+    eco:hasRegisteredDataInstance &lt;3f56c32e-96c6-4b0c-b941-eadc2bf98b18/#notebook&gt; ,
+                                  &lt;16e1eae9-20a5-489d-8380-8c07ca3805c4/#notebook&gt; ,
+                                  &lt;886785d2-6c23-46ee-9e19-5ac36b7bcd71/#notebook&gt; ,
+                                  &lt;dae5015c-d5f9-4ede-b9eb-7ca7a19854a9/#notebook&gt; .
     </pre>
 </figure>
 
 ## Structure and Validation ## {#datareg-structure}
 
-A given [=Agent=] will have one or more [=Data Registries=] discoverable
-through the [[#reg-model]], via resources that implement
-Registrar [[#reg-structure]].
+The resources associated with an [=Agent's=] [=Data Registries=] conform
+to and extend the general patterns detailed in Registrar [[#reg-structure]].
 
-These [=Data Registries=] contain [=Data Registrations=].
+Consequently, this section focuses on the unique composition and validation of
+[=Data Registrations=] in a [=Data Registry=], and the
+[=Registered Data Instances=] contained in each [=Data Registration=].
 
-Each [=Data Registration=] contains any number of [=Registered Data Instances=].
+### Structure of Data Registrations in a Data Registry ### {#datareg-registrations-structure}
 
-### Structure of Data Registrations ### {#datareg-registrations-structure}
-
-<figure>
+<figure id="fig-datareg-registry-structure">
   <figcaption>A [=Data Registry=] at
   https://alice.pod.example/data/#registry</figcaption>
   <img src="datareg-structure.svg" width=100%/>
 </figure>
 
-The [=Data Registry=] instance data is stored in the RDF graph
-of the `/data` container at
-`https://alice.pod.example/data/#registry`.
+In the figure above, a [=Data Registry=] instance is stored in the RDF graph
+of the `/data` container at `https://alice.pod.example/data/#registry`. This
+[=Data Registry=] contains a set of [=Data Registrations=] (all stored in
+the `/data` container), [as shown](#fig-datareg-registry) in the
+previous section.
 
-It links to a
-collection of [=Data Registrations=] stored in
-the `/data` container. Each individual [=Data Registration=] represents
-a different [=shape tree=]. The [=shape tree=] associated with a given
-[=Data Registration=] is identified by the object of the
+Each individual [=Data Registration=] is associated with one
+[=shape tree=], indicated by the
 [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) property.
 
+<figure id="fig-datareg-registry-tree">
+  <figcaption>Definition of an
+  [ecot:data-registry-tree](ecosystem.tree#data-registry-tree)</figcaption>
+  <pre highlight="turtle">
+  <#data-registry-tree>
+    a tree:ShapeTree ;
+    tree:expectsType tree:ShapeTreeContainer ;
+    tree:validatedBy &lt;ecos#DataRegistryShape&gt; ;
+    tree:contains &lt;#data-registration-tree&gt; ,
+                  tree:AllowNone .
+  </pre>
+</figure>
+
 The [ecot:data-registry-tree](ecosystem.tree#data-registry-tree)
-associated with the [=Data Registry=] at `/data/#registry` defines
-the resource structure for that [=Data Registry=], and the data validation
-rules across those resources.
+defines the resource structure for the [=Data Registry=], and the data
+validation rules for the resources inside it.
 
 * It assigns the
     [ecos:DataRegistryShape](ecosystem.shex#DataRegistryShape)
-    to validate the [=Data Registry=] instance data in the
-    container resource
-* It says that the container must include instances of
-    [ecot:data-registration-tree](ecosystem.tree#data-registration-tree),
-    which any resources added to the `/data` container must conform to.
+    to validate the [=Data Registry=] instance itself, stored in the
+    graph of the container resource, [as shown](#fig-datareg-registry) in the
+    previous section
+* It says that the container includes instances of
+    [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+* It says through `tree:AllowNone` that any resources that do not conform to
+    [ecot:data-registration-tree](ecosystem.tree#data-registration-tree) are
+    not allowed. This container can *only* contain resources that conform to
+    [ecot:data-registration-tree](ecosystem.tree#data-registration-tree).
+
+<figure id="fig-datareg-registration-tree">
+  <figcaption>Definition of an
+  [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+  </figcaption>
+  <pre highlight="turtle">
+  <#data-registration-tree>
+    a tree:ShapeTree ;
+    tree:expectsType tree:ShapeTreeContainer ;
+    tree:validatedBy &lt;ecos#DataRegistrationShape&gt; ;
+    tree:matchesUriTemplate "{id}" .
+  </pre>
+</figure>
 
 Conforming to
 [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
 ensures that the [=Data Registry=] container at
-`/data` only contains valid [=Data Registrations=].
+`https://alice.pod.example/data/#registry` only contains valid
+[=Data Registrations=].
 
 * Any resource added to the `/data` container must be a
     container via `tree:expectsType tree:ShapeTreeContainer`.
@@ -1155,18 +1220,22 @@ ensures that the [=Data Registry=] container at
     to ensure there is a valid [=Data Registration=] instance in the
     container resource graph.
 
-### Structure of Registered Data Instances ### {#datareg-instances-structure}
+### Structure of Registered Data Instances in a Data Registration ### {#datareg-instances-structure}
 
 A given [=Data Registration=] will contain any number of
 [=Registered Data Instances=] of the [=shape tree=] associated
 via [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
 
-This requires us to assign two complementary [=shape trees=]
-to the same [=Data Registration=].
+This must assign two complementary [=shape trees=]
+to the same [=Data Registration=] to ensure:
+
+1. We have a well-formed [=Data Registration=]
+2. The [=Data Registration=] only contains [=Registered Data Instances=]
+    of [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
 
 <figure>
   <figcaption>A [=Data Registration=] at
-  https://alice.pod.example/data/49a4057a...5259/#registration
+  https://alice.pod.example/data/49a4057a-6ade-4a9d-9869-085a00925259/#registration
   </figcaption>
   <img src="dataregistration-structure.svg" width=100%/>
 </figure>
@@ -1175,26 +1244,23 @@ In the figure above, we can observe the combination of the
 [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
 and the [note:note-container-tree](note.tree#note-container-tree) on the
 same [=Data Registration=] at
-`/data/49a4057a...5259/#registration`.
+`https://alice.pod.example/data/49a4057a-6ade-4a9d-9869-085a00925259/#registration`.
 
-* A [=Data Registration=] can't know which specific
-    [=shape tree=] will be registered in advance, so the
-    [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
-    can't specify the expected contents of the container with `tree:contains`.
-* It is crucial that the contents of the [=Data Registration=] container
-    be conformant instances of the [=shape tree=] specified in the
-    [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
-    property of the [=Data Registration=].
-* Consequently, a second [=shape tree=] is associated with the
-    [=Data Registration=] to ensure that what is stored in the container
-    are conformant instances of the
-    [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
-* In the figure above,
-    [note:note-container-tree](note.tree#note-container-tree) is also added
-    to the [=Data Registration=] at `/data/49a4057a...5259/#registration`.
-    It adds the additional stipulation that the contents of the
-    [=Data Registration=] must conform to the
-    [note:note-tree](note.tree#note-tree).
+A [=Data Registration=] can't know which specific
+[=shape tree=] will be registered in advance, so the
+[ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+can't specify the expected contents of the container with `tree:contains`.
+
+However, it is crucial that the contents of the [=Data Registration=] container
+be conformant instances of the [=shape tree=] specified in the
+[eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
+property of the [=Data Registration=].
+
+A second [=shape tree=]
+([note:note-container-tree](note.tree#note-container-tree) in the example above)
+is associated with the [=Data Registration=] to ensure that what is stored
+in the container are conformant instances of the
+[eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
 
 ### Naming Registrations and Registered Data Instances ### {#datareg-naming}
 
