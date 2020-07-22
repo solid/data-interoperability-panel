@@ -1264,21 +1264,25 @@ in the container are conformant instances of the
 
 ### Naming Registrations and Registered Data Instances ### {#datareg-naming}
 
-The name of the [=Data Registration=] container resource must be a
+The name of the [=Data Registration=] container resource MUST be a
 generated \[UUID](https://www.ietf.org/rfc/rfc4122.txt).
 
 The name of a [=Registered Data Instance=] resource linked to a
 [=Data Registration=] through
 [eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance)
-must be a generated \[UUID](https://www.ietf.org/rfc/rfc4122.txt).
+MUST be a generated \[UUID](https://www.ietf.org/rfc/rfc4122.txt).
 
 ## Permission Model ## {#datareg-permissions}
 
-A majority of collaborative use cases and data sharing are facilitated
-through the [=Data Registry=]. Consequently, there is a signficant amount
-of variation in permissions for [=Data Registrations=] and
-[=Registered Data Instances=], based on the authorization decisions
-made by the [=Agent=] during Data Authorization.
+Almost all of the collaborative use cases between [=Agents=]
+in the [=ecosystem=] are based on data furnished through the
+[=Data Registry=].
+
+[=Agents=] grant different levels of access to other [=Agents=] on a
+case-by-case basis through [[#dataauth]]. Consequently, a signficant amount
+of flexibility is needed in permissioning [=Data Registrations=] and
+[=Registered Data Instances=], while at the same time avoiding permission
+swamps that become unwieldy to manage.
 
 <figure>
 <figcaption>Permission model for [=Data Registry=] resources</figcaption>
@@ -1346,12 +1350,9 @@ made by the [=Agent=] during Data Authorization.
 
 ### Access Scopes for Data Registrations ### {#datareg-scopes}
 
-Collaborative use cases where the [=Agent=] is sharing data
-with other [=Agents=] and/or [=Applications=] frequent the [=Data Registry=].
-
-The [=Agent=] specifies the [=Data Registrations=] and the
+An [=Agent=] specifies the [=Data Registrations=] and
 [=Registered Data Instances=] within them that other
-[=Agents=] and/or [=Applications=] can access, then chooses what that mode
+[=Agents=] and/or [=Applications=] can access, as well as what that mode
 of access will be.
 
 It is imperative that the permission model enable patterns that
@@ -1369,14 +1370,15 @@ There are two levels of access that must be considered for a given
 * **Specific Instance** - Applies only to specific
       [=Registered Data Instances=] within that [=Data Registration=].
 
-Issue: Need to have a model that provides the context for an authorization
-access grant, and connects it to the authorization statements managed in this
-ecosystem.
-
 #### Permissions for All Registered Data Instances #### {#datareg-all}
 
 The [=access modes=] listed in the table below can be combined as needed and
 granted to a given [=Authorization Subject=].
+
+Issue: WAC doesn't have any mechanism to extend inherited permissions. The
+presence of a specific ACL on a resource negates all inherited permissions,
+making it impossible to “slightly adjust” or “modify” a resource
+while maintaining the permissions inherited for it.
 
 <figure>
 <figcaption>Modes of access for a [=Data Registration=]</figcaption>
@@ -1413,22 +1415,19 @@ granted to a given [=Authorization Subject=].
         <td>Can only create new [=Registered Data Instances=] within the
             [=Data Registration=].</td>
       </tr>
+      <tr>
+        <th scope="row">Created Resource Permissions</th>
+        <td>These determine the permissions assigned to
+        [=Registered Data Instances=] created by the [=Authorization Subject=],
+        when that [=Authorization Subject=] has been granted Write or Append
+        [=access modes=].</td>
+      </tr>
     </tbody>
   </table>
 </figure>
 
-Issue: Must ensure that default permissions on created instances don't
-overcomplicate the experience for the user.
-
-**Default Permissions:** These determine the permissions assigned to
-[=Registered Data Instances=] created by the [=Authorization Subject=], when
-that [=Authorization Subject=] has been granted Write or Append
-[=access modes=].
-
-Issue: WAC doesn't have any mechanism extend inherited permissions. The presence
-of a specific ACL on a resource negates all inherited permissions,
-making it impossible to “slightly adjust” or “modify” a resource
-while maintaining the permissions inherited for it.
+Issue: Identify the scheme through which created resource permissions are
+derived if they are not specified explicitly.
 
 Note: Given the current limitations of [[WAC]], specifically the inability
 to extend inherited permissions, it is likely that managing permissions
@@ -1439,7 +1438,8 @@ from the [=Data Registration=].
 #### Permissions for a Specific Registered Data Instance #### {#datareg-specific}
 
 The [=access modes=] listed in the table below can be combined as needed and
-granted to a given [=Authorization Subject=].
+granted to a given [=Authorization Subject=] for a specific
+[=Registered Data Instance=].
 
 <figure>
 <figcaption>Modes of access for a Specific
@@ -1475,14 +1475,16 @@ granted to a given [=Authorization Subject=].
             Can add to a resource in the [=Registered Data Instance=] but cannot
             remove anything from it, or delete it.</td>
       </tr>
+      <tr>
+        <th scope="row">Created Resource Permissions</th>
+        <td>These determine the permissions assigned to
+        resources within the [=Registered Data Instance=] created by the
+        [=Authorization Subject=], when that [=Authorization Subject=] has
+        been granted Write or Append [=access modes=].</td>
+      </tr>
     </tbody>
   </table>
 </figure>
-
-**Default Permissions:** These determine the permissions assigned to
-resources within the [=Registered Data Instance=] created by the
-[=Authorization Subject=], when that [=Authorization Subject=] has been granted
-Write or Append [=access modes=].
 
 ## Registering Data ## {#datareg-registrations}
 
