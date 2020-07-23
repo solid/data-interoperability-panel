@@ -47,6 +47,14 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:range :Application ;
   rdfs:label "Trusts for application registration"@en .
 
+:trustsForDataAuthorization
+  rdfs:subPropertyOf :trustsApplication ;
+  rdfs:comment "Links to an application the agent trusts to assist with registering and authorizing access to data"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :Agent ;
+  rdfs:range :Application ;
+  rdfs:label "Trusts for data registration and authorization"@en .
+
 # Registrar
 #############################################################################
 # Used by an Agent to organize a collection of Registry Sets

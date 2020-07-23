@@ -1213,8 +1213,8 @@ ensures that the [=Data Registry=] container at
 `https://alice.pod.example/data/#registry` only contains valid
 [=Data Registrations=].
 
-* Any resource added to the `/data` container must be a
-    container via `tree:expectsType tree:ShapeTreeContainer`.
+* Any resource added to the `https://alice.pod.example/data/` container must be
+    a container per `tree:expectsType tree:ShapeTreeContainer`.
 * It assigns the
     [ecos:DataRegistrationShape](ecosystem.shex#DataRegistrationShape)
     to ensure there is a valid [=Data Registration=] instance in the
@@ -1226,10 +1226,10 @@ A given [=Data Registration=] will contain any number of
 [=Registered Data Instances=] of the [=shape tree=] associated
 via [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
 
-This must assign two complementary [=shape trees=]
-to the same [=Data Registration=] to ensure:
+Two complementary [=shape trees=] must be assigned to the same
+[=Data Registration=] to ensure:
 
-1. We have a well-formed [=Data Registration=]
+1. It is a well-formed [=Data Registration=]
 2. The [=Data Registration=] only contains [=Registered Data Instances=]
     of [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
 
@@ -1360,8 +1360,6 @@ allow the [=Agent=] to make intuitive decisions, without
 having to directly manipulate [=acl resources=] for individual documents
 and containers throughout the [=Data Registry=].
 
-Authorization is granted to an [=Authorization Subject=].
-
 There are two levels of access that must be considered for a given
 [=Data Registration=]:
 
@@ -1491,20 +1489,30 @@ granted to a given [=Authorization Subject=] for a specific
 Registering data in a [=Data Registry=] is primarily concerned with the
 following two operations:
 
-* Registering *types of data* - [=Data Registrations=]
-* Registering *instances of those data types* - [=Registered Data Instances=]
+* Registering new *data types* as [=Data Registrations=]
+* Storing and registering new *instances of those data types* as
+    [=Registered Data Instances=]
 
-Managing [=Data Registrations=] or [=Registered Data Instances=]
-is inextricably linked with setting appropriate permissions on that data
-so that it can be used effectively and securely. Consequently, in this
-ecosystem the [=trusted agents=] that assist the [=Agent=]
-with managing [=Data Registrations=] and [[#dataauth]]
-are one and the same. If the [=Application=] in use is not trusted to
-assist with these operations, it will need the assistance of a
-[=Data Authorization Agent=].
+This section explains the mechanics of those operations.
 
-The [=Agent=] specifies the [=Data Authorization Agent=] they trust in their
-[=identity profile document=] via the
+Note: Managing [=Data Registrations=] and the [=Registered Data Instances=]
+contained within them is inextricably linked to permissioning the data
+for effective use and secure collaboration. This is covered at length
+in [[#dataauth]].
+
+### Enlisting the help of a trusted agent ### {#datareg-trustedagent}
+
+In almost every case, an [=Application=] will not be trusted to manage
+[=Data Registries=], and will need the assistance of a [=trusted agent=]
+that has been authorized to assist with data registration for a given [=Agent=].
+
+Untrusted [=Applications=] can enlist the help of the
+[=Data Authorization Agent=]
+to assist with privileged operations like registering new
+[=Data Registrations=] and changing permissions.
+
+The [=Data Authorization Agent=] trusted by a given [=Agent=] is linked
+with them through the
 [eco:trustsForDataAuthorization](ecosystem.ttl#trustsForDataAuthorization)
 property.
 
@@ -1518,78 +1526,64 @@ property.
   </pre>
 </figure>
 
-An [=Application=] must work through the [=Data Authorization Agent=]
-anytime that [=Data Registrations=] need to be managed, or additional
-access is needed to a given [=Agent's=] data.
+An untrusted [=Application=] must work through the trusted
+[=Data Authorization Agent=] anytime that [=Data Registrations=] need to be
+managed or additional access is needed to the [=Agent's=] data.
 
-The [=Application=] will redirect the [=Agent=] via the
-synchronous [=trusted agent=] pattern to the [=data authorization agent=],
-supplying its [=ApplicationID=] as a parameter.
-
-The [=data authorization agent=] is expected to dereference
-(i.e. perform an HTTP GET on) the [=ApplicationID=] to retrieve an
-[=application profile document=]. The contents of that document help the
-[=data authorization agent=], and in turn the [=Agent=], make
-good decisions about management and access to their data. How that happens
-is covered in [[#dataauth]].
-
-Ultimately, the [=Agent=] will decide to register new types of
-data in the form of [=Data Registrations=], with some combination of
-[=access modes=] that allow them to read, create, modify, or delete
-[=Registered Data Instances=]. The remainder of this section explains
-the mechanics of those operations.
+Issue: Patterns to interface with Trusted Agents will be detailed
+in the Trusted Agents section.
 
 ### Creating the data registration entry ### {#datareg-creating}
 
-The [=data authorization agent=] is responsible for creating
-[=Data Registrations=] in conformance with the
+[=Data Registrations=] must be created in conformance with the
 documented [[#datareg-structure]] pattern.
 
-Specifically, the
-[ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
-stipulates that the [=Data Registration=] be a container via
-`tree:expectsType tree:ShapeTreeContainer`.
+The [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+must be assigned to the [=Data Registration=] resource.
 
-Additionally, the [=shape tree=] associated with the [=Data Registration=] via
+<figure id="fig-datareg-create-registration-tree">
+  <figcaption>Definition of an
+  [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+  </figcaption>
+  <pre highlight="turtle">
+  <#data-registration-tree>
+    a tree:ShapeTree ;
+    tree:expectsType tree:ShapeTreeContainer ;
+    tree:validatedBy &lt;ecos#DataRegistrationShape&gt; ;
+    tree:matchesUriTemplate "{id}" .
+  </pre>
+</figure>
+
+The [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+stipulates the following:
+
+1. The [=Data Registration=] resource must be a container per
+    `tree:expectsType tree:ShapeTreeContainer`.
+1. The [=Data Registration=] instance data must be added to the RDF
+    graph of that container, and validate successfully
+    against the
+    [ecos:DataRegistrationShape](ecosystem.shex#DataRegistrationShape).
+1.  The [=Data Registration's=] properties must be set as follows:
+    * [eco:registeredBy](ecosystem.ttl#registeredBy): linked to the [=identity=]
+        of the [=authenticated agent=] that invoked the registration
+        (i.e. the [=webid=] of the [=Agent=])
+    * [eco:registeredWith](ecosystem.ttl#registeredWith): linked to the
+        [=ApplicationID=] of the [=trusted agent=] that facilitated the
+        registration, typically the [=data authorization agent=].
+    * [eco:registeredAt](ecosystem.ttl#registeredAt): the `xsd:dateTime` of
+        the registration.
+    * [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree): URI of the
+        [=shape tree=] that is being registered.
+
+The [=shape tree=] associated with the [=Data Registration=] via
 [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
-must also be assigned to the container resource of the [=Data Registration=],
+must also be assigned to [=Data Registration=] resource,
 per the instructions in [[#datareg-structure]]. This ensures that only
 instances of that particular shape tree are added to the container.
-
-The [=Data Registration=] must be added to the RDF
-graph of that container with a `<#registration>` subject, and pass validation
-against the
-[ecos:DataRegistrationShape](ecosystem.shex#DataRegistrationShape).
-
-The [=Data Registration's=] properties must be set as follows:
-
-* [eco:registeredBy](ecosystem.ttl#registeredBy): linked to the [=identity=]
-    of the [=authenticated agent=] that invoked the registration
-    (i.e. the [=webid=] of the [=Agent=])
-* [eco:registeredWith](ecosystem.ttl#registeredWith): linked to the
-    [=ApplicationID=] of the [=trusted agent=] that facilitated the
-    registration, typically the [=data authorization agent=].
-* [eco:registeredAt](ecosystem.ttl#registeredAt): the `xsd:dateTime` of
-    the registration.
-* [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree): URI of the
-    [=shape tree=] that is being registered.
 
 The [eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance)
 property is not populated until the first [=Registered Data Instance=] is
 added to the [=Data Registration=].
-
-<figure>
-  <figcaption>Instance data for a [=Data Registration=] at
-  https://alice.pod.example/data/foo/#registration</figcaption>
-  <pre highlight="turtle">
-  <#registration>
-    a eco:DataRegistration ;
-    eco:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-    eco:registeredWith &lt;https://app.example/id#agent&gt; ;
-    eco:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
-    eco:registeredShapeTree &lt;https://tree.example/commonnote#notebook-tree&gt; ;
-    </pre>
-</figure>
 
 The [=Data Registration=] container must be named in
 accordance with the instructions in [[#datareg-naming]].
@@ -1608,14 +1602,13 @@ the graph of the [=Data Registry=].
 
 ### Creating registered data instances ### {#datareg-instances}
 
-Creation of [=Registered Data Instances=] is extremely straightforward. For
-the most part, this is simply a matter of storing instance resources
-in conformance with the
-[eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree). The one
-additional operation required is to add the instance to the
+Creation of [=Registered Data Instances=] is a matter of storing instance
+resources in conformance with the
+[eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
+
+Each new [=Registered Data Instance=] must be linked to the
 [=Data Registration=] via
 [eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance).
-
 
 Data Authorization {#dataauth}
 =====================
