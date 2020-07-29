@@ -1,41 +1,41 @@
-@prefix tree: <http://www.w3.org/ns/shapetree#> .
+@prefix st: <http://www.w3.org/ns/shapetree#> .
 @prefix ecos: <https://shapes.pub/drafts/ns/solid/ecosystem#> .
 
 # Agent
 ##############################################################################
 <#profile-tree>
-  a tree:ShapeTree;
-  tree:expectsType tree:ShapeTreeContainer ;
-  tree:contains <#agent-tree> ,
-                tree:AllowAll .
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:contains <#agent-tree> ,
+                st:AllowAll .
 
 <#agent-tree>
-  a tree:ShapeTree;
-  tree:expectsType tree:ShapeTreeResource ;
-  tree:validatedBy <ecos#AgentShape> ;
-  tree:matchesUriTemplate "id" .
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <ecos#AgentShape> ;
+  st:matchesUriTemplate "id" .
 
 # Registrar
 ##############################################################################
 <#registrar-tree>
-  a tree:ShapeTree;
-  tree:expectsType tree:ShapeTreeContainer ;
-  tree:validatedBy <ecos#RegistrarShape> ;
-  tree:contains <#application-registry-set-tree> ,
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <ecos#RegistrarShape> ;
+  st:contains <#application-registry-set-tree> ,
                 <#data-registry-set-tree> ,
-                tree:AllowNone .
+                st:AllowNone .
 
 <#application-registry-set-tree>
-  a tree:ShapeTree;
-  tree:expectsType tree:ShapeTreeResource ;
-  tree:validatedBy <ecos#ApplicationRegistrySetShape> ;
-  tree:matchesUriTemplate "application" .
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <ecos#ApplicationRegistrySetShape> ;
+  st:matchesUriTemplate "application" .
 
 <#data-registry-set-tree>
-  a tree:ShapeTree;
-  tree:expectsType tree:ShapeTreeResource ;
-  tree:validatedBy <ecos#DataRegistrySetShape> ;
-  tree:matchesUriTemplate "data" .
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <ecos#DataRegistrySetShape> ;
+  st:matchesUriTemplate "data" .
 
 # Application Registry
 ##############################################################################
@@ -44,11 +44,11 @@
 # it are valid ApplicationRegistration instances.
 ##############################################################################
 <#application-registry-tree>
-  a tree:ShapeTree;
-  tree:expectsType tree:ShapeTreeContainer ;
-  tree:validatedBy <ecos#ApplicationRegistryShape> ;
-  tree:contains <#application-registration-tree> ,
-                tree:AllowNone .
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <ecos#ApplicationRegistryShape> ;
+  st:contains <#application-registration-tree> ,
+                st:AllowNone .
 
 # Application Registration
 ##############################################################################
@@ -57,10 +57,10 @@
 # whatever data internal to their operation that they like within
 ##############################################################################
 <#application-registration-tree>
-  a tree:ShapeTree;
-  tree:expectsType tree:ShapeTreeContainer ;
-  tree:validatedBy <ecos#ApplicationRegistrationShape> ;
-  tree:matchesUriTemplate "{id}" .
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <ecos#ApplicationRegistrationShape> ;
+  st:matchesUriTemplate "{id}" .
 
 # Data Registry
 ##############################################################################
@@ -69,11 +69,11 @@
 # it are valid DataRegistration instances.
 ##############################################################################
 <#data-registry-tree>
-  a tree:ShapeTree;
-  tree:expectsType tree:ShapeTreeContainer ;
-  tree:validatedBy <ecos#DataRegistryShape> ;
-  tree:contains <#data-registration-tree> ,
-                tree:AllowNone .
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <ecos#DataRegistryShape> ;
+  st:contains <#data-registration-tree> ,
+                st:AllowNone .
 
 # Data Registration
 ##############################################################################
@@ -82,7 +82,7 @@
 # whatever shape tree was registered by the eco:DataRegistration.
 ##############################################################################
 <#data-registration-tree>
-  a tree:ShapeTree;
-  tree:expectsType tree:ShapeTreeContainer ;
-  tree:validatedBy <ecos#DataRegistrationShape> ;
-  tree:matchesUriTemplate "{id}" .
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <ecos#DataRegistrationShape> ;
+  st:matchesUriTemplate "{id}" .
