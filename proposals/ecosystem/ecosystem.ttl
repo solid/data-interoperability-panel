@@ -47,6 +47,14 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:range :Application ;
   rdfs:label "Trusts for application registration"@en .
 
+:trustsForDataAuthorization
+  rdfs:subPropertyOf :trustsApplication ;
+  rdfs:comment "Links to an application the agent trusts to assist with registering and authorizing access to data"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :Agent ;
+  rdfs:range :Application ;
+  rdfs:label "Trusts for data registration and authorization"@en .
+
 # Registrar
 #############################################################################
 # Used by an Agent to organize a collection of Registry Sets
@@ -220,6 +228,33 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:domain :ApplicationRegistration ;
   rdfs:range :Application ;
   rdfs:label "Registered Application"@en .
+
+# DataRegistration Class
+#############################################################################
+# subClassof Registration used for entries in a DataRegistry
+#############################################################################
+:DataRegistration
+  rdfs:subClassOf :Registration ;
+  rdfs:comment "An individual member of a Data Registry"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Data Registration"@en .
+
+# Properties in domain of ApplicationRegistration
+#########################################################
+:registeredShapeTree
+  a rdf:property ;
+  rdfs:comment "Links to the shape tree associated with a given Data Registration"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :DataRegistration ;
+  rdfs:range tree:ShapeTree ;
+  rdfs:label "Registered Shape Tree"@en .
+
+:hasRegisteredDataInstances
+  a rdf:property ;
+  rdfs:comment "Links to instances of the registered shape tree"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :DataRegistration ;
+  rdfs:label "Registered Data Instance"@en .
 
 # Application Class
 #############################################################################
