@@ -9,7 +9,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Validate an instance of the eco:Agent class
 <#AgentShape> {
   a [ eco:Agent ] ;
-  eco:hasRegistrar IRI ;
+  eco:hasRegistrar IRI
 }
 
 ################################################################
@@ -47,8 +47,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   a [ eco:ApplicationRegistration ] ;
   eco:registeredBy IRI ;
   eco:registeredWith IRI ;
-  eco:registeredApplication IRI ;
-  eco:registeredAt xsd:dateTime
+  eco:registeredAt xsd:dateTime ;
+  eco:registeredApplication IRI 
 }
 
 # Data Registry Set
@@ -65,6 +65,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <#DataRegistryShape> {
   a [ eco:DataRegistry ] ;
   eco:hasRegistration IRI*
+}
+
+# Data Registration
+# Validate an instance of the eco:DataRegistration class
+################################################################
+<#DataRegistrationShape> {
+  a [ eco:DataRegistration ] ;
+  eco:registeredBy IRI ;
+  eco:registeredWith IRI ;
+  eco:registeredAt xsd:dateTime ;
+  eco:registeredShapeTree IRI ;
+  eco:hasRegisteredDataInstance IRI*
 }
 
 ################################################################
