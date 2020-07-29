@@ -61,6 +61,10 @@ a[href*=".tree"] {
 
 </style>
 
+<div boilerplate="copyright">
+MIT License Copyright 2019 - 2020 W3C Solid Community Group
+</div>
+
 Problems and Goals {#problems-goals}
 =====================
 
@@ -698,10 +702,10 @@ ensures that the container for the [=Application Registry=] at
 Specifically:
 
 * Any resource added to the `/applications` container must be a
-    container (`tree:expectsType tree:ShapeTreeContainer`)
+    container (`st:expectsType st:ShapeTreeContainer`)
 * An [=Application Registration=] must be stored in the
     RDF graph of that container, to successfully pass shape validation via
-    `tree:validatedBy <ecos#ApplicationRegistrationShape>`.
+    `st:validatedBy <ecos#ApplicationRegistrationShape>`.
 
 <figure>
   <figcaption>An [=Application Registration=] at
@@ -977,7 +981,7 @@ documented [[#appreg-structure]] pattern.
 Specifically, the
 [ecot:application-registration-tree](ecosystem.tree#application-registration-tree)
 stipulates that the [=Application Registration=] be a container via
-`tree:expectsType tree:ShapeTreeContainer`.
+`st:expectsType st:ShapeTreeContainer`.
 
 The [=Application Registration=] must be added to the RDF
 graph of that container with a `<#registration>` subject, and pass validation
@@ -1170,11 +1174,11 @@ Each individual [=Data Registration=] is associated with one
   [ecot:data-registry-tree](ecosystem.tree#data-registry-tree)</figcaption>
   <pre highlight="turtle">
   <#data-registry-tree>
-    a tree:ShapeTree ;
-    tree:expectsType tree:ShapeTreeContainer ;
-    tree:validatedBy &lt;ecos#DataRegistryShape&gt; ;
-    tree:contains &lt;#data-registration-tree&gt; ,
-                  tree:AllowNone .
+    a st:ShapeTree ;
+    st:expectsType st:ShapeTreeContainer ;
+    st:validatedBy &lt;ecos#DataRegistryShape&gt; ;
+    st:contains &lt;#data-registration-tree&gt; ,
+                  st:AllowNone .
   </pre>
 </figure>
 
@@ -1189,7 +1193,7 @@ validation rules for the resources inside it.
     previous section
 * It says that the container includes instances of
     [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
-* It says through `tree:AllowNone` that any resources that do not conform to
+* It says through `st:AllowNone` that any resources that do not conform to
     [ecot:data-registration-tree](ecosystem.tree#data-registration-tree) are
     not allowed. This container can *only* contain resources that conform to
     [ecot:data-registration-tree](ecosystem.tree#data-registration-tree).
@@ -1200,10 +1204,10 @@ validation rules for the resources inside it.
   </figcaption>
   <pre highlight="turtle">
   <#data-registration-tree>
-    a tree:ShapeTree ;
-    tree:expectsType tree:ShapeTreeContainer ;
-    tree:validatedBy &lt;ecos#DataRegistrationShape&gt; ;
-    tree:matchesUriTemplate "{id}" .
+    a st:ShapeTree ;
+    st:expectsType st:ShapeTreeContainer ;
+    st:validatedBy &lt;ecos#DataRegistrationShape&gt; ;
+    st:matchesUriTemplate "{id}" .
   </pre>
 </figure>
 
@@ -1214,7 +1218,7 @@ ensures that the [=Data Registry=] container at
 [=Data Registrations=].
 
 * Any resource added to the `https://alice.pod.example/data/` container must be
-    a container per `tree:expectsType tree:ShapeTreeContainer`.
+    a container per `st:expectsType st:ShapeTreeContainer`.
 * It assigns the
     [ecos:DataRegistrationShape](ecosystem.shex#DataRegistrationShape)
     to ensure there is a valid [=Data Registration=] instance in the
@@ -1249,7 +1253,7 @@ same [=Data Registration=] at
 A [=Data Registration=] can't know which specific
 [=shape tree=] will be registered in advance, so the
 [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
-can't specify the expected contents of the container with `tree:contains`.
+can't specify the expected contents of the container with `st:contains`.
 
 However, it is crucial that the contents of the [=Data Registration=] container
 be conformant instances of the [=shape tree=] specified in the
@@ -1547,10 +1551,10 @@ must be assigned to the [=Data Registration=] resource.
   </figcaption>
   <pre highlight="turtle">
   <#data-registration-tree>
-    a tree:ShapeTree ;
-    tree:expectsType tree:ShapeTreeContainer ;
-    tree:validatedBy &lt;ecos#DataRegistrationShape&gt; ;
-    tree:matchesUriTemplate "{id}" .
+    a st:ShapeTree ;
+    st:expectsType st:ShapeTreeContainer ;
+    st:validatedBy &lt;ecos#DataRegistrationShape&gt; ;
+    st:matchesUriTemplate "{id}" .
   </pre>
 </figure>
 
@@ -1558,7 +1562,7 @@ The [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
 stipulates the following:
 
 1. The [=Data Registration=] resource must be a container per
-    `tree:expectsType tree:ShapeTreeContainer`.
+    `st:expectsType st:ShapeTreeContainer`.
 1. The [=Data Registration=] instance data must be added to the RDF
     graph of that container, and validate successfully
     against the

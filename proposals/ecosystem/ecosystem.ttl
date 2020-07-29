@@ -266,3 +266,208 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:comment "A client software application in the Solid Ecosystem"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Application"@en .
+
+# Properties in domain of Application
+#########################################################
+:applicationDescription
+  a rdf:property ;
+  rdfs:comment "Description of the Application"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :Application ;
+  rdfs:range xsd:string ;
+  rdfs:label "Application Description"@en .
+
+:applicationAuthor
+  a rdf:property ;
+  rdfs:comment "Author of the Application"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :Application ;
+  rdfs:range :Agent ;
+  rdfs:label "Application Author"@en .
+
+:hasAccessNeedGroups
+  a rdf:property ;
+  rdfs:comment "Links to AccessNeedGroups"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :Application ;
+  rdfs:range :AccessNeedGroup ;
+  rdfs:label "Has Access Need Groups"@en .
+
+# AccessNeedGroup Class
+#############################################################################
+# Related to a group of AccessNeeds communicated to a given Agent
+# in the ecosystem by an Application or other Agent
+#############################################################################
+:AccessNeedGroup
+  a rdfs:Class ;
+  rdfs:comment "A grouping of access needs"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Access Need Group"@en .
+
+# Properties in domain of AccessNeedGroup
+#########################################################
+:requestsAccess
+  a rdf:property ;
+  rdfs:comment "Links to discrete Access Needs"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessNeedGroup ;
+  rdfs:label "Requests Access"@en .
+
+:hasAccessNeedDecoratorIndex
+  a rdf:property ;
+  rdfs:comment "SKOS Index for describing Access Needs"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessNeedGroup ;
+  rdfs:label "Access Need Decorator Index"@en .
+
+:authenticatesAs
+  a rdf:property ;
+  rdfs:comment "Agent or mode the Application authenticates as"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessNeedGroup ;
+  rdfs:label "Authenticates As"@en .
+
+# IRI that represents a piloted agent
+#############################################################################
+:Pilot
+  rdfs:comment "Authenticates as Agent piloting the Application"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Pilot"@en .
+
+# AccessNeed Class
+#############################################################################
+# Identifies the type of data and access level need for that data
+#############################################################################
+:AccessNeed
+a rdfs:Class ;
+rdfs:comment "Request for access to a type of data at a specified access level"@en ;
+rdfs:isDefinedBy <> ;
+rdfs:label "Access Need"@en .
+
+# Properties in domain of AccessNeed
+#########################################################
+:inAccessNeedGroup
+a rdf:property ;
+rdfs:comment "Identifies the AccessNeedGroup the AccessNeed belongs to"@en ;
+rdfs:isDefinedBy <> ;
+rdfs:domain :AccessNeed ;
+rdfs:range :AccessNeedGroup ;
+rdfs:label "In Access Need Group"@en .
+
+:requestedAccessNecessity
+a rdf:property ;
+rdfs:comment "Identifies the necessity of the AccessNeed"@en ;
+rdfs:isDefinedBy <> ;
+rdfs:domain :AccessNeed ;
+rdfs:range [ owl:oneOf ( :AccessRequired :AccessOptional ) ] ;
+rdfs:label "Requested Access Necessity"@en .
+
+:requestedAccessMode
+a rdf:property ;
+rdfs:comment "A requested acl:mode of access for an AccessNeed"@en ;
+rdfs:isDefinedBy <> ;
+rdfs:domain :AccessNeed ;
+rdfs:range [ owl:oneOf ( acl:Read acl:Write acl:Control acl:Append ) ] ;
+rdfs:label "Requested Access Mode"@en .
+
+:recursivelyAuthorize
+a rdf:property ;
+xrdfs:comment "Continue traversing shape tree hierarchy for authorization when true"@en ;
+rdfs:isDefinedBy <> ;
+rdfs:domain :AccessNeed ;
+rdfs:range xsd:boolean ;
+rdfs:label "Recursively Authorize"@en .
+
+# IRIs that represent requestedAccessLevels
+#############################################################################
+:AccessRequired
+  rdfs:comment "AccessNeed is required"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Access Required"@en .
+
+:AccessOptional
+  rdfs:comment "AccessNeed is optional"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Access Optional"@en .
+
+# AccessNeedDecoratorIndex class
+#############################################################################
+# A AccessNeedDecoratorIndex details a ShapeTree in a human-readable way.
+# It is primarily used for use cases where a ShapeTree must be described to
+# a user for purposes of authorization.
+#############################################################################
+:AccessNeedDecoratorIndex
+  a rdfs:Class ;
+  rdfs:comment "Links an index of SKOS poly-hierarchies to describe AccessNeeds in an AccessNeedGroup"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "AccessNeed Decorator Index"@en .
+
+# Properties in domain of AccessNeedDecoratorIndex
+#############################################################################
+:hasSeries
+  a rdf:property ;
+  rdfs:domain :AccessNeedDecoratorIndex ;
+  rdfs:range :AccessNeedDecoratorSeries ;
+  rdfs:comment "Links an AccessNeedDecoratorIndex to a AccessNeedDecoratorSeries"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Has Series"@en .
+
+ # AccessNeedDecoratorSeries class
+#############################################################################
+# Details a versioned set of AccessNeedDecoratorHierarchy classes
+# Primary use is grouping AccessNeedDecoratorHierarchy instances by a common
+# discriminator such as language or intended audience
+#############################################################################
+:AccessNeedDecoratorSeries
+  a rdfs:Class ;
+  rdfs:comment "Groups a set of AccessNeedDecoratorHierarchy by a given discriminator"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "AccessNeed Decorator Series"@en .
+
+# Properties in domain of AccessNeedDecoratorSeries
+#############################################################################
+:hasHierarchy
+  a rdf:property ;
+  rdfs:domain :AccessNeedDecoratorSeries ;
+  rdfs:range :AccessNeedDecoratorHierarchy ;
+  rdfs:comment "Links an AccessNeedDecoratorSeries to a AccessNeedDecoratorHierarchy"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Has Hierarchy"@en .
+
+# AccessNeedDecoratorHierarchy class
+#############################################################################
+# Details a versioned SKOS poly-hierarchy that describes
+# an AccessNeedGroup in a given language or format for an intended audience
+# (decreased cognitivty ability, etc.)
+#############################################################################
+:AccessNeedDecoratorHierarchy
+  a rdfs:Class ;
+  rdfs:comment "Describes a SKOS poly-hierarchy for purproses of describing AccessNeeds in an AccessNeedGroup"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "AccessNeed Decorator Hierarchy"@en .
+
+# Properties in domain of AccessNeedDecoratorHierarchy
+#########################################################
+:hasVersion
+  a rdf:property ;
+  rdfs:domain :AccessNeedDecoratorHierarchy ;
+  rdfs:range xsd:string ;
+  rdfs:comment "Describes the version of a AccessNeedDecoratorHierarchy"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Has Version"@en .
+
+:hasSHA256Hash
+  a rdf:property ;
+  rdfs:domain :AccessNeedDecoratorHierarchy ;
+  rdfs:range xsd:string ;
+  rdfs:comment "Describes the SHA-256 of a AccessNeedDecoratorHierarchy"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Has SHA-256 Hash"@en .
+
+:hasSkosGraph
+  a rdf:property ;
+  rdfs:domain :AccessNeedDecoratorHierarchy ;
+  rdfs:range :ShapeTreeLabel ;
+  rdfs:comment "Represents the IRI to the SKOS graph described by AccessNeedDecoratorHierarchy instance"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Has SKOS Graph"@en .
