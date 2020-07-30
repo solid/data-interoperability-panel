@@ -354,21 +354,13 @@ rdfs:domain :AccessNeed ;
 rdfs:range :AccessNeedGroup ;
 rdfs:label "In Access Need Group"@en .
 
-:requestedAccessNecessity
+:hasAccessNeedOptions
 a rdf:property ;
-rdfs:comment "Identifies the necessity of the AccessNeed"@en ;
+rdfs:comment "Identifies AccessNeedOptions associated with the AccessNeed "@en ;
 rdfs:isDefinedBy <> ;
 rdfs:domain :AccessNeed ;
-rdfs:range [ owl:oneOf ( :AccessRequired :AccessOptional ) ] ;
-rdfs:label "Requested Access Necessity"@en .
-
-:requestedAccessMode
-a rdf:property ;
-rdfs:comment "A requested acl:mode of access for an AccessNeed"@en ;
-rdfs:isDefinedBy <> ;
-rdfs:domain :AccessNeed ;
-rdfs:range [ owl:oneOf ( acl:Read acl:Write acl:Control acl:Append ) ] ;
-rdfs:label "Requested Access Mode"@en .
+rdfs:range :AccessNeedOption ;
+rdfs:label "Has Access Need Options"@en .
 
 :recursivelyAuthorize
 a rdf:property ;
@@ -378,15 +370,41 @@ rdfs:domain :AccessNeed ;
 rdfs:range xsd:boolean ;
 rdfs:label "Recursively Authorize"@en .
 
-# IRIs that represent requestedAccessLevels
+# AccessNeedOption Class
+#############################################################################
+# Represents proposed access options for a given :AccessNeed
+#############################################################################
+:AccessNeedOption
+a rdfs:Class ;
+rdfs:comment "Proposed access option for a requested access need"@en ;
+rdfs:isDefinedBy <> ;
+rdfs:label "Access Need Option"@en .
+
+:AccessNecessity
+a rdf:property ;
+rdfs:comment "Identifies the necessity of the AccessNeedOption"@en ;
+rdfs:isDefinedBy <> ;
+rdfs:domain :AccessNeedOption ;
+rdfs:range [ owl:oneOf ( :AccessRequired :AccessOptional ) ] ;
+rdfs:label "Requested Access Necessity"@en .
+
+:AccessMode
+a rdf:property ;
+rdfs:comment "A requested acl:mode of access for an AccessNeedOption"@en ;
+rdfs:isDefinedBy <> ;
+rdfs:domain :AccessNeed ;
+rdfs:range [ owl:oneOf ( acl:Read acl:Write acl:Control acl:Append ) ] ;
+rdfs:label "Requested Access Mode"@en .
+
+# IRIs AccessNeedNecessity types
 #############################################################################
 :AccessRequired
-  rdfs:comment "AccessNeed is required"@en ;
+  rdfs:comment "AccessNeedOption is required"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Required"@en .
 
 :AccessOptional
-  rdfs:comment "AccessNeed is optional"@en ;
+  rdfs:comment "AccessNeedOption is not required"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Optional"@en .
 
