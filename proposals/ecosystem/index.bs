@@ -49,6 +49,11 @@ a[href*=".ttl"] {
   border-bottom: 1px solid #339966;
 }
 
+a.vocab {
+  color: #339966;
+  border-bottom: 1px solid #339966;
+}
+
 a[href*=".shex"] {
   color: #cc2900;
   border-bottom: 1px solid #cc2900;
@@ -1663,7 +1668,7 @@ prefer read and write access.
 Because each [=Access Need=] is associated with a specific [=shape tree=],
 and [=shape trees=] provide both physical and/or virtual hierarchies, an
 [=Access Need=] can specify whether to recurse down through the [=shape tree=]
-hierarchy. Other [=Access Needs=] in the same [=Access Group=] can be added
+hierarchy. Other [=Access Needs=] in the same [=Access Need Group=] can be added
 to stop the recursion, or it can continue until it traverses through the
 remainder of the tree. This is helpful when dealing with more complex
 [=Access Needs=] like medical or financial records.
@@ -1707,7 +1712,7 @@ with the following properties:
 * [eco:inAccessNeedGroup](ecosystem.ttl#inAccessNeedGroup) - links to one
     [=Access Need Group=]
 * [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) - links to one
-    [=shapetree=]
+    [=shape tree=]
 * [eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance) -
     **optional** - links to specific [=Registered Data Instances=] of the
     [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree). Ignored if
@@ -1717,6 +1722,9 @@ with the following properties:
     Continue traversing [=shape tree=] hierarchy for authorization when `true`
 * [eco:hasAccessNeedOption](ecosystem.ttl#hasAccessNeedOption) - links to
     one or more [=Access Need Options=].
+
+Issue: Determine appropriate logic for when [=registered data instances=] can
+be included and when they must be ignored.
 
 <figure id="fig-access-need">
   <figcaption>An [=Access Need=] for the `<note:notebook-tree>`</figcaption>
@@ -1788,7 +1796,7 @@ can be invoked with the following properties:
 
 <figure id="fig-access-need-decorator-index">
   <figcaption>[=Access Need Decorator Index=] referenced in the
-  [previous figure](#fig-access-need-group)</figcaption>
+  [previous figure](#fig-access-need-decorator-index)</figcaption>
   <pre highlight="turtle">
   <#notebook-decorator-index>
       a eco:AccessNeedDecoratorIndex ;
@@ -1804,13 +1812,45 @@ can be invoked with the following properties:
       a eco:AccessNeedDecoratorVersion ;
       eco:isVersion "1.0.0" ;
       eco:hasSHA256 "98198123981273981273918273912738" ;
-      eco:hasDecoratorResource <notebook-decorator-en-1.0> .
+      eco:hasDecorator <notebook-decorator-en-1.0> .
 
   <#en-v11>
       a eco:AccessNeedDecoratorVersion ;
       eco:isVersion "1.1.0" ;
       eco:hasSHA256 "12312312371273712731872371273712" ;
-      eco:hasDecoratorResource <notebook-decorator-en-1.1> .
+      eco:hasDecorator <notebook-decorator-en-1.1> .
+  </pre>
+</figure>
+
+An [=Access Need Decorator=] is represented by the class
+[eco:AccessNeedDecorator](ecosystem.ttl#AccessNeedDecorator).
+[=Access Need Decorators=] provide a reason to the [=Agent=] as to why
+a specific [=Access Need=] / [=Access Need Option=] pairing has been
+requested of them. An [=Access Need Decorator=] can be invoked with the
+following properties:
+
+* [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) - Links to
+    [=shape tree=] associated with an [=Access Need=]
+* [eco:hasAccessNeedOption](ecosystem.ttl#hasAccessNeedOption) - Links to
+    [=Access Need Option=] associated with an [=Access Need=]
+* <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">skos:prefLabel</a> -
+    Description of why access to the [=shape tree=] with the details included in the [=Access Need Option=].
+
+<figure id="fig-access-need-decorator">
+  <figcaption>[=Access Need Decorator=] referenced in the
+  [previous figure](#fig-access-need-decorator-index)</figcaption>
+  <pre highlight="turtle">
+  <#notebook-read-required>
+    a eco:AccessNeedDecorator ;
+    eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
+    eco:hasAccessNeedOption &lt;nevernote:read-required&gt; ;
+    skos:prefLabel "Notebooks can be presented along with a list of their contents"@en .
+
+  <#notebook-read-write>
+    a eco:AccessNeedDecorator ;
+    eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
+    eco:hasAccessNeedOption &lt;nevernote:read-write-required&gt; ;
+    skos:prefLabel "Notebooks and their contents can be presented and managed"@en .
   </pre>
 </figure>
 
