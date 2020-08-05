@@ -1283,7 +1283,7 @@ in the [=ecosystem=] are based on data furnished through the
 [=Data Registry=].
 
 [=Agents=] grant different levels of access to other [=Agents=] on a
-case-by-case basis through [[#dataauth]]. Consequently, a signficant amount
+case-by-case basis through [[#authz]]. Consequently, a signficant amount
 of flexibility is needed in permissioning [=Data Registrations=] and
 [=Registered Data Instances=], while at the same time avoiding permission
 swamps that become unwieldy to manage.
@@ -1502,7 +1502,7 @@ This section explains the mechanics of those operations.
 Note: Managing [=Data Registrations=] and the [=Registered Data Instances=]
 contained within them is inextricably linked to permissioning the data
 for effective use and secure collaboration. This is covered at length
-in [[#dataauth]].
+in [[#authz]].
 
 ### Enlisting the help of a trusted agent ### {#datareg-trustedagent}
 
@@ -1614,10 +1614,8 @@ Each new [=Registered Data Instance=] must be linked to the
 [=Data Registration=] via
 [eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance).
 
-Data Authorization {#dataauth}
+Data Authorization {#authz}
 =====================
-
-Issue: Add introduction section
 
 * Patterns of authorization
     * Access for other agents / people
@@ -1632,11 +1630,191 @@ Boils down to:
 * keep or update a record of the access grant
 * make the grantee aware of the access grant
 
-## Expressing access needs ## {#dataauth-expressing}
+## Expressing access needs ## {#authz-expressing}
 
-TODO
+[=Agents=] or [=Applications=] in the [=ecosystem=] often require access to
+data controlled by another [=Agent=]. A common way to explain and communicate
+data needs between participants in the [=ecosystem=] is required.
 
-## Presenting access needs to the agent ## {#dataauth-presenting}
+An [=Access Need=] is a structured way to express a specific data requirement
+in the [=ecosystem=].
+
+An [=Access Need Group=] is a collection of related
+[=Access Needs=] that a given [=Agent=] and/or [=Application=] uses when
+communicating data needs to other [=Agents=].
+
+[=Agents=] receiving an [=Access Need Group=] from another participant
+in the [=ecosystem=] will determine which data in their [=Data Registries=]
+applies, and then make a determination as to what access will be furnished
+to it, typically through an intuitive user interface.
+
+Each [=Access Need=] is associated with a specific type of data,
+represented by a [=shape tree=]. A given [=Access Need=] can then represent
+a request for any [=registered data instances=] the [=Agent=] has of that
+type, or for specific [=registered data instances=] if it associates them
+with the [=Access Need=].
+
+Each [=Access Need=] has one or more [=Access Need Options=], each of which
+pairs one or more [=access modes=] with a necessity level; *required* or
+*optional*. For example, an [=Access Need=] for [=shape tree=] `N` can say
+that it requires read access to instances of `N`, but would
+prefer read and write access.
+
+Because each [=Access Need=] is associated with a specific [=shape tree=],
+and [=shape trees=] provide both physical and/or virtual hierarchies, an
+[=Access Need=] can specify whether to recurse down through the [=shape tree=]
+hierarchy. Other [=Access Needs=] in the same [=Access Group=] can be added
+to stop the recursion, or it can continue until it traverses through the
+remainder of the tree. This is helpful when dealing with more complex
+[=Access Needs=] like medical or financial records.
+
+Explaining *why* the access is needed is one of the most important
+elements when communicating [=Access Needs=]. [=Access Need Decorators=]
+provide descriptions for every [=Access Need=] / [=Access Need Option=]
+pairing, so that every [=Access Need=] in an [=Access Need Grouping=] has
+a corresponding explanation on why it is being requested and how it
+will be used. [=Access Need Decorators=] are designed to support different
+languages and accessibility needs.
+
+### Data Model ### {#authz-datamodel}
+
+An [=Access Need Group=] is represented by the class
+[eco:AccessNeedGroup](ecosystem.ttl#AccessNeedGroup) and can be invoked
+with the following properties:
+
+* [eco:requestsAccess](ecosystem.ttl#requestsAccess) - links to one or more
+    [=Access Needs=].
+* [eco:authenticatesAs](ecosystem.ttl#authenticatesAs) - [=Agent=] or
+    [eco:Pilot](ecosystem.ttl#Pilot).
+* [eco:hasAccessNeedDecoratorIndex](ecosystem.ttl#hasAccessNeedDecoratorIndex) -
+    links to an [=Access Need Decorator Index=] of [=Access Need Decorators=]
+
+<figure id="fig-access-need-group">
+  <figcaption>An [=Access Need Group=] linking to [=Access Needs=]</figcaption>
+  <pre highlight="turtle">
+  <#notebook-collaboration-group>
+    a eco:AccessNeedGroup ;
+    eco:authenticatesAs &lt;https://nevernote.example/profile/id#agent&gt; ;
+    eco:requestsAccess &lt;#notebook&gt; , &lt;#note&gt; ;
+    eco:hasAccessNeedDecoratorIndex &lt;decorator.ttl#notebook-decorator-index&gt; .
+  </pre>
+</figure>
+
+An [=Access Need=] is represented by the class
+[eco:AccessNeed](ecosystem.ttl#AccessNeed) and can be invoked
+with the following properties:
+
+* [eco:inAccessNeedGroup](ecosystem.ttl#inAccessNeedGroup) - links to one
+    [=Access Need Group=]
+* [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) - links to one
+    [=shapetree=]
+* [eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance) -
+    **optional** - links to specific [=Registered Data Instances=] of the
+    [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree). Ignored if
+    the [=Access Need=] is not linked directly to an [=Access Need Group=],
+    meaning it was arrived at by recursing through a [=shape tree=].
+* [eco:recursivelyAuthorize](ecosystem.ttl#recursivelyAuthorize) -
+    Continue traversing [=shape tree=] hierarchy for authorization when `true`
+* [eco:hasAccessNeedOption](ecosystem.ttl#hasAccessNeedOption) - links to
+    one or more [=Access Need Options=].
+
+<figure id="fig-access-need">
+  <figcaption>An [=Access Need=] for the `<note:notebook-tree>`</figcaption>
+  <pre highlight="turtle">
+  <#notebook>
+      a eco:AccessNeed ;
+      eco:inAccessNeedGroup &lt;#notebook-collaboration-group&gt; ;
+      eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
+      eco:recursivelyAuthorize true ;
+      eco:hasAccessNeedOption &lt;#read-required&gt; , &lt;#read-write-optional&gt; .
+  </pre>
+</figure>
+
+An [=Access Need Option=] is represented by the class
+[eco:AccessNeedOption](ecosystem.ttl#AccessNeedOption) and can be invoked
+with the following properties:
+
+* [eco:AccessNecessity](ecosystem.ttl#AccessNecessity) - Can be
+    [eco:AccessRequired](ecosystem.ttl#AccessRequired) or
+    [eco:AccessOptional](ecosystem.ttl#AccessOptional)
+* [eco:AccessMode](ecosystem.ttl#AccessMode) - Links to one or more
+    [=access modes=]: `acl:Read`, `acl:Write`,
+    `acl:Append`, `acl:Control`
+
+<figure id="fig-access-need-option">
+  <figcaption>[=Access Need Options=] referenced in the
+  [previous figure](#fig-access-need)</figcaption>
+  <pre highlight="turtle">
+  &lt;#read-required&gt;
+      a eco:AccessNeedOption ;
+      eco:AccessNecessity eco:Required ;
+      eco:AccessMode acl:Read .
+
+  &lt;#read-write-optional&gt;
+      a eco:AccessNeedOption ;
+      eco:AccessNecessity eco:Optional ;
+      eco:AccessMode acl:Read acl:Write .
+  </pre>
+</figure>
+
+An [=Access Need Decorator Index=] is represented by the class
+[eco:AccessNeedDecoratorIndex](ecosystem.ttl#AccessNeedDecoratorIndex) and
+can be invoked with the following properties:
+
+* [eco:defaultLanguage](ecosystem.ttl#defaultLanguage) - Default language
+    code to use when not otherwise specified (e.g. `en`)
+* [eco:hasSeries](ecosystem.ttl#hasSeries) - links to one
+    [=Access Need Decorator Series=].
+
+An [=Access Need Decorator Series=] is represented by the class
+[eco:AccessNeedDecoratorSeries](ecosystem.ttl#AccessNeedDecoratorSeries) and
+can be invoked with the following properties:
+
+* [eco:usesLanguage](ecosystem.ttl#usesLanguage) - Language code used
+    by any [=Access Need Decorator Versions=] (e.g. `en`)
+* [eco:hasVersion](ecosystem.ttl#hasVersion) - links to one or more
+    [=Access Need Decorator Versions=].
+
+An [=Access Need Decorator Version=] is represented by the class
+[eco:AccessNeedDecoratorVersion](ecosystem.ttl#AccessNeedDecoratorVersion) and
+can be invoked with the following properties:
+
+* [eco:isVersion](ecosystem.ttl#isVersion) - Semantic version of the
+    [=Access Need Decorator Version=] (e.g. `1.1.0`)
+* [eco:hasSHA256](ecosystem.ttl#hasSHA256) - Describes the SHA-256 of
+    a [=Access Need Decorator Version=].
+* [eco:hasDecorator](ecosystem.ttl#hasDecorator) - Represents the IRI to
+    the SKOS graph described by the [=Access Need Decorator Version=]
+
+<figure id="fig-access-need-decorator-index">
+  <figcaption>[=Access Need Decorator Index=] referenced in the
+  [previous figure](#fig-access-need-group)</figcaption>
+  <pre highlight="turtle">
+  <#notebook-decorator-index>
+      a eco:AccessNeedDecoratorIndex ;
+      eco:defaultLanguage "en" ;
+      eco:hasSeries <#series-en> .
+
+  <#series-en>
+      a eco:AccessNeedDecoratorSeries ;
+      eco:usesLanguage "en" ;
+      eco:hasVersion <#en-v10>, <#en-v11> .
+
+  <#en-v10>
+      a eco:AccessNeedDecoratorVersion ;
+      eco:isVersion "1.0.0" ;
+      eco:hasSHA256 "98198123981273981273918273912738" ;
+      eco:hasDecoratorResource <notebook-decorator-en-1.0> .
+
+  <#en-v11>
+      a eco:AccessNeedDecoratorVersion ;
+      eco:isVersion "1.1.0" ;
+      eco:hasSHA256 "12312312371273712731872371273712" ;
+      eco:hasDecoratorResource <notebook-decorator-en-1.1> .
+  </pre>
+</figure>
+
+## Presenting access needs to the agent ## {#authz-presenting}
 
 TODO
 
@@ -1644,25 +1822,25 @@ TODO
 
 TODO
 
-## Permissioning and managing access grants ## {#dataauth-permissioning}
+## Permissioning and managing access grants ## {#authz-permissioning}
 
 TODO
 
-## Patterns for making requests and getting access ## {#dataauth-protocol}
+## Patterns for making requests and getting access ## {#authz-protocol}
 
-### Access for other agents / people ### {#dataauth-agentpattern}
-
-TODO
-
-### Access for piloted applications ### {#dataauth-pilotpattern}
+### Access for other agents / people ### {#authz-agentpattern}
 
 TODO
 
-### Access for services (autonomous) ### {#dataauth-servicepattern}
+### Access for piloted applications ### {#authz-pilotpattern}
 
 TODO
 
-### Communicating access grants ### {#dataauth-communicating}
+### Access for services (autonomous) ### {#authz-servicepattern}
+
+TODO
+
+### Communicating access grants ### {#authz-communicating}
 
 TODO
 
@@ -1960,6 +2138,20 @@ Associated with resources through the
 A <dfn>Registered Data Instance</dfn> is a unique, stored instance of a
 particular type of data conforming to a given [=shape tree=]. Each registered
 data instance is contained within a given [=Data Registration=].
+
+An <dfn>Access Need</dfn> is...
+
+An <dfn>Access Need Group</dfn> is...
+
+An <dfn>Access Need Option</dfn> is...
+
+An <dfn>Access Need Decorator</dfn> is...
+
+An <dfn>Access Need Decorator Index</dfn> is...
+
+An <dfn>Access Need Decorator Series</dfn> is...
+
+An <dfn>Access Need Decorator Version</dfn> is...
 
 
 Use Case Environment {#environment}
