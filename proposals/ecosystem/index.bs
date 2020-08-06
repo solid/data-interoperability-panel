@@ -1638,8 +1638,9 @@ Boils down to:
 ## Expressing access needs ## {#authz-expressing}
 
 [=Agents=] or [=Applications=] in the [=ecosystem=] often require access to
-data controlled by another [=Agent=]. A common way to explain and communicate
-data needs between participants in the [=ecosystem=] is required.
+data controlled by another [=Agent=]. Consequently, a common way to explain
+and communicate data needs between participants in the [=ecosystem=] is
+required.
 
 An [=Access Need=] is a structured way to express a specific data requirement
 in the [=ecosystem=].
@@ -1649,21 +1650,20 @@ An [=Access Need Group=] is a collection of related
 communicating data needs to other [=Agents=].
 
 [=Agents=] receiving an [=Access Need Group=] from another participant
-in the [=ecosystem=] will determine which data in their [=Data Registries=]
-applies, and then make a determination as to what access will be furnished
-to it, typically through an intuitive user interface.
+in the [=ecosystem=] will lookup applicable data in their [=Data Registries=],
+and decide what access will be provided to it, typically through an
+intuitive user interface.
 
 Each [=Access Need=] is associated with a specific type of data,
 represented by a [=shape tree=]. A given [=Access Need=] can then represent
-a request for any [=registered data instances=] the [=Agent=] has of that
-type, or for specific [=registered data instances=] if it associates them
-with the [=Access Need=].
+a request for any [=registered data instance=] the [=Agent=] has of that
+type, or for specific [=registered data instances=] that are associated with
+the [=Access Need=].
 
-Each [=Access Need=] has one or more [=Access Need Options=], each of which
-pairs one or more [=access modes=] with a necessity level; *required* or
+Each [=Access Need=] has one or more [=access modes=], and a property that
+indicates the necessity of the [=Access Need=]; *required* or
 *optional*. For example, an [=Access Need=] for [=shape tree=] `N` can say
-that it requires read access to instances of `N`, but would
-prefer read and write access.
+that it requires read access to instances of `N`.
 
 Because each [=Access Need=] is associated with a specific [=shape tree=],
 and [=shape trees=] provide both physical and/or virtual hierarchies, an
@@ -1675,11 +1675,11 @@ remainder of the tree. This is helpful when dealing with more complex
 
 Explaining *why* the access is needed is one of the most important
 elements when communicating [=Access Needs=]. [=Access Need Decorators=]
-provide descriptions for every [=Access Need=] / [=Access Need Option=]
-pairing, so that every [=Access Need=] in an [=Access Need Grouping=] has
-a corresponding explanation on why it is being requested and how it
-will be used. [=Access Need Decorators=] are designed to support different
-languages and accessibility needs.
+explain why access is needed and how that access will be used for a given
+[=Access Need Group=], and every [=Access Need=] inside it. This helps
+to ensure [=Agents=] make smart and informed authorization decisions.
+[=Access Need Decorators=] are designed to support different languages
+and accessibility needs.
 
 ### Data Model ### {#authz-datamodel}
 
@@ -1701,7 +1701,7 @@ with the following properties:
     a eco:AccessNeedGroup ;
     eco:authenticatesAs &lt;https://nevernote.example/profile/id#agent&gt; ;
     eco:requestsAccess &lt;#notebook&gt; , &lt;#note&gt; ;
-    eco:hasAccessNeedDecoratorIndex &lt;decorator.ttl#notebook-decorator-index&gt; .
+    eco:hasAccessNeedDecoratorIndex &lt;notebook-access-decorator-index&gt; .
   </pre>
 </figure>
 
@@ -1720,8 +1720,12 @@ with the following properties:
     meaning it was arrived at by recursing through a [=shape tree=].
 * [eco:recursivelyAuthorize](ecosystem.ttl#recursivelyAuthorize) -
     Continue traversing [=shape tree=] hierarchy for authorization when `true`
-* [eco:hasAccessNeedOption](ecosystem.ttl#hasAccessNeedOption) - links to
-    one or more [=Access Need Options=].
+* [eco:AccessNecessity](ecosystem.ttl#AccessNecessity) - Can be
+    [eco:AccessRequired](ecosystem.ttl#AccessRequired) or
+    [eco:AccessOptional](ecosystem.ttl#AccessOptional)
+* [eco:AccessMode](ecosystem.ttl#AccessMode) - Links to one or more
+    [=access modes=]: `acl:Read`, `acl:Write`,
+    `acl:Append`, `acl:Control`
 
 Issue: Determine appropriate logic for when [=registered data instances=] can
 be included and when they must be ignored.
@@ -1734,34 +1738,8 @@ be included and when they must be ignored.
       eco:inAccessNeedGroup &lt;#notebook-collaboration-group&gt; ;
       eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
       eco:recursivelyAuthorize true ;
-      eco:hasAccessNeedOption &lt;#read-required&gt; , &lt;#read-write-optional&gt; .
-  </pre>
-</figure>
-
-An [=Access Need Option=] is represented by the class
-[eco:AccessNeedOption](ecosystem.ttl#AccessNeedOption) and can be invoked
-with the following properties:
-
-* [eco:AccessNecessity](ecosystem.ttl#AccessNecessity) - Can be
-    [eco:AccessRequired](ecosystem.ttl#AccessRequired) or
-    [eco:AccessOptional](ecosystem.ttl#AccessOptional)
-* [eco:AccessMode](ecosystem.ttl#AccessMode) - Links to one or more
-    [=access modes=]: `acl:Read`, `acl:Write`,
-    `acl:Append`, `acl:Control`
-
-<figure id="fig-access-need-option">
-  <figcaption>[=Access Need Options=] referenced in the
-  [previous figure](#fig-access-need)</figcaption>
-  <pre highlight="turtle">
-  &lt;#read-required&gt;
-      a eco:AccessNeedOption ;
-      eco:AccessNecessity eco:Required ;
-      eco:AccessMode acl:Read .
-
-  &lt;#read-write-optional&gt;
-      a eco:AccessNeedOption ;
       eco:AccessNecessity eco:Optional ;
-      eco:AccessMode acl:Read acl:Write .
+      eco:AccessMode acl:Read, acl:Write .
   </pre>
 </figure>
 
@@ -1791,8 +1769,8 @@ can be invoked with the following properties:
     [=Access Need Decorator Version=] (e.g. `1.1.0`)
 * [eco:hasSHA256](ecosystem.ttl#hasSHA256) - Describes the SHA-256 of
     a [=Access Need Decorator Version=].
-* [eco:hasDecorator](ecosystem.ttl#hasDecorator) - Represents the IRI to
-    the SKOS graph described by the [=Access Need Decorator Version=]
+* [eco:hasDecoratorResource](ecosystem.ttl#hasDecoratorResource) - Represents
+    the IRI to the SKOS graph described by the [=Access Need Decorator Version=]
 
 <figure id="fig-access-need-decorator-index">
   <figcaption>[=Access Need Decorator Index=] referenced in the
@@ -1801,56 +1779,73 @@ can be invoked with the following properties:
   <#notebook-decorator-index>
       a eco:AccessNeedDecoratorIndex ;
       eco:defaultLanguage "en" ;
-      eco:hasSeries <#series-en> .
+      eco:hasSeries &lt;#series-en&gt; .
 
   <#series-en>
       a eco:AccessNeedDecoratorSeries ;
       eco:usesLanguage "en" ;
-      eco:hasVersion <#en-v10>, <#en-v11> .
+      eco:hasVersion &lt;#en-v10&gt;, &lt;#en-v11&gt; .
 
   <#en-v10>
       a eco:AccessNeedDecoratorVersion ;
       eco:isVersion "1.0.0" ;
       eco:hasSHA256 "98198123981273981273918273912738" ;
-      eco:hasDecorator <notebook-decorator-en-1.0> .
+      eco:hasDecoratorResource &lt;notebook-decorator-en-1.0&gt; .
 
   <#en-v11>
       a eco:AccessNeedDecoratorVersion ;
       eco:isVersion "1.1.0" ;
       eco:hasSHA256 "12312312371273712731872371273712" ;
-      eco:hasDecorator <notebook-decorator-en-1.1> .
+      eco:hasDecoratorResource &lt;notebook-decorator-en-1.1&gt; .
   </pre>
 </figure>
 
+An [=Access Need Group Decorator=] is represented by the class
+[eco:AccessNeedGroupDecorator](ecosystem.ttl#AccessNeedGroupDecorator).
+
 An [=Access Need Decorator=] is represented by the class
 [eco:AccessNeedDecorator](ecosystem.ttl#AccessNeedDecorator).
-[=Access Need Decorators=] provide a reason to the [=Agent=] as to why
-a specific [=Access Need=] / [=Access Need Option=] pairing has been
-requested of them. An [=Access Need Decorator=] can be invoked with the
+[=Access Need Group Decorators=] and [=Access Need Decorators=]
+provide a reason to the [=Agent=] as to why
+a specific [=Access Need Group=] and associated [=Access Needs=] have been
+requested of them.
+
+An [=Access Need Group Decorator=] can be invoked with the
 following properties:
 
-* [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) - Links to
-    [=shape tree=] associated with an [=Access Need=]
-* [eco:hasAccessNeedOption](ecosystem.ttl#hasAccessNeedOption) - Links to
-    [=Access Need Option=] associated with an [=Access Need=]
-* <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">skos:prefLabel</a> -
-    Description of why access to the [=shape tree=] with the details included in the [=Access Need Option=].
+* [eco:hasAccessNeedGroup](ecosystem.ttl#hasAccessNeedGroup) - Links to
+    the [=Access Need Group=] being described
+* <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">
+    skos:prefLabel</a> - Short label (title) for the [=Access Need Group=].
+* <a href="http://www.w3.org/2004/02/skos/core#definition" class="vocab">
+    skos:definition</a> - Description of what the [=Access Need Group=]
+    is asking for overall.
 
-<figure id="fig-access-need-decorator">
-  <figcaption>[=Access Need Decorator=] referenced in the
+An [=Access Need Decorator=] can be invoked with the
+following properties:
+
+* [eco:requestsAccess](ecosystem.ttl#requestsAccess) - Links to
+    the [=Access Need=] being described
+* <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">
+    skos:prefLabel</a> - Description of why the [=Access Need=] is being
+    requested by the application.
+
+<figure id="fig-access-need-decorators">
+  <figcaption>[=Access Need Group Decorator=] and [=Access Need Decorator=]
+  referenced in the
   [previous figure](#fig-access-need-decorator-index)</figcaption>
   <pre highlight="turtle">
-  <#notebook-read-required>
-    a eco:AccessNeedDecorator ;
-    eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
-    eco:hasAccessNeedOption &lt;nevernote:read-required&gt; ;
-    skos:prefLabel "Notebooks can be presented along with a list of their contents"@en .
+  <#notebook-collaboration>
+    a eco:AccessNeedGroupDecorator ;
+    eco:hasAccessNeedGroup <#notebook-collaboration-group> ;
+    skos:prefLabel "Collaborate on notes"@en .
+    skos:definition "Explaining why this group needs access" .
 
-  <#notebook-read-write>
+  <#notebook-read>
     a eco:AccessNeedDecorator ;
+    eco:hasAccessNeedGroup <#notebook-collaboration-group> ;
     eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
-    eco:hasAccessNeedOption &lt;nevernote:read-write-required&gt; ;
-    skos:prefLabel "Notebooks and their contents can be presented and managed"@en .
+    skos:prefLabel "Notebooks can be presented along with a list of their contents"@en .
   </pre>
 </figure>
 

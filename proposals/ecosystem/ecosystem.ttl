@@ -239,13 +239,12 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Data Registration"@en .
 
-# Properties in domain of ApplicationRegistration
+# Properties in domain of DataRegistration
 #########################################################
 :registeredShapeTree
   a rdf:property ;
   rdfs:comment "Links to the shape tree associated with a given Data Registration"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :DataRegistration ;
   rdfs:range tree:ShapeTree ;
   rdfs:label "Registered Shape Tree"@en .
 
@@ -287,9 +286,9 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:range :Agent ;
   rdfs:label "Application Author"@en .
 
-:hasAccessNeedGroups
+:hasAccessNeedGroup
   a rdf:property ;
-  rdfs:comment "Links to AccessNeedGroups"@en ;
+  rdfs:comment "Links to AccessNeedGroup"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :Application ;
   rdfs:range :AccessNeedGroup ;
@@ -312,7 +311,6 @@ rdfs:label "Solid ecosystem terms"@en .
   a rdf:property ;
   rdfs:comment "Links to discrete Access Needs"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessNeedGroup ;
   rdfs:range :AccessNeed ;
   rdfs:label "Requests Access"@en .
 
@@ -357,14 +355,6 @@ rdfs:domain :AccessNeed ;
 rdfs:range :AccessNeedGroup ;
 rdfs:label "In Access Need Group"@en .
 
-:hasAccessNeedOption
-a rdf:property ;
-rdfs:comment "Identifies AccessNeedOptions associated with the AccessNeed "@en ;
-rdfs:isDefinedBy <> ;
-rdfs:domain :AccessNeed ;
-rdfs:range :AccessNeedOption ;
-rdfs:label "Has Access Need Options"@en .
-
 :recursivelyAuthorize
 a rdf:property ;
 xrdfs:comment "Continue traversing shape tree hierarchy for authorization when true"@en ;
@@ -373,27 +363,17 @@ rdfs:domain :AccessNeed ;
 rdfs:range xsd:boolean ;
 rdfs:label "Recursively Authorize"@en .
 
-# AccessNeedOption Class
-#############################################################################
-# Represents proposed access options for a given :AccessNeed
-#############################################################################
-:AccessNeedOption
-a rdfs:Class ;
-rdfs:comment "Proposed access option for a requested access need"@en ;
-rdfs:isDefinedBy <> ;
-rdfs:label "Access Need Option"@en .
-
 :AccessNecessity
 a rdf:property ;
-rdfs:comment "Identifies the necessity of the AccessNeedOption"@en ;
+rdfs:comment "Identifies the necessity of the AccessNeed"@en ;
 rdfs:isDefinedBy <> ;
-rdfs:domain :AccessNeedOption ;
+rdfs:domain :AccessNeed ;
 rdfs:range [ owl:oneOf ( :AccessRequired :AccessOptional ) ] ;
 rdfs:label "Requested Access Necessity"@en .
 
 :AccessMode
 a rdf:property ;
-rdfs:comment "A requested acl:mode of access for an AccessNeedOption"@en ;
+rdfs:comment "A requested acl:mode of access for an AccessNeed"@en ;
 rdfs:isDefinedBy <> ;
 rdfs:domain :AccessNeed ;
 rdfs:range [ owl:oneOf ( acl:Read acl:Write acl:Control acl:Append ) ] ;
@@ -402,12 +382,12 @@ rdfs:label "Requested Access Mode"@en .
 # IRIs AccessNeedNecessity types
 #############################################################################
 :AccessRequired
-  rdfs:comment "AccessNeedOption is required"@en ;
+  rdfs:comment "AccessNeed is required"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Required"@en .
 
 :AccessOptional
-  rdfs:comment "AccessNeedOption is not required"@en ;
+  rdfs:comment "AccessNeed is not required"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Optional"@en .
 
@@ -436,7 +416,7 @@ rdfs:label "Requested Access Mode"@en .
 :defaultLanguage
   a rdf:property ;
   rdfs:domain :AccessNeedDecoratorIndex ;
-  rdfs:range xsd:string ;
+  rdfs:range xsd:lang ;
   rdfs:comment "Default language code"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Default Language"@en .
@@ -468,7 +448,7 @@ rdfs:label "Requested Access Mode"@en .
 :usesLanguage
   a rdf:property ;
   rdfs:domain :AccessNeedDecoratorSeries ;
-  rdfs:range xsd:string ;
+  rdfs:range xsd:lang ;
   rdfs:comment "Language code in use"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Uses Language"@en .
@@ -502,10 +482,9 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Has SHA-256 Hash"@en .
 
-:hasDecorator
+:hasDecoratorResource
   a rdf:property ;
   rdfs:domain :AccessNeedDecoratorVersion ;
-  rdfs:range :ShapeTreeLabel ;
   rdfs:comment "Represents the IRI to the SKOS graph described by AccessNeedDecoratorVersion instance"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Has Decorator Resource"@en .
@@ -517,6 +496,6 @@ rdfs:label "Requested Access Mode"@en .
 #############################################################################
 :AccessNeedDecorator
   a rdfs:Class ;
-  rdfs:comment "Describes the association between a SKOS label and an Access Need and AccessNeedOption pairing"@en ;
+  rdfs:comment "Describes the association between a SKOS label and an Access Need"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "AccessNeed Decorator"@en .
