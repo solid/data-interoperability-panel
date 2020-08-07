@@ -319,7 +319,7 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:comment "SKOS Index for describing Access Needs"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :AccessNeedGroup ;
-  rdfs:label "Access Need Decorator Index"@en .
+  rdfs:label "Access Decorator Index"@en .
 
 :authenticatesAs
   a rdf:property ;
@@ -367,7 +367,6 @@ rdfs:label "Recursively Authorize"@en .
 a rdf:property ;
 rdfs:comment "Identifies the necessity of the AccessNeed"@en ;
 rdfs:isDefinedBy <> ;
-rdfs:domain :AccessNeed ;
 rdfs:range [ owl:oneOf ( :AccessRequired :AccessOptional ) ] ;
 rdfs:label "Requested Access Necessity"@en .
 
@@ -391,11 +390,10 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Optional"@en .
 
-# AccessNeedDecoratorIndex class
+# AccessDecoratorIndex class
 #############################################################################
-# An AccessNeedDecoratorIndex details AccessNeeds in a human-readable way.
-# It is primarily used for use cases where a ShapeTree must be described to
-# a user for purposes of authorization.
+# An AccessDecoratorIndex details AccessNeeds and AccessNeedGroups
+# in a human-readable way for the purposes of authorization.
 #############################################################################
 :AccessNeedDecoratorIndex
   a rdfs:Class ;
@@ -403,99 +401,131 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "AccessNeed Decorator Index"@en .
 
-# Properties in domain of AccessNeedDecoratorIndex
+# Properties in domain of AccessDecoratorIndex
 #############################################################################
 :hasSeries
   a rdf:property ;
-  rdfs:domain :AccessNeedDecoratorIndex ;
-  rdfs:range :AccessNeedDecoratorSeries ;
-  rdfs:comment "Links an AccessNeedDecoratorIndex to a AccessNeedDecoratorSeries"@en ;
+  rdfs:domain :AccessDecoratorIndex ;
+  rdfs:range :AccessDecoratorSeries ;
+  rdfs:comment "Links an AccessDecoratorIndex to a AccessDecoratorSeries"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Has Series"@en .
 
 :defaultLanguage
   a rdf:property ;
-  rdfs:domain :AccessNeedDecoratorIndex ;
+  rdfs:domain :AccessDecoratorIndex ;
   rdfs:range xsd:lang ;
   rdfs:comment "Default language code"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Default Language"@en .
 
- # AccessNeedDecoratorSeries class
+ # AccessDecoratorSeries class
 #############################################################################
-# Details a versioned set of AccessNeedDecoratorVersion classes
-# Primary use is grouping AccessNeedDecoratorVersion instances by a common
+# Details a versioned set of AccessDecoratorVersion classes
+# Primary use is grouping AccessDecoratorVersion instances by a common
 # discriminator such as language or intended audience
 #############################################################################
-:AccessNeedDecoratorSeries
+:AccessDecoratorSeries
   a rdfs:Class ;
-  rdfs:comment "Groups a set of AccessNeedDecoratorVersion by a given discriminator"@en ;
+  rdfs:comment "Groups a set of AccessDecoratorVersion by a given discriminator"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "AccessNeed Decorator Series"@en .
 
-# Properties in domain of AccessNeedDecoratorSeries
+# Properties in domain of AccessDecoratorSeries
 #############################################################################
 :hasVersion
   a rdf:property ;
-  rdfs:domain :AccessNeedDecoratorSeries ;
-  rdfs:range :AccessNeedDecoratorVersion ;
-  rdfs:comment "Links an AccessNeedDecoratorSeries to a AccessNeedDecoratorVersion"@en ;
+  rdfs:domain :AccessDecoratorSeries ;
+  rdfs:range :AccessDecoratorVersion ;
+  rdfs:comment "Links an AccessDecoratorSeries to a AccessDecoratorVersion"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Has Version"@en .
 
-# Properties in domain of AccessNeedDecoratorSeries
+# Properties in domain of AccessDecoratorSeries
 #############################################################################
 :usesLanguage
   a rdf:property ;
-  rdfs:domain :AccessNeedDecoratorSeries ;
+  rdfs:domain :AccessDecoratorSeries ;
   rdfs:range xsd:lang ;
   rdfs:comment "Language code in use"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Uses Language"@en .
 
-# AccessNeedDecoratorVersion class
+# AccessDecoratorVersion class
 #############################################################################
 # Details a versioned SKOS poly-hierarchy that describes
 # an AccessNeedGroup in a given language or format for an intended audience
 #############################################################################
-:AccessNeedDecoratorVersion
+:AccessDecoratorVersion
   a rdfs:Class ;
   rdfs:comment "Describes a SKOS poly-hierarchy for purproses of describing AccessNeeds in an AccessNeedGroup"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "AccessNeed Decorator Version"@en .
 
-# Properties in domain of AccessNeedDecoratorVersion
+# Properties in domain of AccessDecoratorVersion
 #########################################################
 :isVersion
   a rdf:property ;
-  rdfs:domain :AccessNeedDecoratorVersion ;
+  rdfs:domain :AccessDecoratorVersion ;
   rdfs:range xsd:string ;
-  rdfs:comment "Describes the semantic version of a AccessNeedDecoratorVersion"@en ;
+  rdfs:comment "Describes the semantic version of a AccessDecoratorVersion"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Is Version"@en .
 
 :hasSHA256Hash
   a rdf:property ;
-  rdfs:domain :AccessNeedDecoratorVersion ;
+  rdfs:domain :AccessDecoratorVersion ;
   rdfs:range xsd:string ;
-  rdfs:comment "Describes the SHA-256 of a AccessNeedDecoratorVersion"@en ;
+  rdfs:comment "Describes the SHA-256 of a AccessDecoratorVersion"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Has SHA-256 Hash"@en .
 
-:hasDecoratorResource
+:hasAccessDecoratorResource
   a rdf:property ;
-  rdfs:domain :AccessNeedDecoratorVersion ;
-  rdfs:comment "Represents the IRI to the SKOS graph described by AccessNeedDecoratorVersion instance"@en ;
+  rdfs:domain :AccessDecoratorVersion ;
+  rdfs:comment "Represents the IRI to the SKOS graph described by AccessDecoratorVersion instance"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Has Decorator Resource"@en .
 
-# AccessNeedDecorator class
+# AccessDecoratorResource class
 #############################################################################
-# Details the association between a decorator in a SKOS graph
-# (AccessNeedDecoratorVersion) and an Access Need
+# A resource containing AccessDecorators
 #############################################################################
-:AccessNeedDecorator
+:AccessDecoratorResource
+  a rdfs:Class ;
+  rdfs:comment "Resource containing Access Decorators"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Access Decorator Resource"@en .
+
+# AccessDecorator class
+#############################################################################
+# Associates a SKOS description with different types of Access
+# Needs and Groupings
+#############################################################################
+:AccessDecorator
   a rdfs:Class ;
   rdfs:comment "Describes the association between a SKOS label and an Access Need"@en ;
   rdfs:isDefinedBy <> ;
+  rdfs:label "Access Decorator"@en .
+
+# AccessNeedDecorator class
+#############################################################################
+# Associates a SKOS description with an AccessNeed to describe why that
+# access is needed
+#############################################################################
+:AccessNeedDecorator
+  rdfs:subClassOf :AccessDecorator ;
+  rdfs:comment "Describes the association between a SKOS label and an Access Need"@en ;
+  rdfs:isDefinedBy <> ;
   rdfs:label "AccessNeed Decorator"@en .
+
+# AccessNeedGroupDecorator class
+#############################################################################
+# Associates a SKOS description with an AccessNeedGroup to describe what
+# is the overall purpose of the access request in the AccessNeedGroup
+#############################################################################
+:AccessNeedGroupDecorator
+  rdfs:subClassOf :AccessDecorator ;
+  rdfs:comment "Describes the association between a SKOS label and an Access Need Group"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "AccessNeedGroup Decorator"@en .
