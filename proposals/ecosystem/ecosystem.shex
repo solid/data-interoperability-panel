@@ -112,6 +112,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:needGroupExplanation xsd:string
 }
 
+# Validate an instance of the eco:AccessNeed class
+<#AccessNeedShape> {
+  a [ eco:AccessNeed ] ;
+  eco:inAccessNeedGroup IRI+ ;
+  eco:registeredShapeTree IRI ;
+  eco:hasRegisteredDataInstance IRI* ;
+  eco:recursivelyAuthorize [ true false ] ;
+  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
+}
 
 # Validate an instance of the eco:AccessNeed class
 <#PreparedAccessNeedShape> {
@@ -124,7 +134,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
   eco:needLabel xsd:string ;
   eco:needDescription xsd:string ;
-  eco:needExplanation xsd:string ;
+  eco:needExplanation xsd:string? ;
   eco:supportedByAccessNeed IRI* ;
   eco:supportsAccessNeed IRI
 }

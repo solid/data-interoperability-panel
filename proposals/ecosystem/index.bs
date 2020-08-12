@@ -2000,7 +2000,8 @@ Issue: A bit of setup text here tying the operations together.
         1. Let `NDEC` be the [=Access Need Decorator=] for `NEED`
             populated via [Get Access Need Decorator](#) with inputs:
             `GROUP`, `NEED`, `LANG`
-        1. Let `NEED` [eco:needExplanation](ecosystem.ttl#needExplanation) be the
+        1. If `NDEC` was populated, let `NEED`
+            [eco:needExplanation](ecosystem.ttl#needExplanation) be the
             object value of `NDEC`
             <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">
             skos:prefLabel</a>.
@@ -2021,6 +2022,8 @@ Issue: Does not include registered instances yet.
 Issue: This may not provide coverage when we cross the same
 type of tree (i.e. via references) more than once. May be necessary to pass
 in the prepared set and always work from that.
+
+Issue: Explanation for an access need is not required
 
 ### Get Access Need Group Decorator ### {#authz-get-gdec}
 
