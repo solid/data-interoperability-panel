@@ -328,6 +328,20 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:domain :AccessNeedGroup ;
   rdfs:label "Authenticates As"@en .
 
+:needGroupLabel
+  a rdf:property ;
+  rdfs:comment "Label to use when presenting Access Need Group"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessNeedGroup ;
+  rdfs:label "Access Need Group Label"@en .
+
+:needGroupExplanation
+  a rdf:property ;
+  rdfs:comment "Explanation to use when presenting the Access Need Group"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessNeedGroup ;
+  rdfs:label "Access Need Group Explanation"@en .
+
 # IRI that represents a piloted agent
 #############################################################################
 :Pilot
@@ -363,20 +377,60 @@ rdfs:domain :AccessNeed ;
 rdfs:range xsd:boolean ;
 rdfs:label "Recursively Authorize"@en .
 
-:AccessNecessity
+:accessNecessity
 a rdf:property ;
 rdfs:comment "Identifies the necessity of the AccessNeed"@en ;
 rdfs:isDefinedBy <> ;
 rdfs:range [ owl:oneOf ( :AccessRequired :AccessOptional ) ] ;
 rdfs:label "Requested Access Necessity"@en .
 
-:AccessMode
+:accessMode
 a rdf:property ;
 rdfs:comment "A requested acl:mode of access for an AccessNeed"@en ;
 rdfs:isDefinedBy <> ;
 rdfs:domain :AccessNeed ;
 rdfs:range [ owl:oneOf ( acl:Read acl:Write acl:Control acl:Append ) ] ;
 rdfs:label "Requested Access Mode"@en .
+
+:needLabel
+a rdf:property ;
+rdfs:comment "Label to used when presenting the AccessNeed"@en ;
+rdfs:isDefinedBy <> ;
+rdfs:domain :AccessNeed ;
+rdfs:range xsd:string ;
+rdfs:label "Access Need Label"@en .
+
+:needDescription
+a rdf:property ;
+rdfs:comment "Description used to explain the kind of data being requested"@en ;
+rdfs:isDefinedBy <> ;
+rdfs:domain :AccessNeed ;
+rdfs:range xsd:string ;
+rdfs:label "Access Need Description"@en .
+
+:needExplanation
+a rdf:property ;
+rdfs:comment "Explanation why the access is being requested"@en ;
+rdfs:isDefinedBy <> ;
+rdfs:domain :AccessNeed ;
+rdfs:range xsd:string ;
+rdfs:label "Access Need Explanation"@en .
+
+:supportsAccessNeed
+a rdf:property ;
+rdfs:comment "Links to an AccessNeed supported by this AccessNeed"@en ;
+rdfs:isDefinedBy <> ;
+rdfs:domain :AccessNeed ;
+rdfs:range :AccessNeed ;
+rdfs:label "Supports Access Need"@en .
+
+:supportedByAccessNeed
+a rdf:property ;
+rdfs:comment "Links to an AccessNeed that supports this AccessNeed"@en ;
+rdfs:isDefinedBy <> ;
+rdfs:domain :AccessNeed ;
+rdfs:range :AccessNeed ;
+rdfs:label "Supported By Access Need"@en .
 
 # IRIs AccessNeedNecessity types
 #############################################################################

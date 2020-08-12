@@ -48,7 +48,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:registeredBy IRI ;
   eco:registeredWith IRI ;
   eco:registeredAt xsd:dateTime ;
-  eco:registeredApplication IRI 
+  eco:registeredApplication IRI
 }
 
 # Data Registry Set
@@ -86,4 +86,45 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Validate an instance of the eco:Application class
 <#ApplicationShape> {
   a [ eco:Application ] ;
+}
+
+################################################################
+# Access Need Groups
+################################################################
+
+# Validate an instance of the eco:AccessNeedGroup class
+<#AccessNeedGroupShape> {
+  a [ eco:AccessNeedGroup ] ;
+  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
+  eco:authenticatesAs IRI ;
+  eco:requestsAccess IRI+ ;
+  eco:hasAccessDecoratorIndex IRI
+}
+
+# Validate an instance of a prepared eco:AccessNeedGroup class
+<#PreparedAccessNeedGroupShape> {
+  a [ eco:AccessNeedGroup ] ;
+  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
+  eco:authenticatesAs IRI ;
+  eco:requestsAccess IRI+ ;
+  eco:hasAccessDecoratorIndex IRI ;
+  eco:needGroupLabel xsd:string ;
+  eco:needGroupExplanation xsd:string
+}
+
+
+# Validate an instance of the eco:AccessNeed class
+<#PreparedAccessNeedShape> {
+  a [ eco:AccessNeed ] ;
+  eco:inAccessNeedGroup IRI+ ;
+  eco:registeredShapeTree IRI ;
+  eco:hasRegisteredDataInstance IRI* ;
+  eco:recursivelyAuthorize [ true false ] ;
+  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
+  eco:needLabel xsd:string ;
+  eco:needDescription xsd:string ;
+  eco:needExplanation xsd:string ;
+  eco:supportedByAccessNeed IRI* ;
+  eco:supportsAccessNeed IRI
 }

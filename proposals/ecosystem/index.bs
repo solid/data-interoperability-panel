@@ -64,6 +64,14 @@ a[href*=".tree"] {
   border-bottom: 1px solid #e68a00;
 }
 
+em.rfc2119 {
+  text-transform: lowercase;
+  font-variant: small-caps;
+  font-style: normal;
+  font-size: 18px;
+  color: #900;
+}
+
 </style>
 
 <div boilerplate="copyright">
@@ -1683,7 +1691,7 @@ to ensure [=Agents=] make smart and informed authorization decisions.
 [=Access Decorators=] are designed to support different languages
 and accessibility needs.
 
-### Data Model ### {#authz-datamodel}
+## Data Model ## {#authz-datamodel}
 
 An [=Access Need Group=] is represented by the class
 [eco:AccessNeedGroup](ecosystem.ttl#AccessNeedGroup) and can be invoked
@@ -1693,7 +1701,7 @@ with the following properties:
     [=Access Needs=].
 * [eco:authenticatesAs](ecosystem.ttl#authenticatesAs) - [=Agent=] or
     [eco:Pilot](ecosystem.ttl#Pilot).
-* [eco:AccessNecessity](ecosystem.ttl#AccessNecessity) - Can be
+* [eco:accessNecessity](ecosystem.ttl#accessNecessity) - Can be
     [eco:AccessRequired](ecosystem.ttl#AccessRequired) or
     [eco:AccessOptional](ecosystem.ttl#AccessOptional)
 * [eco:hasAccessDecoratorIndex](ecosystem.ttl#hasAccessDecoratorIndex) -
@@ -1704,7 +1712,7 @@ with the following properties:
   <pre highlight="turtle">
   <#notebook-collaboration-group>
     a eco:AccessNeedGroup ;
-    eco:AccessNecessity eco:AccessRequired ;
+    eco:accessNecessity eco:AccessRequired ;
     eco:authenticatesAs &lt;https://nevernote.example/profile/id#agent&gt; ;
     eco:requestsAccess &lt;#notebook&gt;, &lt;#note&gt; ;
     eco:hasAccessDecoratorIndex &lt;#notebook-access-decorator-index&gt; .
@@ -1748,10 +1756,10 @@ with the following properties:
     [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
 * [eco:recursivelyAuthorize](ecosystem.ttl#recursivelyAuthorize) -
     Continue traversing [=shape tree=] hierarchy for authorization when `true`
-* [eco:AccessNecessity](ecosystem.ttl#AccessNecessity) - Can be
+* [eco:accessNecessity](ecosystem.ttl#accessNecessity) - Can be
     [eco:AccessRequired](ecosystem.ttl#AccessRequired) or
     [eco:AccessOptional](ecosystem.ttl#AccessOptional)
-* [eco:AccessMode](ecosystem.ttl#AccessMode) - Links to one or more
+* [eco:accessMode](ecosystem.ttl#accessMode) - Links to one or more
     [=access modes=]: `acl:Read`, `acl:Write`,
     `acl:Append`, `acl:Control`
 
@@ -1763,8 +1771,8 @@ with the following properties:
       eco:inAccessNeedGroup &lt;#notebook-collaboration-group&gt; ;
       eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
       eco:recursivelyAuthorize true ;
-      eco:AccessNecessity eco:AccessRequired ;
-      eco:AccessMode acl:Read, acl:Write .
+      eco:accessNecessity eco:AccessRequired ;
+      eco:accessMode acl:Read, acl:Write .
   </pre>
 </figure>
 
@@ -1888,9 +1896,141 @@ containing [=Access Decorators=] via
   </pre>
 </figure>
 
-## Presenting access needs to the agent ## {#authz-presenting}
+## Operations ## {#authz-operations}
 
-TODO
+Issue: A bit of setup text here tying the operations together.
+
+### Prepare Access Need Group ### {#authz-prepare-group}
+
+#### Inputs #### {#prepare-group-inputs}
+
+* Let `GROUP` be an [=Access Need Group=]
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Outputs #### {#prepare-group-outputs}
+
+* A [=Prepared Access Need Group=] generated from the input `GROUP`, with
+    an associated set of [=Prepared Access Needs=].
+
+#### Operation Details #### {#prepare-group-details}
+
+1. Perform a validation of the RDF graph of `GROUP` against
+    [eco:AccessNeedGroupShape](ecosystem.shex#AccessNeedGroupShape).
+    <em class="rfc2119">MUST</em> return a status code of 400 if
+    validation fails.
+1. Let `GDEC` be the [=Access Need Group Decorator=] for `GROUP`
+    populated via [[#authz-get-gdec]] with inputs: `GROUP`, `LANG`
+1. Let `GROUP` [eco:needGroupLabel](ecosystem.ttl#needGroupLabel) be the
+    object value of `GDEC`
+    <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">
+    skos:prefLabel</a>.
+1. Let `GROUP` [eco:needGroupExplanation](ecosystem.ttl#needGroupExplanation)
+    be the object value of `GDEC`
+    <a href="http://www.w3.org/2004/02/skos/core#definition" class="vocab">
+    skos:definition</a>.
+1. Let `PREPARED` be an empty set of [=Prepared Access Needs=]
+1. Let `SUPPORTS` be an empty set of [=Supporting Access Needs=]
+1. Let `ROOTS` represent [=Access Needs=] linked directly to `GROUP`
+    via [eco:requestsAccess](ecosystem.ttl#requestsAccess)
+1. For each `NEED` in `ROOTS`
+    1. Call [[#authz-prepare-needs]] with inputs: `GROUP`, `NEED`, `LANG`
+        1. Merge output [=Prepared Access Needs=] with `PREPARED`
+        1. Merge output [=Supporting Access Needs=] with `SUPPORTS`
+1. For each [=Supporting Access Need=] `SN` in `SUPPORTS`
+    1. Find a corresponding [=Prepared Access Need=] `PN` in `PREPARED` where
+          the object values for
+          [eco:RegisteredShapeTree](ecosystem.ttl#registeredShapeTree)
+          in `PN` and `SN` are the same.
+    1. Let `PN` [eco:supportedByAccessNeed](ecosystem.ttl#supportedByAccessNeed)
+          link to `SN`.
+    1. Let `SN` [eco:supportsAccessNeed](ecosystem.ttl#supportsAccessNeed)
+          link to `PN`.
+
+### Prepare Access Needs ### {#authz-prepare-needs}
+
+#### Inputs #### {#prepare-need-inputs}
+
+* Let `GROUP` be the [=Access Need Group=] in context
+* Let `ROOT` be an [=Access Need=] linked directly to `GROUP`
+    via [eco:requestsAccess](ecosystem.ttl#requestsAccess)
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Outputs #### {#prepare-need-outputs}
+
+* A set of [=Prepared Access Needs=]
+* A set of [=Supporting Access Needs=]
+
+#### Operation Details #### {#prepare-need-details}
+
+1. Let `PREPARED` be an empty set of [=Prepared Access Needs=]
+1. Let `SUPPORTING` be an empty set of [=Supporting Access Needs=]
+1. Let `GROUPNEEDS` represent all [=Access Needs=] associated with `GROUP`
+1. Iterate the [=shape tree=] hierarchy. Let `TREE` be the current
+    [=shape tree=] in context, initialized with `ROOT`
+    [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree). Let `NEED`
+    be initialized with `ROOT`.
+    1. Perform a GET on `TREE` to ensure it can be dereferenced.
+        <em class="rfc2119">MUST</em> return a status code of 404 if cannot.
+    1. If `NEED` [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
+        is not the same as `TREE`
+        1. If there is an [=Access Need=] `GN` in `GROUPNEEDS` with an
+            [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
+            equiavalent to `TREE`, let `NEED` be `GN`.
+            <em class="rfc2119">MUST</em> return a status code
+            of 400 if multiple [=Access Needs=] are matched.
+        1. If there is no corresponding [=Access Need=] for `TREE` in
+            `GROUPNEEDS`
+            * Clear all property values for `NEED` except for `inAccessNeedGroup`,
+                `recursivelyAuthorize`, `accessMode`, `accessNecessity`,
+                `needExplanation`
+            * Set `NEED` [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
+                to `TREE`.
+    1. Let `TDEC` be the [=Shape Tree Decorator=] for `TREE`
+        populated via [Get Shape Tree Decorator](#) with inputs: `TREE`, `LANG`
+    1. Let `NEED` [eco:needLabel](ecosystem.ttl#needLabel) be the
+        object value of `TDEC`
+        <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">
+        skos:prefLabel</a>.
+    1. Let `NEED` [eco:needDescription](ecosystem.ttl#needDescription) be the
+        object value of `TDEC`
+        <a href="http://www.w3.org/2004/02/skos/core#definition" class="vocab">
+        skos:definition</a>.
+    1. If `NEED` [eco:needExplanation](ecosystem.ttl#needExplanation) has no
+        object value
+        1. Let `NDEC` be the [=Access Need Decorator=] for `NEED`
+            populated via [Get Access Need Decorator](#) with inputs:
+            `GROUP`, `NEED`, `LANG`
+        1. Let `NEED` [eco:needExplanation](ecosystem.ttl#needExplanation) be the
+            object value of `NDEC`
+            <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">
+            skos:prefLabel</a>.
+    1. If `TREE` has an object value for `st:supports`
+        1. Add a copy of `NEED` to `SUPPORTING`
+        2. Continue to next iteration
+    1. Add a copy of `NEED` to `PREPARED`
+    1. Break if `NEED`
+        [eco:recursivelyAuthorize](ecosystem.ttl#recursivelyAuthorize) is `false`
+1. Return `PREPARED`, `SUPPORTING`
+
+Issue: We currently have no forward links to the non-root needs. It feels
+like these should be explicitly linked, possibly through another predicate
+off of the group.
+
+Issue: Does not include registered instances yet.
+
+Issue: This may not provide coverage when we cross the same
+type of tree (i.e. via references) more than once. May be necessary to pass
+in the prepared set and always work from that.
+
+### Get Access Need Group Decorator ### {#authz-get-gdec}
+
+- Must align with LANG if match is available
+- IF not, must use defaultLanguage
+
+### Get Access Need Decorator ### {#authz-get-ndec}
+
+- Must align with LANG if match is available
+- IF not, must use defaultLanguage
 
 ### Security considerations ### {#presenting-security}
 
@@ -1898,7 +2038,7 @@ TODO
 
 ## Permissioning and managing access grants ## {#authz-permissioning}
 
-TODO
+TODO - this is the actual operation where grants are applied to resources
 
 ## Patterns for making requests and getting access ## {#authz-protocol}
 
@@ -2215,7 +2355,13 @@ data instance is contained within a given [=Data Registration=].
 
 An <dfn>Access Need</dfn> is...
 
+A <dfn>Prepared Access Need</dfn> is...
+
+A <dfn>Supporting Access Need</dfn> is...
+
 An <dfn>Access Need Group</dfn> is...
+
+A <dfn>Prepared Access Need Group</dfn> is...
 
 An <dfn>Access Decorator</dfn> is...
 
@@ -2230,6 +2376,8 @@ An <dfn>Access Decorator Series</dfn> is...
 An <dfn>Access Decorator Version</dfn> is...
 
 An <dfn>Access Decorator Resource</dfn> is...
+
+A <dfn>Shape Tree Decorator</dfn> is...
 
 Use Case Environment {#environment}
 =====================
