@@ -97,19 +97,9 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   a [ eco:AccessNeedGroup ] ;
   eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
   eco:authenticatesAs IRI ;
-  eco:requestsAccess IRI+ ;
+  eco:hasAccessNeed IRI+ ;
+  eco:hasAccessNeedOverride IRI* ;
   eco:hasAccessDecoratorIndex IRI
-}
-
-# Validate an instance of a prepared eco:AccessNeedGroup class
-<#PreparedAccessNeedGroupShape> {
-  a [ eco:AccessNeedGroup ] ;
-  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
-  eco:authenticatesAs IRI ;
-  eco:requestsAccess IRI+ ;
-  eco:hasAccessDecoratorIndex IRI ;
-  eco:needGroupLabel xsd:string ;
-  eco:needGroupExplanation xsd:string
 }
 
 # Validate an instance of the eco:AccessNeed class
@@ -123,18 +113,28 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
 }
 
-# Validate an instance of the eco:AccessNeed class
+# Validate an instance of a prepared eco:PreparedAccessNeedGroup class
+<#PreparedAccessNeedGroupShape> {
+  a [ eco:PreparedAccessNeedGroup ] ;
+  eco:hasAccessNeedGroupDecorator IRI ;
+  eco:authenticatesAs IRI ;
+  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
+  eco:hasPreparedAccessNeed IRI+ ;
+}
+
+# Validate an instance of the eco:PreparedAccessNeed class
 <#PreparedAccessNeedShape> {
-  a [ eco:AccessNeed ] ;
-  eco:inAccessNeedGroup IRI+ ;
-  eco:registeredShapeTree IRI ;
+  a [ eco:PreparedAccessNeed ] ;
+  eco:inPreparedAccessNeedGroup IRI+ ;
+  eco:hasShapeTreeDecorator IRI ;
+  eco:hasAccessNeedDecorator IRI? ;
+  eco:hasDataRegistrationGrant IRI? ;
   eco:hasRegisteredDataInstance IRI* ;
-  eco:recursivelyAuthorize [ true false ] ;
+  eco:registeredShapeTree IRI ;
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
-  eco:needLabel xsd:string ;
-  eco:needDescription xsd:string ;
-  eco:needExplanation xsd:string? ;
-  eco:supportedByAccessNeed IRI* ;
-  eco:supportsAccessNeed IRI
+  eco:supportedBy IRI* ;
+  eco:supports IRI
+  eco:referencesPreparedAccessNeed IRI* ;
+  skos:narrower IRI* ;
 }

@@ -270,6 +270,14 @@ rdfs:label "Solid ecosystem terms"@en .
 
 # Properties in domain of Application
 #########################################################
+:applicationName
+  a rdf:property ;
+  rdfs:comment "Name of the Application"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :Application ;
+  rdfs:range xsd:string ;
+  rdfs:label "Application Name"@en .
+
 :applicationDescription
   a rdf:property ;
   rdfs:comment "Description of the Application"@en ;
@@ -307,12 +315,19 @@ rdfs:label "Solid ecosystem terms"@en .
 
 # Properties in domain of AccessNeedGroup
 #########################################################
-:requestsAccess
+:hasAccessNeed
   a rdf:property ;
-  rdfs:comment "Links to discrete Access Needs"@en ;
+  rdfs:comment "Links to an Access Need"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:range :AccessNeed ;
-  rdfs:label "Requests Access"@en .
+  rdfs:label "Has Access Need"@en .
+
+:hasAccessNeedOverride
+  a rdf:property ;
+  rdfs:comment "Overrides inherited evaluation of an Access Need"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range :AccessNeed ;
+  rdfs:label "Has Access Need Override"@en .
 
 :hasAccessNeedDecoratorIndex
   a rdf:property ;
@@ -328,19 +343,6 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:domain :AccessNeedGroup ;
   rdfs:label "Authenticates As"@en .
 
-:needGroupLabel
-  a rdf:property ;
-  rdfs:comment "Label to use when presenting Access Need Group"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessNeedGroup ;
-  rdfs:label "Access Need Group Label"@en .
-
-:needGroupExplanation
-  a rdf:property ;
-  rdfs:comment "Explanation to use when presenting the Access Need Group"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessNeedGroup ;
-  rdfs:label "Access Need Group Explanation"@en .
 
 # IRI that represents a piloted agent
 #############################################################################
@@ -388,49 +390,8 @@ rdfs:label "Requested Access Necessity"@en .
 a rdf:property ;
 rdfs:comment "A requested acl:mode of access for an AccessNeed"@en ;
 rdfs:isDefinedBy <> ;
-rdfs:domain :AccessNeed ;
 rdfs:range [ owl:oneOf ( acl:Read acl:Write acl:Control acl:Append ) ] ;
 rdfs:label "Requested Access Mode"@en .
-
-:needLabel
-a rdf:property ;
-rdfs:comment "Label to used when presenting the AccessNeed"@en ;
-rdfs:isDefinedBy <> ;
-rdfs:domain :AccessNeed ;
-rdfs:range xsd:string ;
-rdfs:label "Access Need Label"@en .
-
-:needDescription
-a rdf:property ;
-rdfs:comment "Description used to explain the kind of data being requested"@en ;
-rdfs:isDefinedBy <> ;
-rdfs:domain :AccessNeed ;
-rdfs:range xsd:string ;
-rdfs:label "Access Need Description"@en .
-
-:needExplanation
-a rdf:property ;
-rdfs:comment "Explanation why the access is being requested"@en ;
-rdfs:isDefinedBy <> ;
-rdfs:domain :AccessNeed ;
-rdfs:range xsd:string ;
-rdfs:label "Access Need Explanation"@en .
-
-:supportsAccessNeed
-a rdf:property ;
-rdfs:comment "Links to an AccessNeed supported by this AccessNeed"@en ;
-rdfs:isDefinedBy <> ;
-rdfs:domain :AccessNeed ;
-rdfs:range :AccessNeed ;
-rdfs:label "Supports Access Need"@en .
-
-:supportedByAccessNeed
-a rdf:property ;
-rdfs:comment "Links to an AccessNeed that supports this AccessNeed"@en ;
-rdfs:isDefinedBy <> ;
-rdfs:domain :AccessNeed ;
-rdfs:range :AccessNeed ;
-rdfs:label "Supported By Access Need"@en .
 
 # IRIs AccessNeedNecessity types
 #############################################################################
@@ -443,6 +404,100 @@ rdfs:label "Supported By Access Need"@en .
   rdfs:comment "AccessNeed is not required"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Optional"@en .
+
+# PreparedAccessNeedGroup Class
+#############################################################################
+# Result of an AccessNeedGroup whose AccessNeeds have been processed and
+# prepared for evaluation by the Agent in control of the data
+#############################################################################
+:PreparedAccessNeedGroup
+  a rdfs:Class ;
+  rdfs:comment "Group of access needs prepared for evaluation"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Access Need"@en .
+
+:hasAccessNeedGroupDecorator
+  a rdf:property ;
+  rdfs:comment "Links to an AccessNeedGroupDecorator"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :PreparedAccessNeedGroup ;
+  rdfs:range :AccessNeedGroupDecorator ;
+  rdfs:label "Has Access Need Group Decorator"@en .
+
+:hasPreparedAccessNeed
+  a rdf:property ;
+  rdfs:comment "Links to a PreparedAccessNeed"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :PreparedAccessNeedGroup ;
+  rdfs:range :AccessNeedGroupDecorator ;
+  rdfs:label "Has Access Need Group Decorator"@en .
+
+# PreparedAccessNeed Class
+#############################################################################
+# Result of an AccessNeed that has been prepared for evaluation by
+# the Agent in control of the data
+#############################################################################
+:PreparedAccessNeed
+  a rdfs:Class ;
+  rdfs:comment "Access need that have been prepared for evaluation"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Access Need"@en .
+
+:inPreparedAccessNeedGroup
+  a rdf:property ;
+  rdfs:comment "Identifies the PreparedAccessNeedGroup the PreparedAccessNeed belongs to"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :PreparedAccessNeed ;
+  rdfs:range :PreparedAccessNeedGroup ;
+  rdfs:label "In Prepared Access Need Group"@en .
+
+:supports
+  a rdf:property ;
+  rdfs:comment "Links to a PreparedAccessNeed this PreparedAccessNeed supports"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :PreparedAccessNeed ;
+  rdfs:range :PreparedAccessNeed ;
+  rdfs:label "Supports Prepared Access Need"@en .
+
+:supportedBy
+  a rdf:property ;
+  rdfs:comment "Links to a PreparedAccessNeed supported by this PreparedAccessNeed"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :PreparedAccessNeed ;
+  rdfs:range :PreparedAccessNeed ;
+  rdfs:label "Supported By Prepared Access Need"@en .
+
+:hasShapeTreeDecorator
+  a rdf:property ;
+  rdfs:comment "Links to a ShapeTreeDecorator"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :PreparedAccessNeed ;
+  rdfs:range st:ShapeTreeDecorator ;
+  rdfs:label "Has Shape Tree Decorator"@en .
+
+:hasAccessNeedDecorator
+  a rdf:property ;
+  rdfs:comment "Links to an AccessNeedDecorator"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :PreparedAccessNeed ;
+  rdfs:range :AccessNeedDecorator ;
+  rdfs:label "Has Access Need Decorator"@en .
+
+:referencesPreparedAccessNeed
+  a rdf:property ;
+  rdfs:comment "References another PreparedAccessNeed"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :PreparedAccessNeed ;
+  rdfs:range :PreparedAccessNeed ;
+  rdfs:label "References Prepared Access Need"@en .
+
+:hasDataRegistrationGrant
+  a rdf:property ;
+  rdfs:comment "Links to a DataRegistrationGrant"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :PreparedAccessNeed ;
+  rdfs:range :DataRegistrationGrant ;
+  rdfs:label "Has Data Registration Grant"@en .
 
 # AccessDecoratorIndex class
 #############################################################################
