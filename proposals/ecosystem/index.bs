@@ -1,5 +1,5 @@
 <pre class="metadata">
-Title: Proposal for an Interoperable Solid Ecosystem
+Title: Solid Application Interoperability
 Shortname: your-spec
 Level: 1
 Max ToC Depth: 2
@@ -257,6 +257,8 @@ Issue: Complete Collaborative Access then update this section.
 Agent {#ecoagent}
 =====================
 
+## Overview ## {#agent-overview}
+
 An [=Agent=] is a distinct individual, group, or piece of
 software with an identity that can be strongly authenticated. They are
 the primary actors in the Solid [=ecosystem=].
@@ -276,6 +278,8 @@ data model, structure/validation, and perms.
 
 Registrar {#reg}
 =====================
+
+## Overview ## {#registrar-overview}
 
 A [=Registrar=] provides [=Registries=] where an [=Agent=] can register,
 store, and lookup essential data needed to participate in the ecosystem.
@@ -620,6 +624,8 @@ have control-level access across her entire data space.
 
 Application Registration {#appreg}
 =====================
+
+## Overview ## {#appreg-overview}
 
 Application Registration gives [=Agents=] participating in the Solid
 [=ecosystem=] a way to register and track the [=Applications=] they've elected
@@ -1042,6 +1048,8 @@ the graph of the [=Application Registry=].
 
 Data Registration {#datareg}
 =====================
+
+## Overview ## {#datareg-overview}
 
 Data Registration gives [=Agents=] participating in the Solid [=ecosystem=]
 a way to register, organize, and subsequently manage the data they control.
@@ -1630,20 +1638,28 @@ Each new [=Registered Data Instance=] must be linked to the
 Data Authorization {#authz}
 =====================
 
-* Patterns of authorization
-    * Access for other agents / people
-    * Access for applications people use
-    * Access for services (autonomous)
+## Overview ## {#authz-overview}
 
-Boils down to:
+The ability for one [=Agent=] to grant others access to data in their control
+is a fundamental element of a collaborative interoperable ecosystem.
 
-* expression of what is to be shared (requested or intended)
-* selection of exactly what will be shared by grantor
-* update authorization to reflect the changes
-* keep or update a record of the access grant
-* make the grantee aware of the access grant
+Data Authorization represents of several key elements that
+work together to grant, adjust, and rescind access to data controlled by
+by an ecosystem participant.
 
-## Expressing access needs ## {#authz-expressing}
+* A common way to express [[#needs]] allows [=ecosystem=] participants to
+    convey the types or specific instances of data they require.
+
+* [[#grants]] record access decisions made an [=Agent=] on the data in their
+    control.
+
+* [[#exchanging]] provides different mechanisms for conveying [[#needs]]
+    and [[#grants]].
+
+Access Needs {#needs}
+=====================
+
+## Overview ## {#needs-overview}
 
 [=Agents=] or [=Applications=] in the [=ecosystem=] often require access to
 data controlled by some other [=Agent=]. Consequently, a common way to explain
@@ -1652,19 +1668,11 @@ required.
 
 An [=Access Need Group=] is a collection of dependent
 [=Access Needs=] that a given [=Agent=] and/or [=Application=] uses to
-communicate a data access request to other [=Agents=]. An [=Access Need=] is a
-structured way to express a single data requirement.
-
-[=Agents=] receiving an [=Access Need Group=] from another participant
-in the [=ecosystem=] will lookup applicable data in their [=Data Registries=],
-and decide what access will be provided to it, typically through an
-intuitive user interface.
-
-Each [=Access Need=] is associated with a specific type of data,
-represented by a [=shape tree=].
+communicate a data access request to other [=Agents=]. Each [=Access Need=]
+is associated with a specific type of data through an associated [=shape tree=].
 
 A given [=Access Need=] can then represent
-a request for any [=registered data instance=] the [=Agent=] has of that
+a request for any type of [=registered data instance=] the [=Agent=] has of that
 [=shape tree=], and/or indicate specific [=registered data instances=] of
 that [=shape tree=] that have been explicitly associated with the
 [=Access Need=].
@@ -1691,7 +1699,35 @@ to ensure [=Agents=] make smart and informed authorization decisions.
 [=Access Decorators=] are designed to support different languages
 and accessibility needs.
 
-## Data Model ## {#authz-datamodel}
+When [=Access Need Groups=] with associated [=Access Needs=] are received
+by a given [=Agent=], they must be processed so they can be evaluated by
+the [=Agent=].
+
+Processing includes:
+
+* General validation of the [=Access Need Group=] and [=Access Need=]
+* Walking [=shape tree=] hierarchies, to identify dependent data references
+    that must be incorporated into the data set presented to the [=Agent=]
+* Associating [=Access Decorators=] so that groups and needs are described
+    to the [=Agent=] in the language of their preference.
+* Associating [=Shape Tree Decorators=] so that the data the user is sharing
+    can be properly explained to them in the language of their preference.
+* Identifying and linking [=Supporting Access Needs=] so that [=shape trees=]
+    designed to support a specific type of data are presented along with
+    that data, rather than as first class types themselves.
+
+The output of processing an [=Access Need Groups=] is a
+[=Prepared Access Need Group=] with associated [=Prepared Access Needs=].
+
+Any conformant authorization interface MUST present [=Agents=] with
+processed output in the form of [=Prepared Access Need Groups=] and
+[=Prepared Access Needs=], generated using the specified [[#needs-operations]].
+
+Issue: Add detail here about presentation of access needs, instances, and
+connection to Authorization Grants.
+
+
+## Data Model ## {#needs-datamodel}
 
 An [=Access Need Group=] is represented by the class
 [eco:AccessNeedGroup](ecosystem.ttl#AccessNeedGroup) and can be invoked
@@ -1896,11 +1932,31 @@ containing [=Access Decorators=] via
   </pre>
 </figure>
 
-## Operations ## {#authz-operations}
+## Operations ## {#needs-operations}
 
-Issue: A bit of setup text here tying the operations together.
+The following operations explain how to process [=Access Need Groups=]
+and their associated [=Access Needs=] to prepare and present them
+to a given [=Agent=].
 
-### Prepare Access Need Group ### {#authz-prepare-group}
+* [[#prepare-group]]
+* [[#prepare-needs]]
+* [[#present-group]]
+* [[#get-group-dec]]
+* [[#get-need-dec]]
+
+### Prepare Access Need Group ### {#prepare-group}
+
+This operation takes a given [=Access Need Group=] with a number of associated
+[=Access Needs=] and processes them to produce a [=Prepared Access Need Group=]
+with [=Prepared Access Needs=] that are ready to present to a given [=Agent=].
+
+1. The [=shape tree=] associated with each [=Root Access Need=] has been
+    traversed to the desired level of recursion, including across references,
+    with a [=Prepared Access Need=] representing every unique [=shape tree=].
+2. Labels and descriptions have been looked up and
+    added from their respective decorators for [=Access Need Groups=] and
+    [=Access Needs=].
+3. [=Supporting Access Needs=] are associated with [=Prepared Access Needs=].
 
 #### Inputs #### {#prepare-group-inputs}
 
@@ -1919,21 +1975,16 @@ Issue: A bit of setup text here tying the operations together.
     <em class="rfc2119">MUST</em> return a status code of 400 if
     validation fails.
 1. Let `GDEC` be the [=Access Need Group Decorator=] for `GROUP`
-    populated via [[#authz-get-gdec]] with inputs: `GROUP`, `LANG`
-1. Let `GROUP` [eco:needGroupLabel](ecosystem.ttl#needGroupLabel) be the
-    object value of `GDEC`
-    <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">
-    skos:prefLabel</a>.
-1. Let `GROUP` [eco:needGroupExplanation](ecosystem.ttl#needGroupExplanation)
-    be the object value of `GDEC`
-    <a href="http://www.w3.org/2004/02/skos/core#definition" class="vocab">
-    skos:definition</a>.
+    populated via [[#get-group-dec]] with inputs: `GROUP`, `LANG`
 1. Let `PREPARED` be an empty set of [=Prepared Access Needs=]
-1. Let `SUPPORTS` be an empty set of [=Supporting Access Needs=]
+1. Let `SUPPORTS` be an empty set of [=Access Needs=]
+1. Let `DIRECT` be the set of [=Access Needs=] who have an
+    [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) that does
+    not contain an object value for `st:supports`.
 1. Let `ROOTS` represent [=Access Needs=] linked directly to `GROUP`
     via [eco:requestsAccess](ecosystem.ttl#requestsAccess)
-1. For each `NEED` in `ROOTS`
-    1. Call [[#authz-prepare-needs]] with inputs: `GROUP`, `NEED`, `LANG`
+1. For each `ROOT` in `ROOTS`
+    1. Call [[#prepare-needs]] with inputs: `GROUP`, `ROOT`, `LANG`
         1. Merge output [=Prepared Access Needs=] with `PREPARED`
         1. Merge output [=Supporting Access Needs=] with `SUPPORTS`
 1. For each [=Supporting Access Need=] `SN` in `SUPPORTS`
@@ -1946,21 +1997,21 @@ Issue: A bit of setup text here tying the operations together.
     1. Let `SN` [eco:supportsAccessNeed](ecosystem.ttl#supportsAccessNeed)
           link to `PN`.
 
-### Prepare Access Needs ### {#authz-prepare-needs}
+### Prepare Access Needs ### {#prepare-needs}
 
-#### Inputs #### {#prepare-need-inputs}
+#### Inputs #### {#prepare-needs-inputs}
 
 * Let `GROUP` be the [=Access Need Group=] in context
 * Let `ROOT` be an [=Access Need=] linked directly to `GROUP`
     via [eco:requestsAccess](ecosystem.ttl#requestsAccess)
 * Let `LANG` be the [=Agent's=] preferred language
 
-#### Outputs #### {#prepare-need-outputs}
+#### Outputs #### {#prepare-needs-outputs}
 
 * A set of [=Prepared Access Needs=]
 * A set of [=Supporting Access Needs=]
 
-#### Operation Details #### {#prepare-need-details}
+#### Operation Details #### {#prepare-needs-details}
 
 1. Let `PREPARED` be an empty set of [=Prepared Access Needs=]
 1. Let `SUPPORTING` be an empty set of [=Supporting Access Needs=]
@@ -2023,41 +2074,134 @@ Issue: This may not provide coverage when we cross the same
 type of tree (i.e. via references) more than once. May be necessary to pass
 in the prepared set and always work from that.
 
-Issue: Explanation for an access need is not required
+### Present Access Need Group ### {#present-group}
 
-### Get Access Need Group Decorator ### {#authz-get-gdec}
+1. Let `GROUP` [eco:needGroupLabel](ecosystem.ttl#needGroupLabel) be the
+    object value of `GDEC`
+    <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">
+    skos:prefLabel</a>.
+1. Let `GROUP` [eco:needGroupExplanation](ecosystem.ttl#needGroupExplanation)
+    be the object value of `GDEC`
+    <a href="http://www.w3.org/2004/02/skos/core#definition" class="vocab">
+    skos:definition</a>.
+
+### Get Access Need Group Decorator ### {#get-group-dec}
 
 - Must align with LANG if match is available
 - IF not, must use defaultLanguage
 
-### Get Access Need Decorator ### {#authz-get-ndec}
+### Get Access Need Decorator ### {#get-need-dec}
 
 - Must align with LANG if match is available
 - IF not, must use defaultLanguage
 
-### Security considerations ### {#presenting-security}
 
-TODO
+Access Grants {#grants}
+=====================
 
-## Permissioning and managing access grants ## {#authz-permissioning}
+## Overview ## {#access-overview}
+
+## Data Model ## {#access-datamodel}
+
+<figure id="fig-access-model">
+  <img src="access-model.svg" width=100%/>
+  <figcaption>Data model for the access registry</figcaption>
+</figure>
+
+The [=Access Registry=] extends the [[#reg-model]] with type-specific
+subclasses and subproperties.
+
+An [=Agent=] has a [=Registrar=] that links to [=Access Registry Sets=]
+via the [eco:hasAccessRegistrySet](ecosystem.ttl#hasAccessRegistrySet) property.
+
+A [=Access Registry Set=] links to any number of [=Access Registries=] via
+the [eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
+
+An [=Access Registry=] links to any number of registered [=Access Grants=]
+via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
+
+Each [=Access Grant=] represents access granted to one recipient; the
+[=Access Grant Subject=], based on access criteria detailed in one or more
+[=Prepared Access Need Groups=]. Access is granted to registered data in
+[=Data Registries=], identified by [=Data Registration Grants=] linked to the
+[=Access Grant=].
+
+An [=Access Grant=] extends the [eco:Registration](ecosystem.ttl#Registration)
+class with the following properties:
+
+* [eco:hasAccessGrantSubject](ecosystem.ttl#hasAccessGrantSubject) - Links to
+    one [=Access Grant Subject=] who was granted access.
+* [eco:hasPreparedAccessNeedGroup](ecosystem.ttl#hasPreparedAccessNeedGroup) -
+    Links to a [=Prepared Access Need Group=] associated with the Access Grant.
+* [eco:hasDataRegistrationGrant](ecosystem.ttl#hasDataRegistrationGrant) -
+    Links to a [=Data Registration Grant=] associated with the Access Grant.
+
+An [=Access Grant Subject=] is represented by the
+[eco:AccessGrantSubject](ecosystem.ttl#AccessGrantSubject) class, with
+the following properties:
+
+* [eco:accessByAgent](ecosystem.ttl#accessByAgent) - [=Agent=] who is being
+    granted access
+* [eco:accessByApplication](ecosystem.ttl#accessByApplication) - [=Application=]
+    that is being granted access
+
+A [=Data Registration Grant=] is represented by the
+[eco:DataRegistrationGrant](ecosystem.ttl#DataRegistrationGrant) class, with
+the following properties:
+
+* [eco:hasRegistration](ecosystem.ttl#hasRegistration) - links the
+    to the associated [=Data Registration=]
+* [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) - links to the
+    associated [=shape tree=]
+* [eco:satisfiedPreparedAccessNeed](ecosystem.ttl#satisfiesPreparedAccessNeed) -
+    links to the [=Prepared Access Need=] that prompted the user to grant
+    access to this data
+* [eco:scopeOfDataRegistrationGrant](ecosystem.ttl#scopeOfDataRegistrationGrant) -
+    Identifies the access scope of the grant.
+      * [eco:AllInstances](ecosystem.ttl#AllInstances) - Scope includes
+          access to all [=Registered Data Instances=] of the associated
+          [=Data Registration=]
+      * [eco:InheritInstances](ecosystem.ttl#InheritInstances) - Scope includes
+          access to instances inherited by instances selected in the
+          [=Data Registration Grant=] linked via
+          [eco:inheritsFromDataRegistrationGrant](ecosystem.ttl#inheritsFromDataRegistrationGrant).
+      * [eco:SelectedInstances](ecosystem.ttl#SelectedInstances) - Scope includes
+          access only to those [=Registered Data Instances=] specifically selected
+          by the [=Agent=]
+      * [eco:NoAccess](ecosystem.ttl#NoAccess) - Scope include no access.
+  * [eco:inheritsFromDataRegistrationGrant](ecosystem.ttl#inheritsFromDataRegistrationGrant) -
+      Identifies a [=Data Registration Grant=] whose selected instances
+      narrow the scope of instances to be presented by this grant.
+
+## Operations ## {#grants-operations}
+
+### Record Grant ### {#grants-record}
+
+TODO - this is the operation where a grant is stored
+
+### Apply Permissions ### {#grants-apply}
 
 TODO - this is the actual operation where grants are applied to resources
 
-## Patterns for making requests and getting access ## {#authz-protocol}
 
-### Access for other agents / people ### {#authz-agentpattern}
+Exchanging Access Information {#exchanging}
+=====================
 
-TODO
+## Patterns for making requests and getting access ## {#exchanging-protocol}
 
-### Access for piloted applications ### {#authz-pilotpattern}
-
-TODO
-
-### Access for services (autonomous) ### {#authz-servicepattern}
+### Access for other agents / people ### {#exchanging-agentpattern}
 
 TODO
 
-### Communicating access grants ### {#authz-communicating}
+### Access for piloted applications ### {#exchanging-pilotpattern}
+
+TODO
+
+### Access for services (autonomous) ### {#exchanging-servicepattern}
+
+TODO
+
+### Communicating access grants ### {#exchanging-communicating}
 
 TODO
 
@@ -2250,7 +2394,8 @@ An <dfn>access mode</dfn> denotes operations (e.g. read, write)
 that a given [=authorization subject=] can perform on a resource.
 
 An <dfn>authorization subject</dfn> is the target of a given authorization
-statement in an [=acl resource=]. It is either an [=Agent=], a
+statement in an [=acl resource=]. It is either an [=Agent=] (individual,
+group, [=server-side application=]), a
 [=User-Piloted Application=] in use by *any* [=Agent=], or a combination of
 a specific [=Agent=] using a specific [=User-Piloted Application=].
 
@@ -2381,6 +2526,16 @@ An <dfn>Access Decorator Version</dfn> is...
 An <dfn>Access Decorator Resource</dfn> is...
 
 A <dfn>Shape Tree Decorator</dfn> is...
+
+An <dfn>Access Registry Set</dfn> is...
+
+An <dfn>Access Registry</dfn> is...
+
+An <dfn>Access Grant</dfn> is...
+
+A <dfn>Data Registration Grant</dfn> is...
+
+An <dfn>Access Grant Subject</dfn> is...
 
 Use Case Environment {#environment}
 =====================

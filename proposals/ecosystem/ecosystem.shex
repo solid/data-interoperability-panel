@@ -86,6 +86,13 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Validate an instance of the eco:Application class
 <#ApplicationShape> {
   a [ eco:Application ] ;
+  eco:applicationName xsd:string ;
+  eco:applicationDescription xsd:string ;
+  eco:applicationAuthor IRI ;
+  eco:applicationAuthorName xsd:string ;
+  eco:applicationThumbanil IRI ;
+  eco:hasAccessNeedGroup IRI* ;
+  eco:hasCollaborativeAccessNeedGroup IRI*
 }
 
 ################################################################
@@ -137,4 +144,32 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:supports IRI
   eco:referencesPreparedAccessNeed IRI* ;
   skos:narrower IRI* ;
+}
+
+################################################################
+# Access Grants
+################################################################
+
+# Validate an instance of the AccessGrant class
+<#AccessGrant> {
+  a [ eco:AccessGrant ] ;
+  eco:accessGrantSubject IRI ;
+  eco:hasPreparedAccessNeedGroup IRI+ ;
+  eco:hasDataRegistrationGrant IRI+
+}
+
+<#AccessGrantSubject> {
+  a [ eco:AccessGrantSubject ] ;
+  eco:accessGrantSubjectAgent IRI? ;
+  eco:accessGrantSubjectApplication IRI?
+}
+
+# Validate an instance of the DataRegistrationGrant class
+<#DataRegistrationGrant> {
+  a [ eco:DataRegistrationGrant ] ;
+  eco:hasRegistration IRI ;
+  eco:registeredShapeTree IRI ;
+  eco:satisfiesPreparedAccessNeed IRI ;
+  eco:scopeOfDataRegistrationGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ] ;
+  eco:inheritsFromDataRegistrationGrant IRI*
 }
