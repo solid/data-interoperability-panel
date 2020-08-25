@@ -2120,6 +2120,41 @@ the [eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
 An [=Access Registry=] links to any number of registered [=Access Grants=]
 via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
 
+<figure id="fig-access-registrar">
+  <figcaption>A [=Registrar=] at https://alice.pod.example/registries/#registrar
+  linking to an [=Access Registry Set=]</figcaption>
+  <pre highlight="turtle">
+  <#registrar>
+    a eco:Registrar;
+    eco:hasAccessRegistrySet &lt;https://alice.pod.example/registries/access#set&gt; .
+  </pre>
+  </figure>
+</figure>
+
+<figure id ="fig-access-registry-set">
+   <figcaption>An [=Access Registry Set=] at
+   https://alice.pod.example/registries/access#set linking to two different
+  [=Access Registries=]</figcaption>
+  <pre highlight="turtle">
+  <#set>
+    a eco:AccessRegistrySet;
+    eco:hasRegistry &lt;https://alice.pod.example/access/#registry&gt; ,
+                    &lt;https://alice.otherpod.example/access/#registry&gt; .
+  </pre>
+</figure>
+
+<figure id="fig-access-registry">
+  <figcaption>An [=Access Registry=] at https://alice.pod.example/access/#registry
+  linking to several registered [=Access Grants=]</figcaption>
+  <pre highlight="turtle">
+  <#registry>
+    a eco:AccessRegistry ;
+    eco:hasRegistration &lt;ab3d0023-3860-4358-ae33-8d3af1097b9d/#grant&gt ,
+                        &lt;ad7b935f-ced9-4ce6-835f-5c6abc046228/#grant&gt ,
+                        &lt;5ed73c65-ce77-4c8a-8f7e-9715b90307e6/#grant&gt .
+  </pre>
+</figure>
+
 Each [=Access Grant=] represents access granted to one recipient; the
 [=Access Grant Subject=], based on access criteria detailed in one or more
 [=Prepared Access Need Groups=]. Access is granted to registered data in
@@ -2135,6 +2170,57 @@ class with the following properties:
     Links to a [=Prepared Access Need Group=] associated with the Access Grant.
 * [eco:hasDataRegistrationGrant](ecosystem.ttl#hasDataRegistrationGrant) -
     Links to a [=Data Registration Grant=] associated with the Access Grant.
+
+<figure id="fig-access-grant">
+  <figcaption>An [=Access Grant=] at
+  https://alice.pod.example/access/ab3d0023-3860-4358-ae33-8d3af1097b9d/#grant
+  </figcaption>
+  <pre highlight="turtle">
+  <#grant>
+    a eco:AccessGrant ;
+    eco:hasAccessGrantSubject [ eco:accessbyAgent https://bob.pod.example/profile/id#me ] ;
+    eco:hasPreparedAccessNeedGroup <#pag-notebook-group> ;
+    eco:hasDataRegistrationGrant <#notebook-grant> .
+
+  <#notebook-grant>
+    a eco:DataRegistrationGrant ;
+    eco:hasRegistration data:notebook-tree ;
+    eco:registeredShapeTree note:notebook-tree ;
+    eco:satisfiesPreparedAccessNeed <#pan-notebook> ;
+    eco:accessScope eco:AllInstances ;
+
+  <#note-grant>
+    a eco:DataRegistrationGrant ;
+    eco:hasRegistration data:note-tree ;
+    eco:registeredShapeTree note:note-tree ;
+    eco:satisfiesPreparedAccessNeed <#pan-note> ;
+    eco:accessScope eco:AllInstances ;
+
+  <#pag-notebook-group>
+    a eco:PreparedAccessNeedGroup ;
+    eco:hasAccessNeedGroupDecorator ex:accessNotebookGroupDecorator ;
+    eco:accessNecessity eco:AccessRequired ;
+    eco:authenticatesAs eco:Pilot ;
+    eco:hasPreparedAccessNeed <#pan-notebook> .
+
+  <#pan-notebook>
+      a eco:PreparedAccessNeed ;
+      eco:registeredShapeTree note:notebook-tree ;
+      eco:accessMode acl:Read, acl:Write ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:hasAccessNeedDecorator ex:notebookAccessDecorator ;
+      eco:hasShapeTreeDecorator note:notebookDecorator ;
+      eco:referencesPreparedAccessNeed <#pan-notes> .
+
+  <#pan-note>
+      a eco:PreparedAccessNeed ;
+      eco:registeredShapeTree note:note-tree ;
+      eco:accessMode acl:Read, acl:Write ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:hasAccessNeedDecorator ex:noteAccessDecorator ;
+      eco:hasShapeTreeDecorator note:noteDecorator ;
+  </pre>
+</figure>
 
 An [=Access Grant Subject=] is represented by the
 [eco:AccessGrantSubject](ecosystem.ttl#AccessGrantSubject) class, with
