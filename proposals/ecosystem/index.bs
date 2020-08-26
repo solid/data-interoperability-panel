@@ -1940,7 +1940,7 @@ to a given [=Agent=].
 
 * [[#prepare-group]]
 * [[#prepare-needs]]
-* [[#present-group]]
+* [[#present-groups]]
 * [[#get-group-dec]]
 * [[#get-need-dec]]
 
@@ -2074,7 +2074,11 @@ Issue: This may not provide coverage when we cross the same
 type of tree (i.e. via references) more than once. May be necessary to pass
 in the prepared set and always work from that.
 
-### Present Access Need Group ### {#present-group}
+### Present Access Need Groups ### {#present-groups}
+
+Outputs: Pgroup, Dgrants
+
+Note: This will fetch existing Dgrants from registry where applicable
 
 1. Let `GROUP` [eco:needGroupLabel](ecosystem.ttl#needGroupLabel) be the
     object value of `GDEC`
@@ -2084,6 +2088,11 @@ in the prepared set and always work from that.
     be the object value of `GDEC`
     <a href="http://www.w3.org/2004/02/skos/core#definition" class="vocab">
     skos:definition</a>.
+
+Issue: Must also deal with case when returning to an Access Need Group
+and disabling access, which would mean all DGRANTS get so to NoAccess.
+
+Issue: Must handle apppend on contained cases and set the scope appropriately
 
 ### Get Access Need Group Decorator ### {#get-group-dec}
 
@@ -2187,14 +2196,14 @@ class with the following properties:
     eco:hasRegistration data:notebook-tree ;
     eco:registeredShapeTree note:notebook-tree ;
     eco:satisfiesPreparedAccessNeed <#pan-notebook> ;
-    eco:accessScope eco:AllInstances ;
+    eco:scopeOfDataRegistrationGrant eco:AllInstances ;
 
   <#note-grant>
     a eco:DataRegistrationGrant ;
     eco:hasRegistration data:note-tree ;
     eco:registeredShapeTree note:note-tree ;
     eco:satisfiesPreparedAccessNeed <#pan-note> ;
-    eco:accessScope eco:AllInstances ;
+    eco:scopeOfDataRegistrationGrant eco:AllInstances ;
 
   <#pag-notebook-group>
     a eco:PreparedAccessNeedGroup ;
@@ -2210,7 +2219,8 @@ class with the following properties:
       eco:accessNecessity eco:AccessRequired ;
       eco:hasAccessNeedDecorator ex:notebookAccessDecorator ;
       eco:hasShapeTreeDecorator note:notebookDecorator ;
-      eco:referencesPreparedAccessNeed <#pan-notes> .
+      eco:referencesPreparedAccessNeed <#pan-notes> ;
+      eco:hasDataRegistrationGrant <#notebook-grant> .
 
   <#pan-note>
       a eco:PreparedAccessNeed ;
@@ -2219,6 +2229,7 @@ class with the following properties:
       eco:accessNecessity eco:AccessRequired ;
       eco:hasAccessNeedDecorator ex:noteAccessDecorator ;
       eco:hasShapeTreeDecorator note:noteDecorator ;
+      eco:hasDataRegistrationGrant <#note-grant> .
   </pre>
 </figure>
 
@@ -2254,6 +2265,10 @@ the following properties:
       * [eco:SelectedInstances](ecosystem.ttl#SelectedInstances) - Scope includes
           access only to those [=Registered Data Instances=] specifically selected
           by the [=Agent=]
+      * [eco:AppendInstances](ecosystem.ttl#AppendInstances) - Scope includes
+          the ability to create new [=Registered Data Instances=] for the
+          [=Data Registration=] and have access to them, but not have access
+          to others outside of that scope unless otherwise specified.
       * [eco:NoAccess](ecosystem.ttl#NoAccess) - Scope include no access.
   * [eco:inheritsFromDataRegistrationGrant](ecosystem.ttl#inheritsFromDataRegistrationGrant) -
       Identifies a [=Data Registration Grant=] whose selected instances
@@ -2263,11 +2278,104 @@ the following properties:
 
 ### Record Grant ### {#grants-record}
 
-TODO - this is the operation where a grant is stored
+This operation is called based on decisions an [=Agent=] has made on one or
+more [=Prepared Access Need Groups=] for a given [=Authorization Subject=].
+
+#### Inputs #### {#record-inputs}
+
+* Let `GRANT` be an [=Access Grant=] linked any new or stored
+    and synchronized [=Prepared Access Need Groups=] and [=Data Registration Grants=]
+    for a given [=Authorization Subject=]
+
+#### Outputs #### {#record-outputs}
+
+* Let `GRANT` be an [=Access Grant=] that has been stored in the
+    [=Access Registry=] and had the relevant permissions applied.
+
+#### Operation Details #### {#record-details}
+
+Assert: It is the responsibility of the caller to guaranteee that
+[=Prepared Access Need Groups=] and [=Data Registration Grants=] linked to
+to `GRANT` are synchronized based on the [=Agent's=]
+most recent applied choices across all linked [=Prepared Access Need Groups=].
+
+1. Let `PGROUPS` be the [=Prepared Access Need Groups=] linked to `GRANT`
+    via `GRANT hasPreparedAccessNeedGroup`
+1. Let `DGRANTS` be the [=Data Registration Grants=] linked to `GRANT`
+    via `GRANT hasDataRegistrationGrant`
+1. For each [=Prepared Access Need Group=] `PGROUP` in `PGROUPS`:
+    2. For each [=Prepared Access Need=] `NEED` in `PGROUP` traversed via
+        `NEED skos:narrower` or `NEED referencesPreparedAccessNeed`:
+        1. Let `NDRGRANT` be the [=Data Registration Grant=] associated with
+            `NEED` via `NEED hasDataRegistrationGrant`
+            1. Error if `NDGRANT` is missing
+            1. Error if `NDGRANT satisfiesPreparedAccessNeed` doesn't link to `NEED`
+            2. Error if `eco:RegisteredShapeTree` is not the same in `NDGRANT` and `NEED`
+2. For each [=Data Registration Grant=] `DGRANT` in `DGRANTS`
+    3. Let `NEEDS` be all [=Prepared Access Needs=] across `PGROUPS`
+    4. Let `DGNEEDS` be all [=Prepared Access Needs=] linked to `DGRANT` via
+        `DGRANT satisfiesPreparedAccessNeed`
+    4. Error if `DGNEEDS` is not in `NEEDS`
+    5. Error if `DGNEEDS` is empty
+    6. Error if `DGRANT` access modes are not an exact union of `DGNEEDS accessMode` values
+        when `DGRANT scopeOfDataRegistrationGrant` is not `eco:NoAccess`
+3. Call [[#grants-apply]] with `GRANT`
+4. Store `GRANT` in [=Access Registry=]
+    5. TODO
+4. Return `GRANT`
+
+Issue: Need to properly factor in multi-pod scenarios. Must identify the
+proper access registry to store things in based on the data registration, which
+means pods will also need to be registered.
 
 ### Apply Permissions ### {#grants-apply}
 
-TODO - this is the actual operation where grants are applied to resources
+#### Inputs #### {#applyperms-inputs}
+
+* Let `GRANT` be an [=Access Grant=] linked any new or stored
+    and synchronized [=Prepared Access Need Groups=] and [=Data Registration Grants=]
+    for a given [=Authorization Subject=]
+
+#### Outputs #### {#applyperms-outputs}
+
+* Let `GRANT` be an [=Access Grant=] that has had the relevant permissions applied.
+
+#### Operation Details #### {#applyperms-details}
+
+1. Let `DGRANTS` be the [=Data Registration Grants=] linked to `GRANT`
+    via `GRANT hasDataRegistrationGrant`
+2. For each [=Data Registration Grant=] `GRANT` in `GRANTS`
+    3. Let [=Data Registration=] linked via `hasRegistration` be `DREG`
+    4. If `DREG scopeOfDataRegistrationGrant` includes `eco:NoAccess`
+        6. Ignore any other linked scopes (they shouldn't be there)
+        5. Fill In - Remove any existing access for the authorization subject
+    5. If `DREG scopeOfDataRegistrationGrant` includes `eco:AllInstances`
+        6. Error if this is specified with other scopes
+        7. Fetch the ACL Resource for the Data Registration Container
+        8. Load all statements that include the authorization subject
+        9. If effective access != needed access change access for subject
+          10. Handle append mode specially - error if append + write
+              11. Adjust them so the only statement for the subject is append
+                  privileges on the container, with the default Permissions
+                  assigned to the created resource belonging to the creator.
+                  Question: What should the modes be?
+    6. If `DREG scopeOfDataRegistrationGrant` includes `eco:InheritInstances`
+        7. Error if this is specified with AllInstances or NoAccess
+        8. Fetch the ACL resource for the Data Registration Container
+        9. Load all statements that include the authorization subject
+        10. Adjust them so the only statement for the subject is inherited access
+            for MODES to the container where the shape tree associated with DGRANT is
+            referenced by the shape tree associated with the grant at
+            inheritsFromDataRegistrationGrant.
+    7. If `DREG scopeOfDataRegistrationGrant` includes `eco:InheritInstances` AND `eco:SelectedInstances`
+        8. Apply permissions based on the rules for SelectedInstances only
+    8. If `DREG scopeOfDataRegistrationGrant` includes `eco:SelectedInstances`
+        1. For each [=Registered Data Instance=] `INSTANCE`
+        2. Let `ACL` be the [=ACL Resource=] directly associated with `INSTANCE`
+        3. Load all statements that include the authorization subject
+        4. If effective access != needed access
+            5. Change access for subject such that there is only one statement
+                pertinent to the subject with MODES
 
 
 Exchanging Access Information {#exchanging}
