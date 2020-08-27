@@ -2189,13 +2189,14 @@ class with the following properties:
     a eco:AccessGrant ;
     eco:hasAccessGrantSubject [ eco:accessbyAgent https://bob.pod.example/profile/id#me ] ;
     eco:hasPreparedAccessNeedGroup <#pag-notebook-group> ;
-    eco:hasDataRegistrationGrant <#notebook-grant> .
+    eco:hasDataRegistrationGrant <#notebook-grant>, <#note-grant> .
 
   <#notebook-grant>
     a eco:DataRegistrationGrant ;
     eco:hasRegistration data:notebook-tree ;
     eco:registeredShapeTree note:notebook-tree ;
     eco:satisfiesPreparedAccessNeed <#pan-notebook> ;
+    eco:accessMode acl:Read, acl:Write ;
     eco:scopeOfDataRegistrationGrant eco:AllInstances ;
 
   <#note-grant>
@@ -2203,6 +2204,7 @@ class with the following properties:
     eco:hasRegistration data:note-tree ;
     eco:registeredShapeTree note:note-tree ;
     eco:satisfiesPreparedAccessNeed <#pan-note> ;
+    eco:accessMode acl:Read, acl:Write ;
     eco:scopeOfDataRegistrationGrant eco:AllInstances ;
 
   <#pag-notebook-group>
@@ -2250,9 +2252,11 @@ the following properties:
     to the associated [=Data Registration=]
 * [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) - links to the
     associated [=shape tree=]
-* [eco:satisfiedPreparedAccessNeed](ecosystem.ttl#satisfiesPreparedAccessNeed) -
+* [eco:satisfiesPreparedAccessNeed](ecosystem.ttl#satisfiesPreparedAccessNeed) -
     links to the [=Prepared Access Need=] that prompted the user to grant
     access to this data
+* [eco:accessMode](ecosystem.ttl#accessMode) - exact union of `accessMode` values
+    for [=Prepared Access Needs=] associated via [eco:satisfiesPreparedAccessNeed](ecosystem.ttl#satisfiesPreparedAccessNeed).
 * [eco:scopeOfDataRegistrationGrant](ecosystem.ttl#scopeOfDataRegistrationGrant) -
     Identifies the access scope of the grant.
       * [eco:AllInstances](ecosystem.ttl#AllInstances) - Scope includes
@@ -2284,7 +2288,7 @@ which are recorded in the form of [=Data Registration Grants=].
 
 #### Inputs #### {#record-inputs}
 
-* Let `GRANT` be an [=Access Grant=] linked any new or updated
+* Let `GRANT` be an [=Access Grant=] linked to any new or updated
     [=Prepared Access Need Groups=] and [=Data Registration Grants=]
     for a given [=Authorization Subject=]
 
@@ -2338,8 +2342,8 @@ means pods will also need to be registered.
 
 #### Inputs #### {#applyperms-inputs}
 
-* Let `GRANT` be an [=Access Grant=] linked any new or stored
-    and synchronized [=Prepared Access Need Groups=] and [=Data Registration Grants=]
+* Let `GRANT` be an [=Access Grant=] linked to any new or updated
+    [=Prepared Access Need Groups=] and [=Data Registration Grants=]
     for a given [=Authorization Subject=]
 
 #### Outputs #### {#applyperms-outputs}
