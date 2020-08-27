@@ -170,6 +170,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:hasRegistration IRI ;
   eco:registeredShapeTree IRI ;
   eco:satisfiesPreparedAccessNeed IRI ;
+  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   eco:scopeOfDataRegistrationGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ] ;
   eco:inheritsFromDataRegistrationGrant IRI*
 }

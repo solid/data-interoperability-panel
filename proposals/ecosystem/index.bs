@@ -2279,13 +2279,19 @@ the following properties:
 ### Record Grant ### {#grants-record}
 
 This operation is called based on decisions an [=Agent=] has made on one or
-more [=Prepared Access Need Groups=] for a given [=Authorization Subject=].
+more [=Prepared Access Need Groups=] for a given [=Authorization Subject=],
+which are recorded in the form of [=Data Registration Grants=].
 
 #### Inputs #### {#record-inputs}
 
-* Let `GRANT` be an [=Access Grant=] linked any new or stored
-    and synchronized [=Prepared Access Need Groups=] and [=Data Registration Grants=]
+* Let `GRANT` be an [=Access Grant=] linked any new or updated
+    [=Prepared Access Need Groups=] and [=Data Registration Grants=]
     for a given [=Authorization Subject=]
+
+Note: If the [=Authorization Subject=] has already received an [=Access Grant=],
+it will already have a `GRANT` record in the [=Access Registry=]. When
+`GRANT` is passed as input here, it must be based on an updated set of the
+stored [=Prepared Access Need Groups=] and [=Data Registration Grants=].
 
 #### Outputs #### {#record-outputs}
 

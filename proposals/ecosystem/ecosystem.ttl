@@ -457,6 +457,14 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Need"@en .
 
+:hasAccessNeedGroup
+  a rdf:property ;
+  rdfs:comment "Links to the AccessNeedGroup used to generate the PreparedAccessNeedGroup"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :PreparedAccessNeedGroup ;
+  rdfs:range :AccessNeedGroup ;
+  rdfs:label "Has Access Need Group"@en .
+
 :hasAccessNeedGroupDecorator
   a rdf:property ;
   rdfs:comment "Links to an AccessNeedGroupDecorator"@en ;
@@ -758,7 +766,7 @@ rdfs:label "Requested Access Mode"@en .
 #############################################################################
 :DataRegistrationGrant
   a rdfs:Class ;
-  rdfs:comment "Associates a DataRegistration with an AccessGrant"@en ;
+    rdfs:comment "Associates a DataRegistration with an AccessGrant"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Data Registration Grant"@en .
 
