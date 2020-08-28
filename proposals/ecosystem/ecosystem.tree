@@ -22,8 +22,9 @@
   st:expectsType st:ShapeTreeContainer ;
   st:validatedBy <ecos#RegistrarShape> ;
   st:contains <#application-registry-set-tree> ,
-                <#data-registry-set-tree> ,
-                st:AllowNone .
+              <#data-registry-set-tree> ,
+              <#access-registry-set-tree> ,
+              st:AllowNone .
 
 <#application-registry-set-tree>
   a st:ShapeTree;
@@ -36,6 +37,13 @@
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy <ecos#DataRegistrySetShape> ;
   st:matchesUriTemplate "data" .
+
+<#access-registry-set-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <ecos#AccessRegistrySetShape> ;
+  st:matchesUriTemplate "access" .
+
 
 # Application Registry
 ##############################################################################
@@ -85,4 +93,27 @@
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
   st:validatedBy <ecos#DataRegistrationShape> ;
+  st:matchesUriTemplate "{id}" .
+
+# Access Registry
+##############################################################################
+# Ensure the registry container graph contains a valid
+# AccessRegistry instance, and the resource inside of
+# it are valid AccessGrant instances.
+##############################################################################
+<#access-registry-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <ecos#AccessRegistryShape> ;
+  st:contains <#access-grant-tree> ,
+              st:AllowNone .
+
+# Access Grant
+##############################################################################
+# Ensure the grant resource graph contains a valid AccessGrant instance
+##############################################################################
+<#access-grant-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <ecos#AccessGrantShape> ;
   st:matchesUriTemplate "{id}" .

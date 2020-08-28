@@ -1,5 +1,6 @@
 @prefix : <#> .
 @prefix solid: <http://www.w3.org/ns/solid/terms> .
+@prefix st: <http://www.w3.org/ns/shapetree#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -190,6 +191,15 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Data Registry"@en .
 
+# AccessRegistry Class
+#############################################################################
+# SubClassOf Registry which stores registered AccessGrants
+#############################################################################
+:AccessRegistry
+  rdfs:subClassOf :Registry ;
+  rdfs:comment "A collection of Access Grant instances"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Access Registry"@en .
 
 # Registration Class
 #############################################################################
@@ -263,7 +273,7 @@ rdfs:label "Solid ecosystem terms"@en .
   a rdf:property ;
   rdfs:comment "Links to the shape tree associated with a given Data Registration"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:range tree:ShapeTree ;
+  rdfs:range st:ShapeTree ;
   rdfs:label "Registered Shape Tree"@en .
 
 # No domain is provided because this is also used by other classes in the
@@ -331,7 +341,6 @@ rdfs:label "Solid ecosystem terms"@en .
   a rdf:property ;
   rdfs:comment "Links to AccessNeedGroup"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :Application ;
   rdfs:range :AccessNeedGroup ;
   rdfs:label "Has Access Need Group"@en .
 
@@ -457,7 +466,7 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Need"@en .
 
-:hasAccessNeedGroup
+:fromAccessNeedGroup
   a rdf:property ;
   rdfs:comment "Links to the AccessNeedGroup used to generate the PreparedAccessNeedGroup"@en ;
   rdfs:isDefinedBy <> ;
@@ -540,13 +549,13 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:range :PreparedAccessNeed ;
   rdfs:label "References Prepared Access Need"@en .
 
-:hasDataRegistrationGrant
+:hasDataGrant
   a rdf:property ;
-  rdfs:comment "Links to a DataRegistrationGrant"@en ;
+  rdfs:comment "Links to a DataGrant"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :PreparedAccessNeed ;
-  rdfs:range :DataRegistrationGrant ;
-  rdfs:label "Has Data Registration Grant"@en .
+  rdfs:range :DataGrant ;
+  rdfs:label "Has Data Grant"@en .
 
 # AccessDecoratorIndex class
 #############################################################################
@@ -688,16 +697,6 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "AccessNeedGroup Decorator"@en .
 
-# AccessRegistry Class
-#############################################################################
-# SubClassOf Registry which stores registered AccessGrants
-#############################################################################
-:AccessRegistry
-  rdfs:subClassOf :Registry ;
-  rdfs:comment "A collection of registered Access Grant instances"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Access Registry"@en .
-
 # AccessGrant Class
 #############################################################################
 # Records an access decision made by an Agent, stored in the Access Registry
@@ -724,13 +723,13 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:range :PreparedAccessNeedGroup ;
   rdfs:label "Has Prepared Access Need Group"@en .
 
-:hasDataRegistrationGrant
+:hasDataGrant
   a rdf:property ;
-  rdfs:comment "Link to a DataRegistrationGrant"@en ;
+  rdfs:comment "Link to a DataGrant"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :AccessGrant ;
-  rdfs:range :DataRegistrationGrant ;
-  rdfs:label "Has Data Registration Grant"@en .
+  rdfs:range :DataGrant ;
+  rdfs:label "Has Data Grant"@en .
 
 # AccessGrantSubject Class
 #############################################################################
@@ -759,37 +758,37 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:label "Access Grant Subject Application"@en .
 
 
-# DataRegistrationGrant Class
+# DataGrant Class
 #############################################################################
 # Associates a Registration from the Data Registry (DataRegistration)
 # with a given AccessGrant.
 #############################################################################
-:DataRegistrationGrant
+:DataGrant
   a rdfs:Class ;
     rdfs:comment "Associates a DataRegistration with an AccessGrant"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Data Registration Grant"@en .
+  rdfs:label "Data Grant"@en .
 
 :satisfiesPreparedAccessNeed
   a rdf:property ;
-  rdfs:comment "Links to a PreparedAccessNeed that the DataRegistrationGrant satisfies"@en ;
+  rdfs:comment "Links to a PreparedAccessNeed that the DataGrant satisfies"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :DataRegistrationGrant ;
+  rdfs:domain :DataGrant ;
   rdfs:range :PreparedAcecssNeed ;
   rdfs:label "Satisfies Prepared Access Need"@en .
 
-:scopeOfDataRegistrationGrant
+:scopeOfDataGrant
   a rdf:property ;
-  rdfs:comment "Links to a scope identifier for the DataRegistrationGrant"@en ;
+  rdfs:comment "Links to a scope identifier for the DataGrant"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :DataRegistrationGrant ;
+  rdfs:domain :DataGrant ;
   rdfs:range [ owl:oneOf ( :SelectInstances :EveryInstance :InheritInstances :NoAccess ) ] ;
-  rdfs:label "Scope of Data Registration Grant"@en .
+  rdfs:label "Scope of Data Grant"@en .
 
-:inheritsFromDataRegistrationGrant
+:inheritsFromDataGrant
   a rdf:property ;
-  rdfs:comment "Links to a DataRegistrationGrant whose scope is being inherited"@en ;
+  rdfs:comment "Links to a DataGrant whose scope is being inherited"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :DataRegistrationGrant ;
-  rdfs:range :DataRegistrationGrant ;
-  rdfs:label "Inherits From Data Registration Grant"@en .
+  rdfs:domain :DataGrant ;
+  rdfs:range :DataGrant ;
+  rdfs:label "Inherits From Data Grant"@en .

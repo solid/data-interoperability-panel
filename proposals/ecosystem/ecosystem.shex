@@ -123,6 +123,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Validate an instance of a prepared eco:PreparedAccessNeedGroup class
 <#PreparedAccessNeedGroupShape> {
   a [ eco:PreparedAccessNeedGroup ] ;
+  eco:fromAccessNeedGroup IRI ;
   eco:hasAccessNeedGroupDecorator IRI ;
   eco:authenticatesAs IRI ;
   eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
@@ -135,7 +136,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:inPreparedAccessNeedGroup IRI+ ;
   eco:hasShapeTreeDecorator IRI ;
   eco:hasAccessNeedDecorator IRI? ;
-  eco:hasDataRegistrationGrant IRI? ;
+  eco:hasDataGrant IRI? ;
   eco:hasRegisteredDataInstance IRI* ;
   eco:registeredShapeTree IRI ;
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
@@ -147,30 +148,49 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 }
 
 ################################################################
-# Access Grants
+# Access Registry
 ################################################################
 
-# Validate an instance of the AccessGrant class
-<#AccessGrant> {
-  a [ eco:AccessGrant ] ;
-  eco:accessGrantSubject IRI ;
-  eco:hasPreparedAccessNeedGroup IRI+ ;
-  eco:hasDataRegistrationGrant IRI+
+# Access Registry Set
+# Validate an instance of the eco:AccessRegistrySet class
+################################################################
+<#AccessRegistrySetShape> {
+  a [ eco:AccessRegistrySet ] ;
+  eco:hasRegistry IRI+
 }
 
-<#AccessGrantSubject> {
+# Access Registry
+# Validate an instance of the eco:AccessRegistry class
+################################################################
+<#AccessRegistryShape> {
+  a [ eco:AccessRegistry ] ;
+  eco:hasRegistration IRI*
+}
+
+# Validate an instance of the AccessGrant class
+<#AccessGrantShape> {
+  a [ eco:AccessGrant ] ;
+  eco:registeredBy IRI ;
+  eco:registeredWith IRI? ;
+  eco:registeredAt xsd:dateTime ;
+  eco:accessGrantSubject @AccessGrantSubject ;
+  eco:hasPreparedAccessNeedGroup @PreparedAccessNeedGroupShape+ ;
+  eco:hasDataGrant @DataGrantShape+
+}
+
+<#AccessGrantSubjectShape> {
   a [ eco:AccessGrantSubject ] ;
   eco:accessGrantSubjectAgent IRI? ;
   eco:accessGrantSubjectApplication IRI?
 }
 
-# Validate an instance of the DataRegistrationGrant class
-<#DataRegistrationGrant> {
-  a [ eco:DataRegistrationGrant ] ;
+# Validate an instance of the DataGrant class
+<#DataGrantShape> {
+  a [ eco:DataGrant ] ;
   eco:hasRegistration IRI ;
   eco:registeredShapeTree IRI ;
-  eco:satisfiesPreparedAccessNeed IRI ;
+  eco:satisfiesPreparedAccessNeed @PreparedAccessNeedShape+ ;
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  eco:scopeOfDataRegistrationGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ] ;
-  eco:inheritsFromDataRegistrationGrant IRI*
+  eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ] ;
+  eco:inheritsFromDataGrant @DataGrantShape*
 }

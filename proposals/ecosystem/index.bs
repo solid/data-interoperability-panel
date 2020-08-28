@@ -32,6 +32,25 @@ table.permissions tbody td {
   font-size: 10px;
 }
 
+table.classinfo thead tr th[colspan] {
+  text-align: left;
+  font-size: 15px;
+}
+
+table.classinfo thead tr th {
+  text-align: left;
+  font-size: 14px;
+}
+
+table.classinfo tbody tr:nth-child(odd) {
+  background-color: lightgray;
+  font-size: 12px;
+}
+
+table.classinfo tbody tr td {
+  font-size: 12px;
+}
+
 pre {
   font-size: .8em;
 }
@@ -49,6 +68,11 @@ a[href*=".ttl"] {
   border-bottom: 1px solid #339966;
 }
 
+a[href^="#class"] {
+  color: #339966;
+  border-bottom: 1px solid #339966;
+}
+
 a.vocab {
   color: #339966;
   border-bottom: 1px solid #339966;
@@ -59,7 +83,17 @@ a[href*=".shex"] {
   border-bottom: 1px solid #cc2900;
 }
 
+a[href^="#shex"] {
+  color: #cc2900;
+  border-bottom: 1px solid #cc2900;
+}
+
 a[href*=".tree"] {
+  color: #e68a00;
+  border-bottom: 1px solid #e68a00;
+}
+
+a[href^="#tree"] {
   color: #e68a00;
   border-bottom: 1px solid #e68a00;
 }
@@ -2094,6 +2128,13 @@ and disabling access, which would mean all DGRANTS get so to NoAccess.
 
 Issue: Must handle apppend on contained cases and set the scope appropriately
 
+Issue: Must also ensure that we are loading the original GRANT to pickup
+where we left off.
+
+Issue: Must also handle the case when the origin access need group has
+been expanded (optionally show that to the user and the authorization
+options)
+
 ### Get Access Need Group Decorator ### {#get-group-dec}
 
 - Must align with LANG if match is available
@@ -2111,6 +2152,8 @@ Access Grants {#grants}
 ## Overview ## {#access-overview}
 
 ## Data Model ## {#access-datamodel}
+
+### Summary ### {#access-datamodel-overview}
 
 <figure id="fig-access-model">
   <img src="access-model.svg" width=100%/>
@@ -2164,22 +2207,6 @@ via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
   </pre>
 </figure>
 
-Each [=Access Grant=] represents access granted to one recipient; the
-[=Access Grant Subject=], based on access criteria detailed in one or more
-[=Prepared Access Need Groups=]. Access is granted to registered data in
-[=Data Registries=], identified by [=Data Registration Grants=] linked to the
-[=Access Grant=].
-
-An [=Access Grant=] extends the [eco:Registration](ecosystem.ttl#Registration)
-class with the following properties:
-
-* [eco:hasAccessGrantSubject](ecosystem.ttl#hasAccessGrantSubject) - Links to
-    one [=Access Grant Subject=] who was granted access.
-* [eco:hasPreparedAccessNeedGroup](ecosystem.ttl#hasPreparedAccessNeedGroup) -
-    Links to a [=Prepared Access Need Group=] associated with the Access Grant.
-* [eco:hasDataRegistrationGrant](ecosystem.ttl#hasDataRegistrationGrant) -
-    Links to a [=Data Registration Grant=] associated with the Access Grant.
-
 <figure id="fig-access-grant">
   <figcaption>An [=Access Grant=] at
   https://alice.pod.example/access/ab3d0023-3860-4358-ae33-8d3af1097b9d/#grant
@@ -2187,28 +2214,34 @@ class with the following properties:
   <pre highlight="turtle">
   <#grant>
     a eco:AccessGrant ;
-    eco:hasAccessGrantSubject [ eco:accessbyAgent https://bob.pod.example/profile/id#me ] ;
+    eco:hasAccessGrantSubject <#grant-subject> ;
     eco:hasPreparedAccessNeedGroup <#pag-notebook-group> ;
-    eco:hasDataRegistrationGrant <#notebook-grant>, <#note-grant> .
+    eco:hasDataGrant <#notebook-grant>, <#note-grant> .
+
+  <#grant-subject>
+    a eco:AccessGrantSubject ;
+    eco:accessByAgent https://alice.pod.example/profile/id#me ;
+    eco:accessByApplication https://nevernote.example/id#agent .
 
   <#notebook-grant>
-    a eco:DataRegistrationGrant ;
+    a eco:DataGrant ;
     eco:hasRegistration data:notebook-tree ;
     eco:registeredShapeTree note:notebook-tree ;
     eco:satisfiesPreparedAccessNeed <#pan-notebook> ;
     eco:accessMode acl:Read, acl:Write ;
-    eco:scopeOfDataRegistrationGrant eco:AllInstances ;
+    eco:scopeOfDataGrant eco:AllInstances ;
 
   <#note-grant>
-    a eco:DataRegistrationGrant ;
+    a eco:DataGrant ;
     eco:hasRegistration data:note-tree ;
     eco:registeredShapeTree note:note-tree ;
     eco:satisfiesPreparedAccessNeed <#pan-note> ;
     eco:accessMode acl:Read, acl:Write ;
-    eco:scopeOfDataRegistrationGrant eco:AllInstances ;
+    eco:scopeOfDataGrant eco:AllInstances ;
 
   <#pag-notebook-group>
     a eco:PreparedAccessNeedGroup ;
+    eco:fromAccessNeedGroup ex:accessNotebookGroup ;
     eco:hasAccessNeedGroupDecorator ex:accessNotebookGroupDecorator ;
     eco:accessNecessity eco:AccessRequired ;
     eco:authenticatesAs eco:Pilot ;
@@ -2222,7 +2255,7 @@ class with the following properties:
       eco:hasAccessNeedDecorator ex:notebookAccessDecorator ;
       eco:hasShapeTreeDecorator note:notebookDecorator ;
       eco:referencesPreparedAccessNeed <#pan-notes> ;
-      eco:hasDataRegistrationGrant <#notebook-grant> .
+      eco:hasDataGrant <#notebook-grant> .
 
   <#pan-note>
       a eco:PreparedAccessNeed ;
@@ -2231,52 +2264,364 @@ class with the following properties:
       eco:accessNecessity eco:AccessRequired ;
       eco:hasAccessNeedDecorator ex:noteAccessDecorator ;
       eco:hasShapeTreeDecorator note:noteDecorator ;
-      eco:hasDataRegistrationGrant <#note-grant> .
+      eco:hasDataGrant <#note-grant> .
   </pre>
 </figure>
 
-An [=Access Grant Subject=] is represented by the
-[eco:AccessGrantSubject](ecosystem.ttl#AccessGrantSubject) class, with
-the following properties:
+### Access Registry Set ### {#classes-access-registry-set}
 
-* [eco:accessByAgent](ecosystem.ttl#accessByAgent) - [=Agent=] who is being
-    granted access
-* [eco:accessByApplication](ecosystem.ttl#accessByApplication) - [=Application=]
-    that is being granted access
+An <dfn>Access Registry Set</dfn> is a [=Registry Set=] specifically
+made up of [=Access Registries=].
 
-A [=Data Registration Grant=] is represented by the
-[eco:DataRegistrationGrant](ecosystem.ttl#DataRegistrationGrant) class, with
-the following properties:
+<table class="classinfo data" align="left" id="classAccessRegistrySet">
+  <col>
+  <colgroup span=2></colgroup>
+  <col>
+  <thead>
+    <tr>
+      <th colspan=4 text-align=left>
+        [AccessRegistrySet](ecosystem.ttl#AccessRegistrySet)
+        a rdfs:subClassOf [[#reg-model|RegistrySet]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Domain</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistry</td>
+      <td>RegistrySet</td>
+      <td>Registry</td>
+      <td>Link to associated [=Access Registries=]</td>
+    </tr>
+  </tbody>
+</table>
 
-* [eco:hasRegistration](ecosystem.ttl#hasRegistration) - links the
-    to the associated [=Data Registration=]
-* [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) - links to the
-    associated [=shape tree=]
-* [eco:satisfiesPreparedAccessNeed](ecosystem.ttl#satisfiesPreparedAccessNeed) -
-    links to the [=Prepared Access Need=] that prompted the user to grant
-    access to this data
-* [eco:accessMode](ecosystem.ttl#accessMode) - exact union of `accessMode` values
-    for [=Prepared Access Needs=] associated via [eco:satisfiesPreparedAccessNeed](ecosystem.ttl#satisfiesPreparedAccessNeed).
-* [eco:scopeOfDataRegistrationGrant](ecosystem.ttl#scopeOfDataRegistrationGrant) -
-    Identifies the access scope of the grant.
-      * [eco:AllInstances](ecosystem.ttl#AllInstances) - Scope includes
-          access to all [=Registered Data Instances=] of the associated
-          [=Data Registration=]
-      * [eco:InheritInstances](ecosystem.ttl#InheritInstances) - Scope includes
-          access to instances inherited by instances selected in the
-          [=Data Registration Grant=] linked via
-          [eco:inheritsFromDataRegistrationGrant](ecosystem.ttl#inheritsFromDataRegistrationGrant).
-      * [eco:SelectedInstances](ecosystem.ttl#SelectedInstances) - Scope includes
-          access only to those [=Registered Data Instances=] specifically selected
-          by the [=Agent=]
-      * [eco:AppendInstances](ecosystem.ttl#AppendInstances) - Scope includes
-          the ability to create new [=Registered Data Instances=] for the
-          [=Data Registration=] and have access to them, but not have access
-          to others outside of that scope unless otherwise specified.
-      * [eco:NoAccess](ecosystem.ttl#NoAccess) - Scope include no access.
-  * [eco:inheritsFromDataRegistrationGrant](ecosystem.ttl#inheritsFromDataRegistrationGrant) -
-      Identifies a [=Data Registration Grant=] whose selected instances
-      narrow the scope of instances to be presented by this grant.
+The [AccessRegistrySetShape](#shexAccessRegistrySet) is used to validate
+an instance of the [AccessRegistrySet](#classAccessRegistrySet) class.
+
+<pre highlight="turtle" id="shexAccessRegistrySet">
+<#AccessRegistrySetShape> {
+  a [ eco:AccessRegistrySet ] ;
+  eco:hasRegistry IRI+
+}
+</pre>
+
+The [AccessRegistrySetTree](ecosystem.tree#access-registry-set-tree)
+is assigned to a resource to ensure it will validate against the
+[AccessRegistrySetShape](#shexAccessRegistrySet).
+
+<pre highlight="turtle" id="treeAccessRegistrySet">
+<#access-registry-set-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;ecos#AccessRegistrySetShape&gt; ;
+  st:matchesUriTemplate "access" .
+</pre>
+
+### Access Registry ### {#classes-access-registry-set}
+
+An <dfn>Access Registry</dfn> is a collection of
+[=Access Grants=] stored in a specific location in a [=pod=].
+
+<table class="classinfo data" align="left" id="classAccessRegistry">
+  <col>
+  <colgroup span=2></colgroup>
+  <col>
+  <thead>
+    <tr>
+      <th colspan=4>
+        [AccessRegistry](ecosystem.ttl#AccessRegistry)
+        a rdfs:subClassOf [[#reg-model|Registry]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Domain</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>Registry</td>
+      <td>Registration</td>
+      <td>Link to associated [=Access Grants=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessRegistryShape](#shexAccessRegistry) is used to validate an
+instance of the [AccessRegistry](#classAccessRegistry) class.
+
+<pre highlight="turtle" id="shexAccessRegistry">
+<#AccessRegistryShape> {
+  a [ eco:AccessRegistry ] ;
+  eco:hasRegistration IRI*
+}
+</pre>
+
+The [AccessRegistryTree](ecosystem.tree#access-registry-tree) is assigned
+to a container resource to ensure that it will validate against the
+[AccessRegistryShape](#shexAccessRegistry), and contain only
+conformant instances of the [AccessGrantTree](#treeAccessGrant).
+
+<pre highlight="turtle" id="treeAccessRegistry">
+<#access-registry-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy &lt;ecos#AccessRegistryShape&gt; ;
+  st:contains <#access-grant-tree> ,
+              st:AllowNone .
+</pre>
+
+### Access Grant ### {#classes-access-grant}
+
+Each <dfn>Access Grant</dfn> represents access granted to one recipient; the
+[=Access Grant Subject=], based on access criteria detailed in one or more
+[=Prepared Access Need Groups=]. Access is granted to registered data in
+[=Data Registries=], identified by [=Data Grants=] linked to the
+[=Access Grant=].
+
+<table class="classinfo data" align="left" id="classAccessGrant">
+  <col>
+  <colgroup span=2></colgroup>
+  <col>
+  <thead>
+    <tr>
+      <th colspan=4>
+        [AccessGrant](ecosystem.ttl#AccessGrant)
+        a rdfs:subClassOf [[#reg-model|Registration]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Domain</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>Registration</td>
+      <td>Agent</td>
+      <td>[=Agent=] that registered the [=Access Grant=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>Registration</td>
+      <td>Application</td>
+      <td>[=Application=] used to create the [=Access Grant=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>Registration</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Grant=] was created</td>
+    </tr>
+    <tr>
+      <td>hasAccessGrantSubject</td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>AccessGrantSubject</td>
+      <td>Links to one [=Access Grant Subject=] who was granted access.</td>
+    </tr>
+    <tr>
+      <td>hasPreparedAccessNeedGroup</td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>PreparedAccessNeedGroup</td>
+      <td>Links to a [=Prepared Access Need Group=] associated with the Access Grant.</td>
+    </tr>
+    <tr>
+      <td>hasDataGrant</td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>DataGrant</td>
+      <td>Links to a [=Data Grant=] associated with the Access Grant.</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessGrantShape](#shexAccessGrant) is used to validate an instance
+of the [AccessGrant](#classAccessGrant) class.
+
+<pre highlight="turtle" id="shexAccessGrant">
+<#AccessGrantShape> {
+  a [ eco:AccessGrant ] ;
+  eco:registeredBy IRI ;
+  eco:registeredWith IRI? ;
+  eco:registeredAt xsd:dateTime ;
+  eco:accessGrantSubject @AccessGrantSubject ;
+  eco:hasPreparedAccessNeedGroup @PreparedAccessNeedGroupShape+ ;
+  eco:hasDataGrant @DataGrantShape+
+}
+</pre>
+
+The [AccessGrantTree](ecosystem.tree#access-grant-tree) is assigned to a
+resource via the [AccessRegistryTree](#treeAccessRegistry), and ensure
+that the assigned resource will validate against the
+[AccessGrantShape](#shexAccessGrant).
+
+<pre highlight="turtle" id="treeAccessGrant">
+<#access-grant-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;ecos#AccessGrantShape&gt; ;
+  st:matchesUriTemplate "{id}" .
+</pre>
+
+### Access Grant Subject ### {#classes-access-grant-subject}
+
+An <dfn>Access Grant Subject</dfn> represents a unique combination of
+who and what is being granted access. For example, it allows a single [=Agent=]
+to be specified, or a given [=Agent=] using a given [=Application=].
+
+<table class="classinfo data" align="left" id="classAccessGrantSubject">
+  <col>
+  <colgroup span=2></colgroup>
+  <col>
+  <thead>
+    <tr>
+      <th colspan=4>[AccessGrantSubject](ecosystem.ttl#AccessGrant)</th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Domain</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>accessByAgent</td>
+      <td>[AccessGrantSubject](#classAccessGrantSubject)</td>
+      <td>Agent</td>
+      <td>[=Agent=] being granted access</td>
+    </tr>
+    <tr>
+      <td>accessByApplication</td>
+      <td>[AccessGrantSubject](#classAccessGrantSubject)</td>
+      <td>Application</td>
+      <td>[=Application=] being granted access</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessGrantSubjectShape](#shexAccessGrantSubject) is used to validate
+an instance of the [AccessGrantSubject](#classAccessGrantSubject) class.
+
+<pre highlight="turtle" id="shexAccessGrantSubject">
+<#AccessGrantSubjectShape> {
+  a [ eco:AccessGrantSubject ] ;
+  eco:accessGrantSubjectAgent IRI? ;
+  eco:accessGrantSubjectApplication IRI?
+}
+</pre>
+
+### Data Grant ### {#classes-data-grant}
+
+A <dfn>Data Grant</dfn> records a decision made by a
+given [=Agent=] based upon [=Prepared Access Needs=] presented to them
+for a given [=Data Registration=].
+
+<table class="classinfo data" align="left" id="classDataGrant">
+  <col>
+  <colgroup span=2></colgroup>
+  <col>
+  <thead>
+    <tr>
+      <th colspan=4>
+        [DataGrant](ecosystem.ttl#DataGrant)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Domain</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>-</td>
+      <td>DataRegistration</td>
+      <td>[=Data Registration=] the [=Data Grant=] grant applies to</td>
+    </tr>
+    <tr>
+      <td>registeredShapeTree</td>
+      <td>-</td>
+      <td>st:ShapeTree</td>
+      <td>The [=shape tree=] registered at the target [=Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>satisfiesPreparedAccessNeed</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>PreparedAccessNeed</td>
+      <td>Links to a [=Prepared Access Need=] satisfied by the [=Data Grant=]</td>
+    </tr>
+    <tr>
+      <td>accessMode</td>
+      <td>-</td>
+      <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
+      <td>Union of access modes from [=Prepared Access Needs=] linked by
+      satisfiesPreparedAccessNeed</td>
+    </tr>
+    <tr>
+      <td>scopeOfDataGrant</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td> eco:AllInstances, eco:InheritInstances,
+      eco:SelectedInstances, eco:NoAccess</td>
+      <td>Identifies the access scope of the [=Data Grant=]
+        <ul>
+          <li>eco:AllInstances - Scope includes
+              access to all [=Registered Data Instances=] of the associated
+              [=Data Registration=]</li>
+          <li>eco:InheritInstances - Scope includes
+              access to [=Registered Data Instances=] inherited by
+              instances selected in the [=Data Grant=] linked via
+              eco:inheritsFromDataGrant</li>
+          <li>eco:SelectedInstances - Scope includes
+              access only to those [=Registered Data Instances=] specifically
+              selected by the [=Agent=]</li>
+          <li>eco:NoAccess</li> - No access is granted
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>inheritsFromDataGrant</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>Identifies a [=Data Grant=] whose selected
+      [=Registered Data Instances=] narrow the scope of instances to be
+      presented by this grant.</td>
+    </tr>
+  </tbody>
+</table>
+
+The [DataGrantShape](#shexDataGrant) is used to
+validate an instance of the [DataGrant](#classDataGrant)
+class.
+
+<pre highlight="turtle" id="shexDataGrant">
+<#DataGrantShape> {
+  a [ eco:DataGrant ] ;
+  eco:hasRegistration IRI ;
+  eco:registeredShapeTree IRI ;
+  eco:satisfiesPreparedAccessNeed @PreparedAccessNeedShape+ ;
+  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ] ;
+  eco:inheritsFromDataGrant @DataGrantShape*
+}
+</pre>
+
+## Structure and Validation ## {#access-structure}
+
+
 
 ## Operations ## {#grants-operations}
 
@@ -2284,18 +2629,18 @@ the following properties:
 
 This operation is called based on decisions an [=Agent=] has made on one or
 more [=Prepared Access Need Groups=] for a given [=Authorization Subject=],
-which are recorded in the form of [=Data Registration Grants=].
+which are recorded in the form of [=Data Grants=].
 
 #### Inputs #### {#record-inputs}
 
 * Let `GRANT` be an [=Access Grant=] linked to any new or updated
-    [=Prepared Access Need Groups=] and [=Data Registration Grants=]
+    [=Prepared Access Need Groups=] and [=Data Grants=]
     for a given [=Authorization Subject=]
 
 Note: If the [=Authorization Subject=] has already received an [=Access Grant=],
 it will already have a `GRANT` record in the [=Access Registry=]. When
 `GRANT` is passed as input here, it must be based on an updated set of the
-stored [=Prepared Access Need Groups=] and [=Data Registration Grants=].
+stored [=Prepared Access Need Groups=] and [=Data Grants=].
 
 #### Outputs #### {#record-outputs}
 
@@ -2305,33 +2650,39 @@ stored [=Prepared Access Need Groups=] and [=Data Registration Grants=].
 #### Operation Details #### {#record-details}
 
 Assert: It is the responsibility of the caller to guaranteee that
-[=Prepared Access Need Groups=] and [=Data Registration Grants=] linked to
+[=Prepared Access Need Groups=] and [=Data Grants=] linked to
 to `GRANT` are synchronized based on the [=Agent's=]
 most recent applied choices across all linked [=Prepared Access Need Groups=].
 
+1. Let `ACCESS` be the [=Access Registry=] instance
 1. Let `PGROUPS` be the [=Prepared Access Need Groups=] linked to `GRANT`
     via `GRANT hasPreparedAccessNeedGroup`
-1. Let `DGRANTS` be the [=Data Registration Grants=] linked to `GRANT`
-    via `GRANT hasDataRegistrationGrant`
+1. Let `DGRANTS` be the [=Data Grants=] linked to `GRANT`
+    via `GRANT hasDataGrant`
 1. For each [=Prepared Access Need Group=] `PGROUP` in `PGROUPS`:
     2. For each [=Prepared Access Need=] `NEED` in `PGROUP` traversed via
         `NEED skos:narrower` or `NEED referencesPreparedAccessNeed`:
-        1. Let `NDGRANT` be the [=Data Registration Grant=] associated with
-            `NEED` via `NEED hasDataRegistrationGrant`
+        1. Let `NDGRANT` be the [=Data Grant=] associated with
+            `NEED` via `NEED hasDataGrant`
             1. Error if `NDGRANT` is missing
             1. Error if `NDGRANT satisfiesPreparedAccessNeed` doesn't link to `NEED`
             2. Error if `eco:RegisteredShapeTree` is not the same in `NDGRANT` and `NEED`
-2. For each [=Data Registration Grant=] `DGRANT` in `DGRANTS`
+2. For each [=Data Grant=] `DGRANT` in `DGRANTS`
     3. Let `NEEDS` be all [=Prepared Access Needs=] across `PGROUPS`
     4. Let `DGNEEDS` be all [=Prepared Access Needs=] linked to `DGRANT` via
         `DGRANT satisfiesPreparedAccessNeed`
     4. Error if `DGNEEDS` is not in `NEEDS`
     5. Error if `DGNEEDS` is empty
     6. Error if `DGRANT` access modes are not an exact union of `DGNEEDS accessMode` values
-        when `DGRANT scopeOfDataRegistrationGrant` is not `eco:NoAccess`
+        when `DGRANT scopeOfDataGrant` is not `eco:NoAccess`
 3. Call [[#grants-apply]] with `GRANT`
-4. Store `GRANT` in [=Access Registry=]
-    5. TODO
+4. Store `GRANT` in `ACCESS`
+    1. `GRANT` must be added to `ACCESS`, conforming to the assigned
+        [ecot:access-grant-tree](ecosystem.tree#access-grant-tree)
+    1. `GRANT` must conform to
+        [ecos:accessGrantShape](ecosystem.shex#accessGrantShape) per
+        [ecot:access-grant-tree](ecosystem.tree#access-grant-tree)
+    1. Add `GRANT` to the graph of `ACCESS` via `ACCESS hasRegistration`
 4. Return `GRANT`
 
 Issue: Need to properly factor in multi-pod scenarios. Must identify the
@@ -2343,7 +2694,7 @@ means pods will also need to be registered.
 #### Inputs #### {#applyperms-inputs}
 
 * Let `GRANT` be an [=Access Grant=] linked to any new or updated
-    [=Prepared Access Need Groups=] and [=Data Registration Grants=]
+    [=Prepared Access Need Groups=] and [=Data Grants=]
     for a given [=Authorization Subject=]
 
 #### Outputs #### {#applyperms-outputs}
@@ -2352,21 +2703,21 @@ means pods will also need to be registered.
 
 #### Operation Details #### {#applyperms-details}
 
-1. Let `DGRANTS` be the [=Data Registration Grants=] linked to `GRANT`
-    via `GRANT hasDataRegistrationGrant`
-1. For each [=Data Registration Grant=] `DGRANT` in `GRANTS`
+1. Let `DGRANTS` be the [=Data Grants=] linked to `GRANT`
+    via `GRANT hasDataGrant`
+1. For each [=Data Grant=] `DGRANT` in `GRANTS`
     1. Let the [=Data Registration=] linked via `DGRANT hasRegistration` be `DREG`
-    1. If `DGRANT scopeOfDataRegistrationGrant` includes `eco:NoAccess`
-        1. Ignore any other scopes linked via `DGRANT scopeOfDataRegistrationGrant`
+    1. If `DGRANT scopeOfDataGrant` includes `eco:NoAccess`
+        1. Ignore any other scopes linked via `DGRANT scopeOfDataGrant`
         1. Let `ACL` be the [=ACL Resource=] directly associated with `DREG`
         1. Let `STATEMENTS` be any [=Authorization Statements=] in `ACL` directly
             associated with `GRANT accessGrantSubject`.
         1. For each `STATEMENT` in `STATEMENTS`
             1. Remove [=Authorization Subject=] from `STATEMENT`
             2. Remove `STATEMENT` if there are no remaining [=Authorization Subjects=]
-    1. If `DGRANT scopeOfDataRegistrationGrant` includes `eco:AllInstances`
+    1. If `DGRANT scopeOfDataGrant` includes `eco:AllInstances`
         1. Error if `eco:AllInstances` is not the only scope associated via
-            `DGRANT scopeOfDataRegistrationGrant`
+            `DGRANT scopeOfDataGrant`
         1. Let `ACL` be the [=ACL Resource=] directly associated with `DREG`
         1. Let `STATEMENTS` be any [=Authorization Statements=] in `ACL` directly
             associated with `GRANT accessGrantSubject`.
@@ -2381,9 +2732,9 @@ means pods will also need to be registered.
                 the [=access modes=] linked via `DGRANT accessMode`
                 such that all [=Registered Data Instances=] in `REG` inherit
                 those [=access modes=]
-    1. If `DGRANT scopeOfDataRegistrationGrant` includes ONLY `eco:InheritInstances`
-        1. Let `IDGRANT` be the inherited [=Data Registration Grant=]
-        1. Error if `DGRANT inheritsFromDataRegistrationGrant` is missing
+    1. If `DGRANT scopeOfDataGrant` includes ONLY `eco:InheritInstances`
+        1. Let `IDGRANT` be the inherited [=Data Grant=]
+        1. Error if `DGRANT inheritsFromDataGrant` is missing
         1. Error if `IDGRANT eco:RegisteredShapeTree` does not have a reference
             to `DGRANT eco:registeredShapeTree` via `st:references`
         1. Let `ACL` be the [=ACL Resource=] directly associated with `DREG`
@@ -2407,13 +2758,13 @@ means pods will also need to be registered.
                     1. The predicate of the link must be the same as the
                         property detailed in `st:traverseViaShapePath`, in the
                         `st:references` from `IDGRANT eco:registeredShapeTree`
-    1. If `DGRANT scopeOfDataRegistrationGrant` includes `eco:InheritInstances` AND `eco:SelectedInstances`
-        1. Error if any other scopes are associated via `DGRANT scopeOfDataRegistrationGrant`
-        1. Error if `DGRANT inheritsFromDataRegistrationGrant` is missing
+    1. If `DGRANT scopeOfDataGrant` includes `eco:InheritInstances` AND `eco:SelectedInstances`
+        1. Error if any other scopes are associated via `DGRANT scopeOfDataGrant`
+        1. Error if `DGRANT inheritsFromDataGrant` is missing
         1. Error if `IDGRANT eco:RegisteredShapeTree` does not have a reference
             to `DGRANT eco:registeredShapeTree` via `st:references`
         1. Use instructions for `eco:SelectInstances`
-    1. If `DGRANT scopeOfDataRegistrationGrant` includes `eco:SelectedInstances`
+    1. If `DGRANT scopeOfDataGrant` includes `eco:SelectedInstances`
         1. Let `INSTANCES` be the [=Registered Data Instances=] linked via
             `DGRANT eco:hasRegisteredDataInstance`
         1. Error if there are no `INSTANCES`
@@ -2783,16 +3134,6 @@ An <dfn>Access Decorator Version</dfn> is...
 An <dfn>Access Decorator Resource</dfn> is...
 
 A <dfn>Shape Tree Decorator</dfn> is...
-
-An <dfn>Access Registry Set</dfn> is...
-
-An <dfn>Access Registry</dfn> is...
-
-An <dfn>Access Grant</dfn> is...
-
-A <dfn>Data Registration Grant</dfn> is...
-
-An <dfn>Access Grant Subject</dfn> is...
 
 Use Case Environment {#environment}
 =====================
