@@ -147,6 +147,40 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   skos:narrower IRI* ;
 }
 
+<#AccessDecoratorIndexShape> {
+  a [ eco:AccessDecoratorIndex ] ;
+  eco:defaultLanguage xsd:language ;
+  eco:hasSeries @AccessDecoratorSeries+ ;
+}
+
+<#AccessDecoratorSeriesShape> {
+  a [ eco:AccessDecoratorSeries ] ;
+  eco:usesLanguage xsd:language ;
+  eco:hasVersion @AccessDecoratorVersion+ ;
+}
+
+<#AccessDecoratorVersionShape> {
+  a [ eco:AccessDecoratorVersion ] ;
+  eco:isVersion xsd:string ;
+  eco:hasSHA256 xsd:string ;
+  eco:hasAccessDecoratorResource IRI ;
+}
+
+<#AccessNeedGroupDecoratorShape> {
+  a [ eco:AccessNeedGroupDecorator ] ;
+  eco:hasAccessNeedGroup IRI ;
+  skos:prefLabel xsd:string ;
+  skos:definition xsd:string
+}
+
+<#AccessNeedDecoratorShape> {
+  a [ eco:AccessNeedDecorator ] ;
+  eco:hasAccessNeedGroup IRI ;
+  eco:registeredShapeTree IRI ;
+  skos:prefLabel xsd:string
+}
+
+
 ################################################################
 # Access Registry
 ################################################################
