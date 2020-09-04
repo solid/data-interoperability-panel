@@ -1718,7 +1718,7 @@ providing one or more [=Access Need Groups=] to the [=Agent=] controlling
 the data they require access to. The channels through which these may be
 communicated are detailed in [[#exchanging]].
 
-The [[#prepare-group]] operation is processes each [=Access Need Group=]
+The [[#prepare-group]] operation processes each [=Access Need Group=]
 received by the controlling [=Agent=]. A [=Prepared Access Need Group=] is
 generated for each [=Access Need Group=] that was received.
 
@@ -2597,12 +2597,11 @@ validate an instance of the
 ## Operations ## {#needs-operations}
 
 The following operations explain how to process [=Access Need Groups=]
-and their associated [=Access Needs=] to prepare and present them
-to a given [=Agent=].
+so they can be presented to an [=Agent=] in
+[[#access-operations|Access Grant Operations]]
 
 * [[#prepare-group]]
-* [[#prepare-needs]]
-* [[#present-groups]]
+* [[#prepare-need]]
 * [[#get-group-dec]]
 * [[#get-need-dec]]
 
@@ -2610,15 +2609,18 @@ to a given [=Agent=].
 
 This operation takes a given [=Access Need Group=] with a number of associated
 [=Access Needs=] and processes them to produce a [=Prepared Access Need Group=]
-with [=Prepared Access Needs=] that are ready to present to a given [=Agent=].
+with [=Prepared Access Needs=] that are ready to present to a given [=Agent=]
+in [[#access-operations|Access Grant Operations]].
 
-1. The [=shape tree=] associated with each root [=Access Need=] has been
-    traversed to the desired level of recursion, including across references,
-    with a [=Prepared Access Need=] representing every unique [=shape tree=].
-2. Labels and descriptions have been looked up and
-    added from their respective decorators for [=Access Need Groups=] and
-    [=Access Needs=].
-3. [=Supporting Access Needs=] are associated with [=Prepared Access Needs=].
+1. The [=shape tree=] associated with each [=Root Access Need=] is
+    traversed to the desired level of recursion, including across references.
+    A [=Prepared Access Need=] is added in a linked hierarchy
+    starting with the [=Root Access Need=], representing every unique
+    [=shape tree=] that was traversed.
+2. Decorators are looked up and linked to the
+    [=Prepared Access Need Group=] and where available for every
+    [=Prepared Access Need=]
+3. Any [=Supporting Access Needs=] are associated with [=Prepared Access Needs=].
 
 #### Inputs #### {#prepare-group-inputs}
 
@@ -2636,142 +2638,285 @@ with [=Prepared Access Needs=] that are ready to present to a given [=Agent=].
     [eco:AccessNeedGroupShape](ecosystem.shex#AccessNeedGroupShape).
     <em class="rfc2119">MUST</em> return a status code of 400 if
     validation fails.
-1. Let `GDEC` be the [=Access Need Group Decorator=] for `GROUP`
-    populated via [[#get-group-dec]] with inputs: `GROUP`, `LANG`
-1. Let `PREPARED` be an empty set of [=Prepared Access Needs=]
-1. Let `SUPPORTS` be an empty set of [=Access Needs=]
-1. Let `DIRECT` be the set of [=Access Needs=] who have an
-    [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) that does
-    not contain an object value for `st:supports`.
-1. Let `ROOTS` represent [=Access Needs=] linked directly to `GROUP`
-    via [eco:requestsAccess](ecosystem.ttl#requestsAccess)
-1. For each `ROOT` in `ROOTS`
-    1. Call [[#prepare-needs]] with inputs: `GROUP`, `ROOT`, `LANG`
-        1. Merge output [=Prepared Access Needs=] with `PREPARED`
-        1. Merge output [=Supporting Access Needs=] with `SUPPORTS`
-1. For each [=Supporting Access Need=] `SN` in `SUPPORTS`
-    1. Find a corresponding [=Prepared Access Need=] `PN` in `PREPARED` where
-          the object values for
-          [eco:RegisteredShapeTree](ecosystem.ttl#registeredShapeTree)
-          in `PN` and `SN` are the same.
-    1. Let `PN` [eco:supportedByAccessNeed](ecosystem.ttl#supportedByAccessNeed)
-          link to `SN`.
-    1. Let `SN` [eco:supportsAccessNeed](ecosystem.ttl#supportsAccessNeed)
-          link to `PN`.
+1. Let `ALLNEEDS` be the combined set of [=Access Needs=] linked via
+    `GROUP hasAccessNeed` and `GROUP hasAccessNeedOverride`
+1. Let `OVERRIDES` be the [=Access Needs=] linked via `GROUP hasAccessNeedOverride`
+1. Let `TREEDECS` represent all [=Shape Tree Decorators=] associated with `ALLNEEDS`
+1. Let `ALLDECS` represent all [=Access Need Decorators=] associated with `ALLNEEDS`
+1. Let `PGROUP` be a [=Prepared Access Need Group=]
+1. Let `PGROUP hasAccessNeedDecorator` be the [=Access Need Group Decorator=]
+    returned from [[#get-group-dec]] with inputs: `GROUP`, `LANG`
+1. Let `PGROUP fromAccessNeedGroup` be `GROUP`
+1. Let `PGROUP accessNecessity` be `GROUP accessNecessity`
+1. Let `PGROUP authenticatesAs` be `GROUP authenticatesAs`
+1. For each [=Root Access Need=] `ROOT` linked via `GROUP hasAccessNeed`
+    1. Let `PGROUP hasPreparedAccessNeed` be linked to the
+        [=Prepared Root Access Need=] returned by
+        [[#prepare-need]] with inputs: `ROOT registeredShapeTree`, `ROOT`,
+        `ALLNEEDS`, `OVERRIDES`, `TREEDECS`, `ALLDECS`, `LANG`
+1. Let `ALLPREPARED` represent all [=Prepared Access Needs=] linked via
+    `PGROUP hasPreparedAccessNeed`, as well as all [=Prepared Access Needs=]
+    linked to them via `referencesPreparedAccessNeed` or `skos:narrower`.
+1. For each [=Root Prepared Access Need=] `PROOT` linked via `PGROUP hasPreparedAccessNeed`
+    1. Call [[#link-supported]] with inputs: `PROOT`, `ALLPREPARED`
 
-### Prepare Access Needs ### {#prepare-needs}
+### Prepare Access Need ### {#prepare-need}
 
-#### Inputs #### {#prepare-needs-inputs}
+This operation is called recursively to build up a linked hierarchy of
+[=Prepared Access Needs=] in concert with the [[#prepare-need-walk]] operation.
 
-* Let `GROUP` be the [=Access Need Group=] in context
-* Let `ROOT` be an [=Access Need=] linked directly to `GROUP`
-    via [eco:requestsAccess](ecosystem.ttl#requestsAccess)
+#### Inputs #### {#prepare-need-inputs}
+
+* Let `TREE` be the current [=shape tree=] in context
+* Let `LASTNEED` be the [=Access Need=] in context
+* Let `ALLNEEDS` be the combined set of [=Access Needs=] linked via
+    `GROUP hasAccessNeed` and `GROUP hasAccessNeedOverride`
+* Let `OVERRIDES` be the [=Access Needs=] linked via `GROUP hasAccessNeedOverride`
+* Let `TREEDECS` represent all [=Shape Tree Decorators=] associated with `ALLNEEDS`
+* Let `ALLDECS` represent all [=Access Need Decorators=] associated with `ALLNEEDS`
 * Let `LANG` be the [=Agent's=] preferred language
 
-#### Outputs #### {#prepare-needs-outputs}
+#### Outputs #### {#prepare-need-outputs}
 
-* A set of [=Prepared Access Needs=]
-* A set of [=Supporting Access Needs=]
+* A [=Prepared Access Need=] with a linked hierarchy of
+    [=Prepared Access Needs=] associated with it
 
-#### Operation Details #### {#prepare-needs-details}
+#### Operation Details #### {#prepare-need-details}
 
-1. Let `PREPARED` be an empty set of [=Prepared Access Needs=]
-1. Let `SUPPORTING` be an empty set of [=Supporting Access Needs=]
-1. Let `GROUPNEEDS` represent all [=Access Needs=] associated with `GROUP`
-1. Iterate the [=shape tree=] hierarchy. Let `TREE` be the current
-    [=shape tree=] in context, initialized with `ROOT`
-    [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree). Let `NEED`
-    be initialized with `ROOT`.
-    1. Perform a GET on `TREE` to ensure it can be dereferenced.
-        <em class="rfc2119">MUST</em> return a status code of 404 if cannot.
-    1. If `NEED` [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
-        is not the same as `TREE`
-        1. If there is an [=Access Need=] `GN` in `GROUPNEEDS` with an
-            [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
-            equiavalent to `TREE`, let `NEED` be `GN`.
-            <em class="rfc2119">MUST</em> return a status code
-            of 400 if multiple [=Access Needs=] are matched.
-        1. If there is no corresponding [=Access Need=] for `TREE` in
-            `GROUPNEEDS`
-            * Clear all property values for `NEED` except for `inAccessNeedGroup`,
-                `recursivelyAuthorize`, `accessMode`, `accessNecessity`,
-                `needExplanation`
-            * Set `NEED` [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
-                to `TREE`.
-    1. Let `TDEC` be the [=Shape Tree Decorator=] for `TREE`
-        populated via [Get Shape Tree Decorator](#) with inputs: `TREE`, `LANG`
-    1. Let `NEED` [eco:needLabel](ecosystem.ttl#needLabel) be the
-        object value of `TDEC`
-        <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">
-        skos:prefLabel</a>.
-    1. Let `NEED` [eco:needDescription](ecosystem.ttl#needDescription) be the
-        object value of `TDEC`
-        <a href="http://www.w3.org/2004/02/skos/core#definition" class="vocab">
-        skos:definition</a>.
-    1. If `NEED` [eco:needExplanation](ecosystem.ttl#needExplanation) has no
-        object value
-        1. Let `NDEC` be the [=Access Need Decorator=] for `NEED`
-            populated via [Get Access Need Decorator](#) with inputs:
-            `GROUP`, `NEED`, `LANG`
-        1. If `NDEC` was populated, let `NEED`
-            [eco:needExplanation](ecosystem.ttl#needExplanation) be the
-            object value of `NDEC`
-            <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">
-            skos:prefLabel</a>.
-    1. If `TREE` has an object value for `st:supports`
-        1. Add a copy of `NEED` to `SUPPORTING`
-        2. Continue to next iteration
-    1. Add a copy of `NEED` to `PREPARED`
-    1. Break if `NEED`
-        [eco:recursivelyAuthorize](ecosystem.ttl#recursivelyAuthorize) is `false`
-1. Return `PREPARED`, `SUPPORTING`
+1. Let `TOPTREEDEC` be the [=Shape Tree Decorator=]
+    returned from the [Get Shape Tree Decorator](#) operation with
+    inputs: `TREE`, `LANG`
+1. Let `SPECIFICNEED` be the [=Access Need=] returned from the
+    [[#prepare-need-getspecific]] operation with inputs:
+    `TREE`, `OVERRIDES`, `LASTNEED`
+1. return the [=Prepared Access Need=] returned by calling
+    [[#prepare-need-walk]] with inputs:
+    `TREE`, `TOPTREEDEC`, `SPECIFICNEED`, `ALLDECS`, `ALLNEEDS`,
+    `OVERRIDES`, `TREEDECS`, `LANG`
 
-Issue: We currently have no forward links to the non-root needs. It feels
-like these should be explicitly linked, possibly through another predicate
-off of the group.
+#### _walkDecorators #### {#prepare-need-walk}
 
-Issue: Does not include registered instances yet.
+This operation is called recursively to build up a linked hierarchy of
+[=Prepared Access Needs=] in concert with the [[#prepare-need]] operation.
 
-Issue: This may not provide coverage when we cross the same
-type of tree (i.e. via references) more than once. May be necessary to pass
-in the prepared set and always work from that.
+##### Inputs ##### {#walk-inputs}
 
-### Present Access Need Groups ### {#present-groups}
+* Let `TREE` be the current [=shape tree=] in context
+* Let `TREEDEC` be the current [=Shape Tree Decorator=] in context
+* Let `NEED` be the [=Access Need=] in context
+* Let `ALLDECS` represent all [=Access Need Decorators=] associated with `ALLNEEDS`
+* Let `ALLNEEDS` be the combined set of [=Access Needs=] linked via
+    `GROUP hasAccessNeed` and `GROUP hasAccessNeedOverride`
+* Let `OVERRIDES` be the [=Access Needs=] linked via `GROUP hasAccessNeedOverride`
+* Let `TREEDECS` represent all [=Shape Tree Decorators=] associated with `ALLNEEDS`
+* Let `LANG` be the [=Agent's=] preferred language
 
-Outputs: Pgroup, Dgrants
+##### Outputs ##### {#walk-outputs}
 
-Note: This will fetch existing Dgrants from registry where applicable
+* A [=Prepared Access Need=] with a linked hierarchy of
+    [=Prepared Access Needs=] associated with it
 
-1. Let `GROUP` [eco:needGroupLabel](ecosystem.ttl#needGroupLabel) be the
-    object value of `GDEC`
-    <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">
-    skos:prefLabel</a>.
-1. Let `GROUP` [eco:needGroupExplanation](ecosystem.ttl#needGroupExplanation)
-    be the object value of `GDEC`
-    <a href="http://www.w3.org/2004/02/skos/core#definition" class="vocab">
-    skos:definition</a>.
+##### Operation Details ##### {#walk-details}
 
-Issue: Must also deal with case when returning to an Access Need Group
-and disabling access, which would mean all DGRANTS get so to NoAccess.
+1. Let `PREPARED` be a new [=Prepared Access Need=]
+1. Let `PREPARED registeredShapeTree` be `TREE`
+1. Let `PREPARED accessNecessity` be set to `NEED`'s `accessNecessity`
+1. Let `PREPARED accessMode` be all of `NEED`'s `accessMode`s
+1. Let `PREPARED hasAccessNeedDecorator` be the [=Access Need Decorator=]
+    returned from [[#get-need-dec]] with inputs: `NEED`, `LANG`
+1. Let `PREPARED hasShapeTreeDecorator` be `TREEDEC`
+1. If `TREEDEC skos:narrower`
+    1. Let `NARROWERDEC` be `TREEDEC skos:narrower`
+    1. Let `NARROWERTREE` be `NARROWERDEC hasShapeTree`
+    1. Let `NARROWERNEED` be the [=Access Need=] returned from the
+        [[#prepare-need-getspecific]] operation with inputs:
+        `NARROWERTREE`, `OVERRIDES`, `NEED`
+    1. Let `PREPARED skos:narrower` be the [=Prepared Access Need=] returned
+        from calling [[#prepare-need-walk]] with inputs:
+        `NARROWERTREE`, `NARROWERDEC`, `NARROWERNEED`, `ALLDECS`, `ALLNEEDS`,
+        `OVERRIDES`, `TREEDECS`, `LANG`
+1. For each [=shape tree=] `REFTREE` linked via `TREE st:references`
+    1. Call [[#prepare-need]] with inputs `REFTREE`, `NEED`,
+        `ALLNEEDS`, `OVERRIDES`, `TREEDECS`, `ALLDECS`, `LANG`
 
-Issue: Must handle apppend on contained cases and set the scope appropriately
+#### _getSpecificAccessNeed #### {#prepare-need-getspecific}
 
-Issue: Must also ensure that we are loading the original GRANT to pickup
-where we left off.
+This operation looks through all of the [=Access Need Overrides=] associated
+with a given [=Access Need Group=] to see if there is an
+[=Access Need Override=] for the input [=shape tree=]. If there is not,
+it will effective inherit its defaults from the last [=Access Need=] instead.
 
-Issue: Must also handle the case when the origin access need group has
-been expanded (optionally show that to the user and the authorization
-options)
+##### Inputs ##### {#getspecific-inputs}
+
+* Let `TREE` be the current [=shape tree=] in context
+* Let `DEFAULTNEED` be the default [=Access Need=] to return
+* Let `OVERRIDES` be the [=Access Needs=] linked via `GROUP hasAccessNeedOverride`
+
+##### Outputs ##### {#getspecific-outputs}
+
+* An [=Access Need=]
+
+##### Operation Details ##### {#getspecific-details}
+
+1. For each [=Access Need=] `NEED` in `OVERRIDES`
+    1.  return `NEED` if `NEED registeredShapeTree` is `TREE`
+1. return `DEFAULTNEED`
+
+### Link Supported Prepared Access Needs ### {#link-supported}
+
+This is a recursive operation that iterates through all of the
+[=Prepared Access Needs=] associated with a [=Prepared Access Need Group=]
+and links together any that have a support relationship.
+
+A support relationship exists when the [=shape tree=] associated with one
+[=Prepared Access Need=] has an `st:supports` predicate that links
+to the [=shape tree=] of another [=Prepared Access Need=]. They are
+linked bi-directionally through the `supportsPreparedAccessNeed` and
+`supportedByPreparedAccessNeed` properties.
+
+#### Inputs #### {#link-supported-inputs}
+
+* Let `PNEED` be a [=Prepared Access Need=]
+* Let `ALLPREPARED` be all [=Prepared Access Needs=] associated with a
+    given [=Prepared Access Need Group=]
+
+#### Outputs #### {#link-supported-outputs}
+
+* None
+
+#### Operation Details #### {#link-supported-details}
+
+1. Let `TREE` be `PNEED registeredShapeTree`
+1. If `TREE st:supports`
+    1. Let `SUPPORTEDTREE` be the [=shape tree=] linked by `TREE st:supports`
+    1. For each [=Prepared Access Need=] `PREPARED` in `ALLPREPARED`
+        1. Let `SUPPORTEDNEED` be the return of [[#iterate-supported]] with
+            inputs: `ALLPREPARED`, `TREE`
+        1. Let `PNEED supportsPreparedAccessNeed` be `SUPPORTEDNEED`
+        1. Let `SUPPORTEDNEED supportedByPreparedAccessNeed` be `PNEED`
+1. For each [=Prepared Access Need=] `REFNEED` linked by
+    `PNEED referencesPreparedAccessNeed`
+    1. Call [[#link-supported]] with inputs: `REFNEED`, `ALLPREPARED`
+1. For each [=Prepared Access Need=] `NARROWERNEED` linked by
+    `PNEED skos:narrower`
+    1. Call [[#link-supported]] with inputs: `NARROWERNEED`, `ALLPREPARED`
+
+#### Iterate for Supported Prepared Access Needs #### {#iterate-supported}
+
+This is a recursive function that iterates through a linked hierarchy of
+[=Prepared Access Needs=] looking for a [=Prepared Access Need=] with a
+matching [=shape tree=].
+
+##### Inputs ##### {#iterate-inputs}
+
+* Let `PNEED` be a [=Prepared Acecss Need=]
+* Let `TREE` be a [=shape tree]
+
+##### Outputs ##### {#iterate-outputs}
+
+* Returns a [=Prepared Access Need=]
+
+##### Operation Details ##### {#iterate-details}
+
+1. Return `PNEED` if `PNEED registeredShapeTree` is `TREE`
+1. For each [=Prepared Access Need=] `REFNEED` linked by
+    `PNEED referencesPreparedAccessNeed`
+    1. Call [[#iterate-supported]] with inputs: `REFNEED`, `TREE`
+1. For each [=Prepared Access Need=] `NARROWERNEED` linked by
+    `PNEED skos:narrower`
+    1. Call [[#iterate-supported]] with inputs: `NARROWERNEED`, `TREE`
+1. Return `NULL`
+
+### Get Access Decorator Resource ### {#get-access-dec}
+
+This operation returns the appropriate [=Access Decorator Resource=]
+from an input [=Access Decorator Index=] for the provided language.
+If the provided language is not available, a default language is used instead.
+
+#### Inputs #### {#get-access-dec-inputs}
+
+* Let `INDEX` be an [=Access Decorator Index=]
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Outputs #### {#get-access-dec-outputs}
+
+* Let `DECR` be an [=Access Decorator Resource=] from `INDEX`
+
+#### Operation Details #### {#get-access-dec-details}
+
+1. Let `USESERIES` be `INDEX defaultSeries`
+1. Let `USEVERSION` be an unassigned [=Access Decorator Version=]
+1. For each [=Access Decorator Series=] `SERIES` in `INDEX`
+    1. Let `USESERIES` be `SERIES` if `SERIES usesLanguage` == `LANG`
+1. <em class="rfc2119">MUST</em> return a status code
+    of 404 if no [=Access Decorator Series=] are found.
+1. For each [=Access Decorator Version=] `VERSION` in `USESERIES hasVersion`
+    1. Let `USEVERSION` be `VERSION` if `VERSION` is a more recent
+        [semantic version](https://semver.org/) than `USEVERSION` or if
+        `USEVERSION` is unassigned.
+1. <em class="rfc2119">MUST</em> return a status code
+    of 404 if no [=Access Decorator Versions=] are found.
+1. Let `DECR` be the [=Access Decorator Resource=] linked
+    from `USEVERSION hasAccessDecoratorResource`
+1. <em class="rfc2119">MUST</em> return a status code
+    of 404 if `DECR` is unassigned.
+1. return `DECR`
 
 ### Get Access Need Group Decorator ### {#get-group-dec}
 
-- Must align with LANG if match is available
-- IF not, must use defaultLanguage
+This operation returns the appropriate [=Access Need Group Decorator=]
+for an input [=Access Need Group=] in the provided language. If the
+provided language is not available, a default language is used instead.
+
+#### Inputs #### {#get-group-dec-inputs}
+
+* Let `GROUP` be an [=Access Need Group=]
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Outputs #### {#get-group-dec-outputs}
+
+* Let `GDEC` be an [=Access Need Group Decorator=] associated with `GROUP`
+
+#### Operation Details #### {#get-group-dec-details}
+
+1. Let `DECR` be the [=Access Decorator Resource=] returned by [[#get-group-dec]]
+    with inputs: `GROUP hasAccessDecoratorIndex`, `LANG`
+1. Let `USEGDEC` be an unassigned [=Access Need Group Decorator=]
+1. Let `GDECS` be all [=Acess Need Group Decorators=] in `DECR`
+1. For each [=Acces Need Group Decorator] `GDEC` in `GDECS`
+  1. Let `USEGDEC` be `GDEC` if `GDEC hasAccessNeedGroup` is `GROUP`
+1. <em class="rfc2119">MUST</em> return a status code
+    of 404 if `USEGDEC` is unassigned
+1. return `USEGDEC`
 
 ### Get Access Need Decorator ### {#get-need-dec}
 
-- Must align with LANG if match is available
-- IF not, must use defaultLanguage
+This operation returns the appropriate [=Access Need Decorator=]
+for an input [=Access Need=] in the provided language. If the
+provided language is not available, a default language is used instead.
+
+#### Inputs #### {#get-need-dec-inputs}
+
+* Let `NEED` be an [=Access Need=]
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Outputs #### {#get-need-dec-outputs}
+
+* Let `NDEC` be an [=Access Need Decorator=] associated with `NEED`
+
+#### Operation Details #### {#get-need-dec-details}
+
+1. Let `GROUP` be `NEED inAccessNeedGroup`
+1. Let `DECR` be the [=Access Decorator Resource=] returned by [[#get-group-dec]]
+    with inputs: `GROUP hasAccessDecoratorIndex`, `LANG`
+1. Let `USENDEC` be an unassigned [=Access Need Decorator=]
+1. Let `NDECS` be all [=Acess Need Decorators=] in `DECR`
+1. For each [=Acces Need Decorator] `NDEC` in `NDECS`
+  1. Let `USENDEC` be `NDEC` if `NDEC hasAccessNeedGroup` is `GROUP` and
+      `NDEC registeredShapeTree` is `NEED registeredShapeTree`
+1. <em class="rfc2119">MUST</em> return a status code
+    of 404 if `USENDEC` is unassigned
+1. return `USENDEC`
 
 
 Access Grants {#access}
@@ -3324,6 +3469,35 @@ resource or subject names.
 for resource names.
 
 ## Operations ## {#access-operations}
+
+### Present Grant ### {#access-present}
+
+Input: Grant
+
+Output: Grant
+
+Note: This will fetch existing Dgrants from registry where applicable
+
+1. Let `GROUP` [eco:needGroupLabel](ecosystem.ttl#needGroupLabel) be the
+    object value of `GDEC`
+    <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">
+    skos:prefLabel</a>.
+1. Let `GROUP` [eco:needGroupExplanation](ecosystem.ttl#needGroupExplanation)
+    be the object value of `GDEC`
+    <a href="http://www.w3.org/2004/02/skos/core#definition" class="vocab">
+    skos:definition</a>.
+
+Issue: Must also deal with case when returning to an Access Need Group
+and disabling access, which would mean all DGRANTS get so to NoAccess.
+
+Issue: Must handle apppend on contained cases and set the scope appropriately
+
+Issue: Must also ensure that we are loading the original GRANT to pickup
+where we left off.
+
+Issue: Must also handle the case when the origin access need group has
+been expanded (optionally show that to the user and the authorization
+options)
 
 ### Record Grant ### {#access-record}
 
