@@ -1,7 +1,7 @@
 <!doctype html><html lang="en">
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-  <title>Solid Use Cases and Requirements</title>
+  <title>Solid Primer</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 <style data-fill-with="stylesheet">/******************************************************************************
  *                   Style sheet for the W3C specifications                   *
@@ -1371,10 +1371,68 @@ dfn > a.self-link:hover {
 a.self-link::before            { content: "¶"; }
 .heading > a.self-link::before { content: "§"; }
 dfn > a.self-link::before      { content: "#"; }</style>
+<style>/* style-syntax-highlighting */
+
+.highlight:not(.idl) { background: hsl(24, 20%, 95%); }
+code.highlight { padding: .1em; border-radius: .3em; }
+pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
+c-[a] { color: #990055 } /* Keyword.Declaration */
+c-[b] { color: #990055 } /* Keyword.Type */
+c-[c] { color: #708090 } /* Comment */
+c-[d] { color: #708090 } /* Comment.Multiline */
+c-[e] { color: #0077aa } /* Name.Attribute */
+c-[f] { color: #669900 } /* Name.Tag */
+c-[g] { color: #222222 } /* Name.Variable */
+c-[k] { color: #990055 } /* Keyword */
+c-[l] { color: #000000 } /* Literal */
+c-[m] { color: #000000 } /* Literal.Number */
+c-[n] { color: #0077aa } /* Name */
+c-[o] { color: #999999 } /* Operator */
+c-[p] { color: #999999 } /* Punctuation */
+c-[s] { color: #a67f59 } /* Literal.String */
+c-[t] { color: #a67f59 } /* Literal.String.Single */
+c-[u] { color: #a67f59 } /* Literal.String.Double */
+c-[cp] { color: #708090 } /* Comment.Preproc */
+c-[c1] { color: #708090 } /* Comment.Single */
+c-[cs] { color: #708090 } /* Comment.Special */
+c-[kc] { color: #990055 } /* Keyword.Constant */
+c-[kn] { color: #990055 } /* Keyword.Namespace */
+c-[kp] { color: #990055 } /* Keyword.Pseudo */
+c-[kr] { color: #990055 } /* Keyword.Reserved */
+c-[ld] { color: #000000 } /* Literal.Date */
+c-[nc] { color: #0077aa } /* Name.Class */
+c-[no] { color: #0077aa } /* Name.Constant */
+c-[nd] { color: #0077aa } /* Name.Decorator */
+c-[ni] { color: #0077aa } /* Name.Entity */
+c-[ne] { color: #0077aa } /* Name.Exception */
+c-[nf] { color: #0077aa } /* Name.Function */
+c-[nl] { color: #0077aa } /* Name.Label */
+c-[nn] { color: #0077aa } /* Name.Namespace */
+c-[py] { color: #0077aa } /* Name.Property */
+c-[ow] { color: #999999 } /* Operator.Word */
+c-[mb] { color: #000000 } /* Literal.Number.Bin */
+c-[mf] { color: #000000 } /* Literal.Number.Float */
+c-[mh] { color: #000000 } /* Literal.Number.Hex */
+c-[mi] { color: #000000 } /* Literal.Number.Integer */
+c-[mo] { color: #000000 } /* Literal.Number.Oct */
+c-[sb] { color: #a67f59 } /* Literal.String.Backtick */
+c-[sc] { color: #a67f59 } /* Literal.String.Char */
+c-[sd] { color: #a67f59 } /* Literal.String.Doc */
+c-[se] { color: #a67f59 } /* Literal.String.Escape */
+c-[sh] { color: #a67f59 } /* Literal.String.Heredoc */
+c-[si] { color: #a67f59 } /* Literal.String.Interpol */
+c-[sx] { color: #a67f59 } /* Literal.String.Other */
+c-[sr] { color: #a67f59 } /* Literal.String.Regex */
+c-[ss] { color: #a67f59 } /* Literal.String.Symbol */
+c-[vc] { color: #0077aa } /* Name.Variable.Class */
+c-[vg] { color: #0077aa } /* Name.Variable.Global */
+c-[vi] { color: #0077aa } /* Name.Variable.Instance */
+c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
+</style>
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"></p>
-   <h1 class="p-name no-ref" id="title">Solid Use Cases and Requirements</h1>
+   <h1 class="p-name no-ref" id="title">Solid Primer</h1>
    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-09-08">8 September 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
@@ -1398,48 +1456,18 @@ Parts of this work may be from another specification document.  If so, those par
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
-   <p>Use Cases and Requirements for the Solid ecosystem.</p>
+   <p>Primer for the Solid ecosystem.</p>
   </div>
   <div data-fill-with="at-risk"></div>
   <nav data-fill-with="table-of-contents" id="toc">
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
-    <li><a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
+    <li><a href="#introduction"><span class="secno">1</span> <span class="content">Introduction</span></a>
     <li>
-     <a href="#requirements"><span class="secno">2</span> <span class="content">Requirements</span></a>
+     <a href="#data"><span class="secno">2</span> <span class="content">Data</span></a>
      <ol class="toc">
-      <li><a href="#the-system-is-not-abusable"><span class="secno">2.1</span> <span class="content">The system is not abusable</span></a>
-      <li><a href="#an-app-can-request-access-to-a-specific-resource"><span class="secno">2.2</span> <span class="content">An app can request access to a specific resource</span></a>
-      <li><a href="#an-app-can-request-access-to-a-specific-type-of-data-without-knowing-the-structure-of-resources-on-a-pod"><span class="secno">2.3</span> <span class="content">An app can request access to a specific type of data without knowing the structure of resources on a Pod</span></a>
-      <li><a href="#access-requests-can-be-sent-when-the-resource-owner-is-not-present-to-be-approved-once-the-user-is-present"><span class="secno">2.4</span> <span class="content">Access requests can be sent when the resource owner is not present to be approved once the user is present</span></a>
-      <li><a href="#apps-can-request-the-ability-to-write-a-specific-type-of-data-and-will-be-told-where-it-should-write-it"><span class="secno">2.5</span> <span class="content">Apps can request the ability to write a specific type of data and will be told where it should write it</span></a>
-      <li><a href="#it-should-be-possible-for-an-agent-to-block-allow-certain-apps-from-accessing-a-specific-resource-as-that-agent"><span class="secno">2.6</span> <span class="content">It should be possible for an agent to block/allow certain apps from accessing a specific resource as that agent</span></a>
-      <li><a href="#it-should-be-possible-for-an-agent-with-control-access-to-block-allow-certain-apps-from-accessing-a-specific-resource-as-any-agent"><span class="secno">2.7</span> <span class="content">It should be possible for an agent with Control access to block/allow certain apps from accessing a specific resource as any agent</span></a>
-      <li><a href="#it-should-be-easy-to-allow-others-accessing-your-resources-to-use-apps-youre-okay-without-requiring-your-explicit-consent"><span class="secno">2.8</span> <span class="content">It should be easy to allow others accessing your resources to use apps you’re okay without requiring your explicit consent.</span></a>
-      <li><a href="#access-to-specific-types-of-data-should-extend-to-new-resources-that-contain-that-data"><span class="secno">2.9</span> <span class="content">Access to specific types of data should extend to new resources that contain that data</span></a>
-      <li><a href="#access-to-specific-types-of-data-should-not-expose-other-data-that-was-not-requested"><span class="secno">2.10</span> <span class="content">Access to specific types of data should not expose other data that was not requested</span></a>
-      <li><a href="#data-should-have-different-levels-of-requirements-for-users-conciousness-in-consent"><span class="secno">2.11</span> <span class="content">Data should have different levels of requirements for user’s conciousness in consent</span></a>
-      <li><a href="#the-authorization-data-is-easily-cachable"><span class="secno">2.12</span> <span class="content">The authorization data is easily cachable</span></a>
-      <li><a href="#information-about-clients-apps-to-which-users-have-granted-access-and-what-specific-access-they-have-delegated-should-not-be-made-available-to-resource-servers-that-do-not-enforce-relevant-access-restrictions-on-those-clients"><span class="secno">2.13</span> <span class="content">Information about Clients (apps) to which users have granted access and what specific access they have delegated should not be made available to Resource Servers that do not enforce relevant access restrictions on those Clients.</span></a>
-     </ol>
-    <li>
-     <a href="#use-cases"><span class="secno">3</span> <span class="content">Use Cases</span></a>
-     <ol class="toc">
-      <li><a href="#simple-game"><span class="secno">3.1</span> <span class="content">Simple game</span></a>
-      <li><a href="#chat-with-friends"><span class="secno">3.2</span> <span class="content">Chat with friends</span></a>
-      <li><a href="#chat-with-doctor"><span class="secno">3.3</span> <span class="content">Chat with doctor</span></a>
-      <li><a href="#discussion-boards"><span class="secno">3.4</span> <span class="content">Discussion boards</span></a>
-      <li><a href="#rdf-editor"><span class="secno">3.5</span> <span class="content">RDF editor</span></a>
-      <li><a href="#pod-administration"><span class="secno">3.6</span> <span class="content">Pod administration</span></a>
-      <li><a href="#photos-viewer"><span class="secno">3.7</span> <span class="content">Photos viewer</span></a>
-      <li><a href="#photos-organizer"><span class="secno">3.8</span> <span class="content">Photos organizer</span></a>
-      <li><a href="#photos-processing"><span class="secno">3.9</span> <span class="content">Photos processing</span></a>
-      <li><a href="#evil-fitness-tracker"><span class="secno">3.10</span> <span class="content">Evil fitness tracker</span></a>
-      <li><a href="#finances-tracker"><span class="secno">3.11</span> <span class="content">Finances tracker</span></a>
-      <li><a href="#restaurants-tracker"><span class="secno">3.12</span> <span class="content">Restaurants tracker</span></a>
-      <li><a href="#blogs"><span class="secno">3.13</span> <span class="content">Blogs</span></a>
-      <li><a href="#custom-tls-ca"><span class="secno">3.14</span> <span class="content">Custom TLS CA</span></a>
-      <li><a href="#client-constraining-access-control"><span class="secno">3.15</span> <span class="content">Client Constraining Access Control</span></a>
+      <li><a href="#projects"><span class="secno">2.1</span> <span class="content">Projects</span></a>
+      <li><a href="#tasks"><span class="secno">2.2</span> <span class="content">Tasks</span></a>
      </ol>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
@@ -1451,354 +1479,34 @@ Parts of this work may be from another specification document.  If so, those par
    </ol>
   </nav>
   <main>
-   <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
-   <p class="issue" id="issue-c29b11aa"><a class="self-link" href="#issue-c29b11aa"></a> Needs explaination how proposals should clearly reference requirements which they satisfy. As well as requirements they do not satisfy due to some limitations.</p>
-   <h2 class="heading settled" data-level="2" id="requirements"><span class="secno">2. </span><span class="content">Requirements</span><a class="self-link" href="#requirements"></a></h2>
-   <h3 class="heading settled" data-level="2.1" id="the-system-is-not-abusable"><span class="secno">2.1. </span><span class="content">The system is not abusable</span><a class="self-link" href="#the-system-is-not-abusable"></a></h3>
-   <div class="assertion no-marker">
-    <div class="marker">Use cases</div>
-    <ul>
-     <li data-md>
-      <p><a href="#evil-fitness-tracker">§ 3.10 Evil fitness tracker</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="2.2" id="an-app-can-request-access-to-a-specific-resource"><span class="secno">2.2. </span><span class="content">An app can request access to a specific resource</span><a class="self-link" href="#an-app-can-request-access-to-a-specific-resource"></a></h3>
-   <div class="assertion no-marker">
-    <div class="marker">Use cases</div>
-    <ul>
-     <li data-md>
-      <p><a href="#simple-game">§ 3.1 Simple game</a></p>
-     <li data-md>
-      <p><a href="#rdf-editor">§ 3.5 RDF editor</a></p>
-     <li data-md>
-      <p><a href="#pod-administration">§ 3.6 Pod administration</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="2.3" id="an-app-can-request-access-to-a-specific-type-of-data-without-knowing-the-structure-of-resources-on-a-pod"><span class="secno">2.3. </span><span class="content">An app can request access to a specific type of data without knowing the structure of resources on a Pod</span><a class="self-link" href="#an-app-can-request-access-to-a-specific-type-of-data-without-knowing-the-structure-of-resources-on-a-pod"></a></h3>
-   <div class="assertion no-marker">
-    <div class="marker">Use cases</div>
-    <ul>
-     <li data-md>
-      <p><a href="#chat-with-friends">§ 3.2 Chat with friends</a></p>
-     <li data-md>
-      <p><a href="#discussion-boards">§ 3.4 Discussion boards</a></p>
-     <li data-md>
-      <p><a href="#photos-viewer">§ 3.7 Photos viewer</a></p>
-     <li data-md>
-      <p><a href="#photos-processing">§ 3.9 Photos processing</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="2.4" id="access-requests-can-be-sent-when-the-resource-owner-is-not-present-to-be-approved-once-the-user-is-present"><span class="secno">2.4. </span><span class="content">Access requests can be sent when the resource owner is not present to be approved once the user is present</span><a class="self-link" href="#access-requests-can-be-sent-when-the-resource-owner-is-not-present-to-be-approved-once-the-user-is-present"></a></h3>
-   <h3 class="heading settled" data-level="2.5" id="apps-can-request-the-ability-to-write-a-specific-type-of-data-and-will-be-told-where-it-should-write-it"><span class="secno">2.5. </span><span class="content">Apps can request the ability to write a specific type of data and will be told where it should write it</span><a class="self-link" href="#apps-can-request-the-ability-to-write-a-specific-type-of-data-and-will-be-told-where-it-should-write-it"></a></h3>
-   <div class="assertion no-marker">
-    <div class="marker">Use cases</div>
-    <ul>
-     <li data-md>
-      <p><a href="#photos-processing">§ 3.9 Photos processing</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="2.6" id="it-should-be-possible-for-an-agent-to-block-allow-certain-apps-from-accessing-a-specific-resource-as-that-agent"><span class="secno">2.6. </span><span class="content">It should be possible for an agent to block/allow certain apps from accessing a specific resource as that agent</span><a class="self-link" href="#it-should-be-possible-for-an-agent-to-block-allow-certain-apps-from-accessing-a-specific-resource-as-that-agent"></a></h3>
-   <h3 class="heading settled" data-level="2.7" id="it-should-be-possible-for-an-agent-with-control-access-to-block-allow-certain-apps-from-accessing-a-specific-resource-as-any-agent"><span class="secno">2.7. </span><span class="content">It should be possible for an agent with Control access to block/allow certain apps from accessing a specific resource as any agent</span><a class="self-link" href="#it-should-be-possible-for-an-agent-with-control-access-to-block-allow-certain-apps-from-accessing-a-specific-resource-as-any-agent"></a></h3>
-   <div class="assertion no-marker">
-    <div class="marker">Use cases</div>
-    <ul>
-     <li data-md>
-      <p><a href="#chat-with-doctor">§ 3.3 Chat with doctor</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="2.8" id="it-should-be-easy-to-allow-others-accessing-your-resources-to-use-apps-youre-okay-without-requiring-your-explicit-consent"><span class="secno">2.8. </span><span class="content">It should be easy to allow others accessing your resources to use apps you’re okay without requiring your explicit consent.</span><a class="self-link" href="#it-should-be-easy-to-allow-others-accessing-your-resources-to-use-apps-youre-okay-without-requiring-your-explicit-consent"></a></h3>
-   <h3 class="heading settled" data-level="2.9" id="access-to-specific-types-of-data-should-extend-to-new-resources-that-contain-that-data"><span class="secno">2.9. </span><span class="content">Access to specific types of data should extend to new resources that contain that data</span><a class="self-link" href="#access-to-specific-types-of-data-should-extend-to-new-resources-that-contain-that-data"></a></h3>
-   <h3 class="heading settled" data-level="2.10" id="access-to-specific-types-of-data-should-not-expose-other-data-that-was-not-requested"><span class="secno">2.10. </span><span class="content">Access to specific types of data should not expose other data that was not requested</span><a class="self-link" href="#access-to-specific-types-of-data-should-not-expose-other-data-that-was-not-requested"></a></h3>
-   <h3 class="heading settled" data-level="2.11" id="data-should-have-different-levels-of-requirements-for-users-conciousness-in-consent"><span class="secno">2.11. </span><span class="content">Data should have different levels of requirements for user’s conciousness in consent</span><a class="self-link" href="#data-should-have-different-levels-of-requirements-for-users-conciousness-in-consent"></a></h3>
-   <h3 class="heading settled" data-level="2.12" id="the-authorization-data-is-easily-cachable"><span class="secno">2.12. </span><span class="content">The authorization data is easily cachable</span><a class="self-link" href="#the-authorization-data-is-easily-cachable"></a></h3>
-   <h3 class="heading settled" data-level="2.13" id="information-about-clients-apps-to-which-users-have-granted-access-and-what-specific-access-they-have-delegated-should-not-be-made-available-to-resource-servers-that-do-not-enforce-relevant-access-restrictions-on-those-clients"><span class="secno">2.13. </span><span class="content">Information about Clients (apps) to which users have granted access and what specific access they have delegated should not be made available to Resource Servers that do not enforce relevant access restrictions on those Clients.</span><a class="self-link" href="#information-about-clients-apps-to-which-users-have-granted-access-and-what-specific-access-they-have-delegated-should-not-be-made-available-to-resource-servers-that-do-not-enforce-relevant-access-restrictions-on-those-clients"></a></h3>
-   <h2 class="heading settled" data-level="3" id="use-cases"><span class="secno">3. </span><span class="content">Use Cases</span><a class="self-link" href="#use-cases"></a></h2>
-   <p class="issue" id="issue-5636bec6"><a class="self-link" href="#issue-5636bec6"></a> Each use case needs an author who can provide further clarifications as needed.</p>
-   <h3 class="heading settled" data-level="3.1" id="simple-game"><span class="secno">3.1. </span><span class="content">Simple game</span><a class="self-link" href="#simple-game"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice uses https://simplegame.example to play a singleplayer game</p>
-     <ul>
-      <li data-md>
-       <p>Simplegame only needs some file somewhere that it can write its own configuration to. It does not care where it is</p>
-      <li data-md>
-       <p>Simpleapp will also need to access this file again even if it’s being used on another machine</p>
-     </ul>
-   </ul>
-   <div class="assertion no-marker">
-    <div class="marker">Requirements</div>
-    <ul>
-     <li data-md>
-      <p><a href="#an-app-can-request-access-to-a-specific-resource">§ 2.2 An app can request access to a specific resource</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="3.2" id="chat-with-friends"><span class="secno">3.2. </span><span class="content">Chat with friends</span><a class="self-link" href="#chat-with-friends"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice uses https://chat.o.team to chat with her friends</p>
-     <ul>
-      <li data-md>
-       <p>OChat wants to gain access to all chat related data</p>
-      <li data-md>
-       <p>Wants access to chat related data that was created after it asked for permission to read them</p>
-      <li data-md>
-       <p>Wants to be alerted when new chat related data has been added to the Pod</p>
-      <li data-md>
-       <p>Wants to create chat related data</p>
-     </ul>
-   </ul>
-   <div class="assertion no-marker">
-    <div class="marker">Requirements</div>
-    <ul>
-     <li data-md>
-      <p><a href="#an-app-can-request-access-to-a-specific-type-of-data-without-knowing-the-structure-of-resources-on-a-pod">§ 2.3 An app can request access to a specific type of data without knowing the structure of resources on a Pod</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="3.3" id="chat-with-doctor"><span class="secno">3.3. </span><span class="content">Chat with doctor</span><a class="self-link" href="#chat-with-doctor"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice uses https://doctorChat.example to chat with her doctor</p>
-     <ul>
-      <li data-md>
-       <p>DoctorChat wants to create chat related data specifically about medical information</p>
-      <li data-md>
-       <p>DoctorChat wants to ensure Alice has given explicit consent to view the chats that it created before other apps can view this data</p>
-     </ul>
-   </ul>
-   <div class="assertion no-marker">
-    <div class="marker">Requirements</div>
-    <ul>
-     <li data-md>
-      <p><a href="#it-should-be-possible-for-an-agent-with-control-access-to-block-allow-certain-apps-from-accessing-a-specific-resource-as-any-agent">§ 2.7 It should be possible for an agent with Control access to block/allow certain apps from accessing a specific resource as any agent</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="3.4" id="discussion-boards"><span class="secno">3.4. </span><span class="content">Discussion boards</span><a class="self-link" href="#discussion-boards"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice uses iSay deployed on https://isay.alice.example/ to participate in discussion boards</p>
-    <li data-md>
-     <p>She wants to trust iSay to access any discussion boards, including</p>
-     <ul>
-      <li data-md>
-       <p>Discussions on https://alice.example/</p>
-      <li data-md>
-       <p>Discussions on https://acme.example/</p>
-      <li data-md>
-       <p>Discussion on https://yoyodyne.example/</p>
-     </ul>
-    <li data-md>
-     <p>She wants to receive push notifications on devices she uses when someone replies to discussion she participates in - iSay inculdes a remote client component which provides that feature.</p>
-    <li data-md>
-     <p>Alice, ACME and Yoyodyne want to allow each person with access to discussion boards on their resource servers to decide which applications they trust to participate in those discussions.</p>
-    <li data-md>
-     <p>Alice only wants to allow iSay to access discussions to avoid other apps (eg. games) she tries to have any way of posting spam messges in any of those discussions</p>
-   </ul>
-   <div class="assertion no-marker">
-    <div class="marker">Requirements</div>
-    <ul>
-     <li data-md>
-      <p><a href="#the-system-is-not-abusable">§ 2.1 The system is not abusable</a></p>
-     <li data-md>
-      <p><a href="#an-app-can-request-access-to-a-specific-type-of-data-without-knowing-the-structure-of-resources-on-a-pod">§ 2.3 An app can request access to a specific type of data without knowing the structure of resources on a Pod</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="3.5" id="rdf-editor"><span class="secno">3.5. </span><span class="content">RDF editor</span><a class="self-link" href="#rdf-editor"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice uses https://edit.o.team to edit her raw RDF</p>
-     <ul>
-      <li data-md>
-       <p>OEdit wants to be able to read and write to a file at a specific location</p>
-     </ul>
-   </ul>
-   <div class="assertion no-marker">
-    <div class="marker">Requirements</div>
-    <ul>
-     <li data-md>
-      <p><a href="#an-app-can-request-access-to-a-specific-resource">§ 2.2 An app can request access to a specific resource</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="3.6" id="pod-administration"><span class="secno">3.6. </span><span class="content">Pod administration</span><a class="self-link" href="#pod-administration"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice uses https://admin.example to control her pod</p>
-     <ul>
-      <li data-md>
-       <p>Admin wants to be able to read and write to all files on a user’s Pod</p>
-     </ul>
-   </ul>
-   <div class="assertion no-marker">
-    <div class="marker">Requirements</div>
-    <ul>
-     <li data-md>
-      <p><a href="#an-app-can-request-access-to-a-specific-resource">§ 2.2 An app can request access to a specific resource</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="3.7" id="photos-viewer"><span class="secno">3.7. </span><span class="content">Photos viewer</span><a class="self-link" href="#photos-viewer"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice uses https://decentPhotos.example to view her photos and her friend Bob’s photos</p>
-     <ul>
-      <li data-md>
-       <p>Decent photos wants to read to all photos on Alice’s Pod</p>
-      <li data-md>
-       <p>Wants to read all photos on Bob’s Pod that Alice has access to</p>
-     </ul>
-   </ul>
-   <div class="assertion no-marker">
-    <div class="marker">Requirements</div>
-    <ul>
-     <li data-md>
-      <p><a href="#an-app-can-request-access-to-a-specific-type-of-data-without-knowing-the-structure-of-resources-on-a-pod">§ 2.3 An app can request access to a specific type of data without knowing the structure of resources on a Pod</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="3.8" id="photos-organizer"><span class="secno">3.8. </span><span class="content">Photos organizer</span><a class="self-link" href="#photos-organizer"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice uses https://photoOrganizer.example to organize the photos on her Pod</p>
-     <ul>
-      <li data-md>
-       <p>PhotoOrganizer wants to read and write only photos</p>
-      <li data-md>
-       <p>Wants to understand the folder structure of the Pod</p>
-      <li data-md>
-       <p>Wants to modify the folder structure of the Pod</p>
-     </ul>
-   </ul>
-   <div class="assertion no-marker">
-    <div class="marker">Requirements</div>
-    <ul>
-     <li data-md>
-      <p><a href="#an-app-can-request-access-to-a-specific-type-of-data-without-knowing-the-structure-of-resources-on-a-pod">§ 2.3 An app can request access to a specific type of data without knowing the structure of resources on a Pod</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="3.9" id="photos-processing"><span class="secno">3.9. </span><span class="content">Photos processing</span><a class="self-link" href="#photos-processing"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice uses FaceDetectionCronJob to crawl over her photos and Bob’s photos at night and produce facial recognition data</p>
-     <ul>
-      <li data-md>
-       <p>FaceDetectionCronJob is not an application and will need access to photos even when Alice is not actively using it</p>
-      <li data-md>
-       <p>Wants to have read access to Alice’s photos</p>
-      <li data-md>
-       <p>Wants to know where it should put its facial detection data</p>
-      <li data-md>
-       <p>Wants to have read access to Bob’s photos that Alice has access to</p>
-     </ul>
-   </ul>
-   <div class="assertion no-marker">
-    <div class="marker">Requirements</div>
-    <ul>
-     <li data-md>
-      <p><a href="#an-app-can-request-access-to-a-specific-type-of-data-without-knowing-the-structure-of-resources-on-a-pod">§ 2.3 An app can request access to a specific type of data without knowing the structure of resources on a Pod</a></p>
-     <li data-md>
-      <p><a href="#apps-can-request-the-ability-to-write-a-specific-type-of-data-and-will-be-told-where-it-should-write-it">§ 2.5 Apps can request the ability to write a specific type of data and will be told where it should write it</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="3.10" id="evil-fitness-tracker"><span class="secno">3.10. </span><span class="content">Evil fitness tracker</span><a class="self-link" href="#evil-fitness-tracker"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice accidentally uses https://evilfitbit.example to track her fitness data</p>
-     <ul>
-      <li data-md>
-       <p>Evilfitbit will try to do everything to get Alice’s financial data while pretending to just track her fitness data (This should not be allowed)</p>
-     </ul>
-   </ul>
-   <div class="assertion no-marker">
-    <div class="marker">Requirements</div>
-    <ul>
-     <li data-md>
-      <p><a href="#the-system-is-not-abusable">§ 2.1 The system is not abusable</a></p>
-    </ul>
-   </div>
-   <h3 class="heading settled" data-level="3.11" id="finances-tracker"><span class="secno">3.11. </span><span class="content">Finances tracker</span><a class="self-link" href="#finances-tracker"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice uses https://financeTracker.example to view her current finances</p>
-     <ul>
-      <li data-md>
-       <p>financeTracker wants to be able to read Alice’s Financial data</p>
-      <li data-md>
-       <p>financeTracker wants to be able to keep a backup of Alice’s data</p>
-      <li data-md>
-       <p>Alice wants to ensure that financeTracker isn’t legally allowed to save the data it receives</p>
-     </ul>
-   </ul>
-   <h3 class="heading settled" data-level="3.12" id="restaurants-tracker"><span class="secno">3.12. </span><span class="content">Restaurants tracker</span><a class="self-link" href="#restaurants-tracker"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice uses https://favoriteRestaurants.example to track the restaurants she likes</p>
-     <ul>
-      <li data-md>
-       <p>Favorite Restaurants wants to read and write data about restaurants and to get the Alice’s location</p>
-      <li data-md>
-       <p>Alice only wants to allow Favorite Restaurants to read and write restaurant data but not to get her location</p>
-     </ul>
-   </ul>
-   <h3 class="heading settled" data-level="3.13" id="blogs"><span class="secno">3.13. </span><span class="content">Blogs</span><a class="self-link" href="#blogs"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice uses https://blogs.example to read and write blogs</p>
-     <ul>
-      <li data-md>
-       <p>Blogs wants to be able to read public blog information and to write blog data to Alice’s Pod</p>
-      <li data-md>
-       <p>Blogs wants to read data about Alice’s interests</p>
-      <li data-md>
-       <p>Alice does not want Blogs to get data about her interests</p>
-      <li data-md>
-       <p>Blogs continually asks Alice to grant it access to her interests and Alice is annoyed with the incessant asking</p>
-     </ul>
-    <li data-md>
-     <p>Alice uses, is developing, or is testing an app deployed to http://localhost:8080</p>
-     <ul>
-      <li data-md>
-       <p>Note that Alice’s Identity Provider can’t reach Alice’s `localhost:8080`</p>
-      <li data-md>
-       <p>Note that Alice’s Pod can’t reach Alice’s `localhost:8080`</p>
-     </ul>
-    <li data-md>
-     <p>Alice uses an app deployed behind a NAT or firewall (while her browser is also behind the same NAT or firewall) that accesses resources outside the NAT or firewall; for example, Alice uses https://coolcode.int.enterprise.example to edit code stored in Customer Bob’s Pod</p>
-     <ul>
-      <li data-md>
-       <p>*CoolCode* is deployed behind Enterprise.Example’s company firewall and is not dereferenceable from the outside, for example because</p>
-      <li data-md>
-       <p>*CoolCode* is proprietary to Enterprise.Example; or</p>
-      <li data-md>
-       <p>*CoolCode* is a commercial product that is deployed on-premises at Enterprise.Example’s datacenter</p>
-      <li data-md>
-       <p>Note that Alice’s Identity Provider can’t reach https://coolcode.int.enterprise.example</p>
-      <li data-md>
-       <p>Note that Customer Bob’s Pod can’t reach https://coolcode.int.enterprise.example</p>
-     </ul>
-   </ul>
-   <h3 class="heading settled" data-level="3.14" id="custom-tls-ca"><span class="secno">3.14. </span><span class="content">Custom TLS CA</span><a class="self-link" href="#custom-tls-ca"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice uses https://photoOrganizer.example to organize photos on her company’s private storage server https://storage.private.enterprise.example</p>
-     <ul>
-      <li data-md>
-       <p>`storage.private.enterprise.example`'s TLS certificate is signed by Enterprise.Example’s private Certificate Authority</p>
-      <li data-md>
-       <p>Alice’s web browser is configured to trust Enterprise.Example’s private Certificate Authority</p>
-      <li data-md>
-       <p>`storage.private.enterprise.example` is reachable from the public Internet, so Alice’s Identity Provider and *photoOrganizer* could reach it; however, neither is configured to trust Enterprise.Example’s private Certificate Authority</p>
-     </ul>
-   </ul>
-   <h3 class="heading settled" data-level="3.15" id="client-constraining-access-control"><span class="secno">3.15. </span><span class="content">Client Constraining Access Control</span><a class="self-link" href="#client-constraining-access-control"></a></h3>
-   <ul>
-    <li data-md>
-     <p>Alice creates a chat and adds her friends Bob and Charlie.</p>
-     <ul>
-      <li data-md>
-       <p>Alice does not want to allow Bob and Charlie to change the people in the chat</p>
-      <li data-md>
-       <p>Alice wants to allow Bob and Charlie to use any app they want to access the chat</p>
-      <li data-md>
-       <p>Alice wants to be aware of what apps Bob and Charlie have added</p>
-     </ul>
-   </ul>
+   <h2 class="heading settled" data-level="1" id="introduction"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#introduction"></a></h2>
+   <p class="issue" id="issue-e5197cdd"><a class="self-link" href="#issue-e5197cdd"></a> Write introduction</p>
+   <figure>
+     <img src="images/overview.drawio.svg" width="100%/"> 
+    <figcaption align="center">Overview</figcaption>
+   </figure>
+   <p class="issue" id="issue-81cb35ef"><a class="self-link" href="#issue-81cb35ef"></a> Explain visual language</p>
+   <h2 class="heading settled" data-level="2" id="data"><span class="secno">2. </span><span class="content">Data</span><a class="self-link" href="#data"></a></h2>
+   <p>All turtle, shapetree and shex code snippets in this primer will assume following prefixes</p>
+<pre class="include-code highlight" path="snippets/prefixes.ttl"><c- k>@prefix</c-> <c- nn>solid:</c-> <c- g>&lt;http://www.w3.org/ns/solid/terms></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>xsd:</c-> <c- g>&lt;http://www.w3.org/2001/XMLSchema#></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>rdf:</c-> <c- g>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>rdfs:</c-> <c- g>&lt;http://www.w3.org/2000/01/rdf-schema#></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>dcterms:</c-> <c- g>&lt;http://purl.org/dc/terms/></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>shapes:</c-> <c- g>&lt;https://solidshapes.example/></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>ex:</c-> <c- g>&lt;https://namespace.example/></c-> <c- p>.</c->
+</pre>
+   <h3 class="heading settled" data-level="2.1" id="projects"><span class="secno">2.1. </span><span class="content">Projects</span><a class="self-link" href="#projects"></a></h3>
+<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/project.shex"><c- nl>&lt;shapes:ProjectShape></c-> <c- p>{</c->
+  <c- k>a</c-> <c- p>[</c-> <c- nn>ex</c-><c- p>:</c-><c- f>Project</c-> <c- p>]</c->
+<c- p>}</c->
+</pre>
+   <h3 class="heading settled" data-level="2.2" id="tasks"><span class="secno">2.2. </span><span class="content">Tasks</span><a class="self-link" href="#tasks"></a></h3>
+<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/task.shex"><c- nl>&lt;shapes:TaskShape></c-> <c- p>{</c->
+  <c- k>a</c-> <c- p>[</c-> <c- nn>ex</c-><c- p>:</c-><c- f>Task</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>ex</c-><c- p>:</c-><c- f>inProject</c-> <c- k>IRI</c->
+<c- p>}</c->
+</pre>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -1954,6 +1662,6 @@ Parts of this work may be from another specification document.  If so, those par
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
-   <div class="issue"> Needs explaination how proposals should clearly reference requirements which they satisfy. As well as requirements they do not satisfy due to some limitations.<a href="#issue-c29b11aa"> ↵ </a></div>
-   <div class="issue"> Each use case needs an author who can provide further clarifications as needed.<a href="#issue-5636bec6"> ↵ </a></div>
+   <div class="issue"> Write introduction<a href="#issue-e5197cdd"> ↵ </a></div>
+   <div class="issue"> Explain visual language<a href="#issue-81cb35ef"> ↵ </a></div>
   </div>
