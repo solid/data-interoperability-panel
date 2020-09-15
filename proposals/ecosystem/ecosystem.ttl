@@ -451,6 +451,13 @@ rdfs:isDefinedBy <> ;
 rdfs:range [ owl:oneOf ( :AccessRequired :AccessOptional ) ] ;
 rdfs:label "Requested Access Necessity"@en .
 
+:accessScenario
+  a rdf:property ;
+  rdfs:comment "Provides context types for sharing scenarios"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range [ owl:oneOf ( :PersonalAccess :SharedAccess ) ] ;
+  rdfs:label "Access Scenario"@en .
+
 :accessMode
 a rdf:property ;
 rdfs:comment "A requested acl:mode of access for an AccessNeed"@en ;
@@ -458,7 +465,7 @@ rdfs:isDefinedBy <> ;
 rdfs:range [ owl:oneOf ( acl:Read acl:Write acl:Control acl:Append ) ] ;
 rdfs:label "Requested Access Mode"@en .
 
-# IRIs AccessNeedNecessity types
+# IRIs for accessNecessity types
 #############################################################################
 :AccessRequired
   rdfs:comment "AccessNeed is required"@en ;
@@ -469,6 +476,18 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:comment "AccessNeed is not required"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Optional"@en .
+
+# IRIs for accessScenario types
+#############################################################################
+:PersonalAccess
+  rdfs:comment "Access is for personal use of the Agent"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Personal Access"@en .
+
+:SharedAccess
+  rdfs:comment "Access is to be shared with other Agents"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Shared Access"@en .
 
 # PreparedAccessNeedGroup Class
 #############################################################################
