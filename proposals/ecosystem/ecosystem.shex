@@ -105,7 +105,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <#AccessNeedGroupShape> {
   a [ eco:AccessNeedGroup ] ;
   eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
-  eco:accessScenario [ eco:PersonalAccess eco:SharedAccess ] ;
+  eco:accessScenario [ eco:PersonalAccess eco:SharedAccess ]+ ;
   eco:authenticatesAs IRI ;
   eco:hasAccessNeed IRI+ ;
   eco:hasAccessNeedOverride IRI* ;
@@ -130,7 +130,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:hasAccessNeedGroupDecorator IRI ;
   eco:authenticatesAs IRI ;
   eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
-  eco:accessScenario [ eco:PersonalAccess eco:SharedAccess ] ;
+  eco:accessScenario [ eco:PersonalAccess eco:SharedAccess ]+ ;
   eco:isEnabled xsd:boolean? ;
   eco:hasPreparedAccessNeed IRI+ ;
 }

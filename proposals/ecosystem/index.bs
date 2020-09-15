@@ -1773,6 +1773,7 @@ content mappings.
   <#notebook-collaboration-group>
     a eco:AccessNeedGroup ;
     eco:accessNecessity eco:AccessRequired ;
+    eco:accessScenario eco:PersonalAccess, eco:SharedAccess ;
     eco:authenticatesAs eco:Pilot ;
     eco:hasAccessNeed &lt;#notebook&gt; ;
     eco:hasAccessNeedOverride &lt;#note&gt; ;
@@ -1806,6 +1807,7 @@ content mappings.
     eco:hasAccessNeedGroupDecorator ex:notebook-collaboration-decorator ;
     eco:authenticatesAs eco:Pilot ;
     eco:accessNecessity eco:AccessRequired ;
+    eco:accessScenario eco:PersonalAccess, eco:SharedAccess ;
     eco:hasPreparedAccessNeed &lt;#notebook&gt; .
 
   <#prepared-notebook>
@@ -1972,6 +1974,7 @@ instance of the [AccessNeedGroup](#classAccessNeedGroup) class.
 <#AccessNeedGroupShape> {
   a [ eco:AccessNeedGroup ] ;
   eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
+  eco:accessScenario [ eco:PersonalAccess eco:SharedAccess ] ;
   eco:authenticatesAs IRI ;
   eco:hasAccessNeed IRI+ ;
   eco:hasAccessNeedOverride IRI* ;
@@ -2166,6 +2169,7 @@ validate an instance of the
   eco:hasAccessNeedGroupDecorator IRI ;
   eco:authenticatesAs IRI ;
   eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
+  eco:accessScenario [ eco:PersonalAccess eco:SharedAccess ] ;
   eco:hasPreparedAccessNeed IRI+ ;
 }
 </pre>
