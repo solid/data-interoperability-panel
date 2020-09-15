@@ -1690,14 +1690,14 @@ Data Authorization {#authz}
 The ability for one [=Agent=] to grant others access to data in their control
 is a fundamental element of a collaborative interoperable ecosystem.
 
-Data Authorization represents of several key elements that
-work together to grant, adjust, and rescind access to data controlled by
+Data Authorization represents several key elements that
+work together to grant, adjust, and rescind access to data controlled
 by an ecosystem participant.
 
 * A common way to express [[#needs]] allows [=ecosystem=] participants to
     convey the types or specific instances of data they require.
 
-* [[#access]] record access decisions made an [=Agent=] on the data in their
+* [[#access]] record access decisions made by an [=Agent=] on the data in their
     control.
 
 * [[#exchanging]] provides different mechanisms for conveying [[#needs]]
@@ -1723,36 +1723,39 @@ received by the controlling [=Agent=]. A [=Prepared Access Need Group=] is
 generated for each [=Access Need Group=] that was received.
 
 [=Prepared Access Need Groups=] and the [=Prepared Access Needs=] associated
-with them are used as input to key
-[[#access-operations|Access Grant Operations]], and are stored
-as part of the [=Access Grant=].
+with them are used as input to the [[#access-present]] operation,
+and are stored as part of the [=Access Grant=] by the [[#access-record]]
+operation.
 
 ## Data Model ## {#needs-datamodel}
 
 ### Summary ### {#needs-datamodel-summary}
 
 An [=Access Need Group=] links to one or more [=Root Access Needs=] via the
-[hasAccessNeed](#classAccessNeedGroup) property. It links to one or more
-[=Access Need Overrides=] to influence the defaults inherited when following
-a [=Root Access Need=] in the [[#prepare-group]] operation.
+[hasAccessNeed](#classAccessNeedGroup) property. When the [[#prepare-group]]
+operation follows a [=Root Access Need=], it looks for [=Access Need Overrides=]
+linked to the [=Access Need Group=] via
+[hasAccessNeedOverride](#classAccessNeedGroup) to change the defaults
+inherited from the [=Root Access Need=], or the most recent
+[=Access Need Override=].
 
 An [=Access Need=] is associated with one [=shape tree=] via
 [eco:registeredShapeTree](#classAccessNeed).
 
 A [=Prepared Access Need Group=] is linked to the [=Access Need Group=] it
-was generated from via [eco:fromAccessNeedGroup](#classPreparedAccessNeedGroup).
+was generated from via [fromAccessNeedGroup](#classPreparedAccessNeedGroup).
 It links to an [=Access Need Group Decorator=] via
-[eco:hasAccessNeedGroupDecorator](#classPreparedAccessNeedGroup).
+[hasAccessNeedGroupDecorator](#classPreparedAccessNeedGroup).
 
 It links to one or more [=Root Prepared Access Needs=] via
-[eco:hasPreparedAccessNeed](#classPreparedAccessNeed). Each
+[hasPreparedAccessNeed](#classPreparedAccessNeed). Each
 [=Root Prepared Access Need=] represents
 a hierarchy of [=Prepared Access Needs=] corresponding with the associated
 [=shape tree=].
 
 Each [=Prepared Access Need=] links to child
 [=Prepared Access Needs=] via
-[eco:referencesPreparedAccessNeed](#classPreparedAccessNeed) or
+[referencesPreparedAccessNeed](#classPreparedAccessNeed) or
 [skos:narrower](#classPreparedAccessNeed).
 
 An [=Access Need Group=] links to an [=Access Decorator Index=] of
@@ -1900,7 +1903,7 @@ The [[#prepare-group]] operation starts with each <dfn>Root Access Need</dfn>
 linked via `hasAccessNeed`, and traverses the shape tree hierarchy,
 creating a [=Prepared Access Need=] at each new [=shape tree=] and
 linking them in a tree via `referencesPreparedAccessNeed` or `skos:narrower`.
-Each <dfn>Access Need Override</dfn> that it encountered when traversing the
+Each <dfn>Access Need Override</dfn> that it encounters when traversing the
 hierarchy applies new inherited defaults, or stops the recursion before
 it continues through the remainder of the tree.
 
@@ -1976,8 +1979,8 @@ An <dfn>Access Need</dfn> represents the requirement of one specific type
 of data represented by a [=shape tree=], as part of an [=Access Need Group=].
 
 Each [=Access Need=] represents a request to access, create, or manage
-all or a subset of [=Registered Data Instances=] associated with a
-[=Data Registration=] of a given [=shape tree=].
+all or a subset of [=Registered Data Instances=] associated with a single
+[=Data Registration=] for a given [=shape tree=].
 
 Specific [=Registered Data Instances=] may be requested by explicitly
 associating them with the [=Access Need=] via
@@ -2073,8 +2076,8 @@ instance of the [AccessNeed](#classAccessNeed) class.
 
 ### Prepared Access Need Group ### {#needs-prepared-access-need-group}
 
-The [[#prepare-group]] operation takes an [=Access Need Group=] as input
-and outputs a <dfn>Prepared Access Need Group</dfn>.
+A <dfn>Prepared Access Need Group</dfn> is output by the [[#prepare-group]]
+operation when given an [=Access Need Group=] as input.
 
 Preparing an [=Access Need Group=] includes:
 
@@ -2609,8 +2612,8 @@ so they can be presented to an [=Agent=] in
 
 This operation takes a given [=Access Need Group=] with a number of associated
 [=Access Needs=] and processes them to produce a [=Prepared Access Need Group=]
-with [=Prepared Access Needs=] that are ready to present to a given [=Agent=]
-in [[#access-operations|Access Grant Operations]].
+that is ready to present to a given [=Agent=]
+via the [[#access-present]] operation.
 
 1. The [=shape tree=] associated with each [=Root Access Need=] is
     traversed to the desired level of recursion, including across references.
@@ -2651,7 +2654,7 @@ in [[#access-operations|Access Grant Operations]].
 1. Let `PGROUP authenticatesAs` be `GROUP authenticatesAs`
 1. For each [=Root Access Need=] `ROOT` linked via `GROUP hasAccessNeed`
     1. Let `PGROUP hasPreparedAccessNeed` be linked to the
-        [=Prepared Root Access Need=] returned by
+        [=Root Prepared Access Need=] returned by
         [[#prepare-need]] with inputs: `ROOT registeredShapeTree`, `ROOT`,
         `ALLNEEDS`, `OVERRIDES`, `TREEDECS`, `ALLDECS`, `LANG`
 1. Let `ALLPREPARED` represent all [=Prepared Access Needs=] linked via
@@ -3470,34 +3473,83 @@ for resource names.
 
 ## Operations ## {#access-operations}
 
-### Present Grant ### {#access-present}
+* [[#access-initialize]] - Initializes a new [=Access Grant=] for a given
+    [=Access Grant Subject=] and one or more [=Access Need Groups=]
+* [[#access-record]] - Store a new or updated [=Access Grant=] in
+    an [=Access Registry=]
+* [[#access-applyperms]] - Apply permissions to [=acl resources=] based
+    on [=Access Grant=] decisions.
 
-Input: Grant
+The [[#access-present]] operation is non-normative, and meant to instruct
+a developer in how to load and initialize an [=Access Grant=], present it
+to an [=Agent=], invoke the appropriate operations to manipulate
+[=Data Grants=] in accordance with the [=Agent's=] decisions, and then
+record those decisions, which will also apply the permission changes.
 
-Output: Grant
+### Initialize Grant ### {#access-initialize}
 
-Note: This will fetch existing Dgrants from registry where applicable
+Initialize an [=Access Grant=] by processing the input [=Access Need Groups=]
+into [=Prepared Access Need Groups=], then initializing [=Data Grants=] with
+no access (yet) for the corresponding [=Prepared Access Needs=] in each group.
 
-1. Let `GROUP` [eco:needGroupLabel](ecosystem.ttl#needGroupLabel) be the
-    object value of `GDEC`
-    <a href="http://www.w3.org/2004/02/skos/core#prefLabel" class="vocab">
-    skos:prefLabel</a>.
-1. Let `GROUP` [eco:needGroupExplanation](ecosystem.ttl#needGroupExplanation)
-    be the object value of `GDEC`
-    <a href="http://www.w3.org/2004/02/skos/core#definition" class="vocab">
-    skos:definition</a>.
+#### Inputs #### {#initialize-inputs}
 
-Issue: Must also deal with case when returning to an Access Need Group
-and disabling access, which would mean all DGRANTS get so to NoAccess.
+* Let `SUBJECT` be an [=Access Grant Subject=]
+* Let `REGISTRY` be an [=Access Registry=]
+* Let `GROUPS` be [=Access Need Groups=] to associate with the [=Access Grant=]
+* Let `LANG` be the [=Agent's=] preferred language
 
-Issue: Must handle apppend on contained cases and set the scope appropriately
+#### Outputs #### {#initialize-outputs}
 
-Issue: Must also ensure that we are loading the original GRANT to pickup
-where we left off.
+* A newly initialized [=Access Grant=]
 
-Issue: Must also handle the case when the origin access need group has
-been expanded (optionally show that to the user and the authorization
-options)
+#### Operation Details #### {#initialize-details}
+
+1. Let `GRANT` be a newly initialized [=Access Grant=]
+1. Let `GRANT hasAccessGrantSubject` be `SUBJECT`
+1. For each [=Access Need Group=] `GROUP` in `GROUPS`
+    1. Let `PGROUP` be the [=Prepared Access Need Group=] returned from
+        [[#prepare-group]] with inputs `GROUP`, `LANG`
+    1. Link `PGROUP` to `GRANT` via `GRANT hasPreparedAccessNeedGroup`
+1. Let `PGROUPS` be all [=Prepared Access Need Groups=] linked to `GRANT`
+    via `hasPreparedAccessNeedGroup`
+1. Let `DATAGRANTS` be an empty set of [=Data Grants=]
+1. For each [=Prepared Access Group=] `PGROUP` in `PGROUPS`
+    1. For each [=Prepared Access Need=] `PNEED` in `PGROUP`
+        1. Let `MATCHING` be a [=Data Grant=] in `DATAGRANTS` where
+            `PNEED registeredShapeTree` == `MATCHING registeredShapeTree`
+        1. If `MATCHING` let `PNEED hasDataGrant` be `MATCHING`
+        1. If `MATCHING` is missing
+            1. Let `NEWDATAGRANT` be a newly initialized [=Data Grant=]
+            1. Let `NEWDATAGRANT registeredShapeTree` be `PNEED registeredShapeTree`
+            1. Let `NEWDATAGRANT hasRegistration` be a [=Data Registration=] `DR`
+                where `DR registeredShapeTree` == `NEWDATAGRANT registeredShapeTree`
+            1. Let `NEWDATAGRANT scopeOfDataGrant` be `eco:NoAccess`
+            1. Let `PNEED hasDataGrant` be `NEWDATAGRANT`
+            1. Add `PNEED hasDataGrant` to `DATAGRANTS`
+        1. Let `DATAGRANT` be `PNEED hasDataGrant`
+        1. Let `DATAGRANT satisfiesPreparedAccessNeed` include `PNEED`
+        1. Let `DATAGRANT accessmode`s include `PNEED accessmode`s
+  1. Link `GRANT` to `REGISTRY` via `REGISTRY hasRegistration`
+  1. Return `GRANT`
+
+### Load Grant ### {#access-load}
+
+This operation will load an [=Access Grant=] from a given [=Access Registry=]
+
+#### Inputs #### {#load-inputs}
+
+* Let `SUBJECT` be an [=Access Grant Subject=]
+* Let `REGISTRY` be an [=Access Registry=]
+
+#### Outputs #### {#load-outputs}
+
+* An [=Access Grant=] corresponding to `SUBJECT`
+
+#### Operation Details #### {#load-details}
+
+1. For each [=Access Grant=] `GRANT` included in `REGISTRY hasRegistration`
+    1. return `GRANT` if `GRANT hasAccessGrantSubject` == `SUBJECT`
 
 ### Record Grant ### {#access-record}
 
@@ -3552,11 +3604,13 @@ most recent applied choices across all linked [=Prepared Access Need Groups=].
 3. Call [[#access-applyperms]] with `GRANT`
 4. Store `GRANT` in `ACCESS`
     1. `GRANT` must be added to `ACCESS`, conforming to the assigned
-        [ecot:access-grant-tree](ecosystem.tree#access-grant-tree)
+        [ecot:access-grant-tree](ecosystem.tree#access-grant-tree) if it has
+        not already been added.
     1. `GRANT` must conform to
         [ecos:accessGrantShape](ecosystem.shex#accessGrantShape) per
         [ecot:access-grant-tree](ecosystem.tree#access-grant-tree)
-    1. Add `GRANT` to the graph of `ACCESS` via `ACCESS hasRegistration`
+    1. Add `GRANT` to the graph of `ACCESS` via `ACCESS hasRegistration` if
+        it has not already been added.
 4. Return `GRANT`
 
 Issue: Need to properly factor in multi-pod scenarios. Must identify the
@@ -3664,6 +3718,174 @@ Issue: Deal with cases when the data registration doesn't exist yet
 Issue: Append mode for AllInstances needs to be specially handled, and may
 require an additional attribute specified in the requested [=Access Needs=]
 
+### Present Grant ### {#access-present}
+
+This operation is non-normative, and meant to instruct
+a developer in how to load and initialize an [=Access Grant=], present it
+to an [=Agent=], invoke the appropriate operations to manipulate
+[=Data Grants=] in accordance with the [=Agent's=] decisions, and then
+record those decisions, applying the permission changes accodingly.
+
+#### Inputs #### {#present-inputs}
+
+* Let `SUBJECT` be an [=Access Grant Subject=]
+* Let `REGISTRY` be an [=Access Registry=]
+* Let `GROUPS` be an optional set of [=Access Need Groups=]
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Outputs #### {#present-outputs}
+
+* An [=Access Grant=] updated to reflect the controlling [=Agent's=]
+    access preferences.
+
+#### Operation Details #### {#present-details}
+
+1. Let `GRANT` be an [=Access Grant=] returned by [[#access-load]] with
+    inputs: `SUBJECT`, `REGISTRY`
+    1. If `GRANT` is missing, let `GRANT` be an [=Access Grant=] returned
+        by [[#access-initialize]] with inputs: `SUBJECT`, `REGISTRY`,
+        `GROUPS`, `LANG`.
+1. Present the [=Access Grant Subject=]
+1. If available, present the [=Agent=] who granted access via `registeredBy`
+1. If available, present the [=Application=] used by the [=Agent=] to grant
+    access via `registeredWith`
+1. If available, present the timestamp of when the [=Access Grant=] was created
+    via `registeredAt`, and updated via `updatedAt`
+1. For each [=Prepared Access Need Group=] `PGROUP` linked via
+    `GRANT hasPreparedAccessNeedGroup`
+    1. Let `GDEC` be the [=Access Need Group Decorator=] linked via
+        `PGROUP hasAccessNeedGroupDecorator`
+    1. Present the group name via `GDEC skos:prefLabel`
+    1. Present the group description via `GDEC skos:definition`
+    1. Identify the [=Agent=] that will be granted access via `authenticatesAs`.
+        `eco:Pilot` indicates a piloted application.
+    1. If `PGROUP accessNecessity` is `AccessOptional` and `PGROUP isEnabled`
+        is `true`, allow the group to be disabled by invoking the
+        [[#access-denygroup]] operation with inputs: `GRANT`, `PREPARED`
+    1. If `PGROUP accessNecessity` is `AccessOptional` and `PGROUP isEnabled`
+        is false, allow the group to be enabled by setting `PGROUP isEnabled`
+        to `true`.
+    1. If (`PGROUP accessNecessity` is `AccessOptional` and `PGROUP isEnabled`),
+        or if `PGROUP accessNecessity` is `AccessRequired`
+        1. For each [=Root Prepared Access Need=] `ROOT` linked via
+            `PGROUP hasPreparedAccessNeed`
+              1. For each [=Prepared Access Need=] `PNEED` starting with `ROOT`
+                  and traversed via `PNEED skos:narrower` or
+                  `PNEED referencesPreparedAccessNeed`:
+                  1. Let `DATAGRANT` be `PNEED hasDataGrant`
+                  1. Let `NDEC` be `PNEED hasAccessNeedDecorator`
+                  1. Let `STDEC` be `PNEED hasShapeTreeDecorator`
+                  1. If `PNEED accessNecessity` is `AccessOptional`,
+                      and `DATAGRANT scopeOfDataGrant` is `eco:NoAccess`
+                      1. Allow access selection to be enabled and managed as detailed
+                          in the remainder of this operation.
+                  1. Present the name of the [=shape tree=] via `STDEC skos:prefLabel`
+                  1. Present the reason acces to this data is needed via
+                      `NDEC skos:prefLabel`
+                  1. For each [=Supporting Access Need=] `SUPPORTING` linked
+                      via `PNEED supportedBy`
+                      1. Present the name of the [=shape tree=] via the
+                          associated [=Shape Tree Decorator=]
+                      1. Present the reason access to this data is needed via the
+                          associated [=Access Need Decorator=]
+                  1. If `PNEED accessNecessity` is `eco:NoAccess`
+                      1. Allow `eco:AllInstances` to be selected, which invokes
+                          the [[#access-selectall]] operation with inputs:
+                          `GRANT`, `PGROUP`, `PNEED`
+                      1. Allow a subset of [=Registered Data Instances=] be selected,
+                          and let `INSTANCES` be that subset, invoking
+                          the [[#access-select]] operation with inputs:
+                          `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`
+                  1. If `PNEED accessNecessity` is `eco:AllInstances`, then
+                      present the user with summary details, and the ability to
+                      see specific instances.
+                          1. Let `INSTANCES` be a selected set of
+                              [=Registered Data Instances=]
+                          1. If the user chooses to select
+                              specific instances from this list, invoke the
+                              [[#access-select]] operation with inputs: `INSTANCES`,
+                              `GRANT`, `PGROUP`, `PNEED`.
+                  1. If `PNEED accessNecessity` is `eco:SelectedInstances`, then
+                      present the user with the specific instances they have selected,
+                      and:
+                          1. Let `INSTANCES` be a selected set of
+                              [=Registered Data Instances=]
+                          1. Allow the selected [=Registered Data Instances=] to be
+                              adjusted, and invoke the [[#access-select]] operation with
+                              inputs: `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`.
+                          1. Allow all [=Registered Data Instances=] to be selected,
+                              invoking the [[#access-selectall]] operation with inputs:
+                              `GRANT`, `PGROUP`, `PNEED`.
+                  1. If `PNEED accessNecessity` is `eco:InheritInstances`, present
+                      the inherited [=Registered Data Instances=] and:
+                      1. Let `INSTANCES` be a selected set of
+                          [=Registered Data Instances=]
+                      1. Allow a subset to be selected, invoking
+                          the [[#access-select]] operation with inputs: `INSTANCES`,
+                          `GRANT`, `PGROUP`, `PNEED`
+                      1. Identify the [=Prepared Access Need=] / [=Data Grant=]
+                          and selected [=Registered Data Instances=] that were inherited
+                          from.
+                  1. If `PNEED accessNecessity` includes `eco:SelectedInstances`
+                      and `eco:InheritInstances`
+                      1. Let `INSTANCES` be a selected set of
+                          [=Registered Data Instances=]
+                      1. Give the ability to adjust the selected instances, invoking
+                          the [[#access-select]] operation with inputs:
+                          `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`.
+                      1. Give the ability to revert to all inherited instances,
+                          invoking the [[#access-selectall]] operation with inputs:
+                          `GRANT`, `PGROUP`, `PNEED`
+
+Issue: Consider when an existing Access Need Group is expanded or contracted
+
+Issue: Consider when there are new Groups being requested from a given Agent
+
+### Deny Prepared Access Need Group ### {#access-denygroup}
+
+This operation is used when a given [=Prepared Access Group=] with optional
+necessity has been denied.
+
+#### Inputs #### {#denygroup-inputs}
+
+* Let `GRANT` be an [=Access Grant=]
+* Let `PGROUP` be a [=Prepared Access Need Group=]
+
+#### Operation Details #### {#denygroup-details}
+
+1. Let `PGROUP isEnabled` be `false` if `PGROUP accessNecessity` is
+    `eco:AccessOptional`
+1. For each [=Prepared Access Need=] `PNEED` in `PGROUP`
+    1. Let `DATAGRANT` be `PNEED hasDataGrant`
+    1. Let `DATAGRANT scopeOfDataGrant` be `eco:NoAccess`
+
+### Select Specific Instances for Access ### {#access-select}
+
+Used to select specific [=Registered Data Instances=] for a given
+[=Data Grant=], which has a recursive application down the hierachy,
+with subordinate [=Data Grants=] reducing their associated scope of
+[=Registered Data Instances=] to only those related to the instances above them.
+
+#### Inputs #### {#select-inputs}
+
+#### Inputs #### {#select-outputs}
+
+#### Operation Details #### {#select-details}
+
+
+### Select All Instances for Access ### {#access-selectall}
+
+Used to select all [=Registered Data Instances=] for a given [=Data Grant=].
+In the event where this is moving from a subset of inherited instances,
+this will expand to only include all inherited instances.
+
+#### Inputs #### {#selectall-inputs}
+
+#### Inputs #### {#selectall-outputs}
+
+#### Operation Details #### {#selectall-details}
+
+
 Exchanging Access Information {#exchanging}
 =====================
 
@@ -3678,6 +3900,10 @@ TODO
 TODO
 
 ### Access for services (autonomous) ### {#exchanging-servicepattern}
+
+TODO
+
+### Direct share to someone else ### {#exchanging-sharing}
 
 TODO
 

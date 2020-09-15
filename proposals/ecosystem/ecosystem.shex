@@ -48,6 +48,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:registeredBy IRI ;
   eco:registeredWith IRI ;
   eco:registeredAt xsd:dateTime ;
+  eco:updatedAt xsd:dateTime ;
   eco:registeredApplication IRI
 }
 
@@ -75,6 +76,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:registeredBy IRI ;
   eco:registeredWith IRI ;
   eco:registeredAt xsd:dateTime ;
+  eco:updatedAt xsd:dateTime ;
   eco:registeredShapeTree IRI ;
   eco:hasRegisteredDataInstance IRI*
 }
@@ -127,6 +129,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:hasAccessNeedGroupDecorator IRI ;
   eco:authenticatesAs IRI ;
   eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
+  eco:isEnabled xsd:boolean? ;
   eco:hasPreparedAccessNeed IRI+ ;
 }
 
@@ -207,6 +210,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:registeredBy IRI ;
   eco:registeredWith IRI? ;
   eco:registeredAt xsd:dateTime ;
+  eco:updatedAt xsd:dateTime ;
   eco:accessGrantSubject @AccessGrantSubject ;
   eco:hasPreparedAccessNeedGroup @PreparedAccessNeedGroupShape+ ;
   eco:hasDataGrant @DataGrantShape+

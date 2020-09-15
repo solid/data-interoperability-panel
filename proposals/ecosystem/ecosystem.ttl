@@ -237,6 +237,14 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:range xsd:dateTime ;
   rdfs:label "Registered At"@en .
 
+:updatedAt
+  a rdf:property ;
+  rdfs:comment "Date and time the registration was updated"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :Registration ;
+  rdfs:range xsd:dateTime ;
+  rdfs:label "Updated At"@en .
+
 # ApplicationRegistration Class
 #############################################################################
 # subClassof Registration used for entries in an ApplicationRegistry
@@ -393,6 +401,13 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:domain :AccessNeedGroup ;
   rdfs:label "Authenticates As"@en .
 
+:isEnabled
+  a rdf:property ;
+  rdfs:comment "Whether the group has been enabled by the Agent"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessNeedGroup ;
+  rdfs:range xsd:boolean ;
+  rdfs:label "Is Enabled"@en .
 
 # IRI that represents a piloted agent
 #############################################################################
@@ -706,6 +721,14 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Grant"@en .
 
+:hasGrantStatus
+  a rdf:property ;
+  rdfs:comment "Links to the status of the AccessGrant"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessGrant ;
+  rdfs:range [ owl:oneOf ( :ActiveGrant :RevokedGrant ) ] ;
+  rdfs:label "Has Grant Status"@en .
+
 :hasAccessGrantSubject
   a rdf:property ;
   rdfs:comment "Links to the subject of the AccessGrant"@en ;
@@ -729,6 +752,18 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:domain :AccessGrant ;
   rdfs:range :DataGrant ;
   rdfs:label "Has Data Grant"@en .
+
+# IRIs for grant types
+#############################################################################
+:ActiveGrant
+  rdfs:comment "Access Grant is active"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Active Grant"@en .
+
+:RevokedGrant
+  rdfs:comment "Access Grant is revoked"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Access Grant Revoked"@en .
 
 # AccessGrantSubject Class
 #############################################################################
