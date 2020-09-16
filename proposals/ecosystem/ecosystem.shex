@@ -213,9 +213,9 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:registeredWith IRI? ;
   eco:registeredAt xsd:dateTime ;
   eco:updatedAt xsd:dateTime ;
-  eco:accessGrantSubject @AccessGrantSubject ;
-  eco:hasPreparedAccessNeedGroup @PreparedAccessNeedGroupShape+ ;
-  eco:hasDataGrant @DataGrantShape+
+  eco:accessGrantSubject @<#:AccessGrantSubject> ;
+  eco:hasPreparedAccessNeedGroup @<#:PreparedAccessNeedGroupShape>+ ;
+  eco:hasDataGrant @<#:DataGrantShape>+
 }
 
 <#AccessGrantSubjectShape> {
@@ -224,13 +224,34 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:accessGrantSubjectApplication IRI?
 }
 
+<#AccessInvitationShape> {
+  a [ eco:AccessInvitation ] ;
+  eco:registeredBy IRI ;
+  eco:registeredWith IRI? ;
+  eco:registeredAt xsd:dateTime ;
+  eco:updatedAt xsd:dateTime ;
+  eco:expiresAt xsd:dateTime? ;
+  eco:hasPreparedAccessNeedGroup @<#:PreparedAccessNeedGroupShape>+ ;
+  eco:hasDataGrant @<#:DataGrantShape>+
+  eco:hasAccessInvitationChannel @<#:AccessInvitationChannelShape>+ ;
+}
+
+<#AccessInvitationChannelShape> {
+   a [ eco:PhoneInvitationChannel eco:EmailInvitationChannel eco:SMSInvitationChannel eco:OfflineInvitationChannel ] ;
+   eco:channelTarget xsd:string ;
+   eco:channelCode xsd:string ;
+   eco:isValidated xsd:boolean ;
+   eco:remainingAttempts xsd:integer
+}
+
+
 # Validate an instance of the DataGrant class
 <#DataGrantShape> {
   a [ eco:DataGrant ] ;
   eco:hasRegistration IRI ;
   eco:registeredShapeTree IRI ;
-  eco:satisfiesPreparedAccessNeed @PreparedAccessNeedShape+ ;
+  eco:satisfiesPreparedAccessNeed @<#:PreparedAccessNeedShape>+ ;
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ] ;
-  eco:inheritsFromDataGrant @DataGrantShape*
+  eco:inheritsFromDataGrant @<#:DataGrantShape>*
 }

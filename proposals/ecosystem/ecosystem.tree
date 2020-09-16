@@ -106,6 +106,7 @@
   st:expectsType st:ShapeTreeContainer ;
   st:validatedBy <ecos#AccessRegistryShape> ;
   st:contains <#access-grant-tree> ,
+              <#access-invitation-tree> ,
               st:AllowNone .
 
 # Access Grant
@@ -116,4 +117,15 @@
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy <ecos#AccessGrantShape> ;
+  st:matchesUriTemplate "{id}" .
+
+# Access Invitation
+##############################################################################
+# Ensure the invititation resource graph contains a valid
+# AccessInvitation instance
+##############################################################################
+<#access-invitation-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <ecos#AccessInvitationShape> ;
   st:matchesUriTemplate "{id}" .

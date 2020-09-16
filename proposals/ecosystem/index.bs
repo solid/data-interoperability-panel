@@ -2962,7 +2962,8 @@ A [=Access Registry Set=] links to any number of [=Access Registries=] via
 the [eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
 
 An [=Access Registry=] links to any number of registered [=Access Grants=]
-via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
+and [=Access Invitations=] via the
+[eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
 
 <figure id="fig-access-registrar">
   <figcaption>A [=Registrar=] at https://alice.pod.example/registries/#registrar
@@ -2989,13 +2990,15 @@ via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
 
 <figure id="fig-access-registry">
   <figcaption>An [=Access Registry=] at https://alice.pod.example/access/#registry
-  linking to several registered [=Access Grants=]</figcaption>
+  linking to several registered [=Access Grants=] or
+  [=Access Invitations=]</figcaption>
   <pre highlight="turtle">
   <#registry>
     a eco:AccessRegistry ;
-    eco:hasRegistration &lt;ab3d0023-3860-4358-ae33-8d3af1097b9d/#grant&gt ,
-                        &lt;ad7b935f-ced9-4ce6-835f-5c6abc046228/#grant&gt ,
-                        &lt;5ed73c65-ce77-4c8a-8f7e-9715b90307e6/#grant&gt .
+    eco:hasRegistration &lt;ab3d0023-3860-4358-ae33-8d3af1097b9d/#grant&gt; ,
+                        &lt;ad7b935f-ced9-4ce6-835f-5c6abc046228/#grant&gt; ,
+                        &lt;5ed73c65-ce77-4c8a-8f7e-9715b90307e6/#grant&gt; ,
+                        &lt;2d575cba-3f6c-4c58-bccd-0e6266ba56cf/#invitation&gt; .
   </pre>
 </figure>
 
@@ -3006,6 +3009,10 @@ via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
   <pre highlight="turtle">
   <#grant>
     a eco:AccessGrant ;
+    eco:registeredBy https://alice.pod.example/profile/id#me ;
+    eco:registeredWith https://trusted.example/id#agent ;
+    eco:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    eco:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
     eco:hasAccessGrantSubject <#grant-subject> ;
     eco:hasPreparedAccessNeedGroup <#pag-notebook-group> ;
     eco:hasDataGrant <#notebook-grant>, <#note-grant> .
@@ -3014,6 +3021,81 @@ via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
     a eco:AccessGrantSubject ;
     eco:accessByAgent https://alice.pod.example/profile/id#me ;
     eco:accessByApplication https://nevernote.example/id#agent .
+
+  <#notebook-grant>
+    a eco:DataGrant ;
+    eco:hasRegistration data:notebook-tree ;
+    eco:registeredShapeTree note:notebook-tree ;
+    eco:satisfiesPreparedAccessNeed <#pan-notebook> ;
+    eco:accessMode acl:Read, acl:Write ;
+    eco:scopeOfDataGrant eco:AllInstances ;
+
+  <#note-grant>
+    a eco:DataGrant ;
+    eco:hasRegistration data:note-tree ;
+    eco:registeredShapeTree note:note-tree ;
+    eco:satisfiesPreparedAccessNeed <#pan-note> ;
+    eco:accessMode acl:Read, acl:Write ;
+    eco:scopeOfDataGrant eco:AllInstances ;
+
+  <#pag-notebook-group>
+    a eco:PreparedAccessNeedGroup ;
+    eco:fromAccessNeedGroup ex:accessNotebookGroup ;
+    eco:hasAccessNeedGroupDecorator ex:accessNotebookGroupDecorator ;
+    eco:accessNecessity eco:AccessRequired ;
+    eco:authenticatesAs eco:Pilot ;
+    eco:hasPreparedAccessNeed <#pan-notebook> .
+
+  <#pan-notebook>
+      a eco:PreparedAccessNeed ;
+      eco:registeredShapeTree note:notebook-tree ;
+      eco:accessMode acl:Read, acl:Write ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:hasAccessNeedDecorator ex:notebookAccessDecorator ;
+      eco:hasShapeTreeDecorator note:notebookDecorator ;
+      eco:referencesPreparedAccessNeed <#pan-notes> ;
+      eco:hasDataGrant <#notebook-grant> .
+
+  <#pan-note>
+      a eco:PreparedAccessNeed ;
+      eco:registeredShapeTree note:note-tree ;
+      eco:accessMode acl:Read, acl:Write ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:hasAccessNeedDecorator ex:noteAccessDecorator ;
+      eco:hasShapeTreeDecorator note:noteDecorator ;
+      eco:hasDataGrant <#note-grant> .
+  </pre>
+</figure>
+
+<figure id="fig-access-invitation">
+  <figcaption>An [=Access Invitation=] at
+  https://alice.pod.example/access/2d575cba-3f6c-4c58-bccd-0e6266ba56cf/#invitation
+  </figcaption>
+  <pre highlight="turtle">
+  <#invitation>
+    a eco:AccessInvitation ;
+    eco:registeredBy https://alice.pod.example/profile/id#me ;
+    eco:registeredWith https://trusted.example/id#agent ;
+    eco:registeredAt "2020-09-13T19:32:52Z"^^xsd:dateTime ;
+    eco:updatedAt "2020-09-13T19:32:52Z"^^xsd:dateTime ;
+    eco:expiresAt "2020-09-20T19:32:52Z"^^xsd:dateTime ;
+    eco:hasPreparedAccessNeedGroup <#pag-notebook-group> ;
+    eco:hasDataGrant <#notebook-grant>, <#note-grant> ;
+    eco:hasAccessInvitationChannel <#phone-channel>, <#email-channel> .
+
+  <#phone-channel>
+    a eco:PhoneInvitationChannel ;
+    eco:channelTarget "(555) 555-1212" ;
+    eco:channelCode "654345" ;
+    eco:isValidated false ;
+    eco:remainingAttempts 3 .
+
+  <#email-channel>
+    a eco:EmailInvitationChannel ;
+    eco:channelTarget "bob@example.com" ;
+    eco:channelCode "434567" ;
+    eco:isValidated true ;
+    eco:remainingAttempts 3 .
 
   <#notebook-grant>
     a eco:DataGrant ;
@@ -3169,6 +3251,7 @@ conformant instances of the [AccessGrantTree](#treeAccessGrant).
   st:expectsType st:ShapeTreeContainer ;
   st:validatedBy &lt;ecos#AccessRegistryShape&gt; ;
   st:contains <#access-grant-tree> ,
+              <#access-invitation-tree> ,
               st:AllowNone .
 </pre>
 
@@ -3216,6 +3299,12 @@ Each <dfn>Access Grant</dfn> represents access granted to one recipient; the
       <td>Registration</td>
       <td>xsd:dateTime</td>
       <td>Date and time the [=Access Grant=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>Registration</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Grant=] was updated</td>
     </tr>
     <tr>
       <td>hasAccessGrantSubject</td>
@@ -3408,6 +3497,201 @@ class.
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ] ;
   eco:inheritsFromDataGrant @DataGrantShape*
+}
+</pre>
+
+### Access Invitation ### {#datamodel-access-invitation}
+
+An <dfn>Access Invitation</dfn> is a subclass of [=Access Grant=] used when
+an [=Agent=] wishes to grant access to another [=Agent=] whose
+decentralized [=identity=] is unknown to them, or may not exist yet, so they
+must be first invited through another channel (such as phone or email).
+
+Like an [=Access Grant=], an [=Access Invitation=] links to access
+criteria detailed in one or more [=Prepared Access Need Groups=], with
+associated [=Data Grants=] indicating the intended access to be granted.
+
+However, instead of linking to an [=Access Grant Subject=], an
+[=Access Invitation=] links to one or more [=Access Invitation Channels=].
+
+Each channel represents a mechanism through which the invitation can
+be delivered and validated. The mechanism is designed so that multiple
+channels may be validated before an invitation is confirmed and
+converted to an [=Access Grant=].
+
+<table class="classinfo data" align="left" id="classAccessInvitation">
+  <col>
+  <colgroup span=2></colgroup>
+  <col>
+  <thead>
+    <tr>
+      <th colspan=4>
+        [AccessInvitation](ecosystem.ttl#AccessInvitation)
+        a rdfs:subClassOf [[#datamodel-access-grant|AccessGrant]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Domain</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>Registration</td>
+      <td>Agent</td>
+      <td>[=Agent=] that registered the [=Access Invitation=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>Registration</td>
+      <td>Application</td>
+      <td>[=Application=] used to create the [=Access Invitation=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>Registration</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Invitation=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>Registration</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Invitation=] was updated</td>
+    </tr>
+    <tr>
+      <td>expiresAt</td>
+      <td>[AccessInvitation](#classAccessInvitation)</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Invitation=] expires</td>
+    </tr>
+    <tr>
+      <td>hasAccessInvitationChannel</td>
+      <td>[AccessInvitation](#classAccessInvitation)</td>
+      <td>AccessInvitationChannel</td>
+      <td>Links to an [=Access Invitation Channel=]</td>
+    </tr>
+    <tr>
+      <td>hasPreparedAccessNeedGroup</td>
+      <td>[AccessInvitation](#classAccessInvitation)</td>
+      <td>PreparedAccessNeedGroup</td>
+      <td>Links to a [=Prepared Access Need Group=] associated with the
+      [=Access Invitation=].</td>
+    </tr>
+    <tr>
+      <td>hasDataGrant</td>
+      <td>[AccessInvitation](#classAccessInvitation)</td>
+      <td>DataGrant</td>
+      <td>Links to a [=Data Grant=] associated with the
+      [=Access Invitation=].</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessInvitationShape](#shexAccessInvitation) is used to validate an
+instance of the [AccessInvitation](#classAccessInvitation) class.
+
+<pre highlight="turtle" id="shexAccessInvitation">
+<#AccessInvitationShape> {
+  a [ eco:AccessInvitation ] ;
+  eco:registeredBy IRI ;
+  eco:registeredWith IRI? ;
+  eco:registeredAt xsd:dateTime ;
+  eco:updatedAt xsd:dateTime ;
+  eco:expiresAt xsd:dateTime? ;
+  eco:hasPreparedAccessNeedGroup @&lt;#:PreparedAccessNeedGroupShape&gt;+ ;
+  eco:hasDataGrant @&lt;#:DataGrantShape&gt;+
+  eco:hasAccessInvitationChannel @&lt;#:AccessInvitationChannelShape&gt;+ ;
+}
+</pre>
+
+The [AccessInvitationTree](ecosystem.tree#access-invitation-tree) is assigned
+to a resource via the [AccessRegistryTree](#treeAccessRegistry), and ensures
+that the assigned resource will validate against the
+[AccessInvitationShape](#shexAccessInvitation).
+
+<pre highlight="turtle" id="treeAccessInvitation">
+<#access-invitation-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;ecos#AccessInvitationShape&gt; ;
+  st:matchesUriTemplate "{id}" .
+</pre>
+
+### Access Invitation Channel ### {#datamodel-access-invitation-channel}
+
+An <dfn>Access Invitation Channel</dfn> represents a mechanism through
+which an [=Access Invitation=] can be delivered and validated.
+
+<table class="classinfo data" align="left" id="classAccessInvitationChannel">
+  <col>
+  <colgroup span=2></colgroup>
+  <col>
+  <thead>
+    <tr>
+      <th colspan=4>
+        [AccessInvitationChannel](ecosystem.ttl#AccessInvitationChannel)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Domain</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>rdf:type</td>
+      <td>-</td>
+      <td>eco:PhoneInvitationChannel,
+      eco:EmailInvitationChannel,
+      eco:SMSInvitationChannel,
+      eco:OfflineInvitationChannel</td>
+      <td>Each channel is represented by a subClassOf
+      AccessInvitationChannel</td>
+    </tr>
+    <tr>
+      <td>channelTarget</td>
+      <td>[AccessInvitationChannel](#classAccessInvitationChannel)</td>
+      <td>xsd:string</td>
+      <td>Target used when validating the channel</td>
+    </tr>
+    <tr>
+      <td>channelCode</td>
+      <td>[AccessInvitationChannel](#classAccessInvitationChannel)</td>
+      <td>xsd:string</td>
+      <td>Code used for channel validation</td>
+    </tr>
+    <tr>
+      <td>isValidated</td>
+      <td>[AccessInvitationChannel](#classAccessInvitationChannel)</td>
+      <td>xsd:boolean</td>
+      <td>Indicates whether the channel has been validated</td>
+    </tr>
+    <tr>
+      <td>remainingAttempts</td>
+      <td>[AccessInvitationChannel](#classAccessInvitationChannel)</td>
+      <td>xsd:integer</td>
+      <td>Number of allowed validation attempts remaining</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessInvitationChannelShape](#shexAccessInvitationChannel) is used to
+validate an instance of the
+[AccessInvitationChannel](#classAccessInvitation) class.
+
+<pre highlight="turtle" id="shexAccessInvitationChannel">
+<#AccessInvitationChannelShape> {
+   a [ eco:PhoneInvitationChannel eco:EmailInvitationChannel eco:SMSInvitationChannel eco:OfflineInvitationChannel ] ;
+   eco:channelTarget xsd:string ;
+   eco:channelCode xsd:string ;
+   eco:isValidated xsd:boolean ;
+   eco:remainingAttempts xsd:integer
 }
 </pre>
 
