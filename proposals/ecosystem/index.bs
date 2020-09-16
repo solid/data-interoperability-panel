@@ -3781,9 +3781,12 @@ for resource names.
 ## Operations ## {#access-operations}
 
 * [[#access-initialize]] - Initializes a new [=Access Grant=] for a given
-    [=Access Grant Subject=] and one or more [=Access Need Groups=]
-* [[#access-record]] - Store a new or updated [=Access Grant=] in
-    an [=Access Registry=]
+    [=Access Grant Subject=] or an [=Access Invitation=] for one or more
+    [=Access Invitation Channels=] with one or more [=Access Need Groups
+* [[#access-load]] - Load an existing [=Access Grant=] or [=Access Invitation=]
+    from an [=Access Registry=]
+* [[#access-record]] - Store a new or updated [=Access Grant=] or
+    [=Access Invitation=] in an [=Access Registry=]
 * [[#access-applyperms]] - Apply permissions to [=acl resources=] based
     on [=Access Grant=] decisions.
 
@@ -3808,7 +3811,7 @@ no access (yet) for the corresponding [=Prepared Access Needs=] in each group.
 
 #### Outputs #### {#initialize-outputs}
 
-* A newly initialized [=Access Grant=]
+* A newly initialized [=Access Grant=] or [=Access Invitation=]
 
 #### Operation Details #### {#initialize-details}
 
@@ -4095,15 +4098,15 @@ record those decisions, applying the permission changes accodingly.
                           associated [=Shape Tree Decorator=]
                       1. Present the reason access to this data is needed via the
                           associated [=Access Need Decorator=]
-                  1. If `PNEED accessNecessity` is `eco:NoAccess`
+                  1. If `DATAGRANT scopeOfDataGrant` is `eco:NoAccess`
                       1. Allow `eco:AllInstances` to be selected, which invokes
                           the [[#access-selectall]] operation with inputs:
-                          `GRANT`, `PGROUP`, `PNEED`
+                          `DATAGRANT`, `PGROUP`, `PNEED`
                       1. Allow a subset of [=Registered Data Instances=] be selected,
                           and let `INSTANCES` be that subset, invoking
                           the [[#access-select]] operation with inputs:
-                          `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`
-                  1. If `PNEED accessNecessity` is `eco:AllInstances`, then
+                          `INSTANCES`, `DATAGRANT`, `PGROUP`, `PNEED`
+                  1. If `DATAGRANT scopeOfDataGrant` is `eco:AllInstances`, then
                       present the user with summary details, and the ability to
                       see specific instances.
                           1. Let `INSTANCES` be a selected set of
@@ -4111,38 +4114,38 @@ record those decisions, applying the permission changes accodingly.
                           1. If the user chooses to select
                               specific instances from this list, invoke the
                               [[#access-select]] operation with inputs: `INSTANCES`,
-                              `GRANT`, `PGROUP`, `PNEED`.
-                  1. If `PNEED accessNecessity` is `eco:SelectedInstances`, then
+                              `DATAGRANT`, `PGROUP`, `PNEED`.
+                  1. If `DATAGRANT scopeOfDataGrant` is `eco:SelectedInstances`, then
                       present the user with the specific instances they have selected,
                       and:
                           1. Let `INSTANCES` be a selected set of
                               [=Registered Data Instances=]
                           1. Allow the selected [=Registered Data Instances=] to be
                               adjusted, and invoke the [[#access-select]] operation with
-                              inputs: `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`.
+                              inputs: `INSTANCES`, `DATAGRANT`, `PGROUP`, `PNEED`.
                           1. Allow all [=Registered Data Instances=] to be selected,
                               invoking the [[#access-selectall]] operation with inputs:
-                              `GRANT`, `PGROUP`, `PNEED`.
-                  1. If `PNEED accessNecessity` is `eco:InheritInstances`, present
+                              `DATAGRANT`, `PGROUP`, `PNEED`.
+                  1. If `DATAGRANT scopeOfDataGrant` is `eco:InheritInstances`, present
                       the inherited [=Registered Data Instances=] and:
                       1. Let `INSTANCES` be a selected set of
                           [=Registered Data Instances=]
                       1. Allow a subset to be selected, invoking
                           the [[#access-select]] operation with inputs: `INSTANCES`,
-                          `GRANT`, `PGROUP`, `PNEED`
+                          `DATAGRANT`, `PGROUP`, `PNEED`
                       1. Identify the [=Prepared Access Need=] / [=Data Grant=]
                           and selected [=Registered Data Instances=] that were inherited
                           from.
-                  1. If `PNEED accessNecessity` includes `eco:SelectedInstances`
+                  1. If `DATAGRANT scopeOfDataGrant` includes `eco:SelectedInstances`
                       and `eco:InheritInstances`
                       1. Let `INSTANCES` be a selected set of
                           [=Registered Data Instances=]
                       1. Give the ability to adjust the selected instances, invoking
                           the [[#access-select]] operation with inputs:
-                          `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`.
+                          `INSTANCES`, `DATAGRANT`, `PGROUP`, `PNEED`.
                       1. Give the ability to revert to all inherited instances,
                           invoking the [[#access-selectall]] operation with inputs:
-                          `GRANT`, `PGROUP`, `PNEED`
+                          `DATAGRANT`, `PGROUP`, `PNEED`
 
 Issue: Consider when an existing Access Need Group is expanded or contracted
 
