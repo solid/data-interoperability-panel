@@ -3687,12 +3687,19 @@ validate an instance of the
 
 <pre highlight="turtle" id="shexAccessInvitationChannel">
 <#AccessInvitationChannelShape> {
-   a [ eco:PhoneInvitationChannel eco:EmailInvitationChannel eco:SMSInvitationChannel eco:OfflineInvitationChannel ] ;
+   a @<#ChannelTypes> ;
    eco:channelTarget xsd:string ;
    eco:channelCode xsd:string ;
    eco:isValidated xsd:boolean ;
    eco:remainingAttempts xsd:integer
 }
+
+<#ChannelTypes> [
+  :PhoneInvitationChannel   # Telephone
+  :EmailInvitationChannel   # E-mail
+  :SMSInvitationChannel     # SMS (Simple Messaging Service)
+  :OfflineInvitationChannel # Other communication, e.g. verbal, shared note
+]
 </pre>
 
 ## Resource Hierarchy ## {#access-hierarchy}
