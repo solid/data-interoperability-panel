@@ -1724,7 +1724,7 @@ generated for each [=Access Need Group=] that was received.
 
 [=Prepared Access Need Groups=] and the [=Prepared Access Needs=] associated
 with them are used as input to the [[#access-present]] operation,
-and are stored as part of the [=Access Grant=] by the [[#access-record]]
+and are stored as part of the [=Access Grant=] by the [[#access-recordgrant]]
 operation.
 
 ## Data Model ## {#needs-datamodel}
@@ -3783,10 +3783,14 @@ for resource names.
 * [[#access-initialize]] - Initializes a new [=Access Grant=] for a given
     [=Access Grant Subject=] or an [=Access Invitation=] for one or more
     [=Access Invitation Channels=] with one or more [=Access Need Groups
-* [[#access-load]] - Load an existing [=Access Grant=] or [=Access Invitation=]
+* [[#access-loadgrant]] - Load an existing [=Access Grant=]
     from an [=Access Registry=]
-* [[#access-record]] - Store a new or updated [=Access Grant=] or
-    [=Access Invitation=] in an [=Access Registry=]
+* [[#access-loadinvitation]] - Load an existing [=Access Invitation=]
+    from an [=Access Registry=]
+* [[#access-recordgrant]] - Store a new or updated [=Access Grant=]
+    in an [=Access Registry=]
+* [[#access-recordinvitation]] - Store a new or updated [=Access Invitation=]
+    in an [=Access Registry=]
 * [[#access-applyperms]] - Apply permissions to [=acl resources=] based
     on [=Access Grant=] decisions.
 
@@ -3798,14 +3802,15 @@ record those decisions, which will also apply the permission changes.
 
 ### Initialize Grant ### {#access-initialize}
 
-Initialize an [=Access Grant=] by processing the input [=Access Need Groups=]
+Initialize an [=Access Grant=] or [=Access Invitation=] by processing
+the input [=Access Need Groups=]
 into [=Prepared Access Need Groups=], then initializing [=Data Grants=] with
 no access (yet) for the corresponding [=Prepared Access Needs=] in each group.
 
 #### Inputs #### {#initialize-inputs}
 
 * Let `SUBJECT` be an [=Access Grant Subject=]
-* Let `REGISTRY` be an [=Access Registry=]
+* Let `ICHANNELS` be a set of [=Access Invitation Channels=]
 * Let `GROUPS` be [=Access Need Groups=] to associate with the [=Access Grant=]
 * Let `LANG` be the [=Agent's=] preferred language
 
@@ -3815,13 +3820,20 @@ no access (yet) for the corresponding [=Prepared Access Needs=] in each group.
 
 #### Operation Details #### {#initialize-details}
 
-1. Let `GRANT` be a newly initialized [=Access Grant=]
-1. Let `GRANT hasAccessGrantSubject` be `SUBJECT`
+1. <em class="rfc2119">MUST</em> return a status code of 400 if both
+    `SUBJECT` and `ICHANNELS` are provided
+1. If `SUBJECT` is provided
+    1. Let `NEW` be a newly initialized [=Access Grant=]
+    1. Let `NEW hasAccessGrantSubject` be `SUBJECT`
+1. If `ICHANNELS` is provided
+    1. Let `NEW` be a newly initialized [=Access Invitation=]
+    1. For each [=Access Invitation Channel=] `ICHANNEL` in `ICHANNELS`
+        1. Let `ICHANNEL` be linked to `NEW` via `NEW hasAccessInvitationChannel`
 1. For each [=Access Need Group=] `GROUP` in `GROUPS`
     1. Let `PGROUP` be the [=Prepared Access Need Group=] returned from
         [[#prepare-group]] with inputs `GROUP`, `LANG`
-    1. Link `PGROUP` to `GRANT` via `GRANT hasPreparedAccessNeedGroup`
-1. Let `PGROUPS` be all [=Prepared Access Need Groups=] linked to `GRANT`
+    1. Link `PGROUP` to `NEW` via `NEW hasPreparedAccessNeedGroup`
+1. Let `PGROUPS` be all [=Prepared Access Need Groups=] linked to `NEW`
     via `hasPreparedAccessNeedGroup`
 1. Let `DATAGRANTS` be an empty set of [=Data Grants=]
 1. For each [=Prepared Access Group=] `PGROUP` in `PGROUPS`
@@ -3840,92 +3852,157 @@ no access (yet) for the corresponding [=Prepared Access Needs=] in each group.
         1. Let `DATAGRANT` be `PNEED hasDataGrant`
         1. Let `DATAGRANT satisfiesPreparedAccessNeed` include `PNEED`
         1. Let `DATAGRANT accessmode`s include `PNEED accessmode`s
-  1. Link `GRANT` to `REGISTRY` via `REGISTRY hasRegistration`
-  1. Return `GRANT`
+  1. Return `NEW`
 
-### Load Grant ### {#access-load}
+### Load Grant ### {#access-loadgrant}
 
 This operation will load an [=Access Grant=] from a given [=Access Registry=]
 
-#### Inputs #### {#load-inputs}
+#### Inputs #### {#loadgrant-inputs}
 
 * Let `SUBJECT` be an [=Access Grant Subject=]
 * Let `REGISTRY` be an [=Access Registry=]
 
-#### Outputs #### {#load-outputs}
+#### Outputs #### {#loadgrant-outputs}
 
 * An [=Access Grant=] corresponding to `SUBJECT`
 
-#### Operation Details #### {#load-details}
+#### Operation Details #### {#loadgrant-details}
 
 1. For each [=Access Grant=] `GRANT` included in `REGISTRY hasRegistration`
     1. return `GRANT` if `GRANT hasAccessGrantSubject` == `SUBJECT`
 
-### Record Grant ### {#access-record}
+### Load Invitation ### {#access-loadinvitation}
 
-This operation is called based on decisions an [=Agent=] has made on one or
-more [=Prepared Access Need Groups=] for a given [=Authorization Subject=],
-which are recorded in the form of [=Data Grants=].
+This operation will load an [=Access Invitation=] from a given [=Access Registry=]
 
-#### Inputs #### {#record-inputs}
+#### Inputs #### {#loadinvitation-inputs}
 
-* Let `GRANT` be an [=Access Grant=] linked to any new or updated
-    [=Prepared Access Need Groups=] and [=Data Grants=]
-    for a given [=Authorization Subject=]
+* Let `TARGET` be a `eco:ChannelTarget` to match
+* Let `CODE` be an optional `eco:channelCode` to match
+* Let `REGISTRY` be an [=Access Registry=]
 
-Note: If the [=Authorization Subject=] has already received an [=Access Grant=],
-it will already have a `GRANT` record in the [=Access Registry=]. When
-`GRANT` is passed as input here, it must be based on an updated set of the
-stored [=Prepared Access Need Groups=] and [=Data Grants=].
+#### Outputs #### {#loadinvitation-outputs}
 
-#### Outputs #### {#record-outputs}
+*  [=Access Invitations=] matching `TARGET` and (if provided) `CODE`
 
-* Let `GRANT` be an [=Access Grant=] that has been stored in the
-    [=Access Registry=] and had the relevant permissions applied.
+#### Operation Details #### {#loadinvitation-details}
 
-#### Operation Details #### {#record-details}
+1. Let `INVITATIONS` be an empty set of [=Access Invitations=]
+1. For each [=Access Invitation=] `INVITATION` linked via `REGISTRY hasRegistration`
+    1. For each [=Access Invitation Channel=] `ICHANNEL` linked via
+        `INVITATION hasAccessInvitationChannel`
+        1. Next if `ICHANNEL channelTarget` != `TARGET`
+        1. Next if `CODE` is not empty and `ICHANNEL channelCode` != `CODE`
+        1. Add `INVITATION` to `INVITATIONS`
+1. Return `INVITATIONS`
 
-Assert: It is the responsibility of the caller to guaranteee that
-[=Prepared Access Need Groups=] and [=Data Grants=] linked to
-to `GRANT` are synchronized based on the [=Agent's=]
-most recent applied choices across all linked [=Prepared Access Need Groups=].
+### Validate Grant ### {#access-validategrant}
 
-1. Let `ACCESS` be the [=Access Registry=] instance
+This operation is used to validate an [=Access Grant=]
+or [=Access Invitation=] before it is stored in an [=Access Registry=]
+
+#### Inputs #### {#validategrant-inputs}
+
+* Let `GRANT` be an [=Access Grant=] or [=Access Invitation=]
+
+#### Outputs #### {#validategrant-outputs}
+
+* Success or Failure Code
+
+#### Operation Details #### {#validategrant-details}
+
+1. If `GRANT` is an [=Access Invitation=]
+    1. Perform a validation of the RDF graph of `GRANT` against
+        [eco:AccessInvitationShape](ecosystem.shex#AccessInvitationShape).
+        <em class="rfc2119">MUST</em> return a status code of 400 if
+        validation fails.
+1. If `GRANT` is an [=Access Grant=]
+    1. Perform a validation of the RDF graph of `GRANT` against
+        [eco:AccessGrantShape](ecosystem.shex#AccessGrantShape).
+        <em class="rfc2119">MUST</em> return a status code of 400 if
+        validation fails.
 1. Let `PGROUPS` be the [=Prepared Access Need Groups=] linked to `GRANT`
     via `GRANT hasPreparedAccessNeedGroup`
 1. Let `DGRANTS` be the [=Data Grants=] linked to `GRANT`
     via `GRANT hasDataGrant`
 1. For each [=Prepared Access Need Group=] `PGROUP` in `PGROUPS`:
-    2. For each [=Prepared Access Need=] `NEED` in `PGROUP` traversed via
-        `NEED skos:narrower` or `NEED referencesPreparedAccessNeed`:
+    1. For each [=Prepared Access Need=] `PNEED` in `PGROUP` traversed via
+        `PNEED skos:narrower` or `PNEED referencesPreparedAccessNeed`:
         1. Let `NDGRANT` be the [=Data Grant=] associated with
             `NEED` via `NEED hasDataGrant`
             1. Error if `NDGRANT` is missing
             1. Error if `NDGRANT satisfiesPreparedAccessNeed` doesn't link to `NEED`
-            2. Error if `eco:RegisteredShapeTree` is not the same in `NDGRANT` and `NEED`
-2. For each [=Data Grant=] `DGRANT` in `DGRANTS`
-    3. Let `NEEDS` be all [=Prepared Access Needs=] across `PGROUPS`
-    4. Let `DGNEEDS` be all [=Prepared Access Needs=] linked to `DGRANT` via
+            1. Error if `eco:RegisteredShapeTree` is not the same in `NDGRANT` and `NEED`
+1. For each [=Data Grant=] `DGRANT` in `DGRANTS`
+    1. Let `NEEDS` be all [=Prepared Access Needs=] across `PGROUPS`
+    1. Let `DGNEEDS` be all [=Prepared Access Needs=] linked to `DGRANT` via
         `DGRANT satisfiesPreparedAccessNeed`
-    4. Error if `DGNEEDS` is not in `NEEDS`
-    5. Error if `DGNEEDS` is empty
-    6. Error if `DGRANT` access modes are not an exact union of `DGNEEDS accessMode` values
-        when `DGRANT scopeOfDataGrant` is not `eco:NoAccess`
-3. Call [[#access-applyperms]] with `GRANT`
-4. Store `GRANT` in `ACCESS`
-    1. `GRANT` must be added to `ACCESS`, conforming to the assigned
-        [ecot:access-grant-tree](ecosystem.tree#access-grant-tree) if it has
-        not already been added.
-    1. `GRANT` must conform to
-        [ecos:accessGrantShape](ecosystem.shex#accessGrantShape) per
-        [ecot:access-grant-tree](ecosystem.tree#access-grant-tree)
-    1. Add `GRANT` to the graph of `ACCESS` via `ACCESS hasRegistration` if
-        it has not already been added.
-4. Return `GRANT`
+    1. Error if `DGNEEDS` is not in `NEEDS`
+    1. Error if `DGNEEDS` is empty
+    1. Error if `DGRANT` access modes are not an exact union of
+        `DGNEEDS accessMode` values when `DGRANT scopeOfDataGrant` is not
+        `eco:NoAccess`
+
+### Record Grant ### {#access-recordgrant}
+
+This operation stores a new or updated [=Access Grant=] in
+an [=Access Registry=], applies permissions accordingly, and
+calls for an access receipt to be provided.
+
+#### Inputs #### {#recordgrant-inputs}
+
+* Let `GRANT` be an [=Access Grant=]
+* Let `REGISTRY` be an [=Access Registry=]
+
+#### Outputs #### {#recordgrant-outputs}
+
+* An [=Access Grant=] stored in `REGISTRY` with permissions applied and
+    [=Access Receipt=] provided
+
+#### Operation Details #### {#recordgrant-details}
+
+1. Call [[#access-validategrant]] with inputs: `GRANT`.
+    <em class="rfc2119">MUST</em> return a status code of 400 if
+    validation fails.
+1. Add or Update `GRANT` resource in the `REGISTRY` container, conforming to
+    the assigned [ecot:access-grant-tree](ecosystem.tree#access-grant-tree).
+1. Link `GRANT` to the `REGISTRY` via `ACCESS hasRegistration` if
+        it has not already been added
+1. Call [[#access-applyperms]] with inputs: `GRANT`
+1. TODO - CALL TO PROVIDE ACCESS RECEIPT GOES HERE
+1. Return `GRANT`
 
 Issue: Need to properly factor in multi-pod scenarios. Must identify the
 proper access registry to store things in based on the data registration, which
 means pods will also need to be registered.
+
+### Record Invitation ### {#access-recordinvitation}
+
+This operation stores a new or updated [=Access Invitation=] in
+an [=Access Registry=].
+
+#### Inputs #### {#recordinvitation-inputs}
+
+* Let `INVITATION` be an [=Access Invitation=]
+* Let `REGISTRY` be an [=Access Registry=]
+
+#### Outputs #### {#recordinvitation-outputs}
+
+* An [=Access Invitation=] stored in `REGISTRY`
+
+#### Operation Details #### {#recordinvitation-details}
+
+1. Call [[#access-validategrant]] with inputs: `INVITATION`.
+    <em class="rfc2119">MUST</em> return a status code of 400 if
+    validation fails.
+1. Add or Update `INVITATION` resource in the `REGISTRY` container, conforming to
+    the assigned
+    [ecot:access-invitation-tree](ecosystem.tree#access-invitation-tree)
+1. Link `INVITATION` to the `REGISTRY` via `ACCESS hasRegistration` if
+        it has not already been added
+1. TODO - CALL TO DELIVER INVITATION VIA CHANNEL GOES HERE
+1. Return `INVITATION`
 
 ### Apply Permissions ### {#access-applyperms}
 
@@ -4031,36 +4108,43 @@ require an additional attribute specified in the requested [=Access Needs=]
 ### Present Grant ### {#access-present}
 
 This operation is non-normative, and meant to instruct
-a developer in how to load and initialize an [=Access Grant=], present it
-to an [=Agent=], invoke the appropriate operations to manipulate
-[=Data Grants=] in accordance with the [=Agent's=] decisions, and then
-record those decisions, applying the permission changes accodingly.
+a developer in how to load and initialize an [=Access Grant=] or
+[=Access Invitation=], present it to an [=Agent=], invoke the appropriate
+operations to manipulate [=Data Grants=] in accordance with the
+[=Agent's=] decisions, and then record and act upon those decisions.
 
 #### Inputs #### {#present-inputs}
 
 * Let `SUBJECT` be an [=Access Grant Subject=]
+* Let `TARGET` be the `eco:channelTarget` of an [=Access Invitation=]
+* Let `ICHANNELS` be a set of [=Access Invitation Channels=] for a new
+    [=Access Invitation=]
 * Let `REGISTRY` be an [=Access Registry=]
 * Let `GROUPS` be an optional set of [=Access Need Groups=]
 * Let `LANG` be the [=Agent's=] preferred language
 
-#### Outputs #### {#present-outputs}
-
-* An [=Access Grant=] updated to reflect the controlling [=Agent's=]
-    access preferences.
-
 #### Operation Details #### {#present-details}
 
-1. Let `GRANT` be an [=Access Grant=] returned by [[#access-load]] with
-    inputs: `SUBJECT`, `REGISTRY`
-    1. If `GRANT` is missing, let `GRANT` be an [=Access Grant=] returned
-        by [[#access-initialize]] with inputs: `SUBJECT`, `REGISTRY`,
-        `GROUPS`, `LANG`.
-1. Present the [=Access Grant Subject=]
+1. <em class="rfc2119">MUST</em> return a status code of 400 if both
+    `SUBJECT` and `TARGET` are provided
+1. If `SUBJECT` is provided
+    1. Let `GRANT` be an [=Access Grant=] returned by [[#access-loadgrant]] with
+        inputs: `SUBJECT`, `REGISTRY`
+        1. If `GRANT` is missing, let `GRANT` be an [=Access Grant=] returned
+            by [[#access-initialize]] with inputs: `SUBJECT`, `REGISTRY`,
+            `GROUPS`, `LANG`.
+    1. Present the [=Access Grant Subject=]
+1. If `TARGET` is provided
+    1. Let `GRANT` be an [=Access Invitation=] returned by
+        [[#access-loadinvitation]] with inputs: `TARGET`, `REGISTRY`
+        1. If `GRANT` is missing, let `GRANT` be an [=Access Invitation=]
+            returned by [[#access-initialize]] with inputs: `ICHANNELS`,
+            `REGISTRY`, `GROUPS`, `LANG`
 1. If available, present the [=Agent=] who granted access via `registeredBy`
 1. If available, present the [=Application=] used by the [=Agent=] to grant
     access via `registeredWith`
-1. If available, present the timestamp of when the [=Access Grant=] was created
-    via `registeredAt`, and updated via `updatedAt`
+1. If available, present the timestamp of creation via `registeredAt`,
+    and update via `updatedAt`
 1. For each [=Prepared Access Need Group=] `PGROUP` linked via
     `GRANT hasPreparedAccessNeedGroup`
     1. Let `GDEC` be the [=Access Need Group Decorator=] linked via
@@ -4101,11 +4185,11 @@ record those decisions, applying the permission changes accodingly.
                   1. If `DATAGRANT scopeOfDataGrant` is `eco:NoAccess`
                       1. Allow `eco:AllInstances` to be selected, which invokes
                           the [[#access-selectall]] operation with inputs:
-                          `DATAGRANT`, `PGROUP`, `PNEED`
+                          `GRANT`, `PGROUP`, `PNEED`
                       1. Allow a subset of [=Registered Data Instances=] be selected,
                           and let `INSTANCES` be that subset, invoking
                           the [[#access-select]] operation with inputs:
-                          `INSTANCES`, `DATAGRANT`, `PGROUP`, `PNEED`
+                          `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`
                   1. If `DATAGRANT scopeOfDataGrant` is `eco:AllInstances`, then
                       present the user with summary details, and the ability to
                       see specific instances.
@@ -4114,7 +4198,7 @@ record those decisions, applying the permission changes accodingly.
                           1. If the user chooses to select
                               specific instances from this list, invoke the
                               [[#access-select]] operation with inputs: `INSTANCES`,
-                              `DATAGRANT`, `PGROUP`, `PNEED`.
+                              `GRANT`, `PGROUP`, `PNEED`.
                   1. If `DATAGRANT scopeOfDataGrant` is `eco:SelectedInstances`, then
                       present the user with the specific instances they have selected,
                       and:
@@ -4125,14 +4209,14 @@ record those decisions, applying the permission changes accodingly.
                               inputs: `INSTANCES`, `DATAGRANT`, `PGROUP`, `PNEED`.
                           1. Allow all [=Registered Data Instances=] to be selected,
                               invoking the [[#access-selectall]] operation with inputs:
-                              `DATAGRANT`, `PGROUP`, `PNEED`.
+                              `GRANT`, `PGROUP`, `PNEED`.
                   1. If `DATAGRANT scopeOfDataGrant` is `eco:InheritInstances`, present
                       the inherited [=Registered Data Instances=] and:
                       1. Let `INSTANCES` be a selected set of
                           [=Registered Data Instances=]
                       1. Allow a subset to be selected, invoking
                           the [[#access-select]] operation with inputs: `INSTANCES`,
-                          `DATAGRANT`, `PGROUP`, `PNEED`
+                          `GRANT`, `PGROUP`, `PNEED`
                       1. Identify the [=Prepared Access Need=] / [=Data Grant=]
                           and selected [=Registered Data Instances=] that were inherited
                           from.
@@ -4142,10 +4226,13 @@ record those decisions, applying the permission changes accodingly.
                           [=Registered Data Instances=]
                       1. Give the ability to adjust the selected instances, invoking
                           the [[#access-select]] operation with inputs:
-                          `INSTANCES`, `DATAGRANT`, `PGROUP`, `PNEED`.
+                          `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`.
                       1. Give the ability to revert to all inherited instances,
                           invoking the [[#access-selectall]] operation with inputs:
-                          `DATAGRANT`, `PGROUP`, `PNEED`
+                          `GRANT`, `PGROUP`, `PNEED`
+    1. Call [[#access-recordgrant]] if `GRANT` is an [=Access Grant=] to save.
+    1. Call [[#access-recordinvitation]] if `GRANT` is an [=Access Invitation=] to
+        save.
 
 Issue: Consider when an existing Access Need Group is expanded or contracted
 
