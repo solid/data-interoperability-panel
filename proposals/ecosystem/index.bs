@@ -1910,18 +1910,17 @@ hierarchy applies new inherited defaults, or stops the recursion before
 it continues through the remainder of the tree.
 
 <table class="classinfo data" align="left" id="classAccessNeedGroup">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [AccessNeedGroup](ecosystem.ttl#AccessNeedGroup)
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -1929,37 +1928,31 @@ it continues through the remainder of the tree.
   <tbody>
     <tr>
       <td>accessNecessity</td>
-      <td>-</td>
       <td>`eco:AccessRequired`, `eco:AccessOptional`</td>
       <td>Necessity of the access to the requesting party</td>
     </tr>
     <tr>
       <td>accessScenario</td>
-      <td>-</td>
       <td>`eco:PersonalAccess`, `eco:SharedAccess`</td>
       <td>Context in which the access group should be presented</td>
     </tr>
     <tr>
       <td>hasAccessNeed</td>
-      <td>-</td>
       <td>[AccessNeed](#classAccessNeed)</td>
       <td>Link to a [=Root Access Need=]</td>
     </tr>
     <tr>
       <td>hasAccessNeedOverride</td>
-      <td>-</td>
       <td>[AccessNeed](#classAccessNeed)</td>
       <td>Link to an [=Access Need Override=]</td>
     </tr>
     <tr>
       <td>authenticatesAs</td>
-      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
       <td>[=Agent=] or `eco:Pilot`</td>
       <td>[=Agent=] or mode the [=Application=] authenticates as</td>
     </tr>
     <tr>
       <td>hasAccessNeedDecoratorIndex</td>
-      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
       <td>-</td>
       <td>Index of [=Acccess Decorator Resources=] to describe
       [=Access Need Group=] and [=Access Needs=]</td>
@@ -2005,18 +1998,17 @@ indicates the necessity of the [=Access Need=]; *required* or
 [=Access Need Decorators=].
 
 <table class="classinfo data" align="left" id="classAccessNeed">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [AccessNeed](ecosystem.ttl#AccessNeed)
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -2024,26 +2016,22 @@ indicates the necessity of the [=Access Need=]; *required* or
   <tbody>
     <tr>
       <td>inAccessNeedGroup</td>
-      <td>[AccessNeed](#classAccessNeed)</td>
       <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
       <td>[=Access Need Group=] that the [=Access Need=] is part of</td>
     </tr>
     <tr>
       <td>registeredShapeTree</td>
-      <td>-</td>
       <td>`st:ShapeTree`</td>
       <td>The [=shape tree=] requested by the [=Access Need=]</td>
     </tr>
     <tr>
       <td>hasRegisteredDataInstance</td>
       <td>-</td>
-      <td>-</td>
       <td>Request specific [=Registered Data Instances=] of the registered
       [=shape tree=]</td>
     </tr>
     <tr>
       <td>recursivelyAuthorize</td>
-      <td>[AccessNeed](#classAccessNeed)</td>
       <td>`xsd:boolean`</td>
       <td>
         <ul>
@@ -2055,13 +2043,11 @@ indicates the necessity of the [=Access Need=]; *required* or
     </tr>
     <tr>
       <td>accessMode</td>
-      <td>-</td>
       <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
       <td>Requested modes of access for the [=Access Need=]</td>
     </tr>
     <tr>
       <td>accessNecessity</td>
-      <td>-</td>
       <td>`eco:AccessRequired`, `eco:AccessOptional`</td>
       <td>Necessity of the access to the requesting party</td>
     </tr>
@@ -2100,18 +2086,17 @@ A <dfn>Root Prepared Access Need</dfn> is the prepared version of the
 corresponding [=Root Access Need=] in the source [=Access Need Group=].
 
 <table class="classinfo data" align="left" id="classPreparedAccessNeedGroup">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [PreparedAccessNeedGroup](ecosystem.ttl#PreparedAccessNeedGroup)
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -2119,39 +2104,33 @@ corresponding [=Root Access Need=] in the source [=Access Need Group=].
   <tbody>
     <tr>
       <td>fromAccessNeedGroup</td>
-      <td>[PreparedAccessNeedGroup](#classPreparedAccessNeedGroup)</td>
       <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
       <td>The [=Access Need Group=] used to generate the
       [=Prepared Access Need Group=]</td>
     </tr>
     <tr>
       <td>hasAccessNeedGroupDecorator</td>
-      <td>[PreparedAccessNeedGroup](#classPreparedAccessNeedGroup)</td>
       <td>[AccessNeedGroupDecorator](#classAccessNeedGroupDecorator)</td>
       <td>An [=Access Need Group Decorator=] that describes this
       [=Prepared Access Need Group=]</td>
     </tr>
     <tr>
       <td>authenticatesAs</td>
-      <td>-</td>
       <td>[=Agent=] or `eco:Pilot`</td>
       <td>[=Agent=] or mode the [=Application=] authenticates as</td>
     </tr>
     <tr>
       <td>accessScenario</td>
-      <td>-</td>
       <td>`eco:PersonalAccess`, `eco:SharedAccess`</td>
       <td>Context in which the access group should be presented</td>
     </tr>
     <tr>
       <td>accessNecessity</td>
-      <td>-</td>
       <td>`eco:AccessRequired`, `eco:AccessOptional`</td>
       <td>Necessity of the access to the requesting party</td>
     </tr>
     <tr>
       <td>hasPreparedAccessNeed</td>
-      <td>[PreparedAccessNeedGroup](#classPreparedAccessNeedGroup)</td>
       <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
       <td>Link to a [=Root Prepared Access Need=]</td>
     </tr>
@@ -2183,18 +2162,17 @@ for every unique [=shape tree=] encountered as the operation traverses the
 [=shape tree=] hierarchy.
 
 <table class="classinfo data" align="left" id="classPreparedAccessNeed">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [PreparedAccessNeed](ecosystem.ttl#PreparedAccessNeed)
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -2202,13 +2180,11 @@ for every unique [=shape tree=] encountered as the operation traverses the
   <tbody>
     <tr>
       <td>inPreparedAccessNeedGroup</td>
-      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
       <td>[PreparedAccessNeedGroup](#classPreparedAccessNeedGroup)</td>
       <td>[=Prepared Access Need Group=] the [=Prepared Access Need=] belongs to</td>
     </tr>
     <tr>
       <td>hasShapeTreeDecorator</td>
-      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
       <td>`st:ShapeTreeDecorator`</td>
       <td>Decorator associated with the [=shape tree=] that describes the
       name of the shape-tree and what data it represents in the preferred
@@ -2216,46 +2192,39 @@ for every unique [=shape tree=] encountered as the operation traverses the
     </tr>
     <tr>
       <td>hasAccessNeedDecorator</td>
-      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
       <td>[AccessNeedDecorator](#classAccessNeedDecorator)</td>
       <td>Decorator that explains the reason for the access need in the
       preferred language of the [=Agent=]</td>
     </tr>
     <tr>
       <td>hasDataGrant</td>
-      <td>-</td>
       <td>[DataGrant](#classDataGrant)</td>
       <td>[=Data Grant=] associated with the [=Prepared Access Need=],
       established when the [=Access Grant=] is created</td>
     </tr>
     <tr>
       <td>hasRegisteredDataInstance</td>
-      <td>-</td>
       <td>[RegisteredDataInstance](#)</td>
       <td>Links to any specific [=Registered Data Instances=] that were
       included in the original request</td>
     </tr>
     <tr>
       <td>registeredShapeTree</td>
-      <td>-</td>
       <td>`st:ShapeTree`</td>
       <td>[=Shape tree=] associated with the [=Prepared Access Need=]</td>
     </tr>
     <tr>
       <td>accessMode</td>
-      <td>-</td>
       <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
       <td>Requested modes of access for the [=Prepared Access Need=]</td>
     </tr>
     <tr>
       <td>accessNecessity</td>
-      <td>-</td>
       <td>`eco:AccessRequired`, `eco:AccessOptional`</td>
       <td>Necessity of the access to the requesting party</td>
     </tr>
     <tr>
       <td>supportedByPreparedAccessNeed</td>
-      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
       <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
       <td>A [=Prepared Access Need=] whose [=shape tree=] `st:supports` the
       [=shape tree=] of this [=Prepared Access Need=]</td>
@@ -2263,19 +2232,16 @@ for every unique [=shape tree=] encountered as the operation traverses the
     <tr>
       <td>supportsPreparedAccessNeed</td>
       <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
-      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
       <td>A [=Prepared Access Need=] that [=shape tree=] of this
       [=Prepared Access Need=] `st:supports`</td>
     </tr>
     <tr>
       <td>referencesPreparedAccessNeed</td>
       <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
-      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
       <td>The next [=Prepared Access Need=] in a virtual hierarchy</td>
     </tr>
     <tr>
       <td>skos:narrower</td>
-      <td>-</td>
       <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
       <td>The next [=Prepared Access Need=] in a virtual hierarchy where
       the regular [=shape tree=] hierarchy has been extended to include
@@ -2312,18 +2278,17 @@ An <dfn>Access Decorator Index</dfn> is a listing of one or more
 [=Access Decorator Series=].
 
 <table class="classinfo data" align="left" id="classAccessDecoratorIndex">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [AccessDecoratorIndex](ecosystem.ttl#AccessDecoratorIndex)
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -2331,13 +2296,11 @@ An <dfn>Access Decorator Index</dfn> is a listing of one or more
   <tbody>
     <tr>
       <td>defaultLanguage</td>
-      <td>[AccessDecoratorIndex](#classAccessDecoratorIndex)</td>
       <td>`xsd:language`</td>
       <td>Default language to select if not provided as input</td>
     </tr>
     <tr>
       <td>hasSeries</td>
-      <td>[AccessDecoratorIndex](#classAccessDecoratorIndex)</td>
       <td>[AccessDecoratorSeries](#classAccessDecoratorSeries)</td>
       <td>Link to an [=Access Decorator Series=]</td>
     </tr>
@@ -2362,18 +2325,17 @@ An <dfn>Access Decorator Series</dfn> has one or
 more [=Access Decorator Versions=] in a given language.
 
 <table class="classinfo data" align="left" id="classAccessDecoratorSeries">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [AccessDecoratorSeries](ecosystem.ttl#AccessDecoratorSeries)
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -2381,13 +2343,11 @@ more [=Access Decorator Versions=] in a given language.
   <tbody>
     <tr>
       <td>usesLanguage</td>
-      <td>[AccessDecoratorSeries](#classAccessDecoratorSeries)</td>
       <td>xsd:language</td>
       <td>Language code associated with the [=Access Decorator Series=]</td>
     </tr>
     <tr>
       <td>hasVersion</td>
-      <td>[AccessDecoratorSeries](#classAccessDecoratorSeries)</td>
       <td>[AccessDecoratorVersion](#classAccessDecoratorVersion)</td>
       <td>Links to an [=Access Decorator Version=] in the series</td>
     </tr>
@@ -2412,18 +2372,17 @@ An <dfn>Access Decorator Version</dfn> is a versioned instance of
 a given [=Access Decorator Resource=].
 
 <table class="classinfo data" align="left" id="classAccessDecoratorVersion">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [PreparedAccessNeedGroup](ecosystem.ttl#PreparedAccessNeedGroup)
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -2431,19 +2390,16 @@ a given [=Access Decorator Resource=].
   <tbody>
     <tr>
       <td>isVersion</td>
-      <td>[AccessDecoratorVersion](#classAccessDecoratorVersion)</td>
       <td>xsd:string</td>
       <td>Semantic version of the [=Access Decorator Resource=] (e.g. "1.1.0")</td>
     </tr>
     <tr>
       <td>hasSHA256</td>
-      <td>[AccessDecoratorVersion](#classAccessDecoratorVersion)</td>
       <td>xsd:string</td>
       <td>SHA-256 hash of the linked [=Access Decorator Resource=]</td>
     </tr>
     <tr>
       <td>hasAccessDecoratorResource</td>
-      <td>[AccessDecoratorVersion](#classAccessDecoratorVersion)</td>
       <td>[AccessDecoratorResource](#classAccessDecoratorResource)</td>
       <td>Links to the actual [=Access Decorator Resource=] document</td>
     </tr>
@@ -2470,18 +2426,17 @@ An <dfn>Access Decorator Resource</dfn> is a document that contains
 given language.
 
 <table class="classinfo data" align="left" id="classAccessDecoratorResource">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [AccessDecoratorResource](ecosystem.ttl#AccessDecoratorResource)
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -2489,7 +2444,6 @@ given language.
   <tbody>
     <tr>
       <td><i>No properties</i></td>
-      <td>-</td>
       <td>-</td>
       <td>-</td>
     </tr>
@@ -2503,18 +2457,17 @@ more in depth description that explains why a given [=Access Need Group=]
 is being requested of an [=Agent=].
 
 <table class="classinfo data" align="left" id="classAccessNeedGroupDecorator">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [AccessNeedGroupDecorator](ecosystem.ttl#AccessNeedGroupDecorator)
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -2522,19 +2475,16 @@ is being requested of an [=Agent=].
   <tbody>
     <tr>
       <td>hasAccessNeedGroup</td>
-      <td>-</td>
       <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
       <td>[=Access Need Group=] the decorator applies to</td>
     </tr>
     <tr>
       <td>skos:preflabel</td>
-      <td>-</td>
       <td>`xsd:string`</td>
       <td>Short label (title) for the [=Access Need Group=]</td>
     </tr>
     <tr>
       <td>skos:definition</td>
-      <td>-</td>
       <td>`xsd:string`</td>
       <td>Description of why the [=Access Need Group=] requires the
       access it is requesting.</td>
@@ -2561,18 +2511,17 @@ An <dfn>Access Need Decorator</dfn> provides a specific
 explanation of why that data type is being requested.
 
 <table class="classinfo data" align="left" id="classAccessNeedDecorator">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [AccessNeedDecorator](ecosystem.ttl#AccessNeedDecorator)
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -2580,20 +2529,17 @@ explanation of why that data type is being requested.
   <tbody>
     <tr>
       <td>hasAccessNeedGroup</td>
-      <td>-</td>
       <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
       <td>[=Access Need Group=] the decorator applies to</td>
     </tr>
     <tr>
       <td>registeredShapeTree</td>
-      <td>-</td>
       <td>`st:ShapeTree`</td>
       <td>[=Shape tree=] associated with the [=Access Need=] the decorator
       should apply to</td>
     </tr>
     <tr>
       <td>skos:prefLabel</td>
-      <td>-</td>
       <td>`xsd:string`</td>
       <td>Specific explanation of why that data type is being requested</td>
     </tr>
@@ -3165,19 +3111,18 @@ An <dfn>Access Registry Set</dfn> is a [=Registry Set=] specifically
 made up of [=Access Registries=].
 
 <table class="classinfo data" align="left" id="classAccessRegistrySet">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4 text-align=left>
+      <th colspan=3 text-align=left>
         [AccessRegistrySet](ecosystem.ttl#AccessRegistrySet)
         a rdfs:subClassOf [[#reg-model|RegistrySet]]
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -3185,7 +3130,6 @@ made up of [=Access Registries=].
   <tbody>
     <tr>
       <td>hasRegistry</td>
-      <td>RegistrySet</td>
       <td>Registry</td>
       <td>Link to associated [=Access Registries=]</td>
     </tr>
@@ -3220,19 +3164,18 @@ An <dfn>Access Registry</dfn> is a collection of
 [=Access Grants=] stored in a specific location in a [=pod=].
 
 <table class="classinfo data" align="left" id="classAccessRegistry">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [AccessRegistry](ecosystem.ttl#AccessRegistry)
         a rdfs:subClassOf [[#reg-model|Registry]]
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -3240,7 +3183,6 @@ An <dfn>Access Registry</dfn> is a collection of
   <tbody>
     <tr>
       <td>hasRegistration</td>
-      <td>Registry</td>
       <td>Registration</td>
       <td>Link to associated [=Access Grants=]</td>
     </tr>
@@ -3281,19 +3223,18 @@ Each <dfn>Access Grant</dfn> represents access granted to one recipient; the
 [=Access Grant=].
 
 <table class="classinfo data" align="left" id="classAccessGrant">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [AccessGrant](ecosystem.ttl#AccessGrant)
         a rdfs:subClassOf [[#reg-model|Registration]]
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -3301,43 +3242,36 @@ Each <dfn>Access Grant</dfn> represents access granted to one recipient; the
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>Registration</td>
       <td>Agent</td>
       <td>[=Agent=] that registered the [=Access Grant=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
-      <td>Registration</td>
       <td>Application</td>
       <td>[=Application=] used to create the [=Access Grant=]</td>
     </tr>
     <tr>
       <td>registeredAt</td>
-      <td>Registration</td>
       <td>xsd:dateTime</td>
       <td>Date and time the [=Access Grant=] was created</td>
     </tr>
     <tr>
       <td>updatedAt</td>
-      <td>Registration</td>
       <td>xsd:dateTime</td>
       <td>Date and time the [=Access Grant=] was updated</td>
     </tr>
     <tr>
       <td>hasAccessGrantSubject</td>
-      <td>[AccessGrant](#classAccessGrant)</td>
       <td>AccessGrantSubject</td>
       <td>Links to one [=Access Grant Subject=] who was granted access.</td>
     </tr>
     <tr>
       <td>hasPreparedAccessNeedGroup</td>
-      <td>[AccessGrant](#classAccessGrant)</td>
       <td>PreparedAccessNeedGroup</td>
       <td>Links to a [=Prepared Access Need Group=] associated with the Access Grant.</td>
     </tr>
     <tr>
       <td>hasDataGrant</td>
-      <td>[AccessGrant](#classAccessGrant)</td>
       <td>DataGrant</td>
       <td>Links to a [=Data Grant=] associated with the Access Grant.</td>
     </tr>
@@ -3379,16 +3313,15 @@ who and what is being granted access. For example, it allows a single [=Agent=]
 to be specified, or a given [=Agent=] using a given [=Application=].
 
 <table class="classinfo data" align="left" id="classAccessGrantSubject">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>[AccessGrantSubject](ecosystem.ttl#AccessGrant)</th>
+      <th colspan=3>[AccessGrantSubject](ecosystem.ttl#AccessGrant)</th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -3396,13 +3329,11 @@ to be specified, or a given [=Agent=] using a given [=Application=].
   <tbody>
     <tr>
       <td>accessByAgent</td>
-      <td>[AccessGrantSubject](#classAccessGrantSubject)</td>
       <td>Agent</td>
       <td>[=Agent=] being granted access</td>
     </tr>
     <tr>
       <td>accessByApplication</td>
-      <td>[AccessGrantSubject](#classAccessGrantSubject)</td>
       <td>Application</td>
       <td>[=Application=] being granted access</td>
     </tr>
@@ -3427,18 +3358,17 @@ given [=Agent=] based upon [=Prepared Access Needs=] presented to them
 for a given [=Data Registration=].
 
 <table class="classinfo data" align="left" id="classDataGrant">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [DataGrant](ecosystem.ttl#DataGrant)
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -3446,32 +3376,27 @@ for a given [=Data Registration=].
   <tbody>
     <tr>
       <td>hasRegistration</td>
-      <td>-</td>
       <td>DataRegistration</td>
       <td>[=Data Registration=] the [=Data Grant=] applies to</td>
     </tr>
     <tr>
       <td>registeredShapeTree</td>
-      <td>-</td>
       <td>st:ShapeTree</td>
       <td>The [=shape tree=] registered at the target [=Data Registration=]</td>
     </tr>
     <tr>
       <td>satisfiesPreparedAccessNeed</td>
-      <td>[DataGrant](#classDataGrant)</td>
       <td>PreparedAccessNeed</td>
       <td>Links to a [=Prepared Access Need=] satisfied by the [=Data Grant=]</td>
     </tr>
     <tr>
       <td>accessMode</td>
-      <td>-</td>
       <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
       <td>Union of access modes from [=Prepared Access Needs=] linked by
       satisfiesPreparedAccessNeed</td>
     </tr>
     <tr>
       <td>scopeOfDataGrant</td>
-      <td>[DataGrant](#classDataGrant)</td>
       <td> eco:AllInstances, eco:InheritInstances,
       eco:SelectedInstances, eco:NoAccess</td>
       <td>Identifies the access scope of the [=Data Grant=]
@@ -3492,7 +3417,6 @@ for a given [=Data Registration=].
     </tr>
     <tr>
       <td>inheritsFrom</td>
-      <td>[DataGrant](#classDataGrant)</td>
       <td>[DataGrant](#classDataGrant)</td>
       <td>Identifies a [=Data Grant=] whose selected
       [=Registered Data Instances=] narrow the scope of instances to be
@@ -3537,19 +3461,18 @@ channels may be validated before an invitation is confirmed and
 converted to an [=Access Grant=].
 
 <table class="classinfo data" align="left" id="classAccessInvitation">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [AccessInvitation](ecosystem.ttl#AccessInvitation)
         a rdfs:subClassOf [[#datamodel-access-grant|AccessGrant]]
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -3557,50 +3480,42 @@ converted to an [=Access Grant=].
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>Registration</td>
       <td>Agent</td>
       <td>[=Agent=] that registered the [=Access Invitation=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
-      <td>Registration</td>
       <td>Application</td>
       <td>[=Application=] used to create the [=Access Invitation=]</td>
     </tr>
     <tr>
       <td>registeredAt</td>
-      <td>Registration</td>
       <td>xsd:dateTime</td>
       <td>Date and time the [=Access Invitation=] was created</td>
     </tr>
     <tr>
       <td>updatedAt</td>
-      <td>Registration</td>
       <td>xsd:dateTime</td>
       <td>Date and time the [=Access Invitation=] was updated</td>
     </tr>
     <tr>
       <td>expiresAt</td>
-      <td>[AccessInvitation](#classAccessInvitation)</td>
       <td>xsd:dateTime</td>
       <td>Date and time the [=Access Invitation=] expires</td>
     </tr>
     <tr>
       <td>hasAccessInvitationChannel</td>
-      <td>[AccessInvitation](#classAccessInvitation)</td>
       <td>AccessInvitationChannel</td>
       <td>Links to an [=Access Invitation Channel=]</td>
     </tr>
     <tr>
       <td>hasPreparedAccessNeedGroup</td>
-      <td>[AccessInvitation](#classAccessInvitation)</td>
       <td>PreparedAccessNeedGroup</td>
       <td>Links to a [=Prepared Access Need Group=] associated with the
       [=Access Invitation=].</td>
     </tr>
     <tr>
       <td>hasDataGrant</td>
-      <td>[AccessInvitation](#classAccessInvitation)</td>
       <td>DataGrant</td>
       <td>Links to a [=Data Grant=] associated with the
       [=Access Invitation=].</td>
@@ -3644,18 +3559,17 @@ An <dfn>Access Invitation Channel</dfn> represents a mechanism through
 which an [=Access Invitation=] can be delivered and validated.
 
 <table class="classinfo data" align="left" id="classAccessInvitationChannel">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [AccessInvitationChannel](ecosystem.ttl#AccessInvitationChannel)
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -3663,7 +3577,6 @@ which an [=Access Invitation=] can be delivered and validated.
   <tbody>
     <tr>
       <td>rdf:type</td>
-      <td>-</td>
       <td>eco:PhoneInvitationChannel,
       eco:EmailInvitationChannel,
       eco:SMSInvitationChannel,
@@ -3673,25 +3586,21 @@ which an [=Access Invitation=] can be delivered and validated.
     </tr>
     <tr>
       <td>channelTarget</td>
-      <td>[AccessInvitationChannel](#classAccessInvitationChannel)</td>
       <td>xsd:string</td>
       <td>Target used when validating the channel</td>
     </tr>
     <tr>
       <td>channelCode</td>
-      <td>[AccessInvitationChannel](#classAccessInvitationChannel)</td>
       <td>xsd:string</td>
       <td>Code used for channel validation</td>
     </tr>
     <tr>
       <td>isValidated</td>
-      <td>[AccessInvitationChannel](#classAccessInvitationChannel)</td>
       <td>xsd:boolean</td>
       <td>Indicates whether the channel has been validated</td>
     </tr>
     <tr>
       <td>remainingAttempts</td>
-      <td>[AccessInvitationChannel](#classAccessInvitationChannel)</td>
       <td>xsd:integer</td>
       <td>Number of allowed validation attempts remaining</td>
     </tr>
@@ -4410,19 +4319,18 @@ An <dfn>Access Receipt Registry Set</dfn> is a [=Registry Set=] specifically
 made up of [=Access Receipt Registries=].
 
 <table class="classinfo data" align="left" id="classAccessReceiptRegistrySet">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4 text-align=left>
+      <th colspan=3 text-align=left>
         [AccessReceiptRegistrySet](ecosystem.ttl#AccessReceiptRegistrySet)
         a rdfs:subClassOf [[#reg-model|RegistrySet]]
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -4430,7 +4338,6 @@ made up of [=Access Receipt Registries=].
   <tbody>
     <tr>
       <td>hasRegistry</td>
-      <td>RegistrySet</td>
       <td>Registry</td>
       <td>Link to associated [=Access Receipt Registries=]</td>
     </tr>
@@ -4466,19 +4373,18 @@ An <dfn>Access Receipt Registry</dfn> is a collection of
 [=Access Receipts=] stored in a specific location in a [=pod=].
 
 <table class="classinfo data" align="left" id="classAccessReceiptRegistry">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [AccessReceiptRegistry](ecosystem.ttl#AccessReceiptRegistry)
         a rdfs:subClassOf [[#reg-model|Registry]]
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -4486,7 +4392,6 @@ An <dfn>Access Receipt Registry</dfn> is a collection of
   <tbody>
     <tr>
       <td>hasRegistration</td>
-      <td>Registry</td>
       <td>Registration</td>
       <td>Link to associated [=Access Receipts=]</td>
     </tr>
@@ -4523,19 +4428,18 @@ conformant instances of the [AccessReceiptTree](#treeAccessReceipt).
 Each <dfn>Access Receipt</dfn> ...
 
 <table class="classinfo data" align="left" id="classAccessReceipt">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [AccessReceipt](ecosystem.ttl#AccessReceipt)
         a rdfs:subClassOf [[#reg-model|Registration]]
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -4543,43 +4447,36 @@ Each <dfn>Access Receipt</dfn> ...
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>Registration</td>
       <td>Agent</td>
       <td>[=Agent=] that registered the [=Access Receipt=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
-      <td>Registration</td>
       <td>Application</td>
       <td>[=Application=] used to create the [=Access Receipt=]</td>
     </tr>
     <tr>
       <td>registeredAt</td>
-      <td>Registration</td>
       <td>xsd:dateTime</td>
       <td>Date and time the [=Access Receipt=] was created</td>
     </tr>
     <tr>
       <td>updatedAt</td>
-      <td>Registration</td>
       <td>xsd:dateTime</td>
       <td>Date and time the [=Access Receipt=] was updated</td>
     </tr>
     <tr>
       <td>fromAgent</td>
-      <td>-</td>
       <td>Agent</td>
       <td>[=Agent=] that granted access and sent the [=Access Receipt=]</td>
     </tr>
     <tr>
       <td>toAgent</td>
-      <td>-</td>
       <td>Agent</td>
       <td>[=Agent=] who was granted access and received the [=Access Receipt=]</td>
     </tr>
     <tr>
       <td>hasDataReceipt</td>
-      <td>[AccessReceipt](#classAccessReceipt)</td>
       <td>[DataReceipt](#classDataReceipt)</td>
       <td>[=Data Receipt=] for a shared [=Data Registration=] and any shared
       [=Registered Data Instances=]</td>
@@ -4621,18 +4518,17 @@ that the assigned resource will validate against the
 A <dfn>Data Receipt</dfn> ...
 
 <table class="classinfo data" align="left" id="classDataReceipt">
-  <col>
-  <colgroup span=2></colgroup>
-  <col>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
   <thead>
     <tr>
-      <th colspan=4>
+      <th colspan=3>
         [DataReceipt](ecosystem.ttl#DataReceipt)
       </th>
     </tr>
     <tr>
       <th>Property</th>
-      <th>Domain</th>
       <th>Range</th>
       <th>Description</th>
     </tr>
@@ -4640,25 +4536,21 @@ A <dfn>Data Receipt</dfn> ...
   <tbody>
     <tr>
       <td>hasRegistration</td>
-      <td>-</td>
       <td>DataRegistration</td>
       <td>Remote [=Data Registration=] the [=Data Receipt=] applies to</td>
     </tr>
     <tr>
       <td>registeredShapeTree</td>
-      <td>-</td>
       <td>st:ShapeTree</td>
       <td>The [=shape tree=] registered at the target [=Data Registration=]</td>
     </tr>
     <tr>
       <td>accessMode</td>
-      <td>-</td>
       <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
       <td>Access modes granted</td>
     </tr>
     <tr>
       <td>scopeOfDataGrant</td>
-      <td>-</td>
       <td> eco:AllInstances, eco:InheritInstances,
       eco:SelectedInstances, eco:NoAccess</td>
       <td>Identifies the access scope of the [=Data Grant=]
@@ -4679,7 +4571,6 @@ A <dfn>Data Receipt</dfn> ...
     </tr>
     <tr>
       <td>inheritsFrom</td>
-      <td>-</td>
       <td>[DataReceipt](#classDataReceipt)</td>
       <td>Identifies a [=Data Receipt=] whose selected
       [=Registered Data Instances=] narrow the scope of instances to be
