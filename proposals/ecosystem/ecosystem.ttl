@@ -156,7 +156,17 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:subClassOf :RegistrySet ;
   rdfs:comment "A collection of Access Registry instances"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Access Registry"@en .
+  rdfs:label "Access Registry Set"@en .
+
+# AccessReceiptRegistrySet Class
+#############################################################################
+# SubClassOf RegistrySet used for AccessReceiptRegistry Instances
+#############################################################################
+:AccessReceiptRegistrySet
+  rdfs:subClassOf :RegistrySet ;
+  rdfs:comment "A collection of Access Receipt Registry instances"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Access Receipt Registry Set"@en .
 
 # Registry Class
 #############################################################################
@@ -208,6 +218,16 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:comment "A collection of Access Grant instances"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Registry"@en .
+
+# AccessReceiptRegistry Class
+#############################################################################
+# SubClassOf Registry which stores registered AccessReceipts
+#############################################################################
+:AccessReceiptRegistry
+  rdfs:subClassOf :Registry ;
+  rdfs:comment "A collection of Access Receipt instances"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Access Receipt Registry"@en .
 
 # Registration Class
 #############################################################################
