@@ -1700,8 +1700,8 @@ by an ecosystem participant.
 * [[#access]] record access decisions made by an [=Agent=] on the data in their
     control.
 
-* [[#exchanging]] provides different mechanisms for conveying [[#needs]]
-    and [[#access]].
+* [[#receipts]] reflect [=Access Grants=] that one [=Agent=] has provided
+    to another [=Agent=]
 
 Access Needs {#needs}
 =====================
@@ -1716,7 +1716,7 @@ required.
 A given [=Agent=] or [=Application=] expresses their access needs by
 providing one or more [=Access Need Groups=] to the [=Agent=] controlling
 the data they require access to. The channels through which these may be
-communicated are detailed in [[#exchanging]].
+communicated are detailed in [[#needs-workflows]].
 
 The [[#prepare-group]] operation processes each [=Access Need Group=]
 received by the controlling [=Agent=]. A [=Prepared Access Need Group=] is
@@ -2937,6 +2937,23 @@ provided language is not available, a default language is used instead.
     of 404 if `USENDEC` is unassigned
 1. return `USENDEC`
 
+## Workflows ## {#needs-workflows}
+
+### Piloted Application Requests Access ### {#needs-piloted}
+
+Controlling Agent is using an application that needs access to their data
+
+### Server-Side Application Requests Access ### {#needs-serverside}
+
+Controlling Agent wants to use a service that needs access to their data
+
+### Another Agent Requests Access ### {#needs-agentrequest}
+
+Another Agent has requested access to the Controlling Agent's data
+
+### Controller Shares Access ### {#needs-controllershare}
+
+Controlling Agent initiates sharing their data with another Agent
 
 Access Grants {#access}
 =====================
@@ -3142,7 +3159,7 @@ and [=Access Invitations=] via the
   </pre>
 </figure>
 
-### Access Registry Set ### {#datamodel-registry-set}
+### Access Registry Set ### {#datamodel-access-registry-set}
 
 An <dfn>Access Registry Set</dfn> is a [=Registry Set=] specifically
 made up of [=Access Registries=].
@@ -3431,7 +3448,7 @@ for a given [=Data Registration=].
       <td>hasRegistration</td>
       <td>-</td>
       <td>DataRegistration</td>
-      <td>[=Data Registration=] the [=Data Grant=] grant applies to</td>
+      <td>[=Data Registration=] the [=Data Grant=] applies to</td>
     </tr>
     <tr>
       <td>registeredShapeTree</td>
@@ -3465,7 +3482,7 @@ for a given [=Data Registration=].
           <li>eco:InheritInstances - Scope includes
               access to [=Registered Data Instances=] inherited by
               instances selected in the [=Data Grant=] linked via
-              eco:inheritsFromDataGrant</li>
+              eco:inheritsFrom</li>
           <li>eco:SelectedInstances - Scope includes
               access only to those [=Registered Data Instances=] specifically
               selected by the [=Agent=]</li>
@@ -3474,7 +3491,7 @@ for a given [=Data Registration=].
       </td>
     </tr>
     <tr>
-      <td>inheritsFromDataGrant</td>
+      <td>inheritsFrom</td>
       <td>[DataGrant](#classDataGrant)</td>
       <td>[DataGrant](#classDataGrant)</td>
       <td>Identifies a [=Data Grant=] whose selected
@@ -3496,7 +3513,7 @@ class.
   eco:satisfiesPreparedAccessNeed @PreparedAccessNeedShape+ ;
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ] ;
-  eco:inheritsFromDataGrant @DataGrantShape*
+  eco:inheritsFrom @DataGrantShape*
 }
 </pre>
 
@@ -4049,7 +4066,7 @@ an [=Access Registry=].
                 those [=access modes=]
     1. If `DGRANT scopeOfDataGrant` includes ONLY `eco:InheritInstances`
         1. Let `IDGRANT` be the inherited [=Data Grant=]
-        1. Error if `DGRANT inheritsFromDataGrant` is missing
+        1. Error if `DGRANT inheritsFrom` is missing
         1. Error if `IDGRANT eco:RegisteredShapeTree` does not have a reference
             to `DGRANT eco:registeredShapeTree` via `st:references`
         1. Let `ACL` be the [=ACL Resource=] directly associated with `DREG`
@@ -4075,7 +4092,7 @@ an [=Access Registry=].
                         `st:references` from `IDGRANT eco:registeredShapeTree`
     1. If `DGRANT scopeOfDataGrant` includes `eco:InheritInstances` AND `eco:SelectedInstances`
         1. Error if any other scopes are associated via `DGRANT scopeOfDataGrant`
-        1. Error if `DGRANT inheritsFromDataGrant` is missing
+        1. Error if `DGRANT inheritsFrom` is missing
         1. Error if `IDGRANT eco:RegisteredShapeTree` does not have a reference
             to `DGRANT eco:registeredShapeTree` via `st:references`
         1. Use instructions for `eco:SelectInstances`
@@ -4283,30 +4300,422 @@ this will expand to only include all inherited instances.
 #### Operation Details #### {#selectall-details}
 
 
-Exchanging Access Information {#exchanging}
+Access Receipts {#receipts}
 =====================
 
-## Patterns for making requests and getting access ## {#exchanging-protocol}
+## Overview ## {#receipts-overview}
 
-### Access for other agents / people ### {#exchanging-agentpattern}
+## Data Model ## {#receipts-datamodel}
 
-TODO
+### Summary ### {#receipts-datamodel-summary}
 
-### Access for piloted applications ### {#exchanging-pilotpattern}
+<figure id="fig-receipt-model">
+  <img src="receipt-model.svg" width=100%/>
+  <figcaption>Data model for the [=Access Receipt Registry=]</figcaption>
+</figure>
 
-TODO
+The [=Access Receipt Registry=] extends the [[#reg-model]] with type-specific
+subclasses and subproperties.
 
-### Access for services (autonomous) ### {#exchanging-servicepattern}
+An [=Agent=] has a [=Registrar=] that links to [=Access Receipt Registry Sets=]
+via the [eco:hasAccessReceiptRegistrySet](ecosystem.ttl#hasAccessReceiptRegistrySet) property.
 
-TODO
+An [=Access Receipt Registry Set=] links to any number of
+[=Access Receipt Registries=] via
+the [eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
 
-### Direct share to someone else ### {#exchanging-sharing}
+An [=Access Receipt Registry=] links to any number of registered
+[=Access Receipts=] via the
+[eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
 
-TODO
+<figure id="fig-receipt-registrar">
+  <figcaption>A [=Registrar=] at https://alice.pod.example/registries/#registrar
+  linking to an [=Access Receipt Registry Set=]</figcaption>
+  <pre highlight="turtle">
+  <#registrar>
+    a eco:Registrar;
+    eco:hasAccessReceiptRegistrySet &lt;https://alice.pod.example/registries/receipt#set&gt; .
+  </pre>
+  </figure>
+</figure>
 
-### Communicating access grants ### {#exchanging-communicating}
+<figure id ="fig-receipt-registry-set">
+   <figcaption>An [=Access Receipt Registry Set=] at
+   https://alice.pod.example/registries/receipt#set linking to two different
+  [=Access Receipt Registries=]</figcaption>
+  <pre highlight="turtle">
+  <#set>
+    a eco:AccessReceiptRegistrySet;
+    eco:hasRegistry &lt;https://alice.pod.example/receipts/#registry&gt; ,
+                    &lt;https://alice.otherpod.example/receipts/#registry&gt; .
+  </pre>
+</figure>
 
-TODO
+<figure id="fig-receipt-registry">
+  <figcaption>An [=Access Receipt Registry=] at
+  https://alice.pod.example/receipts/#registry
+  linking to several registered [=Access Receipts=] or
+  </figcaption>
+  <pre highlight="turtle">
+  <#registry>
+    a eco:AccessReceiptRegistry ;
+    eco:hasRegistration &lt;fa6d6553-0308-4abd-bce6-888df653695a/#receipt&gt; ,
+                        &lt;d49eae8c-e138-4153-86ed-63832deadc6b/#receipt&gt; ,
+                        &lt;506a0cee-1dc9-4720-a768-294aa0284502/#receipt&gt; .
+  </pre>
+</figure>
+
+<figure id="fig-access-receipt">
+  <figcaption>An [=Access Receipt=] at
+  https://alice.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a/#receipt
+  </figcaption>
+  <pre highlight="turtle">
+  <#receipt>
+    a eco:AccessReceipt ;
+    eco:registeredBy https://bob.pod.example/profile/id#me ;
+    eco:registeredWith https://trusted.example/id#agent ;
+    eco:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    eco:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    eco:fromAgent https://alice.pod.example/profile/id#me ;
+    eco:toAgent https://bob.pod.example/profile/id#me ;
+    eco:hasDataReceipt <#notebook-receipt>, <#note-receipt> .
+
+  <#notebook-receipt>
+    a eco:DataReceipt ;
+    eco:hasRegistration https://alice.pod.example/data/notebook/#registration ;
+    eco:registeredShapeTree note:notebook-tree ;
+    eco:accessMode acl:Read, acl:Write ;
+    eco:scopeOfDataGrant eco:SelectedInstances ;
+    eco:hasRegisteredDataInstance https://alice.pod.example/data/notebook/notebook-1/#notebook ,
+                                  https://alice.pod.example/data/notebook/notebook-1/#notebook .
+
+  <#note-receipt>
+    a eco:DataReceipt ;
+    eco:hasRegistration https://alice.pod.example/data/note/#registration ;
+    eco:registeredShapeTree note:note-tree ;
+    eco:accessMode acl:Read, acl:Write ;
+    eco:scopeOfDataGrant eco:inheritInstances ;
+    eco:inheritsFrom <#notebook-receipt> ;
+    eco:hasRegisteredDataInstance https://alice.pod.example/data/note/note-1/#note ,
+                                  https://alice.pod.example/data/note/note-2/#note ,
+                                  https://alice.pod.example/data/note/note-3/#note ,
+                                  https://alice.pod.example/data/note/note-4/#note ,
+                                  https://alice.pod.example/data/note/note-5/#note .
+  </pre>
+</figure>
+
+### Access Receipt Registry Set ### {#datamodel-receipt-registry-set}
+
+An <dfn>Access Receipt Registry Set</dfn> is a [=Registry Set=] specifically
+made up of [=Access Receipt Registries=].
+
+<table class="classinfo data" align="left" id="classAccessReceiptRegistrySet">
+  <col>
+  <colgroup span=2></colgroup>
+  <col>
+  <thead>
+    <tr>
+      <th colspan=4 text-align=left>
+        [AccessReceiptRegistrySet](ecosystem.ttl#AccessReceiptRegistrySet)
+        a rdfs:subClassOf [[#reg-model|RegistrySet]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Domain</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistry</td>
+      <td>RegistrySet</td>
+      <td>Registry</td>
+      <td>Link to associated [=Access Receipt Registries=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessReceiptRegistrySetShape](#shexAccessReceiptRegistrySet) is used to
+validate an instance of the
+[AccessReceiptRegistrySet](#classAccessReceiptRegistrySet) class.
+
+<pre highlight="turtle" id="shexAccessReceiptRegistrySet">
+<#AccessReceiptRegistrySetShape> {
+  a [ eco:AccessReceiptRegistrySet ] ;
+  eco:hasRegistry IRI+
+}
+</pre>
+
+The [AccessReceiptRegistrySetTree](ecosystem.tree#access-receipt-registry-set-tree)
+is assigned to a resource to ensure it will validate against the
+[AccessReceiptRegistrySetShape](#shexAccessReceiptRegistrySet).
+
+<pre highlight="turtle" id="treeAccessReceiptRegistrySet">
+<#access-receipt-registry-set-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;ecos#AccessReceiptRegistrySetShape&gt; ;
+  st:matchesUriTemplate "receipt" .
+</pre>
+
+### Access Receipt Registry ### {#datamodel-access-receipt-registry}
+
+An <dfn>Access Receipt Registry</dfn> is a collection of
+[=Access Receipts=] stored in a specific location in a [=pod=].
+
+<table class="classinfo data" align="left" id="classAccessReceiptRegistry">
+  <col>
+  <colgroup span=2></colgroup>
+  <col>
+  <thead>
+    <tr>
+      <th colspan=4>
+        [AccessReceiptRegistry](ecosystem.ttl#AccessReceiptRegistry)
+        a rdfs:subClassOf [[#reg-model|Registry]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Domain</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>Registry</td>
+      <td>Registration</td>
+      <td>Link to associated [=Access Receipts=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessReceiptRegistryShape](#shexAccessReceiptRegistry) is used to
+validate an instance of the
+[AccessReceiptRegistry](#classAccessReceiptRegistry) class.
+
+<pre highlight="turtle" id="shexAccessReceiptRegistry">
+<#AccessReceiptRegistryShape> {
+  a [ eco:AccessReceiptRegistry ] ;
+  eco:hasRegistration IRI*
+}
+</pre>
+
+The [AccessReceiptRegistryTree](ecosystem.tree#access-receipt-registry-tree)
+is assigned to a container resource to ensure that it will validate against the
+[AccessReceiptRegistryShape](#shexAccessReceiptRegistry), and contain only
+conformant instances of the [AccessReceiptTree](#treeAccessReceipt).
+
+<pre highlight="turtle" id="treeAccessReceiptRegistry">
+<#access-receipt-registry-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy &lt;ecos#AccessReceiptRegistryShape&gt; ;
+  st:contains <#access-receipt-tree> ,
+              st:AllowNone .
+</pre>
+
+### Access Receipt ### {#datamodel-access-receipt}
+
+Each <dfn>Access Receipt</dfn> ...
+
+<table class="classinfo data" align="left" id="classAccessReceipt">
+  <col>
+  <colgroup span=2></colgroup>
+  <col>
+  <thead>
+    <tr>
+      <th colspan=4>
+        [AccessReceipt](ecosystem.ttl#AccessReceipt)
+        a rdfs:subClassOf [[#reg-model|Registration]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Domain</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>Registration</td>
+      <td>Agent</td>
+      <td>[=Agent=] that registered the [=Access Receipt=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>Registration</td>
+      <td>Application</td>
+      <td>[=Application=] used to create the [=Access Receipt=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>Registration</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Receipt=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>Registration</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Receipt=] was updated</td>
+    </tr>
+    <tr>
+      <td>fromAgent</td>
+      <td>-</td>
+      <td>Agent</td>
+      <td>[=Agent=] that granted access and sent the [=Access Receipt=]</td>
+    </tr>
+    <tr>
+      <td>toAgent</td>
+      <td>-</td>
+      <td>Agent</td>
+      <td>[=Agent=] who was granted access and received the [=Access Receipt=]</td>
+    </tr>
+    <tr>
+      <td>hasDataReceipt</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>[DataReceipt](#classDataReceipt)</td>
+      <td>[=Data Receipt=] for a shared [=Data Registration=] and any shared
+      [=Registered Data Instances=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessReceiptShape](#shexAccessReceipt) is used to validate an instance
+of the [AccessReceipt](#classAccessReceipt) class.
+
+<pre highlight="turtle" id="shexAccessReceipt">
+<#AccessReceiptShape> {
+  a [eco:AccessReceipt] ;
+  eco:fromAgent IRI ;             # Agent who sent the receipt
+  eco:toAgent IRI ;               # Recipient of the receipt
+  eco:registeredBy IRI ;
+  eco:registeredWith IRI? ;
+  eco:registeredAt xsd:dateTime ;
+  eco:updatedAt xsd:dateTime ;
+  eco:hasDataReceipt @<#:DataReceiptShape> ;
+}
+</pre>
+
+The [AccessReceiptTree](ecosystem.tree#access-receipt-tree) is assigned to a
+resource via the [AccessRegistryTree](#treeAccessRegistry), and ensures
+that the assigned resource will validate against the
+[AccessReceiptShape](#shexAccessReceipt).
+
+<pre highlight="turtle" id="treeAccessReceipt">
+<#access-receipt-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;ecos#AccessReceiptShape&gt; ;
+  st:matchesUriTemplate "{id}" .
+</pre>
+
+### Data Receipt ### {#datamodel-data-receipt}
+
+A <dfn>Data Receipt</dfn> ...
+
+<table class="classinfo data" align="left" id="classDataReceipt">
+  <col>
+  <colgroup span=2></colgroup>
+  <col>
+  <thead>
+    <tr>
+      <th colspan=4>
+        [DataReceipt](ecosystem.ttl#DataReceipt)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Domain</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>-</td>
+      <td>DataRegistration</td>
+      <td>Remote [=Data Registration=] the [=Data Receipt=] applies to</td>
+    </tr>
+    <tr>
+      <td>registeredShapeTree</td>
+      <td>-</td>
+      <td>st:ShapeTree</td>
+      <td>The [=shape tree=] registered at the target [=Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>accessMode</td>
+      <td>-</td>
+      <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
+      <td>Access modes granted</td>
+    </tr>
+    <tr>
+      <td>scopeOfDataGrant</td>
+      <td>-</td>
+      <td> eco:AllInstances, eco:InheritInstances,
+      eco:SelectedInstances, eco:NoAccess</td>
+      <td>Identifies the access scope of the [=Data Grant=]
+        <ul>
+          <li>eco:AllInstances - Scope includes
+              access to all [=Registered Data Instances=] of the associated
+              [=Data Registration=]</li>
+          <li>eco:InheritInstances - Scope includes
+              access to [=Registered Data Instances=] inherited by
+              instances selected in the [=Data Receipt=] linked via
+              eco:inheritsFrom</li>
+          <li>eco:SelectedInstances - Scope includes
+              access only to those [=Registered Data Instances=] specifically
+              selected by the [=Agent=]</li>
+          <li>eco:NoAccess</li> - No access is granted
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>inheritsFrom</td>
+      <td>-</td>
+      <td>[DataReceipt](#classDataReceipt)</td>
+      <td>Identifies a [=Data Receipt=] whose selected
+      [=Registered Data Instances=] narrow the scope of instances to be
+      presented by this receipt.</td>
+    </tr>
+  </tbody>
+</table>
+
+The [DataReceiptShape](#shexDataReceipt) is used to
+validate an instance of the [DataReceipt](#classDataReceipt)
+class.
+
+<pre highlight="turtle" id="shexDataReceipt">
+<#DataReceiptShape> {
+  a [eco:DataReceipt] ;
+  eco:hasRegistration IRI ;       # Remote data registration
+  eco:registeredShapeTree IRI ;   # Associated shape tree
+  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ] ;
+  eco:hasRegisteredDataInstance IRI* ;     # if specific instances are selected or inherited
+  eco:inheritsFrom @<#:DataReceiptShape>*
+}
+</pre>
+
+## Resource Hierarchy ## {#receipts-hierarchy}
+
+## Operations ## {#receipts-operations}
+
+## Workflows ## {#receipts-workflows}
+
+### Access Received from Agent ### {#receipts-fromagent}
+
+
+### Access Received for Registered Application ### {#receipts-fromapp}
+
+
 
 
 Trusted Agents {#trusted}

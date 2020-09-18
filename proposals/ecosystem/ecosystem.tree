@@ -44,6 +44,12 @@
   st:validatedBy <ecos#AccessRegistrySetShape> ;
   st:matchesUriTemplate "access" .
 
+<#access-receipt-registry-set-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <ecos#AccessReceiptRegistrySetShape> ;
+  st:matchesUriTemplate "access" .
+
 
 # Application Registry
 ##############################################################################
@@ -128,4 +134,27 @@
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy <ecos#AccessInvitationShape> ;
+  st:matchesUriTemplate "{id}" .
+
+# Access Receipt Registry
+##############################################################################
+# Ensure the registry container graph contains a valid
+# AccessReceiptRegistry instance, and the resources inside of
+# it are valid AccessReceipt instances.
+##############################################################################
+<#access-receipt-registry-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <ecos#AccessReceiptRegistryShape> ;
+  st:contains <#access-receipt-tree> ,
+              st:AllowNone .
+
+# Access Receipt
+##############################################################################
+# Ensure the receipt resource graph contains a valid AccessReceipt instance
+##############################################################################
+<#access-receipt-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <ecos#AccessReceiptShape> ;
   st:matchesUriTemplate "{id}" .

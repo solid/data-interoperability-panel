@@ -32,6 +32,14 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:range :Registrar ;
   rdfs:label "Has registrar"@en .
 
+:hasAccessInbox
+  a rdf:property ;
+  rdfs:comment "Links an Agent to an Access inbox for Access Receipts"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :Agent ;
+  rdfs:range IRI ;
+  rdfs:label "Has Access Inbox"@en .
+
 :trustsApplication
   a rdf:property ;
   rdfs:comment "Links to an Application the Agent trusts"@en ;
@@ -914,7 +922,7 @@ rdfs:label "Requested Access Mode"@en .
 #############################################################################
 :DataGrant
   a rdfs:Class ;
-    rdfs:comment "Associates a DataRegistration with an AccessGrant"@en ;
+  rdfs:comment "Associates a DataRegistration with an AccessGrant"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Data Grant"@en .
 
@@ -934,10 +942,51 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:range [ owl:oneOf ( :SelectInstances :EveryInstance :InheritInstances :NoAccess ) ] ;
   rdfs:label "Scope of Data Grant"@en .
 
-:inheritsFromDataGrant
+:inheritsFrom
   a rdf:property ;
-  rdfs:comment "Links to a DataGrant whose scope is being inherited"@en ;
+  rdfs:comment "Links to a source of scope inheritance"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :DataGrant ;
   rdfs:range :DataGrant ;
-  rdfs:label "Inherits From Data Grant"@en .
+  rdfs:label "Inherits From"@en .
+
+# AccessReceipt Class
+#############################################################################
+# A record of the access granted by another Agent in the ecosystem
+#############################################################################
+:AccessReceipt
+  rdfs:subClassOf :Registration
+  rdfs:comment "A record of access granted by another Agent in the ecosystem"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Access Receipt"@en .
+
+:fromAgent
+  a rdf:property ;
+  rdfs:comment "Agent sending a message"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range :Agent ;
+  rdfs:label "From Agent"@en .
+
+:toAgent
+  a rdf:property ;
+  rdfs:comment "Agent receiving a message"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range :Agent ;
+  rdfs:label "To Agent"@en .
+
+:hasDataReceipt
+  a rdf:property ;
+  rdfs:comment "Agent receiving a message"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessReceipt ;
+  rdfs:range :DataReceipt ;
+  rdfs:label "Has Data Receipt"@en .
+
+# DataReceipt Class
+#############################################################################
+# Access received for a specific data registration in an Access Receipt
+#############################################################################
+:DataReceipt
+  a rdfs:Class ;
+  rdfs:comment "Access to a specific data registration in an Access Receipt"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Data Receipt"@en .
