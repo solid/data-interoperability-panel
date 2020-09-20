@@ -1001,6 +1001,25 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:range :DataReceipt ;
   rdfs:label "Has Data Receipt"@en .
 
+:receivesAccessReceipt
+  a rdf:property ;
+  rdfs:comment "Express a preference in how access receipts are delivered"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range [ owl:oneOf ( :ReceiptInRegistration :ReceiptInMessage ) ] ;
+  rdfs:label "Receives Access Receipt"@en .
+
+# IRIs for Access Receipt Preferences
+#############################################################################
+:ReceiptInRegistration
+  rdfs:comment "Receive access receipt in application registration"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Receipt in Registration"@en .
+
+:ReceiptInMessage
+  rdfs:comment "Receive access receipt in direct message"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Receipt In Message"@en .
+
 # DataReceipt Class
 #############################################################################
 # Access received for a specific data registration in an Access Receipt

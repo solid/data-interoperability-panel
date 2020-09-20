@@ -1,6 +1,6 @@
 <pre class="metadata">
 Title: Solid Application Interoperability
-Shortname: your-spec
+Shortname: interop
 Level: 1
 Max ToC Depth: 2
 Status: w3c/ED
@@ -1703,6 +1703,180 @@ by an ecosystem participant.
 * [[#receipts]] reflect [=Access Grants=] that one [=Agent=] has provided
     to another [=Agent=]
 
+## Workflows ## {#authz-workflows}
+
+The following workflows represent the authorization patterns
+enabled by this specification.
+
+### Application Requests Access ### {#authz-apprequest}
+
+Let `CONTROLLER` be an [=Agent=] that wants to give an
+    [=Application=] `APP` access to data in their control.
+
+Let `APP` be the [=Application=] that `CONTROLLER` wishes to use, and must
+    grant access to. `APP` may be an [=Application=] that is piloted by the
+    [=Agent=], or it may be an autonomous service that operates independently.
+    The following workflow applies to both cases.
+
+Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
+    authorization and access control.
+
+1. `CONTROLLER` decides they'd like to use `APP`
+1. `CONTROLLER` provides their [=identity=] to `APP`
+1. `APP` dereferences the [=identity=] to
+    get `CONTROLLER`'s [=identity profile document=].
+1. `APP` discovers that `AUTHZ` is the [=Authorization Agent=] for
+    `CONTROLLER` via the [[#trusted-load]] operation.
+1. `APP` redirects `CONTROLLER` to `AUTHZ` via the [[#trusted-redirect]]
+    operation.
+    1. `AUTHZ` looks in `APP`'s [=application profile document=] for
+        [=Access Need Groups=] with an `eco:accessScenario` of
+        `eco:PersonalAccess`
+    1. Any [=Access Need Groups=] found are passed to the [[#access-present]]
+        operation, which presents them to `CONTROLLER`.
+    1. `CONTROLLER` decides whether to grant `APP` the access requested.
+    1. `CONTROLLER` authorizes the requested [=Access Need Groups=]
+        and [=Access Needs=]:
+        1. The [[#appreg-new|Register Application]] operation is called
+            to register `APP` in `CONTROLLER`'s [=Application Registry=].
+        1. The [[#access-recordgrant]] operation is invoked
+            1. An [=Access Grant=] is stored in `CONTROLLER`'s
+                [=Access Registry=].
+            1. [[#access-applyperms]] is called to apply permissions based
+                on the [=Access Grant=].
+            1. [[#receipts-provide]] is called to store the
+                [=Access Receipt=]. The Application has set
+                `eco:receivesAccessReceipt` to
+                `ReceiptInRegistration`, so the [=Access Receipt=] is
+                stored in the [=Application Registration=] for `APP`.
+    1. `AUTHZ` redirects `CONTROLLER` back to `APP` via the
+        [[#trusted-return]] operation.
+
+### Another Agent Requests Access ### {#authz-agentrequest}
+
+Let `REQUESTER` be an [=Agent=] requesting data from another
+    [=Agent=] `CONTROLLER` with a known [=identity=].
+
+Let `REQAPP` be an [=Application=] piloted by `REQUESTER`
+
+Let `RAUTHZ` be an [=Application=] trusted by `REQUESTER` for
+    authorization and access control.
+
+Let `CONTROLLER` be an [=Agent=] in control of data that
+    `REQUESTER` would like to access.
+
+Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
+    authorization and access control.
+
+1. `REQUESTER` would like access to `CONTROLLER`'s data.
+1. `REQUESTER` provides `CONTROLLER`'s [=identity=] to `REQAPP`.
+1. `REQAPP` dereferences `CONTROLLER`'s [=identity=] to get `CONTROLLER`'s
+    [=identity profile document=].
+1. `REQAPP` uses [=Access Need Groups=] from its
+    [=application profile document=] with an `eco:accessScenario` of
+    `eco:SharedAccess` to identify [=Access Need Groups=] to request
+    from `CONTROLLER`.
+1. `CONTROLLER` has an `eco:receivesAccessReceipt` value of `ReceiptInMessage`
+    in their [=identity profile document=].
+1. `REQAPP` puts the [=Access Need Groups=] into an [=Access Request=]
+    and posts it to the [=Access Inbox=] identified by `eco:hasAccessInbox`
+    in the `CONTROLLER`'s [=identity profile document=].
+1. `CAUTHZ` monitors `CONTROLLER`'s access inbox autonomously. It notifies
+    `CONTROLLER` when a new [=Access Request=] is received.
+    1. `CONTROLLER` clicks a link in the notification from `CAUTHZ`,
+        opening the `CAUTHZ` user interface and invoking the
+        [[#access-present]] operation using the [=Access Need Groups=] from
+        the [=Access Request=].
+    1. `CONTROLLER` determines whether they wish to grant the access requested.
+    1. Assuming `CONTROLLER` authorizes a minimum of the
+        required [=Access Need Groups=] and [=Access Needs=],
+        the [[#access-recordgrant]] operation is invoked.
+    1. [[#access-recordgrant]] stores an [=Access Grant=] in `CONTROLLER`'s
+        [=Access Registry=].
+        1. [[#access-applyperms]] is called to apply permissions based on the
+            [=Access Grant=].
+        1. [[#receipts-provide]] is called to deliver the [=Access Receipt=].
+            1. `CAUTHZ` dereferences `REQUESTER`'s [=identity=] to get
+                `REQUESTER`'s [=identity profile document=].
+            1. `REQUESTER` has set `eco:receivesAccessReceipt` to
+                `ReceiptInMessage`, so the [=Access Receipt=] is posted
+                to the access inbox identified via `hasAccessInbox` in
+                `REQUESTER`'s '[=identity profile document=].
+1. `RAUTHZ` monitors `REQUESTER`'s access inbox autonomously. It notifies
+    `REQUESTER` when a new [=Access Receipt=] is received.
+    1. `REQUESTER` clicks the link in the notification, opening the
+        `RAUTHZ` user interface and invoking the [[#receipts-present]]
+        operation to approve the [=Access Receipt=].
+    1. `REQUESTER` accepts the [=Access Receipt=], and `RAUTHZ`
+        invokes the [[#receipts-record]] operation.
+        1. [[#receipts-record]] is called to store the [=Access Receipt=]
+            in `REQUESTER`'s [=Access Receipt Registry=].
+        1. [[#remote-update]] is called to update `REQUESTER`'s
+            [=Remote Data Registry=] to reflect what is in the
+            [=Access Receipt=].
+
+### Controller Shares Access ### {#authz-controllershare}
+
+Let `CONTROLLER` be an [=Agent=] in control of data that
+    they would like to authorize `RECEIVER` to access.
+
+Let `CAPP` be an [=Application=] piloted by `CONTROLLER`
+
+Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
+    authorization and access control.
+
+Let `RECEIVER` be an [=Agent=] receiving access to data from another
+    [=Agent=] `CONTROLLER`.
+
+Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
+    authorization and access control.
+
+1. `CONTROLLER` would like to give `RECEIVER` access to their data.
+1. `CONTROLLER` provides `RECEIVER`'s [=identity=] to `CAPP`.
+1. `CAPP` dereferences `RECEIVER`'s [=identity=] to get `RECEIVER`'s
+    [=identity profile document=].
+1. `CAPP` discovers that `CAUTHZ` is the [=Authorization Agent=] for
+    `CONTROLLER` via the [[#trusted-load]] operation.
+1. `CAPP` redirects `CONTROLLER` to `CAUTHZ` via the [[#trusted-redirect]]
+    operation.
+    1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
+        [=Access Need Groups=] with an `eco:accessScenario` of
+        `eco:SharedAccess`
+    1. Any [=Access Need Groups=] found are passed to the [[#access-present]]
+        operation, which presents them to `CONTROLLER`.
+    1. `CONTROLLER` authorizes the data to share with `RECEIVER` based on
+        the provided [=Access Need Groups=].
+        1. The [[#access-recordgrant]] operation is invoked
+            1. An [=Access Grant=] is stored in `CONTROLLER`'s
+                [=Access Registry=].
+            1. [[#access-applyperms]] is called to apply permissions based
+                on the [=Access Grant=].
+            1. [[#receipts-provide]] is called to store the
+                [=Access Receipt=]. `RECEIVER` has set
+                `eco:receivesAccessReceipt` to
+                `ReceiptInMessage`, so the [=Access Receipt=] is posted
+                to the access inbox identified via `hasAccessInbox` in
+                `RECEIVER`'s '[=identity profile document=].
+    1. `CAUTHZ` redirects `CONTROLLER` back to `CAPP` via the
+        [[#trusted-return]] operation.
+1. `RAUTHZ` monitors `RECEIVER`'s access inbox autonomously. It notifies
+    `RECEIVER` when a new [=Access Receipt=] is received.
+    1. `RECEIVER` clicks the link in the notification, opening the
+        `RAUTHZ` user interface and invoking the [[#receipts-present]]
+        operation to approve the [=Access Receipt=].
+    1. `RECEIVER` accepts the [=Access Receipt=], and `RAUTHZ`
+        invokes the [[#receipts-record]] operation.
+        1. [[#receipts-record]] is called to store the [=Access Receipt=]
+            in `RECEIVER`'s [=Access Receipt Registry=].
+        1. [[#remote-update]] is called to update `RECEIVER`'s
+            [=Remote Data Registry=] to reflect what is in the
+            [=Access Receipt=].
+
+### Controller Shares Access with Invited Agent ### {#authz-controllerinvite}
+
+Controlling Agent initiates sharing their data with an Agent that doesn't
+have an identity or a pod.
+
 Access Needs {#needs}
 =====================
 
@@ -2885,17 +3059,96 @@ provided language is not available, a default language is used instead.
 
 ## Workflows ## {#needs-workflows}
 
-### Piloted Application Requests Access ### {#needs-piloted}
+### Application Requests Access ### {#needs-apprequest}
 
 Controlling Agent is using an application that needs access to their data
 
-### Server-Side Application Requests Access ### {#needs-serverside}
+This applies to both server-side and piloted application cases, because
+the controlling agent is either using a piloted app, or learning about a
+server-side app and invoking the access request through their website.
 
-Controlling Agent wants to use a service that needs access to their data
+1. Controlling Agent is piloting the Application
+1. Application has access to the Controlling Agent [=Identity=] through
+    the [=access token=]
+1. Application dereferences the Controlling Agent [=identity=] to
+    get the [=identity profile document=] for the controlling [=Agent=].
+1. Application looks up the Trusted Agent (Authorization Agent) to
+    communicate the request to
+1. Application redirects the user to the Authorization Endpoint, with
+    the [=application profile document=] as a query parameter. Note -
+    the callback URI is taken from the [=application profile document=]
+1. Authorization Agent looks in the [=application profile document=] for
+    [=Access Need Groups=] with an `eco:accessScenario` of `eco:PersonalAccess`
+1. Any [=Access Need Groups=] are provided to the [[#access-present]]
+    operation, which presents them to the user so that can determine whether
+    they wish to grant access to the application in the form of an
+    [=Access Grant=].
+1. Assuming the controlling [=Agent=] authorizes a minimum of the
+    required [=Access Need Groups=] and [=Access Needs=]:
+        1. The [[#appreg-new|Register Application]] operation is called
+            assuming there is not already an application registration
+            for this application.
+        1. The [[#access-recordgrant]] operation is invoked.
+1. [[#access-recordgrant]] stores the [=Access Grant=] in the [=Access Registry=].
+    1. It calls [[#access-applyperms]] to apply permissions based on the
+        [=Access Grant=].
+    1. It calls [[#receipts-provide]] to store the [=Access Receipt=]. The
+        Application has set `eco:receivesAccessReceipt` to
+        `ReceiptInRegistration`, so the [=Access Receipt=] is stored in
+        the [=Application Registration=] for the piloted Application.
 
 ### Another Agent Requests Access ### {#needs-agentrequest}
 
 Another Agent has requested access to the Controlling Agent's data
+
+1. A "requesting" [=Agent=] wishes to request data from another
+    "controlling" [=Agent=], who is their contact with a known [=identity=]
+    to them.
+1. The requesting [=Agent=] is piloting an [=Application=]
+    1. The [=Application=] retrieves [=Access Need Groups=] from its
+        [=application profile document=] with an `eco:accessScenario` of
+        `eco:SharedAccess`, and uses the appropriate ones for the
+        requesting [=Agent's=] needs.
+    1. The [=Application=] puts the [=Access Need Groups=] into an
+        [=Access Request=], because the controlling [=Agent=] has a
+        `eco:receivesAccessReceipt` value of `ReceiptInMessage` in their
+        [=identity profile document=].
+    1. The [=Application=] posts the [=Access Request=] to the
+        [=Access Inbox=] at `eco:hasAccessInbox` in the controlling [=Agent's=]
+        [=identity profile document=].
+1. The controlling [=Agent=] has a trusted Authorization Agent that monitors
+    their access inbox autonomously. It notifies them when a new
+    [=Access Request=] is received.
+    1. The controlling [=Agent=] clicks the link in the notification,
+        which opens the trusted Authorization Agent user interface to present
+        the [=Access Request=], by passing [=Access Need Groups=] to the
+        [[#access-present]] operation. This presents them to the user so they
+        can determine whether they wish to grant the access in the
+        [=Access Request=] in the form of an [=Access Grant=].
+    1. Assuming the controlling [=Agent=] authorizes a minimum of the
+        required [=Access Need Groups=] and [=Access Needs=],
+        the [[#access-recordgrant]] operation is invoked.
+    1. [[#access-recordgrant]] stores the [=Access Grant=] in the [=Access Registry=].
+        1. It calls [[#access-applyperms]] to apply permissions based on the
+            [=Access Grant=].
+        1. It calls [[#receipts-provide]] to deliver the [=Access Receipt=].
+            The requesting [=Agent=] has set `eco:receivesAccessReceipt` to
+            `ReceiptInMessage`, so the [=Access Receipt=] is posted
+            to the access inbox identified via `hasAccessInbox` in the
+            [=identity profile document=] of the requesting [=Agent=].
+1. The requesting [=Agent=] has a trusted Authorization Agent that monitors
+    their access inbox autonomously. It notifies them when a new
+    [=Access Receipt=] is received.
+    1. The requesting [=Agent=] clicks the link in the notification, which opens
+        their trusted Authorization Agent user interface to present the
+        [=Access Receipt=], invoking the [[#receipts-present]] operation.
+    1. The requesting [=Agent=] accepts the [=Access Receipt=], and the
+        Authorization Agent invokes the [[#receipts-record]] operation.
+            1. [[#receipts-record]] stores the received [=Access Receipt=]
+                in the [=Access Receipt Registry=]
+            1. It calls the [[#remote-update]] operation, which updates the
+                [=Remote Data Registry=] to reflect what is in the
+                [=Access Receipt=]
 
 ### Controller Shares Access ### {#needs-controllershare}
 
@@ -4599,18 +4852,34 @@ class.
 
 ## Operations ## {#receipts-operations}
 
-## Workflows ## {#receipts-workflows}
+### Provide Access Receipt ### {#receipts-provide}
 
-### Access Received from Agent ### {#receipts-fromagent}
+### Notify Receipt ### {#receipts-notify}
+
+### Present Access Receipt ### {#receipts-present}
+
+### Record Access Receipt ### {#receipts-record}
 
 
-### Access Received for Registered Application ### {#receipts-fromapp}
+Remote Data Registry {#remote}
+=====================
 
+## Overview ## {#remote-overview}
 
+## Data Model ## {#remote-datamodel}
 
+### Summary ### {#remote-datamodel-summary}
+
+## Resource Hierarchy ## {#remote-hierarchy}
+
+## Operations ## {#remote-operations}
+
+### Update Remote Data ### {#remote-update}
 
 Trusted Agents {#trusted}
 =====================
+
+## Overview ## {#trusted-overview}
 
 A [=trusted Agent=] is an application that a [=Agent=] trusts
 to perform actions for them with elevated privilege. They can be
@@ -4653,6 +4922,20 @@ This flow is most typical for server-side/bot applications or any piloted
 clients that can make use of asynchronous notification processing.
 
 A given trusted agent may employ one or more of these patterns.
+
+## Data Model ## {#trusted-datamodel}
+
+### Summary ### {#trusted-datamodel-summary}
+
+## Resource Hierarchy ## {#trusted-hierarchy}
+
+## Operations ## {#trusted-operations}
+
+### Load Trusted Agent ### {#trusted-load}
+
+### Redirect to Trusted Agent ### {#trusted-redirect}
+
+### Return from Trusted Agent ### {#trusted-return}
 
 Client Identification {#client}
 =====================
