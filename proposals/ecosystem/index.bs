@@ -2155,6 +2155,44 @@ content mappings.
   </pre>
 </figure>
 
+<figure id="fig-access-request">
+  <figcaption>An [=Access Request=] sent from one agent to another</figcaption>
+  <pre highlight="turtle">
+  @prefix eco: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+  @prefix note: &lt;http://shapetrees.pub/ns/note#&gt; .
+
+  <> a eco:AccessRequest ;
+    eco:fromAgent https://alice.pod.example/profile/id#me ;
+    eco:toAgent https://bob.pod.example/profile/id#me ;
+    eco:hasAccessNeedGroup <#notebook-collaboration-group> .
+
+  <#notebook-collaboration-group>
+    a eco:AccessNeedGroup ;
+    eco:accessNecessity eco:AccessRequired ;
+    eco:accessScenario eco:PersonalAccess, eco:SharedAccess ;
+    eco:authenticatesAs eco:Pilot ;
+    eco:hasAccessNeed &lt;#notebook&gt; ;
+    eco:hasAccessNeedOverride &lt;#note&gt; ;
+    eco:hasAccessDecoratorIndex &lt;notebook-access-decorator-index.ttl&gt; .
+
+  <#notebook>
+      a eco:AccessNeed ;
+      eco:inAccessNeedGroup &lt;#notebook-collaboration-group&gt; ;
+      eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
+      eco:recursivelyAuthorize true ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:accessMode acl:Read, acl:Write .
+
+  <#note> # Override to stop recursion
+      a eco:AccessNeed ;
+      eco:inAccessNeedGroup &lt;#notebook-collaboration-group&gt; ;
+      eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
+      eco:recursivelyAuthorize false ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:accessMode acl:Read, acl:Write .
+  </pre>
+</figure>
+
 ### Access Need Group ### {#needs-access-need-group}
 
 An <dfn>Access Need Group</dfn> is a collection of [=Access Needs=]
@@ -2531,6 +2569,60 @@ validate an instance of the
   eco:supports IRI
   eco:referencesPreparedAccessNeed IRI* ;
   skos:narrower IRI* ;
+}
+</pre>
+
+### Access Request ### {#needs-access-request}
+
+An <dfn>Access Request</dfn> is used to send [=Access Need Groups=] from
+one [=Agent=] to [=Another=].
+
+<table class="classinfo data" align="left" id="classAccessRequest">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessRequest](ecosystem.ttl#AccessRequest)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>fromAgent</td>
+      <td>Agent</td>
+      <td>The [=Agent=] who sent the [=Access Request=]</td>
+    </tr>
+    <tr>
+      <td>toAgent</td>
+      <td>Agent</td>
+      <td>The [=Agent=] the [=Access Request=] is meant for</td>
+    </tr>
+  </tbody>
+  <tr>
+    <td>hasAccessNeedGroup</td>
+    <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
+    <td>One or more [=Access Need Groups=] detailing the access requested</td>
+  </tr>
+</tbody>
+</table>
+
+The [AccessRequestShape](#shexAccessRequest) is used to
+validate an instance of the
+[AccessRequest](#classAccessRequest) class.
+
+<pre highlight="turtle" id="shexAccessRequest">
+<#AccessRequestShape> {
+  a [eco:AccessRequest] ;
+  eco:fromAgent IRI ;             # Agent who sent the receipt
+  eco:toAgent IRI ;               # Recipient of the receipt
+  eco:hasAccessNeedGroup @<#:AccessNeedGroupShape>+
 }
 </pre>
 

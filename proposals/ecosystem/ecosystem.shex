@@ -185,6 +185,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   skos:prefLabel xsd:string
 }
 
+# Access Request
+<#AccessRequestShape> {
+  a [eco:AccessRequest] ;
+  eco:fromAgent IRI ;             # Agent who sent the receipt
+  eco:toAgent IRI ;               # Recipient of the receipt
+  eco:hasAccessNeedGroup @<#:AccessNeedGroupShape>+
+}
+
 ################################################################
 # Access Registry
 ################################################################
