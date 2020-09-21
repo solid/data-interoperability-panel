@@ -3800,6 +3800,11 @@ for a given [=Data Registration=].
       [=Registered Data Instances=] narrow the scope of instances to be
       presented by this grant.</td>
     </tr>
+    <tr>
+      <td>hasRegisteredDataInstance</td>
+      <td>Instance of registeredShapeTree</td>
+      <td>Links to a [=Registered Data Instance=] of registeredShapeTree.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -4958,6 +4963,11 @@ A <dfn>Data Receipt</dfn> ...
       [=Registered Data Instances=] narrow the scope of instances to be
       presented by this receipt.</td>
     </tr>
+    <tr>
+      <td>hasRegisteredDataInstance</td>
+      <td>Instance of registeredShapeTree</td>
+      <td>Links to a [=Registered Data Instance=] of registeredShapeTree.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -5094,8 +5104,9 @@ use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
 1. 1. Let `RECEIPT` be an empty [=Access Receipt=]
 1. Let `RECEIPT fromAgent` be `CONTROLLER`
 1. Let `RECEIPT toAgent` be `REC-APP`
-1. Let `RECEIPT hasDataReceipt` be result of [[#provide-datareceipt]] with
-    inputs: `GRANT`
+1. For each [=Data Grant=] `DATAGRANT` linked via `GRANT hasDataGrant`
+    1. Let `RECEIPT hasDataReceipt` be linked to the result of
+        [[#provide-datareceipt]] with inputs: `DATAGRANT`
 1. Let `APPREG` be result of [[#appreg-lookup]] with
     inputs: `CONTROLLER`, `REC-APP`
     1. Call [[#appreg-new]] if `APPREG` is empty
@@ -5109,17 +5120,24 @@ use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
 
 ##### Inputs ##### {#provide-datareceipt-inputs}
 
-* Let `GRANT` be an [=Access Grant=]
+* Let `DATAGRANT` be a [=Data Grant=]
 * Let `CONTROLLER` be the [=Agent=] granting access
 
 ##### Outputs ##### {#provide-datareceipt-outputs}
 
-* An [=Access Receipt=] posted to another [=Agent's=] access inbox
+* A populated [=Data Receipt=]
 
 ##### Operation Details ##### {#provide-datareceipt-details}
 
-1. Let `RECEIPT` be an empty [=Access Receipt=]
-1. Return `RECEIPT`
+1. Let `DATARECEIPT` be an empty [=Data Receipt=]
+1. Let `DATARECEIPT hasRegistration` be `DATAGRANT hasRegistration`
+1. Let `DATARECEIPT registeredShapeTree` be `DATAGRANT registeredShapeTree`
+1. Let `DATARECEIPT accessMode`s be the same as `DATAGRANT accessMode`s
+1. Let `DATARECEIPT scopeOfDataGrant`s be the same as `DATAGRANT scopeOfDataGrant`s
+1. Let `DATARECEIPT hasRegisteredDataInstance`s be the same as
+    `DATAGRANT hasRegisteredDataInstance`s
+1. Let `DATARECEIPT inheritsFrom`s be the same as `DATAGRANT inheritsFrom`s
+1. Return `DATARECEIPT`
 
 #### Provide Receipt in Message #### {#provide-message}
 
@@ -5134,7 +5152,16 @@ use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
 
 ##### Operation Details ##### {#provide-message-details}
 
+1. Let `REC-SUBJECT` be the [=Access Grant Subject=] linked via
+    `GRANT hasAccessGrantSubject`
+1. Let `REC-AGENT` be `REC-SUBJECT accessByAgent`
 1. Let `RECEIPT` be an empty [=Access Receipt=]
+1. Let `RECEIPT fromAgent` be `CONTROLLER`
+1. Let `RECEIPT toAgent` be `REC-AGENT`
+1. For each [=Data Grant=] `DATAGRANT` linked via `GRANT hasDataGrant`
+    1. Let `RECEIPT hasDataReceipt` be linked to the result of
+        [[#provide-datareceipt]] with inputs: `DATAGRANT`
+1. Post `RECEIPT` to `REC-AGENT hasAccessInbox`
 1. Return `RECEIPT`
 
 ### Record Access Receipt ### {#receipts-record}
