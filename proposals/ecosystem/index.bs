@@ -4807,7 +4807,7 @@ conformant instances of the [AccessReceiptTree](#treeAccessReceipt).
 
 ### Access Receipt ### {#datamodel-access-receipt}
 
-Each <dfn>Access Receipt</dfn> ...
+Each <dfn>Access Receipt</dfn>
 
 <table class="classinfo data" align="left" id="classAccessReceipt">
   <colgroup></colgroup>
@@ -5046,11 +5046,101 @@ use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
 
 ### Provide Access Receipt ### {#receipts-provide}
 
-### Notify Receipt ### {#receipts-notify}
+#### Inputs #### {#provide-inputs}
 
-### Present Access Receipt ### {#receipts-present}
+* Let `GRANT` be an [=Access Grant=]
+* Let `CONTROLLER` be the [=Agent=] granting access
+
+#### Outputs #### {#provide-outputs}
+
+* A provided [=Access Receipt=]
+
+#### Operation Details #### {#provide-details}
+
+1. Let `REC-SUBJECT` be the [=Access Grant Subject=] linked via
+    `GRANT hasAccessGrantSubject`
+1. Let `REC-AGENT` be `REC-SUBJECT accessByAgent`
+1. Let `REC-APP` be `REC-SUBJECT accessByApplication`
+1. Let `RECEIPT` be an empty [=Access Receipt=]
+1. If `REC-APP` is not empty
+    1. If `REC-APP eco:receivesAccessReceipt` is `ReceiptInRegistration`
+        1. Let `RECEIPT` be result of [[#provide-registration]] with
+            inputs: `GRANT`
+    1. If `REC-APP eco:receivesAccessReceipt` is `ReceiptInMessage`
+        1. Let `RECEIPT` be result of [[#provide-message]] with
+            inputs: `GRANT`
+1. If `REC-APP` is empty and `REC-AGENT` is not empty
+    1. Return error if `REC-AGENT eco:receivesAccessReceipt` is not
+        `ReceiptInMessage`
+    1. Let `RECEIPT` be result of [[#provide-message]] with inputs: `GRANT`
+1. Return `RECEIPT`
+
+#### Provide Receipt in Application Registration #### {#provide-registration}
+
+##### Inputs ##### {#provide-registration-inputs}
+
+* Let `GRANT` be an [=Access Grant=]
+* Let `CONTROLLER` be the [=Agent=] granting access
+
+##### Outputs ##### {#provide-registration-outputs}
+
+* An [=Access Receipt=] stored in an [=Application Registration=]
+
+##### Operation Details ##### {#provide-registration-details}
+
+1. Let `REC-SUBJECT` be the [=Access Grant Subject=] linked via
+    `GRANT hasAccessGrantSubject`
+1. Let `REC-APP` be `REC-SUBJECT accessByApplication`
+1. 1. Let `RECEIPT` be an empty [=Access Receipt=]
+1. Let `RECEIPT fromAgent` be `CONTROLLER`
+1. Let `RECEIPT toAgent` be `REC-APP`
+1. Let `RECEIPT hasDataReceipt` be result of [[#provide-datareceipt]] with
+    inputs: `GRANT`
+1. Let `APPREG` be result of [[#appreg-lookup]] with
+    inputs: `CONTROLLER`, `REC-APP`
+    1. Call [[#appreg-new]] if `APPREG` is empty
+1. Post `RECEIPT` to `APPREG` container
+1. Let `CURRENT` be `APPREG hasAccessReceipt`
+1. Remove `CURRENT` if it exists
+1. Let `APPREG hasAccessReceipt` be `CURRENT`
+1. Return `RECEIPT`
+
+#### Provide Data Receipt #### {#provide-datareceipt}
+
+##### Inputs ##### {#provide-datareceipt-inputs}
+
+* Let `GRANT` be an [=Access Grant=]
+* Let `CONTROLLER` be the [=Agent=] granting access
+
+##### Outputs ##### {#provide-datareceipt-outputs}
+
+* An [=Access Receipt=] posted to another [=Agent's=] access inbox
+
+##### Operation Details ##### {#provide-datareceipt-details}
+
+1. Let `RECEIPT` be an empty [=Access Receipt=]
+1. Return `RECEIPT`
+
+#### Provide Receipt in Message #### {#provide-message}
+
+##### Inputs ##### {#provide-message-inputs}
+
+* Let `GRANT` be an [=Access Grant=]
+* Let `CONTROLLER` be the [=Agent=] granting access
+
+##### Outputs ##### {#provide-message-outputs}
+
+* An [=Access Receipt=] posted to another [=Agent's=] access inbox
+
+##### Operation Details ##### {#provide-message-details}
+
+1. Let `RECEIPT` be an empty [=Access Receipt=]
+1. Return `RECEIPT`
 
 ### Record Access Receipt ### {#receipts-record}
+
+
+### Present Access Receipt ### {#receipts-present}
 
 
 Remote Data Registry {#remote}
