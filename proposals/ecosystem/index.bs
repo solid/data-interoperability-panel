@@ -5166,6 +5166,47 @@ use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
 
 ### Record Access Receipt ### {#receipts-record}
 
+This operation stores a new [=Access Receipt=] in
+an [=Access Registry=], which in turn will update [=Remote Data Registries=]
+to reflect the access granted in the [=Access Receipt=].
+
+#### Inputs #### {#recordreceipt-inputs}
+
+* Let `RECEIPT` be an [=Access Receipt=]
+* Let `REGISTRY` be an [=Access Receipt Registry=]
+
+#### Outputs #### {#recordreceipt-outputs}
+
+* An [=Access Receipt=] stored in `REGISTRY` with permissions applied and
+    [=Access Receipt=] provided
+
+#### Operation Details #### {#recordreceipt-details}
+
+1. Let `CURRENT` be an [=Access Receipt=] returned by [[#receipts-load]] with
+    inputs: `FROMAGENT`, `REGISTRY`
+1. If `CURRENT` is empty
+    1. Add `RECEIPT` to `REGISTRY`
+    1. Link `RECEIPT` to `REGISTRY` via `REGISTRY hasRegistration`
+1. If `CURRENT` is not empty
+    1. Update `CURRENT` with `RECEIPT`
+1. Call [[#remote-update]] with inputs: `RECEIPT`
+1. Return `RECEIPT`
+
+### Load Access Receipt ### {#receipts-load}
+
+#### Inputs #### {#loadreceipt-inputs}
+
+* Let `AGENT` be an [=Agent=] to load a receipt for
+* Let `REGISTRY` be an [=Access Receipt Registry=] to load from
+
+#### Outputs #### {#loadreceipt-outputs}
+
+* An [=Access Receipt=]
+
+#### Operation Details #### {#loadreceipt-details}
+
+1. For each [=Access Receipt=] `RECEIPT` included in `REGISTRY hasRegistration`
+    1. return `RECEIPT` if `RECEIPT fromAgent` == `AGENT`
 
 ### Present Access Receipt ### {#receipts-present}
 
