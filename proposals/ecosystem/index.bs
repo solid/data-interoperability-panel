@@ -2524,13 +2524,13 @@ for every unique [=shape tree=] encountered as the operation traverses the
       <td>Necessity of the access to the requesting party</td>
     </tr>
     <tr>
-      <td>supportedByPreparedAccessNeed</td>
+      <td>supportedBy</td>
       <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
       <td>A [=Prepared Access Need=] whose [=shape tree=] `st:supports` the
       [=shape tree=] of this [=Prepared Access Need=]</td>
     </tr>
     <tr>
-      <td>supportsPreparedAccessNeed</td>
+      <td>supports</td>
       <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
       <td>A [=Prepared Access Need=] that [=shape tree=] of this
       [=Prepared Access Need=] `st:supports`</td>
@@ -3090,8 +3090,8 @@ and links together any that have a support relationship.
 A support relationship exists when the [=shape tree=] associated with one
 [=Prepared Access Need=] has an `st:supports` predicate that links
 to the [=shape tree=] of another [=Prepared Access Need=]. They are
-linked bi-directionally through the `supportsPreparedAccessNeed` and
-`supportedByPreparedAccessNeed` properties.
+linked bi-directionally through the `eco:supports` and
+`eco:supportedBy` properties.
 
 #### Inputs #### {#link-supported-inputs}
 
@@ -3111,8 +3111,8 @@ linked bi-directionally through the `supportsPreparedAccessNeed` and
     1. For each [=Prepared Access Need=] `PREPARED` in `ALLPREPARED`
         1. Let `SUPPORTEDNEED` be the return of [[#iterate-supported]] with
             inputs: `ALLPREPARED`, `TREE`
-        1. Let `PNEED supportsPreparedAccessNeed` be `SUPPORTEDNEED`
-        1. Let `SUPPORTEDNEED supportedByPreparedAccessNeed` be `PNEED`
+        1. Let `PNEED supports` be `SUPPORTEDNEED`
+        1. Let `SUPPORTEDNEED supportedBy` be `PNEED`
 1. For each [=Prepared Access Need=] `REFNEED` linked by
     `PNEED referencesPreparedAccessNeed`
     1. Call [[#link-supported]] with inputs: `REFNEED`, `ALLPREPARED`
