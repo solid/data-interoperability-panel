@@ -15,6 +15,13 @@
   st:validatedBy <ecos#AgentShape> ;
   st:matchesUriTemplate "id" .
 
+<#access-inbox-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:contains <#access-receipt-tree> ,
+              <#access-request-tree> ,
+              st:AllowNone .
+
 # Registrar
 ##############################################################################
 <#registrar-tree>

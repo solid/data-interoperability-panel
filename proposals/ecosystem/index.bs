@@ -61,7 +61,7 @@ table.tree tbody tr:nth-child(even) {
 }
 
 table.tree tbody td {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 pre {
@@ -245,61 +245,6 @@ own or alongside other conventions, with some caveats.
     server-side support.
 
 </div>
-
-Reference Use Case {#usecase}
-=====================
-
-In our use case, Alice wants to use a new application to record and manage
-her personal and professional notes. She does a Web search and finds
-NeverNote (`https://nevernote.example`), a single-page (SPA) web-based
-application that advertises itself as *solid enabled*. Alice is excited
-about this because she recently created a Solid pod for herself
-at `https://alice.pod.example`.
-
-When Alice brings up NeverNote in her
-web browser, she is prompted to authenticate with her [=WebID=] because
-NeverNote doesn’t know who she is yet, nor is it permitted to send
-authenticated requests to her pod.
-
-## Alice registers NeverNote ## {#alice-registers}
-
-Alice logs into her [=identity provider=] (`https://idp.example`) with her
-WebID (`https://alice.pod.example/profile/id#me`), and receives
-a [=token=] that NeverNote can use to make requests to her pod.
-The token identifies her as Alice (`https://alice.pod.example/profile/id#me`),
-using NeverNote (`https://nevernote.example/id#agent`).
-
-At this point, NeverNote isn't sure whether Alice is a brand new user of
-NeverNote, or an existing user with stored preferences and caches, who has
-granted NeverNote access to her notebook and note data.
-
-To determine whether Alice has already registered NeverNote, NeverNote
-[[#appreg-lookup|looks for an application registration]] for itself through
-Alice's [[#reg]]. If no registration is found, NeverNote will go through
-a quick [[#appreg-new|registration process]]. If there is already an
-existing registration for NeverNote, no additional
-steps are necessary, and NeverNote is able to access the registration entry
-subject to the limitations of the [[#appreg-permissions]], in accordance with
-the [[#appreg-structure]] of the resource hierarchy.
-
-## Alice grants NeverNote access to data ## {#alice-authorizes}
-
-Issue: Complete Data Registration and Data Authorization and update this
-section.
-
-* Through the help of her Authorization Agent, Alice grants NeverNote the
-    following privileges:
-  * Access to Notes that already existed in her Pod
-  * Ability to create new Notes that NeverNote will have permission to manage
-  * Ability to create new Notebooks that NeverNote will have permission to manage
-
-## Alice collaborates with Bob ## {#alice-collaborates}
-
-Issue: Complete Collaborative Access then update this section.
-
-* Alice and Bob collaborate on a Notebook in Alice’s Pod. Bob is using a
-    different application than NeverNote called OtherNote.
-
 
 Agent {#ecoagent}
 =====================
@@ -799,7 +744,7 @@ must be named using a SHA-256 hash encoding of the [=ApplicationID=] for the
 :: <b>NeverNote ApplicationID:</b> `https://nevernote.example/id#agent`
 :: <b>SHA-256 Hash:</b> `70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`
 
-In our [[#usecase]], the name of the container for NeverNote's
+The name of the container for NeverNote's
 [=Application Registration=] would be
 `70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`.
 
@@ -2575,7 +2520,7 @@ validate an instance of the
 ### Access Request ### {#needs-access-request}
 
 An <dfn>Access Request</dfn> is used to send [=Access Need Groups=] from
-one [=Agent=] to [=Another=].
+one [=Agent=] to another.
 
 <table class="classinfo data" align="left" id="classAccessRequest">
   <colgroup></colgroup>
@@ -5034,6 +4979,69 @@ class.
 
 ## Resource Hierarchy ## {#receipts-hierarchy}
 
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Class</th>
+      <th>Shape</th>
+      <th>Shape Tree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`/registries/#registrar`</td>
+      <td>[Registrar](#)</td>
+      <td>[RegistrarShape](#)</td>
+      <td>[RegistrarTree](#)</td>
+    </tr>
+    <tr>
+      <td>`-- receipt#set`</td>
+      <td>[AccessReceiptRegistrySet](#classAccessReceiptRegistrySet)</td>
+      <td>[AccessReceiptRegistrySetShape](#shexAccessReceiptRegistrySet)</td>
+      <td>[AccessReceiptRegistrySetTree](#treeAccessReceiptRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`/receipts/#registry`</td>
+      <td>[AccessReceiptRegistry](#classAccessReceiptRegistry)</td>
+      <td>[AccessReceiptRegistryShape](#shexAccessReceiptRegistry)</td>
+      <td>[AccessReceiptRegistryTree](#treeAccessReceiptRegistry)</td>
+    </tr>
+    <tr>
+      <td>`-- fa6d6553...5a#receipt`</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
+      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+    </tr>
+    <tr>
+      <td>`-- d49eae8c...6b#receipt`</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
+      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+    </tr>
+    <tr>
+      <td>`-- 506a0cee...02#receipt`</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
+      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+    </tr>
+  </tbody>
+</table>
+
+The [=Access Receipt Registry Set=] and the [=Access Receipt Registry=]
+<em class="rfc2119">MAY</em> or <em class="rfc2119">MAY NOT</em>
+be on the same [=pod=].
+
+[=Access Receipt Registry Set=] and [=Access Receipt Registry=] resources
+<em class="rfc2119">MAY</em> use any resource or subject names.
+
+[=Access Receipts=] <em class="rfc2119">MUST</em>
+use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
+
 ## Operations ## {#receipts-operations}
 
 ### Provide Access Receipt ### {#receipts-provide}
@@ -5372,177 +5380,6 @@ Associated with resources through the
 A <dfn>Registered Data Instance</dfn> is a unique, stored instance of a
 particular type of data conforming to a given [=shape tree=]. Each registered
 data instance is contained within a given [=Data Registration=].
-
-Use Case Environment {#environment}
-=====================
-
-## People ## {#people}
-
-### Alice ### {#alice}
-
-<table>
-  <tbody>
-    <tr>
-      <td><th>Alice's Pod URL</th></td>
-      <td>https://alice.pod.example</td>
-    </tr>
-    <tr>
-      <td><th>Alice's WebID</th></td>
-      <td>https://alice.pod.example/profile/id#me</td>
-    </tr>
-  </tbody>
-</table>
-
-#### Alice's Profile Document #### {#alice-profile}
-
-Issue: Need to provide more detail around *how* applications, data, access,
-remote registry items get organized into different registries with a set along
-with use cases.
-
-<figure>
-  <figcaption>Alice’s identity profile document at
-  https://alice.pod.example/id</figcaption>
-  <pre highlight="turtle">
-  @prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
-  @prefix eco: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
-
-  <#me>
-      a eco:Agent;
-      eco:hasRegistrar &lt;https://alice.pod.example/registries/#registrar&gt; ;
-      # Trusted Agents
-      eco:trustsForApplicationRegistration &lt;https://trusted.example/ar/&gt; ;
-      # Notification Endpoints
-      eco:hasAccessInbox &lt;https://alice.pod.example/access/inbox&gt; .
-      # Identity Provider
-      solid:oidcIssuer &lt;https://idp.example&gt; ;
-  </pre>
-</figure>
-
-#### Alice's Registrar #### {#alice-registrar}
-
-<figure>
-  <figcaption>Alice’s registrar instance at
-  https://alice.pod.example/registries/application#set</figcaption>
-  <pre highlight="turtle">
-  <#registrar>
-    a eco:Registrar;
-    eco:hasApplicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; ;
-    eco:hasDataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; .
-  </pre>
-</figure>
-
-#### Alice's Application Registry Set #### {#alice-appregset}
-
-<figure>
-  <figcaption>Alice’s application registry set instance at
-  https://alice.pod.example/registries/application#set</figcaption>
-  <pre highlight="turtle">
-  <#set>
-    a eco:ApplicationRegistrySet;
-    eco:hasApplicationRegistry &lt;https://alice.pod.example/applications/#registry&gt; ,
-                               &lt;https://alice.otherpod.example/applications/#registry&gt; .
-  </pre>
-</figure>
-
-#### Alice's Application Registry #### {#alice-appregistry}
-
-<figure>
-  <figcaption>Alice's application registry instance at
-  https://alice.pod.example/applications/#registry</figcaption>
-  <pre highlight="turtle">
-  <#registry>
-    a eco:ApplicationRegistry ;
-    eco:hasRegistration &lt;https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3/#registration&gt; .
-  </pre>
-</figure>
-
-Note that `https://alice.pod.example/applications/` is a container,
-and #registry is stored in the RDF graph of the container resource.
-
-#### Alice's Application Registration for Nevernote #### {#alice-appregnevernote}
-
-<figure>
-  <figcaption>Alice’s application registration instance for NeverNote at
-  https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3/#registration</figcaption>
-  <pre highlight="turtle">
-  <#registration>
-    a eco:ApplicationRegistration ;
-    eco:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-    eco:registeredWith &lt;https://trusted.example/ar&gt; ;
-    eco:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
-    eco:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
-  </pre>
-</figure>
-
-Note that
-`https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3/`
-is a container, and #registration is stored in the RDF graph of the
-container resource.
-
-## Applications ## {#applications}
-
-### NeverNote ### {#nevernote}
-
-<table>
-  <tbody>
-    <tr>
-      <td><th>Application URL</th></td>
-      <td>https://nevernote.example</td>
-    </tr>
-    <tr>
-      <td><th>Application ID (AppID)</th></td>
-      <td>https://nevernote.example/id#agent</td>
-    </tr>
-    <tr>
-      <td><th>SHA-256 Hash of AppID</th></td>
-      <td>70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3</td>
-    </tr>
-  </tbody>
-</table>
-
-#### NeverNote's Profile Document #### {#nevernote-profile}
-
-<figure>
-  <figcaption>Contents of NeverNote’s Profile Document at
-  https://nevernote.example/id#agent</figcaption>
-  <pre highlight="turtle">
-  @prefix solid: &lt;http://www.w3.org/ns/solid/terms#&gt; .
-  @prefix eco: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
-  @prefix acl: &lt;http://www.w3.org/ns/auth/acl&gt; .
-
-  <#agent>
-      # this is an application, not a person
-      a eco:Application;
-      # redirect to this URL after going through authorization agent workflow
-      eco:authorizationCallback &lt;https://nevernote.example/data-authorization&gt; ;
-      # redirect to this URL after going through application registration
-      # agent workflow
-      eco:applicationRegistrationCallback &lt;https://nevernote.example/app-registration&gt; ;
-
-  # Declaration of the type of access this application needs
-  # UUID randomly generated for subject value
-  <#33116309-1667-4a7b-a91f-4dbf177e3f95>
-      a eco:accessNeed;
-      # Access needs related to notebook shape trees
-      eco:shapetree &lt;https://shapetrees.example/commonnote#notebook&gt;
-      # Request permission create new notebook shape trees
-      eco:shapetreeCreate true;
-      # Request permission to read and write created notebook shape trees
-      eco:shapetreeCreateAccess [ acl:Read, acl:Write ];
-      # Request access to any existing notebook shape trees
-      eco:shapetreeExistingAccess true;
-      # Request permission to read and write existing notebook shape trees
-      eco:shapetreeExistingAccess [ acl:Read, acl:Write ].
-
-  <#75054942-b8b4-4e3a-84e4-7b564ca1ae7a>
-      a eco:accessNeed;
-      eco:shapetree &lt;https://shapetrees.example/commonnote#note&gt;;
-      eco:shapetreeCreate true;
-      eco:shapetreeCreateAccess [ acl:Read, acl:Write ] ;
-      eco:shapetreeExistingAccess true;
-      eco:shapetreeExistingAccess [ acl:Read, acl:Write ].
-  </pre>
-</figure>
 
 <pre class="biblio">
 {
