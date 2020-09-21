@@ -1923,7 +1923,7 @@ required.
 A given [=Agent=] or [=Application=] expresses their access needs by
 providing one or more [=Access Need Groups=] to the [=Agent=] controlling
 the data they require access to. The channels through which these may be
-communicated are detailed in [[#needs-workflows]].
+communicated are detailed in [[#authz-workflows]].
 
 The [[#prepare-group]] operation processes each [=Access Need Group=]
 received by the controlling [=Agent=]. A [=Prepared Access Need Group=] is
@@ -3182,103 +3182,6 @@ provided language is not available, a default language is used instead.
     of 404 if `USENDEC` is unassigned
 1. return `USENDEC`
 
-## Workflows ## {#needs-workflows}
-
-### Application Requests Access ### {#needs-apprequest}
-
-Controlling Agent is using an application that needs access to their data
-
-This applies to both server-side and piloted application cases, because
-the controlling agent is either using a piloted app, or learning about a
-server-side app and invoking the access request through their website.
-
-1. Controlling Agent is piloting the Application
-1. Application has access to the Controlling Agent [=Identity=] through
-    the [=access token=]
-1. Application dereferences the Controlling Agent [=identity=] to
-    get the [=identity profile document=] for the controlling [=Agent=].
-1. Application looks up the Trusted Agent (Authorization Agent) to
-    communicate the request to
-1. Application redirects the user to the Authorization Endpoint, with
-    the [=application profile document=] as a query parameter. Note -
-    the callback URI is taken from the [=application profile document=]
-1. Authorization Agent looks in the [=application profile document=] for
-    [=Access Need Groups=] with an `eco:accessScenario` of `eco:PersonalAccess`
-1. Any [=Access Need Groups=] are provided to the [[#access-present]]
-    operation, which presents them to the user so that can determine whether
-    they wish to grant access to the application in the form of an
-    [=Access Grant=].
-1. Assuming the controlling [=Agent=] authorizes a minimum of the
-    required [=Access Need Groups=] and [=Access Needs=]:
-        1. The [[#appreg-new|Register Application]] operation is called
-            assuming there is not already an application registration
-            for this application.
-        1. The [[#access-recordgrant]] operation is invoked.
-1. [[#access-recordgrant]] stores the [=Access Grant=] in the [=Access Registry=].
-    1. It calls [[#access-applyperms]] to apply permissions based on the
-        [=Access Grant=].
-    1. It calls [[#receipts-provide]] to store the [=Access Receipt=]. The
-        Application has set `eco:receivesAccessReceipt` to
-        `ReceiptInRegistration`, so the [=Access Receipt=] is stored in
-        the [=Application Registration=] for the piloted Application.
-
-### Another Agent Requests Access ### {#needs-agentrequest}
-
-Another Agent has requested access to the Controlling Agent's data
-
-1. A "requesting" [=Agent=] wishes to request data from another
-    "controlling" [=Agent=], who is their contact with a known [=identity=]
-    to them.
-1. The requesting [=Agent=] is piloting an [=Application=]
-    1. The [=Application=] retrieves [=Access Need Groups=] from its
-        [=application profile document=] with an `eco:accessScenario` of
-        `eco:SharedAccess`, and uses the appropriate ones for the
-        requesting [=Agent's=] needs.
-    1. The [=Application=] puts the [=Access Need Groups=] into an
-        [=Access Request=], because the controlling [=Agent=] has a
-        `eco:receivesAccessReceipt` value of `ReceiptInMessage` in their
-        [=identity profile document=].
-    1. The [=Application=] posts the [=Access Request=] to the
-        [=Access Inbox=] at `eco:hasAccessInbox` in the controlling [=Agent's=]
-        [=identity profile document=].
-1. The controlling [=Agent=] has a trusted Authorization Agent that monitors
-    their access inbox autonomously. It notifies them when a new
-    [=Access Request=] is received.
-    1. The controlling [=Agent=] clicks the link in the notification,
-        which opens the trusted Authorization Agent user interface to present
-        the [=Access Request=], by passing [=Access Need Groups=] to the
-        [[#access-present]] operation. This presents them to the user so they
-        can determine whether they wish to grant the access in the
-        [=Access Request=] in the form of an [=Access Grant=].
-    1. Assuming the controlling [=Agent=] authorizes a minimum of the
-        required [=Access Need Groups=] and [=Access Needs=],
-        the [[#access-recordgrant]] operation is invoked.
-    1. [[#access-recordgrant]] stores the [=Access Grant=] in the [=Access Registry=].
-        1. It calls [[#access-applyperms]] to apply permissions based on the
-            [=Access Grant=].
-        1. It calls [[#receipts-provide]] to deliver the [=Access Receipt=].
-            The requesting [=Agent=] has set `eco:receivesAccessReceipt` to
-            `ReceiptInMessage`, so the [=Access Receipt=] is posted
-            to the access inbox identified via `hasAccessInbox` in the
-            [=identity profile document=] of the requesting [=Agent=].
-1. The requesting [=Agent=] has a trusted Authorization Agent that monitors
-    their access inbox autonomously. It notifies them when a new
-    [=Access Receipt=] is received.
-    1. The requesting [=Agent=] clicks the link in the notification, which opens
-        their trusted Authorization Agent user interface to present the
-        [=Access Receipt=], invoking the [[#receipts-present]] operation.
-    1. The requesting [=Agent=] accepts the [=Access Receipt=], and the
-        Authorization Agent invokes the [[#receipts-record]] operation.
-            1. [[#receipts-record]] stores the received [=Access Receipt=]
-                in the [=Access Receipt Registry=]
-            1. It calls the [[#remote-update]] operation, which updates the
-                [=Remote Data Registry=] to reflect what is in the
-                [=Access Receipt=]
-
-### Controller Shares Access ### {#needs-controllershare}
-
-Controlling Agent initiates sharing their data with another Agent
-
 Access Grants {#access}
 =====================
 
@@ -3819,7 +3722,7 @@ class.
   eco:registeredShapeTree IRI ;
   eco:satisfiesPreparedAccessNeed @PreparedAccessNeedShape+ ;
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ] ;
+  eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ]+ ;
   eco:inheritsFrom @DataGrantShape*
 }
 </pre>
@@ -4487,7 +4390,7 @@ operations to manipulate [=Data Grants=] in accordance with the
                       1. Allow access selection to be enabled and managed as detailed
                           in the remainder of this operation.
                   1. Present the name of the [=shape tree=] via `STDEC skos:prefLabel`
-                  1. Present the reason acces to this data is needed via
+                  1. Present the reason access to this data is needed via
                       `NDEC skos:prefLabel`
                   1. For each [=Supporting Access Need=] `SUPPORTING` linked
                       via `PNEED supportedBy`
@@ -4981,7 +4884,7 @@ class.
   eco:hasRegistration IRI ;       # Remote data registration
   eco:registeredShapeTree IRI ;   # Associated shape tree
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ] ;
+  eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ]+ ;
   eco:hasRegisteredDataInstance IRI* ;     # if specific instances are selected or inherited
   eco:inheritsFrom @<#:DataReceiptShape>*
 }
@@ -5210,6 +5113,58 @@ to reflect the access granted in the [=Access Receipt=].
 
 ### Present Access Receipt ### {#receipts-present}
 
+This operation shows an [=Agent=] an [=Access Receipt=] that was
+delivered to them from another [=Agent=] who granted them access to the
+data reflected in the receipt.
+
+It presents them the access that has been granted in the receipt,
+and prompts them to accept it. Acceptance will record the receipt in their
+[=Access Receipt Registry=], and update their [=Remote Data Registry=] to
+reflect it.
+
+#### Inputs #### {#presentreceipt-inputs}
+
+* Let `RECEIPT` be an [=Access Receipt=]
+* Let `REGISTRY` be an [=Access Receipt Registry=]
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Operation Details #### {#presentreceipt-details}
+
+1. Present `RECEIPT fromAgent` as the [=Agent=] granting access
+1. Present `RECEIPT toAgent` as the [=Agent=] receiving access
+1. Let `CURRENT` be an [=Access Receipt=] returned by [[#receipts-load]] with
+    inputs: `RECEIPT fromAgent`, `REGISTRY`
+1. If `CURRENT` is not empty
+    1. Present the [=Agent=] that accepted it via `RECEIPT registeredBy`
+    1. Present the [=Application=] is was accepted with via `RECEIPT registeredWith`
+    1. Present when it was registered via `RECEIPT registeredAt`
+    1. Present when it was last updated via `RECEIPT updatedAt`
+1. For each [=Data Receipt=] `DATARECEIPT` linked via `RECEIPT hasDataReceipt`
+    1. Let `STDEC` be the [=Shape Tree Decorator=]
+        returned from the [Get Shape Tree Decorator](#) operation with
+        inputs: `RECEIPT registeredShapeTree`, `LANG`
+    1. Present the name of the [=shape tree=] via `STDEC skos:prefLabel`
+    1. Present `RECEIPT accessMode`s
+    1. Present `RECEIPT scopeOfDataGrant`
+        1. If `RECEIPT scopeOfDataGrant` is `eco:NoAccess`
+            1. Present the user any access that is being rescinded if
+                they have an existing [=Data Receipt=] from `RECEIPT fromAgent`
+                for `RECEIPT registeredShapeTree`
+        1. If `RECEIPT scopeOfDataGrant` is `eco:AllInstances`
+            1. Present the [=Agent=] with summary details, and the ability
+                to view the [=Registered Data Instances=]
+        1. If `RECEIPT scopeOfDataGrant` includes `eco:SelectedInstances`
+            1. Present the [=Agent=] with summary details, and the ability
+                to view the [=Registered Data Instances=]
+        1. If `RECEIPT scopeOfDataGrant` includes `eco:InheritInstances`
+            1. Present the [=Agent=] with summary details, and the ability
+                to view the [=Registered Data Instances=], along with
+                pointers to the [=Data Receipt=] they inherit from.
+            1. Order this [=Data Receipt=] after the [=Data Receipt=] they
+                inherit from.
+1. Discard [=Access Receipt=] if [=Agent=] does not accept
+1. Call [[#receipts-record]] with inputs: `RECEIPT`, `REGISTRY` if [=Agent=]
+    accepts the [=Access Receipt=]
 
 Remote Data Registry {#remote}
 =====================
