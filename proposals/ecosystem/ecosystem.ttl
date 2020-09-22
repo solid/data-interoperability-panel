@@ -168,6 +168,16 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Receipt Registry Set"@en .
 
+# RemoteDataRegistrySet Class
+#############################################################################
+# SubClassOf RegistrySet used for RemoteDataRegistrySet Instances
+#############################################################################
+:RemoteDataRegistrySet
+  rdfs:subClassOf :RegistrySet ;
+  rdfs:comment "A collection of Remote Data Registry instances"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Remote Data Registry Set"@en .
+
 # Registry Class
 #############################################################################
 # Used by an Agent to organize collections of things necessary to
@@ -228,6 +238,16 @@ rdfs:label "Solid ecosystem terms"@en .
   rdfs:comment "A collection of Access Receipt instances"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Receipt Registry"@en .
+
+# RemoteDataRegistry Class
+#############################################################################
+# SubClassOf Registry which stores registered AccessReceipts
+#############################################################################
+:RemoteDataRegistry
+  rdfs:subClassOf :Registry ;
+  rdfs:comment "A collection of Remote Data Registrations and Remote Registered Data Instances"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Remote Data Registry"@en .
 
 # Registration Class
 #############################################################################
@@ -1046,3 +1066,21 @@ rdfs:label "Requested Access Mode"@en .
   rdfs:comment "Access to a specific data registration in an Access Receipt"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Data Receipt"@en .
+
+# RemoteDataRegistration Class
+#############################################################################
+# subClassof Registration used for entries in a RemoteDataRegistry
+#############################################################################
+:RemoteDataRegistration
+  rdfs:subClassOf :Registration ;
+  rdfs:comment "An individual member of a Remote Data Registry"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Remote Data Registration"@en .
+
+# Properties in domain of DataRegistration
+#########################################################
+:hasRemoteDataInstance
+  a rdf:property ;
+  rdfs:comment "Links to remote instances of the registered shape tree"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Registered Remote Data Instance"@en .

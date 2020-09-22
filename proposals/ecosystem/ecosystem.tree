@@ -31,6 +31,8 @@
   st:contains <#application-registry-set-tree> ,
               <#data-registry-set-tree> ,
               <#access-registry-set-tree> ,
+              <#access-receipt-registry-set-tree> ,
+              <#remote-data-registry-set-tree> ,
               st:AllowNone .
 
 <#application-registry-set-tree>
@@ -55,8 +57,13 @@
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy <ecos#AccessReceiptRegistrySetShape> ;
-  st:matchesUriTemplate "access" .
+  st:matchesUriTemplate "receipt" .
 
+<#remote-data-registry-set-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <ecos#RemoteDataRegistrySetShape> ;
+  st:matchesUriTemplate "remote" .
 
 # Application Registry
 ##############################################################################
@@ -166,4 +173,39 @@
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy <ecos#AccessReceiptShape> ;
+  st:matchesUriTemplate "{id}" .
+
+# Remote Data Registry
+##############################################################################
+# Ensure the registry container graph contains a valid
+# RemoteDataRegistry instance, and the resources inside of
+# it are valid RemoteDataRegistration instances.
+##############################################################################
+<#remote-data-registry-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <ecos#RemoteDataRegistryShape> ;
+  st:contains <#remote-data-registration-tree> ,
+              st:AllowNone .
+
+# Remote Data Registration
+##############################################################################
+# Ensure the receipt resource graph contains a valid RemoteDataRegistration
+##############################################################################
+<#remote-data-registration-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <ecos#RemoteDataRegistrationShape> ;
+  st:matchesUriTemplate "{id}" ;
+  st:contains <#remote-data-instance-tree> ,
+              st:AllowNone .
+
+# Remote Data Instance
+##############################################################################
+# Ensure the receipt resource graph contains a valid RemoteDataInstance
+##############################################################################
+<#remote-data-instance-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <ecos#RemoteDataInstanceShape> ;
   st:matchesUriTemplate "{id}" .

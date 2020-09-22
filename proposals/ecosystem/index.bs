@@ -3239,16 +3239,16 @@ and [=Access Invitations=] via the
   <pre highlight="turtle">
   <#registry>
     a eco:AccessRegistry ;
-    eco:hasRegistration &lt;ab3d0023-3860-4358-ae33-8d3af1097b9d/#grant&gt; ,
-                        &lt;ad7b935f-ced9-4ce6-835f-5c6abc046228/#grant&gt; ,
-                        &lt;5ed73c65-ce77-4c8a-8f7e-9715b90307e6/#grant&gt; ,
-                        &lt;2d575cba-3f6c-4c58-bccd-0e6266ba56cf/#invitation&gt; .
+    eco:hasRegistration &lt;ab3d0023-3860-4358-ae33-8d3af1097b9d#grant&gt; ,
+                        &lt;ad7b935f-ced9-4ce6-835f-5c6abc046228#grant&gt; ,
+                        &lt;5ed73c65-ce77-4c8a-8f7e-9715b90307e6#grant&gt; ,
+                        &lt;2d575cba-3f6c-4c58-bccd-0e6266ba56cf#invitation&gt; .
   </pre>
 </figure>
 
 <figure id="fig-access-grant">
   <figcaption>An [=Access Grant=] at
-  https://alice.pod.example/access/ab3d0023-3860-4358-ae33-8d3af1097b9d/#grant
+  https://alice.pod.example/access/ab3d0023-3860-4358-ae33-8d3af1097b9d#grant
   </figcaption>
   <pre highlight="turtle">
   <#grant>
@@ -4528,45 +4528,45 @@ An [=Access Receipt Registry=] links to any number of registered
 [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
 
 <figure id="fig-receipt-registrar">
-  <figcaption>A [=Registrar=] at https://alice.pod.example/registries/#registrar
+  <figcaption>A [=Registrar=] at https://bob.pod.example/registries/#registrar
   linking to an [=Access Receipt Registry Set=]</figcaption>
   <pre highlight="turtle">
   <#registrar>
     a eco:Registrar;
-    eco:hasAccessReceiptRegistrySet &lt;https://alice.pod.example/registries/receipt#set&gt; .
+    eco:hasAccessReceiptRegistrySet &lt;https://bob.pod.example/registries/receipt#set&gt; .
   </pre>
   </figure>
 </figure>
 
 <figure id ="fig-receipt-registry-set">
    <figcaption>An [=Access Receipt Registry Set=] at
-   https://alice.pod.example/registries/receipt#set linking to two different
+   https://bob.pod.example/registries/receipt#set linking to two different
   [=Access Receipt Registries=]</figcaption>
   <pre highlight="turtle">
   <#set>
     a eco:AccessReceiptRegistrySet;
-    eco:hasRegistry &lt;https://alice.pod.example/receipts/#registry&gt; ,
-                    &lt;https://alice.otherpod.example/receipts/#registry&gt; .
+    eco:hasRegistry &lt;https://bob.pod.example/receipts/#registry&gt; ,
+                    &lt;https://bob.otherpod.example/receipts/#registry&gt; .
   </pre>
 </figure>
 
 <figure id="fig-receipt-registry">
   <figcaption>An [=Access Receipt Registry=] at
-  https://alice.pod.example/receipts/#registry
-  linking to several registered [=Access Receipts=] or
+  https://bob.pod.example/receipts/#registry
+  linking to several registered [=Access Receipts=]
   </figcaption>
   <pre highlight="turtle">
   <#registry>
     a eco:AccessReceiptRegistry ;
-    eco:hasRegistration &lt;fa6d6553-0308-4abd-bce6-888df653695a/#receipt&gt; ,
-                        &lt;d49eae8c-e138-4153-86ed-63832deadc6b/#receipt&gt; ,
-                        &lt;506a0cee-1dc9-4720-a768-294aa0284502/#receipt&gt; .
+    eco:hasRegistration &lt;fa6d6553-0308-4abd-bce6-888df653695a#receipt&gt; ,
+                        &lt;d49eae8c-e138-4153-86ed-63832deadc6b#receipt&gt; ,
+                        &lt;506a0cee-1dc9-4720-a768-294aa0284502#receipt&gt; .
   </pre>
 </figure>
 
 <figure id="fig-access-receipt">
   <figcaption>An [=Access Receipt=] at
-  https://alice.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a/#receipt
+  https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#receipt
   </figcaption>
   <pre highlight="turtle">
   <#receipt>
@@ -4586,7 +4586,7 @@ An [=Access Receipt Registry=] links to any number of registered
     eco:accessMode acl:Read, acl:Write ;
     eco:scopeOfDataGrant eco:SelectedInstances ;
     eco:hasRegisteredDataInstance https://alice.pod.example/data/notebook/notebook-1/#notebook ,
-                                  https://alice.pod.example/data/notebook/notebook-1/#notebook .
+                                  https://alice.pod.example/data/notebook/notebook-2/#notebook .
 
   <#note-receipt>
     a eco:DataReceipt ;
@@ -5166,7 +5166,7 @@ reflect it.
 1. Call [[#receipts-record]] with inputs: `RECEIPT`, `REGISTRY` if [=Agent=]
     accepts the [=Access Receipt=]
 
-Remote Data Registry {#remote}
+Remote Data Registration {#remote}
 =====================
 
 ## Overview ## {#remote-overview}
@@ -5175,11 +5175,532 @@ Remote Data Registry {#remote}
 
 ### Summary ### {#remote-datamodel-summary}
 
+<figure id="fig-receipt-model">
+  <img src="diagrams/remote-model.svg" width=100%/>
+  <figcaption>Data model for the [=Remote Data Registry=]</figcaption>
+</figure>
+
+The [=Remote Data Registry=] extends the [[#reg-model]] with type-specific
+subclasses and subproperties.
+
+An [=Agent=] has a [=Registrar=] that links to [=Remote Data Registry Sets=]
+via the [eco:hasRemoteDataRegistrySet](ecosystem.ttl#hasAccessReceiptRegistrySet)
+property.
+
+A [=Remote Data Registry Set=] links to any number of
+[=Remote Data Registries=] via
+the [eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
+
+A [=Remote Data Registry=] links to any number of registered
+[=Remote Data Registrations=] via the
+[eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
+
+A [=Remote Data Registration=] may link to one or more
+[=Remote Data Instances=] via the
+[eco:hasRemoteDataInstance](ecosystem.ttl#hasRemoteDataInstance) property.
+
+<figure id="fig-remote-registrar">
+  <figcaption>A [=Registrar=] at https://bob.pod.example/registries/#registrar
+  linking to a [=Remote Data Registry Set=]</figcaption>
+  <pre highlight="turtle">
+  <#registrar>
+    a eco:Registrar;
+    eco:hasRemoteDataRegistrySet &lt;https://bob.pod.example/registries/receipt#set&gt; .
+  </pre>
+  </figure>
+</figure>
+
+<figure id ="fig-remote-registry-set">
+   <figcaption>A [=Remote Data Registry Set=] at
+   https://bob.pod.example/registries/remote#set linking to two different
+  [=Remote Data Registries=]</figcaption>
+  <pre highlight="turtle">
+  <#set>
+    a eco:RemoteDataRegistrySet;
+    eco:hasRegistry &lt;https://bob.pod.example/remote/#registry&gt; ,
+                    &lt;https://bob.otherpod.example/remote/#registry&gt; .
+  </pre>
+</figure>
+
+<figure id="fig-remote-registry">
+  <figcaption>An [=Remote Data Registry=] at
+  https://bob.pod.example/remote/#registry
+  linking to several registered [=Remote Data Registrations=]
+  </figcaption>
+  <pre highlight="turtle">
+  <#registry>
+    a eco:RemoteDataRegistry ;
+    eco:hasRegistration &lt;f0ebbd29-3a5a-4770-af29-cdb7693066b4/#registration&gt; ,
+                        &lt;265dff0c-b199-42d8-95b3-d1eaae91c412/#registration&gt; ,
+                        &lt;f68e95eb-a61f-408c-8d83-c4f21dae6115/#registration&gt; .
+  </pre>
+</figure>
+
+<figure id="fig-remote-registration">
+  <figcaption>An [=Remote Data Registration=] at
+  https://bob.pod.example/remote/f0ebbd29-3a5a-4770-af29-cdb7693066b4/#registration
+  </figcaption>
+  <pre highlight="turtle">
+  <#registration>
+    a eco:RemoteDataRegistration ;
+    eco:registeredBy https://bob.pod.example/profile/id#me ;
+    eco:registeredWith https://trusted.example/id#agent ;
+    eco:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    eco:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    eco:hasAccessReceipt https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#receipt ;
+    eco:hasRegistration https://alice.pod.example/data/notebook-tree/#registration ;
+    eco:registeredShapeTree note:notebook-tree ;
+    eco:accessMode acl:Read, acl:Write ;
+    eco:hasRemoteDataInstance https://bob.pod.example/remote/f0ebbd29-3a5a-4770-af29-cdb7693066b4/cd04e76b-d64d-4cea-aacf-fb248a295002#instance ,
+                              https://bob.pod.example/remote/f0ebbd29-3a5a-4770-af29-cdb7693066b4/9506b58f-3c36-4c0c-a698-712baf478deb#instance .
+  </pre>
+</figure>
+
+<figure id="fig-remote-data-instance">
+  <figcaption>An [=Remote Data Instance=] at
+  https://bob.pod.example/remote/f0ebbd29-3a5a-4770-af29-cdb7693066b4/cd04e76b-d64d-4cea-aacf-fb248a295002
+  </figcaption>
+  <pre highlight="turtle">
+  <#registration>
+    a eco:RemoteDataInstance ;
+    eco:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    eco:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    eco:registeredShapeTree note:notebook-tree ;
+    eco:accessMode acl:Read, acl:Write ;
+    eco:hasRegisteredDataInstance https://alice.pod.example/data/notebook/notebook-1/#notebook ;
+    eco:hasAccessReceipt https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#receipt .
+  </pre>
+</figure>
+
+### Remote Data Registry Set ### {#datamodel-remote-registry-set}
+
+A <dfn>Remote Data Registry Set</dfn> is a [=Registry Set=] specifically
+made up of [=Remote Data Registries=].
+
+<table class="classinfo data" align="left" id="classRemoteDataRegistrySet">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3 text-align=left>
+        [RemoteDataRegistrySet](ecosystem.ttl#RemoteDataRegistrySet)
+        a rdfs:subClassOf [[#reg-model|RegistrySet]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistry</td>
+      <td>Registry</td>
+      <td>Link to associated [=Remote Data Registries=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [RemoteDataRegistrySetShape](#shexRemoteDataRegistrySet) is used to
+validate an instance of the
+[RemoteDataRegistrySet](#classRemoteDataRegistrySet) class.
+
+<pre highlight="turtle" id="shexRemoteDataRegistrySet">
+<#RemoteDataRegistrySetShape> {
+  a [ eco:RemoteDataRegistrySet ] ;
+  eco:hasRegistry IRI+
+}
+</pre>
+
+The [RemoteDataRegistrySetTree](ecosystem.tree#remote-data-registry-set-tree)
+is assigned to a resource to ensure it will validate against the
+[RemoteDataRegistrySetShape](#shexRemoteDataRegistrySet).
+
+<pre highlight="turtle" id="treeRemoteDataRegistrySet">
+<#remote-data-registry-set-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;ecos#RemoteDataRegistrySetShape&gt; ;
+  st:matchesUriTemplate "receipt" .
+</pre>
+
+### Remote Data Registry ### {#datamodel-remote-data-registry}
+
+A <dfn>Remote Data Registry</dfn> is a collection of
+[=Remote Data Registrations=] stored in a specific location in a [=pod=].
+
+<table class="classinfo data" align="left" id="classRemoteDataRegistry">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [RemoteDataRegistry](ecosystem.ttl#RemoteDataRegistry)
+        a rdfs:subClassOf [[#reg-model|Registry]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>Registration</td>
+      <td>Link to associated [=Remote Data Registrations=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [RemoteDataRegistryShape](#shexRemoteDataRegistry) is used to
+validate an instance of the
+[RemoteDataRegistry](#classRemoteDataRegistry) class.
+
+<pre highlight="turtle" id="shexRemoteDataRegistry">
+<#RemoteDataRegistryShape> {
+  a [ eco:RemoteDataRegistry ] ;
+  eco:hasRegistration IRI*
+}
+</pre>
+
+The [RemoteDataRegistryTree](ecosystem.tree#remote-data-registry-tree)
+is assigned to a container resource to ensure that it will validate against the
+[RemoteDataRegistryShape](#shexRemoteDataRegistry), and contain only
+conformant instances of the
+[RemoteDataRegistrationTree](#treeRemoteDataRegistration).
+
+<pre highlight="turtle" id="treeRemoteDataRegistry">
+<#remote-data-registry-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy &lt;ecos#RemoteDataRegistryShape&gt; ;
+  st:contains <#remote-data-registration-tree> ,
+              st:AllowNone .
+</pre>
+
+### Remote Data Registration ### {#datamodel-remote-data-registration}
+
+An [=Agent=] maintains a <dfn>Remote Data Registration</dfn> to represent
+a [=Data Registration=] that another [=Agent=] has shared with them. It
+may represent access to the entire [=Data Registration=], or only to a
+select group of [=Remote Data Instances=] within.
+
+A [=Remote Data Registration=] is created when an [=Agent=] receives an
+[=Access Receipt=] from another [=Agent=] that includes access to a given
+[=Data Registration=].
+
+* A [=Remote Data Registration=] MUST be associated with an [=Access Receipt=]
+* If an [=Access Receipt=] is received that changes the access to a shared
+    [=Data Registration=], the corresponding [=Remote Data Registration=]
+    MUST be updated, and removed altogether if that access is removed.
+
+<table class="classinfo data" align="left" id="classRemoteDataRegistration">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [RemoteDataRegistration](ecosystem.ttl#RemoteDataRegistration)
+        a rdfs:subClassOf [[#reg-model|Registration]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>Agent</td>
+      <td>[=Agent=] that registered the [=Remote Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>Application</td>
+      <td>[=Application=] used to create the [=Remote Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Remote Data Registration=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Remote Data Registration=] was updated</td>
+    </tr>
+    <tr>
+      <td>hasRegistration</td>
+      <td>Data Registration</td>
+      <td>Link to the [=Data Registration=] that was shared</td>
+    </tr>
+    <tr>
+      <td>registeredShapeTree</td>
+      <td>st:ShapeTree</td>
+      <td>Shape tree associated with the shared [=Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>scopeOfDataGrant</td>
+      <td> eco:AllInstances, eco:InheritInstances,
+      eco:SelectedInstances, eco:NoAccess</td>
+      <td>Identifies the scope of access that was granted
+        <ul>
+          <li>eco:AllInstances - Scope includes
+              access to all [=Registered Data Instances=] of the shared
+              [=Data Registration=]</li>
+          <li>eco:InheritInstances - Scope includes
+              access to [=Registered Data Instances=] inherited by
+              instances selected in the [=Data Receipt=] linked via
+              eco:inheritsFrom</li>
+          <li>eco:SelectedInstances - Scope includes
+              access only to those [=Registered Data Instances=] specifically
+              selected by the [=Agent=]</li>
+          <li>eco:NoAccess - No access is granted</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>accessMode</td>
+      <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
+      <td>Access modes granted on the shared [=Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>hasRemoteDataInstance</td>
+      <td>[Remote Data Instance](#classRemoteDataInstance)</td>
+      <td>Link to [=Remote Data Instance=] associated with the
+      [=Remote Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessReceipt</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>Link to [=Access Receipt=] that granted this shared access</td>
+    </tr>
+  </tbody>
+</table>
+
+The [RemoteDataRegistrationShape](#shexRemoteDataRegistration) is used to
+validate an instance of the
+[RemoteDataRegistration](#classRemoteDataRegistration) class.
+
+<pre highlight="turtle" id="shexRemoteDataRegistration">
+<#RemoteDataRegistration> {
+  a [eco:RemoteDataRegistration] ;
+  eco:registeredBy IRI ;
+  eco:registeredWith IRI ;
+  eco:registeredAt xsd:dateTime ;
+  eco:updatedAt xsd:dateTime ;
+  eco:hasRegistration IRI ;           # Remote data registration
+  eco:registeredShapeTree IRI ;       # Associated shape tree
+  eco:scopeOfDataGrant [ eco:SelectedInstances
+                         eco:AllInstances
+                         eco:InheritInstances
+                         eco:NoAccess ]+ ;
+  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  eco:hasRemoteDataInstance IRI* ;    # if specific instances are selected or inherited
+  eco:hasAccessReceipt IRI+ ;         # Associated access receipts
+}
+</pre>
+
+The [RemoteDataRegistrationTree](ecosystem.tree#remote-data-registration-tree)
+is assigned to a resource via the
+[RemoteDataRegistryTree](#treeRemoteDataRegistry), and ensures
+that the assigned resource will validate against the
+[RemoteDataRegistrationShape](#shexRemoteDataRegistration).
+
+<pre highlight="turtle" id="treeRemoteDataRegistration">
+<#remote-data-registration-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;ecos#RemoteDataRegistrationShape&gt; ;
+  st:matchesUriTemplate "{id}" ;
+  st:contains <#remote-data-instance-tree> ,
+              st:AllowNone .
+</pre>
+
+### Remote Data Instance ### {#datamodel-remote-data-instance}
+
+An [=Agent=] maintains a <dfn>Remote Data Instance</dfn> to represent
+a [=Registered Data Instance=] that another [=Agent=] has shared with them.
+
+A [=Remote Data Instance=] is created when an [=Agent=] receives an
+[=Access Receipt=] from another [=Agent=] that includes access to a specific
+[=Registered Data Instance=].
+
+* A [=Remote Data Instance=] MUST be associated with an [=Access Receipt=]
+* If an [=Access Receipt=] is received that changes the access to a shared
+    [=Registered Data Instance=], the corresponding [=Remote Data Instance=]
+    MUST be updated, and removed altogether if that access is removed.
+
+<table class="classinfo data" align="left" id="classRemoteDataInstance">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [RemoteDataInstance](ecosystem.ttl#RemoteDataInstance)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>When the [=Remote Data Instance=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>When the [=Remote Data Instance=] was last updated</td>
+    </tr>
+    <tr>
+      <td>hasRegisteredDataInstance</td>
+      <td>RegisteredDataInstance</td>
+      <td>Link to [=Registered Data Instance=] associated with the
+      [=Remote Data Instance=]</td>
+    </tr>
+    <tr>
+      <td>registeredShapeTree</td>
+      <td>st:ShapeTree</td>
+      <td>Shape tree associated with the shared [=Registered Data Instance=]</td>
+    </tr>
+    <tr>
+      <td>accessMode</td>
+      <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
+      <td>Access modes granted on the shared [=Registered Data Instance=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessReceipt</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>Link to [=Access Receipt=] that granted this shared access</td>
+    </tr>
+  </tbody>
+</table>
+
+The [RemoteDataInstanceShape](#shexRemoteDataInstance) is used to
+validate an instance of the
+[RemoteDataInstance](#classRemoteDataInstance) class.
+
+<pre highlight="turtle" id="shexRemoteDataInstance">
+<#RemoteDataInstance> {
+  a [eco:RemoteDataInstance] ;
+  eco:hasRegisteredDataInstance IRI ; # Remote registered data instance
+  eco:registeredAt xsd:dateTime ;
+  eco:registeredShapeTree IRI ;       # Associated shape tree
+  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  eco:hasAccessReceipt IRI+ ;         # Associated access receipts
+}
+</pre>
+
+The [RemoteDataInstanceTree](ecosystem.tree#remote-data-instance-tree)
+is assigned to a resource via the
+[RemoteDataInstanceTree](#treeRemoteDataInstance), and ensures
+that the assigned resource will validate against the
+[RemoteDataInstanceShape](#shexRemoteDataInstance).
+
+<pre highlight="turtle" id="treeRemoteDataInstance">
+<#remote-data-instance-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;ecos#RemoteDataInstanceShape&gt; ;
+  st:matchesUriTemplate "{id}" .
+</pre>
+
 ## Resource Hierarchy ## {#remote-hierarchy}
+
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Class</th>
+      <th>Shape</th>
+      <th>Shape Tree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`/registries/#registrar`</td>
+      <td>[Registrar](#)</td>
+      <td>[RegistrarShape](#)</td>
+      <td>[RegistrarTree](#)</td>
+    </tr>
+    <tr>
+      <td>`-- remote#set`</td>
+      <td>[RemoteDataRegistrySet](#classRemoteDataRegistrySet)</td>
+      <td>[RemoteDataRegistrySetShape](#shexRemoteDataRegistrySet)</td>
+      <td>[RemoteDataRegistrySetTree](#treeRemoteDataRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`/remote/#registry`</td>
+      <td>[RemoteDataRegistry](#classRemoteDataRegistry)</td>
+      <td>[RemoteDataRegistryShape](#shexRemoteDataRegistry)</td>
+      <td>[RemoteDataRegistryTree](#treeRemoteDataRegistry)</td>
+    </tr>
+    <tr>
+      <td>`-- f0ebbd29...b4/#registration`</td>
+      <td>[RemoteData](#classRemoteDataRegistration)</td>
+      <td>[RemoteDataRegistrationShape](#shexRemoteDataRegistration)</td>
+      <td>[RemoteDataRegistrationTree](#treeRemoteDataRegistration)</td>
+    </tr>
+    <tr>
+      <td>`---- cd04e76b...02#instance`</td>
+      <td>[RemoteDataInstance](#classRemoteDataInstance)</td>
+      <td>[RemoteDataInstanceShape](#shexRemoteDataInstance)</td>
+      <td>[RemoteDataInstanceTree](#treeRemoteDataInstance)</td>
+    </tr>
+    <tr>
+      <td>`---- 9506b58f...eb#instance`</td>
+      <td>[RemoteDataInstance](#classRemoteDataInstance)</td>
+      <td>[RemoteDataInstanceShape](#shexRemoteDataInstance)</td>
+      <td>[RemoteDataInstanceTree](#treeRemoteDataInstance)</td>
+    </tr>
+  </tbody>
+</table>
+
+The [=Remote Data Registry Set=] and the [=Remote Data Registry=]
+<em class="rfc2119">MAY</em> or <em class="rfc2119">MAY NOT</em>
+be on the same [=pod=].
+
+[=Remote Data Registry Set=] and [=Remote Data Registry=] resources
+<em class="rfc2119">MAY</em> use any resource or subject names.
+
+[=Remote Data Registrations=] and [=Remote Data Instances=]
+<em class="rfc2119">MUST</em> use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt)
+for resource names.
 
 ## Operations ## {#remote-operations}
 
 ### Update Remote Data ### {#remote-update}
+
+#### Inputs #### {#updateremote-inputs}
+
+* Let `RECEIPT` be an [=Access Receipt=]
+
+#### Outputs #### {#updateremote-outputs}
+
+* Let `RECEIPT` be an [=Access Receipt=] updated with remote data associations
+
+#### Operation Details #### {#updateremote-outputs}
+
+TODO
+
 
 Trusted Agents {#trusted}
 =====================

@@ -269,7 +269,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:registeredShapeTree IRI ;
   eco:satisfiesPreparedAccessNeed @<#:PreparedAccessNeedShape>+ ;
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ]+ ;
+  eco:scopeOfDataGrant [ eco:SelectedInstances
+                         eco:AllInstances
+                         eco:InheritInstances
+                         eco:NoAccess ]+ ;
   eco:hasRegisteredDataInstance IRI* ;
   eco:inheritsFrom @<#:DataGrantShape>*
 }
@@ -304,7 +307,50 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:hasRegistration IRI ;       # Remote data registration
   eco:registeredShapeTree IRI ;   # Associated shape tree
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ]+ ;
+  eco:scopeOfDataGrant [ eco:SelectedInstances
+                         eco:AllInstances
+                         eco:InheritInstances
+                         eco:NoAccess ]+ ;
   eco:hasRegisteredDataInstance IRI* ;     # if specific instances are selected or inherited
   eco:inheritsFrom @<#:DataReceiptShape>*
+}
+
+# Remote Data Registry Set
+<#RemoteDataRegistrySetShape> {
+  a [ eco:RemoteDataRegistrySet ] ;
+  eco:hasRegistry IRI+
+}
+
+# Remote Data Registry
+<#RemoteDataRegistryShape> {
+  a [ eco:RemoteDataRegistry ] ;
+  eco:hasRegistration IRI*
+}
+
+# Remote Data Registration
+<#RemoteDataRegistration> {
+  a [eco:RemoteDataRegistration] ;
+  eco:registeredBy IRI ;
+  eco:registeredWith IRI ;
+  eco:registeredAt xsd:dateTime ;
+  eco:updatedAt xsd:dateTime ;
+  eco:hasRegistration IRI ;           # Remote data registration
+  eco:registeredShapeTree IRI ;       # Associated shape tree
+  eco:scopeOfDataGrant [ eco:SelectedInstances
+                         eco:AllInstances
+                         eco:InheritInstances
+                         eco:NoAccess ]+ ;
+  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  eco:hasRemoteDataInstance IRI* ;    # if specific instances are selected or inherited
+  eco:hasAccessReceipt IRI+ ;         # Associated access receipts
+}
+
+# Remote Data Instance
+<#RemoteDataInstance> {
+  a [eco:RemoteDataInstance] ;
+  eco:hasRegisteredDataInstance IRI ; # Remote registered data instance
+  eco:registeredAt xsd:dateTime ;
+  eco:registeredShapeTree IRI ;       # Associated shape tree
+  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  eco:hasAccessReceipt IRI+ ;         # Associated access receipts
 }
