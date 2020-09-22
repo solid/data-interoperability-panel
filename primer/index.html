@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
   <link href="http://example.com/url-this-spec-will-live-at" rel="canonical">
-  <meta content="8fd1482fda75c9f17a13d611a4ae8e050b43fa9a" name="document-revision">
+  <meta content="3ec565a1dadef25d4f535451d08d111bb6597fc0" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1433,7 +1433,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Solid Primer</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-09-19">19 September 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-09-22">22 September 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1448,7 +1448,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright"><a href="http://creativecommons.org/publicdomain/zero/1.0/" rel="license"><img alt="CC0" src="https://licensebuttons.net/p/zero/1.0/80x15.png"></a> To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 19 September 2020,
+In addition, as of 22 September 2020,
 the editors have made this specification available under the <a href="http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0" rel="license">Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document. </p>
@@ -1456,7 +1456,7 @@ Parts of this work may be from another specification document.  If so, those par
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
-   <p>Primer for the Solid ecosystem.</p>
+   <p>Primer for the Solid interoperability.</p>
   </div>
   <div data-fill-with="at-risk"></div>
   <nav data-fill-with="table-of-contents" id="toc">
@@ -1466,8 +1466,27 @@ Parts of this work may be from another specification document.  If so, those par
     <li>
      <a href="#data"><span class="secno">2</span> <span class="content">Data</span></a>
      <ol class="toc">
-      <li><a href="#projects"><span class="secno">2.1</span> <span class="content">Projects</span></a>
-      <li><a href="#tasks"><span class="secno">2.2</span> <span class="content">Tasks</span></a>
+      <li>
+       <a href="#solidshapesexample"><span class="secno">2.1</span> <span class="content">solidshapes.example</span></a>
+       <ol class="toc">
+        <li><a href="#shapes"><span class="secno">2.1.1</span> <span class="content">Shapes</span></a>
+        <li><a href="#shape-trees"><span class="secno">2.1.2</span> <span class="content">Shape Trees</span></a>
+       </ol>
+      <li>
+       <a href="#acmeexample"><span class="secno">2.2</span> <span class="content">acme.example</span></a>
+       <ol class="toc">
+        <li><a href="#data-registrations"><span class="secno">2.2.1</span> <span class="content">Data Registrations</span></a>
+       </ol>
+      <li>
+       <a href="#aliceexample"><span class="secno">2.3</span> <span class="content">alice.example</span></a>
+       <ol class="toc">
+        <li><a href="#data-registrations①"><span class="secno">2.3.1</span> <span class="content">Data Registrations</span></a>
+       </ol>
+      <li>
+       <a href="#bobexample"><span class="secno">2.4</span> <span class="content">bob.example</span></a>
+       <ol class="toc">
+        <li><a href="#data-registrations②"><span class="secno">2.4.1</span> <span class="content">Data Registrations</span></a>
+       </ol>
      </ol>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
     <li>
@@ -1488,25 +1507,137 @@ Parts of this work may be from another specification document.  If so, those par
    <p class="issue" id="issue-81cb35ef"><a class="self-link" href="#issue-81cb35ef"></a> Explain visual language</p>
    <h2 class="heading settled" data-level="2" id="data"><span class="secno">2. </span><span class="content">Data</span><a class="self-link" href="#data"></a></h2>
    <p>All turtle, shapetree and shex code snippets in this primer will assume following prefixes</p>
-<pre class="include-code highlight" path="snippets/prefixes.ttl"><c- k>@prefix</c-> <c- nn>solid:</c-> <c- g>&lt;http://www.w3.org/ns/solid/terms></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>xsd:</c-> <c- g>&lt;http://www.w3.org/2001/XMLSchema#></c-> <c- p>.</c->
+   <figure>
+<pre class="include-code highlight" path="snippets/prefixes.ttl"><c- k>@prefix</c-> <c- nn>xsd:</c-> <c- g>&lt;http://www.w3.org/2001/XMLSchema#></c-> <c- p>.</c->
 <c- k>@prefix</c-> <c- nn>rdf:</c-> <c- g>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#></c-> <c- p>.</c->
 <c- k>@prefix</c-> <c- nn>rdfs:</c-> <c- g>&lt;http://www.w3.org/2000/01/rdf-schema#></c-> <c- p>.</c->
 <c- k>@prefix</c-> <c- nn>dcterms:</c-> <c- g>&lt;http://purl.org/dc/terms/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>shapes:</c-> <c- g>&lt;https://solidshapes.example/></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>solid:</c-> <c- g>&lt;http://www.w3.org/ns/solid/terms#></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>interop:</c-> <c- g>&lt;http://www.w3.org/ns/solid/interop#></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>shapes:</c-> <c- g>&lt;https://solidshapes.example/shapes/></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>trees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c-> <c- p>.</c->
 <c- k>@prefix</c-> <c- nn>ex:</c-> <c- g>&lt;https://namespace.example/></c-> <c- p>.</c->
 </pre>
-   <h3 class="heading settled" data-level="2.1" id="projects"><span class="secno">2.1. </span><span class="content">Projects</span><a class="self-link" href="#projects"></a></h3>
-<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/project.shex"><c- nl>&lt;shapes:ProjectShape></c-> <c- p>{</c->
+    <figcaption>common prefixes</figcaption>
+   </figure>
+   <h3 class="heading settled" data-level="2.1" id="solidshapesexample"><span class="secno">2.1. </span><span class="content">solidshapes.example</span><a class="self-link" href="#solidshapesexample"></a></h3>
+   <h4 class="heading settled" data-level="2.1.1" id="shapes"><span class="secno">2.1.1. </span><span class="content">Shapes</span><a class="self-link" href="#shapes"></a></h4>
+   <figure>
+<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/solidshapes.example/shapes/project.shex"><c- nl>&lt;shapes:ProjectShape></c-> <c- p>{</c->
   <c- k>a</c-> <c- p>[</c-> <c- nn>ex</c-><c- p>:</c-><c- f>Project</c-> <c- p>]</c->
 <c- p>}</c->
 </pre>
-   <h3 class="heading settled" data-level="2.2" id="tasks"><span class="secno">2.2. </span><span class="content">Tasks</span><a class="self-link" href="#tasks"></a></h3>
-<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/task.shex"><c- nl>&lt;shapes:TaskShape></c-> <c- p>{</c->
+    <figcaption>Project shape (ShEx)</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/solidshapes.example/shapes/task.shex"><c- nl>&lt;shapes:TaskShape></c-> <c- p>{</c->
   <c- k>a</c-> <c- p>[</c-> <c- nn>ex</c-><c- p>:</c-><c- f>Task</c-> <c- p>]</c-> <c- p>;</c->
   <c- nn>ex</c-><c- p>:</c-><c- f>inProject</c-> <c- k>IRI</c->
 <c- p>}</c->
 </pre>
+    <figcaption>Task shape (ShEx)</figcaption>
+   </figure>
+   <h4 class="heading settled" data-level="2.1.2" id="shape-trees"><span class="secno">2.1.2. </span><span class="content">Shape Trees</span><a class="self-link" href="#shape-trees"></a></h4>
+   <figure>
+<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/solidshapes.example/trees/project.ttl"><c- g>&lt;trees:Project></c->
+  <c- b>a</c-> <c- nn>tree:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- nn>tree:</c-><c- f>expectsType</c-> <c- nn>tree:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>tree:</c-><c- f>validatedBy</c-> <c- g>&lt;shapes:Project></c-> <c- p>;</c->
+  <c- nn>tree:</c-><c- f>matchesUriTemplate</c-> <c- s>"{uuid}"</c-> <c- p>.</c->
+</pre>
+    <figcaption>Project shape tree</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/solidshapes.example/trees/task.ttl"><c- g>&lt;trees:Task></c->
+  <c- b>a</c-> <c- nn>tree:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- nn>tree:</c-><c- f>expectsType</c-> <c- nn>tree:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>tree:</c-><c- f>validatedBy</c-> <c- g>&lt;shapes:Task></c-> <c- p>;</c->
+  <c- nn>tree:</c-><c- f>matchesUriTemplate</c-> <c- s>"{uuid}"</c-> <c- p>.</c->
+</pre>
+    <figcaption>Task shape tree</figcaption>
+   </figure>
+   <h3 class="heading settled" data-level="2.2" id="acmeexample"><span class="secno">2.2. </span><span class="content">acme.example</span><a class="self-link" href="#acmeexample"></a></h3>
+   <h4 class="heading settled" data-level="2.2.1" id="data-registrations"><span class="secno">2.2.1. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations"></a></h4>
+   <figure>
+<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/acme.example/f201471d-b1fb-40ad-9eac-867aaf09c3e5.ttl"><c- g>&lt;#projects-registration></c->
+  <c- b>a</c-> <c- nn>interop:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredBy</c-> <c- g>&lt;https://garry.example/#id></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2020-08-23T21:12:27.000Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- g>&lt;trees:Project></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>hasRegisteredDataInstance</c-> <c- g>&lt;9005ea66-fcc3-47af-b082-5da78140bc53#project></c-> <c- p>,</c->
+                                    <c- g>&lt;df0aa24c-fe28-4e9f-9f35-2a9a29d63a06#project></c-> <c- p>,</c->
+                                    <c- g>&lt;21270a16-f07d-417e-9d7c-274cbd8d24f0#project></c-> <c- p>.</c->
+</pre>
+    <figcaption>ACME’s data registration for projects</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/acme.example/67417bc2-5fc1-4e6e-91c4-eea1ead97d1c.ttl"><c- g>&lt;#tasks-registration></c->
+  <c- b>a</c-> <c- nn>interop:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredBy</c-> <c- g>&lt;https://garry.example/#id></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2020-08-23T21:12:45.000Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- g>&lt;trees:Task></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>hasRegisteredDataInstance</c-> <c- g>&lt;9b982a4b-2642-496b-9990-d4464fb36771#task></c-> <c- p>,</c->
+                                    <c- g>&lt;cf5d7d37-ae8e-40c1-a5d1-ef22cf228507#task></c-> <c- p>,</c->
+                                    <c- g>&lt;ef55ad4d-335f-48fe-8224-c813d4649873#task></c-> <c- p>,</c->
+                                    <c- g>&lt;6702961f-e74d-4fa9-991c-b95749d790cb#task></c-> <c- p>,</c->
+                                    <c- g>&lt;7496fcb2-9472-4860-ae7e-c48baf9ff92f#task></c-> <c- p>,</c->
+                                    <c- g>&lt;caaadc1f-affa-4fca-bd9a-98c174947cfe#task></c-> <c- p>,</c->
+                                    <c- g>&lt;260ca6e2-b583-4e11-8f02-99e14638d4c1#task></c-> <c- p>.</c->
+</pre>
+    <figcaption>ACME’s data registration for tasks</figcaption>
+   </figure>
+   <h3 class="heading settled" data-level="2.3" id="aliceexample"><span class="secno">2.3. </span><span class="content">alice.example</span><a class="self-link" href="#aliceexample"></a></h3>
+   <h4 class="heading settled" data-level="2.3.1" id="data-registrations①"><span class="secno">2.3.1. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations①"></a></h4>
+   <figure>
+<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/alice.example/773605f0-b5bf-4d46-878d-5c167eac8b5d.ttl"><c- g>&lt;#projects-registration></c->
+  <c- b>a</c-> <c- nn>interop:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2020-10-17T11:42:35.000Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- g>&lt;trees:Project></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>hasRegisteredDataInstance</c-> <c- g>&lt;ccbd77ae-f769-4e07-b41f-5136501e13e7#project></c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s data registration for projects</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/alice.example/4d594c61-7cff-484a-a1d2-1f353ee4e1e7.ttl"><c- g>&lt;#tasks-registration></c->
+  <c- b>a</c-> <c- nn>interop:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2020-10-17T11:42:36.000Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- g>&lt;trees:Task></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>hasRegisteredDataInstance</c-> <c- g>&lt;576520a6-af5a-4cf9-8b40-8b1512b59c73#task></c-> <c- p>,</c->
+                                    <c- g>&lt;106a82aa-6911-4a7e-a49b-383cbaa9da66#task></c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s data registration for tasks</figcaption>
+   </figure>
+   <h3 class="heading settled" data-level="2.4" id="bobexample"><span class="secno">2.4. </span><span class="content">bob.example</span><a class="self-link" href="#bobexample"></a></h3>
+   <h4 class="heading settled" data-level="2.4.1" id="data-registrations②"><span class="secno">2.4.1. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations②"></a></h4>
+   <figure>
+<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/bob.example/0af793c1-8abc-441c-aacc-f78483b34217.ttl"><c- g>&lt;#projects-registration></c->
+  <c- b>a</c-> <c- nn>interop:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredBy</c-> <c- g>&lt;https://bob.example/#id></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2019-03-14T13:42:31.000Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- g>&lt;trees:Project></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>hasRegisteredDataInstance</c-> <c- g>&lt;e293da85-59cf-45e6-9c1c-c721cfa59893#project></c-> <c- p>.</c->
+</pre>
+    <figcaption>Bob’s data registration for projects</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight" data-code-show="3-100" line-start="3" path="snippets/bob.example/4675444a-8a4d-46e1-abfe-85147e5a9b76.ttl"><c- g>&lt;#tasks-registration></c->
+  <c- b>a</c-> <c- nn>interop:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredBy</c-> <c- g>&lt;https://bob.example/#id></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2019-03-14T13:42:32.000Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
+  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- g>&lt;trees:Task></c-> <c- p>;</c->
+  <c- nn>interop:</c-><c- f>hasRegisteredDataInstance</c-> <c- g>&lt;17fe4de3-6c6a-4ebe-9b75-b942cfdfa087#task></c-> <c- p>,</c->
+                                    <c- g>&lt;df5581b7-c047-49f8-9f34-ed8fc6570548#task></c-> <c- p>.</c->
+</pre>
+    <figcaption>Bob’s data registration for tasks</figcaption>
+   </figure>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
