@@ -4575,6 +4575,7 @@ An [=Access Receipt Registry=] links to any number of registered
     eco:registeredWith https://trusted.example/id#agent ;
     eco:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
     eco:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    eco:providedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
     eco:fromAgent https://alice.pod.example/profile/id#me ;
     eco:toAgent https://bob.pod.example/profile/id#me ;
     eco:hasDataReceipt <#notebook-receipt>, <#note-receipt> .
@@ -4756,6 +4757,11 @@ Each <dfn>Access Receipt</dfn>
       <td>Date and time the [=Access Receipt=] was updated</td>
     </tr>
     <tr>
+      <td>providedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Receipt=] was shared</td>
+    </tr>
+    <tr>
       <td>fromAgent</td>
       <td>Agent</td>
       <td>[=Agent=] that granted access and sent the [=Access Receipt=]</td>
@@ -4786,6 +4792,7 @@ of the [AccessReceipt](#classAccessReceipt) class.
   eco:registeredWith IRI? ;
   eco:registeredAt xsd:dateTime ;
   eco:updatedAt xsd:dateTime ;
+  eco:providedAt xsd:dateTime ;
   eco:hasDataReceipt @<#:DataReceiptShape> ;
 }
 </pre>
@@ -4871,6 +4878,11 @@ A <dfn>Data Receipt</dfn> ...
       <td>Instance of registeredShapeTree</td>
       <td>Links to a [=Registered Data Instance=] of registeredShapeTree.</td>
     </tr>
+    <tr>
+      <td>replacedBy</td>
+      <td>[DataReceipt](#classDataReceipt)</td>
+      <td>Another [=Data Receipt=] that replaces this one</td>
+    </tr>
   </tbody>
 </table>
 
@@ -4886,7 +4898,8 @@ class.
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ]+ ;
   eco:hasRegisteredDataInstance IRI* ;     # if specific instances are selected or inherited
-  eco:inheritsFrom @<#:DataReceiptShape>*
+  eco:inheritsFrom @<#:DataReceiptShape>* ;
+  eco:replacedBy IRI?
 }
 </pre>
 
@@ -5007,6 +5020,7 @@ use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
 1. 1. Let `RECEIPT` be an empty [=Access Receipt=]
 1. Let `RECEIPT fromAgent` be `CONTROLLER`
 1. Let `RECEIPT toAgent` be `REC-APP`
+1. Let `RECEIPT providedAt` be the current time
 1. For each [=Data Grant=] `DATAGRANT` linked via `GRANT hasDataGrant`
     1. Let `RECEIPT hasDataReceipt` be linked to the result of
         [[#provide-datareceipt]] with inputs: `DATAGRANT`
@@ -5061,6 +5075,7 @@ use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
 1. Let `RECEIPT` be an empty [=Access Receipt=]
 1. Let `RECEIPT fromAgent` be `CONTROLLER`
 1. Let `RECEIPT toAgent` be `REC-AGENT`
+1. Let `RECEIPT providedAt` be the current time
 1. For each [=Data Grant=] `DATAGRANT` linked via `GRANT hasDataGrant`
     1. Let `RECEIPT hasDataReceipt` be linked to the result of
         [[#provide-datareceipt]] with inputs: `DATAGRANT`
@@ -5247,7 +5262,8 @@ A [=Remote Data Registration=] may link to one or more
     eco:registeredWith https://trusted.example/id#agent ;
     eco:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
     eco:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    eco:hasAccessReceipt https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#receipt ;
+    eco:providedAt "2020-09-05T06:16:01Z"^^xsd:dateTime ;
+    eco:hasDataReceipt https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#notebook-receipt ;
     eco:hasRegistration https://alice.pod.example/data/notebook-tree/#registration ;
     eco:registeredShapeTree note:notebook-tree ;
     eco:scopeOfDataGrant eco:SelectedInstances ;
@@ -5266,10 +5282,11 @@ A [=Remote Data Registration=] may link to one or more
     a eco:RemoteDataInstance ;
     eco:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
     eco:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    eco:providedAt "2020-09-05T06:16:01Z"^^xsd:dateTime ;
+    eco:hasDataReceipt https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#notebook-receipt ;
     eco:registeredShapeTree note:notebook-tree ;
     eco:accessMode acl:Read, acl:Write ;
-    eco:hasRegisteredDataInstance https://alice.pod.example/data/notebook/notebook-1/#notebook ;
-    eco:hasAccessReceipt https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#receipt .
+    eco:hasRegisteredDataInstance https://alice.pod.example/data/notebook/notebook-1/#notebook .
   </pre>
 </figure>
 
@@ -5439,6 +5456,11 @@ A [=Remote Data Registration=] is created when an [=Agent=] receives an
       <td>Date and time the [=Remote Data Registration=] was updated</td>
     </tr>
     <tr>
+      <td>providedAt</td>
+      <td>xsd:dateTime</td>
+      <td>When the [=Remote Data Instance=] was shared by remote [=Agent=]</td>
+    </tr>
+    <tr>
       <td>hasRegistration</td>
       <td>Data Registration</td>
       <td>Link to the [=Data Registration=] that was shared</td>
@@ -5497,6 +5519,7 @@ validate an instance of the
   eco:registeredBy IRI ;
   eco:registeredWith IRI ;
   eco:registeredAt xsd:dateTime ;
+  eco:providedAt xsd:dataTime ;
   eco:updatedAt xsd:dateTime ;
   eco:hasRegistration IRI ;           # Remote data registration
   eco:registeredShapeTree IRI ;       # Associated shape tree
@@ -5519,7 +5542,7 @@ that the assigned resource will validate against the
 <pre highlight="turtle" id="treeRemoteDataRegistration">
 <#remote-data-registration-tree>
   a st:ShapeTree;
-  st:expectsType st:ShapeTreeResource ;
+  st:expectsType st:ShapeTreeContainer ;
   st:validatedBy &lt;ecos#RemoteDataRegistrationShape&gt; ;
   st:matchesUriTemplate "{id}" ;
   st:contains <#remote-data-instance-tree> ,
@@ -5568,6 +5591,11 @@ A [=Remote Data Instance=] is created when an [=Agent=] receives an
       <td>When the [=Remote Data Instance=] was last updated</td>
     </tr>
     <tr>
+      <td>providedAt</td>
+      <td>xsd:dateTime</td>
+      <td>When the [=Remote Data Instance=] was shared by remote [=Agent=]</td>
+    </tr>
+    <tr>
       <td>hasRegisteredDataInstance</td>
       <td>RegisteredDataInstance</td>
       <td>Link to [=Registered Data Instance=] associated with the
@@ -5584,9 +5612,9 @@ A [=Remote Data Instance=] is created when an [=Agent=] receives an
       <td>Access modes granted on the shared [=Registered Data Instance=]</td>
     </tr>
     <tr>
-      <td>hasAccessReceipt</td>
-      <td>[AccessReceipt](#classAccessReceipt)</td>
-      <td>Link to [=Access Receipt=] that granted this shared access</td>
+      <td>hasDataReceipt</td>
+      <td>[DataReceipt](#classDataReceipt)</td>
+      <td>Link to [=Data Receipt=] that granted this shared access</td>
     </tr>
   </tbody>
 </table>
@@ -5600,9 +5628,10 @@ validate an instance of the
   a [eco:RemoteDataInstance] ;
   eco:hasRegisteredDataInstance IRI ; # Remote registered data instance
   eco:registeredAt xsd:dateTime ;
+  eco:providedAt xsd:dataTime ;
   eco:registeredShapeTree IRI ;       # Associated shape tree
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  eco:hasAccessReceipt IRI+ ;         # Associated access receipts
+  eco:hasDataReceipt IRI+ ;         # Associated data receipts
 }
 </pre>
 
@@ -5693,6 +5722,7 @@ for resource names.
 #### Inputs #### {#updateremote-inputs}
 
 * Let `RECEIPT` be an [=Access Receipt=]
+* Let `REGISTRY` be an [=Remote Data Registry=]
 
 #### Outputs #### {#updateremote-outputs}
 
@@ -5700,7 +5730,151 @@ for resource names.
 
 #### Operation Details #### {#updateremote-outputs}
 
-TODO
+1. For each [=Data Receipt=] `DRECEIPT` linked via `RECEIPT hasDataReceipt`
+    1. Let `REMOTEDR` be a [=Remote Data Regisration=] returned from
+        [[#remote-loadremotedr]] with inputs:
+        `DRECEIPT hasRegistration`, `REGISTRY`
+        1. If `REMOTEDR` is not empty
+            1. Call [[#remote-updateremotedr]] with inputs:
+                `REMOTEDR`, `DRECEIPT`, `RECEIPT`
+        1. If `REMOTEDR` is empty
+            1. Next if `DRECEIPT scopeOfDataGrant` is `eco:NoAccess`
+            1. Call [[#remote-createremotedr]] with inputs:
+                `RECEIPT`, `DRECEIPT`, `REGISTRY`
+
+### Create Remote Data Registration ### {#remote-createremotedr}
+
+#### Inputs #### {#createremotedr-inputs}
+
+* Let `DRECEIPT` be a [=Data Receipt=]
+* Let `RECEIPT` be a [=Access Receipt=]
+* Let `REGISTRY` be a [=Remote Data Registry=]
+
+#### Outputs #### {#createremotedr-outputs}
+
+* A created [=Remote Data Registration=]
+
+#### Operation Details #### {#createremotedr-details}
+
+1. <em class="rfc2119">MUST</em> return error if
+    `DRECEIPT scopeOfDataGrant` includes `eco:SelectedInstances` or
+    `eco:inheritInstances` and `DRECEIPT hasRegisteredDataInstance` is empty
+1. Let `REMOTEDR` be an empty [=Remote Data Registration=]
+1. Let `REMOTEDR registeredBy` be the current [=Agent=]
+1. Let `REMOTEDR registeredWith` be the current [=Application=]
+1. Let `REMOTEDR registeredAt` be the current timestamp
+1. Let `REMOTEDR updatedAt` be the current timestamp
+1. Let `REMOTEDR providedAt` be `RECEIPT providedAt`
+1. Let `REMOTEDR hasDataReceipt` be `DRECEIPT`
+1. Let `REMOTEDR hasRegistration` be `DRECEIPT hasRegistration`
+1. Let `REMOTEDR registeredShapeTree` be `DRECEIPT registeredShape`
+1. Let `REMOTEDR scopeOfDataGrant`s be `DRECEIPT scopeOfDataGrant`s
+1. Let `REMOTEDR accessMode`s be `DRECEIPT accessMode`s
+1. If `DRECEIPT scopeOfDataGrant` is `eco:AllInstances`
+    1. Let `REMOTEDR scopeOfDataGrant` be `eco:AllInstances`
+1. If `DRECEIPT scopeOfDataGrant` is `eco:SelectedInstances`
+    AND/OR `eco:InheritInstances`
+    1. For each [=Registered Data Instance=] `RDI` linked via
+        `DRECEIPT hasRegisteredDataInstance`
+        1. Let `REMOTEDR hasRemoteDataInstance` be linked with the
+            [=Remote Data Instance=] returned from [[#remote-createremotedi]]
+            with inputs: `REMOTEDR`, `RDI`, `DRECEIPT`, `RECEIPT`
+
+### Create Remote Data Instance ### {#remote-createremotedi}
+
+#### Inputs #### {#createremotedi-inputs}
+
+* Let `REMOTEDR` be a [=Remote Data Registration=]
+* Let `RDI` be a [=Registered Data Instance=]
+* Let `DRECEIPT` be a [=Data Receipt=]
+* Let `RECEIPT` be an [=Access Receipt=]
+
+#### Outputs #### {#createremotedi-outputs}
+
+* A [=Remote Data Instance=] for `RDI`
+
+#### Operation Details #### {#createremotedi-details}
+
+1. Let `REMOTEDI` be an empty [=Remote Data Instance=]
+1. Let `REMOTEDI registeredAt` be the current timestamp
+1. Let `REMOTEDI updatedAt` be the current timestamp
+1. Let `REMOTEDI providedAt` be `RECEIPT providedAt`
+1. Let `REMOTEDI registeredShapeTree` be `DRECEIPT registeredShapeTree`
+1. Let `REMOTEDI accessMode`s be `DRECEIPT accessMode`s
+1. Let `REMOTEDR hasDataReceipt` be `DRECEIPT`
+1. Let `REMOTEDR hasRegisteredDataInstance` be
+    `DRECEIPT hasRegisteredDataInstance`
+
+### Update Remote Data Registration ### {#remote-updateremotedr}
+
+#### Inputs #### {#updateremotedr-inputs}
+
+* Let `REMOTEDR` be a [=Remote Data Registration=] to update
+* Let `DRECEIPT` be a [=Data Receipt=]
+* Let `RECEIPT` be a [=Access Receipt=]
+
+#### Outputs #### {#updateremotedr-outputs}
+
+* An updated [=Remote Data Registration=]
+
+#### Operation Details #### {#updateremotedr-details}
+
+1. <em class="rfc2119">MUST</em> return error if `REMOTEDR providedAt`
+    is later than `DRECEIPT providedAt`
+1. If `REMOTEDR hasDataReceipt` is not `DRECEIPT`
+    1. Let `OLDDRECEIPT` be `REMOTEDR hasDataReceipt`
+    1. Let `REMOTEDR hasDataReceipt` be  `DRECEIPT`
+    1. Let `OLDRECEIPT replacedBy` be `DRECEIPT`
+    1. Let `OLDRECEIPT updatedAt` be the current timestamp
+1. Let `REMOTEDR accessMode`s be `DRECEIPT accessMode`s
+1. If `DRECEIPT scopeOfDataGrant` is `eco:NoAccess`
+    1. Let `REMOTEDR scopeOfDataGrant` be `eco:NoAccess`
+    1. Let `REMOTEDR accessMode` be empty
+    1. For each [=Remote Data Instance=] `REMOTEDI` linked via
+        `REMOTEDR hasRemoteDataInstance`
+        1. Delete `REMOTEDI`
+        1. Remove `REMOTEDR hasRemoteDataInstance` link to `REMOTEDI`
+1. If `DRECEIPT scopeOfDataGrant` is `eco:AllInstances`
+    1. For each [=Remote Data Instance=] `REMOTEDI` linked via
+        `REMOTEDR hasRemoteDataInstance`
+        1. Delete `REMOTEDI`
+        1. Remove `REMOTEDR hasRemoteDataInstance` link to `REMOTEDI`
+1. If `DRECEIPT scopeOfDataGrant` is `eco:SelectedInstances` or
+    `eco:InheritInstances`
+    1. For each [=Remote Data Instance=] `REMOTEDI` linked via
+        `REMOTEDR hasRemoteDataInstance`
+        1. Delete `REMOTEDI`
+        1. Remove `REMOTEDR hasRemoteDataInstance` link to `REMOTEDI`
+    1. For each [=Registered Data Instance=] `RDI` linked via
+        `DRECEIPT hasRegisteredDataInstance`
+        1. Let `REMOTEDR hasRemoteDataInstance` be linked with the
+            [=Remote Data Instance=] returned from [[#remote-createremotedi]]
+            with inputs: `REMOTEDR`, `RDI`, `DRECEIPT`, `RECEIPT`
+1. Let `REMOTEDR updatedAt` be the current timestamp
+1. Return `REMOTEDR`
+
+Issue: It might be more elegant to not wipe out the remote data instances
+and recreate them with changes.
+
+Issue: Someone should be able to grant a given [=Agent=] different modes of
+access for different selected instances in a given registration.
+
+### Load Remote Data Registration ### {#remote-loadremotedr}
+
+#### Inputs #### {#loadremotedr-inputs}
+
+* Let `DATAREG` be a [=Data Registration=] to lookup
+* Let `REGISTRY` be a [=Remote Data Registry=] to load from
+
+#### Outputs #### {#loadremotedr-outputs}
+
+* A [=Remote Data Registration=] corresponding to `REMOTEDR`
+
+#### Operation Details #### {#loadremotedr-details}
+
+1. For each [=Remote Data Registration=] `REMOTEDR` in `REGISTRY`
+    1. return `REMOTEDR` if `REMOTEDR hasRegistration` == `DATAREG`
+
 
 
 Trusted Agents {#trusted}

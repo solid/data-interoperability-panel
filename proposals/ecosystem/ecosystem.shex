@@ -298,6 +298,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:registeredWith IRI? ;
   eco:registeredAt xsd:dateTime ;
   eco:updatedAt xsd:dateTime ;
+  eco:providedAt xsd:dateTime ;
   eco:hasDataReceipt @<#:DataReceiptShape> ;
 }
 
@@ -312,7 +313,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
                          eco:InheritInstances
                          eco:NoAccess ]+ ;
   eco:hasRegisteredDataInstance IRI* ;     # if specific instances are selected or inherited
-  eco:inheritsFrom @<#:DataReceiptShape>*
+  eco:inheritsFrom @<#:DataReceiptShape>* ;
+  eco:replacedBy IRI?
 }
 
 # Remote Data Registry Set
@@ -334,6 +336,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   eco:registeredWith IRI ;
   eco:registeredAt xsd:dateTime ;
   eco:updatedAt xsd:dateTime ;
+  eco:providedAt xsd:dateTime ;
   eco:hasRegistration IRI ;           # Remote data registration
   eco:registeredShapeTree IRI ;       # Associated shape tree
   eco:scopeOfDataGrant [ eco:SelectedInstances
@@ -350,6 +353,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   a [eco:RemoteDataInstance] ;
   eco:hasRegisteredDataInstance IRI ; # Remote registered data instance
   eco:registeredAt xsd:dateTime ;
+  eco:providedAt xsd:dateTime ;
   eco:registeredShapeTree IRI ;       # Associated shape tree
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   eco:hasAccessReceipt IRI+ ;         # Associated access receipts
