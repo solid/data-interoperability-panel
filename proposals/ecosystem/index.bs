@@ -5412,10 +5412,11 @@ A [=Remote Data Registration=] is created when an [=Agent=] receives an
 [=Access Receipt=] from another [=Agent=] that includes access to a given
 [=Data Registration=].
 
-* A [=Remote Data Registration=] MUST be associated with an [=Access Receipt=]
-* If an [=Access Receipt=] is received that changes the access to a shared
-    [=Data Registration=], the corresponding [=Remote Data Registration=]
-    MUST be updated, and removed altogether if that access is removed.
+* A [=Remote Data Registration=] MUST be associated with a [=Data Receipt=]
+* If an [=Access Receipt=] with a corresponding [=Data Receipt=] is received
+    that changes the access to a shared [=Data Registration=], the
+    corresponding [=Remote Data Registration=] MUST be updated, and
+    removed altogether if that access is removed.
 
 <table class="classinfo data" align="left" id="classRemoteDataRegistration">
   <colgroup></colgroup>
@@ -5502,9 +5503,9 @@ A [=Remote Data Registration=] is created when an [=Agent=] receives an
       [=Remote Data Registration=]</td>
     </tr>
     <tr>
-      <td>hasAccessReceipt</td>
-      <td>[AccessReceipt](#classAccessReceipt)</td>
-      <td>Link to [=Access Receipt=] that granted this shared access</td>
+      <td>hasDataReceipt</td>
+      <td>[DataReceipt](#classDataReceipt)</td>
+      <td>Link to [=Data Receipt=] that granted this shared access</td>
     </tr>
   </tbody>
 </table>
@@ -5529,7 +5530,7 @@ validate an instance of the
                          eco:NoAccess ]+ ;
   eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   eco:hasRemoteDataInstance IRI* ;    # if specific instances are selected or inherited
-  eco:hasAccessReceipt IRI+ ;         # Associated access receipts
+  eco:hasDataReceipt IRI+ ;         # Associated data receipts
 }
 </pre>
 
@@ -5558,8 +5559,9 @@ A [=Remote Data Instance=] is created when an [=Agent=] receives an
 [=Access Receipt=] from another [=Agent=] that includes access to a specific
 [=Registered Data Instance=].
 
-* A [=Remote Data Instance=] MUST be associated with an [=Access Receipt=]
-* If an [=Access Receipt=] is received that changes the access to a shared
+* A [=Remote Data Instance=] MUST be associated with a [=Data Receipt=]
+* If an [=Access Receipt=] is received with a corresponding [=Data Receipt=]
+    that changes the access to a shared
     [=Registered Data Instance=], the corresponding [=Remote Data Instance=]
     MUST be updated, and removed altogether if that access is removed.
 
