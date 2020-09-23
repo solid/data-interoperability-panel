@@ -4392,12 +4392,15 @@ operations to manipulate [=Data Grants=] in accordance with the
                   1. Present the name of the [=shape tree=] via `STDEC skos:prefLabel`
                   1. Present the reason access to this data is needed via
                       `NDEC skos:prefLabel`
+                  1. Present the access modes requested via `PNEED accessMode`s
                   1. For each [=Supporting Access Need=] `SUPPORTING` linked
                       via `PNEED supportedBy`
                       1. Present the name of the [=shape tree=] via the
                           associated [=Shape Tree Decorator=]
                       1. Present the reason access to this data is needed via the
                           associated [=Access Need Decorator=]
+                      1. Present the access modes requested via
+                          `SUPPORTING accessMode`s
                   1. If `DATAGRANT scopeOfDataGrant` is `eco:NoAccess`
                       1. Allow `eco:AllInstances` to be selected, which invokes
                           the [[#access-selectall]] operation with inputs:
