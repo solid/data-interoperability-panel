@@ -1,0 +1,423 @@
+Application Registration {#appreg}
+=====================
+
+## Overview ## {#appreg-overview}
+
+Application Registration gives [=Agents=] participating in the Solid
+[=ecosystem=] a way to register and track the [=Applications=] they've elected
+to use with their data. It also provides each [=Application=] with a place
+to store metadata, preferences, access grants, caches, and other internal
+data specific to the function of a given [=Application=].
+
+An [=Application Registry=] for storing individual
+[=Application Registrations=] is introduced, implemented through the [[#reg]].
+
+## Data Model ## {#appreg-datamodel}
+
+<figure>
+  <img src="diagrams/appreg-model.svg" width=100%/>
+  <figcaption>Data model for application registration</figcaption>
+</figure>
+
+Application Registration extends the [[#reg-model]] with type-specific
+subclasses and subproperties.
+
+* An [=Agent=] has a [=Registrar=], which links to
+    [=Application Registry Set=] instances.
+
+* An [=Application Registry Set=] links to any number of
+    [=Application Registry=] instances via the
+    [eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
+
+* An [=Application Registry=] links to any number of
+    [=Application Registrations=] via the
+    [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
+
+* An [=Application Registration=] extends the
+    [eco:Registration](ecosystem.ttl#Registration)
+    class with the
+    [eco:ApplicationRegistration](ecosystem.ttl#ApplicationRegistration)
+    subclass.
+
+The [eco:ApplicationRegistration](ecosystem.ttl#ApplicationRegistration)
+subclass also introduces the following properties:
+
+* [eco:registeredApplication](ecosystem.ttl#registeredApplication) -
+    [=ApplicationID=] of the [=Application=] that is being registered.
+
+<figure>
+  <figcaption>Instance data for
+  an [=Application Registration=] at
+  https://alice.pod.example/applications/02f9d4221d9e5c0ae/#registration
+  </figcaption>
+  <pre highlight="turtle" line-highlight="5" line-numbers="true">
+  <#registration>
+    a eco:ApplicationRegistration ;
+    eco:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
+    eco:registeredWith &lt;https://trusted.example/ar&gt; ;
+    eco:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
+    eco:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+  </pre>
+</figure>
+
+## Structure and Validation ## {#appreg-structure}
+
+A given [=Agent=] will have one or more
+[=Application Registries=] discoverable through the
+[[#reg-model]], via resources that implement
+[[#reg-structure|Registrar Structure and Validation]].
+
+<figure>
+  <figcaption>An [=Application Registry=] at
+  https://alice.pod.example/applications/#registry</figcaption>
+  <img src="diagrams/registrar-applications.svg" width=100%/>
+</figure>
+
+The [=Application Registry=] instance data is stored in the RDF graph
+of the `/applications` container at
+`https://alice.pod.example/applications/#registry`. It links to a
+collection of [=Application Registrations=] stored in
+the `/applications` container.
+
+The shape tree
+[ecot:application-registry-tree](ecosystem.tree#application-registry-tree)
+associated with the `/applications` container specifies this resource
+structure. It assigns the
+[ecos:ApplicationRegistryShape](ecosystem.shex#ApplicationRegistryShape)
+to validate the [=Application Registry=] instance data in the
+container resource, and says that the container includes instances of
+[ecot:application-registration-tree](ecosystem.tree#application-registration-tree),
+which any resources added to the `/applications` container must conform to.
+
+Conforming to
+[ecot:application-registration-tree](ecosystem.tree#application-registration-tree)
+ensures that the container for the [=Application Registry=] at
+`/applications#registry` only contains valid [=Application Registrations=].
+
+Specifically:
+
+* Any resource added to the `/applications` container must be a
+    container (`st:expectsType st:ShapeTreeContainer`)
+* An [=Application Registration=] must be stored in the
+    RDF graph of that container, to successfully pass shape validation via
+    `st:validatedBy <ecos#ApplicationRegistrationShape>`.
+
+<figure>
+  <figcaption>An [=Application Registration=] at
+  https://alice.pod.example/applications/02f9d4221d9e5c0ae/#registration
+  </figcaption>
+  <img src="diagrams/appregistration-structure.svg" width=100%/>
+</figure>
+
+These [=Application Registrations=] are associated with container resources
+so that the [=Application=] that has been registered
+has dedicated space to store data that is very specific to its internal
+functions. In the figure above, we can see an application-specific
+configuration resource (`config.ttl`) and a summary index file (`summary.idx`).
+
+### Naming application registration resources ### {#appreg-naming}
+
+In this proposal, resource names for ecosystem instances are almost always
+randomly generated. However, when creating an
+[ecot:application-registration-tree](ecosystem.tree#application-registration-tree)
+for an [=Application Registration=], the container
+must be named using a SHA-256 hash encoding of the [=ApplicationID=] for the
+[=Application=], which is linked through the
+[eco:registeredApplication](ecosystem.ttl#registeredApplication) property.
+
+:: <b>NeverNote ApplicationID:</b> `https://nevernote.example/id#agent`
+:: <b>SHA-256 Hash:</b> `70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`
+
+The name of the container for NeverNote's
+[=Application Registration=] would be
+`70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`.
+
+There is a reasonable argument for whether or not a one-way hash alogorithm
+like SHA-256 is appropriate, as we are primarily using it as a mechanism
+for URL encoding to create uniform, opaque resource names,
+and the ApplicationID for a given [=Application=]
+is publicly shared. However, the use of one-way hash does add a modicum
+of additional privacy at a miniscule expense.
+
+Issue: Is it appropriate to use a one-way hash for application registration
+resource names. [Github issue](https://github.com/solid/data-interoperability-panel/issues/48)
+
+### Use of internal application space ### {#appreg-internal}
+
+There is a legitimate argument that giving [=Applications=] their own
+private data space in Solid is counterintuitive to Solid’s proposition to
+decouple data and [=Applications=].
+
+However, there are certain types of data that are very specific to
+the function of a particular [=Application=], and have no value to other
+[=Applications=]. This may include but not be limited to app-specific
+preferences, configurations, caches, or indexes. Forcing that data into
+[=shape trees=] and [=shapes=] stored in the data registry that are supposed
+to be consumable and interoperable by other [=Applications=] can lead to
+frankenstein-like [=shape trees=] and [=shapes=] that no one wants to use.
+Giving [=Applications=] a private space where they can store internal data
+is therefore a key factor in broad interoperability,
+because it protects interoperable data from pollution by narrowly
+focused elements.
+
+Ultimately, if [=Applications=] don't want to be interoperable, there's
+no reasonable convention that could prevent it. For example, they could
+decide to use proprietary vocabularies, [=shapes=], and [=shape trees=].
+However, there are motivating factors to
+be interoperable, because in doing so they become compatible with a
+slew of data that already exists in the [=ecosystem=], including data within
+their competitive landscape. Providing a private space allows [=Applications=]
+to separate some internals from true interoperable data so that the
+interoperable data is cleaner and more usable. Our belief is that
+this helps avoid the creation of far-reaching app-specific silos.
+
+Because this space is private to an [=Application=] and not meant to
+be interoperable, the [=Application=] may or may not decide to utilize
+data validation facilities like [=shape trees=] or [=shapes=].
+
+## Permission Model ## {#appreg-permissions}
+
+There is no public access to any data in an [=Application Registry=].
+
+Only [=Agents=] that have been selectively trusted to assist a
+given agent with managing application registration have the ability to manage
+contents and permissions across [=Application Registries=],
+including the creation and modification of [=Application Registrations=].
+
+A given registered [=Application=] has read access to its
+[=Application Registration=], and read/write access to
+the data space inside its container. It does not get control privileges.
+
+<figure>
+<figcaption>Permission model for [=Application Registry=] resources</figcaption>
+  <table class="data permissions" align="left">
+    <col>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup span=2></colgroup>
+    <colgroup span=2></colgroup>
+    <thead>
+      <tr>
+        <th></th>
+        <th scope="colgroup">Controller</th>
+        <th scope="colgroup">Public</th>
+        <th colspan=2 scope="colgroup">Selectively Trusted</th>
+        <th colspan=2 scope="colgroup">Selectively Granted</th>
+      </tr>
+      <tr>
+        <th scope="col">Resource</th>
+        <th scope="col">Access</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`/applications/`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- /applications/02f9d4221d9e5c0ae/`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>Registered App.</td>
+        <td>Read</td>
+      </tr>
+      <tr>
+        <td>`-- /applications/02f9d4221d9e5c0ae/*`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>Registered App.</td>
+        <td>Write</td>
+      </tr>
+      <tr>
+        <td>`-- /applications/6fe4221d0589d7bde/`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>Registered App.</td>
+        <td>Read</td>
+      </tr>
+      <tr>
+        <td>`-- /applications/6fe4221d0589d7bde/*`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>Registered App.</td>
+        <td>Write</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+## Looking up an Application Registration ## {#appreg-lookup}
+
+There are a few reasons that different actors might lookup
+an [=Application Registration=]:
+
+* The [=Agent=] may want to view or manage their collection of registered
+    [=Applications=].
+* Another [=trusted agent=] may assist the [=Agent=] with management
+    and registration of [=Applications=].
+* An [=Application=] may want to see if it has been registered,
+    and access its [=Application Registration=]
+    if it exists. *This is the most frequently occuring scenario.*
+
+Per the [[#appreg-permissions]], the [=Agent=] and
+any [=trusted agents=] for application registration will have access and
+visibility across [=Application Registries=] and
+[=Application Registrations=]. An
+[=Application=] will only have access to its own [=Application Registration=],
+in which case it would be linked to that [=Application Registration=] via the
+[eco:registeredApplication](ecosystem.ttl#registeredApplication) property.
+
+Since [=Applications=] do not have access to the list of [=Applications=]
+in [=Application Registries=], the only way they can check to see if they
+are registered is to perform a direct lookup in the addressable space
+of each [=Application Registry=] in the [=Application Registry Set=],
+using the SHA-256 hash of its [=applicationID=].
+
+<pre>
+GET https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3
+</pre>
+
+Inability to access the [=Application Registration=] would be a result of:
+
+* There is no [=Application Registration=] for that
+    [=Application=] in the [=Application Registry=].
+* There is an [=Application Registration=] at the target URL, but
+    it cannot be accessed because it associated with a
+    different [=Application=].
+
+In either case, the server may return either a 403 or 404 depending on
+server or user privacy preference.
+
+If an [=Application=] can access the
+[=Application Registration=], then it can confirm that it
+is already a registered [=Application=] for the [=Agent=].
+
+If an [=Application=] is not registered, and would like to be,
+it will need to go through the process of [[#appreg-new]].
+
+## Registering an Application ## {#appreg-new}
+
+In almost every case, an [=Application=] will not be permitted
+to register itself, and will need the
+assistance of a [=trusted agent=] that has been authorized to assist
+with application registration for a given [=Agent=].
+
+Issue: Agents that can perform these capabilities will be discoverable
+through the registrar. Until that section is written, we'll use a
+hard-coded properties associated with the Agent for discovery.
+
+The [=Application=] will look for another
+[=Application=] that is linked with the [=Agent=] through the
+[eco:trustsForApplicationRegistration](ecosystem.ttl#trustsForApplicationRegistration)
+property.
+
+<figure>
+  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me linking to Application
+  Registration Agent</figcaption>
+  <pre highlight="turtle">
+    <#me>
+      a eco:Agent;
+      eco:trustsForApplicationRegistration &lt;https://trusted.example/ar/&gt; .
+  </pre>
+</figure>
+
+The [=Application=] will redirect the [=Agent=] via the
+synchronous [[#trusted|trusted agent]] pattern to the [=Application=] linked by
+[eco:trustsForApplicationRegistration](ecosystem.ttl#trustsForApplicationRegistration),
+supplying its [=ApplicationID=] as a parameter.
+
+The [=application registration agent=] is now expected to dereference
+(i.e. perform an HTTP GET on) the [=ApplicationID=] to retrieve an
+[=application profile document=]. The contents of that document
+help the [=Agent=] determine whether that [=Application=] is suitable for
+approval.
+
+For example, verification of a verifiable credential
+stored in the [=application profile document=], issued by a trusted third party,
+is a good indicator of the [=Application’s=] trustworthiness.
+Similarly, an [=Application=], or the [=identity provider=] it uses, may
+be listed on a trusted whitelist that the [=trusted agent=]
+consults. It is able to raise issues related to these checks (or others)
+to the [=Agent=] as part of her decision making process.
+
+Assuming suitability and confirmation from the [=Agent=], the
+[=application registration agent=] will proceed to create the
+[=Application Registration=] for
+the [=Application=] in the appropriate [=Application Registry=].
+When it is finished, it will return her to
+the [=Application=] at the
+[eco:applicationRegistrationCallback](ecosystem.ttl#applicationRegistrationCallback)
+provided in the application profile document.
+
+### Creating the application registration entry ### {#appreg-creating}
+
+The [=application registration agent=] is responsible for creating
+the [=Application Registration=] in conformance with the
+documented [[#appreg-structure]] pattern.
+
+Specifically, the
+[ecot:application-registration-tree](ecosystem.tree#application-registration-tree)
+stipulates that the [=Application Registration=] be a container via
+`st:expectsType st:ShapeTreeContainer`.
+
+The [=Application Registration=] must be added to the RDF
+graph of that container with a `<#registration>` subject, and pass validation
+against the
+[ecos:ApplicationRegistrationShape](ecosystem.shex#ApplicationRegistrationShape).
+
+The [=Application Registration's=] properties must be set as follows:
+
+* [eco:registeredBy](ecosystem.ttl#registeredBy): linked to the [=identity=]
+    of the [=authenticated agent=] that invoked the registration
+    (i.e. the [=webid=] of the [=Agent=])
+* [eco:registeredWith](ecosystem.ttl#registeredWith): linked to the
+    [=ApplicationID=] of the [=trusted agent=] that facilitated the
+    registration, typically the [=application registration agent=].
+* [eco:registeredApplication](ecosystem.ttl#registeredApplication): linked to
+    the [=ApplicationID=] of the [=Application=] that is being registered.
+* [eco:registeredAt](ecosystem.ttl#registeredAt): the `xsd:dateTime` of
+    the registration.
+
+<figure>
+  <figcaption>Example [=Application Registration=]</figcaption>
+  <pre highlight="turtle">
+  <#registration>
+    a eco:applicationRegistration ;
+    eco:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
+    eco:registeredWith &lt;https://trusted.example/ar&gt; ;
+    eco:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
+    eco:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+  </pre>
+</figure>
+
+The [=Application Registration=] container must be named in
+accordance with the instructions in [[#appreg-naming]].
+
+The [=Application Registration=] container must be added as a child
+member of the [=Application Registry=] container.
+
+Access to the [=Application Registration=] must be set per the
+instructions in [[#appreg-permissions]].
+
+The [=Application Registration=] must be associated with the
+[=Application Registry=] through the
+[eco:hasRegistry](ecosystem.ttl#hasRegistry) property in
+the graph of the [=Application Registry=].

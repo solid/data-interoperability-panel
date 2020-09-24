@@ -1,0 +1,1318 @@
+Access Grants {#access}
+=====================
+
+## Overview ## {#access-overview}
+
+## Data Model ## {#access-datamodel}
+
+### Summary ### {#access-datamodel-summary}
+
+<figure id="fig-access-model">
+  <img src="diagrams/access-model.svg" width=100%/>
+  <figcaption>Data model for the access registry</figcaption>
+</figure>
+
+The [=Access Registry=] extends the [[#reg-model]] with type-specific
+subclasses and subproperties.
+
+An [=Agent=] has a [=Registrar=] that links to [=Access Registry Sets=]
+via the [eco:hasAccessRegistrySet](ecosystem.ttl#hasAccessRegistrySet) property.
+
+A [=Access Registry Set=] links to any number of [=Access Registries=] via
+the [eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
+
+An [=Access Registry=] links to any number of registered [=Access Grants=]
+and [=Access Invitations=] via the
+[eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
+
+<figure id="fig-access-registrar">
+  <figcaption>A [=Registrar=] at https://alice.pod.example/registries/#registrar
+  linking to an [=Access Registry Set=]</figcaption>
+  <pre highlight="turtle">
+  <#registrar>
+    a eco:Registrar;
+    eco:hasAccessRegistrySet &lt;https://alice.pod.example/registries/access#set&gt; .
+  </pre>
+  </figure>
+</figure>
+
+<figure id ="fig-access-registry-set">
+   <figcaption>An [=Access Registry Set=] at
+   https://alice.pod.example/registries/access#set linking to two different
+  [=Access Registries=]</figcaption>
+  <pre highlight="turtle">
+  <#set>
+    a eco:AccessRegistrySet;
+    eco:hasRegistry &lt;https://alice.pod.example/access/#registry&gt; ,
+                    &lt;https://alice.otherpod.example/access/#registry&gt; .
+  </pre>
+</figure>
+
+<figure id="fig-access-registry">
+  <figcaption>An [=Access Registry=] at https://alice.pod.example/access/#registry
+  linking to several registered [=Access Grants=] or
+  [=Access Invitations=]</figcaption>
+  <pre highlight="turtle">
+  <#registry>
+    a eco:AccessRegistry ;
+    eco:hasRegistration &lt;ab3d0023-3860-4358-ae33-8d3af1097b9d#grant&gt; ,
+                        &lt;ad7b935f-ced9-4ce6-835f-5c6abc046228#grant&gt; ,
+                        &lt;5ed73c65-ce77-4c8a-8f7e-9715b90307e6#grant&gt; ,
+                        &lt;2d575cba-3f6c-4c58-bccd-0e6266ba56cf#invitation&gt; .
+  </pre>
+</figure>
+
+<figure id="fig-access-grant">
+  <figcaption>An [=Access Grant=] at
+  https://alice.pod.example/access/ab3d0023-3860-4358-ae33-8d3af1097b9d#grant
+  </figcaption>
+  <pre highlight="turtle">
+  <#grant>
+    a eco:AccessGrant ;
+    eco:registeredBy https://alice.pod.example/profile/id#me ;
+    eco:registeredWith https://trusted.example/id#agent ;
+    eco:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    eco:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    eco:hasAccessGrantSubject <#grant-subject> ;
+    eco:hasPreparedAccessNeedGroup <#pag-notebook-group> ;
+    eco:hasDataGrant <#notebook-grant>, <#note-grant> .
+
+  <#grant-subject>
+    a eco:AccessGrantSubject ;
+    eco:accessByAgent https://alice.pod.example/profile/id#me ;
+    eco:accessByApplication https://nevernote.example/id#agent .
+
+  <#notebook-grant>
+    a eco:DataGrant ;
+    eco:hasRegistration data:notebook-tree ;
+    eco:registeredShapeTree note:notebook-tree ;
+    eco:satisfiesPreparedAccessNeed <#pan-notebook> ;
+    eco:accessMode acl:Read, acl:Write ;
+    eco:scopeOfDataGrant eco:AllInstances ;
+
+  <#note-grant>
+    a eco:DataGrant ;
+    eco:hasRegistration data:note-tree ;
+    eco:registeredShapeTree note:note-tree ;
+    eco:satisfiesPreparedAccessNeed <#pan-note> ;
+    eco:accessMode acl:Read, acl:Write ;
+    eco:scopeOfDataGrant eco:AllInstances ;
+
+  <#pag-notebook-group>
+    a eco:PreparedAccessNeedGroup ;
+    eco:fromAccessNeedGroup ex:accessNotebookGroup ;
+    eco:hasAccessNeedGroupDecorator ex:accessNotebookGroupDecorator ;
+    eco:accessNecessity eco:AccessRequired ;
+    eco:authenticatesAs eco:Pilot ;
+    eco:hasPreparedAccessNeed <#pan-notebook> .
+
+  <#pan-notebook>
+      a eco:PreparedAccessNeed ;
+      eco:registeredShapeTree note:notebook-tree ;
+      eco:accessMode acl:Read, acl:Write ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:hasAccessNeedDecorator ex:notebookAccessDecorator ;
+      eco:hasShapeTreeDecorator note:notebookDecorator ;
+      eco:referencesPreparedAccessNeed <#pan-notes> ;
+      eco:hasDataGrant <#notebook-grant> .
+
+  <#pan-note>
+      a eco:PreparedAccessNeed ;
+      eco:registeredShapeTree note:note-tree ;
+      eco:accessMode acl:Read, acl:Write ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:hasAccessNeedDecorator ex:noteAccessDecorator ;
+      eco:hasShapeTreeDecorator note:noteDecorator ;
+      eco:hasDataGrant <#note-grant> .
+  </pre>
+</figure>
+
+<figure id="fig-access-invitation">
+  <figcaption>An [=Access Invitation=] at
+  https://alice.pod.example/access/2d575cba-3f6c-4c58-bccd-0e6266ba56cf/#invitation
+  </figcaption>
+  <pre highlight="turtle">
+  <#invitation>
+    a eco:AccessInvitation ;
+    eco:registeredBy https://alice.pod.example/profile/id#me ;
+    eco:registeredWith https://trusted.example/id#agent ;
+    eco:registeredAt "2020-09-13T19:32:52Z"^^xsd:dateTime ;
+    eco:updatedAt "2020-09-13T19:32:52Z"^^xsd:dateTime ;
+    eco:expiresAt "2020-09-20T19:32:52Z"^^xsd:dateTime ;
+    eco:hasPreparedAccessNeedGroup <#pag-notebook-group> ;
+    eco:hasDataGrant <#notebook-grant>, <#note-grant> ;
+    eco:hasAccessInvitationChannel <#phone-channel>, <#email-channel> .
+
+  <#phone-channel>
+    a eco:PhoneInvitationChannel ;
+    eco:channelTarget "(555) 555-1212" ;
+    eco:channelCode "654345" ;
+    eco:isValidated false ;
+    eco:remainingAttempts 3 .
+
+  <#email-channel>
+    a eco:EmailInvitationChannel ;
+    eco:channelTarget "bob@example.com" ;
+    eco:channelCode "434567" ;
+    eco:isValidated true ;
+    eco:remainingAttempts 3 .
+
+  <#notebook-grant>
+    a eco:DataGrant ;
+    eco:hasRegistration data:notebook-tree ;
+    eco:registeredShapeTree note:notebook-tree ;
+    eco:satisfiesPreparedAccessNeed <#pan-notebook> ;
+    eco:accessMode acl:Read, acl:Write ;
+    eco:scopeOfDataGrant eco:AllInstances ;
+
+  <#note-grant>
+    a eco:DataGrant ;
+    eco:hasRegistration data:note-tree ;
+    eco:registeredShapeTree note:note-tree ;
+    eco:satisfiesPreparedAccessNeed <#pan-note> ;
+    eco:accessMode acl:Read, acl:Write ;
+    eco:scopeOfDataGrant eco:AllInstances ;
+
+  <#pag-notebook-group>
+    a eco:PreparedAccessNeedGroup ;
+    eco:fromAccessNeedGroup ex:accessNotebookGroup ;
+    eco:hasAccessNeedGroupDecorator ex:accessNotebookGroupDecorator ;
+    eco:accessNecessity eco:AccessRequired ;
+    eco:authenticatesAs eco:Pilot ;
+    eco:hasPreparedAccessNeed <#pan-notebook> .
+
+  <#pan-notebook>
+      a eco:PreparedAccessNeed ;
+      eco:registeredShapeTree note:notebook-tree ;
+      eco:accessMode acl:Read, acl:Write ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:hasAccessNeedDecorator ex:notebookAccessDecorator ;
+      eco:hasShapeTreeDecorator note:notebookDecorator ;
+      eco:referencesPreparedAccessNeed <#pan-notes> ;
+      eco:hasDataGrant <#notebook-grant> .
+
+  <#pan-note>
+      a eco:PreparedAccessNeed ;
+      eco:registeredShapeTree note:note-tree ;
+      eco:accessMode acl:Read, acl:Write ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:hasAccessNeedDecorator ex:noteAccessDecorator ;
+      eco:hasShapeTreeDecorator note:noteDecorator ;
+      eco:hasDataGrant <#note-grant> .
+  </pre>
+</figure>
+
+### Access Registry Set ### {#datamodel-access-registry-set}
+
+An <dfn>Access Registry Set</dfn> is a [=Registry Set=] specifically
+made up of [=Access Registries=].
+
+<table class="classinfo data" align="left" id="classAccessRegistrySet">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3 text-align=left>
+        [AccessRegistrySet](ecosystem.ttl#AccessRegistrySet)
+        a rdfs:subClassOf [[#reg-model|RegistrySet]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistry</td>
+      <td>Registry</td>
+      <td>Link to associated [=Access Registries=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessRegistrySetShape](#shexAccessRegistrySet) is used to validate
+an instance of the [AccessRegistrySet](#classAccessRegistrySet) class.
+
+<pre highlight="turtle" id="shexAccessRegistrySet">
+<#AccessRegistrySetShape> {
+  a [ eco:AccessRegistrySet ] ;
+  eco:hasRegistry IRI+
+}
+</pre>
+
+The [AccessRegistrySetTree](ecosystem.tree#access-registry-set-tree)
+is assigned to a resource to ensure it will validate against the
+[AccessRegistrySetShape](#shexAccessRegistrySet).
+
+<pre highlight="turtle" id="treeAccessRegistrySet">
+<#access-registry-set-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;ecos#AccessRegistrySetShape&gt; ;
+  st:matchesUriTemplate "access" .
+</pre>
+
+### Access Registry ### {#datamodel-access-registry}
+
+An <dfn>Access Registry</dfn> is a collection of
+[=Access Grants=] stored in a specific location in a [=pod=].
+
+<table class="classinfo data" align="left" id="classAccessRegistry">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessRegistry](ecosystem.ttl#AccessRegistry)
+        a rdfs:subClassOf [[#reg-model|Registry]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>Registration</td>
+      <td>Link to associated [=Access Grants=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessRegistryShape](#shexAccessRegistry) is used to validate an
+instance of the [AccessRegistry](#classAccessRegistry) class.
+
+<pre highlight="turtle" id="shexAccessRegistry">
+<#AccessRegistryShape> {
+  a [ eco:AccessRegistry ] ;
+  eco:hasRegistration IRI*
+}
+</pre>
+
+The [AccessRegistryTree](ecosystem.tree#access-registry-tree) is assigned
+to a container resource to ensure that it will validate against the
+[AccessRegistryShape](#shexAccessRegistry), and contain only
+conformant instances of the [AccessGrantTree](#treeAccessGrant).
+
+<pre highlight="turtle" id="treeAccessRegistry">
+<#access-registry-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy &lt;ecos#AccessRegistryShape&gt; ;
+  st:contains <#access-grant-tree> ,
+              <#access-invitation-tree> ,
+              st:AllowNone .
+</pre>
+
+### Access Grant ### {#datamodel-access-grant}
+
+Each <dfn>Access Grant</dfn> represents access granted to one recipient; the
+[=Access Grant Subject=], based on access criteria detailed in one or more
+[=Prepared Access Need Groups=]. Access is granted to registered data in
+[=Data Registries=], identified by [=Data Grants=] linked to the
+[=Access Grant=].
+
+<table class="classinfo data" align="left" id="classAccessGrant">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessGrant](ecosystem.ttl#AccessGrant)
+        a rdfs:subClassOf [[#reg-model|Registration]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>Agent</td>
+      <td>[=Agent=] that registered the [=Access Grant=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>Application</td>
+      <td>[=Application=] used to create the [=Access Grant=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Grant=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Grant=] was updated</td>
+    </tr>
+    <tr>
+      <td>hasAccessGrantSubject</td>
+      <td>AccessGrantSubject</td>
+      <td>Links to one [=Access Grant Subject=] who was granted access.</td>
+    </tr>
+    <tr>
+      <td>hasPreparedAccessNeedGroup</td>
+      <td>PreparedAccessNeedGroup</td>
+      <td>Links to a [=Prepared Access Need Group=] associated with the Access Grant.</td>
+    </tr>
+    <tr>
+      <td>hasDataGrant</td>
+      <td>DataGrant</td>
+      <td>Links to a [=Data Grant=] associated with the Access Grant.</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessGrantShape](#shexAccessGrant) is used to validate an instance
+of the [AccessGrant](#classAccessGrant) class.
+
+<pre highlight="turtle" id="shexAccessGrant">
+<#AccessGrantShape> {
+  a [ eco:AccessGrant ] ;
+  eco:registeredBy IRI ;
+  eco:registeredWith IRI? ;
+  eco:registeredAt xsd:dateTime ;
+  eco:accessGrantSubject @AccessGrantSubject ;
+  eco:hasPreparedAccessNeedGroup @PreparedAccessNeedGroupShape+ ;
+  eco:hasDataGrant @DataGrantShape+
+}
+</pre>
+
+The [AccessGrantTree](ecosystem.tree#access-grant-tree) is assigned to a
+resource via the [AccessRegistryTree](#treeAccessRegistry), and ensure
+that the assigned resource will validate against the
+[AccessGrantShape](#shexAccessGrant).
+
+<pre highlight="turtle" id="treeAccessGrant">
+<#access-grant-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;ecos#AccessGrantShape&gt; ;
+  st:matchesUriTemplate "{id}" .
+</pre>
+
+### Access Grant Subject ### {#datamodel-access-grant-subject}
+
+An <dfn>Access Grant Subject</dfn> represents a unique combination of
+who and what is being granted access. For example, it allows a single [=Agent=]
+to be specified, or a given [=Agent=] using a given [=Application=].
+
+<table class="classinfo data" align="left" id="classAccessGrantSubject">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>[AccessGrantSubject](ecosystem.ttl#AccessGrant)</th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>accessByAgent</td>
+      <td>Agent</td>
+      <td>[=Agent=] being granted access</td>
+    </tr>
+    <tr>
+      <td>accessByApplication</td>
+      <td>Application</td>
+      <td>[=Application=] being granted access</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessGrantSubjectShape](#shexAccessGrantSubject) is used to validate
+an instance of the [AccessGrantSubject](#classAccessGrantSubject) class.
+
+<pre highlight="turtle" id="shexAccessGrantSubject">
+<#AccessGrantSubjectShape> {
+  a [ eco:AccessGrantSubject ] ;
+  eco:accessGrantSubjectAgent IRI? ;
+  eco:accessGrantSubjectApplication IRI?
+}
+</pre>
+
+### Data Grant ### {#datamodel-data-grant}
+
+A <dfn>Data Grant</dfn> records a decision made by a
+given [=Agent=] based upon [=Prepared Access Needs=] presented to them
+for a given [=Data Registration=].
+
+<table class="classinfo data" align="left" id="classDataGrant">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [DataGrant](ecosystem.ttl#DataGrant)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>DataRegistration</td>
+      <td>[=Data Registration=] the [=Data Grant=] applies to</td>
+    </tr>
+    <tr>
+      <td>registeredShapeTree</td>
+      <td>st:ShapeTree</td>
+      <td>The [=shape tree=] registered at the target [=Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>satisfiesPreparedAccessNeed</td>
+      <td>PreparedAccessNeed</td>
+      <td>Links to a [=Prepared Access Need=] satisfied by the [=Data Grant=]</td>
+    </tr>
+    <tr>
+      <td>accessMode</td>
+      <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
+      <td>Union of access modes from [=Prepared Access Needs=] linked by
+      satisfiesPreparedAccessNeed</td>
+    </tr>
+    <tr>
+      <td>scopeOfDataGrant</td>
+      <td> eco:AllInstances, eco:InheritInstances,
+      eco:SelectedInstances, eco:NoAccess</td>
+      <td>Identifies the access scope of the [=Data Grant=]
+        <ul>
+          <li>eco:AllInstances - Scope includes
+              access to all [=Registered Data Instances=] of the associated
+              [=Data Registration=]</li>
+          <li>eco:InheritInstances - Scope includes
+              access to [=Registered Data Instances=] inherited by
+              instances selected in the [=Data Grant=] linked via
+              eco:inheritsFrom</li>
+          <li>eco:SelectedInstances - Scope includes
+              access only to those [=Registered Data Instances=] specifically
+              selected by the [=Agent=]</li>
+          <li>eco:NoAccess</li> - No access is granted
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>inheritsFrom</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>Identifies a [=Data Grant=] whose selected
+      [=Registered Data Instances=] narrow the scope of instances to be
+      presented by this grant.</td>
+    </tr>
+    <tr>
+      <td>hasRegisteredDataInstance</td>
+      <td>Instance of registeredShapeTree</td>
+      <td>Links to a [=Registered Data Instance=] of registeredShapeTree.</td>
+    </tr>
+  </tbody>
+</table>
+
+The [DataGrantShape](#shexDataGrant) is used to
+validate an instance of the [DataGrant](#classDataGrant)
+class.
+
+<pre highlight="turtle" id="shexDataGrant">
+<#DataGrantShape> {
+  a [ eco:DataGrant ] ;
+  eco:hasRegistration IRI ;
+  eco:registeredShapeTree IRI ;
+  eco:satisfiesPreparedAccessNeed @PreparedAccessNeedShape+ ;
+  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  eco:scopeOfDataGrant [ eco:SelectedInstances eco:AllInstances eco:InheritInstances eco:NoAccess ]+ ;
+  eco:inheritsFrom @DataGrantShape*
+}
+</pre>
+
+### Access Invitation ### {#datamodel-access-invitation}
+
+An <dfn>Access Invitation</dfn> is a subclass of [=Access Grant=] used when
+an [=Agent=] wishes to grant access to another [=Agent=] whose
+decentralized [=identity=] is unknown to them, or may not exist yet, so they
+must be first invited through another channel (such as phone or email).
+
+Like an [=Access Grant=], an [=Access Invitation=] links to access
+criteria detailed in one or more [=Prepared Access Need Groups=], with
+associated [=Data Grants=] indicating the intended access to be granted.
+
+However, instead of linking to an [=Access Grant Subject=], an
+[=Access Invitation=] links to one or more [=Access Invitation Channels=].
+
+Each channel represents a mechanism through which the invitation can
+be delivered and validated. The mechanism is designed so that multiple
+channels may be validated before an invitation is confirmed and
+converted to an [=Access Grant=].
+
+<table class="classinfo data" align="left" id="classAccessInvitation">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessInvitation](ecosystem.ttl#AccessInvitation)
+        a rdfs:subClassOf [[#datamodel-access-grant|AccessGrant]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>Agent</td>
+      <td>[=Agent=] that registered the [=Access Invitation=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>Application</td>
+      <td>[=Application=] used to create the [=Access Invitation=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Invitation=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Invitation=] was updated</td>
+    </tr>
+    <tr>
+      <td>expiresAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Invitation=] expires</td>
+    </tr>
+    <tr>
+      <td>hasAccessInvitationChannel</td>
+      <td>AccessInvitationChannel</td>
+      <td>Links to an [=Access Invitation Channel=]</td>
+    </tr>
+    <tr>
+      <td>hasPreparedAccessNeedGroup</td>
+      <td>PreparedAccessNeedGroup</td>
+      <td>Links to a [=Prepared Access Need Group=] associated with the
+      [=Access Invitation=].</td>
+    </tr>
+    <tr>
+      <td>hasDataGrant</td>
+      <td>DataGrant</td>
+      <td>Links to a [=Data Grant=] associated with the
+      [=Access Invitation=].</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessInvitationShape](#shexAccessInvitation) is used to validate an
+instance of the [AccessInvitation](#classAccessInvitation) class.
+
+<pre highlight="turtle" id="shexAccessInvitation">
+<#AccessInvitationShape> {
+  a [ eco:AccessInvitation ] ;
+  eco:registeredBy IRI ;
+  eco:registeredWith IRI? ;
+  eco:registeredAt xsd:dateTime ;
+  eco:updatedAt xsd:dateTime ;
+  eco:expiresAt xsd:dateTime? ;
+  eco:hasPreparedAccessNeedGroup @&lt;#:PreparedAccessNeedGroupShape&gt;+ ;
+  eco:hasDataGrant @&lt;#:DataGrantShape&gt;+
+  eco:hasAccessInvitationChannel @&lt;#:AccessInvitationChannelShape&gt;+ ;
+}
+</pre>
+
+The [AccessInvitationTree](ecosystem.tree#access-invitation-tree) is assigned
+to a resource via the [AccessRegistryTree](#treeAccessRegistry), and ensures
+that the assigned resource will validate against the
+[AccessInvitationShape](#shexAccessInvitation).
+
+<pre highlight="turtle" id="treeAccessInvitation">
+<#access-invitation-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;ecos#AccessInvitationShape&gt; ;
+  st:matchesUriTemplate "{id}" .
+</pre>
+
+### Access Invitation Channel ### {#datamodel-access-invitation-channel}
+
+An <dfn>Access Invitation Channel</dfn> represents a mechanism through
+which an [=Access Invitation=] can be delivered and validated.
+
+<table class="classinfo data" align="left" id="classAccessInvitationChannel">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessInvitationChannel](ecosystem.ttl#AccessInvitationChannel)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>rdf:type</td>
+      <td>eco:PhoneInvitationChannel,
+      eco:EmailInvitationChannel,
+      eco:SMSInvitationChannel,
+      eco:OfflineInvitationChannel</td>
+      <td>Each channel is represented by a subClassOf
+      AccessInvitationChannel</td>
+    </tr>
+    <tr>
+      <td>channelTarget</td>
+      <td>xsd:string</td>
+      <td>Target used when validating the channel</td>
+    </tr>
+    <tr>
+      <td>channelCode</td>
+      <td>xsd:string</td>
+      <td>Code used for channel validation</td>
+    </tr>
+    <tr>
+      <td>isValidated</td>
+      <td>xsd:boolean</td>
+      <td>Indicates whether the channel has been validated</td>
+    </tr>
+    <tr>
+      <td>remainingAttempts</td>
+      <td>xsd:integer</td>
+      <td>Number of allowed validation attempts remaining</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessInvitationChannelShape](#shexAccessInvitationChannel) is used to
+validate an instance of the
+[AccessInvitationChannel](#classAccessInvitation) class.
+
+<pre highlight="turtle" id="shexAccessInvitationChannel">
+<#AccessInvitationChannelShape> {
+   a @<#ChannelTypes> ;
+   eco:channelTarget xsd:string ;
+   eco:channelCode xsd:string ;
+   eco:isValidated xsd:boolean ;
+   eco:remainingAttempts xsd:integer
+}
+
+<#ChannelTypes> [
+  :PhoneInvitationChannel   # Telephone
+  :EmailInvitationChannel   # E-mail
+  :SMSInvitationChannel     # SMS (Simple Messaging Service)
+  :OfflineInvitationChannel # Other communication, e.g. verbal, shared note
+]
+</pre>
+
+## Resource Hierarchy ## {#access-hierarchy}
+
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Class</th>
+      <th>Shape</th>
+      <th>Shape Tree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`/registries/#registrar`</td>
+      <td>[Registrar](#)</td>
+      <td>[RegistrarShape](#)</td>
+      <td>[RegistrarTree](#)</td>
+    </tr>
+    <tr>
+      <td>`-- access#set`</td>
+      <td>[AccessRegistrySet](#classAccessRegistrySet)</td>
+      <td>[AccessRegistrySetShape](#shexAccessRegistrySet)</td>
+      <td>[AccessRegistrySetTree](#treeAccessRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`/access/#registry`</td>
+      <td>[AccessRegistry](#classAccessRegistry)</td>
+      <td>[AccessRegistryShape](#shexAccessRegistry)</td>
+      <td>[AccessRegistryTree](#treeAccessRegistry)</td>
+    </tr>
+    <tr>
+      <td>`-- c482f931...630e5ab0#grant`</td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>[AccessGrantShape](#shexAccessGrant)</td>
+      <td>[AccessGrantTree](#treeAccessGrant)</td>
+    </tr>
+    <tr>
+      <td>`-- e0983a7e...88c387ea#grant`</td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>[AccessGrantShape](#shexAccessGrant)</td>
+      <td>[AccessGrantTree](#treeAccessGrant)</td>
+    </tr>
+    <tr>
+      <td>`-- eddf13d6...7f4962c5#grant`</td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>[AccessGrantShape](#shexAccessGrant)</td>
+      <td>[AccessGrantTree](#treeAccessGrant)</td>
+    </tr>
+    <tr>
+      <td>`-- a990c1b9...c041eb74#grant`</td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>[AccessGrantShape](#shexAccessGrant)</td>
+      <td>[AccessGrantTree](#treeAccessGrant)</td>
+    </tr>
+    <tr>
+      <td>`-- 265ef957...6689aee7#grant`</td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>[AccessGrantShape](#shexAccessGrant)</td>
+      <td>[AccessGrantTree](#treeAccessGrant)</td>
+    </tr>
+  </tbody>
+</table>
+
+The [=Access Registry Set=] and the [=Access Registry=] MAY or MAY NOT
+be on the same [=pod=].
+
+[=Access Registry Set=] and [=Access Registry=] resources MAY use any
+resource or subject names.
+
+[=Access Grants=] MUST use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt)
+for resource names.
+
+## Operations ## {#access-operations}
+
+* [[#access-initialize]] - Initializes a new [=Access Grant=] for a given
+    [=Access Grant Subject=] or an [=Access Invitation=] for one or more
+    [=Access Invitation Channels=] with one or more [=Access Need Groups
+* [[#access-loadgrant]] - Load an existing [=Access Grant=]
+    from an [=Access Registry=]
+* [[#access-loadinvitation]] - Load an existing [=Access Invitation=]
+    from an [=Access Registry=]
+* [[#access-recordgrant]] - Store a new or updated [=Access Grant=]
+    in an [=Access Registry=]
+* [[#access-recordinvitation]] - Store a new or updated [=Access Invitation=]
+    in an [=Access Registry=]
+* [[#access-applyperms]] - Apply permissions to [=acl resources=] based
+    on [=Access Grant=] decisions.
+
+The [[#access-present]] operation is non-normative, and meant to instruct
+a developer in how to load and initialize an [=Access Grant=], present it
+to an [=Agent=], invoke the appropriate operations to manipulate
+[=Data Grants=] in accordance with the [=Agent's=] decisions, and then
+record those decisions, which will also apply the permission changes.
+
+### Initialize Grant ### {#access-initialize}
+
+Initialize an [=Access Grant=] or [=Access Invitation=] by processing
+the input [=Access Need Groups=]
+into [=Prepared Access Need Groups=], then initializing [=Data Grants=] with
+no access (yet) for the corresponding [=Prepared Access Needs=] in each group.
+
+#### Inputs #### {#initialize-inputs}
+
+* Let `SUBJECT` be an [=Access Grant Subject=]
+* Let `ICHANNELS` be a set of [=Access Invitation Channels=]
+* Let `GROUPS` be [=Access Need Groups=] to associate with the [=Access Grant=]
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Outputs #### {#initialize-outputs}
+
+* A newly initialized [=Access Grant=] or [=Access Invitation=]
+
+#### Operation Details #### {#initialize-details}
+
+1. <em class="rfc2119">MUST</em> return a status code of 400 if both
+    `SUBJECT` and `ICHANNELS` are provided
+1. If `SUBJECT` is provided
+    1. Let `NEW` be a newly initialized [=Access Grant=]
+    1. Let `NEW hasAccessGrantSubject` be `SUBJECT`
+1. If `ICHANNELS` is provided
+    1. Let `NEW` be a newly initialized [=Access Invitation=]
+    1. For each [=Access Invitation Channel=] `ICHANNEL` in `ICHANNELS`
+        1. Let `ICHANNEL` be linked to `NEW` via `NEW hasAccessInvitationChannel`
+1. For each [=Access Need Group=] `GROUP` in `GROUPS`
+    1. Let `PGROUP` be the [=Prepared Access Need Group=] returned from
+        [[#prepare-group]] with inputs `GROUP`, `LANG`
+    1. Link `PGROUP` to `NEW` via `NEW hasPreparedAccessNeedGroup`
+1. Let `PGROUPS` be all [=Prepared Access Need Groups=] linked to `NEW`
+    via `hasPreparedAccessNeedGroup`
+1. Let `DATAGRANTS` be an empty set of [=Data Grants=]
+1. For each [=Prepared Access Group=] `PGROUP` in `PGROUPS`
+    1. For each [=Prepared Access Need=] `PNEED` in `PGROUP`
+        1. Let `MATCHING` be a [=Data Grant=] in `DATAGRANTS` where
+            `PNEED registeredShapeTree` == `MATCHING registeredShapeTree`
+        1. If `MATCHING` let `PNEED hasDataGrant` be `MATCHING`
+        1. If `MATCHING` is missing
+            1. Let `NEWDATAGRANT` be a newly initialized [=Data Grant=]
+            1. Let `NEWDATAGRANT registeredShapeTree` be `PNEED registeredShapeTree`
+            1. Let `NEWDATAGRANT hasRegistration` be a [=Data Registration=] `DR`
+                where `DR registeredShapeTree` == `NEWDATAGRANT registeredShapeTree`
+            1. Let `NEWDATAGRANT scopeOfDataGrant` be `eco:NoAccess`
+            1. Let `PNEED hasDataGrant` be `NEWDATAGRANT`
+            1. Add `PNEED hasDataGrant` to `DATAGRANTS`
+        1. Let `DATAGRANT` be `PNEED hasDataGrant`
+        1. Let `DATAGRANT satisfiesPreparedAccessNeed` include `PNEED`
+        1. Let `DATAGRANT accessmode`s include `PNEED accessmode`s
+  1. Return `NEW`
+
+### Load Grant ### {#access-loadgrant}
+
+This operation will load an [=Access Grant=] from a given [=Access Registry=]
+
+#### Inputs #### {#loadgrant-inputs}
+
+* Let `SUBJECT` be an [=Access Grant Subject=]
+* Let `REGISTRY` be an [=Access Registry=]
+
+#### Outputs #### {#loadgrant-outputs}
+
+* An [=Access Grant=] corresponding to `SUBJECT`
+
+#### Operation Details #### {#loadgrant-details}
+
+1. For each [=Access Grant=] `GRANT` included in `REGISTRY hasRegistration`
+    1. return `GRANT` if `GRANT hasAccessGrantSubject` == `SUBJECT`
+
+### Load Invitation ### {#access-loadinvitation}
+
+This operation will load an [=Access Invitation=] from a given [=Access Registry=]
+
+#### Inputs #### {#loadinvitation-inputs}
+
+* Let `TARGET` be a `eco:ChannelTarget` to match
+* Let `CODE` be an optional `eco:channelCode` to match
+* Let `REGISTRY` be an [=Access Registry=]
+
+#### Outputs #### {#loadinvitation-outputs}
+
+*  [=Access Invitations=] matching `TARGET` and (if provided) `CODE`
+
+#### Operation Details #### {#loadinvitation-details}
+
+1. Let `INVITATIONS` be an empty set of [=Access Invitations=]
+1. For each [=Access Invitation=] `INVITATION` linked via `REGISTRY hasRegistration`
+    1. For each [=Access Invitation Channel=] `ICHANNEL` linked via
+        `INVITATION hasAccessInvitationChannel`
+        1. Next if `ICHANNEL channelTarget` != `TARGET`
+        1. Next if `CODE` is not empty and `ICHANNEL channelCode` != `CODE`
+        1. Add `INVITATION` to `INVITATIONS`
+1. Return `INVITATIONS`
+
+### Validate Grant ### {#access-validategrant}
+
+This operation is used to validate an [=Access Grant=]
+or [=Access Invitation=] before it is stored in an [=Access Registry=]
+
+#### Inputs #### {#validategrant-inputs}
+
+* Let `GRANT` be an [=Access Grant=] or [=Access Invitation=]
+
+#### Outputs #### {#validategrant-outputs}
+
+* Success or Failure Code
+
+#### Operation Details #### {#validategrant-details}
+
+1. If `GRANT` is an [=Access Invitation=]
+    1. Perform a validation of the RDF graph of `GRANT` against
+        [eco:AccessInvitationShape](ecosystem.shex#AccessInvitationShape).
+        <em class="rfc2119">MUST</em> return a status code of 400 if
+        validation fails.
+1. If `GRANT` is an [=Access Grant=]
+    1. Perform a validation of the RDF graph of `GRANT` against
+        [eco:AccessGrantShape](ecosystem.shex#AccessGrantShape).
+        <em class="rfc2119">MUST</em> return a status code of 400 if
+        validation fails.
+1. Let `PGROUPS` be the [=Prepared Access Need Groups=] linked to `GRANT`
+    via `GRANT hasPreparedAccessNeedGroup`
+1. Let `DGRANTS` be the [=Data Grants=] linked to `GRANT`
+    via `GRANT hasDataGrant`
+1. For each [=Prepared Access Need Group=] `PGROUP` in `PGROUPS`:
+    1. For each [=Prepared Access Need=] `PNEED` in `PGROUP` traversed via
+        `PNEED skos:narrower` or `PNEED referencesPreparedAccessNeed`:
+        1. Let `NDGRANT` be the [=Data Grant=] associated with
+            `NEED` via `NEED hasDataGrant`
+            1. Error if `NDGRANT` is missing
+            1. Error if `NDGRANT satisfiesPreparedAccessNeed` doesn't link to `NEED`
+            1. Error if `eco:RegisteredShapeTree` is not the same in `NDGRANT` and `NEED`
+1. For each [=Data Grant=] `DGRANT` in `DGRANTS`
+    1. Let `NEEDS` be all [=Prepared Access Needs=] across `PGROUPS`
+    1. Let `DGNEEDS` be all [=Prepared Access Needs=] linked to `DGRANT` via
+        `DGRANT satisfiesPreparedAccessNeed`
+    1. Error if `DGNEEDS` is not in `NEEDS`
+    1. Error if `DGNEEDS` is empty
+    1. Error if `DGRANT` access modes are not an exact union of
+        `DGNEEDS accessMode` values when `DGRANT scopeOfDataGrant` is not
+        `eco:NoAccess`
+
+### Record Grant ### {#access-recordgrant}
+
+This operation stores a new or updated [=Access Grant=] in
+an [=Access Registry=], applies permissions accordingly, and
+calls for an access receipt to be provided.
+
+#### Inputs #### {#recordgrant-inputs}
+
+* Let `GRANT` be an [=Access Grant=]
+* Let `REGISTRY` be an [=Access Registry=]
+
+#### Outputs #### {#recordgrant-outputs}
+
+* An [=Access Grant=] stored in `REGISTRY` with permissions applied and
+    [=Access Receipt=] provided
+
+#### Operation Details #### {#recordgrant-details}
+
+1. Call [[#access-validategrant]] with inputs: `GRANT`.
+    <em class="rfc2119">MUST</em> return a status code of 400 if
+    validation fails.
+1. Add or Update `GRANT` resource in the `REGISTRY` container, conforming to
+    the assigned [ecot:access-grant-tree](ecosystem.tree#access-grant-tree).
+1. Link `GRANT` to the `REGISTRY` via `ACCESS hasRegistration` if
+        it has not already been added
+1. Call [[#access-applyperms]] with inputs: `GRANT`
+1. TODO - CALL TO PROVIDE ACCESS RECEIPT GOES HERE
+1. Return `GRANT`
+
+Issue: Need to properly factor in multi-pod scenarios. Must identify the
+proper access registry to store things in based on the data registration, which
+means pods will also need to be registered.
+
+### Record Invitation ### {#access-recordinvitation}
+
+This operation stores a new or updated [=Access Invitation=] in
+an [=Access Registry=].
+
+#### Inputs #### {#recordinvitation-inputs}
+
+* Let `INVITATION` be an [=Access Invitation=]
+* Let `REGISTRY` be an [=Access Registry=]
+
+#### Outputs #### {#recordinvitation-outputs}
+
+* An [=Access Invitation=] stored in `REGISTRY`
+
+#### Operation Details #### {#recordinvitation-details}
+
+1. Call [[#access-validategrant]] with inputs: `INVITATION`.
+    <em class="rfc2119">MUST</em> return a status code of 400 if
+    validation fails.
+1. Add or Update `INVITATION` resource in the `REGISTRY` container, conforming to
+    the assigned
+    [ecot:access-invitation-tree](ecosystem.tree#access-invitation-tree)
+1. Link `INVITATION` to the `REGISTRY` via `ACCESS hasRegistration` if
+        it has not already been added
+1. TODO - CALL TO DELIVER INVITATION VIA CHANNEL GOES HERE
+1. Return `INVITATION`
+
+### Deliver Invitation ### {#access-deliverinvitation}
+
+### Validate Invitation ### {#access-validateinvitation}
+
+### Apply Permissions ### {#access-applyperms}
+
+#### Inputs #### {#applyperms-inputs}
+
+* Let `GRANT` be an [=Access Grant=] linked to any new or updated
+    [=Prepared Access Need Groups=] and [=Data Grants=]
+    for a given [=Authorization Subject=]
+
+#### Outputs #### {#applyperms-outputs}
+
+* Let `GRANT` be an [=Access Grant=] that has had the relevant permissions applied.
+
+#### Operation Details #### {#applyperms-details}
+
+1. Let `DGRANTS` be the [=Data Grants=] linked to `GRANT`
+    via `GRANT hasDataGrant`
+1. For each [=Data Grant=] `DGRANT` in `GRANTS`
+    1. Let the [=Data Registration=] linked via `DGRANT hasRegistration` be `DREG`
+    1. If `DGRANT scopeOfDataGrant` includes `eco:NoAccess`
+        1. Ignore any other scopes linked via `DGRANT scopeOfDataGrant`
+        1. Let `ACL` be the [=ACL Resource=] directly associated with `DREG`
+        1. Let `STATEMENTS` be any [=Authorization Statements=] in `ACL` directly
+            associated with `GRANT accessGrantSubject`.
+        1. For each `STATEMENT` in `STATEMENTS`
+            1. Remove [=Authorization Subject=] from `STATEMENT`
+            2. Remove `STATEMENT` if there are no remaining [=Authorization Subjects=]
+    1. If `DGRANT scopeOfDataGrant` includes `eco:AllInstances`
+        1. Error if `eco:AllInstances` is not the only scope associated via
+            `DGRANT scopeOfDataGrant`
+        1. Let `ACL` be the [=ACL Resource=] directly associated with `DREG`
+        1. Let `STATEMENTS` be any [=Authorization Statements=] in `ACL` directly
+            associated with `GRANT accessGrantSubject`.
+        1. For each `STATEMENT` in `STATEMENTS`
+            1. Remove [=Authorization Subject=] from `STATEMENT`
+            1. Remove `STATEMENT` from `ACL` if there are no
+                remaining [=Authorization Subjects=] in `STATEMENT`
+        1. Add a new [=Authorization Statement=] `NEWSTATEMENT` to `ACL`
+            1. Set `NEWSTATEMENT` [=Authorization Subject=] to
+                `GRANT accessGrantSubject`.
+            2. Set the [=access modes=] for `NEWSTATEMENT` to
+                the [=access modes=] linked via `DGRANT accessMode`
+                such that all [=Registered Data Instances=] in `REG` inherit
+                those [=access modes=]
+    1. If `DGRANT scopeOfDataGrant` includes ONLY `eco:InheritInstances`
+        1. Let `IDGRANT` be the inherited [=Data Grant=]
+        1. Error if `DGRANT inheritsFrom` is missing
+        1. Error if `IDGRANT eco:RegisteredShapeTree` does not have a reference
+            to `DGRANT eco:registeredShapeTree` via `st:references`
+        1. Let `ACL` be the [=ACL Resource=] directly associated with `DREG`
+        1. Let `STATEMENTS` be any [=Authorization Statements=] in `ACL` directly
+            associated with `GRANT accessGrantSubject`.
+        1. For each `STATEMENT` in `STATEMENTS`
+            1. Remove [=Authorization Subject=] from `STATEMENT`
+            1. Remove `STATEMENT` from `ACL` if there are no
+                remaining [=Authorization Subjects=] in `STATEMENT`
+        1. Add a new [=Authorization Statement=] `NEWSTATEMENT` to `ACL`
+            1. Set `NEWSTATEMENT` [=Authorization Subject=] to
+                `GRANT accessGrantSubject`.
+            1. Set the [=access modes=] for `NEWSTATEMENT` to
+                the [=access modes=] linked via `DGRANT accessMode`
+                such that all [=Registered Data Instances=] in `REG` inherit
+                those [=access modes=], with the following condition:
+                    1. Access will only be granted to
+                        [=Registered Data Instances=] when a link exists between
+                        `IDGRANT eco:registeredShapeTree` and
+                        `DGRANT eco:registeredShapeTree`.
+                    1. The predicate of the link must be the same as the
+                        property detailed in `st:traverseViaShapePath`, in the
+                        `st:references` from `IDGRANT eco:registeredShapeTree`
+    1. If `DGRANT scopeOfDataGrant` includes `eco:InheritInstances` AND `eco:SelectedInstances`
+        1. Error if any other scopes are associated via `DGRANT scopeOfDataGrant`
+        1. Error if `DGRANT inheritsFrom` is missing
+        1. Error if `IDGRANT eco:RegisteredShapeTree` does not have a reference
+            to `DGRANT eco:registeredShapeTree` via `st:references`
+        1. Use instructions for `eco:SelectInstances`
+    1. If `DGRANT scopeOfDataGrant` includes `eco:SelectedInstances`
+        1. Let `INSTANCES` be the [=Registered Data Instances=] linked via
+            `DGRANT eco:hasRegisteredDataInstance`
+        1. Error if there are no `INSTANCES`
+        1. For each `INSTANCE` in `INSTANCES`
+          1. Error if `INSTANCE` is missing
+          1. Let `ACL` be the [=ACL Resource=] directly associated with `INSTANCE`
+          1. Let `STATEMENTS` be any [=Authorization Statements=] in `ACL` directly
+              associated with `GRANT accessGrantSubject`
+          1. For each `STATEMENT` in `STATEMENTS`
+              1. Remove [=Authorization Subject=] from `STATEMENT`
+              1. Remove `STATEMENT` from `ACL` if there are no
+                  remaining [=Authorization Subjects=] in `STATEMENT`
+          1. Add a new [=Authorization Statement=] `NEWSTATEMENT` to `ACL`
+              1. Set `NEWSTATEMENT` [=Authorization Subject=] to
+                  `GRANT accessGrantSubject`.
+              1. Set the [=access modes=] for `NEWSTATEMENT` to
+                  the [=access modes=] linked via `DGRANT accessMode`
+              1. If `INSTANCE` is a container, ensure all [=resources=] in the
+                  container are set to inherit those [=access modes=]
+
+Issue: Deal with cases when the data registration doesn't exist yet
+
+Issue: Append mode for AllInstances needs to be specially handled, and may
+require an additional attribute specified in the requested [=Access Needs=]
+
+### Present Grant ### {#access-present}
+
+This operation is non-normative, and meant to instruct
+a developer in how to load and initialize an [=Access Grant=] or
+[=Access Invitation=], present it to an [=Agent=], invoke the appropriate
+operations to manipulate [=Data Grants=] in accordance with the
+[=Agent's=] decisions, and then record and act upon those decisions.
+
+#### Inputs #### {#present-inputs}
+
+* Let `SUBJECT` be an [=Access Grant Subject=]
+* Let `TARGET` be the `eco:channelTarget` of an [=Access Invitation=]
+* Let `ICHANNELS` be a set of [=Access Invitation Channels=] for a new
+    [=Access Invitation=]
+* Let `REGISTRY` be an [=Access Registry=]
+* Let `GROUPS` be an optional set of [=Access Need Groups=]
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Operation Details #### {#present-details}
+
+1. <em class="rfc2119">MUST</em> return a status code of 400 if both
+    `SUBJECT` and `TARGET` are provided
+1. If `SUBJECT` is provided
+    1. Let `GRANT` be an [=Access Grant=] returned by [[#access-loadgrant]] with
+        inputs: `SUBJECT`, `REGISTRY`
+        1. If `GRANT` is missing, let `GRANT` be an [=Access Grant=] returned
+            by [[#access-initialize]] with inputs: `SUBJECT`, `REGISTRY`,
+            `GROUPS`, `LANG`.
+    1. Present the [=Access Grant Subject=]
+1. If `TARGET` is provided
+    1. Let `GRANT` be an [=Access Invitation=] returned by
+        [[#access-loadinvitation]] with inputs: `TARGET`, `REGISTRY`
+        1. If `GRANT` is missing, let `GRANT` be an [=Access Invitation=]
+            returned by [[#access-initialize]] with inputs: `ICHANNELS`,
+            `REGISTRY`, `GROUPS`, `LANG`
+1. If available, present the [=Agent=] who granted access via `registeredBy`
+1. If available, present the [=Application=] used by the [=Agent=] to grant
+    access via `registeredWith`
+1. If available, present the timestamp of creation via `registeredAt`,
+    and update via `updatedAt`
+1. For each [=Prepared Access Need Group=] `PGROUP` linked via
+    `GRANT hasPreparedAccessNeedGroup`
+    1. Let `GDEC` be the [=Access Need Group Decorator=] linked via
+        `PGROUP hasAccessNeedGroupDecorator`
+    1. Present the group name via `GDEC skos:prefLabel`
+    1. Present the group description via `GDEC skos:definition`
+    1. Identify the [=Agent=] that will be granted access via `authenticatesAs`.
+        `eco:Pilot` indicates a piloted application.
+    1. If `PGROUP accessNecessity` is `AccessOptional` and `PGROUP isEnabled`
+        is `true`, allow the group to be disabled by invoking the
+        [[#access-denygroup]] operation with inputs: `GRANT`, `PREPARED`
+    1. If `PGROUP accessNecessity` is `AccessOptional` and `PGROUP isEnabled`
+        is false, allow the group to be enabled by setting `PGROUP isEnabled`
+        to `true`.
+    1. If (`PGROUP accessNecessity` is `AccessOptional` and `PGROUP isEnabled`),
+        or if `PGROUP accessNecessity` is `AccessRequired`
+        1. For each [=Root Prepared Access Need=] `ROOT` linked via
+            `PGROUP hasPreparedAccessNeed`
+              1. For each [=Prepared Access Need=] `PNEED` starting with `ROOT`
+                  and traversed via `PNEED skos:narrower` or
+                  `PNEED referencesPreparedAccessNeed`:
+                  1. Let `DATAGRANT` be `PNEED hasDataGrant`
+                  1. Let `NDEC` be `PNEED hasAccessNeedDecorator`
+                  1. Let `STDEC` be `PNEED hasShapeTreeDecorator`
+                  1. If `PNEED accessNecessity` is `AccessOptional`,
+                      and `DATAGRANT scopeOfDataGrant` is `eco:NoAccess`
+                      1. Allow access selection to be enabled and managed as detailed
+                          in the remainder of this operation.
+                  1. Present the name of the [=shape tree=] via `STDEC skos:prefLabel`
+                  1. Present the reason access to this data is needed via
+                      `NDEC skos:prefLabel`
+                  1. Present the access modes requested via `PNEED accessMode`s
+                  1. For each [=Supporting Access Need=] `SUPPORTING` linked
+                      via `PNEED supportedBy`
+                      1. Present the name of the [=shape tree=] via the
+                          associated [=Shape Tree Decorator=]
+                      1. Present the reason access to this data is needed via the
+                          associated [=Access Need Decorator=]
+                      1. Present the access modes requested via
+                          `SUPPORTING accessMode`s
+                  1. If `DATAGRANT scopeOfDataGrant` is `eco:NoAccess`
+                      1. Allow `eco:AllInstances` to be selected, which invokes
+                          the [[#access-selectall]] operation with inputs:
+                          `GRANT`, `PGROUP`, `PNEED`
+                      1. Allow a subset of [=Registered Data Instances=] be selected,
+                          and let `INSTANCES` be that subset, invoking
+                          the [[#access-select]] operation with inputs:
+                          `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`
+                  1. If `DATAGRANT scopeOfDataGrant` is `eco:AllInstances`, then
+                      present the user with summary details, and the ability to
+                      see specific instances.
+                          1. Let `INSTANCES` be a selected set of
+                              [=Registered Data Instances=]
+                          1. If the user chooses to select
+                              specific instances from this list, invoke the
+                              [[#access-select]] operation with inputs: `INSTANCES`,
+                              `GRANT`, `PGROUP`, `PNEED`.
+                  1. If `DATAGRANT scopeOfDataGrant` is `eco:SelectedInstances`, then
+                      present the user with the specific instances they have selected,
+                      and:
+                          1. Let `INSTANCES` be a selected set of
+                              [=Registered Data Instances=]
+                          1. Allow the selected [=Registered Data Instances=] to be
+                              adjusted, and invoke the [[#access-select]] operation with
+                              inputs: `INSTANCES`, `DATAGRANT`, `PGROUP`, `PNEED`.
+                          1. Allow all [=Registered Data Instances=] to be selected,
+                              invoking the [[#access-selectall]] operation with inputs:
+                              `GRANT`, `PGROUP`, `PNEED`.
+                  1. If `DATAGRANT scopeOfDataGrant` is `eco:InheritInstances`, present
+                      the inherited [=Registered Data Instances=] and:
+                      1. Let `INSTANCES` be a selected set of
+                          [=Registered Data Instances=]
+                      1. Allow a subset to be selected, invoking
+                          the [[#access-select]] operation with inputs: `INSTANCES`,
+                          `GRANT`, `PGROUP`, `PNEED`
+                      1. Identify the [=Prepared Access Need=] / [=Data Grant=]
+                          and selected [=Registered Data Instances=] that were inherited
+                          from.
+                  1. If `DATAGRANT scopeOfDataGrant` includes `eco:SelectedInstances`
+                      and `eco:InheritInstances`
+                      1. Let `INSTANCES` be a selected set of
+                          [=Registered Data Instances=]
+                      1. Give the ability to adjust the selected instances, invoking
+                          the [[#access-select]] operation with inputs:
+                          `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`.
+                      1. Give the ability to revert to all inherited instances,
+                          invoking the [[#access-selectall]] operation with inputs:
+                          `GRANT`, `PGROUP`, `PNEED`
+    1. Call [[#access-recordgrant]] if `GRANT` is an [=Access Grant=] to save.
+    1. Call [[#access-recordinvitation]] if `GRANT` is an [=Access Invitation=] to
+        save.
+
+Issue: Consider when an existing Access Need Group is expanded or contracted
+
+Issue: Consider when there are new Groups being requested from a given Agent
+
+### Deny Prepared Access Need Group ### {#access-denygroup}
+
+This operation is used when a given [=Prepared Access Group=] with optional
+necessity has been denied.
+
+#### Inputs #### {#denygroup-inputs}
+
+* Let `GRANT` be an [=Access Grant=]
+* Let `PGROUP` be a [=Prepared Access Need Group=]
+
+#### Operation Details #### {#denygroup-details}
+
+1. Let `PGROUP isEnabled` be `false` if `PGROUP accessNecessity` is
+    `eco:AccessOptional`
+1. For each [=Prepared Access Need=] `PNEED` in `PGROUP`
+    1. Let `DATAGRANT` be `PNEED hasDataGrant`
+    1. Let `DATAGRANT scopeOfDataGrant` be `eco:NoAccess`
+
+### Select Specific Instances for Access ### {#access-select}
+
+Used to select specific [=Registered Data Instances=] for a given
+[=Data Grant=], which has a recursive application down the hierachy,
+with subordinate [=Data Grants=] reducing their associated scope of
+[=Registered Data Instances=] to only those related to the instances above them.
+
+#### Inputs #### {#select-inputs}
+
+#### Inputs #### {#select-outputs}
+
+#### Operation Details #### {#select-details}
+
+
+### Select All Instances for Access ### {#access-selectall}
+
+Used to select all [=Registered Data Instances=] for a given [=Data Grant=].
+In the event where this is moving from a subset of inherited instances,
+this will expand to only include all inherited instances.
+
+#### Inputs #### {#selectall-inputs}
+
+#### Inputs #### {#selectall-outputs}
+
+#### Operation Details #### {#selectall-details}

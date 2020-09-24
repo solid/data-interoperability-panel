@@ -1,0 +1,56 @@
+Application {#application}
+=====================
+
+Client Identification {#clientid}
+=====================
+
+Throughout this proposal, we see cases where Alice compartmentalizes access
+to her data based on who or what is access it - the [=authenticated agent=].
+In certain cases, we also limit access based on the application in use
+by Alice - the
+[=user-piloted application=].
+
+We utilize a new optional predicate in an [=acl resource=] statement to
+restrict access to permitted [=user-piloted applications=], identified by their
+[=ApplicationIDs=].
+
+Limiting access to data based on
+the [=user-piloted application=] in use is only reliable in certain
+instances when the [=application=] can be identified with confidence.
+
+## Identifying client applications ## {#client-id}
+
+For identification purposes, client [=applications=] in use across the world
+today fall into two buckets; *strongly identifiable* and *weakly identifiable*.
+
+**Strongly identifiable clients** can be identified by 3rd parties independently
+from their user/controller. Only [=server-side applications=] are
+strongly identifiable. As confidential clients, they can keep secrets
+and can present attestations and third-party credentials
+via DNS / domain certificates.
+
+**Weakly identifiable clients** include in-browser JS apps and native desktop
+or mobile applications. They are considered weakly identifiable because they
+are not able to keep secrets on an instance level. They are often referred to
+as public clients. Native apps should be strongly-identifiable in theory
+(since they are able to keep secrets on an instance level), but not in
+practice because the OS manufacturers do not make their trust
+infrastructure available. **Weakly identifiable clients are only strongly
+identifiable to the user controlling them**.
+
+## Limiting access by client application ## {#client-limit}
+
+In the case of a strongly identifiable [=server-side application=],
+the [=authenticated agent=] and the client application are the same. The client
+application has its own [=identity=] that can be strongly authenticated. Alice
+chooses which data that client application's identity can access, in the same
+way that she chooses which data Bob can access.
+
+In the case of [=user-piloted applications=], the ability for a Solid pod to
+limit access to data by the client application in use is only as strong as
+the trustworthiness of the user piloting that application, and their ability
+to avoid using malicious applications. The [=ApplicationID=] can be manipulated
+by the user in control of the app. This means that Alice can strongly control
+the applications that she uses to compartmentalize her own data, but has
+limited ability to control the applications that Bob uses to access the data
+she shares with him.

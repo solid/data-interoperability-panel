@@ -1,0 +1,367 @@
+Agent {#agent}
+=====================
+
+## Overview ## {#agent-overview}
+
+An [=Agent=] is a distinct individual, group, or piece of
+software with an identity that can be strongly authenticated. They are
+the primary actors in the Solid [=ecosystem=].
+
+Agents have [=identities=], and dereferencing those identities leads
+to [=identity profile documents=] that let other agents and applications
+participating in the ecosystem know how to interact with them.
+
+Even the applications that the agent uses directly find their way to
+the agent's data through the agent's identity.
+
+Agents are represented by the `eco:Agent` class.
+
+Issue: Expand this text further to demonstrate the association with the
+traditional identity profile document when dereferencing a webid, with
+data model, structure/validation, and perms.
+
+Registrar {#reg}
+=====================
+
+## Overview ## {#registrar-overview}
+
+A [=Registrar=] provides [=Registries=] where an [=Agent=] can register,
+store, and lookup essential data needed to participate in the ecosystem.
+It supports key functions like application registration,
+organizing and tracking data, and more.
+
+* [[#appreg]] uses [=Application Registries=] to manage
+    [=Application Registrations=].
+* Data Registration relies on data registries to organize,
+    store, and find registered data.
+* Access registries let agents track and communicate access grants to
+    resources they control.
+* Agents track and manage data that has been shared with them through
+    remote registries.
+
+
+## Registrar Data Model ## {#reg-model}
+
+<figure>
+  <img src="diagrams/registrar-model.svg" width=100%/>
+  <figcaption align="center">Top level registrar data model</figcaption>
+</figure>
+
+
+Humans, software, or device [=Agents=] participating in the Solid ecosystem
+are represented by the class [eco:Agent](ecosystem.ttl#Agent). Each
+[=Agent=] has a [=Registrar=], represented by the class
+[eco:Registrar](ecosystem.ttl#Registrar).
+
+<figure>
+  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me linking to
+  [=Registrar=]</figcaption>
+  <pre highlight="turtle">
+  <#me>
+    a eco:Agent;
+    eco:hasRegistrar &lt;https://alice.pod.example/registries/#registrar&gt; .
+  </pre>
+</figure>
+
+A [=Registrar=] links to a number of [=Registry Sets=]. [=Registry Sets=] are
+represented by the class [eco:RegistrySet](ecosystem.ttl#RegistrySet).
+They are collections of one or more linked [=Registries=]. They are almost
+always focused on a single [=Registry=] type, through type-specific
+subclasses like
+[eco:ApplicationRegistrySet](ecosystem.ttl#ApplicationRegistySet).
+
+A given [=Registrar=] is linked to a [=Registry Set=] via the
+[eco:hasRegistrySet](ecosystem.ttl#hasRegistrySet) property, or through
+type-specific sub-properties like
+[eco:hasApplicationRegistrySet](ecosystem.ttl#hasApplicationRegistrySet).
+
+<figure>
+  <figcaption>[=Registrar=] at
+  https://alice.pod.example/registries/#registrar linking to
+  [=Registry Sets=]</figcaption>
+  <pre highlight="turtle">
+  <#registrar>
+    a eco:Registrar;
+    eco:hasApplicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; ;
+    eco:hasDataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; .
+  </pre>
+  </figure>
+</figure>
+
+A [=Registry=] is a place where an [=Agent=] can register, store, and lookup
+essential data needed to participate in the [=ecosystem=]. It is represented
+by the [eco:Registry](ecosystem.ttl#Registry) class.
+
+A given [=Registry Set=] links to any number of [=Registries=] via the
+[eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
+
+This applies to type-specific to subclasses as well. For example, an
+[=Application Registry Set=] links to any number of [=Application Registries=]
+via the same [eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
+
+<figure>
+  <figcaption>[=Application Registry Set=] linking to two different
+  [=Application Registries=]</figcaption>
+  <pre highlight="turtle">
+  <#set>
+    a eco:ApplicationRegistrySet;
+    eco:hasRegistry &lt;https://alice.pod.example/applications/#registry&gt; ,
+                    &lt;https://alice.otherpod.example/applications/#registry&gt; .
+  </pre>
+</figure>
+
+[=Registries=] exist to store and catalog [=Registrations=], each of which
+represents an individual unit of information for a given [=Registry=].
+[=Registrations=] are represented by the `eco:Registration` class.
+
+A given [=Registry=] links to any number of [=Registrations=] via the
+[eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
+
+This applies to type-specific to subclasses as well, which are the normal
+mode of use. For example, an
+[=Application Registry=] links to any number of [=Application Registrations=]
+via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
+
+<figure>
+  <figcaption>[=Application Registry=] linking to three
+  [=Application Registration=] instances</figcaption>
+  <pre highlight="turtle">
+  <#registry>
+    a eco:ApplicationRegistry ;
+    eco:hasRegistration &lt;https://alice.pod.example/applications/02f9d4221d9e5c0ae/#registration&gt ,
+                        &lt;https://alice.pod.example/applications/6fe4221d0589d7bde/#registration&gt ,
+                        &lt;https://alice.pod.example/applications/543ab04333ba5bcc2/#registration&gt .
+  </pre>
+</figure>
+
+The properties and associated data of a given [=Registration=]
+may vary widely depending on the type of [=Registry=] it is
+associated with. However, a number of general properties are inherited from
+the base [=Registration=] class
+[eco:Registration](ecosystem.ttl#Registration). In the following
+example, all properties except for
+[eco:registeredApplication](ecosystem.ttl#registeredApplication)
+are inherited from
+[eco:Registration](ecosystem.ttl#Registration).
+
+<figure>
+  <figcaption>An [=Application Registration=] instance</figcaption>
+  <pre highlight="turtle" line-highlight="5" line-numbers="true">
+  <#registration>
+    a eco:ApplicationRegistration ;
+    eco:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
+    eco:registeredWith &lt;https://trusted.example/ar&gt; ;
+    eco:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
+    eco:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+  </pre>
+</figure>
+
+## Structure and Validation ## {#reg-structure}
+
+Instances of the classes and properties in the [[#reg-model]]
+are organized across different resources and pods for a given [=Agent=]
+participating in the [=ecosystem=]. The instance data in resources are
+validated by [=shapes=], which are associated with those resources
+through [=shape trees=].
+
+<figure>
+  <figcaption>Example [=Registrar=] structure for an [=Agent=].
+  Excludes some [=Registry=] types for clarity.</figcaption>
+  <img src="diagrams/registrar-tree.svg" width=100%/>
+</figure>
+
+The [=Registrar=] linked to an [=Agent=]
+is discovered by dereferencing their [=identity=]
+(e.g. `https://alice.pod.example/profile/id#me`) to access their
+[=identity profile document=], represented in
+the figure above as `/id`.
+
+The [=Registrar=] is stored in the RDF graph of the
+`/registeries` container at `https://alice.pod.example/registries/#registrar`.
+The [=Registrar=] instance links to a collection of type-specific
+[=Registry Set=] instances stored in the `/registries` container.
+
+The shape tree [ecot:registrar-tree](ecosystem.tree#registrar-tree)
+associated with the `/registries` container
+specifies this resource structure. It assigns the
+[ecos:RegistrarShape](ecosystem.shex#RegistrarShape) to validate
+a [=Registrar=] instance in the graph of the container resource. It also assigns [ecos:ApplicationRegistrySetShape](ecosystem.shex#ApplicationRegistrySetShape)
+and [ecos:DataRegistrySetShape](ecosystem.shex#DataRegistrySetShape)
+to validate the
+[eco:ApplicationRegistrySet](ecosystem.ttl#ApplicationRegistrySet) and
+[eco:DataRegistrySet](ecosystem.ttl#DataRegistrySet)
+instances in the contained resources.
+
+<figure>
+  <figcaption>[=Shape trees=], [=shapes=], and [=Registry Set=] resources
+  associated with a [=Registrar=] container</figcaption>
+  <img src="diagrams/registrar-registries.svg" width=100%/>
+</figure>
+
+A [=Registry Set=] resource of a specific type will link to one or more
+[=Registry=] instances of the same type.
+
+For example, the [=Application Registry Set=] at
+`https://alice.pod.example/registries/application#set` links to two
+[=Application Registry=] instances, one of them being
+`https://alice.pod.example/applications/#registry`.
+
+The [=Application Registry=] instance is stored in the RDF graph
+of the `/applications` container at
+`https://alice.pod.example/applications/#registry`. It links to a
+collection of [=Application Registration=] instances stored in
+the `/applications` container.
+
+The shape tree
+[ecot:application-registry-tree](ecosystem.tree#application-registry-tree)
+associated with the `/applications` container specifies this resource
+structure. It assigns the
+[ecos:ApplicationRegistryShape](ecosystem.shex#ApplicationRegistryShape)
+to validate the [=Application Registry=] instance in the
+container resource. It also assigns a
+[ecos:ApplicationRegistrationShape](ecosystem.shex#ApplicationRegistrationShape)
+to validate an [=Application Registration=] in every
+contained resource.
+
+<figure>
+  <figcaption>[=Shape trees=], [=shapes=], and [=Application Registration=]
+  resources associated with an [=Application Registry=] container</figcaption>
+  <img src="diagrams/registrar-applications.svg" width=100%/>
+</figure>
+
+## Permission Model ## {#reg-permissions}
+
+The permission model for the [=Registrar=] resources detailed in [[#reg-structure]]
+are illustrated in the table below. That said, the following key points
+are worth noting:
+
+* The [=identity profile document=] at `/id` is the only resource that is
+    publicly accessible (with read-only privileges).
+* The only information exposed is a link to Alice's [=Registrar=] at
+    `/registries`, which is a protected document.
+* Neither the types or locations of Alice's [=Registries=] are
+    ever publicly exposed.
+
+The [=Agent=] should be assumed to
+have control-level access across her entire data space.
+
+<figure>
+<figcaption>Permission model for [=Registrar=] resources</figcaption>
+  <table class="data permissions" align="left">
+    <col>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup span=2></colgroup>
+    <colgroup span=2></colgroup>
+    <thead>
+      <tr>
+        <th></th>
+        <th scope="colgroup">Controller</th>
+        <th scope="colgroup">Public</th>
+        <th colspan=2 scope="colgroup">Selectively Trusted</th>
+        <th colspan=2 scope="colgroup">Selectively Granted</th>
+      </tr>
+      <tr>
+        <th scope="col">Resource</th>
+        <th scope="col">Access</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`/id`</td>
+        <td>Control</td>
+        <td>Read</td>
+        <td>Identity Agent</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`/registries/`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Trusted Agents</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- /registries/application`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- /registries/data`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Data Authorization Agent</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`/applications/`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- /applications/registration-123/`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>Registered App.</td>
+        <td>Read</td>
+      </tr>
+      <tr>
+        <td>`-- /applications/registration-123/*`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>App. Registration Agent</td>
+        <td>Control</td>
+        <td>Registered App.</td>
+        <td>Write</td>
+      </tr>
+      <tr>
+        <td>`/data/`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Data Authorization Agent</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- /data/registration-456/`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Data Authorization Agent</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`-- /data/registration-456/*`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Data Authorization Agent</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>

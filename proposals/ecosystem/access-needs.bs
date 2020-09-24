@@ -1,0 +1,1271 @@
+Access Needs {#needs}
+=====================
+
+## Overview ## {#needs-overview}
+
+[=Agents=] or [=Applications=] in the [=ecosystem=] often require access to
+data controlled by some other [=Agent=]. Consequently, a common way to explain
+and communicate data needs between participants in the [=ecosystem=] is
+required.
+
+A given [=Agent=] or [=Application=] expresses their access needs by
+providing one or more [=Access Need Groups=] to the [=Agent=] controlling
+the data they require access to. The channels through which these may be
+communicated are detailed in [[#authz-workflows]].
+
+The [[#prepare-group]] operation processes each [=Access Need Group=]
+received by the controlling [=Agent=]. A [=Prepared Access Need Group=] is
+generated for each [=Access Need Group=] that was received.
+
+[=Prepared Access Need Groups=] and the [=Prepared Access Needs=] associated
+with them are used as input to the [[#access-present]] operation,
+and are stored as part of the [=Access Grant=] by the [[#access-recordgrant]]
+operation.
+
+## Data Model ## {#needs-datamodel}
+
+### Summary ### {#needs-datamodel-summary}
+
+An [=Access Need Group=] links to one or more [=Root Access Needs=] via the
+[hasAccessNeed](#classAccessNeedGroup) property. When the [[#prepare-group]]
+operation follows a [=Root Access Need=], it looks for [=Access Need Overrides=]
+linked to the [=Access Need Group=] via
+[hasAccessNeedOverride](#classAccessNeedGroup) to change the defaults
+inherited from the [=Root Access Need=], or the most recent
+[=Access Need Override=].
+
+An [=Access Need=] is associated with one [=shape tree=] via
+[eco:registeredShapeTree](#classAccessNeed).
+
+A [=Prepared Access Need Group=] is linked to the [=Access Need Group=] it
+was generated from via [fromAccessNeedGroup](#classPreparedAccessNeedGroup).
+It links to an [=Access Need Group Decorator=] via
+[hasAccessNeedGroupDecorator](#classPreparedAccessNeedGroup).
+
+It links to one or more [=Root Prepared Access Needs=] via
+[hasPreparedAccessNeed](#classPreparedAccessNeed). Each
+[=Root Prepared Access Need=] represents
+a hierarchy of [=Prepared Access Needs=] corresponding with the associated
+[=shape tree=].
+
+Each [=Prepared Access Need=] links to child
+[=Prepared Access Needs=] via
+[referencesPreparedAccessNeed](#classPreparedAccessNeed) or
+[skos:narrower](#classPreparedAccessNeed).
+
+An [=Access Need Group=] links to an [=Access Decorator Index=] of
+different [=Access Decorator Series=] that explain the [=Access Need Group=]
+and [=Access Needs=] in different languages. Each [=Access Decorator Series=]
+has one or more [=Access Decorator Versions=] pointing to an
+[=Access Decorator Resource=], which contains the actual language-specific
+content mappings.
+
+
+
+<figure id="fig-access-need-group">
+  <figcaption>An [=Access Need Group=] linking to [=Access Needs=]</figcaption>
+  <pre highlight="turtle">
+  <#notebook-collaboration-group>
+    a eco:AccessNeedGroup ;
+    eco:accessNecessity eco:AccessRequired ;
+    eco:accessScenario eco:PersonalAccess, eco:SharedAccess ;
+    eco:authenticatesAs eco:Pilot ;
+    eco:hasAccessNeed &lt;#notebook&gt; ;
+    eco:hasAccessNeedOverride &lt;#note&gt; ;
+    eco:hasAccessDecoratorIndex &lt;notebook-access-decorator-index.ttl&gt; .
+
+  <#notebook>
+      a eco:AccessNeed ;
+      eco:inAccessNeedGroup &lt;#notebook-collaboration-group&gt; ;
+      eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
+      eco:recursivelyAuthorize true ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:accessMode acl:Read, acl:Write .
+
+  <#note> # Override to stop recursion
+      a eco:AccessNeed ;
+      eco:inAccessNeedGroup &lt;#notebook-collaboration-group&gt; ;
+      eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
+      eco:recursivelyAuthorize false ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:accessMode acl:Read, acl:Write .
+  </pre>
+</figure>
+
+<figure id="fig-prepared-access-need-group">
+  <figcaption>A [=Prepared Access Need Group=] linking to
+  [=Prepared Access Needs=]</figcaption>
+  <pre highlight="turtle">
+  <#prepared-notebook-collaboration-group>
+    a eco:PreparedAccessNeedGroup ;
+    eco:fromAccessNeedGroup <#notebook-collaboration-group> ;
+    eco:hasAccessNeedGroupDecorator ex:notebook-collaboration-decorator ;
+    eco:authenticatesAs eco:Pilot ;
+    eco:accessNecessity eco:AccessRequired ;
+    eco:accessScenario eco:PersonalAccess, eco:SharedAccess ;
+    eco:hasPreparedAccessNeed &lt;#notebook&gt; .
+
+  <#prepared-notebook>
+    a eco:PreparedAccessNeed ;
+    eco:inPreparedAccessNeedGroup &lt;#prepared-notebook-collaboration-group&gt; ;
+    eco:registeredShapeTree note:notebook-tree ;
+    eco:hasShapeTreeDecorator note:notebook-decorator&gt; ;
+    eco:hasAccessNeedDecorator ex:notebook-need-decorator ;
+    eco:accessNecessity eco:AccessRequired ;
+    eco:accessMode acl:Read, acl:Write ;
+    eco:referencesPreparedAccessNeed <#prepared-note> .
+
+  <#prepared-note>
+    a eco:PreparedAccessNeed ;
+    eco:inPreparedAccessNeedGroup &lt;#prepared-notebook-collaboration-group&gt; ;
+    eco:registeredShapeTree &lt;note:note-tree&gt; ;
+    eco:hasShapeTreeDecorator note:note-decorator&gt; ;
+    eco:hasAccessNeedDecorator ex:note-need-decorator ;
+    eco:accessNecessity eco:AccessRequired ;
+    eco:accessMode acl:Read, acl:Write .
+  </pre>
+</figure>
+
+<figure id="fig-access-need-decorator-index">
+  <figcaption>[=Access Decorator Index=] document linked by the
+  [#notebook-collaboration-group](#fig-access-need-group)</figcaption>
+  <pre highlight="turtle">
+  @prefix eco: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+  @prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+
+  <>
+    a eco:AccessDecoratorIndex ;
+    eco:defaultLanguage "en"^^xsd:language ;
+    eco:hasSeries &lt;#series-en&gt; .
+
+  <#series-en>
+      a eco:AccessDecoratorSeries ;
+      eco:usesLanguage "en"^^xsd:language ;
+      eco:hasVersion &lt;#en-v10&gt;, &lt;#en-v11&gt; .
+
+  <#en-v10>
+      a eco:AccessDecoratorVersion ;
+      eco:isVersion "1.0.0" ;
+      eco:hasSHA256 "98198123981273981273918273912738" ;
+      eco:hasAccessDecoratorResource &lt;notebook-decorator-en-1.0&gt; .
+
+  <#en-v11>
+      a eco:AccessDecoratorVersion ;
+      eco:isVersion "1.1.0" ;
+      eco:hasSHA256 "12312312371273712731872371273712" ;
+      eco:hasAccessDecoratorResource &lt;notebook-decorator-en-1.1&gt; .
+  </pre>
+</figure>
+
+<figure id="fig-access-decorator-resource">
+  <figcaption>An [=Access Decorator Resource=] referenced
+  by the [Access Need Decorator Index](#fig-access-need-decorator-index)
+  </figcaption>
+  <pre highlight="turtle">
+  @prefix skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
+  @prefix eco: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+  @prefix note: &lt;http://shapetrees.pub/ns/note#&gt; .
+
+  <> a eco:AccessDecoratorResource .
+
+  <#notebook-collaboration-decorator>
+    a eco:AccessNeedGroupDecorator ;
+    eco:hasAccessNeedGroup &lt;#notebook-collaboration-group&gt; ;
+    skos:prefLabel "Collaborate on notes"@en .
+    skos:definition "Allowing for full reading and writing of notebooks and notes"@en .
+
+  <#notebook-decorator>
+    a eco:AccessNeedDecorator ;
+    eco:hasAccessNeedGroup &lt;#notebook-collaboration-group&gt; ;
+    eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
+    skos:prefLabel "Notebooks can be presented along with a list of their contents and read / written"@en .
+
+  <#note-decorator>
+    a eco:AccessNeedDecorator ;
+    eco:hasAccessNeedGroup &lt;#notebook-collaboration-group&gt; ;
+    eco:registeredShapeTree &lt;note:note-tree&gt; ;
+    skos:prefLabel "Notes can be accessed and written"@en .
+  </pre>
+</figure>
+
+<figure id="fig-access-request">
+  <figcaption>An [=Access Request=] sent from one agent to another</figcaption>
+  <pre highlight="turtle">
+  @prefix eco: &lt;http://www.w3.org/ns/solid/ecosystem#&gt; .
+  @prefix note: &lt;http://shapetrees.pub/ns/note#&gt; .
+
+  <> a eco:AccessRequest ;
+    eco:fromAgent https://alice.pod.example/profile/id#me ;
+    eco:toAgent https://bob.pod.example/profile/id#me ;
+    eco:hasAccessNeedGroup <#notebook-collaboration-group> .
+
+  <#notebook-collaboration-group>
+    a eco:AccessNeedGroup ;
+    eco:accessNecessity eco:AccessRequired ;
+    eco:accessScenario eco:PersonalAccess, eco:SharedAccess ;
+    eco:authenticatesAs eco:Pilot ;
+    eco:hasAccessNeed &lt;#notebook&gt; ;
+    eco:hasAccessNeedOverride &lt;#note&gt; ;
+    eco:hasAccessDecoratorIndex &lt;notebook-access-decorator-index.ttl&gt; .
+
+  <#notebook>
+      a eco:AccessNeed ;
+      eco:inAccessNeedGroup &lt;#notebook-collaboration-group&gt; ;
+      eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
+      eco:recursivelyAuthorize true ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:accessMode acl:Read, acl:Write .
+
+  <#note> # Override to stop recursion
+      a eco:AccessNeed ;
+      eco:inAccessNeedGroup &lt;#notebook-collaboration-group&gt; ;
+      eco:registeredShapeTree &lt;note:notebook-tree&gt; ;
+      eco:recursivelyAuthorize false ;
+      eco:accessNecessity eco:AccessRequired ;
+      eco:accessMode acl:Read, acl:Write .
+  </pre>
+</figure>
+
+### Access Need Group ### {#needs-access-need-group}
+
+An <dfn>Access Need Group</dfn> is a collection of [=Access Needs=]
+that a given [=Agent=] and/or [=Application=] uses to communicate a data
+access request to other [=Agents=].
+
+Each [=Access Need=] is associated with a specific [=shape tree=],
+and [=shape trees=] provide both physical and/or virtual hierarchies.
+The [[#prepare-group]] operation starts with each <dfn>Root Access Need</dfn>
+linked via `hasAccessNeed`, and traverses the shape tree hierarchy,
+creating a [=Prepared Access Need=] at each new [=shape tree=] and
+linking them in a tree via `referencesPreparedAccessNeed` or `skos:narrower`.
+Each <dfn>Access Need Override</dfn> that it encounters when traversing the
+hierarchy applies new inherited defaults, or stops the recursion before
+it continues through the remainder of the tree.
+
+<table class="classinfo data" align="left" id="classAccessNeedGroup">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessNeedGroup](ecosystem.ttl#AccessNeedGroup)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>accessNecessity</td>
+      <td>`eco:AccessRequired`, `eco:AccessOptional`</td>
+      <td>Necessity of the access to the requesting party</td>
+    </tr>
+    <tr>
+      <td>accessScenario</td>
+      <td>`eco:PersonalAccess`, `eco:SharedAccess`</td>
+      <td>Context in which the access group should be presented</td>
+    </tr>
+    <tr>
+      <td>hasAccessNeed</td>
+      <td>[AccessNeed](#classAccessNeed)</td>
+      <td>Link to a [=Root Access Need=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessNeedOverride</td>
+      <td>[AccessNeed](#classAccessNeed)</td>
+      <td>Link to an [=Access Need Override=]</td>
+    </tr>
+    <tr>
+      <td>authenticatesAs</td>
+      <td>[=Agent=] or `eco:Pilot`</td>
+      <td>[=Agent=] or mode the [=Application=] authenticates as</td>
+    </tr>
+    <tr>
+      <td>hasAccessNeedDecoratorIndex</td>
+      <td>-</td>
+      <td>Index of [=Acccess Decorator Resources=] to describe
+      [=Access Need Group=] and [=Access Needs=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessNeedGroupShape](#shexAccessNeedGroup) is used to validate an
+instance of the [AccessNeedGroup](#classAccessNeedGroup) class.
+
+<pre highlight="turtle" id="shexAccessNeedGroup">
+<#AccessNeedGroupShape> {
+  a [ eco:AccessNeedGroup ] ;
+  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
+  eco:accessScenario [ eco:PersonalAccess eco:SharedAccess ] ;
+  eco:authenticatesAs IRI ;
+  eco:hasAccessNeed IRI+ ;
+  eco:hasAccessNeedOverride IRI* ;
+  eco:hasAccessDecoratorIndex IRI
+}
+</pre>
+
+### Access Need ### {#needs-access-need}
+
+An <dfn>Access Need</dfn> represents the requirement of one specific type
+of data represented by a [=shape tree=], as part of an [=Access Need Group=].
+
+Each [=Access Need=] represents a request to access, create, or manage
+all or a subset of [=Registered Data Instances=] associated with a single
+[=Data Registration=] for a given [=shape tree=].
+
+Specific [=Registered Data Instances=] may be requested by explicitly
+associating them with the [=Access Need=] via
+[hasRegisteredDataInstance](#classAccessNeed).
+
+Each [=Access Need=] has one or more [=access modes=], and a property that
+indicates the necessity of the [=Access Need=]; *required* or
+*optional*. For example, an [=Access Need=] for read access to
+[=shape tree=] `N` can be identified as a required item in the
+[=Access Need Group=].
+
+[=Access Needs=] are described using language-specific
+[=Access Need Decorators=].
+
+<table class="classinfo data" align="left" id="classAccessNeed">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessNeed](ecosystem.ttl#AccessNeed)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>inAccessNeedGroup</td>
+      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
+      <td>[=Access Need Group=] that the [=Access Need=] is part of</td>
+    </tr>
+    <tr>
+      <td>registeredShapeTree</td>
+      <td>`st:ShapeTree`</td>
+      <td>The [=shape tree=] requested by the [=Access Need=]</td>
+    </tr>
+    <tr>
+      <td>hasRegisteredDataInstance</td>
+      <td>-</td>
+      <td>Request specific [=Registered Data Instances=] of the registered
+      [=shape tree=]</td>
+    </tr>
+    <tr>
+      <td>recursivelyAuthorize</td>
+      <td>`xsd:boolean`</td>
+      <td>
+        <ul>
+          <li><b>true</b> - continue traversing shape tree hierarchy for
+          authorization when true</li>
+          <li><b>false</b> - stop traversal</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>accessMode</td>
+      <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
+      <td>Requested modes of access for the [=Access Need=]</td>
+    </tr>
+    <tr>
+      <td>accessNecessity</td>
+      <td>`eco:AccessRequired`, `eco:AccessOptional`</td>
+      <td>Necessity of the access to the requesting party</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessNeedShape](#shexAccessNeed) is used to validate an
+instance of the [AccessNeed](#classAccessNeed) class.
+
+<pre highlight="turtle" id="shexAccessNeed">
+<#AccessNeedShape> {
+  a [ eco:AccessNeed ] ;
+  eco:inAccessNeedGroup IRI+ ;
+  eco:registeredShapeTree IRI ;
+  eco:hasRegisteredDataInstance IRI* ;
+  eco:recursivelyAuthorize [ true false ] ;
+  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
+}
+</pre>
+
+### Prepared Access Need Group ### {#needs-prepared-access-need-group}
+
+A <dfn>Prepared Access Need Group</dfn> is output by the [[#prepare-group]]
+operation when given an [=Access Need Group=] as input.
+
+Preparing an [=Access Need Group=] includes:
+
+* Getting an [=Access Need Group Decorator=] via [[#get-group-dec]]
+* Recursing through the [=shape tree=] hierarchy of each [=Root Access Need=]
+    in the [=Access Need Group=], and creating a [=Prepared Access Need=] for
+    every [=shape tree=] encountered, applying [=Access Need Overrides=] when
+    available.
+
+A <dfn>Root Prepared Access Need</dfn> is the prepared version of the
+corresponding [=Root Access Need=] in the source [=Access Need Group=].
+
+<table class="classinfo data" align="left" id="classPreparedAccessNeedGroup">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [PreparedAccessNeedGroup](ecosystem.ttl#PreparedAccessNeedGroup)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>fromAccessNeedGroup</td>
+      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
+      <td>The [=Access Need Group=] used to generate the
+      [=Prepared Access Need Group=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessNeedGroupDecorator</td>
+      <td>[AccessNeedGroupDecorator](#classAccessNeedGroupDecorator)</td>
+      <td>An [=Access Need Group Decorator=] that describes this
+      [=Prepared Access Need Group=]</td>
+    </tr>
+    <tr>
+      <td>authenticatesAs</td>
+      <td>[=Agent=] or `eco:Pilot`</td>
+      <td>[=Agent=] or mode the [=Application=] authenticates as</td>
+    </tr>
+    <tr>
+      <td>accessScenario</td>
+      <td>`eco:PersonalAccess`, `eco:SharedAccess`</td>
+      <td>Context in which the access group should be presented</td>
+    </tr>
+    <tr>
+      <td>accessNecessity</td>
+      <td>`eco:AccessRequired`, `eco:AccessOptional`</td>
+      <td>Necessity of the access to the requesting party</td>
+    </tr>
+    <tr>
+      <td>hasPreparedAccessNeed</td>
+      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
+      <td>Link to a [=Root Prepared Access Need=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [PreparedAccessNeedGroupShape](#shexPreparedAccessNeedGroup) is used to
+validate an instance of the
+[PreparedAccessNeedGroup](#classPreparedAccessNeedGroup) class.
+
+<pre highlight="turtle" id="shexPreparedAccessNeedGroup">
+<#PreparedAccessNeedGroupShape> {
+  a [ eco:PreparedAccessNeedGroup ] ;
+  eco:fromAccessNeedGroup IRI ;
+  eco:hasAccessNeedGroupDecorator IRI ;
+  eco:authenticatesAs IRI ;
+  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
+  eco:accessScenario [ eco:PersonalAccess eco:SharedAccess ] ;
+  eco:hasPreparedAccessNeed IRI+ ;
+}
+</pre>
+
+### Prepared Access Need ### {#needs-prepared-access-need}
+
+A <dfn>Prepared Access Need</dfn> is generated by the [[#prepare-group]]
+operation as it processes an input [=Access Need Group=]. A
+[=Prepared Access Need=] is added to the [=Prepared Access Need Group=]
+for every unique [=shape tree=] encountered as the operation traverses the
+[=shape tree=] hierarchy.
+
+<table class="classinfo data" align="left" id="classPreparedAccessNeed">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [PreparedAccessNeed](ecosystem.ttl#PreparedAccessNeed)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>inPreparedAccessNeedGroup</td>
+      <td>[PreparedAccessNeedGroup](#classPreparedAccessNeedGroup)</td>
+      <td>[=Prepared Access Need Group=] the [=Prepared Access Need=] belongs to</td>
+    </tr>
+    <tr>
+      <td>hasShapeTreeDecorator</td>
+      <td>`st:ShapeTreeDecorator`</td>
+      <td>Decorator associated with the [=shape tree=] that describes the
+      name of the shape-tree and what data it represents in the preferred
+      language of the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessNeedDecorator</td>
+      <td>[AccessNeedDecorator](#classAccessNeedDecorator)</td>
+      <td>Decorator that explains the reason for the access need in the
+      preferred language of the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasDataGrant</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[=Data Grant=] associated with the [=Prepared Access Need=],
+      established when the [=Access Grant=] is created</td>
+    </tr>
+    <tr>
+      <td>hasRegisteredDataInstance</td>
+      <td>[RegisteredDataInstance](#)</td>
+      <td>Links to any specific [=Registered Data Instances=] that were
+      included in the original request</td>
+    </tr>
+    <tr>
+      <td>registeredShapeTree</td>
+      <td>`st:ShapeTree`</td>
+      <td>[=Shape tree=] associated with the [=Prepared Access Need=]</td>
+    </tr>
+    <tr>
+      <td>accessMode</td>
+      <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
+      <td>Requested modes of access for the [=Prepared Access Need=]</td>
+    </tr>
+    <tr>
+      <td>accessNecessity</td>
+      <td>`eco:AccessRequired`, `eco:AccessOptional`</td>
+      <td>Necessity of the access to the requesting party</td>
+    </tr>
+    <tr>
+      <td>supportedBy</td>
+      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
+      <td>A [=Prepared Access Need=] whose [=shape tree=] `st:supports` the
+      [=shape tree=] of this [=Prepared Access Need=]</td>
+    </tr>
+    <tr>
+      <td>supports</td>
+      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
+      <td>A [=Prepared Access Need=] that [=shape tree=] of this
+      [=Prepared Access Need=] `st:supports`</td>
+    </tr>
+    <tr>
+      <td>referencesPreparedAccessNeed</td>
+      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
+      <td>The next [=Prepared Access Need=] in a virtual hierarchy</td>
+    </tr>
+    <tr>
+      <td>skos:narrower</td>
+      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
+      <td>The next [=Prepared Access Need=] in a virtual hierarchy where
+      the regular [=shape tree=] hierarchy has been extended to include
+      a skos hierarchy.</td>
+    </tr>
+  </tbody>
+</table>
+
+The [PreparedAccessNeedShape](#shexPreparedAccessNeed) is used to
+validate an instance of the
+[PreparedAccessNeed](#classPreparedAccessNeed) class.
+
+<pre highlight="turtle" id="shexPreparedAccessNeed">
+<#PreparedAccessNeedShape> {
+  a [ eco:PreparedAccessNeed ] ;
+  eco:inPreparedAccessNeedGroup IRI+ ;
+  eco:hasShapeTreeDecorator IRI ;
+  eco:hasAccessNeedDecorator IRI? ;
+  eco:hasDataGrant IRI? ;
+  eco:hasRegisteredDataInstance IRI* ;
+  eco:registeredShapeTree IRI ;
+  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
+  eco:supportedBy IRI* ;
+  eco:supports IRI
+  eco:referencesPreparedAccessNeed IRI* ;
+  skos:narrower IRI* ;
+}
+</pre>
+
+### Access Request ### {#needs-access-request}
+
+An <dfn>Access Request</dfn> is used to send [=Access Need Groups=] from
+one [=Agent=] to another.
+
+<table class="classinfo data" align="left" id="classAccessRequest">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessRequest](ecosystem.ttl#AccessRequest)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>fromAgent</td>
+      <td>Agent</td>
+      <td>The [=Agent=] who sent the [=Access Request=]</td>
+    </tr>
+    <tr>
+      <td>toAgent</td>
+      <td>Agent</td>
+      <td>The [=Agent=] the [=Access Request=] is meant for</td>
+    </tr>
+  </tbody>
+  <tr>
+    <td>hasAccessNeedGroup</td>
+    <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
+    <td>One or more [=Access Need Groups=] detailing the access requested</td>
+  </tr>
+</tbody>
+</table>
+
+The [AccessRequestShape](#shexAccessRequest) is used to
+validate an instance of the
+[AccessRequest](#classAccessRequest) class.
+
+<pre highlight="turtle" id="shexAccessRequest">
+<#AccessRequestShape> {
+  a [eco:AccessRequest] ;
+  eco:fromAgent IRI ;             # Agent who sent the receipt
+  eco:toAgent IRI ;               # Recipient of the receipt
+  eco:hasAccessNeedGroup @<#:AccessNeedGroupShape>+
+}
+</pre>
+
+### Access Decorator Index ### {#needs-access-decorator-index}
+
+An <dfn>Access Decorator Index</dfn> is a listing of one or more
+[=Access Decorator Series=].
+
+<table class="classinfo data" align="left" id="classAccessDecoratorIndex">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessDecoratorIndex](ecosystem.ttl#AccessDecoratorIndex)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>defaultLanguage</td>
+      <td>`xsd:language`</td>
+      <td>Default language to select if not provided as input</td>
+    </tr>
+    <tr>
+      <td>hasSeries</td>
+      <td>[AccessDecoratorSeries](#classAccessDecoratorSeries)</td>
+      <td>Link to an [=Access Decorator Series=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessDecoratorIndexShape](#shexAccessDecoratorIndex) is used to
+validate an instance of the [AccessDecoratorIndex](#classAccessDecoratorIndex)
+class.
+
+<pre highlight="turtle" id="shexAccessDecoratorIndex">
+<#AccessDecoratorIndexShape> {
+  a [ eco:AccessDecoratorIndex ] ;
+  eco:defaultLanguage xsd:language ;
+  eco:hasSeries @AccessDecoratorSeries+ ;
+}
+</pre>
+
+#### Access Decorator Series #### {#needs-access-decorator-series}
+
+An <dfn>Access Decorator Series</dfn> has one or
+more [=Access Decorator Versions=] in a given language.
+
+<table class="classinfo data" align="left" id="classAccessDecoratorSeries">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessDecoratorSeries](ecosystem.ttl#AccessDecoratorSeries)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>usesLanguage</td>
+      <td>xsd:language</td>
+      <td>Language code associated with the [=Access Decorator Series=]</td>
+    </tr>
+    <tr>
+      <td>hasVersion</td>
+      <td>[AccessDecoratorVersion](#classAccessDecoratorVersion)</td>
+      <td>Links to an [=Access Decorator Version=] in the series</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessDecoratorSeriesShape](#shexAccessDecoratorSeries) is used to
+validate an instance of the [AccessDecoratorSeries](#classAccessDecoratorSeries)
+class.
+
+<pre highlight="turtle" id="shexAccessDecoratorSeries">
+<#AccessDecoratorSeriesShape> {
+  a [ eco:AccessDecoratorSeries ] ;
+  eco:usesLanguage xsd:language ;
+  eco:hasVersion @AccessDecoratorVersion+ ;
+}
+</pre>
+
+#### Access Decorator Version #### {#needs-access-decorator-version}
+
+An <dfn>Access Decorator Version</dfn> is a versioned instance of
+a given [=Access Decorator Resource=].
+
+<table class="classinfo data" align="left" id="classAccessDecoratorVersion">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [PreparedAccessNeedGroup](ecosystem.ttl#PreparedAccessNeedGroup)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>isVersion</td>
+      <td>xsd:string</td>
+      <td>Semantic version of the [=Access Decorator Resource=] (e.g. "1.1.0")</td>
+    </tr>
+    <tr>
+      <td>hasSHA256</td>
+      <td>xsd:string</td>
+      <td>SHA-256 hash of the linked [=Access Decorator Resource=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessDecoratorResource</td>
+      <td>[AccessDecoratorResource](#classAccessDecoratorResource)</td>
+      <td>Links to the actual [=Access Decorator Resource=] document</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessDecoratorVersionShape](#shexAccessDecoratorVersion) is used to
+validate an instance of the
+[AccessDecoratorVersion](#classAccessDecoratorVersion) class.
+
+<pre highlight="turtle" id="shexAccessDecoratorVersion">
+<#AccessDecoratorVersionShape> {
+  a [ eco:AccessDecoratorVersion ] ;
+  eco:isVersion xsd:string ;
+  eco:hasSHA256 xsd:string ;
+  eco:hasAccessDecoratorResource IRI ;
+}
+</pre>
+
+### Access Decorator Resource ### {#needs-access-decorator-resource}
+
+An <dfn>Access Decorator Resource</dfn> is a document that contains
+[=Access Need Group Decorators=] and [=Access Need Decorators=] in a
+given language.
+
+<table class="classinfo data" align="left" id="classAccessDecoratorResource">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessDecoratorResource](ecosystem.ttl#AccessDecoratorResource)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><i>No properties</i></td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Access Need Group Decorator #### {#needs-access-need-group-decorator}
+
+An <dfn>Access Need Group Decorator</dfn> provides a subject name and
+more in depth description that explains why a given [=Access Need Group=]
+is being requested of an [=Agent=].
+
+<table class="classinfo data" align="left" id="classAccessNeedGroupDecorator">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessNeedGroupDecorator](ecosystem.ttl#AccessNeedGroupDecorator)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasAccessNeedGroup</td>
+      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
+      <td>[=Access Need Group=] the decorator applies to</td>
+    </tr>
+    <tr>
+      <td>skos:preflabel</td>
+      <td>`xsd:string`</td>
+      <td>Short label (title) for the [=Access Need Group=]</td>
+    </tr>
+    <tr>
+      <td>skos:definition</td>
+      <td>`xsd:string`</td>
+      <td>Description of why the [=Access Need Group=] requires the
+      access it is requesting.</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessNeedGroupDecoratorShape](#shexAccessNeedGroupDecorator) is used to
+validate an instance of the
+[AccessNeedGroupDecorator](#classAccessNeedGroupDecorator) class.
+
+<pre highlight="turtle" id="shexAccessNeedGroupDecorator">
+<#AccessNeedGroupDecoratorShape> {
+  a [ eco:AccessNeedGroupDecorator ] ;
+  eco:hasAccessNeedGroup IRI ;
+  skos:prefLabel xsd:string ;
+  skos:definition xsd:string
+}
+</pre>
+
+#### Access Need Decorator #### {#needs-access-need-decorator}
+
+An <dfn>Access Need Decorator</dfn> provides a specific
+explanation of why that data type is being requested.
+
+<table class="classinfo data" align="left" id="classAccessNeedDecorator">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessNeedDecorator](ecosystem.ttl#AccessNeedDecorator)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasAccessNeedGroup</td>
+      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
+      <td>[=Access Need Group=] the decorator applies to</td>
+    </tr>
+    <tr>
+      <td>registeredShapeTree</td>
+      <td>`st:ShapeTree`</td>
+      <td>[=Shape tree=] associated with the [=Access Need=] the decorator
+      should apply to</td>
+    </tr>
+    <tr>
+      <td>skos:prefLabel</td>
+      <td>`xsd:string`</td>
+      <td>Specific explanation of why that data type is being requested</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessNeedDecoratorShape](#shexAccessNeedDecorator) is used to
+validate an instance of the
+[AccessNeedDecorator](#classAccessNeedDecorator) class.
+
+<pre highlight="turtle" id="shexAccessNeedDecorator">
+<#AccessNeedDecoratorShape> {
+  a [ eco:AccessNeedDecorator ] ;
+  eco:hasAccessNeedGroup IRI ;
+  eco:registeredShapeTree IRI ;
+  skos:prefLabel xsd:string
+}
+</pre>
+
+## Operations ## {#needs-operations}
+
+The following operations explain how to process [=Access Need Groups=]
+so they can be presented to an [=Agent=] in
+[[#access-operations|Access Grant Operations]]
+
+* [[#prepare-group]]
+* [[#prepare-need]]
+* [[#get-group-dec]]
+* [[#get-need-dec]]
+
+### Prepare Access Need Group ### {#prepare-group}
+
+This operation takes a given [=Access Need Group=] with a number of associated
+[=Access Needs=] and processes them to produce a [=Prepared Access Need Group=]
+that is ready to present to a given [=Agent=]
+via the [[#access-present]] operation.
+
+1. The [=shape tree=] associated with each [=Root Access Need=] is
+    traversed to the desired level of recursion, including across references.
+    A [=Prepared Access Need=] is added in a linked hierarchy
+    starting with the [=Root Access Need=], representing every unique
+    [=shape tree=] that was traversed.
+2. Decorators are looked up and linked to the
+    [=Prepared Access Need Group=] and where available for every
+    [=Prepared Access Need=]
+3. Any [=Supporting Access Needs=] are associated with [=Prepared Access Needs=].
+
+#### Inputs #### {#prepare-group-inputs}
+
+* Let `GROUP` be an [=Access Need Group=]
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Outputs #### {#prepare-group-outputs}
+
+* A [=Prepared Access Need Group=] generated from the input `GROUP`, with
+    an associated set of [=Prepared Access Needs=].
+
+#### Operation Details #### {#prepare-group-details}
+
+1. Perform a validation of the RDF graph of `GROUP` against
+    [eco:AccessNeedGroupShape](ecosystem.shex#AccessNeedGroupShape).
+    <em class="rfc2119">MUST</em> return a status code of 400 if
+    validation fails.
+1. Let `ALLNEEDS` be the combined set of [=Access Needs=] linked via
+    `GROUP hasAccessNeed` and `GROUP hasAccessNeedOverride`
+1. Let `OVERRIDES` be the [=Access Needs=] linked via `GROUP hasAccessNeedOverride`
+1. Let `TREEDECS` represent all [=Shape Tree Decorators=] associated with `ALLNEEDS`
+1. Let `ALLDECS` represent all [=Access Need Decorators=] associated with `ALLNEEDS`
+1. Let `PGROUP` be a [=Prepared Access Need Group=]
+1. Let `PGROUP hasAccessNeedDecorator` be the [=Access Need Group Decorator=]
+    returned from [[#get-group-dec]] with inputs: `GROUP`, `LANG`
+1. Let `PGROUP fromAccessNeedGroup` be `GROUP`
+1. Let `PGROUP accessNecessity` be `GROUP accessNecessity`
+1. Let `PGROUP authenticatesAs` be `GROUP authenticatesAs`
+1. For each [=Root Access Need=] `ROOT` linked via `GROUP hasAccessNeed`
+    1. Let `PGROUP hasPreparedAccessNeed` be linked to the
+        [=Root Prepared Access Need=] returned by
+        [[#prepare-need]] with inputs: `ROOT registeredShapeTree`, `ROOT`,
+        `ALLNEEDS`, `OVERRIDES`, `TREEDECS`, `ALLDECS`, `LANG`
+1. Let `ALLPREPARED` represent all [=Prepared Access Needs=] linked via
+    `PGROUP hasPreparedAccessNeed`, as well as all [=Prepared Access Needs=]
+    linked to them via `referencesPreparedAccessNeed` or `skos:narrower`.
+1. For each [=Root Prepared Access Need=] `PROOT` linked via `PGROUP hasPreparedAccessNeed`
+    1. Call [[#link-supported]] with inputs: `PROOT`, `ALLPREPARED`
+
+### Prepare Access Need ### {#prepare-need}
+
+This operation is called recursively to build up a linked hierarchy of
+[=Prepared Access Needs=] in concert with the [[#prepare-need-walk]] operation.
+
+#### Inputs #### {#prepare-need-inputs}
+
+* Let `TREE` be the current [=shape tree=] in context
+* Let `LASTNEED` be the [=Access Need=] in context
+* Let `ALLNEEDS` be the combined set of [=Access Needs=] linked via
+    `GROUP hasAccessNeed` and `GROUP hasAccessNeedOverride`
+* Let `OVERRIDES` be the [=Access Needs=] linked via `GROUP hasAccessNeedOverride`
+* Let `TREEDECS` represent all [=Shape Tree Decorators=] associated with `ALLNEEDS`
+* Let `ALLDECS` represent all [=Access Need Decorators=] associated with `ALLNEEDS`
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Outputs #### {#prepare-need-outputs}
+
+* A [=Prepared Access Need=] with a linked hierarchy of
+    [=Prepared Access Needs=] associated with it
+
+#### Operation Details #### {#prepare-need-details}
+
+1. Let `TOPTREEDEC` be the [=Shape Tree Decorator=]
+    returned from the [Get Shape Tree Decorator](#) operation with
+    inputs: `TREE`, `LANG`
+1. Let `SPECIFICNEED` be the [=Access Need=] returned from the
+    [[#prepare-need-getspecific]] operation with inputs:
+    `TREE`, `OVERRIDES`, `LASTNEED`
+1. return the [=Prepared Access Need=] returned by calling
+    [[#prepare-need-walk]] with inputs:
+    `TREE`, `TOPTREEDEC`, `SPECIFICNEED`, `ALLDECS`, `ALLNEEDS`,
+    `OVERRIDES`, `TREEDECS`, `LANG`
+
+#### _walkDecorators #### {#prepare-need-walk}
+
+This operation is called recursively to build up a linked hierarchy of
+[=Prepared Access Needs=] in concert with the [[#prepare-need]] operation.
+
+##### Inputs ##### {#walk-inputs}
+
+* Let `TREE` be the current [=shape tree=] in context
+* Let `TREEDEC` be the current [=Shape Tree Decorator=] in context
+* Let `NEED` be the [=Access Need=] in context
+* Let `ALLDECS` represent all [=Access Need Decorators=] associated with `ALLNEEDS`
+* Let `ALLNEEDS` be the combined set of [=Access Needs=] linked via
+    `GROUP hasAccessNeed` and `GROUP hasAccessNeedOverride`
+* Let `OVERRIDES` be the [=Access Needs=] linked via `GROUP hasAccessNeedOverride`
+* Let `TREEDECS` represent all [=Shape Tree Decorators=] associated with `ALLNEEDS`
+* Let `LANG` be the [=Agent's=] preferred language
+
+##### Outputs ##### {#walk-outputs}
+
+* A [=Prepared Access Need=] with a linked hierarchy of
+    [=Prepared Access Needs=] associated with it
+
+##### Operation Details ##### {#walk-details}
+
+1. Let `PREPARED` be a new [=Prepared Access Need=]
+1. Let `PREPARED registeredShapeTree` be `TREE`
+1. Let `PREPARED accessNecessity` be set to `NEED`'s `accessNecessity`
+1. Let `PREPARED accessMode` be all of `NEED`'s `accessMode`s
+1. Let `PREPARED hasAccessNeedDecorator` be the [=Access Need Decorator=]
+    returned from [[#get-need-dec]] with inputs: `NEED`, `LANG`
+1. Let `PREPARED hasShapeTreeDecorator` be `TREEDEC`
+1. If `TREEDEC skos:narrower`
+    1. Let `NARROWERDEC` be `TREEDEC skos:narrower`
+    1. Let `NARROWERTREE` be `NARROWERDEC hasShapeTree`
+    1. Let `NARROWERNEED` be the [=Access Need=] returned from the
+        [[#prepare-need-getspecific]] operation with inputs:
+        `NARROWERTREE`, `OVERRIDES`, `NEED`
+    1. Let `PREPARED skos:narrower` be the [=Prepared Access Need=] returned
+        from calling [[#prepare-need-walk]] with inputs:
+        `NARROWERTREE`, `NARROWERDEC`, `NARROWERNEED`, `ALLDECS`, `ALLNEEDS`,
+        `OVERRIDES`, `TREEDECS`, `LANG`
+1. For each [=shape tree=] `REFTREE` linked via `TREE st:references`
+    1. Call [[#prepare-need]] with inputs `REFTREE`, `NEED`,
+        `ALLNEEDS`, `OVERRIDES`, `TREEDECS`, `ALLDECS`, `LANG`
+
+#### _getSpecificAccessNeed #### {#prepare-need-getspecific}
+
+This operation looks through all of the [=Access Need Overrides=] associated
+with a given [=Access Need Group=] to see if there is an
+[=Access Need Override=] for the input [=shape tree=]. If there is not,
+it will effective inherit its defaults from the last [=Access Need=] instead.
+
+##### Inputs ##### {#getspecific-inputs}
+
+* Let `TREE` be the current [=shape tree=] in context
+* Let `DEFAULTNEED` be the default [=Access Need=] to return
+* Let `OVERRIDES` be the [=Access Needs=] linked via `GROUP hasAccessNeedOverride`
+
+##### Outputs ##### {#getspecific-outputs}
+
+* An [=Access Need=]
+
+##### Operation Details ##### {#getspecific-details}
+
+1. For each [=Access Need=] `NEED` in `OVERRIDES`
+    1.  return `NEED` if `NEED registeredShapeTree` is `TREE`
+1. return `DEFAULTNEED`
+
+### Link Supported Prepared Access Needs ### {#link-supported}
+
+This is a recursive operation that iterates through all of the
+[=Prepared Access Needs=] associated with a [=Prepared Access Need Group=]
+and links together any that have a support relationship.
+
+A support relationship exists when the [=shape tree=] associated with one
+[=Prepared Access Need=] has an `st:supports` predicate that links
+to the [=shape tree=] of another [=Prepared Access Need=]. They are
+linked bi-directionally through the `eco:supports` and
+`eco:supportedBy` properties.
+
+#### Inputs #### {#link-supported-inputs}
+
+* Let `PNEED` be a [=Prepared Access Need=]
+* Let `ALLPREPARED` be all [=Prepared Access Needs=] associated with a
+    given [=Prepared Access Need Group=]
+
+#### Outputs #### {#link-supported-outputs}
+
+* None
+
+#### Operation Details #### {#link-supported-details}
+
+1. Let `TREE` be `PNEED registeredShapeTree`
+1. If `TREE st:supports`
+    1. Let `SUPPORTEDTREE` be the [=shape tree=] linked by `TREE st:supports`
+    1. For each [=Prepared Access Need=] `PREPARED` in `ALLPREPARED`
+        1. Let `SUPPORTEDNEED` be the return of [[#iterate-supported]] with
+            inputs: `ALLPREPARED`, `TREE`
+        1. Let `PNEED supports` be `SUPPORTEDNEED`
+        1. Let `SUPPORTEDNEED supportedBy` be `PNEED`
+1. For each [=Prepared Access Need=] `REFNEED` linked by
+    `PNEED referencesPreparedAccessNeed`
+    1. Call [[#link-supported]] with inputs: `REFNEED`, `ALLPREPARED`
+1. For each [=Prepared Access Need=] `NARROWERNEED` linked by
+    `PNEED skos:narrower`
+    1. Call [[#link-supported]] with inputs: `NARROWERNEED`, `ALLPREPARED`
+
+#### Iterate for Supported Prepared Access Needs #### {#iterate-supported}
+
+This is a recursive function that iterates through a linked hierarchy of
+[=Prepared Access Needs=] looking for a [=Prepared Access Need=] with a
+matching [=shape tree=].
+
+##### Inputs ##### {#iterate-inputs}
+
+* Let `PNEED` be a [=Prepared Acecss Need=]
+* Let `TREE` be a [=shape tree]
+
+##### Outputs ##### {#iterate-outputs}
+
+* Returns a [=Prepared Access Need=]
+
+##### Operation Details ##### {#iterate-details}
+
+1. Return `PNEED` if `PNEED registeredShapeTree` is `TREE`
+1. For each [=Prepared Access Need=] `REFNEED` linked by
+    `PNEED referencesPreparedAccessNeed`
+    1. Call [[#iterate-supported]] with inputs: `REFNEED`, `TREE`
+1. For each [=Prepared Access Need=] `NARROWERNEED` linked by
+    `PNEED skos:narrower`
+    1. Call [[#iterate-supported]] with inputs: `NARROWERNEED`, `TREE`
+1. Return `NULL`
+
+### Get Access Decorator Resource ### {#get-access-dec}
+
+This operation returns the appropriate [=Access Decorator Resource=]
+from an input [=Access Decorator Index=] for the provided language.
+If the provided language is not available, a default language is used instead.
+
+#### Inputs #### {#get-access-dec-inputs}
+
+* Let `INDEX` be an [=Access Decorator Index=]
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Outputs #### {#get-access-dec-outputs}
+
+* Let `DECR` be an [=Access Decorator Resource=] from `INDEX`
+
+#### Operation Details #### {#get-access-dec-details}
+
+1. Let `USESERIES` be `INDEX defaultSeries`
+1. Let `USEVERSION` be an unassigned [=Access Decorator Version=]
+1. For each [=Access Decorator Series=] `SERIES` in `INDEX`
+    1. Let `USESERIES` be `SERIES` if `SERIES usesLanguage` == `LANG`
+1. <em class="rfc2119">MUST</em> return a status code
+    of 404 if no [=Access Decorator Series=] are found.
+1. For each [=Access Decorator Version=] `VERSION` in `USESERIES hasVersion`
+    1. Let `USEVERSION` be `VERSION` if `VERSION` is a more recent
+        [semantic version](https://semver.org/) than `USEVERSION` or if
+        `USEVERSION` is unassigned.
+1. <em class="rfc2119">MUST</em> return a status code
+    of 404 if no [=Access Decorator Versions=] are found.
+1. Let `DECR` be the [=Access Decorator Resource=] linked
+    from `USEVERSION hasAccessDecoratorResource`
+1. <em class="rfc2119">MUST</em> return a status code
+    of 404 if `DECR` is unassigned.
+1. return `DECR`
+
+### Get Access Need Group Decorator ### {#get-group-dec}
+
+This operation returns the appropriate [=Access Need Group Decorator=]
+for an input [=Access Need Group=] in the provided language. If the
+provided language is not available, a default language is used instead.
+
+#### Inputs #### {#get-group-dec-inputs}
+
+* Let `GROUP` be an [=Access Need Group=]
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Outputs #### {#get-group-dec-outputs}
+
+* Let `GDEC` be an [=Access Need Group Decorator=] associated with `GROUP`
+
+#### Operation Details #### {#get-group-dec-details}
+
+1. Let `DECR` be the [=Access Decorator Resource=] returned by [[#get-group-dec]]
+    with inputs: `GROUP hasAccessDecoratorIndex`, `LANG`
+1. Let `USEGDEC` be an unassigned [=Access Need Group Decorator=]
+1. Let `GDECS` be all [=Acess Need Group Decorators=] in `DECR`
+1. For each [=Acces Need Group Decorator] `GDEC` in `GDECS`
+  1. Let `USEGDEC` be `GDEC` if `GDEC hasAccessNeedGroup` is `GROUP`
+1. <em class="rfc2119">MUST</em> return a status code
+    of 404 if `USEGDEC` is unassigned
+1. return `USEGDEC`
+
+### Get Access Need Decorator ### {#get-need-dec}
+
+This operation returns the appropriate [=Access Need Decorator=]
+for an input [=Access Need=] in the provided language. If the
+provided language is not available, a default language is used instead.
+
+#### Inputs #### {#get-need-dec-inputs}
+
+* Let `NEED` be an [=Access Need=]
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Outputs #### {#get-need-dec-outputs}
+
+* Let `NDEC` be an [=Access Need Decorator=] associated with `NEED`
+
+#### Operation Details #### {#get-need-dec-details}
+
+1. Let `GROUP` be `NEED inAccessNeedGroup`
+1. Let `DECR` be the [=Access Decorator Resource=] returned by [[#get-group-dec]]
+    with inputs: `GROUP hasAccessDecoratorIndex`, `LANG`
+1. Let `USENDEC` be an unassigned [=Access Need Decorator=]
+1. Let `NDECS` be all [=Acess Need Decorators=] in `DECR`
+1. For each [=Acces Need Decorator] `NDEC` in `NDECS`
+  1. Let `USENDEC` be `NDEC` if `NDEC hasAccessNeedGroup` is `GROUP` and
+      `NDEC registeredShapeTree` is `NEED registeredShapeTree`
+1. <em class="rfc2119">MUST</em> return a status code
+    of 404 if `USENDEC` is unassigned
+1. return `USENDEC`

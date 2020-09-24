@@ -1,0 +1,282 @@
+Data Authorization {#authz}
+=====================
+
+## Overview ## {#authz-overview}
+
+The ability for one [=Agent=] to grant others access to data in their control
+is a fundamental element of a collaborative interoperable ecosystem.
+
+Data Authorization represents several key elements that
+work together to grant, adjust, and rescind access to data controlled
+by an ecosystem participant.
+
+* A common way to express [[#needs]] allows [=ecosystem=] participants to
+    convey the types or specific instances of data they require.
+
+* [[#access]] record access decisions made by an [=Agent=] on the data in their
+    control.
+
+* [[#receipts]] reflect [=Access Grants=] that one [=Agent=] has provided
+    to another [=Agent=]
+
+## Workflows ## {#authz-workflows}
+
+The following workflows represent the authorization patterns
+enabled by this specification.
+
+### Application Requests Access ### {#authz-apprequest}
+
+Let `CONTROLLER` be an [=Agent=] that wants to give an
+    [=Application=] `APP` access to data in their control.
+
+Let `APP` be the [=Application=] that `CONTROLLER` wishes to use, and must
+    grant access to. `APP` may be an [=Application=] that is piloted by the
+    [=Agent=], or it may be an autonomous service that operates independently.
+    The following workflow applies to both cases.
+
+Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
+    authorization and access control.
+
+1. `CONTROLLER` decides they'd like to use `APP`
+1. `CONTROLLER` provides their [=identity=] to `APP`
+1. `APP` dereferences the [=identity=] to
+    get `CONTROLLER`'s [=identity profile document=].
+1. `APP` discovers that `AUTHZ` is the [=Authorization Agent=] for
+    `CONTROLLER` via the [[#trusted-load]] operation.
+1. `APP` redirects `CONTROLLER` to `AUTHZ` via the [[#trusted-redirect]]
+    operation.
+    1. `AUTHZ` looks in `APP`'s [=application profile document=] for
+        [=Access Need Groups=] with an `eco:accessScenario` of
+        `eco:PersonalAccess`
+    1. Any [=Access Need Groups=] found are passed to the [[#access-present]]
+        operation, which presents them to `CONTROLLER`.
+    1. `CONTROLLER` decides whether to grant `APP` the access requested.
+    1. `CONTROLLER` authorizes the requested [=Access Need Groups=]
+        and [=Access Needs=]:
+        1. The [[#appreg-new|Register Application]] operation is called
+            to register `APP` in `CONTROLLER`'s [=Application Registry=].
+        1. The [[#access-recordgrant]] operation is invoked
+            1. An [=Access Grant=] is stored in `CONTROLLER`'s
+                [=Access Registry=].
+            1. [[#access-applyperms]] is called to apply permissions based
+                on the [=Access Grant=].
+            1. [[#receipts-provide]] is called to store the
+                [=Access Receipt=]. The Application has set
+                `eco:receivesAccessReceipt` to
+                `ReceiptInRegistration`, so the [=Access Receipt=] is
+                stored in the [=Application Registration=] for `APP`.
+    1. `AUTHZ` redirects `CONTROLLER` back to `APP` via the
+        [[#trusted-return]] operation.
+
+### Another Agent Requests Access ### {#authz-agentrequest}
+
+Let `REQUESTER` be an [=Agent=] requesting data from another
+    [=Agent=] `CONTROLLER` with a known [=identity=].
+
+Let `REQAPP` be an [=Application=] piloted by `REQUESTER`
+
+Let `RAUTHZ` be an [=Application=] trusted by `REQUESTER` for
+    authorization and access control.
+
+Let `CONTROLLER` be an [=Agent=] in control of data that
+    `REQUESTER` would like to access.
+
+Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
+    authorization and access control.
+
+1. `REQUESTER` would like access to `CONTROLLER`'s data.
+1. `REQUESTER` provides `CONTROLLER`'s [=identity=] to `REQAPP`.
+1. `REQAPP` dereferences `CONTROLLER`'s [=identity=] to get `CONTROLLER`'s
+    [=identity profile document=].
+1. `REQAPP` uses [=Access Need Groups=] from its
+    [=application profile document=] with an `eco:accessScenario` of
+    `eco:SharedAccess` to identify [=Access Need Groups=] to request
+    from `CONTROLLER`.
+1. `CONTROLLER` has an `eco:receivesAccessReceipt` value of `ReceiptInMessage`
+    in their [=identity profile document=].
+1. `REQAPP` puts the [=Access Need Groups=] into an [=Access Request=]
+    and posts it to the [=Access Inbox=] identified by `eco:hasAccessInbox`
+    in the `CONTROLLER`'s [=identity profile document=].
+1. `CAUTHZ` monitors `CONTROLLER`'s access inbox autonomously. It notifies
+    `CONTROLLER` when a new [=Access Request=] is received.
+    1. `CONTROLLER` clicks a link in the notification from `CAUTHZ`,
+        opening the `CAUTHZ` user interface and invoking the
+        [[#access-present]] operation using the [=Access Need Groups=] from
+        the [=Access Request=].
+    1. `CONTROLLER` determines whether they wish to grant the access requested.
+    1. Assuming `CONTROLLER` authorizes a minimum of the
+        required [=Access Need Groups=] and [=Access Needs=],
+        the [[#access-recordgrant]] operation is invoked.
+    1. [[#access-recordgrant]] stores an [=Access Grant=] in `CONTROLLER`'s
+        [=Access Registry=].
+        1. [[#access-applyperms]] is called to apply permissions based on the
+            [=Access Grant=].
+        1. [[#receipts-provide]] is called to deliver the [=Access Receipt=].
+            1. `CAUTHZ` dereferences `REQUESTER`'s [=identity=] to get
+                `REQUESTER`'s [=identity profile document=].
+            1. `REQUESTER` has set `eco:receivesAccessReceipt` to
+                `ReceiptInMessage`, so the [=Access Receipt=] is posted
+                to the access inbox identified via `hasAccessInbox` in
+                `REQUESTER`'s '[=identity profile document=].
+1. `RAUTHZ` monitors `REQUESTER`'s access inbox autonomously. It notifies
+    `REQUESTER` when a new [=Access Receipt=] is received.
+    1. `REQUESTER` clicks the link in the notification, opening the
+        `RAUTHZ` user interface and invoking the [[#receipts-present]]
+        operation to approve the [=Access Receipt=].
+    1. `REQUESTER` accepts the [=Access Receipt=], and `RAUTHZ`
+        invokes the [[#receipts-record]] operation.
+        1. [[#receipts-record]] is called to store the [=Access Receipt=]
+            in `REQUESTER`'s [=Access Receipt Registry=].
+        1. [[#remote-update]] is called to update `REQUESTER`'s
+            [=Remote Data Registry=] to reflect what is in the
+            [=Access Receipt=].
+
+### Controller Shares Access ### {#authz-controllershare}
+
+Let `CONTROLLER` be an [=Agent=] in control of data that
+    they would like to authorize `RECEIVER` to access.
+
+Let `CAPP` be an [=Application=] piloted by `CONTROLLER`
+
+Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
+    authorization and access control.
+
+Let `RECEIVER` be an [=Agent=] receiving access to data from another
+    [=Agent=] `CONTROLLER`.
+
+Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
+    authorization and access control.
+
+1. `CONTROLLER` would like to give `RECEIVER` access to their data.
+1. `CONTROLLER` provides `RECEIVER`'s [=identity=] to `CAPP`.
+1. `CAPP` dereferences `RECEIVER`'s [=identity=] to get `RECEIVER`'s
+    [=identity profile document=].
+1. `CAPP` discovers that `CAUTHZ` is the [=Authorization Agent=] for
+    `CONTROLLER` via the [[#trusted-load]] operation.
+1. `CAPP` redirects `CONTROLLER` to `CAUTHZ` via the [[#trusted-redirect]]
+    operation.
+    1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
+        [=Access Need Groups=] with an `eco:accessScenario` of
+        `eco:SharedAccess`
+    1. Any [=Access Need Groups=] found are passed to the [[#access-present]]
+        operation, which presents them to `CONTROLLER`.
+    1. `CONTROLLER` authorizes the data to share with `RECEIVER` based on
+        the provided [=Access Need Groups=].
+        1. The [[#access-recordgrant]] operation is invoked
+            1. An [=Access Grant=] is stored in `CONTROLLER`'s
+                [=Access Registry=].
+            1. [[#access-applyperms]] is called to apply permissions based
+                on the [=Access Grant=].
+            1. [[#receipts-provide]] is called to store the
+                [=Access Receipt=]. `RECEIVER` has set
+                `eco:receivesAccessReceipt` to
+                `ReceiptInMessage`, so the [=Access Receipt=] is posted
+                to the access inbox identified via `hasAccessInbox` in
+                `RECEIVER`'s '[=identity profile document=].
+    1. `CAUTHZ` redirects `CONTROLLER` back to `CAPP` via the
+        [[#trusted-return]] operation.
+1. `RAUTHZ` monitors `RECEIVER`'s access inbox autonomously. It notifies
+    `RECEIVER` when a new [=Access Receipt=] is received.
+    1. `RECEIVER` clicks the link in the notification, opening the
+        `RAUTHZ` user interface and invoking the [[#receipts-present]]
+        operation to approve the [=Access Receipt=].
+    1. `RECEIVER` accepts the [=Access Receipt=], and `RAUTHZ`
+        invokes the [[#receipts-record]] operation.
+        1. [[#receipts-record]] is called to store the [=Access Receipt=]
+            in `RECEIVER`'s [=Access Receipt Registry=].
+        1. [[#remote-update]] is called to update `RECEIVER`'s
+            [=Remote Data Registry=] to reflect what is in the
+            [=Access Receipt=].
+
+### Controller Shares Access with Invited Agent ### {#authz-controllerinvite}
+
+Controlling Agent initiates sharing their data with an Agent that doesn't
+have an identity or a pod.
+
+Let `CONTROLLER` be an [=Agent=] in control of data that
+    they would like to authorize `INVITEE` to access.
+
+Let `CAPP` be an [=Application=] piloted by `CONTROLLER`
+
+Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
+    authorization and access control.
+
+Let `CISERVICE` be an [=Application=] trusted by `CONTROLLER` to validate
+    invitations made to `INVITEE`s.
+
+Let `INVITEE` be a person without an [=identity=] or [=pod=] that `CONTROLLER`
+    would like to authorize to access their data. `CONTROLLER` knows their
+    e-mail address and mobile phone number.
+
+LET `PROVIDER` be a service that hosts [=identities=] and [=pods=] who
+    provisions the same for `INVITEE`
+
+Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
+    `INVITEE` for authorization and access control.
+
+1. `CONTROLLER` would like to give `INVITEE` access to their data.
+1. `CONTROLLER` provides `INVITEE`'s e-mail address and mobile number to `CAPP`.
+1. `CAPP` discovers that `CAUTHZ` is the [=Authorization Agent=] for
+    `CONTROLLER` via the [[#trusted-load]] operation.
+1. `CAPP` redirects `CONTROLLER` to `CAUTHZ` via the [[#trusted-redirect]]
+    operation.
+    1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
+        [=Access Need Groups=] with an `eco:accessScenario` of
+        `eco:SharedAccess`
+    1. Any [=Access Need Groups=] found are passed to the [[#access-present]]
+        operation, which presents them to `CONTROLLER`.
+    1. `CONTROLLER` authorizes the data to share with `INVITEE` based on
+        the provided [=Access Need Groups=].
+        1. The [[#access-recordinvitation]] operation is invoked
+            1. An [=Access Invitation=] is stored in `CONTROLLER`'s
+                [=Access Registry=].
+            1. [[#access-deliverinvitation]] is called to create an
+                invitation entry for each [=Access Invitation Channel=] in
+                the [=Access Invitation=] with `CISERVICE`
+            1. For each [=Access Invitation Channel=] in the
+                [=Access Invitation=]
+                1. `CISERVICE` sends a notification to `INIVITEE` using the
+                    medium associated with the [=Access Invitation Channel=]
+                    type
+    1. `CAUTHZ` redirects `CONTROLLER` back to `CAPP` via the
+        [[#trusted-return]] operation.
+1. `INVITEE` receives a notification associated with one of the
+    [=Access Invitation Channels=].
+    1. `INVITEE` clicks a link in the notification to register an
+        identity and pod with `PROVIDER`.
+    1. `INVITEE` clicks a link in the notification bringing them to the
+        `CISERVICE` user interface to validate the invitation by
+        invoking [[#access-validateinvitation]].
+        1. If validation is successful, but there are other
+            [=Access Invitation Channels=] left to validate, the `INVITEE` will
+            be prompted to validate them. Continue until failure or
+            validation of all [=Access Invitation Channels=] are succesful.
+        1. `CISERVICE` initializes a new [=Access Grant=] via
+            [[#access-initialize]], using the contents of
+            the [=Access Invitation=], and the new registered
+            [=identity=] for `INVITEE`.
+        1. `CISERVICE` calls [[#access-recordgrant]] using the
+            [=Access Grant=] initialized from the [=Access Invitation=]
+            1. An [=Access Grant=] is stored in `CONTROLLER`'s
+                [=Access Registry=].
+            1. [[#access-applyperms]] is called to apply permissions
+                based on the [=Access Grant=].
+            1. [[#receipts-provide]] is called to store the
+                [=Access Receipt=]. `INVITEE` has set
+                `eco:receivesAccessReceipt` to
+                `ReceiptInMessage`, so the [=Access Receipt=] is posted
+                to the access inbox identified via `hasAccessInbox` in
+                `INVITEE`'s '[=identity profile document=].
+
+
+Issue: Should we assume that CISERVICE is able to manage grants, or should
+it need to redirect through the authorization agent? Perhaps the recommendation
+should be that they are combined? Bad separation of concerns?
+
+Issue: This doesn't take account a sequencing of validation steps from
+one channel to another.
+
+Issue: Should the API for the invitation service be standardized?
+
+Issue: Should the interface for registering and returning from an
+    identity provider and/or pod provider be standardized?
