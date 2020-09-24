@@ -25,7 +25,7 @@ Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth unde
 
 ## Meetings
 
-Panel meetings are held most Mondays at 3:30PM EST / 8:30PM BST / 9:30PM CEST. Check-in on [gitter](https://gitter.im/solid/data-interoperability-panel) for weekly agenda. Minutes are posted below.
+Panel meetings are held most Tuesdays at 10:00AM EST / 4:00PM CEST. Check-in on [gitter](https://gitter.im/solid/data-interoperability-panel) for weekly agenda.
 
 Meeting URL: https://global.gotomeeting.com/join/620786365  
 
