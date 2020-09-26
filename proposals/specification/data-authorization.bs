@@ -46,8 +46,8 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
 1. `APP` redirects `CONTROLLER` to `AUTHZ` via the [[#trusted-redirect]]
     operation.
     1. `AUTHZ` looks in `APP`'s [=application profile document=] for
-        [=Access Need Groups=] with an `eco:accessScenario` of
-        `eco:PersonalAccess`
+        [=Access Need Groups=] with an `interop:accessScenario` of
+        `interop:PersonalAccess`
     1. Any [=Access Need Groups=] found are passed to the [[#access-present]]
         operation, which presents them to `CONTROLLER`.
     1. `CONTROLLER` decides whether to grant `APP` the access requested.
@@ -62,7 +62,7 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
                 on the [=Access Grant=].
             1. [[#receipts-provide]] is called to store the
                 [=Access Receipt=]. The Application has set
-                `eco:receivesAccessReceipt` to
+                `interop:receivesAccessReceipt` to
                 `ReceiptInRegistration`, so the [=Access Receipt=] is
                 stored in the [=Application Registration=] for `APP`.
     1. `AUTHZ` redirects `CONTROLLER` back to `APP` via the
@@ -89,13 +89,13 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
 1. `REQAPP` dereferences `CONTROLLER`'s [=identity=] to get `CONTROLLER`'s
     [=identity profile document=].
 1. `REQAPP` uses [=Access Need Groups=] from its
-    [=application profile document=] with an `eco:accessScenario` of
-    `eco:SharedAccess` to identify [=Access Need Groups=] to request
+    [=application profile document=] with an `interop:accessScenario` of
+    `interop:SharedAccess` to identify [=Access Need Groups=] to request
     from `CONTROLLER`.
-1. `CONTROLLER` has an `eco:receivesAccessReceipt` value of `ReceiptInMessage`
+1. `CONTROLLER` has an `interop:receivesAccessReceipt` value of `ReceiptInMessage`
     in their [=identity profile document=].
 1. `REQAPP` puts the [=Access Need Groups=] into an [=Access Request=]
-    and posts it to the [=Access Inbox=] identified by `eco:hasAccessInbox`
+    and posts it to the [=Access Inbox=] identified by `interop:hasAccessInbox`
     in the `CONTROLLER`'s [=identity profile document=].
 1. `CAUTHZ` monitors `CONTROLLER`'s access inbox autonomously. It notifies
     `CONTROLLER` when a new [=Access Request=] is received.
@@ -114,7 +114,7 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
         1. [[#receipts-provide]] is called to deliver the [=Access Receipt=].
             1. `CAUTHZ` dereferences `REQUESTER`'s [=identity=] to get
                 `REQUESTER`'s [=identity profile document=].
-            1. `REQUESTER` has set `eco:receivesAccessReceipt` to
+            1. `REQUESTER` has set `interop:receivesAccessReceipt` to
                 `ReceiptInMessage`, so the [=Access Receipt=] is posted
                 to the access inbox identified via `hasAccessInbox` in
                 `REQUESTER`'s '[=identity profile document=].
@@ -156,8 +156,8 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
 1. `CAPP` redirects `CONTROLLER` to `CAUTHZ` via the [[#trusted-redirect]]
     operation.
     1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
-        [=Access Need Groups=] with an `eco:accessScenario` of
-        `eco:SharedAccess`
+        [=Access Need Groups=] with an `interop:accessScenario` of
+        `interop:SharedAccess`
     1. Any [=Access Need Groups=] found are passed to the [[#access-present]]
         operation, which presents them to `CONTROLLER`.
     1. `CONTROLLER` authorizes the data to share with `RECEIVER` based on
@@ -169,7 +169,7 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
                 on the [=Access Grant=].
             1. [[#receipts-provide]] is called to store the
                 [=Access Receipt=]. `RECEIVER` has set
-                `eco:receivesAccessReceipt` to
+                `interop:receivesAccessReceipt` to
                 `ReceiptInMessage`, so the [=Access Receipt=] is posted
                 to the access inbox identified via `hasAccessInbox` in
                 `RECEIVER`'s '[=identity profile document=].
@@ -221,8 +221,8 @@ Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
 1. `CAPP` redirects `CONTROLLER` to `CAUTHZ` via the [[#trusted-redirect]]
     operation.
     1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
-        [=Access Need Groups=] with an `eco:accessScenario` of
-        `eco:SharedAccess`
+        [=Access Need Groups=] with an `interop:accessScenario` of
+        `interop:SharedAccess`
     1. Any [=Access Need Groups=] found are passed to the [[#access-present]]
         operation, which presents them to `CONTROLLER`.
     1. `CONTROLLER` authorizes the data to share with `INVITEE` based on
@@ -263,7 +263,7 @@ Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
                 based on the [=Access Grant=].
             1. [[#receipts-provide]] is called to store the
                 [=Access Receipt=]. `INVITEE` has set
-                `eco:receivesAccessReceipt` to
+                `interop:receivesAccessReceipt` to
                 `ReceiptInMessage`, so the [=Access Receipt=] is posted
                 to the access inbox identified via `hasAccessInbox` in
                 `INVITEE`'s '[=identity profile document=].

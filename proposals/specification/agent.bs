@@ -1,166 +1,168 @@
-Agent {#agent}
+interop.treeAgent {#agent}
 =====================
 
 ## Overview ## {#agent-overview}
 
-An [=Agent=] is a distinct individual, group, or piece of
-software with an identity that can be strongly authenticated. They are
-the primary actors in the Solid [=ecosystem=].
+[=Agents=] represent the primary actors in an interoperable Solid [=ecosystem=].
 
-Agents have [=identities=], and dereferencing those identities leads
-to [=identity profile documents=] that let other agents and applications
-participating in the ecosystem know how to interact with them.
+An [=Agent's=] <dfn>identity</dfn> is a unique URI that can be dereferenced to
+an [=Agent=] instance, providing a pathway through which an [=Agent=] can
+discover and access their data across the decentralized Web.
 
-Even the applications that the agent uses directly find their way to
-the agent's data through the agent's identity.
+Other [=Agents=] and [=Applications=] can dereference an
+[=Agent's=] [=identity=] to get the information they need to
+interact with them.
 
-Agents are represented by the `eco:Agent` class.
+An [=Agent=] is designed to be publicly accessible, but many of the
+things the [=Agent=] links to are designed to be private, or accessible
+only by other [=Agents=] and/or [=Applications=] that the [=Agent=]
+has authorized.
 
-Issue: Expand this text further to demonstrate the association with the
-traditional identity profile document when dereferencing a webid, with
-data model, structure/validation, and perms.
+A <dfn>Registry</dfn> is a place where an [=Agent=] can store and find
+essential data needed to participate in the [=ecosystem=]. [=Agents=] use
+several different types of [=Registries=], each of which serve a
+particular purpose or function.
 
-Registrar {#reg}
-=====================
+<table class="classinfo data" align="left" id="agentRegistries">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Registry</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Application Registry</td>
+      <td>Records the [=Applications=] that a given [=Agent=] uses
+      or has given access to.
+      <i>See [[#appreg|Application Registration]]</i></td>
+    </tr>
+    <tr>
+      <td>Data Registry</td>
+      <td>Stores and organizes data types for interoperable use by different
+      [=Applications=] and shared with other [=Agents=]
+      <i>See [[#datareg|Data Registration]]</i></td>
+    </tr>
+    <tr>
+      <td>Access Grant Registry</td>
+      <td>Records access granted to other [=Agents=] and/or [=Applications=]
+      <i>See [[#access|Access Grants]]</i></td>
+    </tr>
+    <tr>
+      <td>Access Receipt Registry</td>
+      <td>Tracks access that has been granted by other [=Agents=]
+      <i>See [[#receipts|Access Receipts]]</i></td>
+    </tr>
+    <tr>
+      <td>Remote Data Registry</td>
+      <td>Local references to data that has been shared by other [=Agents=]
+      <i>See [[#remote|Remote Data Registration]]</i></td>
+    </tr>
+  </tbody>
+</table>
 
-## Overview ## {#registrar-overview}
+A given [=Agent=] may more than one instance of a given [=Registry=],
+especially when the [=Agent=] has more than one pod, or is managing
+data on behalf of another [=Agent=], in a [=Trusted Agent=] capacity.
 
-A [=Registrar=] provides [=Registries=] where an [=Agent=] can register,
-store, and lookup essential data needed to participate in the ecosystem.
-It supports key functions like application registration,
-organizing and tracking data, and more.
+A <dfn>Registry Set</dfn> is a collection of one or more [=Registries=] of
+the same type, linked through the [=Agent=]. They allow one [=Agent=] to
+link to many [=Registries=] across the Web, without exposing them in
+a public resource.
 
-* [[#appreg]] uses [=Application Registries=] to manage
-    [=Application Registrations=].
-* Data Registration relies on data registries to organize,
-    store, and find registered data.
-* Access registries let agents track and communicate access grants to
-    resources they control.
-* Agents track and manage data that has been shared with them through
-    remote registries.
+## Data Model ## {#agent-datamodel}
 
-
-## Registrar Data Model ## {#reg-model}
+### Summary ### {#datamodel-summary}
 
 <figure>
-  <img src="diagrams/registrar-model.svg" width=100%/>
-  <figcaption align="center">Top level registrar data model</figcaption>
+  <img src="diagrams/agent-model.svg" width=100%/>
+  <figcaption align="center">Agent data model</figcaption>
 </figure>
 
+An [=Agent=] links to different kinds of [=Registry Sets=] via type-specific
+subproperties of [interop:hasRegistrySet](interop.ttl#hasRegistrySet).
 
-Humans, software, or device [=Agents=] participating in the Solid ecosystem
-are represented by the class [eco:Agent](ecosystem.ttl#Agent). Each
-[=Agent=] has a [=Registrar=], represented by the class
-[eco:Registrar](ecosystem.ttl#Registrar).
+[=Registry Sets=] links to any number of [=Registries=] via the
+[interop:hasRegistry](interop.ttl#hasRegistry) property.
+
+A <dfn>Registration</dfn> represents an individual unit of information
+for a given [=Registry=]. [=Registries=] link to any number of
+[=Registrations=] via the
+[interop:hasRegistration](interop.ttl#hasRegistration) property.
 
 <figure>
-  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me linking to
-  [=Registrar=]</figcaption>
+  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me</figcaption>
   <pre highlight="turtle">
   <#me>
-    a eco:Agent;
-    eco:hasRegistrar &lt;https://alice.pod.example/registries/#registrar&gt; .
+    a interop:Agent;
+    ######## Registry Sets ########
+    interop:hasApplicationRegistrySet &lt;https://alice.pod.example/profile/application#set&gt; ;
+    interop:hasDataRegistrySet &lt;https://alice.pod.example/profile/data#set&gt; ;
+    interop:hasAccessGrantRegistrySet &lt;https://alice.pod.example/profile/access#set&gt; ;
+    interop:hasAccessReceiptRegistrySet &lt;https://alice.pod.example/profile/receipt#set&gt; ;
+    interop:hasRemoteDataRegistrySet &lt;https://alice.pod.example/profile/remote#set&gt; ;
   </pre>
 </figure>
 
-A [=Registrar=] links to a number of [=Registry Sets=]. [=Registry Sets=] are
-represented by the class [eco:RegistrySet](ecosystem.ttl#RegistrySet).
-They are collections of one or more linked [=Registries=]. They are almost
-always focused on a single [=Registry=] type, through type-specific
-subclasses like
-[eco:ApplicationRegistrySet](ecosystem.ttl#ApplicationRegistySet).
+### Agent ### {#datamodel-agent}
 
-A given [=Registrar=] is linked to a [=Registry Set=] via the
-[eco:hasRegistrySet](ecosystem.ttl#hasRegistrySet) property, or through
-type-specific sub-properties like
-[eco:hasApplicationRegistrySet](ecosystem.ttl#hasApplicationRegistrySet).
+An <dfn>Agent</dfn> is a distinct individual, group, organization, or piece
+of software with an [=identity=] that can be strongly authenticated.
 
-<figure>
-  <figcaption>[=Registrar=] at
-  https://alice.pod.example/registries/#registrar linking to
-  [=Registry Sets=]</figcaption>
-  <pre highlight="turtle">
-  <#registrar>
-    a eco:Registrar;
-    eco:hasApplicationRegistrySet &lt;https://alice.pod.example/registries/application#set&gt; ;
-    eco:hasDataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; .
-  </pre>
-  </figure>
-</figure>
+<table class="classinfo data" align="left" id="classAgent">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3 text-align=left>
+        [Agent](interop.ttl#Agent)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasApplicationRegistrySet</td>
+      <td>ApplicationRegistrySet</td>
+      <td>Link to the [=Agent's=] [=Application Registry Set=]</td>
+    </tr>
+  </tbody>
+</table>
 
-A [=Registry=] is a place where an [=Agent=] can register, store, and lookup
-essential data needed to participate in the [=ecosystem=]. It is represented
-by the [eco:Registry](ecosystem.ttl#Registry) class.
+The [AgentShape](#shexAgent) is used to validate an instance of the
+[Agent](#classAgent) class.
 
-A given [=Registry Set=] links to any number of [=Registries=] via the
-[eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
+<pre highlight="turtle" id="shexAgent">
+<#AgentShape> {
+  a [ interop:Agent ] ;
+  interop:hasApplicationRegistrySet IRI
+}
+</pre>
 
-This applies to type-specific to subclasses as well. For example, an
-[=Application Registry Set=] links to any number of [=Application Registries=]
-via the same [eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
+The [AgentTree](interop.tree#agent-tree)
+is assigned to a resource to ensure it will validate against the
+[AgentShape](#shexAgent).
 
-<figure>
-  <figcaption>[=Application Registry Set=] linking to two different
-  [=Application Registries=]</figcaption>
-  <pre highlight="turtle">
-  <#set>
-    a eco:ApplicationRegistrySet;
-    eco:hasRegistry &lt;https://alice.pod.example/applications/#registry&gt; ,
-                    &lt;https://alice.otherpod.example/applications/#registry&gt; .
-  </pre>
-</figure>
+<pre highlight="turtle" id="treeAgent">
+<#agent-tree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;interops#AgentShape&gt; ;
+  st:matchesUriTemplate "id" .
+</pre>
 
-[=Registries=] exist to store and catalog [=Registrations=], each of which
-represents an individual unit of information for a given [=Registry=].
-[=Registrations=] are represented by the `eco:Registration` class.
+## Resource Hierarchy ## {#agent-hierarchy}
 
-A given [=Registry=] links to any number of [=Registrations=] via the
-[eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
-
-This applies to type-specific to subclasses as well, which are the normal
-mode of use. For example, an
-[=Application Registry=] links to any number of [=Application Registrations=]
-via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
-
-<figure>
-  <figcaption>[=Application Registry=] linking to three
-  [=Application Registration=] instances</figcaption>
-  <pre highlight="turtle">
-  <#registry>
-    a eco:ApplicationRegistry ;
-    eco:hasRegistration &lt;https://alice.pod.example/applications/02f9d4221d9e5c0ae/#registration&gt ,
-                        &lt;https://alice.pod.example/applications/6fe4221d0589d7bde/#registration&gt ,
-                        &lt;https://alice.pod.example/applications/543ab04333ba5bcc2/#registration&gt .
-  </pre>
-</figure>
-
-The properties and associated data of a given [=Registration=]
-may vary widely depending on the type of [=Registry=] it is
-associated with. However, a number of general properties are inherited from
-the base [=Registration=] class
-[eco:Registration](ecosystem.ttl#Registration). In the following
-example, all properties except for
-[eco:registeredApplication](ecosystem.ttl#registeredApplication)
-are inherited from
-[eco:Registration](ecosystem.ttl#Registration).
-
-<figure>
-  <figcaption>An [=Application Registration=] instance</figcaption>
-  <pre highlight="turtle" line-highlight="5" line-numbers="true">
-  <#registration>
-    a eco:ApplicationRegistration ;
-    eco:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-    eco:registeredWith &lt;https://trusted.example/ar&gt; ;
-    eco:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
-    eco:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
-  </pre>
-</figure>
-
-## Structure and Validation ## {#reg-structure}
-
-Instances of the classes and properties in the [[#reg-model]]
+Instances of the classes and properties in the [[#datamodel-agent]]
 are organized across different resources and pods for a given [=Agent=]
-participating in the [=ecosystem=]. The instance data in resources are
+participating in the [=ystem=]. The instance data in resources are
 validated by [=shapes=], which are associated with those resources
 through [=shape trees=].
 
@@ -181,15 +183,15 @@ The [=Registrar=] is stored in the RDF graph of the
 The [=Registrar=] instance links to a collection of type-specific
 [=Registry Set=] instances stored in the `/registries` container.
 
-The shape tree [ecot:registrar-tree](ecosystem.tree#registrar-tree)
+The shape tree [interopt:registrar-tree](interop.tree#registrar-tree)
 associated with the `/registries` container
 specifies this resource structure. It assigns the
-[ecos:RegistrarShape](ecosystem.shex#RegistrarShape) to validate
-a [=Registrar=] instance in the graph of the container resource. It also assigns [ecos:ApplicationRegistrySetShape](ecosystem.shex#ApplicationRegistrySetShape)
-and [ecos:DataRegistrySetShape](ecosystem.shex#DataRegistrySetShape)
+[interops:RegistrarShape](interop.shex#RegistrarShape) to validate
+a [=Registrar=] instance in the graph of the container resource. It also assigns [interops:ApplicationRegistrySetShape](interop.shex#ApplicationRegistrySetShape)
+and [interops:DataRegistrySetShape](interop.shex#DataRegistrySetShape)
 to validate the
-[eco:ApplicationRegistrySet](ecosystem.ttl#ApplicationRegistrySet) and
-[eco:DataRegistrySet](ecosystem.ttl#DataRegistrySet)
+[interop:ApplicationRegistrySet](interop.ttl#ApplicationRegistrySet) and
+[interop:DataRegistrySet](interop.ttl#DataRegistrySet)
 instances in the contained resources.
 
 <figure>
@@ -213,13 +215,13 @@ collection of [=Application Registration=] instances stored in
 the `/applications` container.
 
 The shape tree
-[ecot:application-registry-tree](ecosystem.tree#application-registry-tree)
+[interopt:application-registry-tree](interop.tree#application-registry-tree)
 associated with the `/applications` container specifies this resource
 structure. It assigns the
-[ecos:ApplicationRegistryShape](ecosystem.shex#ApplicationRegistryShape)
+[interops:ApplicationRegistryShape](interop.shex#ApplicationRegistryShape)
 to validate the [=Application Registry=] instance in the
 container resource. It also assigns a
-[ecos:ApplicationRegistrationShape](ecosystem.shex#ApplicationRegistrationShape)
+[interops:ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)
 to validate an [=Application Registration=] in every
 contained resource.
 
@@ -229,11 +231,11 @@ contained resource.
   <img src="diagrams/registrar-applications.svg" width=100%/>
 </figure>
 
-## Permission Model ## {#reg-permissions}
+## Permission Model ## {#agent-permissions}
 
-The permission model for the [=Registrar=] resources detailed in [[#reg-structure]]
-are illustrated in the table below. That said, the following key points
-are worth noting:
+The permission model for the [=Registrar=] resources detailed in
+[[#agent-hierarchy]] are illustrated in the table below. That said, the
+following key points are worth noting:
 
 * The [=identity profile document=] at `/id` is the only resource that is
     publicly accessible (with read-only privileges).
@@ -365,3 +367,5 @@ have control-level access across her entire data space.
     </tbody>
   </table>
 </figure>
+
+## Operations ## {#agent-operations}

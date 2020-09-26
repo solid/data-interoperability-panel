@@ -7,7 +7,7 @@ Data Registration gives [=Agents=] participating in the Solid [=ecosystem=]
 a way to register, organize, and subsequently manage the data they control.
 
 A [=Data Registry=] for storing individual [=Data Registrations=] is
-introduced, implemented through the [[#reg]].
+introduced.
 
 A given [=Data Registry=] provides a specific location in a Solid [=pod=] where
 data of various types is organized and stored in a uniform way to aid
@@ -28,25 +28,25 @@ query engines or indexing schemes.
   <figcaption>Data model for data registration</figcaption>
 </figure>
 
-Data Registration extends the [[#reg-model]] with type-specific subclasses
+Data Registration extends the [[#datamodel-agent]] with type-specific subclasses
 and subproperties.
 
 An [=Agent=] has a [=Registrar=] that links to [=Data Registry Sets=]
-via the [eco:hasDataRegistrySet](ecosystem.ttl#hasDataRegistrySet) property.
+via the [interop:hasDataRegistrySet](interop.ttl#hasDataRegistrySet) property.
 
 A [=Data Registry Set=] links to any number of [=Data Registries=] via
-the [eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
+the [interop:hasRegistry](interop.ttl#hasRegistry) property.
 
 A [=Data Registry=] links to any number of [=Data Registrations=]
-via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
+via the [interop:hasRegistration](interop.ttl#hasRegistration) property.
 
 <figure id="fig-datareg-registrar">
   <figcaption>A [=Registrar=] at https://alice.pod.example/registries/#registrar
   linking to a [=Data Registry Set=]</figcaption>
   <pre highlight="turtle">
   <#registrar>
-    a eco:Registrar;
-    eco:hasDataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; .
+    a interop:Registrar;
+    interop:hasDataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; .
   </pre>
   </figure>
 </figure>
@@ -58,8 +58,8 @@ via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
   [=Data Registries=]</figcaption>
   <pre highlight="turtle">
   <#set>
-    a eco:DataRegistrySet;
-    eco:hasRegistry &lt;https://alice.pod.example/data/#registry&gt; ,
+    a interop:DataRegistrySet;
+    interop:hasRegistry &lt;https://alice.pod.example/data/#registry&gt; ,
                     &lt;https://alice.otherpod.example/data/#registry&gt; .
   </pre>
 </figure>
@@ -69,32 +69,32 @@ via the [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
   linking to several [=Data Registrations=]</figcaption>
   <pre highlight="turtle">
   <#registry>
-    a eco:DataRegistry ;
-    eco:hasRegistration &lt;49a4057a-6ade-4a9d-9869-085a00925259/#registration&gt ,
+    a interop:DataRegistry ;
+    interop:hasRegistration &lt;49a4057a-6ade-4a9d-9869-085a00925259/#registration&gt ,
                         &lt;cf2d40d3-858e-42f7-8b11-d021b5989ed2/#registration&gt ,
                         &lt;628a7371-3a9b-49f9-a7aa-2e9c93e0150b/#registration&gt .
   </pre>
 </figure>
 
 A [=Data Registration=] extends the
-[eco:Registration](ecosystem.ttl#Registration) class with the
-[eco:DataRegistration](ecosystem.ttl#DataRegistration) subclass.
+[interop:Registration](interop.ttl#Registration) class with the
+[interop:DataRegistration](interop.ttl#DataRegistration) subclass.
 
 A [=Data Registration=] includes any number of [=Registered Data Instances=]
 via the
-[eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance)
+[interop:hasRegisteredDataInstance](interop.ttl#hasRegisteredDataInstance)
 property.
 
-The [eco:DataRegistration](ecosystem.ttl#DataRegistration) subclass
-extends the [eco:Registration](ecosystem.ttl#Registration) class with
+The [interop:DataRegistration](interop.ttl#DataRegistration) subclass
+extends the [interop:Registration](interop.ttl#Registration) class with
 the following properties:
 
-* [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) - URI of the
+* [interop:registeredShapeTree](interop.ttl#registeredShapeTree) - URI of the
     [=shape tree=] that is being registered.
-* [eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance) -
+* [interop:hasRegisteredDataInstance](interop.ttl#hasRegisteredDataInstance) -
     Any number of [=Registered Data Instances=] of the
     [=shape tree=] associated via
-    [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
+    [interop:registeredShapeTree](interop.ttl#registeredShapeTree).
 
 
 <figure id="fig-datareg-registration">
@@ -103,12 +103,12 @@ the following properties:
   linking to several [=Registered Data Instances=]</figcaption>
   <pre highlight="turtle" line-highlight="5" line-numbers="true">
   <#registration>
-    a eco:DataRegistration ;
-    eco:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-    eco:registeredWith &lt;https://app.example/id#agent&gt; ;
-    eco:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
-    eco:registeredShapeTree &lt;https://tree.example/commonnote#notebook-tree&gt; ;
-    eco:hasRegisteredDataInstance &lt;3f56c32e-96c6-4b0c-b941-eadc2bf98b18/#notebook&gt; ,
+    a interop:DataRegistration ;
+    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
+    interop:registeredWith &lt;https://app.example/id#agent&gt; ;
+    interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+    interop:registeredShapeTree &lt;https://tree.example/commonnote#notebook-tree&gt; ;
+    interop:hasRegisteredDataInstance &lt;3f56c32e-96c6-4b0c-b941-eadc2bf98b18/#notebook&gt; ,
                                   &lt;16e1eae9-20a5-489d-8380-8c07ca3805c4/#notebook&gt; ,
                                   &lt;886785d2-6c23-46ee-9e19-5ac36b7bcd71/#notebook&gt; ,
                                   &lt;dae5015c-d5f9-4ede-b9eb-7ca7a19854a9/#notebook&gt; .
@@ -118,7 +118,7 @@ the following properties:
 ## Structure and Validation ## {#datareg-structure}
 
 The resources associated with an [=Agent's=] [=Data Registries=] conform
-to and extend the general patterns detailed in Registrar [[#reg-structure]].
+to and extend the general patterns detailed in Registrar [[#agent-hierarchy]].
 
 Consequently, this section focuses on the unique composition and validation of
 [=Data Registrations=] in a [=Data Registry=], and the
@@ -140,52 +140,52 @@ previous section.
 
 Each individual [=Data Registration=] is associated with one
 [=shape tree=], indicated by the
-[eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree) property.
+[interop:registeredShapeTree](interop.ttl#registeredShapeTree) property.
 
 <figure id="fig-datareg-registry-tree">
   <figcaption>Definition of an
-  [ecot:data-registry-tree](ecosystem.tree#data-registry-tree)</figcaption>
+  [interopt:data-registry-tree](interop.tree#data-registry-tree)</figcaption>
   <pre highlight="turtle">
   <#data-registry-tree>
     a st:ShapeTree ;
     st:expectsType st:ShapeTreeContainer ;
-    st:validatedBy &lt;ecos#DataRegistryShape&gt; ;
+    st:validatedBy &lt;interops#DataRegistryShape&gt; ;
     st:contains &lt;#data-registration-tree&gt; ,
                   st:AllowNone .
   </pre>
 </figure>
 
-The [ecot:data-registry-tree](ecosystem.tree#data-registry-tree)
+The [interopt:data-registry-tree](interop.tree#data-registry-tree)
 defines the resource structure for the [=Data Registry=], and the data
 validation rules for the resources inside it.
 
 * It assigns the
-    [ecos:DataRegistryShape](ecosystem.shex#DataRegistryShape)
+    [interops:DataRegistryShape](interop.shex#DataRegistryShape)
     to validate the [=Data Registry=] instance itself, stored in the
     graph of the container resource, [as shown](#fig-datareg-registry) in the
     previous section
 * It says that the container includes instances of
-    [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+    [interopt:data-registration-tree](interop.tree#data-registration-tree)
 * It says through `st:AllowNone` that any resources that do not conform to
-    [ecot:data-registration-tree](ecosystem.tree#data-registration-tree) are
+    [interopt:data-registration-tree](interop.tree#data-registration-tree) are
     not allowed. This container can *only* contain resources that conform to
-    [ecot:data-registration-tree](ecosystem.tree#data-registration-tree).
+    [interopt:data-registration-tree](interop.tree#data-registration-tree).
 
 <figure id="fig-datareg-registration-tree">
   <figcaption>Definition of an
-  [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+  [interopt:data-registration-tree](interop.tree#data-registration-tree)
   </figcaption>
   <pre highlight="turtle">
   <#data-registration-tree>
     a st:ShapeTree ;
     st:expectsType st:ShapeTreeContainer ;
-    st:validatedBy &lt;ecos#DataRegistrationShape&gt; ;
+    st:validatedBy &lt;interops#DataRegistrationShape&gt; ;
     st:matchesUriTemplate "{id}" .
   </pre>
 </figure>
 
 Conforming to
-[ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+[interopt:data-registration-tree](interop.tree#data-registration-tree)
 ensures that the [=Data Registry=] container at
 `https://alice.pod.example/data/#registry` only contains valid
 [=Data Registrations=].
@@ -193,7 +193,7 @@ ensures that the [=Data Registry=] container at
 * Any resource added to the `https://alice.pod.example/data/` container must be
     a container per `st:expectsType st:ShapeTreeContainer`.
 * It assigns the
-    [ecos:DataRegistrationShape](ecosystem.shex#DataRegistrationShape)
+    [interops:DataRegistrationShape](interop.shex#DataRegistrationShape)
     to ensure there is a valid [=Data Registration=] instance in the
     container resource graph.
 
@@ -201,14 +201,14 @@ ensures that the [=Data Registry=] container at
 
 A given [=Data Registration=] will contain any number of
 [=Registered Data Instances=] of the [=shape tree=] associated
-via [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
+via [interop:registeredShapeTree](interop.ttl#registeredShapeTree).
 
 Two complementary [=shape trees=] must be assigned to the same
 [=Data Registration=] to ensure:
 
 1. It is a well-formed [=Data Registration=]
 2. The [=Data Registration=] only contains [=Registered Data Instances=]
-    of [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
+    of [interop:registeredShapeTree](interop.ttl#registeredShapeTree).
 
 <figure>
   <figcaption>A [=Data Registration=] at
@@ -218,26 +218,26 @@ Two complementary [=shape trees=] must be assigned to the same
 </figure>
 
 In the figure above, we can observe the combination of the
-[ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+[interopt:data-registration-tree](interop.tree#data-registration-tree)
 and the [note:note-container-tree](note.tree#note-container-tree) on the
 same [=Data Registration=] at
 `https://alice.pod.example/data/49a4057a-6ade-4a9d-9869-085a00925259/#registration`.
 
 A [=Data Registration=] can't know which specific
 [=shape tree=] will be registered in advance, so the
-[ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+[interopt:data-registration-tree](interop.tree#data-registration-tree)
 can't specify the expected contents of the container with `st:contains`.
 
 However, it is crucial that the contents of the [=Data Registration=] container
 be conformant instances of the [=shape tree=] specified in the
-[eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
+[interop:registeredShapeTree](interop.ttl#registeredShapeTree)
 property of the [=Data Registration=].
 
 A second [=shape tree=]
 ([note:note-container-tree](note.tree#note-container-tree) in the example above)
 is associated with the [=Data Registration=] to ensure that what is stored
 in the container are conformant instances of the
-[eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
+[interop:registeredShapeTree](interop.ttl#registeredShapeTree).
 
 ### Naming Registrations and Registered Data Instances ### {#datareg-naming}
 
@@ -246,7 +246,7 @@ generated \[UUID](https://www.ietf.org/rfc/rfc4122.txt).
 
 The name of a [=Registered Data Instance=] resource linked to a
 [=Data Registration=] through
-[eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance)
+[interop:hasRegisteredDataInstance](interop.ttl#hasRegisteredDataInstance)
 MUST be a generated \[UUID](https://www.ietf.org/rfc/rfc4122.txt).
 
 ## Permission Model ## {#datareg-permissions}
@@ -490,7 +490,7 @@ to assist with privileged operations like registering new
 
 The [=Data Authorization Agent=] trusted by a given [=Agent=] is linked
 with them through the
-[eco:trustsForDataAuthorization](ecosystem.ttl#trustsForDataAuthorization)
+[interop:trustsForDataAuthorization](interop.ttl#trustsForDataAuthorization)
 property.
 
 <figure>
@@ -498,8 +498,8 @@ property.
   Authorization Agent</figcaption>
   <pre highlight="turtle">
     <#me>
-      a eco:Agent;
-      eco:trustsForDataAuthorization &lt;https://trusted.example/da/&gt; .
+      a interop:Agent;
+      interop:trustsForDataAuthorization &lt;https://trusted.example/da/&gt; .
   </pre>
 </figure>
 
@@ -515,23 +515,23 @@ in the Trusted Agents section.
 [=Data Registrations=] must be created in conformance with the
 documented [[#datareg-structure]] pattern.
 
-The [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+The [interopt:data-registration-tree](interop.tree#data-registration-tree)
 must be assigned to the [=Data Registration=] resource.
 
 <figure id="fig-datareg-create-registration-tree">
   <figcaption>Definition of an
-  [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+  [interopt:data-registration-tree](interop.tree#data-registration-tree)
   </figcaption>
   <pre highlight="turtle">
   <#data-registration-tree>
     a st:ShapeTree ;
     st:expectsType st:ShapeTreeContainer ;
-    st:validatedBy &lt;ecos#DataRegistrationShape&gt; ;
+    st:validatedBy &lt;interops#DataRegistrationShape&gt; ;
     st:matchesUriTemplate "{id}" .
   </pre>
 </figure>
 
-The [ecot:data-registration-tree](ecosystem.tree#data-registration-tree)
+The [interopt:data-registration-tree](interop.tree#data-registration-tree)
 stipulates the following:
 
 1. The [=Data Registration=] resource must be a container per
@@ -539,26 +539,26 @@ stipulates the following:
 1. The [=Data Registration=] instance data must be added to the RDF
     graph of that container, and validate successfully
     against the
-    [ecos:DataRegistrationShape](ecosystem.shex#DataRegistrationShape).
+    [interops:DataRegistrationShape](interop.shex#DataRegistrationShape).
 1.  The [=Data Registration's=] properties must be set as follows:
-    * [eco:registeredBy](ecosystem.ttl#registeredBy): linked to the [=identity=]
+    * [interop:registeredBy](interop.ttl#registeredBy): linked to the [=identity=]
         of the [=authenticated agent=] that invoked the registration
         (i.e. the [=webid=] of the [=Agent=])
-    * [eco:registeredWith](ecosystem.ttl#registeredWith): linked to the
+    * [interop:registeredWith](interop.ttl#registeredWith): linked to the
         [=ApplicationID=] of the [=trusted agent=] that facilitated the
         registration, typically the [=data authorization agent=].
-    * [eco:registeredAt](ecosystem.ttl#registeredAt): the `xsd:dateTime` of
+    * [interop:registeredAt](interop.ttl#registeredAt): the `xsd:dateTime` of
         the registration.
-    * [eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree): URI of the
+    * [interop:registeredShapeTree](interop.ttl#registeredShapeTree): URI of the
         [=shape tree=] that is being registered.
 
 The [=shape tree=] associated with the [=Data Registration=] via
-[eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree)
+[interop:registeredShapeTree](interop.ttl#registeredShapeTree)
 must also be assigned to [=Data Registration=] resource,
 per the instructions in [[#datareg-structure]]. This ensures that only
 instances of that particular shape tree are added to the container.
 
-The [eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance)
+The [interop:hasRegisteredDataInstance](interop.ttl#hasRegisteredDataInstance)
 property is not populated until the first [=Registered Data Instance=] is
 added to the [=Data Registration=].
 
@@ -573,7 +573,7 @@ instructions in [[#datareg-permissions]].
 
 The [=Data Registration=] must be associated with the
 [=Data Registry=] through the
-[eco:hasRegistry](ecosystem.ttl#hasRegistry) property in
+[interop:hasRegistry](interop.ttl#hasRegistry) property in
 the graph of the [=Data Registry=].
 
 
@@ -581,8 +581,8 @@ the graph of the [=Data Registry=].
 
 Creation of [=Registered Data Instances=] is a matter of storing instance
 resources in conformance with the
-[eco:registeredShapeTree](ecosystem.ttl#registeredShapeTree).
+[interop:registeredShapeTree](interop.ttl#registeredShapeTree).
 
 Each new [=Registered Data Instance=] must be linked to the
 [=Data Registration=] via
-[eco:hasRegisteredDataInstance](ecosystem.ttl#hasRegisteredDataInstance).
+[interop:hasRegisteredDataInstance](interop.ttl#hasRegisteredDataInstance).

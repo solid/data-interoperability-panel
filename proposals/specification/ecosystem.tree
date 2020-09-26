@@ -1,5 +1,5 @@
 @prefix st: <http://www.w3.org/ns/shapetree#> .
-@prefix ecos: <https://shapes.pub/drafts/ns/solid/ecosystem#> .
+@prefix interops: <https://shapes.pub/drafts/ns/solid/interop#> .
 
 # Agent
 ##############################################################################
@@ -12,7 +12,7 @@
 <#agent-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy <ecos#AgentShape> ;
+  st:validatedBy <interops#AgentShape> ;
   st:matchesUriTemplate "id" .
 
 <#access-inbox-tree>
@@ -27,7 +27,7 @@
 <#registrar-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy <ecos#RegistrarShape> ;
+  st:validatedBy <interops#RegistrarShape> ;
   st:contains <#application-registry-set-tree> ,
               <#data-registry-set-tree> ,
               <#access-registry-set-tree> ,
@@ -38,31 +38,31 @@
 <#application-registry-set-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy <ecos#ApplicationRegistrySetShape> ;
+  st:validatedBy <interops#ApplicationRegistrySetShape> ;
   st:matchesUriTemplate "application" .
 
 <#data-registry-set-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy <ecos#DataRegistrySetShape> ;
+  st:validatedBy <interops#DataRegistrySetShape> ;
   st:matchesUriTemplate "data" .
 
 <#access-registry-set-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy <ecos#AccessRegistrySetShape> ;
+  st:validatedBy <interops#AccessRegistrySetShape> ;
   st:matchesUriTemplate "access" .
 
 <#access-receipt-registry-set-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy <ecos#AccessReceiptRegistrySetShape> ;
+  st:validatedBy <interops#AccessReceiptRegistrySetShape> ;
   st:matchesUriTemplate "receipt" .
 
 <#remote-data-registry-set-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy <ecos#RemoteDataRegistrySetShape> ;
+  st:validatedBy <interops#RemoteDataRegistrySetShape> ;
   st:matchesUriTemplate "remote" .
 
 # Application Registry
@@ -74,7 +74,7 @@
 <#application-registry-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy <ecos#ApplicationRegistryShape> ;
+  st:validatedBy <interops#ApplicationRegistryShape> ;
   st:contains <#application-registration-tree> ,
                 st:AllowNone .
 
@@ -87,7 +87,7 @@
 <#application-registration-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy <ecos#ApplicationRegistrationShape> ;
+  st:validatedBy <interops#ApplicationRegistrationShape> ;
   st:contains <#access-receipt-tree> ,
                 st:AllowAll ;
   st:matchesUriTemplate "{id}" .
@@ -101,7 +101,7 @@
 <#data-registry-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy <ecos#DataRegistryShape> ;
+  st:validatedBy <interops#DataRegistryShape> ;
   st:contains <#data-registration-tree> ,
                 st:AllowNone .
 
@@ -114,7 +114,7 @@
 <#data-registration-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy <ecos#DataRegistrationShape> ;
+  st:validatedBy <interops#DataRegistrationShape> ;
   st:matchesUriTemplate "{id}" .
 
 # Access Registry
@@ -126,7 +126,7 @@
 <#access-registry-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy <ecos#AccessRegistryShape> ;
+  st:validatedBy <interops#AccessRegistryShape> ;
   st:contains <#access-grant-tree> ,
               <#access-invitation-tree> ,
               st:AllowNone .
@@ -138,7 +138,7 @@
 <#access-grant-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy <ecos#AccessGrantShape> ;
+  st:validatedBy <interops#AccessGrantShape> ;
   st:matchesUriTemplate "{id}" .
 
 # Access Invitation
@@ -149,7 +149,7 @@
 <#access-invitation-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy <ecos#AccessInvitationShape> ;
+  st:validatedBy <interops#AccessInvitationShape> ;
   st:matchesUriTemplate "{id}" .
 
 # Access Receipt Registry
@@ -161,7 +161,7 @@
 <#access-receipt-registry-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy <ecos#AccessReceiptRegistryShape> ;
+  st:validatedBy <interops#AccessReceiptRegistryShape> ;
   st:contains <#access-receipt-tree> ,
               st:AllowNone .
 
@@ -172,7 +172,7 @@
 <#access-receipt-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy <ecos#AccessReceiptShape> ;
+  st:validatedBy <interops#AccessReceiptShape> ;
   st:matchesUriTemplate "{id}" .
 
 # Remote Data Registry
@@ -184,7 +184,7 @@
 <#remote-data-registry-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy <ecos#RemoteDataRegistryShape> ;
+  st:validatedBy <interops#RemoteDataRegistryShape> ;
   st:contains <#remote-data-registration-tree> ,
               st:AllowNone .
 
@@ -195,7 +195,7 @@
 <#remote-data-registration-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy <ecos#RemoteDataRegistrationShape> ;
+  st:validatedBy <interops#RemoteDataRegistrationShape> ;
   st:matchesUriTemplate "{id}" ;
   st:contains <#remote-data-instance-tree> ,
               st:AllowNone .
@@ -207,5 +207,5 @@
 <#remote-data-instance-tree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy <ecos#RemoteDataInstanceShape> ;
+  st:validatedBy <interops#RemoteDataInstanceShape> ;
   st:matchesUriTemplate "{id}" .

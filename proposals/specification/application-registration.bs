@@ -10,7 +10,7 @@ to store metadata, preferences, access grants, caches, and other internal
 data specific to the function of a given [=Application=].
 
 An [=Application Registry=] for storing individual
-[=Application Registrations=] is introduced, implemented through the [[#reg]].
+[=Application Registrations=] is introduced.
 
 ## Data Model ## {#appreg-datamodel}
 
@@ -19,7 +19,7 @@ An [=Application Registry=] for storing individual
   <figcaption>Data model for application registration</figcaption>
 </figure>
 
-Application Registration extends the [[#reg-model]] with type-specific
+Application Registration extends the [[#datamodel-agent]] with type-specific
 subclasses and subproperties.
 
 * An [=Agent=] has a [=Registrar=], which links to
@@ -27,22 +27,22 @@ subclasses and subproperties.
 
 * An [=Application Registry Set=] links to any number of
     [=Application Registry=] instances via the
-    [eco:hasRegistry](ecosystem.ttl#hasRegistry) property.
+    [interop:hasRegistry](interop.ttl#hasRegistry) property.
 
 * An [=Application Registry=] links to any number of
     [=Application Registrations=] via the
-    [eco:hasRegistration](ecosystem.ttl#hasRegistration) property.
+    [interop:hasRegistration](interop.ttl#hasRegistration) property.
 
 * An [=Application Registration=] extends the
-    [eco:Registration](ecosystem.ttl#Registration)
+    [interop:Registration](interop.ttl#Registration)
     class with the
-    [eco:ApplicationRegistration](ecosystem.ttl#ApplicationRegistration)
+    [interop:ApplicationRegistration](interop.ttl#ApplicationRegistration)
     subclass.
 
-The [eco:ApplicationRegistration](ecosystem.ttl#ApplicationRegistration)
+The [interop:ApplicationRegistration](interop.ttl#ApplicationRegistration)
 subclass also introduces the following properties:
 
-* [eco:registeredApplication](ecosystem.ttl#registeredApplication) -
+* [interop:registeredApplication](interop.ttl#registeredApplication) -
     [=ApplicationID=] of the [=Application=] that is being registered.
 
 <figure>
@@ -52,11 +52,11 @@ subclass also introduces the following properties:
   </figcaption>
   <pre highlight="turtle" line-highlight="5" line-numbers="true">
   <#registration>
-    a eco:ApplicationRegistration ;
-    eco:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-    eco:registeredWith &lt;https://trusted.example/ar&gt; ;
-    eco:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
-    eco:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+    a interop:ApplicationRegistration ;
+    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
+    interop:registeredWith &lt;https://trusted.example/ar&gt; ;
+    interop:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
+    interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
   </pre>
 </figure>
 
@@ -64,8 +64,8 @@ subclass also introduces the following properties:
 
 A given [=Agent=] will have one or more
 [=Application Registries=] discoverable through the
-[[#reg-model]], via resources that implement
-[[#reg-structure|Registrar Structure and Validation]].
+[[#datamodel-agent]], via resources that implement
+the [[#agent-hierarchy]].
 
 <figure>
   <figcaption>An [=Application Registry=] at
@@ -80,17 +80,17 @@ collection of [=Application Registrations=] stored in
 the `/applications` container.
 
 The shape tree
-[ecot:application-registry-tree](ecosystem.tree#application-registry-tree)
+[interopt:application-registry-tree](interop.tree#application-registry-tree)
 associated with the `/applications` container specifies this resource
 structure. It assigns the
-[ecos:ApplicationRegistryShape](ecosystem.shex#ApplicationRegistryShape)
+[interops:ApplicationRegistryShape](interop.shex#ApplicationRegistryShape)
 to validate the [=Application Registry=] instance data in the
 container resource, and says that the container includes instances of
-[ecot:application-registration-tree](ecosystem.tree#application-registration-tree),
+[interopt:application-registration-tree](interop.tree#application-registration-tree),
 which any resources added to the `/applications` container must conform to.
 
 Conforming to
-[ecot:application-registration-tree](ecosystem.tree#application-registration-tree)
+[interopt:application-registration-tree](interop.tree#application-registration-tree)
 ensures that the container for the [=Application Registry=] at
 `/applications#registry` only contains valid [=Application Registrations=].
 
@@ -100,7 +100,7 @@ Specifically:
     container (`st:expectsType st:ShapeTreeContainer`)
 * An [=Application Registration=] must be stored in the
     RDF graph of that container, to successfully pass shape validation via
-    `st:validatedBy <ecos#ApplicationRegistrationShape>`.
+    `st:validatedBy <interops#ApplicationRegistrationShape>`.
 
 <figure>
   <figcaption>An [=Application Registration=] at
@@ -119,11 +119,11 @@ configuration resource (`config.ttl`) and a summary index file (`summary.idx`).
 
 In this proposal, resource names for ecosystem instances are almost always
 randomly generated. However, when creating an
-[ecot:application-registration-tree](ecosystem.tree#application-registration-tree)
+[interopt:application-registration-tree](interop.tree#application-registration-tree)
 for an [=Application Registration=], the container
 must be named using a SHA-256 hash encoding of the [=ApplicationID=] for the
 [=Application=], which is linked through the
-[eco:registeredApplication](ecosystem.ttl#registeredApplication) property.
+[interop:registeredApplication](interop.ttl#registeredApplication) property.
 
 :: <b>NeverNote ApplicationID:</b> `https://nevernote.example/id#agent`
 :: <b>SHA-256 Hash:</b> `70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`
@@ -283,7 +283,7 @@ visibility across [=Application Registries=] and
 [=Application Registrations=]. An
 [=Application=] will only have access to its own [=Application Registration=],
 in which case it would be linked to that [=Application Registration=] via the
-[eco:registeredApplication](ecosystem.ttl#registeredApplication) property.
+[interop:registeredApplication](interop.ttl#registeredApplication) property.
 
 Since [=Applications=] do not have access to the list of [=Applications=]
 in [=Application Registries=], the only way they can check to see if they
@@ -326,7 +326,7 @@ hard-coded properties associated with the Agent for discovery.
 
 The [=Application=] will look for another
 [=Application=] that is linked with the [=Agent=] through the
-[eco:trustsForApplicationRegistration](ecosystem.ttl#trustsForApplicationRegistration)
+[interop:trustsForApplicationRegistration](interop.ttl#trustsForApplicationRegistration)
 property.
 
 <figure>
@@ -334,14 +334,14 @@ property.
   Registration Agent</figcaption>
   <pre highlight="turtle">
     <#me>
-      a eco:Agent;
-      eco:trustsForApplicationRegistration &lt;https://trusted.example/ar/&gt; .
+      a interop:Agent;
+      interop:trustsForApplicationRegistration &lt;https://trusted.example/ar/&gt; .
   </pre>
 </figure>
 
 The [=Application=] will redirect the [=Agent=] via the
 synchronous [[#trusted|trusted agent]] pattern to the [=Application=] linked by
-[eco:trustsForApplicationRegistration](ecosystem.ttl#trustsForApplicationRegistration),
+[interop:trustsForApplicationRegistration](interop.ttl#trustsForApplicationRegistration),
 supplying its [=ApplicationID=] as a parameter.
 
 The [=application registration agent=] is now expected to dereference
@@ -364,7 +364,7 @@ Assuming suitability and confirmation from the [=Agent=], the
 the [=Application=] in the appropriate [=Application Registry=].
 When it is finished, it will return her to
 the [=Application=] at the
-[eco:applicationRegistrationCallback](ecosystem.ttl#applicationRegistrationCallback)
+[interop:applicationRegistrationCallback](interop.ttl#applicationRegistrationCallback)
 provided in the application profile document.
 
 ### Creating the application registration entry ### {#appreg-creating}
@@ -374,37 +374,37 @@ the [=Application Registration=] in conformance with the
 documented [[#appreg-structure]] pattern.
 
 Specifically, the
-[ecot:application-registration-tree](ecosystem.tree#application-registration-tree)
+[interopt:application-registration-tree](interop.tree#application-registration-tree)
 stipulates that the [=Application Registration=] be a container via
 `st:expectsType st:ShapeTreeContainer`.
 
 The [=Application Registration=] must be added to the RDF
 graph of that container with a `<#registration>` subject, and pass validation
 against the
-[ecos:ApplicationRegistrationShape](ecosystem.shex#ApplicationRegistrationShape).
+[interops:ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape).
 
 The [=Application Registration's=] properties must be set as follows:
 
-* [eco:registeredBy](ecosystem.ttl#registeredBy): linked to the [=identity=]
+* [interop:registeredBy](interop.ttl#registeredBy): linked to the [=identity=]
     of the [=authenticated agent=] that invoked the registration
     (i.e. the [=webid=] of the [=Agent=])
-* [eco:registeredWith](ecosystem.ttl#registeredWith): linked to the
+* [interop:registeredWith](interop.ttl#registeredWith): linked to the
     [=ApplicationID=] of the [=trusted agent=] that facilitated the
     registration, typically the [=application registration agent=].
-* [eco:registeredApplication](ecosystem.ttl#registeredApplication): linked to
+* [interop:registeredApplication](interop.ttl#registeredApplication): linked to
     the [=ApplicationID=] of the [=Application=] that is being registered.
-* [eco:registeredAt](ecosystem.ttl#registeredAt): the `xsd:dateTime` of
+* [interop:registeredAt](interop.ttl#registeredAt): the `xsd:dateTime` of
     the registration.
 
 <figure>
   <figcaption>Example [=Application Registration=]</figcaption>
   <pre highlight="turtle">
   <#registration>
-    a eco:applicationRegistration ;
-    eco:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-    eco:registeredWith &lt;https://trusted.example/ar&gt; ;
-    eco:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
-    eco:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+    a interop:applicationRegistration ;
+    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
+    interop:registeredWith &lt;https://trusted.example/ar&gt; ;
+    interop:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
+    interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
   </pre>
 </figure>
 
@@ -419,5 +419,5 @@ instructions in [[#appreg-permissions]].
 
 The [=Application Registration=] must be associated with the
 [=Application Registry=] through the
-[eco:hasRegistry](ecosystem.ttl#hasRegistry) property in
+[interop:hasRegistry](interop.ttl#hasRegistry) property in
 the graph of the [=Application Registry=].

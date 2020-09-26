@@ -1,4 +1,4 @@
-PREFIX eco: <http://www.w3.org/ns/solid/ecosystem#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 
@@ -6,192 +6,184 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Agent
 ################################################################
 
-# Validate an instance of the eco:Agent class
+# Validate an instance of the interop:Agent class
 <#AgentShape> {
-  a [ eco:Agent ] ;
-  eco:hasRegistrar IRI
-}
-
-################################################################
-# Registrar
-################################################################
-
-# Registrar
-# Validate an instance of the eco:Registrar class
-<#RegistrarShape> {
-  a [ eco:Registrar ] ;
-  eco:hasApplicationRegistrySet IRI ;
-  eco:hasDataRegistrySet IRI
+  a [ interop:Agent ] ;
+  interop:hasApplicationRegistrySet IRI ;
+  interop:hasDataRegistrySet IRI ;
+  interop:hasAccessRegistrySet IRI ;
+  interop:hasAccessReceiptRegistrySet IRI ;
+  interop:hasRemoteDataRegistrySet IRI ;
 }
 
 # Application Registry Set
-# Validate an instance of the eco:ApplicationRegistrySet class
+# Validate an instance of the interop:ApplicationRegistrySet class
 ################################################################
 <#ApplicationRegistrySetShape> {
-  a [ eco:ApplicationRegistrySet ] ;
-  eco:hasRegistry IRI+
+  a [ interop:ApplicationRegistrySet ] ;
+  interop:hasRegistry IRI+
 }
 
 # Application Registry
-# Validate an instance of the eco:ApplicationRegistry class
+# Validate an instance of the interop:ApplicationRegistry class
 ################################################################
 <#ApplicationRegistryShape> {
-  a [ eco:ApplicationRegistry ] ;
-  eco:hasRegistration IRI*
+  a [ interop:ApplicationRegistry ] ;
+  interop:hasRegistration IRI*
 }
 
 # Application Registration
-# Validate an instance of the eco:ApplicationRegistration class
+# Validate an instance of the interop:ApplicationRegistration class
 ################################################################
 <#ApplicationRegistrationShape> {
-  a [ eco:ApplicationRegistration ] ;
-  eco:registeredBy IRI ;
-  eco:registeredWith IRI ;
-  eco:registeredAt xsd:dateTime ;
-  eco:updatedAt xsd:dateTime ;
-  eco:registeredApplication IRI ;
-  eco:hasAccessReceipt IRI?
+  a [ interop:ApplicationRegistration ] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:registeredApplication IRI ;
+  interop:hasAccessReceipt IRI?
 }
 
 # Data Registry Set
-# Validate an instance of the eco:DataRegistrySet class
+# Validate an instance of the interop:DataRegistrySet class
 ################################################################
 <#DataRegistrySetShape> {
-  a [ eco:DataRegistrySet ] ;
-  eco:hasRegistry IRI+
+  a [ interop:DataRegistrySet ] ;
+  interop:hasRegistry IRI+
 }
 
 # Data Registry
-# Validate an instance of the eco:DataRegistry class
+# Validate an instance of the interop:DataRegistry class
 ################################################################
 <#DataRegistryShape> {
-  a [ eco:DataRegistry ] ;
-  eco:hasRegistration IRI*
+  a [ interop:DataRegistry ] ;
+  interop:hasRegistration IRI*
 }
 
 # Data Registration
-# Validate an instance of the eco:DataRegistration class
+# Validate an instance of the interop:DataRegistration class
 ################################################################
 <#DataRegistrationShape> {
-  a [ eco:DataRegistration ] ;
-  eco:registeredBy IRI ;
-  eco:registeredWith IRI ;
-  eco:registeredAt xsd:dateTime ;
-  eco:updatedAt xsd:dateTime ;
-  eco:registeredShapeTree IRI ;
-  eco:hasRegisteredDataInstance IRI*
+  a [ interop:DataRegistration ] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:registeredShapeTree IRI ;
+  interop:hasRegisteredDataInstance IRI*
 }
 
 ################################################################
 # Application
 ################################################################
 
-# Validate an instance of the eco:Application class
+# Validate an instance of the interop:Application class
 <#ApplicationShape> {
-  a [ eco:Application ] ;
-  eco:applicationName xsd:string ;
-  eco:applicationDescription xsd:string ;
-  eco:applicationAuthor IRI ;
-  eco:applicationAuthorName xsd:string ;
-  eco:applicationThumbanil IRI ;
-  eco:hasAccessNeedGroup IRI* ;
-  eco:hasCollaborativeAccessNeedGroup IRI*
+  a [ interop:Application ] ;
+  interop:applicationName xsd:string ;
+  interop:applicationDescription xsd:string ;
+  interop:applicationAuthor IRI ;
+  interop:applicationAuthorName xsd:string ;
+  interop:applicationThumbanil IRI ;
+  interop:hasAccessNeedGroup IRI* ;
+  interop:hasCollaborativeAccessNeedGroup IRI*
 }
 
 ################################################################
 # Access Need Groups
 ################################################################
 
-# Validate an instance of the eco:AccessNeedGroup class
+# Validate an instance of the interop:AccessNeedGroup class
 <#AccessNeedGroupShape> {
-  a [ eco:AccessNeedGroup ] ;
-  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
-  eco:accessScenario [ eco:PersonalAccess eco:SharedAccess ]+ ;
-  eco:authenticatesAs IRI ;
-  eco:hasAccessNeed IRI+ ;
-  eco:hasAccessNeedOverride IRI* ;
-  eco:hasAccessDecoratorIndex IRI
+  a [ interop:AccessNeedGroup ] ;
+  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
+  interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
+  interop:authenticatesAs IRI ;
+  interop:hasAccessNeed IRI+ ;
+  interop:hasAccessNeedOverride IRI* ;
+  interop:hasAccessDecoratorIndex IRI
 }
 
-# Validate an instance of the eco:AccessNeed class
+# Validate an instance of the interop:AccessNeed class
 <#AccessNeedShape> {
-  a [ eco:AccessNeed ] ;
-  eco:inAccessNeedGroup IRI+ ;
-  eco:registeredShapeTree IRI ;
-  eco:hasRegisteredDataInstance IRI* ;
-  eco:recursivelyAuthorize [ true false ] ;
-  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
+  a [ interop:AccessNeed ] ;
+  interop:inAccessNeedGroup IRI+ ;
+  interop:registeredShapeTree IRI ;
+  interop:hasRegisteredDataInstance IRI* ;
+  interop:recursivelyAuthorize [ true false ] ;
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
 }
 
-# Validate an instance of a prepared eco:PreparedAccessNeedGroup class
+# Validate an instance of a prepared interop:PreparedAccessNeedGroup class
 <#PreparedAccessNeedGroupShape> {
-  a [ eco:PreparedAccessNeedGroup ] ;
-  eco:fromAccessNeedGroup IRI ;
-  eco:hasAccessNeedGroupDecorator IRI ;
-  eco:authenticatesAs IRI ;
-  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
-  eco:accessScenario [ eco:PersonalAccess eco:SharedAccess ]+ ;
-  eco:isEnabled xsd:boolean? ;
-  eco:hasPreparedAccessNeed IRI+ ;
+  a [ interop:PreparedAccessNeedGroup ] ;
+  interop:fromAccessNeedGroup IRI ;
+  interop:hasAccessNeedGroupDecorator IRI ;
+  interop:authenticatesAs IRI ;
+  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
+  interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
+  interop:isEnabled xsd:boolean? ;
+  interop:hasPreparedAccessNeed IRI+ ;
 }
 
-# Validate an instance of the eco:PreparedAccessNeed class
+# Validate an instance of the interop:PreparedAccessNeed class
 <#PreparedAccessNeedShape> {
-  a [ eco:PreparedAccessNeed ] ;
-  eco:inPreparedAccessNeedGroup IRI+ ;
-  eco:hasShapeTreeDecorator IRI ;
-  eco:hasAccessNeedDecorator IRI? ;
-  eco:hasDataGrant IRI? ;
-  eco:hasRegisteredDataInstance IRI* ;
-  eco:registeredShapeTree IRI ;
-  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  eco:accessNecessity [ eco:AccessRequired eco:AccessOptional ] ;
-  eco:supportedBy IRI* ;
-  eco:supports IRI
-  eco:referencesPreparedAccessNeed IRI* ;
+  a [ interop:PreparedAccessNeed ] ;
+  interop:inPreparedAccessNeedGroup IRI+ ;
+  interop:hasShapeTreeDecorator IRI ;
+  interop:hasAccessNeedDecorator IRI? ;
+  interop:hasDataGrant IRI? ;
+  interop:hasRegisteredDataInstance IRI* ;
+  interop:registeredShapeTree IRI ;
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
+  interop:supportedBy IRI* ;
+  interop:supports IRI
+  interop:referencesPreparedAccessNeed IRI* ;
   skos:narrower IRI* ;
 }
 
 <#AccessDecoratorIndexShape> {
-  a [ eco:AccessDecoratorIndex ] ;
-  eco:defaultLanguage xsd:language ;
-  eco:hasSeries @AccessDecoratorSeries+ ;
+  a [ interop:AccessDecoratorIndex ] ;
+  interop:defaultLanguage xsd:language ;
+  interop:hasSeries @AccessDecoratorSeries+ ;
 }
 
 <#AccessDecoratorSeriesShape> {
-  a [ eco:AccessDecoratorSeries ] ;
-  eco:usesLanguage xsd:language ;
-  eco:hasVersion @AccessDecoratorVersion+ ;
+  a [ interop:AccessDecoratorSeries ] ;
+  interop:usesLanguage xsd:language ;
+  interop:hasVersion @AccessDecoratorVersion+ ;
 }
 
 <#AccessDecoratorVersionShape> {
-  a [ eco:AccessDecoratorVersion ] ;
-  eco:isVersion xsd:string ;
-  eco:hasSHA256 xsd:string ;
-  eco:hasAccessDecoratorResource IRI ;
+  a [ interop:AccessDecoratorVersion ] ;
+  interop:isVersion xsd:string ;
+  interop:hasSHA256 xsd:string ;
+  interop:hasAccessDecoratorResource IRI ;
 }
 
 <#AccessNeedGroupDecoratorShape> {
-  a [ eco:AccessNeedGroupDecorator ] ;
-  eco:hasAccessNeedGroup IRI ;
+  a [ interop:AccessNeedGroupDecorator ] ;
+  interop:hasAccessNeedGroup IRI ;
   skos:prefLabel xsd:string ;
   skos:definition xsd:string
 }
 
 <#AccessNeedDecoratorShape> {
-  a [ eco:AccessNeedDecorator ] ;
-  eco:hasAccessNeedGroup IRI ;
-  eco:registeredShapeTree IRI ;
+  a [ interop:AccessNeedDecorator ] ;
+  interop:hasAccessNeedGroup IRI ;
+  interop:registeredShapeTree IRI ;
   skos:prefLabel xsd:string
 }
 
 # Access Request
 <#AccessRequestShape> {
-  a [eco:AccessRequest] ;
-  eco:fromAgent IRI ;             # Agent who sent the receipt
-  eco:toAgent IRI ;               # Recipient of the receipt
-  eco:hasAccessNeedGroup @<#:AccessNeedGroupShape>+
+  a [interop:AccessRequest] ;
+  interop:fromAgent IRI ;             # Agent who sent the receipt
+  interop:toAgent IRI ;               # Recipient of the receipt
+  interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+
 }
 
 ################################################################
@@ -199,59 +191,59 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 ################################################################
 
 # Access Registry Set
-# Validate an instance of the eco:AccessRegistrySet class
+# Validate an instance of the interop:AccessRegistrySet class
 ################################################################
 <#AccessRegistrySetShape> {
-  a [ eco:AccessRegistrySet ] ;
-  eco:hasRegistry IRI+
+  a [ interop:AccessRegistrySet ] ;
+  interop:hasRegistry IRI+
 }
 
 # Access Registry
-# Validate an instance of the eco:AccessRegistry class
+# Validate an instance of the interop:AccessRegistry class
 ################################################################
 <#AccessRegistryShape> {
-  a [ eco:AccessRegistry ] ;
-  eco:hasRegistration IRI*
+  a [ interop:AccessRegistry ] ;
+  interop:hasRegistration IRI*
 }
 
 # Validate an instance of the AccessGrant class
 <#AccessGrantShape> {
-  a [ eco:AccessGrant ] ;
-  eco:registeredBy IRI ;
-  eco:registeredWith IRI? ;
-  eco:registeredAt xsd:dateTime ;
-  eco:updatedAt xsd:dateTime ;
-  eco:accessGrantSubject @<#:AccessGrantSubject> ;
-  eco:hasPreparedAccessNeedGroup @<#:PreparedAccessNeedGroupShape>+ ;
-  eco:hasDataGrant @<#:DataGrantShape>+
+  a [ interop:AccessGrant ] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI? ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:accessGrantSubject @<#:AccessGrantSubject> ;
+  interop:hasPreparedAccessNeedGroup @<#:PreparedAccessNeedGroupShape>+ ;
+  interop:hasDataGrant @<#:DataGrantShape>+
 }
 
 <#AccessGrantSubjectShape> {
-  a [ eco:AccessGrantSubject ] ;
-  eco:accessGrantSubjectAgent IRI? ;
-  eco:accessGrantSubjectApplication IRI?
+  a [ interop:AccessGrantSubject ] ;
+  interop:accessGrantSubjectAgent IRI? ;
+  interop:accessGrantSubjectApplication IRI?
 }
 
 # Access Invitation Channel
 <#AccessInvitationShape> {
-  a [ eco:AccessInvitation ] ;
-  eco:registeredBy IRI ;
-  eco:registeredWith IRI? ;
-  eco:registeredAt xsd:dateTime ;
-  eco:updatedAt xsd:dateTime ;
-  eco:expiresAt xsd:dateTime? ;
-  eco:hasPreparedAccessNeedGroup @<#:PreparedAccessNeedGroupShape>+ ;
-  eco:hasDataGrant @<#:DataGrantShape>+
-  eco:hasAccessInvitationChannel @<#:AccessInvitationChannelShape>+ ;
+  a [ interop:AccessInvitation ] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI? ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:expiresAt xsd:dateTime? ;
+  interop:hasPreparedAccessNeedGroup @<#:PreparedAccessNeedGroupShape>+ ;
+  interop:hasDataGrant @<#:DataGrantShape>+
+  interop:hasAccessInvitationChannel @<#:AccessInvitationChannelShape>+ ;
 }
 
 # Access Invitation Channel
 <#AccessInvitationChannelShape> {
    a @<#ChannelTypes> ;
-   eco:channelTarget xsd:string ;
-   eco:channelCode xsd:string ;
-   eco:isValidated xsd:boolean ;
-   eco:remainingAttempts xsd:integer
+   interop:channelTarget xsd:string ;
+   interop:channelCode xsd:string ;
+   interop:isValidated xsd:boolean ;
+   interop:remainingAttempts xsd:integer
 }
 
 # Access Invitation Channel Types
@@ -264,97 +256,97 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 # Data Grant
 <#DataGrantShape> {
-  a [ eco:DataGrant ] ;
-  eco:hasRegistration IRI ;
-  eco:registeredShapeTree IRI ;
-  eco:satisfiesPreparedAccessNeed @<#:PreparedAccessNeedShape>+ ;
-  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  eco:scopeOfDataGrant [ eco:SelectedInstances
-                         eco:AllInstances
-                         eco:InheritInstances
-                         eco:NoAccess ]+ ;
-  eco:hasRegisteredDataInstance IRI* ;
-  eco:inheritsFrom @<#:DataGrantShape>*
+  a [ interop:DataGrant ] ;
+  interop:hasRegistration IRI ;
+  interop:registeredShapeTree IRI ;
+  interop:satisfiesPreparedAccessNeed @<#:PreparedAccessNeedShape>+ ;
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:scopeOfDataGrant [ interop:SelectedInstances
+                         interop:AllInstances
+                         interop:InheritInstances
+                         interop:NoAccess ]+ ;
+  interop:hasRegisteredDataInstance IRI* ;
+  interop:inheritsFrom @<#:DataGrantShape>*
 }
 
 # Access Receipt Registry Set
 <#AccessReceiptRegistrySetShape> {
-  a [ eco:AccessReceiptRegistrySet ] ;
-  eco:hasRegistry IRI+
+  a [ interop:AccessReceiptRegistrySet ] ;
+  interop:hasRegistry IRI+
 }
 
 # Access Receipt Registry
 <#AccessReceiptRegistryShape> {
-  a [ eco:AccessReceiptRegistry ] ;
-  eco:hasRegistration IRI*
+  a [ interop:AccessReceiptRegistry ] ;
+  interop:hasRegistration IRI*
 }
 
 # Access Receipt
 <#AccessReceiptShape> {
-  a [eco:AccessReceipt] ;
-  eco:fromAgent IRI ;             # Agent who sent the receipt
-  eco:toAgent IRI ;               # Recipient of the receipt
-  eco:registeredBy IRI ;
-  eco:registeredWith IRI? ;
-  eco:registeredAt xsd:dateTime ;
-  eco:updatedAt xsd:dateTime ;
-  eco:providedAt xsd:dateTime ;
-  eco:hasDataReceipt @<#:DataReceiptShape> ;
+  a [interop:AccessReceipt] ;
+  interop:fromAgent IRI ;             # Agent who sent the receipt
+  interop:toAgent IRI ;               # Recipient of the receipt
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI? ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:providedAt xsd:dateTime ;
+  interop:hasDataReceipt @<#:DataReceiptShape> ;
 }
 
 # Data Receipt
 <#DataReceiptShape> {
-  a [eco:DataReceipt] ;
-  eco:hasRegistration IRI ;       # Remote data registration
-  eco:registeredShapeTree IRI ;   # Associated shape tree
-  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  eco:scopeOfDataGrant [ eco:SelectedInstances
-                         eco:AllInstances
-                         eco:InheritInstances
-                         eco:NoAccess ]+ ;
-  eco:hasRegisteredDataInstance IRI* ;     # if specific instances are selected or inherited
-  eco:inheritsFrom @<#:DataReceiptShape>* ;
-  eco:replacedBy IRI?
+  a [interop:DataReceipt] ;
+  interop:hasRegistration IRI ;       # Remote data registration
+  interop:registeredShapeTree IRI ;   # Associated shape tree
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:scopeOfDataGrant [ interop:SelectedInstances
+                         interop:AllInstances
+                         interop:InheritInstances
+                         interop:NoAccess ]+ ;
+  interop:hasRegisteredDataInstance IRI* ;     # if specific instances are selected or inherited
+  interop:inheritsFrom @<#:DataReceiptShape>* ;
+  interop:replacedBy IRI?
 }
 
 # Remote Data Registry Set
 <#RemoteDataRegistrySetShape> {
-  a [ eco:RemoteDataRegistrySet ] ;
-  eco:hasRegistry IRI+
+  a [ interop:RemoteDataRegistrySet ] ;
+  interop:hasRegistry IRI+
 }
 
 # Remote Data Registry
 <#RemoteDataRegistryShape> {
-  a [ eco:RemoteDataRegistry ] ;
-  eco:hasRegistration IRI*
+  a [ interop:RemoteDataRegistry ] ;
+  interop:hasRegistration IRI*
 }
 
 # Remote Data Registration
 <#RemoteDataRegistration> {
-  a [eco:RemoteDataRegistration] ;
-  eco:registeredBy IRI ;
-  eco:registeredWith IRI ;
-  eco:registeredAt xsd:dateTime ;
-  eco:updatedAt xsd:dateTime ;
-  eco:providedAt xsd:dateTime ;
-  eco:hasRegistration IRI ;           # Remote data registration
-  eco:registeredShapeTree IRI ;       # Associated shape tree
-  eco:scopeOfDataGrant [ eco:SelectedInstances
-                         eco:AllInstances
-                         eco:InheritInstances
-                         eco:NoAccess ]+ ;
-  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  eco:hasRemoteDataInstance IRI* ;    # if specific instances are selected or inherited
-  eco:hasAccessReceipt IRI+ ;         # Associated access receipts
+  a [interop:RemoteDataRegistration] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:providedAt xsd:dateTime ;
+  interop:hasRegistration IRI ;           # Remote data registration
+  interop:registeredShapeTree IRI ;       # Associated shape tree
+  interop:scopeOfDataGrant [ interop:SelectedInstances
+                         interop:AllInstances
+                         interop:InheritInstances
+                         interop:NoAccess ]+ ;
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:hasRemoteDataInstance IRI* ;    # if specific instances are selected or inherited
+  interop:hasAccessReceipt IRI+ ;         # Associated access receipts
 }
 
 # Remote Data Instance
 <#RemoteDataInstance> {
-  a [eco:RemoteDataInstance] ;
-  eco:hasRegisteredDataInstance IRI ; # Remote registered data instance
-  eco:registeredAt xsd:dateTime ;
-  eco:providedAt xsd:dateTime ;
-  eco:registeredShapeTree IRI ;       # Associated shape tree
-  eco:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  eco:hasAccessReceipt IRI+ ;         # Associated access receipts
+  a [interop:RemoteDataInstance] ;
+  interop:hasRegisteredDataInstance IRI ; # Remote registered data instance
+  interop:registeredAt xsd:dateTime ;
+  interop:providedAt xsd:dateTime ;
+  interop:registeredShapeTree IRI ;       # Associated shape tree
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:hasAccessReceipt IRI+ ;         # Associated access receipts
 }
