@@ -18,8 +18,8 @@ subclasses and subproperties.
 An [=Agent=] has a [=Registrar=] that links to [=Access Grant Registry Sets=]
 via the [interop:hasAccessGrantRegistrySet](interop.ttl#hasAccessGrantRegistrySet) property.
 
-A [=Access Grant Registry Set=] links to any number of [=Access Registries=] via
-the [interop:hasRegistry](interop.ttl#hasRegistry) property.
+A [=Access Grant Registry Set=] links to any number of [=Access Grant Registries=]
+via the [interop:hasRegistry](interop.ttl#hasRegistry) property.
 
 An [=Access Grant Registry=] links to any number of registered [=Access Grants=]
 and [=Access Invitations=] via the
@@ -39,7 +39,7 @@ and [=Access Invitations=] via the
 <figure id ="fig-access-registry-set">
    <figcaption>An [=Access Grant Registry Set=] at
    https://alice.pod.example/registries/grant#set linking to two different
-  [=Access Registries=]</figcaption>
+  [=Access Grant Registries=]</figcaption>
   <pre highlight="turtle">
   <#set>
     a interop:AccessGrantRegistrySet;
@@ -205,7 +205,7 @@ and [=Access Invitations=] via the
 ### Access Grant Registry Set ### {#datamodel-access-registry-set}
 
 An <dfn>Access Grant Registry Set</dfn> is a [=Registry Set=] specifically
-made up of [=Access Registries=].
+made up of [=Access Grant Registries=].
 
 <table class="classinfo data" align="left" id="classAccessGrantRegistrySet">
   <colgroup></colgroup>
@@ -228,7 +228,7 @@ made up of [=Access Registries=].
     <tr>
       <td>hasRegistry</td>
       <td>Registry</td>
-      <td>Link to associated [=Access Registries=]</td>
+      <td>Link to associated [=Access Grant Registries=]</td>
     </tr>
   </tbody>
 </table>
