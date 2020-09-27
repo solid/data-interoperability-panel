@@ -46,7 +46,7 @@ of [=Registry=] serves a specific purpose or function.
     <tr>
       <td>Access Grant Registry</td>
       <td>Records access granted to other [=Agents=] and/or [=Applications=]
-      <i>See [[#access|Access Grants]]</i></td>
+      <i>See [[#grants|Access Grants]]</i></td>
     </tr>
     <tr>
       <td>Access Receipt Registry</td>
@@ -90,7 +90,7 @@ assigned to each [=Registry Set=], depending on the sensitivity of the
     ######## Registry Sets ########
     interop:hasApplicationRegistrySet &lt;https://alice.pod.example/profile/application#set&gt; ;
     interop:hasDataRegistrySet &lt;https://alice.pod.example/profile/data#set&gt; ;
-    interop:hasAccessGrantRegistrySet &lt;https://alice.pod.example/profile/access#set&gt; ;
+    interop:hasAccessGrantRegistrySet &lt;https://alice.pod.example/profile/grant#set&gt; ;
     interop:hasAccessReceiptRegistrySet &lt;https://alice.pod.example/profile/receipt#set&gt; ;
     interop:hasRemoteDataRegistrySet &lt;https://alice.pod.example/profile/remote#set&gt; ;
     ######## Inboxes ########
@@ -167,7 +167,7 @@ The [AgentShape](#shexAgent) is used to validate an instance of the
   a [ interop:Agent ] ;
   interop:hasApplicationRegistrySet IRI ;
   interop:hasDataRegistrySet IRI ;
-  interop:hasAccessRegistrySet IRI ;
+  interop:hasAccessGrantRegistrySet IRI ;
   interop:hasAccessReceiptRegistrySet IRI ;
   interop:hasRemoteDataRegistrySet IRI ;
   interop:hasInbox IRI ;
@@ -175,12 +175,12 @@ The [AgentShape](#shexAgent) is used to validate an instance of the
 }
 </pre>
 
-The [AgentTree](interop.tree#agent-tree)
+The [AgentTree](interop.tree#AgentTree)
 is assigned to a resource to ensure it will validate against the
 [AgentShape](#shexAgent).
 
 <pre highlight="turtle" id="treeAgent">
-<#agent-tree>
+<#AgentTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy &lt;interops#AgentShape&gt; ;
@@ -228,10 +228,10 @@ is assigned to a resource to ensure it will validate against the
       <td>[DataRegistrySetTree](#)</td>
     </tr>
     <tr>
-      <td>`-- access#set`</td>
-      <td>[AccessRegistrySet](#classAccessRegistrySet)</td>
-      <td>[AccessRegistrySetShape](#shexAccessRegistrySet)</td>
-      <td>[AccessRegistrySetTree](#treeAccessRegistrySet)</td>
+      <td>`-- grant#set`</td>
+      <td>[AccessGrantRegistrySet](#classAccessGrantRegistrySet)</td>
+      <td>[AccessGrantRegistrySetShape](#shexAccessGrantRegistrySet)</td>
+      <td>[AccessGrantRegistrySetTree](#treeAccessGrantRegistrySet)</td>
     </tr>
     <tr>
       <td>`-- receipt#set`</td>

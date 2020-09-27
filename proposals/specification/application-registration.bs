@@ -80,17 +80,17 @@ collection of [=Application Registrations=] stored in
 the `/applications` container.
 
 The shape tree
-[interopt:application-registry-tree](interop.tree#application-registry-tree)
+[interopt:ApplicationRegistryTree](interop.tree#ApplicationRegistryTree)
 associated with the `/applications` container specifies this resource
 structure. It assigns the
 [interops:ApplicationRegistryShape](interop.shex#ApplicationRegistryShape)
 to validate the [=Application Registry=] instance data in the
 container resource, and says that the container includes instances of
-[interopt:application-registration-tree](interop.tree#application-registration-tree),
+[interopt:ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree),
 which any resources added to the `/applications` container must conform to.
 
 Conforming to
-[interopt:application-registration-tree](interop.tree#application-registration-tree)
+[interopt:ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)
 ensures that the container for the [=Application Registry=] at
 `/applications#registry` only contains valid [=Application Registrations=].
 
@@ -119,7 +119,7 @@ configuration resource (`config.ttl`) and a summary index file (`summary.idx`).
 
 In this proposal, resource names for ecosystem instances are almost always
 randomly generated. However, when creating an
-[interopt:application-registration-tree](interop.tree#application-registration-tree)
+[interopt:ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)
 for an [=Application Registration=], the container
 must be named using a SHA-256 hash encoding of the [=ApplicationID=] for the
 [=Application=], which is linked through the
@@ -374,7 +374,7 @@ the [=Application Registration=] in conformance with the
 documented [[#appreg-structure]] pattern.
 
 Specifically, the
-[interopt:application-registration-tree](interop.tree#application-registration-tree)
+[interopt:ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)
 stipulates that the [=Application Registration=] be a container via
 `st:expectsType st:ShapeTreeContainer`.
 

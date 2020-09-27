@@ -40,31 +40,38 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 
 :hasRegistrySet
   a rdf:property ;
-  rdfs:comment "Links an agent's registrar to a registry set"@en ;
+  rdfs:comment "Links an agent to their registry set"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:range :RegistrySet ;
   rdfs:label "Has registry set"@en .
 
 :hasApplicationRegistrySet
   rdfs:subPropertyOf :hasRegistrySet ;
-  rdfs:comment "Links an agent's registrar to an application registry set"@en ;
+  rdfs:comment "Links an agent to their application registry set"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:range :ApplicationRegistrySet ;
   rdfs:label "Has application registry set"@en .
 
 :hasDataRegistrySet
   rdfs:subPropertyOf :hasRegistrySet ;
-  rdfs:comment "Links an agent's registrar to a data registry set"@en ;
+  rdfs:comment "Links an agent to their data registry set"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:range :DataRegistrySet ;
   rdfs:label "Has data registry set"@en .
 
-:hasAccessRegistrySet
+:hasAccessGrantRegistrySet
   rdfs:subPropertyOf :hasRegistrySet ;
-  rdfs:comment "Links an agent's registrar to an access registry set"@en ;
+  rdfs:comment "Links an agent to their access grant registry set"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:range :AccessRegistrySet ;
-  rdfs:label "Has access registry set"@en .
+  rdfs:range :AccessGrantRegistrySet ;
+  rdfs:label "Has access grant registry set"@en .
+
+:hasAccessReceiptRegistrySet
+  rdfs:subPropertyOf :hasRegistrySet ;
+  rdfs:comment "Links an agent to their access receipt registry set"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range :AccessReceiptRegistrySet ;
+  rdfs:label "Has access receipt registry set"@en .
 
 # RegistrySet Class
 #############################################################################
@@ -203,17 +210,17 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 #############################################################################
 # Access Grants
 #############################################################################
-:AccessRegistrySet
+:AccessGrantRegistrySet
   rdfs:subClassOf :RegistrySet ;
-  rdfs:comment "A collection of Access Registry instances"@en ;
+  rdfs:comment "A collection of Access Grant Registry instances"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Access Registry Set"@en .
+  rdfs:label "Access Grant Registry Set"@en .
 
-:AccessRegistry
+:AccessGrantRegistry
   rdfs:subClassOf :Registry ;
   rdfs:comment "A collection of Access Grant instances"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Access Registry"@en .
+  rdfs:label "Access Grant Registry"@en .
 
 :AccessGrant
   rdfs:subClassOf :Registration
@@ -574,14 +581,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:range :AccessNeedGroup ;
   rdfs:label "Has Access Need Group"@en .
-
-:hasCollaborativeAccessNeedGroup
-  a rdf:property ;
-  rdfs:comment "Links to AccessNeedGroup used for data sharing"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :Application ;
-  rdfs:range :AccessNeedGroup ;
-  rdfs:label "Has Collaborative Access Need Group"@en .
 
 #############################################################################
 # Access Needs

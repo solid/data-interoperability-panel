@@ -13,7 +13,7 @@ by an ecosystem participant.
 * A common way to express [[#needs]] allows [=ecosystem=] participants to
     convey the types or specific instances of data they require.
 
-* [[#access]] record access decisions made by an [=Agent=] on the data in their
+* [[#grants]] record access decisions made by an [=Agent=] on the data in their
     control.
 
 * [[#receipts]] reflect [=Access Grants=] that one [=Agent=] has provided
@@ -48,17 +48,17 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
     1. `AUTHZ` looks in `APP`'s [=application profile document=] for
         [=Access Need Groups=] with an `interop:accessScenario` of
         `interop:PersonalAccess`
-    1. Any [=Access Need Groups=] found are passed to the [[#access-present]]
+    1. Any [=Access Need Groups=] found are passed to the [[#grants-present]]
         operation, which presents them to `CONTROLLER`.
     1. `CONTROLLER` decides whether to grant `APP` the access requested.
     1. `CONTROLLER` authorizes the requested [=Access Need Groups=]
         and [=Access Needs=]:
         1. The [[#appreg-new|Register Application]] operation is called
             to register `APP` in `CONTROLLER`'s [=Application Registry=].
-        1. The [[#access-recordgrant]] operation is invoked
+        1. The [[#grants-recordgrant]] operation is invoked
             1. An [=Access Grant=] is stored in `CONTROLLER`'s
-                [=Access Registry=].
-            1. [[#access-applyperms]] is called to apply permissions based
+                [=Access Grant Registry=].
+            1. [[#grants-applyperms]] is called to apply permissions based
                 on the [=Access Grant=].
             1. [[#receipts-provide]] is called to store the
                 [=Access Receipt=]. The Application has set
@@ -101,15 +101,15 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
     `CONTROLLER` when a new [=Access Request=] is received.
     1. `CONTROLLER` clicks a link in the notification from `CAUTHZ`,
         opening the `CAUTHZ` user interface and invoking the
-        [[#access-present]] operation using the [=Access Need Groups=] from
+        [[#grants-present]] operation using the [=Access Need Groups=] from
         the [=Access Request=].
     1. `CONTROLLER` determines whether they wish to grant the access requested.
     1. Assuming `CONTROLLER` authorizes a minimum of the
         required [=Access Need Groups=] and [=Access Needs=],
-        the [[#access-recordgrant]] operation is invoked.
-    1. [[#access-recordgrant]] stores an [=Access Grant=] in `CONTROLLER`'s
-        [=Access Registry=].
-        1. [[#access-applyperms]] is called to apply permissions based on the
+        the [[#grants-recordgrant]] operation is invoked.
+    1. [[#grants-recordgrant]] stores an [=Access Grant=] in `CONTROLLER`'s
+        [=Access Grant Registry=].
+        1. [[#grants-applyperms]] is called to apply permissions based on the
             [=Access Grant=].
         1. [[#receipts-provide]] is called to deliver the [=Access Receipt=].
             1. `CAUTHZ` dereferences `REQUESTER`'s [=identity=] to get
@@ -158,14 +158,14 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
     1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
         [=Access Need Groups=] with an `interop:accessScenario` of
         `interop:SharedAccess`
-    1. Any [=Access Need Groups=] found are passed to the [[#access-present]]
+    1. Any [=Access Need Groups=] found are passed to the [[#grants-present]]
         operation, which presents them to `CONTROLLER`.
     1. `CONTROLLER` authorizes the data to share with `RECEIVER` based on
         the provided [=Access Need Groups=].
-        1. The [[#access-recordgrant]] operation is invoked
+        1. The [[#grants-recordgrant]] operation is invoked
             1. An [=Access Grant=] is stored in `CONTROLLER`'s
-                [=Access Registry=].
-            1. [[#access-applyperms]] is called to apply permissions based
+                [=Access Grant Registry=].
+            1. [[#grants-applyperms]] is called to apply permissions based
                 on the [=Access Grant=].
             1. [[#receipts-provide]] is called to store the
                 [=Access Receipt=]. `RECEIVER` has set
@@ -223,14 +223,14 @@ Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
     1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
         [=Access Need Groups=] with an `interop:accessScenario` of
         `interop:SharedAccess`
-    1. Any [=Access Need Groups=] found are passed to the [[#access-present]]
+    1. Any [=Access Need Groups=] found are passed to the [[#grants-present]]
         operation, which presents them to `CONTROLLER`.
     1. `CONTROLLER` authorizes the data to share with `INVITEE` based on
         the provided [=Access Need Groups=].
-        1. The [[#access-recordinvitation]] operation is invoked
+        1. The [[#grants-recordinvitation]] operation is invoked
             1. An [=Access Invitation=] is stored in `CONTROLLER`'s
-                [=Access Registry=].
-            1. [[#access-deliverinvitation]] is called to create an
+                [=Access Grant Registry=].
+            1. [[#grants-deliverinvitation]] is called to create an
                 invitation entry for each [=Access Invitation Channel=] in
                 the [=Access Invitation=] with `CISERVICE`
             1. For each [=Access Invitation Channel=] in the
@@ -246,20 +246,20 @@ Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
         identity and pod with `PROVIDER`.
     1. `INVITEE` clicks a link in the notification bringing them to the
         `CISERVICE` user interface to validate the invitation by
-        invoking [[#access-validateinvitation]].
+        invoking [[#grants-validateinvitation]].
         1. If validation is successful, but there are other
             [=Access Invitation Channels=] left to validate, the `INVITEE` will
             be prompted to validate them. Continue until failure or
             validation of all [=Access Invitation Channels=] are succesful.
         1. `CISERVICE` initializes a new [=Access Grant=] via
-            [[#access-initialize]], using the contents of
+            [[#grants-initializegrant]], using the contents of
             the [=Access Invitation=], and the new registered
             [=identity=] for `INVITEE`.
-        1. `CISERVICE` calls [[#access-recordgrant]] using the
+        1. `CISERVICE` calls [[#grants-recordgrant]] using the
             [=Access Grant=] initialized from the [=Access Invitation=]
             1. An [=Access Grant=] is stored in `CONTROLLER`'s
-                [=Access Registry=].
-            1. [[#access-applyperms]] is called to apply permissions
+                [=Access Grant Registry=].
+            1. [[#grants-applyperms]] is called to apply permissions
                 based on the [=Access Grant=].
             1. [[#receipts-provide]] is called to store the
                 [=Access Receipt=]. `INVITEE` has set

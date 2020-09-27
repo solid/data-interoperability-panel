@@ -9,7 +9,7 @@
   st:contains <#AgentTree> ,
               <#ApplicationRegistrySetTree> ,
               <#DataRegistrySetTree> ,
-              <#AccessRegistrySetTree> ,
+              <#AccessGrantRegistrySetTree> ,
               <#AccessReceiptRegistrySetTree> ,
               <#RemoteDataRegistrySetTree> ,
               st:AllowAll .
@@ -39,10 +39,10 @@
   st:validatedBy <interops#DataRegistrySetShape> ;
   st:matchesUriTemplate "data" .
 
-<#AccessRegistrySetTree>
+<#AccessGrantRegistrySetTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy <interops#AccessRegistrySetShape> ;
+  st:validatedBy <interops#AccessGrantRegistrySetShape> ;
   st:matchesUriTemplate "access" .
 
 <#AccessReceiptRegistrySetTree>
@@ -109,16 +109,16 @@
   st:validatedBy <interops#DataRegistrationShape> ;
   st:matchesUriTemplate "{id}" .
 
-# Access Registry
+# Access Grant Registry
 ##############################################################################
 # Ensure the registry container graph contains a valid
-# AccessRegistry instance, and the resource inside of
+# AccessGrantRegistry instance, and the resource inside of
 # it are valid AccessGrant instances.
 ##############################################################################
-<#AccessRegistryTree>
+<#AccessGrantRegistryTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy <interops#AccessRegistryShape> ;
+  st:validatedBy <interops#AccessGrantRegistryShape> ;
   st:contains <#AccessGrantTree> ,
               <#AccessInvitationTree> ,
               st:AllowNone .

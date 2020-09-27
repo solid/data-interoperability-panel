@@ -144,18 +144,18 @@ Each individual [=Data Registration=] is associated with one
 
 <figure id="fig-datareg-registry-tree">
   <figcaption>Definition of an
-  [interopt:data-registry-tree](interop.tree#data-registry-tree)</figcaption>
+  [interopt:DataRegistryTree](interop.tree#DataRegistryTree)</figcaption>
   <pre highlight="turtle">
-  <#data-registry-tree>
+  <#DataRegistryTree>
     a st:ShapeTree ;
     st:expectsType st:ShapeTreeContainer ;
     st:validatedBy &lt;interops#DataRegistryShape&gt; ;
-    st:contains &lt;#data-registration-tree&gt; ,
+    st:contains &lt;#DataRegistrationTree&gt; ,
                   st:AllowNone .
   </pre>
 </figure>
 
-The [interopt:data-registry-tree](interop.tree#data-registry-tree)
+The [interopt:DataRegistryTree](interop.tree#DataRegistryTree)
 defines the resource structure for the [=Data Registry=], and the data
 validation rules for the resources inside it.
 
@@ -165,18 +165,18 @@ validation rules for the resources inside it.
     graph of the container resource, [as shown](#fig-datareg-registry) in the
     previous section
 * It says that the container includes instances of
-    [interopt:data-registration-tree](interop.tree#data-registration-tree)
+    [interopt:DataRegistrationTree](interop.tree#DataRegistrationTree)
 * It says through `st:AllowNone` that any resources that do not conform to
-    [interopt:data-registration-tree](interop.tree#data-registration-tree) are
+    [interopt:DataRegistrationTree](interop.tree#DataRegistrationTree) are
     not allowed. This container can *only* contain resources that conform to
-    [interopt:data-registration-tree](interop.tree#data-registration-tree).
+    [interopt:DataRegistrationTree](interop.tree#DataRegistrationTree).
 
 <figure id="fig-datareg-registration-tree">
   <figcaption>Definition of an
-  [interopt:data-registration-tree](interop.tree#data-registration-tree)
+  [interopt:DataRegistrationTree](interop.tree#DataRegistrationTree)
   </figcaption>
   <pre highlight="turtle">
-  <#data-registration-tree>
+  <#DataRegistrationTree>
     a st:ShapeTree ;
     st:expectsType st:ShapeTreeContainer ;
     st:validatedBy &lt;interops#DataRegistrationShape&gt; ;
@@ -185,7 +185,7 @@ validation rules for the resources inside it.
 </figure>
 
 Conforming to
-[interopt:data-registration-tree](interop.tree#data-registration-tree)
+[interopt:DataRegistrationTree](interop.tree#DataRegistrationTree)
 ensures that the [=Data Registry=] container at
 `https://alice.pod.example/data/#registry` only contains valid
 [=Data Registrations=].
@@ -218,14 +218,14 @@ Two complementary [=shape trees=] must be assigned to the same
 </figure>
 
 In the figure above, we can observe the combination of the
-[interopt:data-registration-tree](interop.tree#data-registration-tree)
+[interopt:DataRegistrationTree](interop.tree#DataRegistrationTree)
 and the [note:note-container-tree](note.tree#note-container-tree) on the
 same [=Data Registration=] at
 `https://alice.pod.example/data/49a4057a-6ade-4a9d-9869-085a00925259/#registration`.
 
 A [=Data Registration=] can't know which specific
 [=shape tree=] will be registered in advance, so the
-[interopt:data-registration-tree](interop.tree#data-registration-tree)
+[interopt:DataRegistrationTree](interop.tree#DataRegistrationTree)
 can't specify the expected contents of the container with `st:contains`.
 
 However, it is crucial that the contents of the [=Data Registration=] container
@@ -515,15 +515,15 @@ in the Trusted Agents section.
 [=Data Registrations=] must be created in conformance with the
 documented [[#datareg-structure]] pattern.
 
-The [interopt:data-registration-tree](interop.tree#data-registration-tree)
+The [interopt:DataRegistrationTree](interop.tree#DataRegistrationTree)
 must be assigned to the [=Data Registration=] resource.
 
 <figure id="fig-datareg-create-registration-tree">
   <figcaption>Definition of an
-  [interopt:data-registration-tree](interop.tree#data-registration-tree)
+  [interopt:DataRegistrationTree](interop.tree#DataRegistrationTree)
   </figcaption>
   <pre highlight="turtle">
-  <#data-registration-tree>
+  <#DataRegistrationTree>
     a st:ShapeTree ;
     st:expectsType st:ShapeTreeContainer ;
     st:validatedBy &lt;interops#DataRegistrationShape&gt; ;
@@ -531,7 +531,7 @@ must be assigned to the [=Data Registration=] resource.
   </pre>
 </figure>
 
-The [interopt:data-registration-tree](interop.tree#data-registration-tree)
+The [interopt:DataRegistrationTree](interop.tree#DataRegistrationTree)
 stipulates the following:
 
 1. The [=Data Registration=] resource must be a container per

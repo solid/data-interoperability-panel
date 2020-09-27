@@ -6,7 +6,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   a [ interop:Agent ] ;
   interop:hasApplicationRegistrySet IRI ;
   interop:hasDataRegistrySet IRI ;
-  interop:hasAccessRegistrySet IRI ;
+  interop:hasAccessGrantRegistrySet IRI ;
   interop:hasAccessReceiptRegistrySet IRI ;
   interop:hasRemoteDataRegistrySet IRI ;
   interop:hasInbox IRI ;
@@ -68,7 +68,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:applicationAuthorName xsd:string ;
   interop:applicationThumbanil IRI ;
   interop:hasAccessNeedGroup IRI* ;
-  interop:hasCollaborativeAccessNeedGroup IRI*
 }
 
 # Access Need Group
@@ -168,15 +167,15 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+
 }
 
-# Access Registry Set
-<#AccessRegistrySetShape> {
-  a [ interop:AccessRegistrySet ] ;
+# Access Grant Registry Set
+<#AccessGrantRegistrySetShape> {
+  a [ interop:AccessGrantRegistrySet ] ;
   interop:hasRegistry IRI+
 }
 
-# Access Registry
-<#AccessRegistryShape> {
-  a [ interop:AccessRegistry ] ;
+# Access Grant Registry
+<#AccessGrantRegistryShape> {
+  a [ interop:AccessGrantRegistry ] ;
   interop:hasRegistration IRI*
 }
 

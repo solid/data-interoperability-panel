@@ -1,60 +1,60 @@
-Access Grants {#access}
+Access Grants {#grants}
 =====================
 
-## Overview ## {#access-overview}
+## Overview ## {#grants-overview}
 
-## Data Model ## {#access-datamodel}
+## Data Model ## {#grants-datamodel}
 
-### Summary ### {#access-datamodel-summary}
+### Summary ### {#grants-datamodel-summary}
 
 <figure id="fig-access-model">
   <img src="diagrams/access-model.svg" width=100%/>
   <figcaption>Data model for the access registry</figcaption>
 </figure>
 
-The [=Access Registry=] extends the [[#datamodel-agent]] with type-specific
+The [=Access Grant Registry=] extends the [[#datamodel-agent]] with type-specific
 subclasses and subproperties.
 
-An [=Agent=] has a [=Registrar=] that links to [=Access Registry Sets=]
-via the [interop:hasAccessRegistrySet](interop.ttl#hasAccessRegistrySet) property.
+An [=Agent=] has a [=Registrar=] that links to [=Access Grant Registry Sets=]
+via the [interop:hasAccessGrantRegistrySet](interop.ttl#hasAccessGrantRegistrySet) property.
 
-A [=Access Registry Set=] links to any number of [=Access Registries=] via
+A [=Access Grant Registry Set=] links to any number of [=Access Registries=] via
 the [interop:hasRegistry](interop.ttl#hasRegistry) property.
 
-An [=Access Registry=] links to any number of registered [=Access Grants=]
+An [=Access Grant Registry=] links to any number of registered [=Access Grants=]
 and [=Access Invitations=] via the
 [interop:hasRegistration](interop.ttl#hasRegistration) property.
 
 <figure id="fig-access-registrar">
   <figcaption>A [=Registrar=] at https://alice.pod.example/registries/#registrar
-  linking to an [=Access Registry Set=]</figcaption>
+  linking to an [=Access Grant Registry Set=]</figcaption>
   <pre highlight="turtle">
   <#registrar>
     a interop:Registrar;
-    interop:hasAccessRegistrySet &lt;https://alice.pod.example/registries/access#set&gt; .
+    interop:hasAccessGrantRegistrySet &lt;https://alice.pod.example/registries/grant#set&gt; .
   </pre>
   </figure>
 </figure>
 
 <figure id ="fig-access-registry-set">
-   <figcaption>An [=Access Registry Set=] at
-   https://alice.pod.example/registries/access#set linking to two different
+   <figcaption>An [=Access Grant Registry Set=] at
+   https://alice.pod.example/registries/grant#set linking to two different
   [=Access Registries=]</figcaption>
   <pre highlight="turtle">
   <#set>
-    a interop:AccessRegistrySet;
-    interop:hasRegistry &lt;https://alice.pod.example/access/#registry&gt; ,
-                    &lt;https://alice.otherpod.example/access/#registry&gt; .
+    a interop:AccessGrantRegistrySet;
+    interop:hasRegistry &lt;https://alice.pod.example/grants/#registry&gt; ,
+                    &lt;https://alice.otherpod.example/grants/#registry&gt; .
   </pre>
 </figure>
 
 <figure id="fig-access-registry">
-  <figcaption>An [=Access Registry=] at https://alice.pod.example/access/#registry
+  <figcaption>An [=Access Grant Registry=] at https://alice.pod.example/grants/#registry
   linking to several registered [=Access Grants=] or
   [=Access Invitations=]</figcaption>
   <pre highlight="turtle">
   <#registry>
-    a interop:AccessRegistry ;
+    a interop:AccessGrantRegistry ;
     interop:hasRegistration &lt;ab3d0023-3860-4358-ae33-8d3af1097b9d#grant&gt; ,
                         &lt;ad7b935f-ced9-4ce6-835f-5c6abc046228#grant&gt; ,
                         &lt;5ed73c65-ce77-4c8a-8f7e-9715b90307e6#grant&gt; ,
@@ -64,7 +64,7 @@ and [=Access Invitations=] via the
 
 <figure id="fig-access-grant">
   <figcaption>An [=Access Grant=] at
-  https://alice.pod.example/access/ab3d0023-3860-4358-ae33-8d3af1097b9d#grant
+  https://alice.pod.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d#grant
   </figcaption>
   <pre highlight="turtle">
   <#grant>
@@ -129,7 +129,7 @@ and [=Access Invitations=] via the
 
 <figure id="fig-access-invitation">
   <figcaption>An [=Access Invitation=] at
-  https://alice.pod.example/access/2d575cba-3f6c-4c58-bccd-0e6266ba56cf/#invitation
+  https://alice.pod.example/grants/2d575cba-3f6c-4c58-bccd-0e6266ba56cf/#invitation
   </figcaption>
   <pre highlight="turtle">
   <#invitation>
@@ -202,19 +202,19 @@ and [=Access Invitations=] via the
   </pre>
 </figure>
 
-### Access Registry Set ### {#datamodel-access-registry-set}
+### Access Grant Registry Set ### {#datamodel-access-registry-set}
 
-An <dfn>Access Registry Set</dfn> is a [=Registry Set=] specifically
+An <dfn>Access Grant Registry Set</dfn> is a [=Registry Set=] specifically
 made up of [=Access Registries=].
 
-<table class="classinfo data" align="left" id="classAccessRegistrySet">
+<table class="classinfo data" align="left" id="classAccessGrantRegistrySet">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
     <tr>
       <th colspan=3 text-align=left>
-        [AccessRegistrySet](interop.ttl#AccessRegistrySet)
+        [AccessGrantRegistrySet](interop.ttl#AccessGrantRegistrySet)
         a rdfs:subClassOf [[#datamodel-agent|RegistrySet]]
       </th>
     </tr>
@@ -233,41 +233,41 @@ made up of [=Access Registries=].
   </tbody>
 </table>
 
-The [AccessRegistrySetShape](#shexAccessRegistrySet) is used to validate
-an instance of the [AccessRegistrySet](#classAccessRegistrySet) class.
+The [AccessGrantRegistrySetShape](#shexAccessGrantRegistrySet) is used to validate
+an instance of the [AccessGrantRegistrySet](#classAccessGrantRegistrySet) class.
 
-<pre highlight="turtle" id="shexAccessRegistrySet">
-<#AccessRegistrySetShape> {
-  a [ interop:AccessRegistrySet ] ;
+<pre highlight="turtle" id="shexAccessGrantRegistrySet">
+<#AccessGrantRegistrySetShape> {
+  a [ interop:AccessGrantRegistrySet ] ;
   interop:hasRegistry IRI+
 }
 </pre>
 
-The [AccessRegistrySetTree](interop.tree#access-registry-set-tree)
+The [AccessGrantRegistrySetTree](interop.tree#AccessGrantRegistrySetTree)
 is assigned to a resource to ensure it will validate against the
-[AccessRegistrySetShape](#shexAccessRegistrySet).
+[AccessGrantRegistrySetShape](#shexAccessGrantRegistrySet).
 
-<pre highlight="turtle" id="treeAccessRegistrySet">
-<#access-registry-set-tree>
+<pre highlight="turtle" id="treeAccessGrantRegistrySet">
+<#AccessGrantRegistrySetTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#AccessRegistrySetShape&gt; ;
+  st:validatedBy &lt;interops#AccessGrantRegistrySetShape&gt; ;
   st:matchesUriTemplate "access" .
 </pre>
 
-### Access Registry ### {#datamodel-access-registry}
+### Access Grant Registry ### {#datamodel-access-registry}
 
-An <dfn>Access Registry</dfn> is a collection of
+An <dfn>Access Grant Registry</dfn> is a collection of
 [=Access Grants=] stored in a specific location in a [=pod=].
 
-<table class="classinfo data" align="left" id="classAccessRegistry">
+<table class="classinfo data" align="left" id="classAccessGrantRegistry">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
     <tr>
       <th colspan=3>
-        [AccessRegistry](interop.ttl#AccessRegistry)
+        [AccessGrantRegistry](interop.ttl#AccessGrantRegistry)
         a rdfs:subClassOf [[#datamodel-agent|Registry]]
       </th>
     </tr>
@@ -286,28 +286,28 @@ An <dfn>Access Registry</dfn> is a collection of
   </tbody>
 </table>
 
-The [AccessRegistryShape](#shexAccessRegistry) is used to validate an
-instance of the [AccessRegistry](#classAccessRegistry) class.
+The [AccessGrantRegistryShape](#shexAccessGrantRegistry) is used to validate an
+instance of the [AccessGrantRegistry](#classAccessGrantRegistry) class.
 
-<pre highlight="turtle" id="shexAccessRegistry">
-<#AccessRegistryShape> {
-  a [ interop:AccessRegistry ] ;
+<pre highlight="turtle" id="shexAccessGrantRegistry">
+<#AccessGrantRegistryShape> {
+  a [ interop:AccessGrantRegistry ] ;
   interop:hasRegistration IRI*
 }
 </pre>
 
-The [AccessRegistryTree](interop.tree#access-registry-tree) is assigned
+The [AccessGrantRegistryTree](interop.tree#AccessGrantRegistryTree) is assigned
 to a container resource to ensure that it will validate against the
-[AccessRegistryShape](#shexAccessRegistry), and contain only
+[AccessGrantRegistryShape](#shexAccessGrantRegistry), and contain only
 conformant instances of the [AccessGrantTree](#treeAccessGrant).
 
-<pre highlight="turtle" id="treeAccessRegistry">
-<#access-registry-tree>
+<pre highlight="turtle" id="treeAccessGrantRegistry">
+<#AccessGrantRegistryTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy &lt;interops#AccessRegistryShape&gt; ;
-  st:contains <#access-grant-tree> ,
-              <#access-invitation-tree> ,
+  st:validatedBy &lt;interops#AccessGrantRegistryShape&gt; ;
+  st:contains <#AccessGrantTree> ,
+              <#AccessInvitationTree> ,
               st:AllowNone .
 </pre>
 
@@ -390,13 +390,13 @@ of the [AccessGrant](#classAccessGrant) class.
 }
 </pre>
 
-The [AccessGrantTree](interop.tree#access-grant-tree) is assigned to a
-resource via the [AccessRegistryTree](#treeAccessRegistry), and ensure
+The [AccessGrantTree](interop.tree#AccessGrantTree) is assigned to a
+resource via the [AccessGrantRegistryTree](#treeAccessGrantRegistry), and ensure
 that the assigned resource will validate against the
 [AccessGrantShape](#shexAccessGrant).
 
 <pre highlight="turtle" id="treeAccessGrant">
-<#access-grant-tree>
+<#AccessGrantTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy &lt;interops#AccessGrantShape&gt; ;
@@ -642,13 +642,13 @@ instance of the [AccessInvitation](#classAccessInvitation) class.
 }
 </pre>
 
-The [AccessInvitationTree](interop.tree#access-invitation-tree) is assigned
-to a resource via the [AccessRegistryTree](#treeAccessRegistry), and ensures
+The [AccessInvitationTree](interop.tree#AccessInvitationTree) is assigned
+to a resource via the [AccessGrantRegistryTree](#treeAccessGrantRegistry), and ensures
 that the assigned resource will validate against the
 [AccessInvitationShape](#shexAccessInvitation).
 
 <pre highlight="turtle" id="treeAccessInvitation">
-<#access-invitation-tree>
+<#AccessInvitationTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy &lt;interops#AccessInvitationShape&gt; ;
@@ -730,7 +730,7 @@ validate an instance of the
 ]
 </pre>
 
-## Resource Hierarchy ## {#access-hierarchy}
+## Resource Hierarchy ## {#grants-hierarchy}
 
 <table class="data tree" align="left">
   <col>
@@ -753,16 +753,16 @@ validate an instance of the
       <td>[RegistrarTree](#)</td>
     </tr>
     <tr>
-      <td>`-- access#set`</td>
-      <td>[AccessRegistrySet](#classAccessRegistrySet)</td>
-      <td>[AccessRegistrySetShape](#shexAccessRegistrySet)</td>
-      <td>[AccessRegistrySetTree](#treeAccessRegistrySet)</td>
+      <td>`-- grant#set`</td>
+      <td>[AccessGrantRegistrySet](#classAccessGrantRegistrySet)</td>
+      <td>[AccessGrantRegistrySetShape](#shexAccessGrantRegistrySet)</td>
+      <td>[AccessGrantRegistrySetTree](#treeAccessGrantRegistrySet)</td>
     </tr>
     <tr>
-      <td>`/access/#registry`</td>
-      <td>[AccessRegistry](#classAccessRegistry)</td>
-      <td>[AccessRegistryShape](#shexAccessRegistry)</td>
-      <td>[AccessRegistryTree](#treeAccessRegistry)</td>
+      <td>`/grants/#registry`</td>
+      <td>[AccessGrantRegistry](#classAccessGrantRegistry)</td>
+      <td>[AccessGrantRegistryShape](#shexAccessGrantRegistry)</td>
+      <td>[AccessGrantRegistryTree](#treeAccessGrantRegistry)</td>
     </tr>
     <tr>
       <td>`-- c482f931...630e5ab0#grant`</td>
@@ -797,38 +797,38 @@ validate an instance of the
   </tbody>
 </table>
 
-The [=Access Registry Set=] and the [=Access Registry=] MAY or MAY NOT
+The [=Access Grant Registry Set=] and the [=Access Grant Registry=] MAY or MAY NOT
 be on the same [=pod=].
 
-[=Access Registry Set=] and [=Access Registry=] resources MAY use any
+[=Access Grant Registry Set=] and [=Access Grant Registry=] resources MAY use any
 resource or subject names.
 
 [=Access Grants=] MUST use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt)
 for resource names.
 
-## Operations ## {#access-operations}
+## Operations ## {#grants-operations}
 
-* [[#access-initialize]] - Initializes a new [=Access Grant=] for a given
+* [[#grants-initializegrant]] - Initializes a new [=Access Grant=] for a given
     [=Access Grant Subject=] or an [=Access Invitation=] for one or more
     [=Access Invitation Channels=] with one or more [=Access Need Groups
-* [[#access-loadgrant]] - Load an existing [=Access Grant=]
-    from an [=Access Registry=]
-* [[#access-loadinvitation]] - Load an existing [=Access Invitation=]
-    from an [=Access Registry=]
-* [[#access-recordgrant]] - Store a new or updated [=Access Grant=]
-    in an [=Access Registry=]
-* [[#access-recordinvitation]] - Store a new or updated [=Access Invitation=]
-    in an [=Access Registry=]
-* [[#access-applyperms]] - Apply permissions to [=acl resources=] based
+* [[#grants-loadgrant]] - Load an existing [=Access Grant=]
+    from an [=Access Grant Registry=]
+* [[#grants-loadinvitation]] - Load an existing [=Access Invitation=]
+    from an [=Access Grant Registry=]
+* [[#grants-recordgrant]] - Store a new or updated [=Access Grant=]
+    in an [=Access Grant Registry=]
+* [[#grants-recordinvitation]] - Store a new or updated [=Access Invitation=]
+    in an [=Access Grant Registry=]
+* [[#grants-applyperms]] - Apply permissions to [=acl resources=] based
     on [=Access Grant=] decisions.
 
-The [[#access-present]] operation is non-normative, and meant to instruct
+The [[#grants-present]] operation is non-normative, and meant to instruct
 a developer in how to load and initialize an [=Access Grant=], present it
 to an [=Agent=], invoke the appropriate operations to manipulate
 [=Data Grants=] in accordance with the [=Agent's=] decisions, and then
 record those decisions, which will also apply the permission changes.
 
-### Initialize Grant ### {#access-initialize}
+### Initialize Grant ### {#grants-initializegrant}
 
 Initialize an [=Access Grant=] or [=Access Invitation=] by processing
 the input [=Access Need Groups=]
@@ -882,14 +882,14 @@ no access (yet) for the corresponding [=Prepared Access Needs=] in each group.
         1. Let `DATAGRANT accessmode`s include `PNEED accessmode`s
   1. Return `NEW`
 
-### Load Grant ### {#access-loadgrant}
+### Load Grant ### {#grants-loadgrant}
 
-This operation will load an [=Access Grant=] from a given [=Access Registry=]
+This operation will load an [=Access Grant=] from a given [=Access Grant Registry=]
 
 #### Inputs #### {#loadgrant-inputs}
 
 * Let `SUBJECT` be an [=Access Grant Subject=]
-* Let `REGISTRY` be an [=Access Registry=]
+* Let `REGISTRY` be an [=Access Grant Registry=]
 
 #### Outputs #### {#loadgrant-outputs}
 
@@ -900,15 +900,15 @@ This operation will load an [=Access Grant=] from a given [=Access Registry=]
 1. For each [=Access Grant=] `GRANT` included in `REGISTRY hasRegistration`
     1. return `GRANT` if `GRANT hasAccessGrantSubject` == `SUBJECT`
 
-### Load Invitation ### {#access-loadinvitation}
+### Load Invitation ### {#grants-loadinvitation}
 
-This operation will load an [=Access Invitation=] from a given [=Access Registry=]
+This operation will load an [=Access Invitation=] from a given [=Access Grant Registry=]
 
 #### Inputs #### {#loadinvitation-inputs}
 
 * Let `TARGET` be a `interop:ChannelTarget` to match
 * Let `CODE` be an optional `interop:channelCode` to match
-* Let `REGISTRY` be an [=Access Registry=]
+* Let `REGISTRY` be an [=Access Grant Registry=]
 
 #### Outputs #### {#loadinvitation-outputs}
 
@@ -925,10 +925,10 @@ This operation will load an [=Access Invitation=] from a given [=Access Registry
         1. Add `INVITATION` to `INVITATIONS`
 1. Return `INVITATIONS`
 
-### Validate Grant ### {#access-validategrant}
+### Validate Grant ### {#grants-validategrant}
 
 This operation is used to validate an [=Access Grant=]
-or [=Access Invitation=] before it is stored in an [=Access Registry=]
+or [=Access Invitation=] before it is stored in an [=Access Grant Registry=]
 
 #### Inputs #### {#validategrant-inputs}
 
@@ -972,16 +972,16 @@ or [=Access Invitation=] before it is stored in an [=Access Registry=]
         `DGNEEDS accessMode` values when `DGRANT scopeOfDataGrant` is not
         `interop:NoAccess`
 
-### Record Grant ### {#access-recordgrant}
+### Record Grant ### {#grants-recordgrant}
 
 This operation stores a new or updated [=Access Grant=] in
-an [=Access Registry=], applies permissions accordingly, and
+an [=Access Grant Registry=], applies permissions accordingly, and
 calls for an access receipt to be provided.
 
 #### Inputs #### {#recordgrant-inputs}
 
 * Let `GRANT` be an [=Access Grant=]
-* Let `REGISTRY` be an [=Access Registry=]
+* Let `REGISTRY` be an [=Access Grant Registry=]
 
 #### Outputs #### {#recordgrant-outputs}
 
@@ -990,14 +990,14 @@ calls for an access receipt to be provided.
 
 #### Operation Details #### {#recordgrant-details}
 
-1. Call [[#access-validategrant]] with inputs: `GRANT`.
+1. Call [[#grants-validategrant]] with inputs: `GRANT`.
     <em class="rfc2119">MUST</em> return a status code of 400 if
     validation fails.
 1. Add or Update `GRANT` resource in the `REGISTRY` container, conforming to
-    the assigned [interopt:access-grant-tree](interop.tree#access-grant-tree).
+    the assigned [interopt:AccessGrantTree](interop.tree#AccessGrantTree).
 1. Link `GRANT` to the `REGISTRY` via `ACCESS hasRegistration` if
         it has not already been added
-1. Call [[#access-applyperms]] with inputs: `GRANT`
+1. Call [[#grants-applyperms]] with inputs: `GRANT`
 1. TODO - CALL TO PROVIDE ACCESS RECEIPT GOES HERE
 1. Return `GRANT`
 
@@ -1005,15 +1005,15 @@ Issue: Need to properly factor in multi-pod scenarios. Must identify the
 proper access registry to store things in based on the data registration, which
 means pods will also need to be registered.
 
-### Record Invitation ### {#access-recordinvitation}
+### Record Invitation ### {#grants-recordinvitation}
 
 This operation stores a new or updated [=Access Invitation=] in
-an [=Access Registry=].
+an [=Access Grant Registry=].
 
 #### Inputs #### {#recordinvitation-inputs}
 
 * Let `INVITATION` be an [=Access Invitation=]
-* Let `REGISTRY` be an [=Access Registry=]
+* Let `REGISTRY` be an [=Access Grant Registry=]
 
 #### Outputs #### {#recordinvitation-outputs}
 
@@ -1021,22 +1021,22 @@ an [=Access Registry=].
 
 #### Operation Details #### {#recordinvitation-details}
 
-1. Call [[#access-validategrant]] with inputs: `INVITATION`.
+1. Call [[#grants-validategrant]] with inputs: `INVITATION`.
     <em class="rfc2119">MUST</em> return a status code of 400 if
     validation fails.
 1. Add or Update `INVITATION` resource in the `REGISTRY` container, conforming to
     the assigned
-    [interopt:access-invitation-tree](interop.tree#access-invitation-tree)
+    [interopt:AccessInvitationTree](interop.tree#AccessInvitationTree)
 1. Link `INVITATION` to the `REGISTRY` via `ACCESS hasRegistration` if
         it has not already been added
 1. TODO - CALL TO DELIVER INVITATION VIA CHANNEL GOES HERE
 1. Return `INVITATION`
 
-### Deliver Invitation ### {#access-deliverinvitation}
+### Deliver Invitation ### {#grants-deliverinvitation}
 
-### Validate Invitation ### {#access-validateinvitation}
+### Validate Invitation ### {#grants-validateinvitation}
 
-### Apply Permissions ### {#access-applyperms}
+### Apply Permissions ### {#grants-applyperms}
 
 #### Inputs #### {#applyperms-inputs}
 
@@ -1137,7 +1137,7 @@ Issue: Deal with cases when the data registration doesn't exist yet
 Issue: Append mode for AllInstances needs to be specially handled, and may
 require an additional attribute specified in the requested [=Access Needs=]
 
-### Present Grant ### {#access-present}
+### Present Grant ### {#grants-present}
 
 This operation is non-normative, and meant to instruct
 a developer in how to load and initialize an [=Access Grant=] or
@@ -1151,7 +1151,7 @@ operations to manipulate [=Data Grants=] in accordance with the
 * Let `TARGET` be the `interop:channelTarget` of an [=Access Invitation=]
 * Let `ICHANNELS` be a set of [=Access Invitation Channels=] for a new
     [=Access Invitation=]
-* Let `REGISTRY` be an [=Access Registry=]
+* Let `REGISTRY` be an [=Access Grant Registry=]
 * Let `GROUPS` be an optional set of [=Access Need Groups=]
 * Let `LANG` be the [=Agent's=] preferred language
 
@@ -1160,17 +1160,17 @@ operations to manipulate [=Data Grants=] in accordance with the
 1. <em class="rfc2119">MUST</em> return a status code of 400 if both
     `SUBJECT` and `TARGET` are provided
 1. If `SUBJECT` is provided
-    1. Let `GRANT` be an [=Access Grant=] returned by [[#access-loadgrant]] with
+    1. Let `GRANT` be an [=Access Grant=] returned by [[#grants-loadgrant]] with
         inputs: `SUBJECT`, `REGISTRY`
         1. If `GRANT` is missing, let `GRANT` be an [=Access Grant=] returned
-            by [[#access-initialize]] with inputs: `SUBJECT`, `REGISTRY`,
+            by [[#grants-initializegrant]] with inputs: `SUBJECT`, `REGISTRY`,
             `GROUPS`, `LANG`.
     1. Present the [=Access Grant Subject=]
 1. If `TARGET` is provided
     1. Let `GRANT` be an [=Access Invitation=] returned by
-        [[#access-loadinvitation]] with inputs: `TARGET`, `REGISTRY`
+        [[#grants-loadinvitation]] with inputs: `TARGET`, `REGISTRY`
         1. If `GRANT` is missing, let `GRANT` be an [=Access Invitation=]
-            returned by [[#access-initialize]] with inputs: `ICHANNELS`,
+            returned by [[#grants-initializegrant]] with inputs: `ICHANNELS`,
             `REGISTRY`, `GROUPS`, `LANG`
 1. If available, present the [=Agent=] who granted access via `registeredBy`
 1. If available, present the [=Application=] used by the [=Agent=] to grant
@@ -1187,7 +1187,7 @@ operations to manipulate [=Data Grants=] in accordance with the
         `interop:Pilot` indicates a piloted application.
     1. If `PGROUP accessNecessity` is `AccessOptional` and `PGROUP isEnabled`
         is `true`, allow the group to be disabled by invoking the
-        [[#access-denygroup]] operation with inputs: `GRANT`, `PREPARED`
+        [[#grants-denygroup]] operation with inputs: `GRANT`, `PREPARED`
     1. If `PGROUP accessNecessity` is `AccessOptional` and `PGROUP isEnabled`
         is false, allow the group to be enabled by setting `PGROUP isEnabled`
         to `true`.
@@ -1219,11 +1219,11 @@ operations to manipulate [=Data Grants=] in accordance with the
                           `SUPPORTING accessMode`s
                   1. If `DATAGRANT scopeOfDataGrant` is `interop:NoAccess`
                       1. Allow `interop:AllInstances` to be selected, which invokes
-                          the [[#access-selectall]] operation with inputs:
+                          the [[#grants-selectall]] operation with inputs:
                           `GRANT`, `PGROUP`, `PNEED`
                       1. Allow a subset of [=Registered Data Instances=] be selected,
                           and let `INSTANCES` be that subset, invoking
-                          the [[#access-select]] operation with inputs:
+                          the [[#grants-select]] operation with inputs:
                           `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`
                   1. If `DATAGRANT scopeOfDataGrant` is `interop:AllInstances`, then
                       present the user with summary details, and the ability to
@@ -1232,7 +1232,7 @@ operations to manipulate [=Data Grants=] in accordance with the
                               [=Registered Data Instances=]
                           1. If the user chooses to select
                               specific instances from this list, invoke the
-                              [[#access-select]] operation with inputs: `INSTANCES`,
+                              [[#grants-select]] operation with inputs: `INSTANCES`,
                               `GRANT`, `PGROUP`, `PNEED`.
                   1. If `DATAGRANT scopeOfDataGrant` is `interop:SelectedInstances`, then
                       present the user with the specific instances they have selected,
@@ -1240,17 +1240,17 @@ operations to manipulate [=Data Grants=] in accordance with the
                           1. Let `INSTANCES` be a selected set of
                               [=Registered Data Instances=]
                           1. Allow the selected [=Registered Data Instances=] to be
-                              adjusted, and invoke the [[#access-select]] operation with
+                              adjusted, and invoke the [[#grants-select]] operation with
                               inputs: `INSTANCES`, `DATAGRANT`, `PGROUP`, `PNEED`.
                           1. Allow all [=Registered Data Instances=] to be selected,
-                              invoking the [[#access-selectall]] operation with inputs:
+                              invoking the [[#grants-selectall]] operation with inputs:
                               `GRANT`, `PGROUP`, `PNEED`.
                   1. If `DATAGRANT scopeOfDataGrant` is `interop:InheritInstances`, present
                       the inherited [=Registered Data Instances=] and:
                       1. Let `INSTANCES` be a selected set of
                           [=Registered Data Instances=]
                       1. Allow a subset to be selected, invoking
-                          the [[#access-select]] operation with inputs: `INSTANCES`,
+                          the [[#grants-select]] operation with inputs: `INSTANCES`,
                           `GRANT`, `PGROUP`, `PNEED`
                       1. Identify the [=Prepared Access Need=] / [=Data Grant=]
                           and selected [=Registered Data Instances=] that were inherited
@@ -1260,20 +1260,20 @@ operations to manipulate [=Data Grants=] in accordance with the
                       1. Let `INSTANCES` be a selected set of
                           [=Registered Data Instances=]
                       1. Give the ability to adjust the selected instances, invoking
-                          the [[#access-select]] operation with inputs:
+                          the [[#grants-select]] operation with inputs:
                           `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`.
                       1. Give the ability to revert to all inherited instances,
-                          invoking the [[#access-selectall]] operation with inputs:
+                          invoking the [[#grants-selectall]] operation with inputs:
                           `GRANT`, `PGROUP`, `PNEED`
-    1. Call [[#access-recordgrant]] if `GRANT` is an [=Access Grant=] to save.
-    1. Call [[#access-recordinvitation]] if `GRANT` is an [=Access Invitation=] to
+    1. Call [[#grants-recordgrant]] if `GRANT` is an [=Access Grant=] to save.
+    1. Call [[#grants-recordinvitation]] if `GRANT` is an [=Access Invitation=] to
         save.
 
 Issue: Consider when an existing Access Need Group is expanded or contracted
 
 Issue: Consider when there are new Groups being requested from a given Agent
 
-### Deny Prepared Access Need Group ### {#access-denygroup}
+### Deny Prepared Access Need Group ### {#grants-denygroup}
 
 This operation is used when a given [=Prepared Access Group=] with optional
 necessity has been denied.
@@ -1291,7 +1291,7 @@ necessity has been denied.
     1. Let `DATAGRANT` be `PNEED hasDataGrant`
     1. Let `DATAGRANT scopeOfDataGrant` be `interop:NoAccess`
 
-### Select Specific Instances for Access ### {#access-select}
+### Select Specific Instances for Access ### {#grants-select}
 
 Used to select specific [=Registered Data Instances=] for a given
 [=Data Grant=], which has a recursive application down the hierachy,
@@ -1305,7 +1305,7 @@ with subordinate [=Data Grants=] reducing their associated scope of
 #### Operation Details #### {#select-details}
 
 
-### Select All Instances for Access ### {#access-selectall}
+### Select All Instances for Access ### {#grants-selectall}
 
 Used to select all [=Registered Data Instances=] for a given [=Data Grant=].
 In the event where this is moving from a subset of inherited instances,

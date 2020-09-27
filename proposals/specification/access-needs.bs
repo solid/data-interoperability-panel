@@ -18,8 +18,8 @@ received by the controlling [=Agent=]. A [=Prepared Access Need Group=] is
 generated for each [=Access Need Group=] that was received.
 
 [=Prepared Access Need Groups=] and the [=Prepared Access Needs=] associated
-with them are used as input to the [[#access-present]] operation,
-and are stored as part of the [=Access Grant=] by the [[#access-recordgrant]]
+with them are used as input to the [[#grants-present]] operation,
+and are stored as part of the [=Access Grant=] by the [[#grants-recordgrant]]
 operation.
 
 ## Data Model ## {#needs-datamodel}
@@ -950,7 +950,7 @@ validate an instance of the
 
 The following operations explain how to process [=Access Need Groups=]
 so they can be presented to an [=Agent=] in
-[[#access-operations|Access Grant Operations]]
+[[#grants-operations|Access Grant Operations]]
 
 * [[#prepare-group]]
 * [[#prepare-need]]
@@ -962,7 +962,7 @@ so they can be presented to an [=Agent=] in
 This operation takes a given [=Access Need Group=] with a number of associated
 [=Access Needs=] and processes them to produce a [=Prepared Access Need Group=]
 that is ready to present to a given [=Agent=]
-via the [[#access-present]] operation.
+via the [[#grants-present]] operation.
 
 1. The [=shape tree=] associated with each [=Root Access Need=] is
     traversed to the desired level of recursion, including across references.

@@ -145,12 +145,12 @@ validate an instance of the
 }
 </pre>
 
-The [AccessReceiptRegistrySetTree](interop.tree#access-receipt-registry-set-tree)
+The [AccessReceiptRegistrySetTree](interop.tree#AccessReceiptRegistrySetTree)
 is assigned to a resource to ensure it will validate against the
 [AccessReceiptRegistrySetShape](#shexAccessReceiptRegistrySet).
 
 <pre highlight="turtle" id="treeAccessReceiptRegistrySet">
-<#access-receipt-registry-set-tree>
+<#AccessReceiptRegistrySetTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy &lt;interops#AccessReceiptRegistrySetShape&gt; ;
@@ -199,17 +199,17 @@ validate an instance of the
 }
 </pre>
 
-The [AccessReceiptRegistryTree](interop.tree#access-receipt-registry-tree)
+The [AccessReceiptRegistryTree](interop.tree#AccessReceiptRegistryTree)
 is assigned to a container resource to ensure that it will validate against the
 [AccessReceiptRegistryShape](#shexAccessReceiptRegistry), and contain only
 conformant instances of the [AccessReceiptTree](#treeAccessReceipt).
 
 <pre highlight="turtle" id="treeAccessReceiptRegistry">
-<#access-receipt-registry-tree>
+<#AccessReceiptRegistryTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
   st:validatedBy &lt;interops#AccessReceiptRegistryShape&gt; ;
-  st:contains <#access-receipt-tree> ,
+  st:contains <#AccessReceiptTree> ,
               st:AllowNone .
 </pre>
 
@@ -296,13 +296,13 @@ of the [AccessReceipt](#classAccessReceipt) class.
 }
 </pre>
 
-The [AccessReceiptTree](interop.tree#access-receipt-tree) is assigned to a
-resource via the [AccessRegistryTree](#treeAccessRegistry), and ensures
+The [AccessReceiptTree](interop.tree#AccessReceiptTree) is assigned to a
+resource via the [AccessGrantRegistryTree](#treeAccessGrantRegistry), and ensures
 that the assigned resource will validate against the
 [AccessReceiptShape](#shexAccessReceipt).
 
 <pre highlight="turtle" id="treeAccessReceipt">
-<#access-receipt-tree>
+<#AccessReceiptTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy &lt;interops#AccessReceiptShape&gt; ;
@@ -584,7 +584,7 @@ use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
 ### Record Access Receipt ### {#receipts-record}
 
 This operation stores a new [=Access Receipt=] in
-an [=Access Registry=], which in turn will update [=Remote Data Registries=]
+an [=Access Grant Registry=], which in turn will update [=Remote Data Registries=]
 to reflect the access granted in the [=Access Receipt=].
 
 #### Inputs #### {#recordreceipt-inputs}

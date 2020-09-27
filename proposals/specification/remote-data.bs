@@ -149,12 +149,12 @@ validate an instance of the
 }
 </pre>
 
-The [RemoteDataRegistrySetTree](interop.tree#remote-data-registry-set-tree)
+The [RemoteDataRegistrySetTree](interop.tree#RemoteDataRegistrySetTree)
 is assigned to a resource to ensure it will validate against the
 [RemoteDataRegistrySetShape](#shexRemoteDataRegistrySet).
 
 <pre highlight="turtle" id="treeRemoteDataRegistrySet">
-<#remote-data-registry-set-tree>
+<#RemoteDataRegistrySetTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy &lt;interops#RemoteDataRegistrySetShape&gt; ;
@@ -203,18 +203,18 @@ validate an instance of the
 }
 </pre>
 
-The [RemoteDataRegistryTree](interop.tree#remote-data-registry-tree)
+The [RemoteDataRegistryTree](interop.tree#RemoteDataRegistryTree)
 is assigned to a container resource to ensure that it will validate against the
 [RemoteDataRegistryShape](#shexRemoteDataRegistry), and contain only
 conformant instances of the
 [RemoteDataRegistrationTree](#treeRemoteDataRegistration).
 
 <pre highlight="turtle" id="treeRemoteDataRegistry">
-<#remote-data-registry-tree>
+<#RemoteDataRegistryTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
   st:validatedBy &lt;interops#RemoteDataRegistryShape&gt; ;
-  st:contains <#remote-data-registration-tree> ,
+  st:contains <#RemoteDataRegistrationTree> ,
               st:AllowNone .
 </pre>
 
@@ -351,19 +351,19 @@ validate an instance of the
 }
 </pre>
 
-The [RemoteDataRegistrationTree](interop.tree#remote-data-registration-tree)
+The [RemoteDataRegistrationTree](interop.tree#RemoteDataRegistrationTree)
 is assigned to a resource via the
 [RemoteDataRegistryTree](#treeRemoteDataRegistry), and ensures
 that the assigned resource will validate against the
 [RemoteDataRegistrationShape](#shexRemoteDataRegistration).
 
 <pre highlight="turtle" id="treeRemoteDataRegistration">
-<#remote-data-registration-tree>
+<#RemoteDataRegistrationTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
   st:validatedBy &lt;interops#RemoteDataRegistrationShape&gt; ;
   st:matchesUriTemplate "{id}" ;
-  st:contains <#remote-data-instance-tree> ,
+  st:contains <#RemoteDataInstanceTree> ,
               st:AllowNone .
 </pre>
 
@@ -454,14 +454,14 @@ validate an instance of the
 }
 </pre>
 
-The [RemoteDataInstanceTree](interop.tree#remote-data-instance-tree)
+The [RemoteDataInstanceTree](interop.tree#RemoteDataInstanceTree)
 is assigned to a resource via the
 [RemoteDataInstanceTree](#treeRemoteDataInstance), and ensures
 that the assigned resource will validate against the
 [RemoteDataInstanceShape](#shexRemoteDataInstance).
 
 <pre highlight="turtle" id="treeRemoteDataInstance">
-<#remote-data-instance-tree>
+<#RemoteDataInstanceTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy &lt;interops#RemoteDataInstanceShape&gt; ;
