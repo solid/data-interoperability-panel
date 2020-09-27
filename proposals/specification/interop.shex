@@ -1,12 +1,7 @@
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-
-################################################################
 # Agent
-################################################################
-
-# Validate an instance of the interop:Agent class
 <#AgentShape> {
   a [ interop:Agent ] ;
   interop:hasApplicationRegistrySet IRI ;
@@ -14,27 +9,23 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasAccessRegistrySet IRI ;
   interop:hasAccessReceiptRegistrySet IRI ;
   interop:hasRemoteDataRegistrySet IRI ;
+  interop:hasInbox IRI ;
+  interop:hasAccessInbox IRI
 }
 
 # Application Registry Set
-# Validate an instance of the interop:ApplicationRegistrySet class
-################################################################
 <#ApplicationRegistrySetShape> {
   a [ interop:ApplicationRegistrySet ] ;
   interop:hasRegistry IRI+
 }
 
 # Application Registry
-# Validate an instance of the interop:ApplicationRegistry class
-################################################################
 <#ApplicationRegistryShape> {
   a [ interop:ApplicationRegistry ] ;
   interop:hasRegistration IRI*
 }
 
 # Application Registration
-# Validate an instance of the interop:ApplicationRegistration class
-################################################################
 <#ApplicationRegistrationShape> {
   a [ interop:ApplicationRegistration ] ;
   interop:registeredBy IRI ;
@@ -46,24 +37,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 }
 
 # Data Registry Set
-# Validate an instance of the interop:DataRegistrySet class
-################################################################
 <#DataRegistrySetShape> {
   a [ interop:DataRegistrySet ] ;
   interop:hasRegistry IRI+
 }
 
 # Data Registry
-# Validate an instance of the interop:DataRegistry class
-################################################################
 <#DataRegistryShape> {
   a [ interop:DataRegistry ] ;
   interop:hasRegistration IRI*
 }
 
 # Data Registration
-# Validate an instance of the interop:DataRegistration class
-################################################################
 <#DataRegistrationShape> {
   a [ interop:DataRegistration ] ;
   interop:registeredBy IRI ;
@@ -74,11 +59,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasRegisteredDataInstance IRI*
 }
 
-################################################################
 # Application
-################################################################
-
-# Validate an instance of the interop:Application class
 <#ApplicationShape> {
   a [ interop:Application ] ;
   interop:applicationName xsd:string ;
@@ -90,11 +71,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasCollaborativeAccessNeedGroup IRI*
 }
 
-################################################################
-# Access Need Groups
-################################################################
-
-# Validate an instance of the interop:AccessNeedGroup class
+# Access Need Group
 <#AccessNeedGroupShape> {
   a [ interop:AccessNeedGroup ] ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
@@ -105,7 +82,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasAccessDecoratorIndex IRI
 }
 
-# Validate an instance of the interop:AccessNeed class
+# Access Need
 <#AccessNeedShape> {
   a [ interop:AccessNeed ] ;
   interop:inAccessNeedGroup IRI+ ;
@@ -116,7 +93,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
 }
 
-# Validate an instance of a prepared interop:PreparedAccessNeedGroup class
+# Prepared Access Need Group
 <#PreparedAccessNeedGroupShape> {
   a [ interop:PreparedAccessNeedGroup ] ;
   interop:fromAccessNeedGroup IRI ;
@@ -128,7 +105,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasPreparedAccessNeed IRI+ ;
 }
 
-# Validate an instance of the interop:PreparedAccessNeed class
+# Prepared Access Need
 <#PreparedAccessNeedShape> {
   a [ interop:PreparedAccessNeed ] ;
   interop:inPreparedAccessNeedGroup IRI+ ;
@@ -145,18 +122,21 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   skos:narrower IRI* ;
 }
 
+# Access Decorator Index
 <#AccessDecoratorIndexShape> {
   a [ interop:AccessDecoratorIndex ] ;
   interop:defaultLanguage xsd:language ;
   interop:hasSeries @AccessDecoratorSeries+ ;
 }
 
+# Access Decorator Series
 <#AccessDecoratorSeriesShape> {
   a [ interop:AccessDecoratorSeries ] ;
   interop:usesLanguage xsd:language ;
   interop:hasVersion @AccessDecoratorVersion+ ;
 }
 
+# Access Decorator Version
 <#AccessDecoratorVersionShape> {
   a [ interop:AccessDecoratorVersion ] ;
   interop:isVersion xsd:string ;
@@ -164,6 +144,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasAccessDecoratorResource IRI ;
 }
 
+# Access Need Group Decorator
 <#AccessNeedGroupDecoratorShape> {
   a [ interop:AccessNeedGroupDecorator ] ;
   interop:hasAccessNeedGroup IRI ;
@@ -171,6 +152,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   skos:definition xsd:string
 }
 
+# Access Need Decorator
 <#AccessNeedDecoratorShape> {
   a [ interop:AccessNeedDecorator ] ;
   interop:hasAccessNeedGroup IRI ;
@@ -186,27 +168,19 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+
 }
 
-################################################################
-# Access Registry
-################################################################
-
 # Access Registry Set
-# Validate an instance of the interop:AccessRegistrySet class
-################################################################
 <#AccessRegistrySetShape> {
   a [ interop:AccessRegistrySet ] ;
   interop:hasRegistry IRI+
 }
 
 # Access Registry
-# Validate an instance of the interop:AccessRegistry class
-################################################################
 <#AccessRegistryShape> {
   a [ interop:AccessRegistry ] ;
   interop:hasRegistration IRI*
 }
 
-# Validate an instance of the AccessGrant class
+# Access Grant
 <#AccessGrantShape> {
   a [ interop:AccessGrant ] ;
   interop:registeredBy IRI ;
@@ -218,13 +192,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasDataGrant @<#:DataGrantShape>+
 }
 
+# Access Grant Subject
 <#AccessGrantSubjectShape> {
   a [ interop:AccessGrantSubject ] ;
   interop:accessGrantSubjectAgent IRI? ;
   interop:accessGrantSubjectApplication IRI?
 }
 
-# Access Invitation Channel
+# Access Invitation
 <#AccessInvitationShape> {
   a [ interop:AccessInvitation ] ;
   interop:registeredBy IRI ;

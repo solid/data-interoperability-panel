@@ -1,27 +1,25 @@
-interop.treeAgent {#agent}
+Agent {#agent}
 =====================
 
 ## Overview ## {#agent-overview}
 
 [=Agents=] represent the primary actors in an interoperable Solid [=ecosystem=].
 
-An [=Agent's=] <dfn>identity</dfn> is a unique URI that can be dereferenced to
-an [=Agent=] instance, providing a pathway through which an [=Agent=] can
-discover and access their data across the decentralized Web.
-
-Other [=Agents=] and [=Applications=] can dereference an
-[=Agent's=] [=identity=] to get the information they need to
-interact with them.
+An [=Agent=] is denoted by an [=identity=]. Dereferencing that [=identity=]
+leads to the [=Agent=], and a graph of useful information about them. This
+graph is used by the [=Agent=] to locate and access their own data, and data
+relevant to them, across the decentralized Web. Other [=Agents=] and
+[=Applications=] use this information to interact with them.
 
 An [=Agent=] is designed to be publicly accessible, but many of the
 things the [=Agent=] links to are designed to be private, or accessible
-only by other [=Agents=] and/or [=Applications=] that the [=Agent=]
+only by other [=Agents=] or [=Applications=] that the [=Agent=]
 has authorized.
 
+Most of an [=Agent's=] information is stored in [=Registries=].
 A <dfn>Registry</dfn> is a place where an [=Agent=] can store and find
-essential data needed to participate in the [=ecosystem=]. [=Agents=] use
-several different types of [=Registries=], each of which serve a
-particular purpose or function.
+different types of data, often for particular purposes. Each type
+of [=Registry=] serves a specific purpose or function.
 
 <table class="classinfo data" align="left" id="agentRegistries">
   <colgroup></colgroup>
@@ -63,34 +61,26 @@ particular purpose or function.
   </tbody>
 </table>
 
-A given [=Agent=] may more than one instance of a given [=Registry=],
-especially when the [=Agent=] has more than one pod, or is managing
-data on behalf of another [=Agent=], in a [=Trusted Agent=] capacity.
-
-A <dfn>Registry Set</dfn> is a collection of one or more [=Registries=] of
-the same type, linked through the [=Agent=]. They allow one [=Agent=] to
-link to many [=Registries=] across the Web, without exposing them in
-a public resource.
-
 ## Data Model ## {#agent-datamodel}
 
 ### Summary ### {#datamodel-summary}
 
-<figure>
-  <img src="diagrams/agent-model.svg" width=100%/>
-  <figcaption align="center">Agent data model</figcaption>
-</figure>
+When an [=Agent=] has more than one pod, or is managing
+data on behalf of another [=Agent=], they will be linked to multiple
+[=Registries=] of the same type. A <dfn>Registry Set</dfn> is used to
+organize [=Registries=] of the same type together.
 
-An [=Agent=] links to different kinds of [=Registry Sets=] via type-specific
+An [=Agent=] links to each kind of [=Registry Sets=] through type-specific
 subproperties of [interop:hasRegistrySet](interop.ttl#hasRegistrySet).
 
-[=Registry Sets=] links to any number of [=Registries=] via the
-[interop:hasRegistry](interop.ttl#hasRegistry) property.
+This allows one [=Agent=] to
+link to many [=Registries=] across the Web, without exposing those
+[=Registries=] in a public document. Different permissions can be
+assigned to each [=Registry Set=], depending on the sensitivity of the
+[=Registries=] they link to.
 
-A <dfn>Registration</dfn> represents an individual unit of information
-for a given [=Registry=]. [=Registries=] link to any number of
-[=Registrations=] via the
-[interop:hasRegistration](interop.ttl#hasRegistration) property.
+[=Registry Sets=] link to [=Registries=] through the
+[interop:hasRegistry](interop.ttl#hasRegistry) property.
 
 <figure>
   <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me</figcaption>
@@ -103,6 +93,9 @@ for a given [=Registry=]. [=Registries=] link to any number of
     interop:hasAccessGrantRegistrySet &lt;https://alice.pod.example/profile/access#set&gt; ;
     interop:hasAccessReceiptRegistrySet &lt;https://alice.pod.example/profile/receipt#set&gt; ;
     interop:hasRemoteDataRegistrySet &lt;https://alice.pod.example/profile/remote#set&gt; ;
+    ######## Inboxes ########
+    interop:hasInbox &lt;https://alice.pod.example/inbox/general&gt; ;
+    interop:hasAccessInbox &lt;https://alice.pod.example/inbox/access&gt; .
   </pre>
 </figure>
 
@@ -131,7 +124,37 @@ of software with an [=identity=] that can be strongly authenticated.
     <tr>
       <td>hasApplicationRegistrySet</td>
       <td>ApplicationRegistrySet</td>
-      <td>Link to the [=Agent's=] [=Application Registry Set=]</td>
+      <td>[=Application Registry Set=] for the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasDataRegistrySet</td>
+      <td>DataRegistrySet</td>
+      <td>[=Data Registry Set=] for the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessGrantRegistrySet</td>
+      <td>AccessGrantRegistrySet</td>
+      <td>[=Access Grant Registry Set=] for the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessReceiptRegistrySet</td>
+      <td>AccessReceiptRegistrySet</td>
+      <td>[=Access Receipt Registry Set=] for the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasRemoteDataRegistrySet</td>
+      <td>RemoteDataRegistrySet</td>
+      <td>[=Remote Data Registry Set=] for the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasInbox</td>
+      <td>ldp:inbox</td>
+      <td>A general inbox for messages sent to the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessInbox</td>
+      <td>ldp:inbox</td>
+      <td>An inbox for access related messages sent to the [=Agent=]</td>
     </tr>
   </tbody>
 </table>
@@ -142,7 +165,13 @@ The [AgentShape](#shexAgent) is used to validate an instance of the
 <pre highlight="turtle" id="shexAgent">
 <#AgentShape> {
   a [ interop:Agent ] ;
-  interop:hasApplicationRegistrySet IRI
+  interop:hasApplicationRegistrySet IRI ;
+  interop:hasDataRegistrySet IRI ;
+  interop:hasAccessRegistrySet IRI ;
+  interop:hasAccessReceiptRegistrySet IRI ;
+  interop:hasRemoteDataRegistrySet IRI ;
+  interop:hasInbox IRI ;
+  interop:hasAccessInbox IRI
 }
 </pre>
 
@@ -155,119 +184,119 @@ is assigned to a resource to ensure it will validate against the
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy &lt;interops#AgentShape&gt; ;
-  st:matchesUriTemplate "id" .
+  st:matchesUriTemplate "{id}" .
 </pre>
 
 ## Resource Hierarchy ## {#agent-hierarchy}
 
-Instances of the classes and properties in the [[#datamodel-agent]]
-are organized across different resources and pods for a given [=Agent=]
-participating in the [=ystem=]. The instance data in resources are
-validated by [=shapes=], which are associated with those resources
-through [=shape trees=].
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Class</th>
+      <th>Shape</th>
+      <th>Shape Tree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`/profile/`</td>
+      <td>-</td>
+      <td>-</td>
+      <td>[ProfileTree](#treeAgent)</td>
+    </tr>
+    <tr>
+      <td>`-- id#me`</td>
+      <td>[Agent](#classAgent)</td>
+      <td>[AgentShape](#shexAgent)</td>
+      <td>[AgentTree](#treeAgent)</td>
+    </tr>
+    <tr>
+      <td>`-- application#set`</td>
+      <td>[ApplicationRegistrySet](#)</td>
+      <td>[ApplicationRegistrySetShape](#)</td>
+      <td>[ApplicationRegistrySetTree](#)</td>
+    </tr>
+    <tr>
+      <td>`-- data#set`</td>
+      <td>[DataRegistrySet](#)</td>
+      <td>[DataRegistrySetShape](#)</td>
+      <td>[DataRegistrySetTree](#)</td>
+    </tr>
+    <tr>
+      <td>`-- access#set`</td>
+      <td>[AccessRegistrySet](#classAccessRegistrySet)</td>
+      <td>[AccessRegistrySetShape](#shexAccessRegistrySet)</td>
+      <td>[AccessRegistrySetTree](#treeAccessRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`-- receipt#set`</td>
+      <td>[AccessReceiptRegistrySet](#classAccessReceiptRegistrySet)</td>
+      <td>[AccessReceiptRegistrySetShape](#shexAccessReceiptRegistrySet)</td>
+      <td>[AccessReceiptRegistrySetTree](#treeAccessReceiptRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`-- remote#set`</td>
+      <td>[RemoteDataRegistrySet](#classRemoteDataRegistrySet)</td>
+      <td>[RemoteDataRegistrySetShape](#shexRemoteDataRegistrySet)</td>
+      <td>[RemoteDataRegistrySetTree](#treeRemoteDataRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`/inbox/access`</td>
+      <td><a href="https://www.w3.org/ns/ldp#inbox" class="vocab">ldp:inbox</a></td>
+      <td>-</td>
+      <td>[AccessInboxTree](interop.tree#treeAccessInbox)</td>
+    </tr>
+    <tr>
+      <td>`/inbox/general`</td>
+      <td><a href="https://www.w3.org/ns/ldp#inbox" class="vocab">ldp:inbox</a></td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
 
-<figure>
-  <figcaption>Example [=Registrar=] structure for an [=Agent=].
-  Excludes some [=Registry=] types for clarity.</figcaption>
-  <img src="diagrams/registrar-tree.svg" width=100%/>
-</figure>
-
-The [=Registrar=] linked to an [=Agent=]
-is discovered by dereferencing their [=identity=]
-(e.g. `https://alice.pod.example/profile/id#me`) to access their
-[=identity profile document=], represented in
-the figure above as `/id`.
-
-The [=Registrar=] is stored in the RDF graph of the
-`/registeries` container at `https://alice.pod.example/registries/#registrar`.
-The [=Registrar=] instance links to a collection of type-specific
-[=Registry Set=] instances stored in the `/registries` container.
-
-The shape tree [interopt:registrar-tree](interop.tree#registrar-tree)
-associated with the `/registries` container
-specifies this resource structure. It assigns the
-[interops:RegistrarShape](interop.shex#RegistrarShape) to validate
-a [=Registrar=] instance in the graph of the container resource. It also assigns [interops:ApplicationRegistrySetShape](interop.shex#ApplicationRegistrySetShape)
-and [interops:DataRegistrySetShape](interop.shex#DataRegistrySetShape)
-to validate the
-[interop:ApplicationRegistrySet](interop.ttl#ApplicationRegistrySet) and
-[interop:DataRegistrySet](interop.ttl#DataRegistrySet)
-instances in the contained resources.
-
-<figure>
-  <figcaption>[=Shape trees=], [=shapes=], and [=Registry Set=] resources
-  associated with a [=Registrar=] container</figcaption>
-  <img src="diagrams/registrar-registries.svg" width=100%/>
-</figure>
-
-A [=Registry Set=] resource of a specific type will link to one or more
-[=Registry=] instances of the same type.
-
-For example, the [=Application Registry Set=] at
-`https://alice.pod.example/registries/application#set` links to two
-[=Application Registry=] instances, one of them being
-`https://alice.pod.example/applications/#registry`.
-
-The [=Application Registry=] instance is stored in the RDF graph
-of the `/applications` container at
-`https://alice.pod.example/applications/#registry`. It links to a
-collection of [=Application Registration=] instances stored in
-the `/applications` container.
-
-The shape tree
-[interopt:application-registry-tree](interop.tree#application-registry-tree)
-associated with the `/applications` container specifies this resource
-structure. It assigns the
-[interops:ApplicationRegistryShape](interop.shex#ApplicationRegistryShape)
-to validate the [=Application Registry=] instance in the
-container resource. It also assigns a
-[interops:ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)
-to validate an [=Application Registration=] in every
-contained resource.
-
-<figure>
-  <figcaption>[=Shape trees=], [=shapes=], and [=Application Registration=]
-  resources associated with an [=Application Registry=] container</figcaption>
-  <img src="diagrams/registrar-applications.svg" width=100%/>
-</figure>
+[=Agent=] resources <em class="rfc2119">MAY</em> use any resource or
+subject names. The names used herein have been selected for comprehension
+and readability.
 
 ## Permission Model ## {#agent-permissions}
 
-The permission model for the [=Registrar=] resources detailed in
-[[#agent-hierarchy]] are illustrated in the table below. That said, the
-following key points are worth noting:
+The permission model for the resources detailed in
+[[#agent-hierarchy]] are illustrated in the table below.
 
-* The [=identity profile document=] at `/id` is the only resource that is
-    publicly accessible (with read-only privileges).
-* The only information exposed is a link to Alice's [=Registrar=] at
-    `/registries`, which is a protected document.
-* Neither the types or locations of Alice's [=Registries=] are
-    ever publicly exposed.
+<b>Notable items:</b>
 
-The [=Agent=] should be assumed to
-have control-level access across her entire data space.
+* The [=identity profile document=] `id` which contains the [=Agent=] instance
+    gives the public read-only access.
+* [=Registry Sets=] are not publicly exposed. Only the [=Agent=]
+    or their [=Trusted Agents=] and [=Applications=] can see the [=Registries=]
+    listed by them.
 
 <figure>
-<figcaption>Permission model for [=Registrar=] resources</figcaption>
+<figcaption>Permission model for [=Agent=] resources</figcaption>
   <table class="data permissions" align="left">
     <col>
     <colgroup></colgroup>
     <colgroup></colgroup>
-    <colgroup span=2></colgroup>
+    <colgroup></colgroup>
     <colgroup span=2></colgroup>
     <thead>
       <tr>
         <th></th>
-        <th scope="colgroup">Controller</th>
+        <th scope="colgroup">Agent</th>
         <th scope="colgroup">Public</th>
-        <th colspan=2 scope="colgroup">Selectively Trusted</th>
-        <th colspan=2 scope="colgroup">Selectively Granted</th>
+        <th scope="colgroup">Trusted Agents</th>
+        <th scope="colgroup">Other Agents Granted Access</th>
       </tr>
       <tr>
         <th scope="col">Resource</th>
         <th scope="col">Access</th>
         <th scope="col">Access</th>
-        <th scope="col">Subject</th>
         <th scope="col">Access</th>
         <th scope="col">Subject</th>
         <th scope="col">Access</th>
@@ -275,94 +304,61 @@ have control-level access across her entire data space.
     </thead>
     <tbody>
       <tr>
-        <td>`/id`</td>
+        <td>`/profile/`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- id`</td>
         <td>Control</td>
         <td>Read</td>
-        <td>Identity Agent</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+
+      <tr>
+        <td>`-- application`</td>
+        <td>Control</td>
+        <td>-</td>
         <td>Control</td>
         <td>-</td>
         <td>-</td>
       </tr>
       <tr>
-        <td>`/registries/`</td>
+        <td>`-- data`</td>
         <td>Control</td>
         <td>-</td>
-        <td>Trusted Agents</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td>`-- /registries/application`</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>App. Registration Agent</td>
         <td>Control</td>
         <td>-</td>
         <td>-</td>
       </tr>
       <tr>
-        <td>`-- /registries/data`</td>
+        <td>`-- access`</td>
         <td>Control</td>
         <td>-</td>
-        <td>Data Authorization Agent</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td>`/applications/`</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>App. Registration Agent</td>
         <td>Control</td>
         <td>-</td>
         <td>-</td>
       </tr>
       <tr>
-        <td>`-- /applications/registration-123/`</td>
+        <td>`-- receipt`</td>
         <td>Control</td>
         <td>-</td>
-        <td>App. Registration Agent</td>
-        <td>Control</td>
-        <td>Registered App.</td>
-        <td>Read</td>
-      </tr>
-      <tr>
-        <td>`-- /applications/registration-123/*`</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>App. Registration Agent</td>
-        <td>Control</td>
-        <td>Registered App.</td>
-        <td>Write</td>
-      </tr>
-      <tr>
-        <td>`/data/`</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>Data Authorization Agent</td>
         <td>Control</td>
         <td>-</td>
         <td>-</td>
       </tr>
       <tr>
-        <td>`-- /data/registration-456/`</td>
+        <td>`-- remote`</td>
         <td>Control</td>
         <td>-</td>
-        <td>Data Authorization Agent</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-      <tr>
-        <td>`-- /data/registration-456/*`</td>
         <td>Control</td>
         <td>-</td>
-        <td>Data Authorization Agent</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
+        <td>-</td>
       </tr>
     </tbody>
   </table>
