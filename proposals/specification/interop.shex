@@ -92,22 +92,22 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
 }
 
-# Prepared Access Need Group
-<#PreparedAccessNeedGroupShape> {
-  a [ interop:PreparedAccessNeedGroup ] ;
+# Compiled Access Group
+<#CompiledAccessGroupShape> {
+  a [ interop:CompiledAccessGroup ] ;
   interop:fromAccessNeedGroup IRI ;
   interop:hasAccessNeedGroupDecorator IRI ;
   interop:authenticatesAs IRI ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
   interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
   interop:isEnabled xsd:boolean? ;
-  interop:hasPreparedAccessNeed IRI+ ;
+  interop:hasCompiledAccess IRI+ ;
 }
 
-# Prepared Access Need
-<#PreparedAccessNeedShape> {
-  a [ interop:PreparedAccessNeed ] ;
-  interop:inPreparedAccessNeedGroup IRI+ ;
+# Compiled Access
+<#CompiledAccessShape> {
+  a [ interop:CompiledAccess ] ;
+  interop:inCompiledAccessGroup IRI+ ;
   interop:hasShapeTreeDecorator IRI ;
   interop:hasAccessNeedDecorator IRI? ;
   interop:hasDataGrant IRI? ;
@@ -117,7 +117,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
   interop:supportedBy IRI* ;
   interop:supports IRI
-  interop:referencesPreparedAccessNeed IRI* ;
+  interop:referencesCompiledAccess IRI* ;
   skos:narrower IRI* ;
 }
 
@@ -187,7 +187,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;
   interop:accessGrantSubject @<#:AccessGrantSubject> ;
-  interop:hasPreparedAccessNeedGroup @<#:PreparedAccessNeedGroupShape>+ ;
+  interop:hasCompiledAccessGroup @<#:CompiledAccessGroupShape>+ ;
   interop:hasDataGrant @<#:DataGrantShape>+
 }
 
@@ -206,7 +206,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;
   interop:expiresAt xsd:dateTime? ;
-  interop:hasPreparedAccessNeedGroup @<#:PreparedAccessNeedGroupShape>+ ;
+  interop:hasCompiledAccessGroup @<#:CompiledAccessGroupShape>+ ;
   interop:hasDataGrant @<#:DataGrantShape>+
   interop:hasAccessInvitationChannel @<#:AccessInvitationChannelShape>+ ;
 }
@@ -233,7 +233,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   a [ interop:DataGrant ] ;
   interop:hasRegistration IRI ;
   interop:registeredShapeTree IRI ;
-  interop:satisfiesPreparedAccessNeed @<#:PreparedAccessNeedShape>+ ;
+  interop:satisfiesCompiledAccess @<#:CompiledAccessShape>+ ;
   interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   interop:scopeOfDataGrant [ interop:SelectedInstances
                          interop:AllInstances

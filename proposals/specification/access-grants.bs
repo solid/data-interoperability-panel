@@ -74,7 +74,7 @@ and [=Access Invitations=] via the
     interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
     interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
     interop:hasAccessGrantSubject <#grant-subject> ;
-    interop:hasPreparedAccessNeedGroup <#pag-notebook-group> ;
+    interop:hasCompiledAccessGroup <#cag-notebook-group> ;
     interop:hasDataGrant <#notebook-grant>, <#note-grant> .
 
   <#grant-subject>
@@ -86,7 +86,7 @@ and [=Access Invitations=] via the
     a interop:DataGrant ;
     interop:hasRegistration data:notebook-tree ;
     interop:registeredShapeTree note:notebook-tree ;
-    interop:satisfiesPreparedAccessNeed <#pan-notebook> ;
+    interop:satisfiesCompiledAccess <#ca-notebook> ;
     interop:accessMode acl:Read, acl:Write ;
     interop:scopeOfDataGrant interop:AllInstances ;
 
@@ -94,30 +94,30 @@ and [=Access Invitations=] via the
     a interop:DataGrant ;
     interop:hasRegistration data:note-tree ;
     interop:registeredShapeTree note:note-tree ;
-    interop:satisfiesPreparedAccessNeed <#pan-note> ;
+    interop:satisfiesCompiledAccess <#ca-note> ;
     interop:accessMode acl:Read, acl:Write ;
     interop:scopeOfDataGrant interop:AllInstances ;
 
-  <#pag-notebook-group>
-    a interop:PreparedAccessNeedGroup ;
+  <#cag-notebook-group>
+    a interop:CompiledAccessGroup ;
     interop:fromAccessNeedGroup ex:accessNotebookGroup ;
     interop:hasAccessNeedGroupDecorator ex:accessNotebookGroupDecorator ;
     interop:accessNecessity interop:AccessRequired ;
     interop:authenticatesAs interop:Pilot ;
-    interop:hasPreparedAccessNeed <#pan-notebook> .
+    interop:hasCompiledAccess <#ca-notebook> .
 
-  <#pan-notebook>
-      a interop:PreparedAccessNeed ;
+  <#ca-notebook>
+      a interop:CompiledAccess ;
       interop:registeredShapeTree note:notebook-tree ;
       interop:accessMode acl:Read, acl:Write ;
       interop:accessNecessity interop:AccessRequired ;
       interop:hasAccessNeedDecorator ex:notebookAccessDecorator ;
       interop:hasShapeTreeDecorator note:notebookDecorator ;
-      interop:referencesPreparedAccessNeed <#pan-notes> ;
+      interop:referencesCompiledAccess <#ca-notes> ;
       interop:hasDataGrant <#notebook-grant> .
 
-  <#pan-note>
-      a interop:PreparedAccessNeed ;
+  <#ca-note>
+      a interop:CompiledAccess ;
       interop:registeredShapeTree note:note-tree ;
       interop:accessMode acl:Read, acl:Write ;
       interop:accessNecessity interop:AccessRequired ;
@@ -139,7 +139,7 @@ and [=Access Invitations=] via the
     interop:registeredAt "2020-09-13T19:32:52Z"^^xsd:dateTime ;
     interop:updatedAt "2020-09-13T19:32:52Z"^^xsd:dateTime ;
     interop:expiresAt "2020-09-20T19:32:52Z"^^xsd:dateTime ;
-    interop:hasPreparedAccessNeedGroup <#pag-notebook-group> ;
+    interop:hasCompiledAccessGroup <#cag-notebook-group> ;
     interop:hasDataGrant <#notebook-grant>, <#note-grant> ;
     interop:hasAccessInvitationChannel <#phone-channel>, <#email-channel> .
 
@@ -161,7 +161,7 @@ and [=Access Invitations=] via the
     a interop:DataGrant ;
     interop:hasRegistration data:notebook-tree ;
     interop:registeredShapeTree note:notebook-tree ;
-    interop:satisfiesPreparedAccessNeed <#pan-notebook> ;
+    interop:satisfiesCompiledAccess <#ca-notebook> ;
     interop:accessMode acl:Read, acl:Write ;
     interop:scopeOfDataGrant interop:AllInstances ;
 
@@ -169,30 +169,30 @@ and [=Access Invitations=] via the
     a interop:DataGrant ;
     interop:hasRegistration data:note-tree ;
     interop:registeredShapeTree note:note-tree ;
-    interop:satisfiesPreparedAccessNeed <#pan-note> ;
+    interop:satisfiesCompiledAccess <#ca-note> ;
     interop:accessMode acl:Read, acl:Write ;
     interop:scopeOfDataGrant interop:AllInstances ;
 
-  <#pag-notebook-group>
-    a interop:PreparedAccessNeedGroup ;
+  <#cag-notebook-group>
+    a interop:CompiledAccessGroup ;
     interop:fromAccessNeedGroup ex:accessNotebookGroup ;
     interop:hasAccessNeedGroupDecorator ex:accessNotebookGroupDecorator ;
     interop:accessNecessity interop:AccessRequired ;
     interop:authenticatesAs interop:Pilot ;
-    interop:hasPreparedAccessNeed <#pan-notebook> .
+    interop:hasCompiledAccess <#ca-notebook> .
 
-  <#pan-notebook>
-      a interop:PreparedAccessNeed ;
+  <#ca-notebook>
+      a interop:CompiledAccess ;
       interop:registeredShapeTree note:notebook-tree ;
       interop:accessMode acl:Read, acl:Write ;
       interop:accessNecessity interop:AccessRequired ;
       interop:hasAccessNeedDecorator ex:notebookAccessDecorator ;
       interop:hasShapeTreeDecorator note:notebookDecorator ;
-      interop:referencesPreparedAccessNeed <#pan-notes> ;
+      interop:referencesCompiledAccess <#ca-notes> ;
       interop:hasDataGrant <#notebook-grant> .
 
-  <#pan-note>
-      a interop:PreparedAccessNeed ;
+  <#ca-note>
+      a interop:CompiledAccess ;
       interop:registeredShapeTree note:note-tree ;
       interop:accessMode acl:Read, acl:Write ;
       interop:accessNecessity interop:AccessRequired ;
@@ -315,7 +315,7 @@ conformant instances of the [AccessGrantTree](#treeAccessGrant).
 
 Each <dfn>Access Grant</dfn> represents access granted to one recipient; the
 [=Access Grant Subject=], based on access criteria detailed in one or more
-[=Prepared Access Need Groups=]. Access is granted to registered data in
+[=Compiled Access Groups=]. Access is granted to registered data in
 [=Data Registries=], identified by [=Data Grants=] linked to the
 [=Access Grant=].
 
@@ -363,9 +363,9 @@ Each <dfn>Access Grant</dfn> represents access granted to one recipient; the
       <td>Links to one [=Access Grant Subject=] who was granted access.</td>
     </tr>
     <tr>
-      <td>hasPreparedAccessNeedGroup</td>
-      <td>PreparedAccessNeedGroup</td>
-      <td>Links to a [=Prepared Access Need Group=] associated with the Access Grant.</td>
+      <td>hasCompiledAccessGroup</td>
+      <td>CompiledAccessGroup</td>
+      <td>Links to a [=Compiled Access Group=] associated with the Access Grant.</td>
     </tr>
     <tr>
       <td>hasDataGrant</td>
@@ -385,7 +385,7 @@ of the [AccessGrant](#classAccessGrant) class.
   interop:registeredWith IRI? ;
   interop:registeredAt xsd:dateTime ;
   interop:accessGrantSubject @AccessGrantSubject ;
-  interop:hasPreparedAccessNeedGroup @PreparedAccessNeedGroupShape+ ;
+  interop:hasCompiledAccessGroup @CompiledAccessGroupShape+ ;
   interop:hasDataGrant @DataGrantShape+
 }
 </pre>
@@ -451,7 +451,7 @@ an instance of the [AccessGrantSubject](#classAccessGrantSubject) class.
 ### Data Grant ### {#datamodel-data-grant}
 
 A <dfn>Data Grant</dfn> records a decision made by a
-given [=Agent=] based upon [=Prepared Access Needs=] presented to them
+given [=Agent=] based upon [=Compiled Accesses=] presented to them
 for a given [=Data Registration=].
 
 <table class="classinfo data" align="left" id="classDataGrant">
@@ -482,15 +482,15 @@ for a given [=Data Registration=].
       <td>The [=shape tree=] registered at the target [=Data Registration=]</td>
     </tr>
     <tr>
-      <td>satisfiesPreparedAccessNeed</td>
-      <td>PreparedAccessNeed</td>
-      <td>Links to a [=Prepared Access Need=] satisfied by the [=Data Grant=]</td>
+      <td>satisfiesCompiledAccess</td>
+      <td>CompiledAccess</td>
+      <td>Links to a [=Compiled Access=] satisfied by the [=Data Grant=]</td>
     </tr>
     <tr>
       <td>accessMode</td>
       <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
-      <td>Union of access modes from [=Prepared Access Needs=] linked by
-      satisfiesPreparedAccessNeed</td>
+      <td>Union of access modes from [=Compiled Accesses=] linked by
+      satisfiesCompiledAccess</td>
     </tr>
     <tr>
       <td>scopeOfDataGrant</td>
@@ -536,7 +536,7 @@ class.
   a [ interop:DataGrant ] ;
   interop:hasRegistration IRI ;
   interop:registeredShapeTree IRI ;
-  interop:satisfiesPreparedAccessNeed @PreparedAccessNeedShape+ ;
+  interop:satisfiesCompiledAccess @CompiledAccessShape+ ;
   interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   interop:scopeOfDataGrant [ interop:SelectedInstances interop:AllInstances interop:InheritInstances interop:NoAccess ]+ ;
   interop:inheritsFrom @DataGrantShape*
@@ -551,7 +551,7 @@ decentralized [=identity=] is unknown to them, or may not exist yet, so they
 must be first invited through another channel (such as phone or email).
 
 Like an [=Access Grant=], an [=Access Invitation=] links to access
-criteria detailed in one or more [=Prepared Access Need Groups=], with
+criteria detailed in one or more [=Compiled Access Groups=], with
 associated [=Data Grants=] indicating the intended access to be granted.
 
 However, instead of linking to an [=Access Grant Subject=], an
@@ -611,9 +611,9 @@ converted to an [=Access Grant=].
       <td>Links to an [=Access Invitation Channel=]</td>
     </tr>
     <tr>
-      <td>hasPreparedAccessNeedGroup</td>
-      <td>PreparedAccessNeedGroup</td>
-      <td>Links to a [=Prepared Access Need Group=] associated with the
+      <td>hasCompiledAccessGroup</td>
+      <td>CompiledAccessGroup</td>
+      <td>Links to a [=Compiled Access Group=] associated with the
       [=Access Invitation=].</td>
     </tr>
     <tr>
@@ -636,7 +636,7 @@ instance of the [AccessInvitation](#classAccessInvitation) class.
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;
   interop:expiresAt xsd:dateTime? ;
-  interop:hasPreparedAccessNeedGroup @&lt;#:PreparedAccessNeedGroupShape&gt;+ ;
+  interop:hasCompiledAccessGroup @&lt;#:CompiledAccessGroupShape&gt;+ ;
   interop:hasDataGrant @&lt;#:DataGrantShape&gt;+
   interop:hasAccessInvitationChannel @&lt;#:AccessInvitationChannelShape&gt;+ ;
 }
@@ -832,8 +832,8 @@ record those decisions, which will also apply the permission changes.
 
 Initialize an [=Access Grant=] or [=Access Invitation=] by processing
 the input [=Access Need Groups=]
-into [=Prepared Access Need Groups=], then initializing [=Data Grants=] with
-no access (yet) for the corresponding [=Prepared Access Needs=] in each group.
+into [=Compiled Access Groups=], then initializing [=Data Grants=] with
+no access (yet) for the corresponding [=Compiled Accesses=] in each group.
 
 #### Inputs #### {#initialize-inputs}
 
@@ -858,28 +858,28 @@ no access (yet) for the corresponding [=Prepared Access Needs=] in each group.
     1. For each [=Access Invitation Channel=] `ICHANNEL` in `ICHANNELS`
         1. Let `ICHANNEL` be linked to `NEW` via `NEW hasAccessInvitationChannel`
 1. For each [=Access Need Group=] `GROUP` in `GROUPS`
-    1. Let `PGROUP` be the [=Prepared Access Need Group=] returned from
-        [[#prepare-group]] with inputs `GROUP`, `LANG`
-    1. Link `PGROUP` to `NEW` via `NEW hasPreparedAccessNeedGroup`
-1. Let `PGROUPS` be all [=Prepared Access Need Groups=] linked to `NEW`
-    via `hasPreparedAccessNeedGroup`
+    1. Let `CAGROUP` be the [=Compiled Access Group=] returned from
+        [[#compile-group]] with inputs `GROUP`, `LANG`
+    1. Link `CAGROUP` to `NEW` via `NEW hasCompiledAccessGroup`
+1. Let `CAGROUPS` be all [=Compiled Access Groups=] linked to `NEW`
+    via `hasCompiledAccessGroup`
 1. Let `DATAGRANTS` be an empty set of [=Data Grants=]
-1. For each [=Prepared Access Group=] `PGROUP` in `PGROUPS`
-    1. For each [=Prepared Access Need=] `PNEED` in `PGROUP`
+1. For each [=Compiled Access Group=] `CAGROUP` in `CAGROUPS`
+    1. For each [=Compiled Access=] `CACCESS` in `CAGROUP`
         1. Let `MATCHING` be a [=Data Grant=] in `DATAGRANTS` where
-            `PNEED registeredShapeTree` == `MATCHING registeredShapeTree`
-        1. If `MATCHING` let `PNEED hasDataGrant` be `MATCHING`
+            `CACCESS registeredShapeTree` == `MATCHING registeredShapeTree`
+        1. If `MATCHING` let `CACCESS hasDataGrant` be `MATCHING`
         1. If `MATCHING` is missing
             1. Let `NEWDATAGRANT` be a newly initialized [=Data Grant=]
-            1. Let `NEWDATAGRANT registeredShapeTree` be `PNEED registeredShapeTree`
+            1. Let `NEWDATAGRANT registeredShapeTree` be `CACCESS registeredShapeTree`
             1. Let `NEWDATAGRANT hasRegistration` be a [=Data Registration=] `DR`
                 where `DR registeredShapeTree` == `NEWDATAGRANT registeredShapeTree`
             1. Let `NEWDATAGRANT scopeOfDataGrant` be `interop:NoAccess`
-            1. Let `PNEED hasDataGrant` be `NEWDATAGRANT`
-            1. Add `PNEED hasDataGrant` to `DATAGRANTS`
-        1. Let `DATAGRANT` be `PNEED hasDataGrant`
-        1. Let `DATAGRANT satisfiesPreparedAccessNeed` include `PNEED`
-        1. Let `DATAGRANT accessmode`s include `PNEED accessmode`s
+            1. Let `CACCESS hasDataGrant` be `NEWDATAGRANT`
+            1. Add `CACCESS hasDataGrant` to `DATAGRANTS`
+        1. Let `DATAGRANT` be `CACCESS hasDataGrant`
+        1. Let `DATAGRANT satisfiesCompiledAccess` include `CACCESS`
+        1. Let `DATAGRANT accessmode`s include `CACCESS accessmode`s
   1. Return `NEW`
 
 ### Load Grant ### {#grants-loadgrant}
@@ -950,26 +950,26 @@ or [=Access Invitation=] before it is stored in an [=Access Grant Registry=]
         [interop:AccessGrantShape](interop.shex#AccessGrantShape).
         <em class="rfc2119">MUST</em> return a status code of 400 if
         validation fails.
-1. Let `PGROUPS` be the [=Prepared Access Need Groups=] linked to `GRANT`
-    via `GRANT hasPreparedAccessNeedGroup`
+1. Let `CAGROUPS` be the [=Compiled Access Groups=] linked to `GRANT`
+    via `GRANT hasCompiledAccessGroup`
 1. Let `DGRANTS` be the [=Data Grants=] linked to `GRANT`
     via `GRANT hasDataGrant`
-1. For each [=Prepared Access Need Group=] `PGROUP` in `PGROUPS`:
-    1. For each [=Prepared Access Need=] `PNEED` in `PGROUP` traversed via
-        `PNEED skos:narrower` or `PNEED referencesPreparedAccessNeed`:
+1. For each [=Compiled Access Group=] `CAGROUP` in `CAGROUPS`:
+    1. For each [=Compiled Access=] `CACCESS` in `CAGROUP` traversed via
+        `CACCESS skos:narrower` or `CACCESS referencesCompiledAccess`:
         1. Let `NDGRANT` be the [=Data Grant=] associated with
-            `NEED` via `NEED hasDataGrant`
+            `CACCESS` via `CACCESS hasDataGrant`
             1. Error if `NDGRANT` is missing
-            1. Error if `NDGRANT satisfiesPreparedAccessNeed` doesn't link to `NEED`
-            1. Error if `interop:RegisteredShapeTree` is not the same in `NDGRANT` and `NEED`
+            1. Error if `NDGRANT satisfiesCompiledAccess` doesn't link to `CACCESS`
+            1. Error if `interop:RegisteredShapeTree` is not the same in `NDGRANT` and `CACCESS`
 1. For each [=Data Grant=] `DGRANT` in `DGRANTS`
-    1. Let `NEEDS` be all [=Prepared Access Needs=] across `PGROUPS`
-    1. Let `DGNEEDS` be all [=Prepared Access Needs=] linked to `DGRANT` via
-        `DGRANT satisfiesPreparedAccessNeed`
-    1. Error if `DGNEEDS` is not in `NEEDS`
-    1. Error if `DGNEEDS` is empty
+    1. Let `CA` be all [=Compiled Accesses=] across `CAGROUPS`
+    1. Let `DGCA` be all [=Compiled Accesses=] linked to `DGRANT` via
+        `DGRANT satisfiesCompiledAccess`
+    1. Error if `DGCA` is not in `CA`
+    1. Error if `DGCA` is empty
     1. Error if `DGRANT` access modes are not an exact union of
-        `DGNEEDS accessMode` values when `DGRANT scopeOfDataGrant` is not
+        `DGCA accessMode` values when `DGRANT scopeOfDataGrant` is not
         `interop:NoAccess`
 
 ### Record Grant ### {#grants-recordgrant}
@@ -1041,7 +1041,7 @@ an [=Access Grant Registry=].
 #### Inputs #### {#applyperms-inputs}
 
 * Let `GRANT` be an [=Access Grant=] linked to any new or updated
-    [=Prepared Access Need Groups=] and [=Data Grants=]
+    [=Compiled Access Groups=] and [=Data Grants=]
     for a given [=Authorization Subject=]
 
 #### Outputs #### {#applyperms-outputs}
@@ -1177,40 +1177,40 @@ operations to manipulate [=Data Grants=] in accordance with the
     access via `registeredWith`
 1. If available, present the timestamp of creation via `registeredAt`,
     and update via `updatedAt`
-1. For each [=Prepared Access Need Group=] `PGROUP` linked via
-    `GRANT hasPreparedAccessNeedGroup`
+1. For each [=Compiled Access Group=] `CAGROUP` linked via
+    `GRANT hasCompiledAccessGroup`
     1. Let `GDEC` be the [=Access Need Group Decorator=] linked via
-        `PGROUP hasAccessNeedGroupDecorator`
+        `CAGROUP hasAccessNeedGroupDecorator`
     1. Present the group name via `GDEC skos:prefLabel`
     1. Present the group description via `GDEC skos:definition`
     1. Identify the [=Agent=] that will be granted access via `authenticatesAs`.
         `interop:Pilot` indicates a piloted application.
-    1. If `PGROUP accessNecessity` is `AccessOptional` and `PGROUP isEnabled`
+    1. If `CAGROUP accessNecessity` is `AccessOptional` and `CAGROUP isEnabled`
         is `true`, allow the group to be disabled by invoking the
-        [[#grants-denygroup]] operation with inputs: `GRANT`, `PREPARED`
-    1. If `PGROUP accessNecessity` is `AccessOptional` and `PGROUP isEnabled`
-        is false, allow the group to be enabled by setting `PGROUP isEnabled`
+        [[#grants-denygroup]] operation with inputs: `GRANT`, `CAGROUP`
+    1. If `CAGROUP accessNecessity` is `AccessOptional` and `CAGROUP isEnabled`
+        is false, allow the group to be enabled by setting `CAGROUP isEnabled`
         to `true`.
-    1. If (`PGROUP accessNecessity` is `AccessOptional` and `PGROUP isEnabled`),
-        or if `PGROUP accessNecessity` is `AccessRequired`
-        1. For each [=Root Prepared Access Need=] `ROOT` linked via
-            `PGROUP hasPreparedAccessNeed`
-              1. For each [=Prepared Access Need=] `PNEED` starting with `ROOT`
-                  and traversed via `PNEED skos:narrower` or
-                  `PNEED referencesPreparedAccessNeed`:
-                  1. Let `DATAGRANT` be `PNEED hasDataGrant`
-                  1. Let `NDEC` be `PNEED hasAccessNeedDecorator`
-                  1. Let `STDEC` be `PNEED hasShapeTreeDecorator`
-                  1. If `PNEED accessNecessity` is `AccessOptional`,
+    1. If (`CAGROUP accessNecessity` is `AccessOptional` and `CAGROUP isEnabled`),
+        or if `CAGROUP accessNecessity` is `AccessRequired`
+        1. For each [=Root Compiled Access=] `ROOT` linked via
+            `CAGROUP hasCompiledAccess`
+              1. For each [=Compiled Access=] `CACCESS` starting with `ROOT`
+                  and traversed via `CACCESS skos:narrower` or
+                  `CACCESS referencesCompiledAccess`:
+                  1. Let `DATAGRANT` be `CACCESS hasDataGrant`
+                  1. Let `NDEC` be `CACCESS hasAccessNeedDecorator`
+                  1. Let `STDEC` be `CACCESS hasShapeTreeDecorator`
+                  1. If `CACCESS accessNecessity` is `AccessOptional`,
                       and `DATAGRANT scopeOfDataGrant` is `interop:NoAccess`
                       1. Allow access selection to be enabled and managed as detailed
                           in the remainder of this operation.
                   1. Present the name of the [=shape tree=] via `STDEC skos:prefLabel`
                   1. Present the reason access to this data is needed via
                       `NDEC skos:prefLabel`
-                  1. Present the access modes requested via `PNEED accessMode`s
+                  1. Present the access modes requested via `CACCESS accessMode`s
                   1. For each [=Supporting Access Need=] `SUPPORTING` linked
-                      via `PNEED supportedBy`
+                      via `CACCESS supportedBy`
                       1. Present the name of the [=shape tree=] via the
                           associated [=Shape Tree Decorator=]
                       1. Present the reason access to this data is needed via the
@@ -1220,11 +1220,11 @@ operations to manipulate [=Data Grants=] in accordance with the
                   1. If `DATAGRANT scopeOfDataGrant` is `interop:NoAccess`
                       1. Allow `interop:AllInstances` to be selected, which invokes
                           the [[#grants-selectall]] operation with inputs:
-                          `GRANT`, `PGROUP`, `PNEED`
+                          `GRANT`, `CAGROUP`, `CACCESS`
                       1. Allow a subset of [=Registered Data Instances=] be selected,
                           and let `INSTANCES` be that subset, invoking
                           the [[#grants-select]] operation with inputs:
-                          `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`
+                          `INSTANCES`, `GRANT`, `CAGROUP`, `CACCESS`
                   1. If `DATAGRANT scopeOfDataGrant` is `interop:AllInstances`, then
                       present the user with summary details, and the ability to
                       see specific instances.
@@ -1233,7 +1233,7 @@ operations to manipulate [=Data Grants=] in accordance with the
                           1. If the user chooses to select
                               specific instances from this list, invoke the
                               [[#grants-select]] operation with inputs: `INSTANCES`,
-                              `GRANT`, `PGROUP`, `PNEED`.
+                              `GRANT`, `CAGROUP`, `CACCESS`.
                   1. If `DATAGRANT scopeOfDataGrant` is `interop:SelectedInstances`, then
                       present the user with the specific instances they have selected,
                       and:
@@ -1241,18 +1241,18 @@ operations to manipulate [=Data Grants=] in accordance with the
                               [=Registered Data Instances=]
                           1. Allow the selected [=Registered Data Instances=] to be
                               adjusted, and invoke the [[#grants-select]] operation with
-                              inputs: `INSTANCES`, `DATAGRANT`, `PGROUP`, `PNEED`.
+                              inputs: `INSTANCES`, `DATAGRANT`, `CAGROUP`, `CACCESS`.
                           1. Allow all [=Registered Data Instances=] to be selected,
                               invoking the [[#grants-selectall]] operation with inputs:
-                              `GRANT`, `PGROUP`, `PNEED`.
+                              `GRANT`, `CAGROUP`, `CACCESS`.
                   1. If `DATAGRANT scopeOfDataGrant` is `interop:InheritInstances`, present
                       the inherited [=Registered Data Instances=] and:
                       1. Let `INSTANCES` be a selected set of
                           [=Registered Data Instances=]
                       1. Allow a subset to be selected, invoking
                           the [[#grants-select]] operation with inputs: `INSTANCES`,
-                          `GRANT`, `PGROUP`, `PNEED`
-                      1. Identify the [=Prepared Access Need=] / [=Data Grant=]
+                          `GRANT`, `CAGROUP`, `CACCESS`
+                      1. Identify the [=Compiled Access=] / [=Data Grant=]
                           and selected [=Registered Data Instances=] that were inherited
                           from.
                   1. If `DATAGRANT scopeOfDataGrant` includes `interop:SelectedInstances`
@@ -1261,10 +1261,10 @@ operations to manipulate [=Data Grants=] in accordance with the
                           [=Registered Data Instances=]
                       1. Give the ability to adjust the selected instances, invoking
                           the [[#grants-select]] operation with inputs:
-                          `INSTANCES`, `GRANT`, `PGROUP`, `PNEED`.
+                          `INSTANCES`, `GRANT`, `CAGROUP`, `CACCESS`.
                       1. Give the ability to revert to all inherited instances,
                           invoking the [[#grants-selectall]] operation with inputs:
-                          `GRANT`, `PGROUP`, `PNEED`
+                          `GRANT`, `CAGROUP`, `CACCESS`
     1. Call [[#grants-recordgrant]] if `GRANT` is an [=Access Grant=] to save.
     1. Call [[#grants-recordinvitation]] if `GRANT` is an [=Access Invitation=] to
         save.
@@ -1273,22 +1273,22 @@ Issue: Consider when an existing Access Need Group is expanded or contracted
 
 Issue: Consider when there are new Groups being requested from a given Agent
 
-### Deny Prepared Access Need Group ### {#grants-denygroup}
+### Deny Compiled Access Group ### {#grants-denygroup}
 
-This operation is used when a given [=Prepared Access Group=] with optional
+This operation is used when a given [=Compiled Access Group=] with optional
 necessity has been denied.
 
 #### Inputs #### {#denygroup-inputs}
 
 * Let `GRANT` be an [=Access Grant=]
-* Let `PGROUP` be a [=Prepared Access Need Group=]
+* Let `CAGROUP` be a [=Compiled Access Group=]
 
 #### Operation Details #### {#denygroup-details}
 
-1. Let `PGROUP isEnabled` be `false` if `PGROUP accessNecessity` is
+1. Let `CAGROUP isEnabled` be `false` if `CAGROUP accessNecessity` is
     `interop:AccessOptional`
-1. For each [=Prepared Access Need=] `PNEED` in `PGROUP`
-    1. Let `DATAGRANT` be `PNEED hasDataGrant`
+1. For each [=Compiled Access=] `CACCESS` in `CAGROUP`
+    1. Let `DATAGRANT` be `CACCESS hasDataGrant`
     1. Let `DATAGRANT scopeOfDataGrant` be `interop:NoAccess`
 
 ### Select Specific Instances for Access ### {#grants-select}

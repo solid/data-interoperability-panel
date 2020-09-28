@@ -13,11 +13,11 @@ providing one or more [=Access Need Groups=] to the [=Agent=] controlling
 the data they require access to. The channels through which these may be
 communicated are detailed in [[#authz-workflows]].
 
-The [[#prepare-group]] operation processes each [=Access Need Group=]
-received by the controlling [=Agent=]. A [=Prepared Access Need Group=] is
+The [[#compile-group]] operation processes each [=Access Need Group=]
+received by the controlling [=Agent=]. A [=Compiled Access Group=] is
 generated for each [=Access Need Group=] that was received.
 
-[=Prepared Access Need Groups=] and the [=Prepared Access Needs=] associated
+[=Compiled Access Groups=] and the [=Compiled Accesses=] associated
 with them are used as input to the [[#grants-present]] operation,
 and are stored as part of the [=Access Grant=] by the [[#grants-recordgrant]]
 operation.
@@ -27,7 +27,7 @@ operation.
 ### Summary ### {#needs-datamodel-summary}
 
 An [=Access Need Group=] links to one or more [=Root Access Needs=] via the
-[hasAccessNeed](#classAccessNeedGroup) property. When the [[#prepare-group]]
+[hasAccessNeed](#classAccessNeedGroup) property. When the [[#compile-group]]
 operation follows a [=Root Access Need=], it looks for [=Access Need Overrides=]
 linked to the [=Access Need Group=] via
 [hasAccessNeedOverride](#classAccessNeedGroup) to change the defaults
@@ -37,21 +37,21 @@ inherited from the [=Root Access Need=], or the most recent
 An [=Access Need=] is associated with one [=shape tree=] via
 [interop:registeredShapeTree](#classAccessNeed).
 
-A [=Prepared Access Need Group=] is linked to the [=Access Need Group=] it
-was generated from via [fromAccessNeedGroup](#classPreparedAccessNeedGroup).
+A [=Compiled Access Group=] is linked to the [=Access Need Group=] it
+was generated from via [fromAccessNeedGroup](#classCompiledAccessGroup).
 It links to an [=Access Need Group Decorator=] via
-[hasAccessNeedGroupDecorator](#classPreparedAccessNeedGroup).
+[hasAccessNeedGroupDecorator](#classCompiledAccessGroup).
 
-It links to one or more [=Root Prepared Access Needs=] via
-[hasPreparedAccessNeed](#classPreparedAccessNeed). Each
-[=Root Prepared Access Need=] represents
-a hierarchy of [=Prepared Access Needs=] corresponding with the associated
+It links to one or more [=Root Compiled Accesses=] via
+[hasCompiledAccess](#classCompiledAccess). Each
+[=Root Compiled Access=] represents
+a hierarchy of [=Compiled Accesses=] corresponding with the associated
 [=shape tree=].
 
-Each [=Prepared Access Need=] links to child
-[=Prepared Access Needs=] via
-[referencesPreparedAccessNeed](#classPreparedAccessNeed) or
-[skos:narrower](#classPreparedAccessNeed).
+Each [=Compiled Access=] links to child
+[=Compiled Accesses=] via
+[referencesCompiledAccess](#classCompiledAccess) or
+[skos:narrower](#classCompiledAccess).
 
 An [=Access Need Group=] links to an [=Access Decorator Index=] of
 different [=Access Decorator Series=] that explain the [=Access Need Group=]
@@ -92,32 +92,32 @@ content mappings.
   </pre>
 </figure>
 
-<figure id="fig-prepared-access-need-group">
-  <figcaption>A [=Prepared Access Need Group=] linking to
-  [=Prepared Access Needs=]</figcaption>
+<figure id="fig-compiled-access-group">
+  <figcaption>A [=Compiled Access Group=] linking to
+  [=Compiled Accesses=]</figcaption>
   <pre highlight="turtle">
-  <#prepared-notebook-collaboration-group>
-    a interop:PreparedAccessNeedGroup ;
+  <#compiled-notebook-collaboration-group>
+    a interop:CompiledAccessGroup ;
     interop:fromAccessNeedGroup <#notebook-collaboration-group> ;
     interop:hasAccessNeedGroupDecorator ex:notebook-collaboration-decorator ;
     interop:authenticatesAs interop:Pilot ;
     interop:accessNecessity interop:AccessRequired ;
     interop:accessScenario interop:PersonalAccess, interop:SharedAccess ;
-    interop:hasPreparedAccessNeed &lt;#notebook&gt; .
+    interop:hasCompiledAccess &lt;#notebook&gt; .
 
-  <#prepared-notebook>
-    a interop:PreparedAccessNeed ;
-    interop:inPreparedAccessNeedGroup &lt;#prepared-notebook-collaboration-group&gt; ;
+  <#compiled-notebook>
+    a interop:CompiledAccess ;
+    interop:inCompiledAccessGroup &lt;#compiled-notebook-collaboration-group&gt; ;
     interop:registeredShapeTree note:notebook-tree ;
     interop:hasShapeTreeDecorator note:notebook-decorator&gt; ;
     interop:hasAccessNeedDecorator ex:notebook-need-decorator ;
     interop:accessNecessity interop:AccessRequired ;
     interop:accessMode acl:Read, acl:Write ;
-    interop:referencesPreparedAccessNeed <#prepared-note> .
+    interop:referencesCompiledAccess <#compiled-note> .
 
-  <#prepared-note>
-    a interop:PreparedAccessNeed ;
-    interop:inPreparedAccessNeedGroup &lt;#prepared-notebook-collaboration-group&gt; ;
+  <#compiled-note>
+    a interop:CompiledAccess ;
+    interop:inCompiledAccessGroup &lt;#compiled-notebook-collaboration-group&gt; ;
     interop:registeredShapeTree &lt;note:note-tree&gt; ;
     interop:hasShapeTreeDecorator note:note-decorator&gt; ;
     interop:hasAccessNeedDecorator ex:note-need-decorator ;
@@ -234,10 +234,10 @@ access request to other [=Agents=].
 
 Each [=Access Need=] is associated with a specific [=shape tree=],
 and [=shape trees=] provide both physical and/or virtual hierarchies.
-The [[#prepare-group]] operation starts with each <dfn>Root Access Need</dfn>
+The [[#compile-group]] operation starts with each <dfn>Root Access Need</dfn>
 linked via `hasAccessNeed`, and traverses the shape tree hierarchy,
-creating a [=Prepared Access Need=] at each new [=shape tree=] and
-linking them in a tree via `referencesPreparedAccessNeed` or `skos:narrower`.
+creating a [=Compiled Access=] at each new [=shape tree=] and
+linking them in a tree via `referencesCompiledAccess` or `skos:narrower`.
 Each <dfn>Access Need Override</dfn> that it encounters when traversing the
 hierarchy applies new inherited defaults, or stops the recursion before
 it continues through the remainder of the tree.
@@ -402,30 +402,30 @@ instance of the [AccessNeed](#classAccessNeed) class.
 }
 </pre>
 
-### Prepared Access Need Group ### {#needs-prepared-access-need-group}
+### Compiled Access Group ### {#needs-compiled-access-group}
 
-A <dfn>Prepared Access Need Group</dfn> is output by the [[#prepare-group]]
+A <dfn>Compiled Access Group</dfn> is output by the [[#compile-group]]
 operation when given an [=Access Need Group=] as input.
 
-Preparing an [=Access Need Group=] includes:
+Compiling an [=Access Need Group=] includes:
 
 * Getting an [=Access Need Group Decorator=] via [[#get-group-dec]]
 * Recursing through the [=shape tree=] hierarchy of each [=Root Access Need=]
-    in the [=Access Need Group=], and creating a [=Prepared Access Need=] for
+    in the [=Access Need Group=], and creating a [=Compiled Access=] for
     every [=shape tree=] encountered, applying [=Access Need Overrides=] when
     available.
 
-A <dfn>Root Prepared Access Need</dfn> is the prepared version of the
+A <dfn>Root Compiled Access</dfn> is the compiled version of the
 corresponding [=Root Access Need=] in the source [=Access Need Group=].
 
-<table class="classinfo data" align="left" id="classPreparedAccessNeedGroup">
+<table class="classinfo data" align="left" id="classCompiledAccessGroup">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
     <tr>
       <th colspan=3>
-        [PreparedAccessNeedGroup](interop.ttl#PreparedAccessNeedGroup)
+        [CompiledAccessGroup](interop.ttl#CompiledAccessGroup)
       </th>
     </tr>
     <tr>
@@ -439,13 +439,13 @@ corresponding [=Root Access Need=] in the source [=Access Need Group=].
       <td>fromAccessNeedGroup</td>
       <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
       <td>The [=Access Need Group=] used to generate the
-      [=Prepared Access Need Group=]</td>
+      [=Compiled Access Group=]</td>
     </tr>
     <tr>
       <td>hasAccessNeedGroupDecorator</td>
       <td>[AccessNeedGroupDecorator](#classAccessNeedGroupDecorator)</td>
       <td>An [=Access Need Group Decorator=] that describes this
-      [=Prepared Access Need Group=]</td>
+      [=Compiled Access Group=]</td>
     </tr>
     <tr>
       <td>authenticatesAs</td>
@@ -463,45 +463,45 @@ corresponding [=Root Access Need=] in the source [=Access Need Group=].
       <td>Necessity of the access to the requesting party</td>
     </tr>
     <tr>
-      <td>hasPreparedAccessNeed</td>
-      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
-      <td>Link to a [=Root Prepared Access Need=]</td>
+      <td>hasCompiledAccess</td>
+      <td>[CompiledAccess](#classCompiledAccess)</td>
+      <td>Link to a [=Root Compiled Access=]</td>
     </tr>
   </tbody>
 </table>
 
-The [PreparedAccessNeedGroupShape](#shexPreparedAccessNeedGroup) is used to
+The [CompiledAccessGroupShape](#shexCompiledAccessGroup) is used to
 validate an instance of the
-[PreparedAccessNeedGroup](#classPreparedAccessNeedGroup) class.
+[CompiledAccessGroup](#classCompiledAccessGroup) class.
 
-<pre highlight="turtle" id="shexPreparedAccessNeedGroup">
-<#PreparedAccessNeedGroupShape> {
-  a [ interop:PreparedAccessNeedGroup ] ;
+<pre highlight="turtle" id="shexCompiledAccessGroup">
+<#CompiledAccessGroupShape> {
+  a [ interop:CompiledAccessGroup ] ;
   interop:fromAccessNeedGroup IRI ;
   interop:hasAccessNeedGroupDecorator IRI ;
   interop:authenticatesAs IRI ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
   interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ] ;
-  interop:hasPreparedAccessNeed IRI+ ;
+  interop:hasCompiledAccess IRI+ ;
 }
 </pre>
 
-### Prepared Access Need ### {#needs-prepared-access-need}
+### Compiled Access ### {#needs-compiled-access}
 
-A <dfn>Prepared Access Need</dfn> is generated by the [[#prepare-group]]
+A <dfn>Compiled Access</dfn> is generated by the [[#compile-group]]
 operation as it processes an input [=Access Need Group=]. A
-[=Prepared Access Need=] is added to the [=Prepared Access Need Group=]
+[=Compiled Access=] is added to the [=Compiled Access Group=]
 for every unique [=shape tree=] encountered as the operation traverses the
 [=shape tree=] hierarchy.
 
-<table class="classinfo data" align="left" id="classPreparedAccessNeed">
+<table class="classinfo data" align="left" id="classCompiledAccess">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
     <tr>
       <th colspan=3>
-        [PreparedAccessNeed](interop.ttl#PreparedAccessNeed)
+        [CompiledAccess](interop.ttl#CompiledAccess)
       </th>
     </tr>
     <tr>
@@ -512,9 +512,9 @@ for every unique [=shape tree=] encountered as the operation traverses the
   </thead>
   <tbody>
     <tr>
-      <td>inPreparedAccessNeedGroup</td>
-      <td>[PreparedAccessNeedGroup](#classPreparedAccessNeedGroup)</td>
-      <td>[=Prepared Access Need Group=] the [=Prepared Access Need=] belongs to</td>
+      <td>inCompiledAccessGroup</td>
+      <td>[CompiledAccessGroup](#classCompiledAccessGroup)</td>
+      <td>[=Compiled Access Group=] the [=Compiled Access=] belongs to</td>
     </tr>
     <tr>
       <td>hasShapeTreeDecorator</td>
@@ -532,7 +532,7 @@ for every unique [=shape tree=] encountered as the operation traverses the
     <tr>
       <td>hasDataGrant</td>
       <td>[DataGrant](#classDataGrant)</td>
-      <td>[=Data Grant=] associated with the [=Prepared Access Need=],
+      <td>[=Data Grant=] associated with the [=Compiled Access=],
       established when the [=Access Grant=] is created</td>
     </tr>
     <tr>
@@ -544,12 +544,12 @@ for every unique [=shape tree=] encountered as the operation traverses the
     <tr>
       <td>registeredShapeTree</td>
       <td>`st:ShapeTree`</td>
-      <td>[=Shape tree=] associated with the [=Prepared Access Need=]</td>
+      <td>[=Shape tree=] associated with the [=Compiled Access=]</td>
     </tr>
     <tr>
       <td>accessMode</td>
       <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
-      <td>Requested modes of access for the [=Prepared Access Need=]</td>
+      <td>Requested modes of access for the [=Compiled Access=]</td>
     </tr>
     <tr>
       <td>accessNecessity</td>
@@ -558,39 +558,39 @@ for every unique [=shape tree=] encountered as the operation traverses the
     </tr>
     <tr>
       <td>supportedBy</td>
-      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
-      <td>A [=Prepared Access Need=] whose [=shape tree=] `st:supports` the
-      [=shape tree=] of this [=Prepared Access Need=]</td>
+      <td>[CompiledAccess](#classCompiledAccess)</td>
+      <td>A [=Compiled Access=] whose [=shape tree=] `st:supports` the
+      [=shape tree=] of this [=Compiled Access=]</td>
     </tr>
     <tr>
       <td>supports</td>
-      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
-      <td>A [=Prepared Access Need=] that [=shape tree=] of this
-      [=Prepared Access Need=] `st:supports`</td>
+      <td>[CompiledAccess](#classCompiledAccess)</td>
+      <td>A [=Compiled Access=] that [=shape tree=] of this
+      [=Compiled Access=] `st:supports`</td>
     </tr>
     <tr>
-      <td>referencesPreparedAccessNeed</td>
-      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
-      <td>The next [=Prepared Access Need=] in a virtual hierarchy</td>
+      <td>referencesCompiledAccess</td>
+      <td>[CompiledAccess](#classCompiledAccess)</td>
+      <td>The next [=Compiled Access=] in a virtual hierarchy</td>
     </tr>
     <tr>
       <td>skos:narrower</td>
-      <td>[PreparedAccessNeed](#classPreparedAccessNeed)</td>
-      <td>The next [=Prepared Access Need=] in a virtual hierarchy where
+      <td>[CompiledAccess](#classCompiledAccess)</td>
+      <td>The next [=Compiled Access=] in a virtual hierarchy where
       the regular [=shape tree=] hierarchy has been extended to include
       a skos hierarchy.</td>
     </tr>
   </tbody>
 </table>
 
-The [PreparedAccessNeedShape](#shexPreparedAccessNeed) is used to
+The [CompiledAccessShape](#shexCompiledAccess) is used to
 validate an instance of the
-[PreparedAccessNeed](#classPreparedAccessNeed) class.
+[CompiledAccess](#classCompiledAccess) class.
 
-<pre highlight="turtle" id="shexPreparedAccessNeed">
-<#PreparedAccessNeedShape> {
-  a [ interop:PreparedAccessNeed ] ;
-  interop:inPreparedAccessNeedGroup IRI+ ;
+<pre highlight="turtle" id="shexCompiledAccess">
+<#CompiledAccessShape> {
+  a [ interop:CompiledAccess ] ;
+  interop:inCompiledAccessGroup IRI+ ;
   interop:hasShapeTreeDecorator IRI ;
   interop:hasAccessNeedDecorator IRI? ;
   interop:hasDataGrant IRI? ;
@@ -600,7 +600,7 @@ validate an instance of the
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
   interop:supportedBy IRI* ;
   interop:supports IRI
-  interop:referencesPreparedAccessNeed IRI* ;
+  interop:referencesCompiledAccess IRI* ;
   skos:narrower IRI* ;
 }
 </pre>
@@ -765,7 +765,7 @@ a given [=Access Decorator Resource=].
   <thead>
     <tr>
       <th colspan=3>
-        [PreparedAccessNeedGroup](interop.ttl#PreparedAccessNeedGroup)
+        [CompiledAccessGroup](interop.ttl#CompiledAccessGroup)
       </th>
     </tr>
     <tr>
@@ -952,39 +952,39 @@ The following operations explain how to process [=Access Need Groups=]
 so they can be presented to an [=Agent=] in
 [[#grants-operations|Access Grant Operations]]
 
-* [[#prepare-group]]
-* [[#prepare-need]]
+* [[#compile-group]]
+* [[#compile-need]]
 * [[#get-group-dec]]
 * [[#get-need-dec]]
 
-### Prepare Access Need Group ### {#prepare-group}
+### Compile Access Need Group ### {#compile-group}
 
 This operation takes a given [=Access Need Group=] with a number of associated
-[=Access Needs=] and processes them to produce a [=Prepared Access Need Group=]
+[=Access Needs=] and processes them to produce a [=Compiled Access Group=]
 that is ready to present to a given [=Agent=]
 via the [[#grants-present]] operation.
 
 1. The [=shape tree=] associated with each [=Root Access Need=] is
     traversed to the desired level of recursion, including across references.
-    A [=Prepared Access Need=] is added in a linked hierarchy
+    A [=Compiled Access=] is added in a linked hierarchy
     starting with the [=Root Access Need=], representing every unique
     [=shape tree=] that was traversed.
 2. Decorators are looked up and linked to the
-    [=Prepared Access Need Group=] and where available for every
-    [=Prepared Access Need=]
-3. Any [=Supporting Access Needs=] are associated with [=Prepared Access Needs=].
+    [=Compiled Access Group=] and where available for every
+    [=Compiled Access=]
+3. Any [=Supporting Access Needs=] are associated with [=Compiled Accesses=].
 
-#### Inputs #### {#prepare-group-inputs}
+#### Inputs #### {#compile-group-inputs}
 
 * Let `GROUP` be an [=Access Need Group=]
 * Let `LANG` be the [=Agent's=] preferred language
 
-#### Outputs #### {#prepare-group-outputs}
+#### Outputs #### {#compile-group-outputs}
 
-* A [=Prepared Access Need Group=] generated from the input `GROUP`, with
-    an associated set of [=Prepared Access Needs=].
+* A [=Compiled Access Group=] generated from the input `GROUP`, with
+    an associated set of [=Compiled Accesses=].
 
-#### Operation Details #### {#prepare-group-details}
+#### Operation Details #### {#compile-group-details}
 
 1. Perform a validation of the RDF graph of `GROUP` against
     [interop:AccessNeedGroupShape](interop.shex#AccessNeedGroupShape).
@@ -995,29 +995,29 @@ via the [[#grants-present]] operation.
 1. Let `OVERRIDES` be the [=Access Needs=] linked via `GROUP hasAccessNeedOverride`
 1. Let `TREEDECS` represent all [=Shape Tree Decorators=] associated with `ALLNEEDS`
 1. Let `ALLDECS` represent all [=Access Need Decorators=] associated with `ALLNEEDS`
-1. Let `PGROUP` be a [=Prepared Access Need Group=]
-1. Let `PGROUP hasAccessNeedDecorator` be the [=Access Need Group Decorator=]
+1. Let `CAGROUP` be a [=Compiled Access Group=]
+1. Let `CAGROUP hasAccessNeedDecorator` be the [=Access Need Group Decorator=]
     returned from [[#get-group-dec]] with inputs: `GROUP`, `LANG`
-1. Let `PGROUP fromAccessNeedGroup` be `GROUP`
-1. Let `PGROUP accessNecessity` be `GROUP accessNecessity`
-1. Let `PGROUP authenticatesAs` be `GROUP authenticatesAs`
+1. Let `CAGROUP fromAccessNeedGroup` be `GROUP`
+1. Let `CAGROUP accessNecessity` be `GROUP accessNecessity`
+1. Let `CAGROUP authenticatesAs` be `GROUP authenticatesAs`
 1. For each [=Root Access Need=] `ROOT` linked via `GROUP hasAccessNeed`
-    1. Let `PGROUP hasPreparedAccessNeed` be linked to the
-        [=Root Prepared Access Need=] returned by
-        [[#prepare-need]] with inputs: `ROOT registeredShapeTree`, `ROOT`,
+    1. Let `CAGROUP hasCompiledAccess` be linked to the
+        [=Root Compiled Access=] returned by
+        [[#compile-need]] with inputs: `ROOT registeredShapeTree`, `ROOT`,
         `ALLNEEDS`, `OVERRIDES`, `TREEDECS`, `ALLDECS`, `LANG`
-1. Let `ALLPREPARED` represent all [=Prepared Access Needs=] linked via
-    `PGROUP hasPreparedAccessNeed`, as well as all [=Prepared Access Needs=]
-    linked to them via `referencesPreparedAccessNeed` or `skos:narrower`.
-1. For each [=Root Prepared Access Need=] `PROOT` linked via `PGROUP hasPreparedAccessNeed`
-    1. Call [[#link-supported]] with inputs: `PROOT`, `ALLPREPARED`
+1. Let `ALLCOMPILED` represent all [=Compiled Accesses=] linked via
+    `CAGROUP hasCompiledAccess`, as well as all [=Compiled Accesses=]
+    linked to them via `referencesCompiledAccess` or `skos:narrower`.
+1. For each [=Root Compiled Access=] `PROOT` linked via `CAGROUP hasCompiledAccess`
+    1. Call [[#link-supported]] with inputs: `PROOT`, `ALLCOMPILED`
 
-### Prepare Access Need ### {#prepare-need}
+### Compile Access Need ### {#compile-need}
 
 This operation is called recursively to build up a linked hierarchy of
-[=Prepared Access Needs=] in concert with the [[#prepare-need-walk]] operation.
+[=Compiled Accesses=] in concert with the [[#compile-need-walk]] operation.
 
-#### Inputs #### {#prepare-need-inputs}
+#### Inputs #### {#compile-need-inputs}
 
 * Let `TREE` be the current [=shape tree=] in context
 * Let `LASTNEED` be the [=Access Need=] in context
@@ -1028,28 +1028,28 @@ This operation is called recursively to build up a linked hierarchy of
 * Let `ALLDECS` represent all [=Access Need Decorators=] associated with `ALLNEEDS`
 * Let `LANG` be the [=Agent's=] preferred language
 
-#### Outputs #### {#prepare-need-outputs}
+#### Outputs #### {#compile-need-outputs}
 
-* A [=Prepared Access Need=] with a linked hierarchy of
-    [=Prepared Access Needs=] associated with it
+* A [=Compiled Access=] with a linked hierarchy of
+    [=Compiled Accesses=] associated with it
 
-#### Operation Details #### {#prepare-need-details}
+#### Operation Details #### {#compile-need-details}
 
 1. Let `TOPTREEDEC` be the [=Shape Tree Decorator=]
     returned from the [Get Shape Tree Decorator](#) operation with
     inputs: `TREE`, `LANG`
 1. Let `SPECIFICNEED` be the [=Access Need=] returned from the
-    [[#prepare-need-getspecific]] operation with inputs:
+    [[#compile-need-getspecific]] operation with inputs:
     `TREE`, `OVERRIDES`, `LASTNEED`
-1. return the [=Prepared Access Need=] returned by calling
-    [[#prepare-need-walk]] with inputs:
+1. return the [=Compiled Access=] returned by calling
+    [[#compile-need-walk]] with inputs:
     `TREE`, `TOPTREEDEC`, `SPECIFICNEED`, `ALLDECS`, `ALLNEEDS`,
     `OVERRIDES`, `TREEDECS`, `LANG`
 
-#### _walkDecorators #### {#prepare-need-walk}
+#### _walkDecorators #### {#compile-need-walk}
 
 This operation is called recursively to build up a linked hierarchy of
-[=Prepared Access Needs=] in concert with the [[#prepare-need]] operation.
+[=Compiled Accesses=] in concert with the [[#compile-need]] operation.
 
 ##### Inputs ##### {#walk-inputs}
 
@@ -1065,33 +1065,33 @@ This operation is called recursively to build up a linked hierarchy of
 
 ##### Outputs ##### {#walk-outputs}
 
-* A [=Prepared Access Need=] with a linked hierarchy of
-    [=Prepared Access Needs=] associated with it
+* A [=Compiled Access=] with a linked hierarchy of
+    [=Compiled Accesses=] associated with it
 
 ##### Operation Details ##### {#walk-details}
 
-1. Let `PREPARED` be a new [=Prepared Access Need=]
-1. Let `PREPARED registeredShapeTree` be `TREE`
-1. Let `PREPARED accessNecessity` be set to `NEED`'s `accessNecessity`
-1. Let `PREPARED accessMode` be all of `NEED`'s `accessMode`s
-1. Let `PREPARED hasAccessNeedDecorator` be the [=Access Need Decorator=]
+1. Let `COMPILED` be a new [=Compiled Access=]
+1. Let `COMPILED registeredShapeTree` be `TREE`
+1. Let `COMPILED accessNecessity` be set to `NEED`'s `accessNecessity`
+1. Let `COMPILED accessMode` be all of `NEED`'s `accessMode`s
+1. Let `COMPILED hasAccessNeedDecorator` be the [=Access Need Decorator=]
     returned from [[#get-need-dec]] with inputs: `NEED`, `LANG`
-1. Let `PREPARED hasShapeTreeDecorator` be `TREEDEC`
+1. Let `COMPILED hasShapeTreeDecorator` be `TREEDEC`
 1. If `TREEDEC skos:narrower`
     1. Let `NARROWERDEC` be `TREEDEC skos:narrower`
     1. Let `NARROWERTREE` be `NARROWERDEC hasShapeTree`
-    1. Let `NARROWERNEED` be the [=Access Need=] returned from the
-        [[#prepare-need-getspecific]] operation with inputs:
+    1. Let `NARROWERCA` be the [=Access Need=] returned from the
+        [[#compile-need-getspecific]] operation with inputs:
         `NARROWERTREE`, `OVERRIDES`, `NEED`
-    1. Let `PREPARED skos:narrower` be the [=Prepared Access Need=] returned
-        from calling [[#prepare-need-walk]] with inputs:
-        `NARROWERTREE`, `NARROWERDEC`, `NARROWERNEED`, `ALLDECS`, `ALLNEEDS`,
+    1. Let `COMPILED skos:narrower` be the [=Compiled Access=] returned
+        from calling [[#compile-need-walk]] with inputs:
+        `NARROWERTREE`, `NARROWERDEC`, `NARROWERCA`, `ALLDECS`, `ALLNEEDS`,
         `OVERRIDES`, `TREEDECS`, `LANG`
 1. For each [=shape tree=] `REFTREE` linked via `TREE st:references`
-    1. Call [[#prepare-need]] with inputs `REFTREE`, `NEED`,
+    1. Call [[#compile-need]] with inputs `REFTREE`, `NEED`,
         `ALLNEEDS`, `OVERRIDES`, `TREEDECS`, `ALLDECS`, `LANG`
 
-#### _getSpecificAccessNeed #### {#prepare-need-getspecific}
+#### _getSpecificAccessNeed #### {#compile-need-getspecific}
 
 This operation looks through all of the [=Access Need Overrides=] associated
 with a given [=Access Need Group=] to see if there is an
@@ -1114,23 +1114,23 @@ it will effective inherit its defaults from the last [=Access Need=] instead.
     1.  return `NEED` if `NEED registeredShapeTree` is `TREE`
 1. return `DEFAULTNEED`
 
-### Link Supported Prepared Access Needs ### {#link-supported}
+### Link Supported Compiled Accesses ### {#link-supported}
 
 This is a recursive operation that iterates through all of the
-[=Prepared Access Needs=] associated with a [=Prepared Access Need Group=]
+[=Compiled Accesses=] associated with a [=Compiled Access Group=]
 and links together any that have a support relationship.
 
 A support relationship exists when the [=shape tree=] associated with one
-[=Prepared Access Need=] has an `st:supports` predicate that links
-to the [=shape tree=] of another [=Prepared Access Need=]. They are
+[=Compiled Access=] has an `st:supports` predicate that links
+to the [=shape tree=] of another [=Compiled Access=]. They are
 linked bi-directionally through the `interop:supports` and
 `interop:supportedBy` properties.
 
 #### Inputs #### {#link-supported-inputs}
 
-* Let `PNEED` be a [=Prepared Access Need=]
-* Let `ALLPREPARED` be all [=Prepared Access Needs=] associated with a
-    given [=Prepared Access Need Group=]
+* Let `CACCESS` be a [=Compiled Access=]
+* Let `ALLCOMPILED` be all [=Compiled Accesses=] associated with a
+    given [=Compiled Access Group=]
 
 #### Outputs #### {#link-supported-outputs}
 
@@ -1138,45 +1138,45 @@ linked bi-directionally through the `interop:supports` and
 
 #### Operation Details #### {#link-supported-details}
 
-1. Let `TREE` be `PNEED registeredShapeTree`
+1. Let `TREE` be `CACCESS registeredShapeTree`
 1. If `TREE st:supports`
     1. Let `SUPPORTEDTREE` be the [=shape tree=] linked by `TREE st:supports`
-    1. For each [=Prepared Access Need=] `PREPARED` in `ALLPREPARED`
-        1. Let `SUPPORTEDNEED` be the return of [[#iterate-supported]] with
-            inputs: `ALLPREPARED`, `TREE`
-        1. Let `PNEED supports` be `SUPPORTEDNEED`
-        1. Let `SUPPORTEDNEED supportedBy` be `PNEED`
-1. For each [=Prepared Access Need=] `REFNEED` linked by
-    `PNEED referencesPreparedAccessNeed`
-    1. Call [[#link-supported]] with inputs: `REFNEED`, `ALLPREPARED`
-1. For each [=Prepared Access Need=] `NARROWERNEED` linked by
-    `PNEED skos:narrower`
-    1. Call [[#link-supported]] with inputs: `NARROWERNEED`, `ALLPREPARED`
+    1. For each [=Compiled Access=] `COMPILED` in `ALLCOMPILED`
+        1. Let `SUPPORTEDCA` be the return of [[#iterate-supported]] with
+            inputs: `ALLCOMPILED`, `TREE`
+        1. Let `CACCESS supports` be `SUPPORTEDCA`
+        1. Let `SUPPORTEDCA supportedBy` be `CACCESS`
+1. For each [=Compiled Access=] `REFCA` linked by
+    `CACCESS referencesCompiledAccess`
+    1. Call [[#link-supported]] with inputs: `REFCA`, `ALLCOMPILED`
+1. For each [=Compiled Access=] `NARROWERCA` linked by
+    `CACCESS skos:narrower`
+    1. Call [[#link-supported]] with inputs: `NARROWERCA`, `ALLCOMPILED`
 
-#### Iterate for Supported Prepared Access Needs #### {#iterate-supported}
+#### Iterate for Supported Compiled Accesses #### {#iterate-supported}
 
 This is a recursive function that iterates through a linked hierarchy of
-[=Prepared Access Needs=] looking for a [=Prepared Access Need=] with a
+[=Compiled Accesses=] looking for a [=Compiled Access=] with a
 matching [=shape tree=].
 
 ##### Inputs ##### {#iterate-inputs}
 
-* Let `PNEED` be a [=Prepared Acecss Need=]
+* Let `CACCESS` be a [=Compiled Access=]
 * Let `TREE` be a [=shape tree]
 
 ##### Outputs ##### {#iterate-outputs}
 
-* Returns a [=Prepared Access Need=]
+* Returns a [=Compiled Access=]
 
 ##### Operation Details ##### {#iterate-details}
 
-1. Return `PNEED` if `PNEED registeredShapeTree` is `TREE`
-1. For each [=Prepared Access Need=] `REFNEED` linked by
-    `PNEED referencesPreparedAccessNeed`
-    1. Call [[#iterate-supported]] with inputs: `REFNEED`, `TREE`
-1. For each [=Prepared Access Need=] `NARROWERNEED` linked by
-    `PNEED skos:narrower`
-    1. Call [[#iterate-supported]] with inputs: `NARROWERNEED`, `TREE`
+1. Return `CACCESS` if `CACCESS registeredShapeTree` is `TREE`
+1. For each [=Compiled Access=] `REFCA` linked by
+    `CACCESS referencesCompiledAccess`
+    1. Call [[#iterate-supported]] with inputs: `REFCA`, `TREE`
+1. For each [=Compiled Access=] `NARROWERCA` linked by
+    `CACCESS skos:narrower`
+    1. Call [[#iterate-supported]] with inputs: `NARROWERCA`, `TREE`
 1. Return `NULL`
 
 ### Get Access Decorator Resource ### {#get-access-dec}
