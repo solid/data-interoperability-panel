@@ -718,7 +718,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:domain :CompiledAccessGroup ;
   rdfs:range :AccessNeedGroup ;
-  rdfs:label "Has Access Need Group"@en .
+  rdfs:label "From Access Need Group"@en .
 
 :hasAccessNeedGroupDecorator
   a rdf:property ;
@@ -751,6 +751,14 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:domain :CompiledAccess ;
   rdfs:range :CompiledAccessGroup ;
   rdfs:label "In Compiled Access Group"@en .
+
+:fromAccessNeed
+  a rdf:property ;
+  rdfs:comment "Links to the AccessNeed used to generate the CompiledAccess"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :CompiledAccess ;
+  rdfs:range :AccessNeed ;
+  rdfs:label "From Access Need"@en .
 
 :supports
   a rdf:property ;
