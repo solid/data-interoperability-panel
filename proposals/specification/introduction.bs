@@ -8,16 +8,35 @@ to its full potential. The fundamentals of Solid make this possible,
 but further definition of standard methods and mechanisms must be established
 to make it practical, intuitive, and secure.
 
-We must be able to support data interoperability across applications while
-enabling secure collaboration and query using intuitive data boundaries.
+Note: See
+[[PROBLEMS-AND-GOALS|Problems and Goals for Interoperability in Solid]]
+for a detailed explanation of the problem space.
 
-Diversity in how the same data will be accessed and manipulated by different
-entities and applications exacerbates the need for reliable mechanisms that
-protect against data corruption, data leakage, or broken workflows
+This specification details how [=Agents=] in the Solid ecosystem
+can manage and utilize data stored in a Solid pod under their control using
+disparate, interoperable [=Applications=], and then share that data in
+collaboration with other [=Agents=].
 
-Standard methods and mechanisms for interoperability, collaboration, and
-security of data in a Solid Pod must realize these needs, and it must be done
-without changing the fundamentals of Solid.
+[[#appreg]] lets [=Agents=] register and track the [=Applications=] they've
+decided to use.
 
-Note: See [[PROBLEMS-AND-GOALS]] for a detailed explanation of the stated
-problems and goals for interoperability.
+[[#datareg]] lets [=Agents=] register, organize, and lookup their data.
+Data is stored uniformly, avoiding complex physical hierarchies.
+[=Shape trees=] and [=shapes=] provide strong data validation and
+intuitive data boundaries.
+
+[[#authz]] provides the means for an [=Agent=] to grant other [=Agents=]
+and [=Applications=] access to data in their control.
+
+* [[#needs]] let [=Agents=] and [=Applications=] express which data they
+    need access to, and patterns to request those needs.
+
+* [[#grants]] let [=Agents=] manage and track access they've granted to
+    other [=Agents=] and [=Applications=].
+
+* [[#receipts]] are provided by [=Agents=] to other [=Agents=]
+    and [=Applications=] to let them know about the access they've been
+    granted.
+
+* [[#remote]] lets [=Agents=] maintain a local registry of remote data
+    that has been shared with them by other [=Agents=].
