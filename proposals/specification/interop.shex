@@ -66,7 +66,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:applicationDescription xsd:string ;
   interop:applicationAuthor IRI ;
   interop:applicationAuthorName xsd:string ;
-  interop:applicationThumbanil IRI ;
+  interop:applicationThumbanil IRI? ;
   interop:hasAccessNeedGroup IRI* ;
 }
 
@@ -226,6 +226,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   :EmailInvitationChannel   # E-mail
   :SMSInvitationChannel     # SMS (Simple Messaging Service)
   :OfflineInvitationChannel # Other communication, e.g. verbal, shared note
+  :LDNInvitationChannel     # Linked Data Notification
 ]
 
 # Data Grant
