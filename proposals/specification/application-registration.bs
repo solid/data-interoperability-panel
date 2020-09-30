@@ -1,6 +1,9 @@
 Application Registration {#appreg}
 =====================
 
+Issue: Refactor Application Registration to use the format introduced throughout
+Data Authorization (overview, model, hierarchy, permissions, operations )
+
 ## Overview ## {#appreg-overview}
 
 Application Registration gives [=Agents=] participating in the Solid
@@ -22,8 +25,7 @@ An [=Application Registry=] for storing individual
 Application Registration extends the [[#datamodel-agent]] with type-specific
 subclasses and subproperties.
 
-* An [=Agent=] has a [=Registrar=], which links to
-    [=Application Registry Set=] instances.
+* An [=Agent=] links to [=Application Registry Set=] instances.
 
 * An [=Application Registry Set=] links to any number of
     [=Application Registry=] instances via the
@@ -65,7 +67,7 @@ subclass also introduces the following properties:
 A given [=Agent=] will have one or more
 [=Application Registries=] discoverable through the
 [[#datamodel-agent]], via resources that implement
-the [[#agent-hierarchy]].
+the [[#agents-hierarchy]].
 
 <figure>
   <figcaption>An [=Application Registry=] at
@@ -320,8 +322,8 @@ to register itself, and will need the
 assistance of a [=trusted agent=] that has been authorized to assist
 with application registration for a given [=Agent=].
 
-Issue: Agents that can perform these capabilities will be discoverable
-through the registrar. Until that section is written, we'll use a
+Issue: Applications that can perform these capabilities will be discoverable
+through the Agent. Until that section is written, we'll use
 hard-coded properties associated with the Agent for discovery.
 
 The [=Application=] will look for another

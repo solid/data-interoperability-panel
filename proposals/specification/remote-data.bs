@@ -3,20 +3,19 @@ Remote Data Registration {#remote}
 
 ## Overview ## {#remote-overview}
 
+Issue: Write overview for Remote Data Registration
+
 ## Data Model ## {#remote-datamodel}
 
 ### Summary ### {#remote-datamodel-summary}
 
-<figure id="fig-receipt-model">
+<figure id="fig-remote-model">
   <img src="diagrams/remote-model.svg" width=100%/>
   <figcaption>Data model for the [=Remote Data Registry=]</figcaption>
 </figure>
 
-The [=Remote Data Registry=] extends the [[#datamodel-agent]]]] with type-specific
-subclasses and subproperties.
-
-An [=Agent=] has a [=Registrar=] that links to [=Remote Data Registry Sets=]
-via the [interop:hasRemoteDataRegistrySet](interop.ttl#hasAccessReceiptRegistrySet)
+An [=Agent=] links to [=Remote Data Registry Sets=] via the
+[interop:hasRemoteDataRegistrySet](interop.ttl#hasAccessReceiptRegistrySet)
 property.
 
 A [=Remote Data Registry Set=] links to any number of
@@ -31,20 +30,20 @@ A [=Remote Data Registration=] may link to one or more
 [=Remote Data Instances=] via the
 [interop:hasRemoteDataInstance](interop.ttl#hasRemoteDataInstance) property.
 
-<figure id="fig-remote-registrar">
-  <figcaption>A [=Registrar=] at https://bob.pod.example/registries/#registrar
-  linking to a [=Remote Data Registry Set=]</figcaption>
+<figure id="fig-remote-agent">
+  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me
+  linking to an [=Remote Data Registry Set=]</figcaption>
   <pre highlight="turtle">
-  <#registrar>
-    a interop:Registrar;
-    interop:hasRemoteDataRegistrySet &lt;https://bob.pod.example/registries/receipt#set&gt; .
+  <#me>
+    a interop:Agent;
+    interop:hasRemoteDataRegistrySet &lt;https://alice.pod.example/profile/remote#set&gt; .
   </pre>
   </figure>
 </figure>
 
 <figure id ="fig-remote-registry-set">
    <figcaption>A [=Remote Data Registry Set=] at
-   https://bob.pod.example/registries/remote#set linking to two different
+   https://bob.pod.example/profile/remote#set linking to two different
   [=Remote Data Registries=]</figcaption>
   <pre highlight="turtle">
   <#set>
@@ -485,10 +484,10 @@ that the assigned resource will validate against the
   </thead>
   <tbody>
     <tr>
-      <td>`/registries/#registrar`</td>
-      <td>[Registrar](#)</td>
-      <td>[RegistrarShape](#)</td>
-      <td>[RegistrarTree](#)</td>
+      <td>`/profile/`</td>
+      <td>-</td>
+      <td>-</td>
+      <td>[ProfileTree](#treeAgent)</td>
     </tr>
     <tr>
       <td>`-- remote#set`</td>
@@ -547,7 +546,7 @@ for resource names.
 
 * Let `RECEIPT` be an [=Access Receipt=] updated with remote data associations
 
-#### Operation Details #### {#updateremote-outputs}
+#### Operation Details #### {#updateremote-details}
 
 1. For each [=Data Receipt=] `DRECEIPT` linked via `RECEIPT hasDataReceipt`
     1. Let `REMOTEDR` be a [=Remote Data Regisration=] returned from

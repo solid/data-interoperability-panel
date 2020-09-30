@@ -1,6 +1,9 @@
 Data Registration {#datareg}
 =====================
 
+Issue: Refactor Data Registration to use the format introduced throughout
+Data Authorization (overview, model, hierarchy, permissions, operations )
+
 ## Overview ## {#datareg-overview}
 
 Data Registration gives [=Agents=] participating in the Solid [=ecosystem=]
@@ -31,7 +34,7 @@ query engines or indexing schemes.
 Data Registration extends the [[#datamodel-agent]] with type-specific subclasses
 and subproperties.
 
-An [=Agent=] has a [=Registrar=] that links to [=Data Registry Sets=]
+An [=Agent=] links to [=Data Registry Sets=]
 via the [interop:hasDataRegistrySet](interop.ttl#hasDataRegistrySet) property.
 
 A [=Data Registry Set=] links to any number of [=Data Registries=] via
@@ -40,21 +43,20 @@ the [interop:hasRegistry](interop.ttl#hasRegistry) property.
 A [=Data Registry=] links to any number of [=Data Registrations=]
 via the [interop:hasRegistration](interop.ttl#hasRegistration) property.
 
-<figure id="fig-datareg-registrar">
-  <figcaption>A [=Registrar=] at https://alice.pod.example/registries/#registrar
+<figure id="fig-datareg-agent">
+  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me
   linking to a [=Data Registry Set=]</figcaption>
   <pre highlight="turtle">
-  <#registrar>
-    a interop:Registrar;
-    interop:hasDataRegistrySet &lt;https://alice.pod.example/registries/data#set&gt; .
+  <#me>
+    a interop:Agent;
+    interop:hasDataRegistrySet &lt;https://alice.pod.example/profile/data#set&gt; .
   </pre>
   </figure>
 </figure>
 
-
 <figure id ="fig-datareg-registry-set">
    <figcaption>A [=Data Registry Set=] at
-   https://alice.pod.example/registries/data#set linking to two different
+   https://alice.pod.example/profile/data#set linking to two different
   [=Data Registries=]</figcaption>
   <pre highlight="turtle">
   <#set>
@@ -118,7 +120,8 @@ the following properties:
 ## Structure and Validation ## {#datareg-structure}
 
 The resources associated with an [=Agent's=] [=Data Registries=] conform
-to and extend the general patterns detailed in Registrar [[#agent-hierarchy]].
+to and extend the general patterns detailed in the [=Agent's=]
+[[#agents-hierarchy]].
 
 Consequently, this section focuses on the unique composition and validation of
 [=Data Registrations=] in a [=Data Registry=], and the

@@ -3,20 +3,20 @@ Access Receipts {#receipts}
 
 ## Overview ## {#receipts-overview}
 
+Issue: Write overview for Access Receipts
+
 ## Data Model ## {#receipts-datamodel}
 
 ### Summary ### {#receipts-datamodel-summary}
 
 <figure id="fig-receipt-model">
-  <img src="diagrams/receipt-model.svg" width=100%/>
+  <img src="diagrams/receipts-model.svg" width=100%/>
   <figcaption>Data model for the [=Access Receipt Registry=]</figcaption>
 </figure>
 
-The [=Access Receipt Registry=] extends the [[#datamodel-agent]] with type-specific
-subclasses and subproperties.
-
-An [=Agent=] has a [=Registrar=] that links to [=Access Receipt Registry Sets=]
-via the [interop:hasAccessReceiptRegistrySet](interop.ttl#hasAccessReceiptRegistrySet) property.
+An [=Agent=] links to [=Access Receipt Registry Sets=] via the
+[interop:hasAccessReceiptRegistrySet](interop.ttl#hasAccessReceiptRegistrySet)
+property.
 
 An [=Access Receipt Registry Set=] links to any number of
 [=Access Receipt Registries=] via
@@ -26,20 +26,20 @@ An [=Access Receipt Registry=] links to any number of registered
 [=Access Receipts=] via the
 [interop:hasRegistration](interop.ttl#hasRegistration) property.
 
-<figure id="fig-receipt-registrar">
-  <figcaption>A [=Registrar=] at https://bob.pod.example/registries/#registrar
+<figure id="fig-receipts-agent">
+  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me
   linking to an [=Access Receipt Registry Set=]</figcaption>
   <pre highlight="turtle">
-  <#registrar>
-    a interop:Registrar;
-    interop:hasAccessReceiptRegistrySet &lt;https://bob.pod.example/registries/receipt#set&gt; .
+  <#me>
+    a interop:Agent;
+    interop:hasAccessReceiptRegistrySet &lt;https://alice.pod.example/profile/receipt#set&gt; .
   </pre>
   </figure>
 </figure>
 
 <figure id ="fig-receipt-registry-set">
    <figcaption>An [=Access Receipt Registry Set=] at
-   https://bob.pod.example/registries/receipt#set linking to two different
+   https://bob.pod.example/profile/receipt#set linking to two different
   [=Access Receipt Registries=]</figcaption>
   <pre highlight="turtle">
   <#set>
@@ -215,7 +215,9 @@ conformant instances of the [AccessReceiptTree](#treeAccessReceipt).
 
 ### Access Receipt ### {#datamodel-access-receipt}
 
-Each <dfn>Access Receipt</dfn>
+Each <dfn>Access Receipt</dfn> ...
+
+Issue: Write definition for Access Receipt class
 
 <table class="classinfo data" align="left" id="classAccessReceipt">
   <colgroup></colgroup>
@@ -312,6 +314,8 @@ that the assigned resource will validate against the
 ### Data Receipt ### {#datamodel-data-receipt}
 
 A <dfn>Data Receipt</dfn> ...
+
+Issue: Write definition for Data Receipt class
 
 <table class="classinfo data" align="left" id="classDataReceipt">
   <colgroup></colgroup>
@@ -419,10 +423,10 @@ class.
   </thead>
   <tbody>
     <tr>
-      <td>`/registries/#registrar`</td>
-      <td>[Registrar](#)</td>
-      <td>[RegistrarShape](#)</td>
-      <td>[RegistrarTree](#)</td>
+      <td>`/profile/`</td>
+      <td>-</td>
+      <td>-</td>
+      <td>[ProfileTree](#treeAgent)</td>
     </tr>
     <tr>
       <td>`-- receipt#set`</td>

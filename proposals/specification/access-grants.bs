@@ -3,42 +3,41 @@ Access Grants {#grants}
 
 ## Overview ## {#grants-overview}
 
+Issue: Write overview for Access Grants
+
 ## Data Model ## {#grants-datamodel}
 
 ### Summary ### {#grants-datamodel-summary}
 
-<figure id="fig-access-model">
-  <img src="diagrams/access-model.svg" width=100%/>
+<figure id="fig-grants-model">
+  <img src="diagrams/grants-model.svg" width=100%/>
   <figcaption>Data model for the access registry</figcaption>
 </figure>
 
-The [=Access Grant Registry=] extends the [[#datamodel-agent]] with type-specific
-subclasses and subproperties.
-
-An [=Agent=] has a [=Registrar=] that links to [=Access Grant Registry Sets=]
+An [=Agent=] links to [=Access Grant Registry Sets=]
 via the [interop:hasAccessGrantRegistrySet](interop.ttl#hasAccessGrantRegistrySet) property.
 
-A [=Access Grant Registry Set=] links to any number of [=Access Grant Registries=]
+An [=Access Grant Registry Set=] links to any number of [=Access Grant Registries=]
 via the [interop:hasRegistry](interop.ttl#hasRegistry) property.
 
 An [=Access Grant Registry=] links to any number of registered [=Access Grants=]
 and [=Access Invitations=] via the
 [interop:hasRegistration](interop.ttl#hasRegistration) property.
 
-<figure id="fig-access-registrar">
-  <figcaption>A [=Registrar=] at https://alice.pod.example/registries/#registrar
+<figure id="fig-grants-agent">
+  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me
   linking to an [=Access Grant Registry Set=]</figcaption>
   <pre highlight="turtle">
-  <#registrar>
-    a interop:Registrar;
-    interop:hasAccessGrantRegistrySet &lt;https://alice.pod.example/registries/grant#set&gt; .
+  <#me>
+    a interop:Agent;
+    interop:hasAccessGrantRegistrySet &lt;https://alice.pod.example/profile/grant#set&gt; .
   </pre>
   </figure>
 </figure>
 
-<figure id ="fig-access-registry-set">
+<figure id ="fig-grants-registry-set">
    <figcaption>An [=Access Grant Registry Set=] at
-   https://alice.pod.example/registries/grant#set linking to two different
+   https://alice.pod.example/profile/grant#set linking to two different
   [=Access Grant Registries=]</figcaption>
   <pre highlight="turtle">
   <#set>
@@ -48,7 +47,7 @@ and [=Access Invitations=] via the
   </pre>
 </figure>
 
-<figure id="fig-access-registry">
+<figure id="fig-grants-registry">
   <figcaption>An [=Access Grant Registry=] at https://alice.pod.example/grants/#registry
   linking to several registered [=Access Grants=] or
   [=Access Invitations=]</figcaption>
@@ -62,7 +61,7 @@ and [=Access Invitations=] via the
   </pre>
 </figure>
 
-<figure id="fig-access-grant">
+<figure id="fig-grants-grant">
   <figcaption>An [=Access Grant=] at
   https://alice.pod.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d#grant
   </figcaption>
@@ -127,7 +126,7 @@ and [=Access Invitations=] via the
   </pre>
 </figure>
 
-<figure id="fig-access-invitation">
+<figure id="fig-grants-invitation">
   <figcaption>An [=Access Invitation=] at
   https://alice.pod.example/grants/2d575cba-3f6c-4c58-bccd-0e6266ba56cf/#invitation
   </figcaption>
@@ -749,10 +748,10 @@ validate an instance of the
   </thead>
   <tbody>
     <tr>
-      <td>`/registries/#registrar`</td>
-      <td>[Registrar](#)</td>
-      <td>[RegistrarShape](#)</td>
-      <td>[RegistrarTree](#)</td>
+      <td>`/profile/`</td>
+      <td>-</td>
+      <td>-</td>
+      <td>[ProfileTree](#treeAgent)</td>
     </tr>
     <tr>
       <td>`-- grant#set`</td>
@@ -1036,7 +1035,11 @@ an [=Access Grant Registry=].
 
 ### Deliver Invitation ### {#grants-deliverinvitation}
 
+Issue: Write standard operation for invitation delivery
+
 ### Validate Invitation ### {#grants-validateinvitation}
+
+Issue: Write standard operation for validating an invitation
 
 ### Apply Permissions ### {#grants-applyperms}
 
@@ -1300,12 +1303,8 @@ Used to select specific [=Registered Data Instances=] for a given
 with subordinate [=Data Grants=] reducing their associated scope of
 [=Registered Data Instances=] to only those related to the instances above them.
 
-#### Inputs #### {#select-inputs}
-
-#### Inputs #### {#select-outputs}
-
-#### Operation Details #### {#select-details}
-
+Issue: Write operation for selecting specific registered data instances
+for a given Data Registration within an Access Grant
 
 ### Select All Instances for Access ### {#grants-selectall}
 
@@ -1313,8 +1312,5 @@ Used to select all [=Registered Data Instances=] for a given [=Data Grant=].
 In the event where this is moving from a subset of inherited instances,
 this will expand to only include all inherited instances.
 
-#### Inputs #### {#selectall-inputs}
-
-#### Inputs #### {#selectall-outputs}
-
-#### Operation Details #### {#selectall-details}
+Issue: Write operation for selecting all registered data instances
+for a given Data Registration within an Access Grant
