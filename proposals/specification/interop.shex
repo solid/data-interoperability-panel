@@ -1,0 +1,327 @@
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+# Agent
+<#AgentShape> {
+  a [ interop:Agent ] ;
+  interop:hasApplicationRegistrySet IRI ;
+  interop:hasDataRegistrySet IRI ;
+  interop:hasAccessGrantRegistrySet IRI ;
+  interop:hasAccessReceiptRegistrySet IRI ;
+  interop:hasRemoteDataRegistrySet IRI ;
+  interop:hasInbox IRI ;
+  interop:hasAccessInbox IRI
+}
+
+# Application Registry Set
+<#ApplicationRegistrySetShape> {
+  a [ interop:ApplicationRegistrySet ] ;
+  interop:hasRegistry IRI+
+}
+
+# Application Registry
+<#ApplicationRegistryShape> {
+  a [ interop:ApplicationRegistry ] ;
+  interop:hasRegistration IRI*
+}
+
+# Application Registration
+<#ApplicationRegistrationShape> {
+  a [ interop:ApplicationRegistration ] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:registeredApplication IRI ;
+  interop:hasAccessReceipt IRI?
+}
+
+# Data Registry Set
+<#DataRegistrySetShape> {
+  a [ interop:DataRegistrySet ] ;
+  interop:hasRegistry IRI+
+}
+
+# Data Registry
+<#DataRegistryShape> {
+  a [ interop:DataRegistry ] ;
+  interop:hasRegistration IRI*
+}
+
+# Data Registration
+<#DataRegistrationShape> {
+  a [ interop:DataRegistration ] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:registeredShapeTree IRI ;
+  interop:hasRegisteredDataInstance IRI*
+}
+
+# Application
+<#ApplicationShape> {
+  a [ interop:Application ] ;
+  interop:applicationName xsd:string ;
+  interop:applicationDescription xsd:string ;
+  interop:applicationAuthor IRI ;
+  interop:applicationAuthorName xsd:string ;
+  interop:applicationThumbanil IRI? ;
+  interop:hasAccessNeedGroup IRI* ;
+}
+
+# Access Need Group
+<#AccessNeedGroupShape> {
+  a [ interop:AccessNeedGroup ] ;
+  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
+  interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
+  interop:authenticatesAs IRI ;
+  interop:hasAccessNeed IRI+ ;
+  interop:hasAccessNeedOverride IRI* ;
+  interop:hasAccessDecoratorIndex IRI
+}
+
+# Access Need
+<#AccessNeedShape> {
+  a [ interop:AccessNeed ] ;
+  interop:inAccessNeedGroup IRI+ ;
+  interop:registeredShapeTree IRI ;
+  interop:hasRegisteredDataInstance IRI* ;
+  interop:recursivelyAuthorize [ true false ] ;
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
+}
+
+# Compiled Access Group
+<#CompiledAccessGroupShape> {
+  a [ interop:CompiledAccessGroup ] ;
+  interop:fromAccessNeedGroup IRI ;
+  interop:hasAccessNeedGroupDecorator IRI ;
+  interop:authenticatesAs IRI ;
+  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
+  interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
+  interop:isEnabled xsd:boolean? ;
+  interop:hasCompiledAccess IRI+ ;
+}
+
+# Compiled Access
+<#CompiledAccessShape> {
+  a [ interop:CompiledAccess ] ;
+  interop:inCompiledAccessGroup IRI+ ;
+  interop:hasShapeTreeDecorator IRI ;
+  interop:hasAccessNeedDecorator IRI? ;
+  interop:hasDataGrant IRI? ;
+  interop:hasRegisteredDataInstance IRI* ;
+  interop:registeredShapeTree IRI ;
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
+  interop:supportedBy IRI* ;
+  interop:supports IRI
+  interop:referencesCompiledAccess IRI* ;
+  skos:narrower IRI* ;
+}
+
+# Access Decorator Index
+<#AccessDecoratorIndexShape> {
+  a [ interop:AccessDecoratorIndex ] ;
+  interop:defaultLanguage xsd:language ;
+  interop:hasSeries @AccessDecoratorSeries+ ;
+}
+
+# Access Decorator Series
+<#AccessDecoratorSeriesShape> {
+  a [ interop:AccessDecoratorSeries ] ;
+  interop:usesLanguage xsd:language ;
+  interop:hasVersion @AccessDecoratorVersion+ ;
+}
+
+# Access Decorator Version
+<#AccessDecoratorVersionShape> {
+  a [ interop:AccessDecoratorVersion ] ;
+  interop:isVersion xsd:string ;
+  interop:hasSHA256 xsd:string ;
+  interop:hasAccessDecoratorResource IRI ;
+}
+
+# Access Need Group Decorator
+<#AccessNeedGroupDecoratorShape> {
+  a [ interop:AccessNeedGroupDecorator ] ;
+  interop:hasAccessNeedGroup IRI ;
+  skos:prefLabel xsd:string ;
+  skos:definition xsd:string
+}
+
+# Access Need Decorator
+<#AccessNeedDecoratorShape> {
+  a [ interop:AccessNeedDecorator ] ;
+  interop:hasAccessNeedGroup IRI ;
+  interop:registeredShapeTree IRI ;
+  skos:prefLabel xsd:string
+}
+
+# Access Request
+<#AccessRequestShape> {
+  a [interop:AccessRequest] ;
+  interop:fromAgent IRI ;             # Agent who sent the receipt
+  interop:toAgent IRI ;               # Recipient of the receipt
+  interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+
+}
+
+# Access Grant Registry Set
+<#AccessGrantRegistrySetShape> {
+  a [ interop:AccessGrantRegistrySet ] ;
+  interop:hasRegistry IRI+
+}
+
+# Access Grant Registry
+<#AccessGrantRegistryShape> {
+  a [ interop:AccessGrantRegistry ] ;
+  interop:hasRegistration IRI*
+}
+
+# Access Grant
+<#AccessGrantShape> {
+  a [ interop:AccessGrant ] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI? ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:accessGrantSubject @<#:AccessGrantSubject> ;
+  interop:hasCompiledAccessGroup @<#:CompiledAccessGroupShape>+ ;
+  interop:hasDataGrant @<#:DataGrantShape>+
+}
+
+# Access Grant Subject
+<#AccessGrantSubjectShape> {
+  a [ interop:AccessGrantSubject ] ;
+  interop:accessGrantSubjectAgent IRI? ;
+  interop:accessGrantSubjectApplication IRI?
+}
+
+# Access Invitation
+<#AccessInvitationShape> {
+  a [ interop:AccessInvitation ] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI? ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:expiresAt xsd:dateTime? ;
+  interop:hasCompiledAccessGroup @<#:CompiledAccessGroupShape>+ ;
+  interop:hasDataGrant @<#:DataGrantShape>+
+  interop:hasAccessInvitationChannel @<#:AccessInvitationChannelShape>+ ;
+}
+
+# Access Invitation Channel
+<#AccessInvitationChannelShape> {
+   a @<#ChannelTypes> ;
+   interop:channelTarget xsd:string ;
+   interop:channelCode xsd:string ;
+   interop:isValidated xsd:boolean ;
+   interop:remainingAttempts xsd:integer
+}
+
+# Access Invitation Channel Types
+<#ChannelTypes> [
+  :PhoneInvitationChannel   # Telephone
+  :EmailInvitationChannel   # E-mail
+  :SMSInvitationChannel     # SMS (Simple Messaging Service)
+  :OfflineInvitationChannel # Other communication, e.g. verbal, shared note
+  :LDNInvitationChannel     # Linked Data Notification
+]
+
+# Data Grant
+<#DataGrantShape> {
+  a [ interop:DataGrant ] ;
+  interop:hasRegistration IRI ;
+  interop:registeredShapeTree IRI ;
+  interop:satisfiesCompiledAccess @<#:CompiledAccessShape>+ ;
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:scopeOfDataGrant [ interop:SelectedInstances
+                         interop:AllInstances
+                         interop:InheritInstances
+                         interop:NoAccess ]+ ;
+  interop:hasRegisteredDataInstance IRI* ;
+  interop:inheritsFrom @<#:DataGrantShape>*
+}
+
+# Access Receipt Registry Set
+<#AccessReceiptRegistrySetShape> {
+  a [ interop:AccessReceiptRegistrySet ] ;
+  interop:hasRegistry IRI+
+}
+
+# Access Receipt Registry
+<#AccessReceiptRegistryShape> {
+  a [ interop:AccessReceiptRegistry ] ;
+  interop:hasRegistration IRI*
+}
+
+# Access Receipt
+<#AccessReceiptShape> {
+  a [interop:AccessReceipt] ;
+  interop:fromAgent IRI ;             # Agent who sent the receipt
+  interop:toAgent IRI ;               # Recipient of the receipt
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI? ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:providedAt xsd:dateTime ;
+  interop:hasDataReceipt @<#:DataReceiptShape> ;
+}
+
+# Data Receipt
+<#DataReceiptShape> {
+  a [interop:DataReceipt] ;
+  interop:hasRegistration IRI ;       # Remote data registration
+  interop:registeredShapeTree IRI ;   # Associated shape tree
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:scopeOfDataGrant [ interop:SelectedInstances
+                         interop:AllInstances
+                         interop:InheritInstances
+                         interop:NoAccess ]+ ;
+  interop:hasRegisteredDataInstance IRI* ;     # if specific instances are selected or inherited
+  interop:inheritsFrom @<#:DataReceiptShape>* ;
+  interop:replacedBy IRI?
+}
+
+# Remote Data Registry Set
+<#RemoteDataRegistrySetShape> {
+  a [ interop:RemoteDataRegistrySet ] ;
+  interop:hasRegistry IRI+
+}
+
+# Remote Data Registry
+<#RemoteDataRegistryShape> {
+  a [ interop:RemoteDataRegistry ] ;
+  interop:hasRegistration IRI*
+}
+
+# Remote Data Registration
+<#RemoteDataRegistration> {
+  a [interop:RemoteDataRegistration] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:providedAt xsd:dateTime ;
+  interop:hasRegistration IRI ;           # Remote data registration
+  interop:registeredShapeTree IRI ;       # Associated shape tree
+  interop:scopeOfDataGrant [ interop:SelectedInstances
+                         interop:AllInstances
+                         interop:InheritInstances
+                         interop:NoAccess ]+ ;
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:hasRemoteDataInstance IRI* ;    # if specific instances are selected or inherited
+  interop:hasAccessReceipt IRI+ ;         # Associated access receipts
+}
+
+# Remote Data Instance
+<#RemoteDataInstance> {
+  a [interop:RemoteDataInstance] ;
+  interop:hasRegisteredDataInstance IRI ; # Remote registered data instance
+  interop:registeredAt xsd:dateTime ;
+  interop:providedAt xsd:dateTime ;
+  interop:registeredShapeTree IRI ;       # Associated shape tree
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:hasAccessReceipt IRI+ ;         # Associated access receipts
+}

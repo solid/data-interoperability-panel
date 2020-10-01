@@ -1,0 +1,685 @@
+Access Receipts {#receipts}
+=====================
+
+## Overview ## {#receipts-overview}
+
+Issue: Write overview for Access Receipts
+
+## Data Model ## {#receipts-datamodel}
+
+### Summary ### {#receipts-datamodel-summary}
+
+<figure id="fig-receipt-model">
+  <img src="diagrams/receipts-model.svg" width=100%/>
+  <figcaption>Data model for the [=Access Receipt Registry=]</figcaption>
+</figure>
+
+An [=Agent=] links to [=Access Receipt Registry Sets=] via the
+[interop:hasAccessReceiptRegistrySet](interop.ttl#hasAccessReceiptRegistrySet)
+property.
+
+An [=Access Receipt Registry Set=] links to any number of
+[=Access Receipt Registries=] via
+the [interop:hasRegistry](interop.ttl#hasRegistry) property.
+
+An [=Access Receipt Registry=] links to any number of registered
+[=Access Receipts=] via the
+[interop:hasRegistration](interop.ttl#hasRegistration) property.
+
+<figure id="fig-receipts-agent">
+  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me
+  linking to an [=Access Receipt Registry Set=]</figcaption>
+  <pre highlight="turtle">
+  <#me>
+    a interop:Agent;
+    interop:hasAccessReceiptRegistrySet &lt;https://alice.pod.example/profile/receipt#set&gt; .
+  </pre>
+  </figure>
+</figure>
+
+<figure id ="fig-receipt-registry-set">
+   <figcaption>An [=Access Receipt Registry Set=] at
+   https://bob.pod.example/profile/receipt#set linking to two different
+  [=Access Receipt Registries=]</figcaption>
+  <pre highlight="turtle">
+  <#set>
+    a interop:AccessReceiptRegistrySet;
+    interop:hasRegistry &lt;https://bob.pod.example/receipts/#registry&gt; ,
+                    &lt;https://bob.otherpod.example/receipts/#registry&gt; .
+  </pre>
+</figure>
+
+<figure id="fig-receipt-registry">
+  <figcaption>An [=Access Receipt Registry=] at
+  https://bob.pod.example/receipts/#registry
+  linking to several registered [=Access Receipts=]
+  </figcaption>
+  <pre highlight="turtle">
+  <#registry>
+    a interop:AccessReceiptRegistry ;
+    interop:hasRegistration &lt;fa6d6553-0308-4abd-bce6-888df653695a#receipt&gt; ,
+                        &lt;d49eae8c-e138-4153-86ed-63832deadc6b#receipt&gt; ,
+                        &lt;506a0cee-1dc9-4720-a768-294aa0284502#receipt&gt; .
+  </pre>
+</figure>
+
+<figure id="fig-access-receipt">
+  <figcaption>An [=Access Receipt=] at
+  https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#receipt
+  </figcaption>
+  <pre highlight="turtle">
+  <#receipt>
+    a interop:AccessReceipt ;
+    interop:registeredBy https://bob.pod.example/profile/id#me ;
+    interop:registeredWith https://trusted.example/id#agent ;
+    interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    interop:providedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    interop:fromAgent https://alice.pod.example/profile/id#me ;
+    interop:toAgent https://bob.pod.example/profile/id#me ;
+    interop:hasDataReceipt <#notebook-receipt>, <#note-receipt> .
+
+  <#notebook-receipt>
+    a interop:DataReceipt ;
+    interop:hasRegistration https://alice.pod.example/data/notebook/#registration ;
+    interop:registeredShapeTree note:notebook-tree ;
+    interop:accessMode acl:Read, acl:Write ;
+    interop:scopeOfDataGrant interop:SelectedInstances ;
+    interop:hasRegisteredDataInstance https://alice.pod.example/data/notebook/notebook-1/#notebook ,
+                                  https://alice.pod.example/data/notebook/notebook-2/#notebook .
+
+  <#note-receipt>
+    a interop:DataReceipt ;
+    interop:hasRegistration https://alice.pod.example/data/note/#registration ;
+    interop:registeredShapeTree note:note-tree ;
+    interop:accessMode acl:Read, acl:Write ;
+    interop:scopeOfDataGrant interop:inheritInstances ;
+    interop:inheritsFrom <#notebook-receipt> ;
+    interop:hasRegisteredDataInstance https://alice.pod.example/data/note/note-1/#note ,
+                                  https://alice.pod.example/data/note/note-2/#note ,
+                                  https://alice.pod.example/data/note/note-3/#note ,
+                                  https://alice.pod.example/data/note/note-4/#note ,
+                                  https://alice.pod.example/data/note/note-5/#note .
+  </pre>
+</figure>
+
+### Access Receipt Registry Set ### {#datamodel-receipt-registry-set}
+
+An <dfn>Access Receipt Registry Set</dfn> is a [=Registry Set=] specifically
+made up of [=Access Receipt Registries=].
+
+<table class="classinfo data" align="left" id="classAccessReceiptRegistrySet">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3 text-align=left>
+        [AccessReceiptRegistrySet](interop.ttl#AccessReceiptRegistrySet)
+        a rdfs:subClassOf [[#datamodel-agent|RegistrySet]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistry</td>
+      <td>Registry</td>
+      <td>Link to associated [=Access Receipt Registries=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessReceiptRegistrySetShape](#shexAccessReceiptRegistrySet) is used to
+validate an instance of the
+[AccessReceiptRegistrySet](#classAccessReceiptRegistrySet) class.
+
+<pre highlight="turtle" id="shexAccessReceiptRegistrySet">
+<#AccessReceiptRegistrySetShape> {
+  a [ interop:AccessReceiptRegistrySet ] ;
+  interop:hasRegistry IRI+
+}
+</pre>
+
+The [AccessReceiptRegistrySetTree](interop.tree#AccessReceiptRegistrySetTree)
+is assigned to a resource to ensure it will validate against the
+[AccessReceiptRegistrySetShape](#shexAccessReceiptRegistrySet).
+
+<pre highlight="turtle" id="treeAccessReceiptRegistrySet">
+<#AccessReceiptRegistrySetTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;interops#AccessReceiptRegistrySetShape&gt; ;
+  st:matchesUriTemplate "receipt" .
+</pre>
+
+### Access Receipt Registry ### {#datamodel-access-receipt-registry}
+
+An <dfn>Access Receipt Registry</dfn> is a collection of
+[=Access Receipts=] stored in a specific location in a [=pod=].
+
+<table class="classinfo data" align="left" id="classAccessReceiptRegistry">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessReceiptRegistry](interop.ttl#AccessReceiptRegistry)
+        a rdfs:subClassOf [[#datamodel-agent|Registry]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>Registration</td>
+      <td>Link to associated [=Access Receipts=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessReceiptRegistryShape](#shexAccessReceiptRegistry) is used to
+validate an instance of the
+[AccessReceiptRegistry](#classAccessReceiptRegistry) class.
+
+<pre highlight="turtle" id="shexAccessReceiptRegistry">
+<#AccessReceiptRegistryShape> {
+  a [ interop:AccessReceiptRegistry ] ;
+  interop:hasRegistration IRI*
+}
+</pre>
+
+The [AccessReceiptRegistryTree](interop.tree#AccessReceiptRegistryTree)
+is assigned to a container resource to ensure that it will validate against the
+[AccessReceiptRegistryShape](#shexAccessReceiptRegistry), and contain only
+conformant instances of the [AccessReceiptTree](#treeAccessReceipt).
+
+<pre highlight="turtle" id="treeAccessReceiptRegistry">
+<#AccessReceiptRegistryTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy &lt;interops#AccessReceiptRegistryShape&gt; ;
+  st:contains <#AccessReceiptTree> ,
+              st:AllowNone .
+</pre>
+
+### Access Receipt ### {#datamodel-access-receipt}
+
+Each <dfn>Access Receipt</dfn> ...
+
+Issue: Write definition for Access Receipt class
+
+<table class="classinfo data" align="left" id="classAccessReceipt">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [AccessReceipt](interop.ttl#AccessReceipt)
+        a rdfs:subClassOf [[#datamodel-agent|Registration]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>Agent</td>
+      <td>[=Agent=] that registered the [=Access Receipt=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>Application</td>
+      <td>[=Application=] used to create the [=Access Receipt=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Receipt=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Receipt=] was updated</td>
+    </tr>
+    <tr>
+      <td>providedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Receipt=] was shared</td>
+    </tr>
+    <tr>
+      <td>fromAgent</td>
+      <td>Agent</td>
+      <td>[=Agent=] that granted access and sent the [=Access Receipt=]</td>
+    </tr>
+    <tr>
+      <td>toAgent</td>
+      <td>Agent</td>
+      <td>[=Agent=] who was granted access and received the [=Access Receipt=]</td>
+    </tr>
+    <tr>
+      <td>hasDataReceipt</td>
+      <td>[DataReceipt](#classDataReceipt)</td>
+      <td>[=Data Receipt=] for a shared [=Data Registration=] and any shared
+      [=Registered Data Instances=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [AccessReceiptShape](#shexAccessReceipt) is used to validate an instance
+of the [AccessReceipt](#classAccessReceipt) class.
+
+<pre highlight="turtle" id="shexAccessReceipt">
+<#AccessReceiptShape> {
+  a [interop:AccessReceipt] ;
+  interop:fromAgent IRI ;             # Agent who sent the receipt
+  interop:toAgent IRI ;               # Recipient of the receipt
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI? ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:providedAt xsd:dateTime ;
+  interop:hasDataReceipt @<#:DataReceiptShape> ;
+}
+</pre>
+
+The [AccessReceiptTree](interop.tree#AccessReceiptTree) is assigned to a
+resource via the [AccessGrantRegistryTree](#treeAccessGrantRegistry), and ensures
+that the assigned resource will validate against the
+[AccessReceiptShape](#shexAccessReceipt).
+
+<pre highlight="turtle" id="treeAccessReceipt">
+<#AccessReceiptTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;interops#AccessReceiptShape&gt; ;
+  st:matchesUriTemplate "{id}" .
+</pre>
+
+### Data Receipt ### {#datamodel-data-receipt}
+
+A <dfn>Data Receipt</dfn> ...
+
+Issue: Write definition for Data Receipt class
+
+<table class="classinfo data" align="left" id="classDataReceipt">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [DataReceipt](interop.ttl#DataReceipt)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>DataRegistration</td>
+      <td>Remote [=Data Registration=] the [=Data Receipt=] applies to</td>
+    </tr>
+    <tr>
+      <td>registeredShapeTree</td>
+      <td>st:ShapeTree</td>
+      <td>The [=shape tree=] registered at the target [=Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>accessMode</td>
+      <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
+      <td>Access modes granted</td>
+    </tr>
+    <tr>
+      <td>scopeOfDataGrant</td>
+      <td> interop:AllInstances, interop:InheritInstances,
+      interop:SelectedInstances, interop:NoAccess</td>
+      <td>Identifies the access scope of the [=Data Grant=]
+        <ul>
+          <li>interop:AllInstances - Scope includes
+              access to all [=Registered Data Instances=] of the associated
+              [=Data Registration=]</li>
+          <li>interop:InheritInstances - Scope includes
+              access to [=Registered Data Instances=] inherited by
+              instances selected in the [=Data Receipt=] linked via
+              interop:inheritsFrom</li>
+          <li>interop:SelectedInstances - Scope includes
+              access only to those [=Registered Data Instances=] specifically
+              selected by the [=Agent=]</li>
+          <li>interop:NoAccess</li> - No access is granted
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>inheritsFrom</td>
+      <td>[DataReceipt](#classDataReceipt)</td>
+      <td>Identifies a [=Data Receipt=] whose selected
+      [=Registered Data Instances=] narrow the scope of instances to be
+      presented by this receipt.</td>
+    </tr>
+    <tr>
+      <td>hasRegisteredDataInstance</td>
+      <td>Instance of registeredShapeTree</td>
+      <td>Links to a [=Registered Data Instance=] of registeredShapeTree.</td>
+    </tr>
+    <tr>
+      <td>replacedBy</td>
+      <td>[DataReceipt](#classDataReceipt)</td>
+      <td>Another [=Data Receipt=] that replaces this one</td>
+    </tr>
+  </tbody>
+</table>
+
+The [DataReceiptShape](#shexDataReceipt) is used to
+validate an instance of the [DataReceipt](#classDataReceipt)
+class.
+
+<pre highlight="turtle" id="shexDataReceipt">
+<#DataReceiptShape> {
+  a [interop:DataReceipt] ;
+  interop:hasRegistration IRI ;       # Remote data registration
+  interop:registeredShapeTree IRI ;   # Associated shape tree
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:scopeOfDataGrant [ interop:SelectedInstances interop:AllInstances interop:InheritInstances interop:NoAccess ]+ ;
+  interop:hasRegisteredDataInstance IRI* ;     # if specific instances are selected or inherited
+  interop:inheritsFrom @<#:DataReceiptShape>* ;
+  interop:replacedBy IRI?
+}
+</pre>
+
+## Resource Hierarchy ## {#receipts-hierarchy}
+
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Class</th>
+      <th>Shape</th>
+      <th>Shape Tree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`/profile/`</td>
+      <td>-</td>
+      <td>-</td>
+      <td>[ProfileTree](#treeAgent)</td>
+    </tr>
+    <tr>
+      <td>`-- receipt#set`</td>
+      <td>[AccessReceiptRegistrySet](#classAccessReceiptRegistrySet)</td>
+      <td>[AccessReceiptRegistrySetShape](#shexAccessReceiptRegistrySet)</td>
+      <td>[AccessReceiptRegistrySetTree](#treeAccessReceiptRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`/receipts/#registry`</td>
+      <td>[AccessReceiptRegistry](#classAccessReceiptRegistry)</td>
+      <td>[AccessReceiptRegistryShape](#shexAccessReceiptRegistry)</td>
+      <td>[AccessReceiptRegistryTree](#treeAccessReceiptRegistry)</td>
+    </tr>
+    <tr>
+      <td>`-- fa6d6553...5a#receipt`</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
+      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+    </tr>
+    <tr>
+      <td>`-- d49eae8c...6b#receipt`</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
+      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+    </tr>
+    <tr>
+      <td>`-- 506a0cee...02#receipt`</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
+      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+    </tr>
+  </tbody>
+</table>
+
+The [=Access Receipt Registry Set=] and the [=Access Receipt Registry=]
+<em class="rfc2119">MAY</em> or <em class="rfc2119">MAY NOT</em>
+be on the same [=pod=].
+
+[=Access Receipt Registry Set=] and [=Access Receipt Registry=] resources
+<em class="rfc2119">MAY</em> use any resource or subject names.
+
+[=Access Receipts=] <em class="rfc2119">MUST</em>
+use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
+
+## Operations ## {#receipts-operations}
+
+### Provide Access Receipt ### {#receipts-provide}
+
+#### Inputs #### {#provide-inputs}
+
+* Let `GRANT` be an [=Access Grant=]
+* Let `CONTROLLER` be the [=Agent=] granting access
+
+#### Outputs #### {#provide-outputs}
+
+* A provided [=Access Receipt=]
+
+#### Operation Details #### {#provide-details}
+
+1. Let `REC-SUBJECT` be the [=Access Grant Subject=] linked via
+    `GRANT hasAccessGrantSubject`
+1. Let `REC-AGENT` be `REC-SUBJECT accessByAgent`
+1. Let `REC-APP` be `REC-SUBJECT accessByApplication`
+1. Let `RECEIPT` be an empty [=Access Receipt=]
+1. If `REC-APP` is not empty
+    1. If `REC-APP interop:receivesAccessReceipt` is `ReceiptInRegistration`
+        1. Let `RECEIPT` be result of [[#provide-registration]] with
+            inputs: `GRANT`
+    1. If `REC-APP interop:receivesAccessReceipt` is `ReceiptInMessage`
+        1. Let `RECEIPT` be result of [[#provide-message]] with
+            inputs: `GRANT`
+1. If `REC-APP` is empty and `REC-AGENT` is not empty
+    1. Return error if `REC-AGENT interop:receivesAccessReceipt` is not
+        `ReceiptInMessage`
+    1. Let `RECEIPT` be result of [[#provide-message]] with inputs: `GRANT`
+1. Return `RECEIPT`
+
+#### Provide Receipt in Application Registration #### {#provide-registration}
+
+##### Inputs ##### {#provide-registration-inputs}
+
+* Let `GRANT` be an [=Access Grant=]
+* Let `CONTROLLER` be the [=Agent=] granting access
+
+##### Outputs ##### {#provide-registration-outputs}
+
+* An [=Access Receipt=] stored in an [=Application Registration=]
+
+##### Operation Details ##### {#provide-registration-details}
+
+1. Let `REC-SUBJECT` be the [=Access Grant Subject=] linked via
+    `GRANT hasAccessGrantSubject`
+1. Let `REC-APP` be `REC-SUBJECT accessByApplication`
+1. 1. Let `RECEIPT` be an empty [=Access Receipt=]
+1. Let `RECEIPT fromAgent` be `CONTROLLER`
+1. Let `RECEIPT toAgent` be `REC-APP`
+1. Let `RECEIPT providedAt` be the current time
+1. For each [=Data Grant=] `DATAGRANT` linked via `GRANT hasDataGrant`
+    1. Let `RECEIPT hasDataReceipt` be linked to the result of
+        [[#provide-datareceipt]] with inputs: `DATAGRANT`
+1. Let `APPREG` be result of [[#appreg-lookup]] with
+    inputs: `CONTROLLER`, `REC-APP`
+    1. Call [[#appreg-new]] if `APPREG` is empty
+1. Post `RECEIPT` to `APPREG` container
+1. Let `CURRENT` be `APPREG hasAccessReceipt`
+1. Remove `CURRENT` if it exists
+1. Let `APPREG hasAccessReceipt` be `CURRENT`
+1. Return `RECEIPT`
+
+#### Provide Data Receipt #### {#provide-datareceipt}
+
+##### Inputs ##### {#provide-datareceipt-inputs}
+
+* Let `DATAGRANT` be a [=Data Grant=]
+* Let `CONTROLLER` be the [=Agent=] granting access
+
+##### Outputs ##### {#provide-datareceipt-outputs}
+
+* A populated [=Data Receipt=]
+
+##### Operation Details ##### {#provide-datareceipt-details}
+
+1. Let `DATARECEIPT` be an empty [=Data Receipt=]
+1. Let `DATARECEIPT hasRegistration` be `DATAGRANT hasRegistration`
+1. Let `DATARECEIPT registeredShapeTree` be `DATAGRANT registeredShapeTree`
+1. Let `DATARECEIPT accessMode`s be the same as `DATAGRANT accessMode`s
+1. Let `DATARECEIPT scopeOfDataGrant`s be the same as `DATAGRANT scopeOfDataGrant`s
+1. Let `DATARECEIPT hasRegisteredDataInstance`s be the same as
+    `DATAGRANT hasRegisteredDataInstance`s
+1. Let `DATARECEIPT inheritsFrom`s be the same as `DATAGRANT inheritsFrom`s
+1. Return `DATARECEIPT`
+
+#### Provide Receipt in Message #### {#provide-message}
+
+##### Inputs ##### {#provide-message-inputs}
+
+* Let `GRANT` be an [=Access Grant=]
+* Let `CONTROLLER` be the [=Agent=] granting access
+
+##### Outputs ##### {#provide-message-outputs}
+
+* An [=Access Receipt=] posted to another [=Agent's=] access inbox
+
+##### Operation Details ##### {#provide-message-details}
+
+1. Let `REC-SUBJECT` be the [=Access Grant Subject=] linked via
+    `GRANT hasAccessGrantSubject`
+1. Let `REC-AGENT` be `REC-SUBJECT accessByAgent`
+1. Let `RECEIPT` be an empty [=Access Receipt=]
+1. Let `RECEIPT fromAgent` be `CONTROLLER`
+1. Let `RECEIPT toAgent` be `REC-AGENT`
+1. Let `RECEIPT providedAt` be the current time
+1. For each [=Data Grant=] `DATAGRANT` linked via `GRANT hasDataGrant`
+    1. Let `RECEIPT hasDataReceipt` be linked to the result of
+        [[#provide-datareceipt]] with inputs: `DATAGRANT`
+1. Post `RECEIPT` to `REC-AGENT hasAccessInbox`
+1. Return `RECEIPT`
+
+### Record Access Receipt ### {#receipts-record}
+
+This operation stores a new [=Access Receipt=] in
+an [=Access Grant Registry=], which in turn will update [=Remote Data Registries=]
+to reflect the access granted in the [=Access Receipt=].
+
+#### Inputs #### {#recordreceipt-inputs}
+
+* Let `RECEIPT` be an [=Access Receipt=]
+* Let `REGISTRY` be an [=Access Receipt Registry=]
+
+#### Outputs #### {#recordreceipt-outputs}
+
+* An [=Access Receipt=] stored in `REGISTRY` with permissions applied and
+    [=Access Receipt=] provided
+
+#### Operation Details #### {#recordreceipt-details}
+
+1. Let `CURRENT` be an [=Access Receipt=] returned by [[#receipts-load]] with
+    inputs: `FROMAGENT`, `REGISTRY`
+1. If `CURRENT` is empty
+    1. Add `RECEIPT` to `REGISTRY`
+    1. Link `RECEIPT` to `REGISTRY` via `REGISTRY hasRegistration`
+1. If `CURRENT` is not empty
+    1. Update `CURRENT` with `RECEIPT`
+1. Call [[#remote-update]] with inputs: `RECEIPT`
+1. Return `RECEIPT`
+
+### Load Access Receipt ### {#receipts-load}
+
+#### Inputs #### {#loadreceipt-inputs}
+
+* Let `AGENT` be an [=Agent=] to load a receipt for
+* Let `REGISTRY` be an [=Access Receipt Registry=] to load from
+
+#### Outputs #### {#loadreceipt-outputs}
+
+* An [=Access Receipt=]
+
+#### Operation Details #### {#loadreceipt-details}
+
+1. For each [=Access Receipt=] `RECEIPT` included in `REGISTRY hasRegistration`
+    1. return `RECEIPT` if `RECEIPT fromAgent` == `AGENT`
+
+### Present Access Receipt ### {#receipts-present}
+
+This operation shows an [=Agent=] an [=Access Receipt=] that was
+delivered to them from another [=Agent=] who granted them access to the
+data reflected in the receipt.
+
+It presents them the access that has been granted in the receipt,
+and prompts them to accept it. Acceptance will record the receipt in their
+[=Access Receipt Registry=], and update their [=Remote Data Registry=] to
+reflect it.
+
+#### Inputs #### {#presentreceipt-inputs}
+
+* Let `RECEIPT` be an [=Access Receipt=]
+* Let `REGISTRY` be an [=Access Receipt Registry=]
+* Let `LANG` be the [=Agent's=] preferred language
+
+#### Operation Details #### {#presentreceipt-details}
+
+1. Present `RECEIPT fromAgent` as the [=Agent=] granting access
+1. Present `RECEIPT toAgent` as the [=Agent=] receiving access
+1. Let `CURRENT` be an [=Access Receipt=] returned by [[#receipts-load]] with
+    inputs: `RECEIPT fromAgent`, `REGISTRY`
+1. If `CURRENT` is not empty
+    1. Present the [=Agent=] that accepted it via `RECEIPT registeredBy`
+    1. Present the [=Application=] is was accepted with via `RECEIPT registeredWith`
+    1. Present when it was registered via `RECEIPT registeredAt`
+    1. Present when it was last updated via `RECEIPT updatedAt`
+1. For each [=Data Receipt=] `DATARECEIPT` linked via `RECEIPT hasDataReceipt`
+    1. Let `STDEC` be the [=Shape Tree Decorator=]
+        returned from the [Get Shape Tree Decorator](#) operation with
+        inputs: `RECEIPT registeredShapeTree`, `LANG`
+    1. Present the name of the [=shape tree=] via `STDEC skos:prefLabel`
+    1. Present `RECEIPT accessMode`s
+    1. Present `RECEIPT scopeOfDataGrant`
+        1. If `RECEIPT scopeOfDataGrant` is `interop:NoAccess`
+            1. Present the user any access that is being rescinded if
+                they have an existing [=Data Receipt=] from `RECEIPT fromAgent`
+                for `RECEIPT registeredShapeTree`
+        1. If `RECEIPT scopeOfDataGrant` is `interop:AllInstances`
+            1. Present the [=Agent=] with summary details, and the ability
+                to view the [=Registered Data Instances=]
+        1. If `RECEIPT scopeOfDataGrant` includes `interop:SelectedInstances`
+            1. Present the [=Agent=] with summary details, and the ability
+                to view the [=Registered Data Instances=]
+        1. If `RECEIPT scopeOfDataGrant` includes `interop:InheritInstances`
+            1. Present the [=Agent=] with summary details, and the ability
+                to view the [=Registered Data Instances=], along with
+                pointers to the [=Data Receipt=] they inherit from.
+            1. Order this [=Data Receipt=] after the [=Data Receipt=] they
+                inherit from.
+1. Discard [=Access Receipt=] if [=Agent=] does not accept
+1. Call [[#receipts-record]] with inputs: `RECEIPT`, `REGISTRY` if [=Agent=]
+    accepts the [=Access Receipt=]

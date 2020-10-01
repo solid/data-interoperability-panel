@@ -1,0 +1,203 @@
+@prefix st: <http://www.w3.org/ns/shapetree#> .
+@prefix interops: <https://shapes.pub/drafts/ns/solid/interop#> .
+
+# Agent
+##############################################################################
+<#ProfileTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:contains <#AgentTree> ,
+              <#ApplicationRegistrySetTree> ,
+              <#DataRegistrySetTree> ,
+              <#AccessGrantRegistrySetTree> ,
+              <#AccessReceiptRegistrySetTree> ,
+              <#RemoteDataRegistrySetTree> ,
+              st:AllowAll .
+
+<#AgentTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <interops#AgentShape> ;
+  st:matchesUriTemplate "{id}" .
+
+<#AccessInboxTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:contains <#AccessReceiptTree> ,
+              <#AccessRequestTree> ,
+              st:AllowNone .
+
+<#ApplicationRegistrySetTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <interops#ApplicationRegistrySetShape> ;
+  st:matchesUriTemplate "application" .
+
+<#DataRegistrySetTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <interops#DataRegistrySetShape> ;
+  st:matchesUriTemplate "data" .
+
+<#AccessGrantRegistrySetTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <interops#AccessGrantRegistrySetShape> ;
+  st:matchesUriTemplate "access" .
+
+<#AccessReceiptRegistrySetTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <interops#AccessReceiptRegistrySetShape> ;
+  st:matchesUriTemplate "receipt" .
+
+<#RemoteDataRegistrySetTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <interops#RemoteDataRegistrySetShape> ;
+  st:matchesUriTemplate "remote" .
+
+# Application Registry
+##############################################################################
+# Ensure the registry container graph contains a valid
+# ApplicationRegistry instance, and the resource inside of
+# it are valid ApplicationRegistration instances.
+##############################################################################
+<#ApplicationRegistryTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <interops#ApplicationRegistryShape> ;
+  st:contains <#ApplicationRegistrationTree> ,
+                st:AllowNone .
+
+# Application Registration
+##############################################################################
+# Ensure the registration container graph contains a valid
+# ApplicationRegistration instance. Applications have freedom to store
+# whatever data internal to their operation that they like within
+##############################################################################
+<#ApplicationRegistrationTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <interops#ApplicationRegistrationShape> ;
+  st:contains <#AccessReceiptTree> ,
+                st:AllowAll ;
+  st:matchesUriTemplate "{id}" .
+
+# Data Registry
+##############################################################################
+# Ensure the registry container graph contains a valid
+# DataRegistry instance, and the resource inside of
+# it are valid DataRegistration instances.
+##############################################################################
+<#DataRegistryTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <interops#DataRegistryShape> ;
+  st:contains <#DataRegistrationTree> ,
+                st:AllowNone .
+
+# Data Registration
+##############################################################################
+# Ensure the registration container graph contains a valid
+# DataRegistration instance, which will in turn contain instances of
+# whatever shape tree was registered by the eco:DataRegistration.
+##############################################################################
+<#DataRegistrationTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <interops#DataRegistrationShape> ;
+  st:matchesUriTemplate "{id}" .
+
+# Access Grant Registry
+##############################################################################
+# Ensure the registry container graph contains a valid
+# AccessGrantRegistry instance, and the resource inside of
+# it are valid AccessGrant instances.
+##############################################################################
+<#AccessGrantRegistryTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <interops#AccessGrantRegistryShape> ;
+  st:contains <#AccessGrantTree> ,
+              <#AccessInvitationTree> ,
+              st:AllowNone .
+
+# Access Grant
+##############################################################################
+# Ensure the grant resource graph contains a valid AccessGrant instance
+##############################################################################
+<#AccessGrantTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <interops#AccessGrantShape> ;
+  st:matchesUriTemplate "{id}" .
+
+# Access Invitation
+##############################################################################
+# Ensure the invititation resource graph contains a valid
+# AccessInvitation instance
+##############################################################################
+<#AccessInvitationTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <interops#AccessInvitationShape> ;
+  st:matchesUriTemplate "{id}" .
+
+# Access Receipt Registry
+##############################################################################
+# Ensure the registry container graph contains a valid
+# AccessReceiptRegistry instance, and the resources inside of
+# it are valid AccessReceipt instances.
+##############################################################################
+<#AccessReceiptRegistryTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <interops#AccessReceiptRegistryShape> ;
+  st:contains <#AccessReceiptTree> ,
+              st:AllowNone .
+
+# Access Receipt
+##############################################################################
+# Ensure the receipt resource graph contains a valid AccessReceipt instance
+##############################################################################
+<#AccessReceiptTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <interops#AccessReceiptShape> ;
+  st:matchesUriTemplate "{id}" .
+
+# Remote Data Registry
+##############################################################################
+# Ensure the registry container graph contains a valid
+# RemoteDataRegistry instance, and the resources inside of
+# it are valid RemoteDataRegistration instances.
+##############################################################################
+<#RemoteDataRegistryTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <interops#RemoteDataRegistryShape> ;
+  st:contains <#RemoteDataRegistrationTree> ,
+              st:AllowNone .
+
+# Remote Data Registration
+##############################################################################
+# Ensure the receipt resource graph contains a valid RemoteDataRegistration
+##############################################################################
+<#RemoteDataRegistrationTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <interops#RemoteDataRegistrationShape> ;
+  st:matchesUriTemplate "{id}" ;
+  st:contains <#RemoteDataInstanceTree> ,
+              st:AllowNone .
+
+# Remote Data Instance
+##############################################################################
+# Ensure the receipt resource graph contains a valid RemoteDataInstance
+##############################################################################
+<#RemoteDataInstanceTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <interops#RemoteDataInstanceShape> ;
+  st:matchesUriTemplate "{id}" .
