@@ -15,7 +15,6 @@ Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth unde
 
 ## Initiatives in Process
 
-* **Specification Template for Use Cases and Requirements** - [Source](https://github.com/solid/data-interoperability-panel/blob/master/proposals/use-cases-and-requirements/) - [Rendered](https://solid.github.io/data-interoperability-panel/use-cases-and-requirements/)
 * **Solid Application Interoperability - Specification** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/specification) - [Rendered](https://solid.github.io/data-interoperability-panel/specification/)
 * **Solid Application Interoperability - Primer** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/primer) - [Rendered](https://solid.github.io/data-interoperability-panel/primer/)
 * **Shape Trees** - [Spec](https://github.com/shapetrees/specification) - [Library](https://github.com/shapetrees/) - [Test Suite](https://github.com/shapetrees/test-suite) - [Playground](https://github.com/shapetrees/playground)
