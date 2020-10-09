@@ -1,216 +1,461 @@
 Application Registration {#appreg}
 =====================
 
-Issue: Refactor Application Registration to use the format introduced throughout
-Data Authorization (overview, model, hierarchy, permissions, operations )
-
 ## Overview ## {#appreg-overview}
 
-Application Registration gives [=Agents=] participating in the Solid
-[=ecosystem=] a way to register and track the [=Applications=] they've elected
-to use with their data. It also provides each [=Application=] with a place
-to store metadata, preferences, access grants, caches, and other internal
-data specific to the function of a given [=Application=].
+Application Registration lets [=Agents=] register and track the
+[=Applications=] they’ve decided to use. It provides a dedicated place to
+store internal data specific to the function of a given [=Application=].
 
-An [=Application Registry=] for storing individual
-[=Application Registrations=] is introduced.
+<div class="note">
+Giving [=Applications=] their own private data space in Solid may seem
+counterintuitive to Solid’s proposition to decouple data and [=Applications=].
+
+However, some data is extremely specific to the function of a particular
+[=Application=], and has absolutely no value to any others. Forcing that data
+into standard types and structures can lead to mixing in with the
+interoperable data, creating convoluted vocabularies, [=shape trees=], and
+[=shapes=] that inhibit adoption by others.
+
+Giving [=Applications=] a private space where they can store internal data
+is therefore a key factor in broad interoperability,
+because it protects interoperable data from pollution by narrowly
+focused elements.
+</div>
 
 ## Data Model ## {#appreg-datamodel}
+
+### Summary ### {#appreg-datamodel-summary}
 
 <figure>
   <img src="diagrams/appreg-model.svg" width=100%/>
   <figcaption>Data model for application registration</figcaption>
 </figure>
 
-Application Registration extends the [[#datamodel-agent]] with type-specific
-subclasses and subproperties.
+An [=Agent=] links to [=Application Registry Sets=] via the
+[interop:hasApplicationRegistrySet](interop.ttl#hasApplicationRegistrySet)
+property.
 
-* An [=Agent=] links to [=Application Registry Set=] instances.
+An [=Application Registry Set=] links to any number of [=Application Registries=]
+via the [interop:hasRegistry](interop.ttl#hasRegistry) property.
 
-* An [=Application Registry Set=] links to any number of
-    [=Application Registry=] instances via the
-    [interop:hasRegistry](interop.ttl#hasRegistry) property.
+Each registered [=Application=] has an [=Application Registration=]. An
+[=Application Registry=] links to any number of [=Application Registrations=]
+via the [interop:hasRegistration](interop.ttl#hasRegistration) property.
 
-* An [=Application Registry=] links to any number of
-    [=Application Registrations=] via the
-    [interop:hasRegistration](interop.ttl#hasRegistration) property.
+<figure id="fig-appreg-agent">
+  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me
+  linking to an [=Application Registry Set=]</figcaption>
+  <pre highlight="turtle">
+  <#me>
+    a interop:Agent;
+    interop:hasApplicationRegistrySet &lt;https://alice.pod.example/profile/application#set&gt; .
+  </pre>
+  </figure>
+</figure>
 
-* An [=Application Registration=] extends the
-    [interop:Registration](interop.ttl#Registration)
-    class with the
-    [interop:ApplicationRegistration](interop.ttl#ApplicationRegistration)
-    subclass.
-
-The [interop:ApplicationRegistration](interop.ttl#ApplicationRegistration)
-subclass also introduces the following properties:
-
-* [interop:registeredApplication](interop.ttl#registeredApplication) -
-    [=ApplicationID=] of the [=Application=] that is being registered.
-
-<figure>
-  <figcaption>Instance data for
-  an [=Application Registration=] at
-  https://alice.pod.example/applications/02f9d4221d9e5c0ae/#registration
-  </figcaption>
-  <pre highlight="turtle" line-highlight="5" line-numbers="true">
-  <#registration>
-    a interop:ApplicationRegistration ;
-    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-    interop:registeredWith &lt;https://trusted.example/ar&gt; ;
-    interop:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
-    interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
+<figure id ="fig-appreg-registry-set">
+   <figcaption>An [=Application Registry Set=] at
+   https://alice.pod.example/profile/application#set linking to two different
+  [=Application Registries=]</figcaption>
+  <pre highlight="turtle">
+  <#set>
+    a interop:ApplicationRegistrySet;
+    interop:hasRegistry &lt;https://alice.pod.example/applications/#registry&gt; ,
+                    &lt;https://alice.otherpod.example/applications/#registry&gt; .
   </pre>
 </figure>
 
-## Structure and Validation ## {#appreg-structure}
-
-A given [=Agent=] will have one or more
-[=Application Registries=] discoverable through the
-[[#datamodel-agent]], via resources that implement
-the [[#agents-hierarchy]].
-
-<figure>
-  <figcaption>An [=Application Registry=] at
-  https://alice.pod.example/applications/#registry</figcaption>
-  <img src="diagrams/registrar-applications.svg" width=100%/>
+<figure id="fig-appreg-registry">
+  <figcaption>An [=Application Registry=] at https://alice.pod.example/applications/#registry
+  linking to several [=Application Registrations=]</figcaption>
+  <pre highlight="turtle">
+  <#registry>
+    a interop:ApplicationRegistry ;
+    interop:hasRegistration &lt;705563552198b6fb3efc40717872aa2ec35d669c1095cc5d665f499ec5d7e23a/#registration&gt; ,
+                        &lt;ede6aa50cb9e5fc564fdb4f0dc661685825ee3178355214086be27f9830e2a42/#registration&gt; ,
+                        &lt;150dca42b3d5661ba10a28e0aff36f212e27b0f7463fe1ef3bf1b5a45b640673/#registration&gt; ,
+                        &lt;b3564e72a3877c9cfa9e4bc4d9e47e9b7c536ae9927407c8dd00ec3b0069f536/#registration&gt; .
+  </pre>
 </figure>
 
-The [=Application Registry=] instance data is stored in the RDF graph
-of the `/applications` container at
-`https://alice.pod.example/applications/#registry`. It links to a
-collection of [=Application Registrations=] stored in
-the `/applications` container.
-
-The shape tree
-[interopt:ApplicationRegistryTree](interop.tree#ApplicationRegistryTree)
-associated with the `/applications` container specifies this resource
-structure. It assigns the
-[interops:ApplicationRegistryShape](interop.shex#ApplicationRegistryShape)
-to validate the [=Application Registry=] instance data in the
-container resource, and says that the container includes instances of
-[interopt:ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree),
-which any resources added to the `/applications` container must conform to.
-
-Conforming to
-[interopt:ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)
-ensures that the container for the [=Application Registry=] at
-`/applications#registry` only contains valid [=Application Registrations=].
-
-Specifically:
-
-* Any resource added to the `/applications` container must be a
-    container (`st:expectsType st:ShapeTreeContainer`)
-* An [=Application Registration=] must be stored in the
-    RDF graph of that container, to successfully pass shape validation via
-    `st:validatedBy <interops#ApplicationRegistrationShape>`.
-
-<figure>
+<figure id="fig-appreg-registration">
   <figcaption>An [=Application Registration=] at
-  https://alice.pod.example/applications/02f9d4221d9e5c0ae/#registration
+  https://alice.pod.example/applications/705563552198b6fb3efc40717872aa2ec35d669c1095cc5d665f499ec5d7e23a/#registration
   </figcaption>
-  <img src="diagrams/appregistration-structure.svg" width=100%/>
+  <pre highlight="turtle">
+  <#registration>
+    a interop:ApplicationRegistration ;
+    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
+    interop:registeredWith &lt;https://trusted.example/id#agent&gt; ;
+    interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
+    interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
+    interop:registeredApplication &lt;https://app.example/profile/id#agent&gt; ;
+    interop:hasAccessReceipt &lt;./04ca5ba7-0166-4312-ae96-09b9f3a25ba0#receipt&gt; .
+  </pre>
 </figure>
 
-These [=Application Registrations=] are associated with container resources
-so that the [=Application=] that has been registered
-has dedicated space to store data that is very specific to its internal
-functions. In the figure above, we can see an application-specific
-configuration resource (`config.ttl`) and a summary index file (`summary.idx`).
+### Application Registry Set ### {#datamodel-application-registry-set}
 
-### Naming application registration resources ### {#appreg-naming}
+An <dfn>Application Registry Set</dfn> is a [=Registry Set=] specifically
+made up of [=Application Registries=].
 
-In this proposal, resource names for ecosystem instances are almost always
-randomly generated. However, when creating an
-[interopt:ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)
-for an [=Application Registration=], the container
-must be named using a SHA-256 hash encoding of the [=ApplicationID=] for the
-[=Application=], which is linked through the
-[interop:registeredApplication](interop.ttl#registeredApplication) property.
+<table class="classinfo data" align="left" id="classApplicationRegistrySet">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3 text-align=left>
+        [ApplicationRegistrySet](interop.ttl#ApplicationRegistrySet)
+        a rdfs:subClassOf [[#datamodel-agent|RegistrySet]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistry</td>
+      <td>Registry</td>
+      <td>Link to associated [=Application Registries=]</td>
+    </tr>
+  </tbody>
+</table>
 
-:: <b>NeverNote ApplicationID:</b> `https://nevernote.example/id#agent`
-:: <b>SHA-256 Hash:</b> `70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`
+The [ApplicationRegistrySetShape](#shexApplicationRegistrySet) is used to validate
+an instance of the [ApplicationRegistrySet](#classApplicationRegistrySet) class.
 
-The name of the container for NeverNote's
-[=Application Registration=] would be
-`70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3`.
+<pre highlight="turtle" id="shexApplicationRegistrySet">
+<#ApplicationRegistrySetShape> {
+  a [ interop:ApplicationRegistrySet ] ;
+  interop:hasRegistry IRI+
+}
+</pre>
 
-There is a reasonable argument for whether or not a one-way hash alogorithm
-like SHA-256 is appropriate, as we are primarily using it as a mechanism
-for URL encoding to create uniform, opaque resource names,
-and the ApplicationID for a given [=Application=]
-is publicly shared. However, the use of one-way hash does add a modicum
-of additional privacy at a miniscule expense.
+The [ApplicationRegistrySetTree](interop.tree#ApplicationRegistrySetTree)
+is assigned to a resource to ensure it will validate against the
+[ApplicationRegistrySetShape](#shexApplicationRegistrySet).
 
-Issue: Is it appropriate to use a one-way hash for application registration
+<pre highlight="turtle" id="treeApplicationRegistrySet">
+<#ApplicationRegistrySetTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;interops#ApplicationRegistrySetShape&gt; ;
+  st:matchesUriTemplate "application" .
+</pre>
+
+### Application Registry ### {#datamodel-application-registry}
+
+An <dfn>Application Registry</dfn> is a collection of
+[=Application Registrations=] stored in a specific location in a [=pod=].
+
+<table class="classinfo data" align="left" id="classApplicationRegistry">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [ApplicationRegistry](interop.ttl#ApplicationRegistry)
+        a rdfs:subClassOf [[#datamodel-agent|Registry]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>[ApplicationRegistration](#classApplicationRegistration)</td>
+      <td>Link to an associated [=Application Registration=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [ApplicationRegistryShape](#shexApplicationRegistry) is used to validate an
+instance of the [ApplicationRegistry](#classApplicationRegistry) class.
+
+<pre highlight="turtle" id="shexApplicationRegistry">
+<#ApplicationRegistryShape> {
+  a [ interop:ApplicationRegistry ] ;
+  interop:hasRegistration IRI*
+}
+</pre>
+
+The [ApplicationRegistryTree](interop.tree#ApplicationRegistryTree) is assigned
+to a container resource to ensure that it will validate against the
+[ApplicationRegistryShape](#shexAccessGrantRegistry), and contain only
+conformant instances of the
+[ApplicationRegistrationTree](#treeApplicationRegistration).
+
+<pre highlight="turtle" id="treeApplicationRegistry">
+<#ApplicationRegistryTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy &lt;interops#ApplicationRegistryShape&gt; ;
+  st:contains <#ApplicationRegistrationTree> ,
+              st:AllowNone .
+</pre>
+
+### Application Registration ### {#datamodel-application-registration}
+
+An <dfn>Application Registration</dfn> provides the [=Agent=]
+with a place to maintain metadata, state, preferences, and
+other application-specific data associated with a given [=Application=] they
+have elected to use.
+
+<table class="classinfo data" align="left" id="classApplicationRegistration">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [ApplicationRegistration](interop.ttl#ApplicationRegistration)
+        a rdfs:subClassOf [[#datamodel-agent|Registration]]
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>[Agent](#classAgent)</td>
+      <td>[=Agent=] that registered the [=Application Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>[Application](#classApplication)</td>
+      <td>[=Application=] used to create the [=Application Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Application Registration=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Application Registration=] was updated</td>
+    </tr>
+    <tr>
+      <td>registeredApplication</td>
+      <td>[Application](#classApplication)</td>
+      <td>The [=Application=] that was registered</td>
+    </tr>
+    <tr>
+      <td>hasAccessReceipt</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>An [=Access Receipt=] that lets the [=Application=] know what
+      the [=Agent=] has granted them access to</td>
+    </tr>
+  </tbody>
+</table>
+
+The [ApplicationRegistrationShape](#shexApplicationRegistration) is used
+to validate an instance of the
+[ApplicationRegistration](#classApplicationRegistration)
+class.
+
+<pre highlight="turtle" id="shexApplicationRegistration">
+<#ApplicationRegistrationShape> {
+  a [ interop:ApplicationRegistration ] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:registeredApplication IRI ;
+  interop:hasAccessReceipt IRI?
+}
+</pre>
+
+The [ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)
+is assigned to a resource via the
+[ApplicationRegistryTree](#treeApplicationRegistry),
+to ensure that the [=Application Registration=] will validate against the
+[ApplicationRegistrationShape](#shexApplicationRegistration). It can
+include any resources, but ensures that if an [=Access Receipt=] is
+added, it is validated against [AccessReceiptTree](#treeAccessReceipt).
+
+<pre highlight="turtle" id="treeApplicationRegistration">
+<#ApplicationRegistrationTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy &lt;interops#ApplicationRegistrationShape&gt; ;
+  st:contains <#AccessReceiptTree> ,
+                st:AllowAll ;
+  st:matchesUriTemplate "{id}" .
+</pre>
+
+## Resource Hierarchy ## {#appreg-hierarchy}
+
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Class</th>
+      <th>Shape</th>
+      <th>Shape Tree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`/profile/`</td>
+      <td>-</td>
+      <td>-</td>
+      <td>[ProfileTree](#treeAgent)</td>
+    </tr>
+    <tr>
+      <td>`-- application#set`</td>
+      <td>[ApplicationRegistrySet](#classApplicationRegistrySet)</td>
+      <td>[ApplicationRegistrySetShape](#shexApplicationRegistrySet)</td>
+      <td>[ApplicationRegistrySetTree](#treeApplicationRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`/applications/#registry`</td>
+      <td>[ApplicationRegistry](#classApplicationRegistry)</td>
+      <td>[ApplicationRegistryShape](#shexApplicationRegistry)</td>
+      <td>[ApplicationRegistryTree](#treeApplicationRegistry)</td>
+    </tr>
+    <tr>
+      <td>`-- 70556355...c5d7e23a/#registration`</td>
+      <td>[ApplicationRegistration](#classApplicationRegistration)</td>
+      <td>[ApplicationRegistrationShape](#shexApplicationRegistration)</td>
+      <td>[ApplicationRegistrationTree](#treeApplicationRegistration)</td>
+    </tr>
+    <tr>
+      <td>`---- 04ca5ba7...f3a25ba0#receipt`</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
+      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+    </tr>
+    <tr>
+      <td>`---- ex-cache-1122`</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>`-- ede6aa50...830e2a42/#registration`</td>
+      <td>[ApplicationRegistration](#classApplicationRegistration)</td>
+      <td>[ApplicationRegistrationShape](#shexApplicationRegistration)</td>
+      <td>[ApplicationRegistrationTree](#treeApplicationRegistration)</td>
+    </tr>
+    <tr>
+      <td>`---- 2af133d6...78e343ba#receipt`</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
+      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+    </tr>
+    <tr>
+      <td>`---- ex-internal-idx`</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>`-- 150dca42...5b640673/#registration`</td>
+      <td>[ApplicationRegistration](#classApplicationRegistration)</td>
+      <td>[ApplicationRegistrationShape](#shexApplicationRegistration)</td>
+      <td>[ApplicationRegistrationTree](#treeApplicationRegistration)</td>
+    </tr>
+    <tr>
+      <td>`---- 14f8bfb9...e42f7084#receipt`</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
+      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+    </tr>
+    <tr>
+      <td>`-- b3564e72...0069f536/#registration`</td>
+      <td>[ApplicationRegistration](#classApplicationRegistration)</td>
+      <td>[ApplicationRegistrationShape](#shexApplicationRegistration)</td>
+      <td>[ApplicationRegistrationTree](#treeApplicationRegistration)</td>
+    </tr>
+  </tbody>
+</table>
+
+The [=Application Registry Set=] and the [=Application Registry=] MAY or MAY NOT
+be on the same [=pod=].
+
+[=Application Registry Set=] and [=Application Registry=] resources MAY use any
+resource or subject names.
+
+The resource name for an [=Application Registration=] container
+MUST be a SHA-256 hash encoding of the [=identity=] for the
+registered [=Application=], which is linked via
+[interop:registeredApplication](#classApplicationRegistration).
+
+:: <b>Example Application Identity:</b> `https://app.example/profile/id#agent`
+:: <b>SHA-256 Hash:</b> `705563552198b6fb3efc40717872aa2ec35d669c1095cc5d665f499ec5d7e23a`
+
+Issue: Is it necessary to use a one-way hash for application registration
 resource names. [Github issue](https://github.com/solid/data-interoperability-panel/issues/48)
 
-### Use of internal application space ### {#appreg-internal}
+[=Application Registrations=] use containers so that registered
+[=Application=] have dedicated space to store internal, non-interoperable
+data. In the figure above, we can see an application-specific cache
+resource (`ex-cache-1122`) and an internal index (`ex-internal-idx`).
 
-There is a legitimate argument that giving [=Applications=] their own
-private data space in Solid is counterintuitive to Solid’s proposition to
-decouple data and [=Applications=].
-
-However, there are certain types of data that are very specific to
-the function of a particular [=Application=], and have no value to other
-[=Applications=]. This may include but not be limited to app-specific
-preferences, configurations, caches, or indexes. Forcing that data into
-[=shape trees=] and [=shapes=] stored in the data registry that are supposed
-to be consumable and interoperable by other [=Applications=] can lead to
-frankenstein-like [=shape trees=] and [=shapes=] that no one wants to use.
-Giving [=Applications=] a private space where they can store internal data
-is therefore a key factor in broad interoperability,
-because it protects interoperable data from pollution by narrowly
-focused elements.
-
-Ultimately, if [=Applications=] don't want to be interoperable, there's
-no reasonable convention that could prevent it. For example, they could
-decide to use proprietary vocabularies, [=shapes=], and [=shape trees=].
-However, there are motivating factors to
-be interoperable, because in doing so they become compatible with a
-slew of data that already exists in the [=ecosystem=], including data within
-their competitive landscape. Providing a private space allows [=Applications=]
-to separate some internals from true interoperable data so that the
-interoperable data is cleaner and more usable. Our belief is that
-this helps avoid the creation of far-reaching app-specific silos.
-
-Because this space is private to an [=Application=] and not meant to
-be interoperable, the [=Application=] may or may not decide to utilize
-data validation facilities like [=shape trees=] or [=shapes=].
 
 ## Permission Model ## {#appreg-permissions}
 
-There is no public access to any data in an [=Application Registry=].
+The permission model for the resources detailed in
+[[#appreg-hierarchy]] are illustrated in the table below.
 
-Only [=Agents=] that have been selectively trusted to assist a
-given agent with managing application registration have the ability to manage
-contents and permissions across [=Application Registries=],
-including the creation and modification of [=Application Registrations=].
+<b>Notable items:</b>
 
-A given registered [=Application=] has read access to its
-[=Application Registration=], and read/write access to
-the data space inside its container. It does not get control privileges.
+* There is no public access to any data in an [=Application Registry=]
+* Only the [=Agent=] or [=Trusted Agents=] have the ability to manage
+    contents and permissions across [=Application Registries=], including
+    the creation and modification of [=Application Registrations=].
+* A given registered [=Application=] has Read,Append+ access to its
+    [=Application Registration=], [=Access Receipt=], and read/write access to
+    the remaining data space inside of the container.
+    It does not get control privileges.
+
+Note: Append+ indicates that Read/Write is granted
+to the subsequently created resource.
 
 <figure>
-<figcaption>Permission model for [=Application Registry=] resources</figcaption>
+<figcaption>Permission model for [=Application Registry=] resources. Some
+resource names have been amended with their type for readability.
+</figcaption>
   <table class="data permissions" align="left">
+    <col>
     <col>
     <colgroup></colgroup>
     <colgroup></colgroup>
-    <colgroup span=2></colgroup>
+    <colgroup></colgroup>
     <colgroup span=2></colgroup>
     <thead>
       <tr>
         <th></th>
-        <th scope="colgroup">Controller</th>
+        <th></th>
+        <th scope="colgroup">Agent</th>
         <th scope="colgroup">Public</th>
-        <th colspan=2 scope="colgroup">Selectively Trusted</th>
-        <th colspan=2 scope="colgroup">Selectively Granted</th>
+        <th scope="colgroup">Trusted Agents</th>
+        <th scope="colgroup">Other Agents</th>
       </tr>
       <tr>
         <th scope="col">Resource</th>
+        <th scope="col"></th>
         <th scope="col">Access</th>
         <th scope="col">Access</th>
-        <th scope="col">Subject</th>
         <th scope="col">Access</th>
         <th scope="col">Subject</th>
         <th scope="col">Access</th>
@@ -218,208 +463,195 @@ the data space inside its container. It does not get control privileges.
     </thead>
     <tbody>
       <tr>
+        <td>`/profile/`</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- application`</td>
+        <td>[=Application Registry Set=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
         <td>`/applications/`</td>
+        <td>[=Application Registry=]</td>
         <td>Control</td>
         <td>-</td>
-        <td>App. Registration Agent</td>
         <td>Control</td>
         <td>-</td>
         <td>-</td>
       </tr>
       <tr>
-        <td>`-- /applications/02f9d4221d9e5c0ae/`</td>
+        <td>`-- 70556355...c5d7e23a`</td>
+        <td>[=Application Registration=]</td>
         <td>Control</td>
         <td>-</td>
-        <td>App. Registration Agent</td>
         <td>Control</td>
-        <td>Registered App.</td>
+        <td>Registered [=Application=]</td>
+        <td>Read/Append+</td>
+      </tr>
+      <tr>
+        <td>`---- 04ca5ba7...f3a25ba0`</td>
+        <td>[=Access Receipt=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>Registered [=Application=]</td>
         <td>Read</td>
       </tr>
       <tr>
-        <td>`-- /applications/02f9d4221d9e5c0ae/*`</td>
+        <td>`---- ex-cache-1122`</td>
+        <td>-</td>
         <td>Control</td>
         <td>-</td>
-        <td>App. Registration Agent</td>
         <td>Control</td>
-        <td>Registered App.</td>
-        <td>Write</td>
+        <td>Registered [=Application=]</td>
+        <td>Read/Write</td>
       </tr>
       <tr>
-        <td>`-- /applications/6fe4221d0589d7bde/`</td>
+        <td>`-- ede6aa50...830e2a42`</td>
+        <td>[=Application Registration=]</td>
         <td>Control</td>
         <td>-</td>
-        <td>App. Registration Agent</td>
         <td>Control</td>
-        <td>Registered App.</td>
+        <td>Registered [=Application=]</td>
+        <td>Read/Append+</td>
+      </tr>
+      <tr>
+        <td>`---- 2af133d6...78e343ba`</td>
+        <td>[=Access Receipt=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>Registered [=Application=]</td>
         <td>Read</td>
       </tr>
       <tr>
-        <td>`-- /applications/6fe4221d0589d7bde/*`</td>
+        <td>`---- ex-internal-idx`</td>
+        <td>-</td>
         <td>Control</td>
         <td>-</td>
-        <td>App. Registration Agent</td>
         <td>Control</td>
-        <td>Registered App.</td>
-        <td>Write</td>
+        <td>Registered [=Application=]</td>
+        <td>Read/Write</td>
+      </tr>
+      <tr>
+        <td>`-- 150dca42...5b640673`</td>
+        <td>[=Application Registration=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>Registered [=Application=]</td>
+        <td>Read/Append+</td>
+      </tr>
+      <tr>
+        <td>`---- 14f8bfb9...e42f7084`</td>
+        <td>[=Access Receipt=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>Registered [=Application=]</td>
+        <td>Read</td>
+      </tr>
+      <tr>
+        <td>`-- b3564e72...0069f536`</td>
+        <td>[=Application Registration=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>Registered [=Application=]</td>
+        <td>Read/Append+</td>
       </tr>
     </tbody>
   </table>
 </figure>
 
-## Looking up an Application Registration ## {#appreg-lookup}
+## Operations ## {#appreg-operations}
 
-There are a few reasons that different actors might lookup
-an [=Application Registration=]:
+### Load Application Registration ### {#appreg-loadappreg}
 
-* The [=Agent=] may want to view or manage their collection of registered
-    [=Applications=].
-* Another [=trusted agent=] may assist the [=Agent=] with management
-    and registration of [=Applications=].
-* An [=Application=] may want to see if it has been registered,
-    and access its [=Application Registration=]
-    if it exists. *This is the most frequently occuring scenario.*
+This operation allows an [=Application=] find and load a
+corresponding [=Application Registration=] for a given [=Agent=].
 
-Per the [[#appreg-permissions]], the [=Agent=] and
-any [=trusted agents=] for application registration will have access and
-visibility across [=Application Registries=] and
-[=Application Registrations=]. An
-[=Application=] will only have access to its own [=Application Registration=],
-in which case it would be linked to that [=Application Registration=] via the
-[interop:registeredApplication](interop.ttl#registeredApplication) property.
+Failure to discover an [=Application Registration=] means that the
+[=Application=] is not registered.
 
-Since [=Applications=] do not have access to the list of [=Applications=]
-in [=Application Registries=], the only way they can check to see if they
-are registered is to perform a direct lookup in the addressable space
-of each [=Application Registry=] in the [=Application Registry Set=],
-using the SHA-256 hash of its [=applicationID=].
+Per the [[#appreg-permissions]], a given [=Application=] will only
+have access to its own [=Application Registration=]. Since [=Applications=]
+do not have access to the list of [=Applications=]
+in an [=Agent's=] [=Application Registries=], they must perform a direct lookup
+in the addressable space of each [=Application Registry=]
+in the [=Application Registry Set=] to find a corresponding
+[=Application Registration=].
 
-<pre>
-GET https://alice.pod.example/applications/70e9249113f8aef095626980e82f13833f24a902571502ef726b4d7e69739ba3
-</pre>
+Note: This specification is designed to support compartmentalization
+of data between [=Applications=]. Server-side support may vary.
+See [[#security-appauthz]].
 
-Inability to access the [=Application Registration=] would be a result of:
+#### Inputs #### {#loadappreg-inputs}
 
-* There is no [=Application Registration=] for that
-    [=Application=] in the [=Application Registry=].
-* There is an [=Application Registration=] at the target URL, but
-    it cannot be accessed because it associated with a
-    different [=Application=].
+* Let `AGENT` be the [=Agent=]
+* Let `APP` be an [=Application=] in use by `AGENT`
 
-In either case, the server may return either a 403 or 404 depending on
-server or user privacy preference.
+#### Outputs #### {#loadappreg-outputs}
 
-If an [=Application=] can access the
-[=Application Registration=], then it can confirm that it
-is already a registered [=Application=] for the [=Agent=].
+* An [=Application Registration=]
 
-If an [=Application=] is not registered, and would like to be,
-it will need to go through the process of [[#appreg-new]].
+#### Operation Details #### {#loadappreg-details}
 
-## Registering an Application ## {#appreg-new}
+1. `AGENT` provides their [=identity=] to `APP`
+1. `APP` dereferences the [=identity=] of `AGENT`
+    get `AGENT`'s [=identity profile document=].
+1. Let `ARSET` be the [=Application Registry Set=] linked via
+    `AGENT hasApplicationRegistrySet`.
+    1. Because `ARSET` is a non-public document, `AGENT` and `APP`
+        will be required to furnish a DPoP proof and
+        access token to the Solid Server, obtained via the
+        Solid-OIDC protocol.
+1. For each [=Application Registry=] `AREGISTRY` in `ARSET`
+    1. Let `IDSHA256` be the SHA-256 hash of `APP`'s [=identity=]
+    1. Let `STATUS` be the `HTTP` status code returned from a
+        `GET` or `HEAD` of `https://AREGISTRY/IDSHA256`
+    1. Return `AREGISTRY` if `STATUS` is `200 OK`
+1. Return FALSE
 
-In almost every case, an [=Application=] will not be permitted
-to register itself, and will need the
-assistance of a [=trusted agent=] that has been authorized to assist
-with application registration for a given [=Agent=].
+### Register Application ### {#appreg-registerapp}
 
-Issue: Applications that can perform these capabilities will be discoverable
-through the Agent. Until that section is written, we'll use
-hard-coded properties associated with the Agent for discovery.
+This operation creates a new [=Application Registration=], and
+`MUST` be called from an [[#authz-apprequest]] workfow.
 
-The [=Application=] will look for another
-[=Application=] that is linked with the [=Agent=] through the
-[interop:trustsForApplicationRegistration](interop.ttl#trustsForApplicationRegistration)
-property.
+#### Inputs #### {#registerapp-inputs}
 
-<figure>
-  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me linking to Application
-  Registration Agent</figcaption>
-  <pre highlight="turtle">
-    <#me>
-      a interop:Agent;
-      interop:trustsForApplicationRegistration &lt;https://trusted.example/ar/&gt; .
-  </pre>
-</figure>
+* Let `AGENT` be the [=Agent=]
+* Let `APP` be an [=Application=] in use by `AGENT`
+* Let `REGISTRY` be the target [=Application Registry=]
 
-The [=Application=] will redirect the [=Agent=] via the
-synchronous [[#trusted|trusted agent]] pattern to the [=Application=] linked by
-[interop:trustsForApplicationRegistration](interop.ttl#trustsForApplicationRegistration),
-supplying its [=ApplicationID=] as a parameter.
+#### Outputs #### {#registerapp-outputs}
 
-The [=application registration agent=] is now expected to dereference
-(i.e. perform an HTTP GET on) the [=ApplicationID=] to retrieve an
-[=application profile document=]. The contents of that document
-help the [=Agent=] determine whether that [=Application=] is suitable for
-approval.
+* An [=Application Registration=]
 
-For example, verification of a verifiable credential
-stored in the [=application profile document=], issued by a trusted third party,
-is a good indicator of the [=Application’s=] trustworthiness.
-Similarly, an [=Application=], or the [=identity provider=] it uses, may
-be listed on a trusted whitelist that the [=trusted agent=]
-consults. It is able to raise issues related to these checks (or others)
-to the [=Agent=] as part of her decision making process.
+#### Operation Details #### {#registerapp-details}
 
-Assuming suitability and confirmation from the [=Agent=], the
-[=application registration agent=] will proceed to create the
-[=Application Registration=] for
-the [=Application=] in the appropriate [=Application Registry=].
-When it is finished, it will return her to
-the [=Application=] at the
-[interop:applicationRegistrationCallback](interop.ttl#applicationRegistrationCallback)
-provided in the application profile document.
-
-### Creating the application registration entry ### {#appreg-creating}
-
-The [=application registration agent=] is responsible for creating
-the [=Application Registration=] in conformance with the
-documented [[#appreg-structure]] pattern.
-
-Specifically, the
-[interopt:ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)
-stipulates that the [=Application Registration=] be a container via
-`st:expectsType st:ShapeTreeContainer`.
-
-The [=Application Registration=] must be added to the RDF
-graph of that container with a `<#registration>` subject, and pass validation
-against the
-[interops:ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape).
-
-The [=Application Registration's=] properties must be set as follows:
-
-* [interop:registeredBy](interop.ttl#registeredBy): linked to the [=identity=]
-    of the [=authenticated agent=] that invoked the registration
-    (i.e. the [=webid=] of the [=Agent=])
-* [interop:registeredWith](interop.ttl#registeredWith): linked to the
-    [=ApplicationID=] of the [=trusted agent=] that facilitated the
-    registration, typically the [=application registration agent=].
-* [interop:registeredApplication](interop.ttl#registeredApplication): linked to
-    the [=ApplicationID=] of the [=Application=] that is being registered.
-* [interop:registeredAt](interop.ttl#registeredAt): the `xsd:dateTime` of
-    the registration.
-
-<figure>
-  <figcaption>Example [=Application Registration=]</figcaption>
-  <pre highlight="turtle">
-  <#registration>
-    a interop:applicationRegistration ;
-    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-    interop:registeredWith &lt;https://trusted.example/ar&gt; ;
-    interop:registeredApplication &lt;https://nevernote.example/id#agent&gt; ;
-    interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime .
-  </pre>
-</figure>
-
-The [=Application Registration=] container must be named in
-accordance with the instructions in [[#appreg-naming]].
-
-The [=Application Registration=] container must be added as a child
-member of the [=Application Registry=] container.
-
-Access to the [=Application Registration=] must be set per the
-instructions in [[#appreg-permissions]].
-
-The [=Application Registration=] must be associated with the
-[=Application Registry=] through the
-[interop:hasRegistry](interop.ttl#hasRegistry) property in
-the graph of the [=Application Registry=].
+1. Let `EXISTING` be an [=Application Registration=] returned from
+    [[#appreg-loadappreg]] with inputs: `AGENT`, `APP`
+1. Return `EXISTING` if `EXISTING` is not empty
+1. Let `REG` be a newly initialized [=Application Registration=]
+1. Let `REG registeredBy` be `AGENT`
+1. Let `REG registeredWith` be the [=identity=] of the [=Application=]
+    executing the operation
+1. Let `REG registeredAt` be the current date and time
+1. Let `REG updatedAt` be the current date and time
+1. Let `REG registeredApplication` be the [=identity=] of `APP`
+1. Let `IDSHA256` be the SHA-256 hash of `APP`'s [=identity=]
+1. Add `REG` to the `REGISTRY` container, using `IDSHA256` as the resource name
+1. Assign permissions for `REG` per the [[#appreg-permissions]]
+1. Link `REG` to `REGISTRY` via `REGISTRY hasRegistration`
+1. Return `REG`

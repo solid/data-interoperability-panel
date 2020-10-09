@@ -298,7 +298,8 @@ instance of the [AccessGrantRegistry](#classAccessGrantRegistry) class.
 The [AccessGrantRegistryTree](interop.tree#AccessGrantRegistryTree) is assigned
 to a container resource to ensure that it will validate against the
 [AccessGrantRegistryShape](#shexAccessGrantRegistry), and contain only
-conformant instances of the [AccessGrantTree](#treeAccessGrant).
+conformant instances of the [AccessGrantTree](#treeAccessGrant) and
+[AccessInvitationTree](#treeAccessInvitation).
 
 <pre highlight="turtle" id="treeAccessGrantRegistry">
 <#AccessGrantRegistryTree>
@@ -996,7 +997,7 @@ calls for an access receipt to be provided.
     validation fails.
 1. Add or Update `GRANT` resource in the `REGISTRY` container, conforming to
     the assigned [interopt:AccessGrantTree](interop.tree#AccessGrantTree).
-1. Link `GRANT` to the `REGISTRY` via `ACCESS hasRegistration` if
+1. Link `GRANT` to the `REGISTRY` via `REGISTRY hasRegistration` if
         it has not already been added
 1. Call [[#grants-applyperms]] with inputs: `GRANT`
 1. TODO - CALL TO PROVIDE ACCESS RECEIPT GOES HERE

@@ -527,9 +527,9 @@ use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
 1. For each [=Data Grant=] `DATAGRANT` linked via `GRANT hasDataGrant`
     1. Let `RECEIPT hasDataReceipt` be linked to the result of
         [[#provide-datareceipt]] with inputs: `DATAGRANT`
-1. Let `APPREG` be result of [[#appreg-lookup]] with
+1. Let `APPREG` be result of [[#appreg-loadappreg]] with
     inputs: `CONTROLLER`, `REC-APP`
-    1. Call [[#appreg-new]] if `APPREG` is empty
+    1. Call [[#appreg-registerapp]] if `APPREG` is empty
 1. Post `RECEIPT` to `APPREG` container
 1. Let `CURRENT` be `APPREG hasAccessReceipt`
 1. Remove `CURRENT` if it exists
