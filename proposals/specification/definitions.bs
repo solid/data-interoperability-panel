@@ -46,12 +46,6 @@ thing, data model, abstract entity, etc.) with a DID document,
 equivalent to an [=identity profile document=], to allow trustable
 interactions with that subject. [[DID]]
 
-An <dfn>identity provider</dfn> furnishes an [=agent=] with authenticated
-credentials that prove agent is who it says it is, across the web.
-
-A <dfn>token</dfn> is used to make authenticated requests to the [=Solid=]
-server for a given [=authenticated agent=].
-
 An <dfn>ApplicationID</dfn> is a web resource at an HTTP URI uniquely associated
 with a given [=application=]. For [=server-side applications=], it may also
 serve as an [=identity=]. An [=application profile document=] can be
@@ -61,9 +55,6 @@ An <dfn>application profile document</dfn> is a linked data document
 obtained by dereferencing the URI for a given [=ApplicationID=]. It contains
 useful information about an application that can be employed in
 various workflows including application registration and data authorization.
-
-A <dfn>resource controller</dfn> is an [=authenticated agent=] with full
-privileges and control over a given resource or set of resources.
 
 An <dfn>acl resource</dfn> as defined by [[WAC]] may be directly
 associated with a resource or indirectly associated with a resource
@@ -105,33 +96,6 @@ each of these resources with a shape. This allows one to treat a set of
 related resources as a single grouping, and apply that to a range of
 operations including access control, data organization, data validation,
 and data migration. [[SHAPETREES]]
-
-An <dfn>Application Registry Set</dfn> is a [=Registry Set=] specifically
-made up of [=Application Registries=]. Represented by the
-[interop:ApplicationRegistrySet](interop.ttl#ApplicationRegistySet) class.
-Validated by the
-[interops:ApplicationRegistrySetShape](interop.shex#RegistrySetShape).
-Associated with resources by the
-[interopt:ApplicationRegistrySetTree](interop.tree#ApplicationRegistrySetTree).
-
-An <dfn>Application Registry</dfn> is a collection of
-[=Application Registrations=] stored in a specific location in a [=pod=].
-Represented by the
-[interop:ApplicationRegistry](interop.ttl#ApplicationRegistry) class.
-Validated by the
-[interops:ApplicationRegistryShape](interop.shex#ApplicationRegistryShape).
-Associated with resources by the
-[interopt:ApplicationRegistryTree](interop.tree#ApplicationRegistryTree).
-
-An <dfn>Application Registration</dfn> provides the [=Agent=]
-with a place to maintain metadata, state, preferences, and
-other application-specific data associated with a given [=Application=] they
-have elected to use. Represented by the
-[interop:ApplicationRegistration](interop.ttl#ApplicationRegistration) class.
-Validated by the
-[interops:ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape).
-Associated with resources by the
-[interopt:ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree).
 
 A <dfn>Data Registry Set</dfn> is a [=Registry Set=] specifically made up of
 [=Data Registries=]. Represented by the

@@ -37,6 +37,12 @@ Let `APP` be the [=Application=] that `CONTROLLER` wishes to use, and must
 Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
     authorization and access control.
 
+Let `REGISTERAPP` be a boolean value that indicates whether the
+[=Application=] is requesting to be [=Registered=]
+
+Let `GRANTACCESS` be a boolean value that indicates whether the
+[=Application=] wishes to be granted access to data
+
 1. `CONTROLLER` decides they'd like to use `APP`
 1. `CONTROLLER` provides their [=identity=] to `APP`
 1. `APP` dereferences the [=identity=] to
@@ -45,26 +51,31 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
     `CONTROLLER` via the [[#trusted-load]] operation.
 1. `APP` redirects `CONTROLLER` to `AUTHZ` via the [[#trusted-redirect]]
     operation.
-    1. `AUTHZ` looks in `APP`'s [=application profile document=] for
-        [=Access Need Groups=] with an `interop:accessScenario` of
-        `interop:PersonalAccess`
-    1. Any [=Access Need Groups=] found are passed to the [[#grants-present]]
-        operation, which presents them to `CONTROLLER`.
-    1. `CONTROLLER` decides whether to grant `APP` the access requested.
-    1. `CONTROLLER` authorizes the requested [=Access Need Groups=]
-        and [=Access Needs=]:
-        1. The [[#appreg-new|Register Application]] operation is called
-            to register `APP` in `CONTROLLER`'s [=Application Registry=].
-        1. The [[#grants-recordgrant]] operation is invoked
-            1. An [=Access Grant=] is stored in `CONTROLLER`'s
-                [=Access Grant Registry=].
-            1. [[#grants-applyperms]] is called to apply permissions based
-                on the [=Access Grant=].
-            1. [[#receipts-provide]] is called to store the
-                [=Access Receipt=]. The Application has set
-                `interop:receivesAccessReceipt` to
-                `ReceiptInRegistration`, so the [=Access Receipt=] is
-                stored in the [=Application Registration=] for `APP`.
+    1. If `REGISTERAPP` is `true`
+        1. Let `APPREG` be an [=Application Registration=] returned by
+            [[#appreg-loadappreg]] with inputs: `CONTROLLER`, `APP`
+        1. If `APPREG` is empty let `APPREG` be the [=Application Registration=]
+            returned by [[#appreg-registerapp]] with inputs: `AGENT`, `APP`,
+            `REGISTRY`.
+    1. If `GRANTACCESS` is `true`
+        1. `AUTHZ` looks in `APP`'s [=application profile document=] for
+            [=Access Need Groups=] with an `interop:accessScenario` of
+            `interop:PersonalAccess`
+        1. Any [=Access Need Groups=] found are passed to the [[#grants-present]]
+            operation, which presents them to `CONTROLLER`.
+        1. `CONTROLLER` decides whether to grant `APP` the access requested.
+        1. `CONTROLLER` authorizes the requested [=Access Need Groups=]
+            and [=Access Needs=]:
+            1. The [[#grants-recordgrant]] operation is invoked
+                1. An [=Access Grant=] is stored in `CONTROLLER`'s
+                    [=Access Grant Registry=].
+                1. [[#grants-applyperms]] is called to apply permissions based
+                    on the [=Access Grant=].
+                1. [[#receipts-provide]] is called to store the
+                    [=Access Receipt=]. The Application has set
+                    `interop:receivesAccessReceipt` to
+                    `ReceiptInRegistration`, so the [=Access Receipt=] is
+                    stored in the [=Application Registration=] for `APP`.
     1. `AUTHZ` redirects `CONTROLLER` back to `APP` via the
         [[#trusted-return]] operation.
 
@@ -95,7 +106,7 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
 1. `CONTROLLER` has an `interop:receivesAccessReceipt` value of `ReceiptInMessage`
     in their [=identity profile document=].
 1. `REQAPP` puts the [=Access Need Groups=] into an [=Access Request=]
-    and posts it to the [=Access Inbox=] identified by `interop:hasAccessInbox`
+    and posts it to the access inbox identified by `interop:hasAccessInbox`
     in the `CONTROLLER`'s [=identity profile document=].
 1. `CAUTHZ` monitors `CONTROLLER`'s access inbox autonomously. It notifies
     `CONTROLLER` when a new [=Access Request=] is received.
