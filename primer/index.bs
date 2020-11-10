@@ -4,7 +4,7 @@ Shortname: solid-primer
 Level: 1
 Status: w3c/ED
 Group: solid-cg
-URL: http://example.com/url-this-spec-will-live-at
+URL: https://solid.github.io/data-interoperability-panel/primer/
 Editor: elf Pavlik
 Abstract: Primer for the Solid interoperability.
 </pre>
@@ -24,14 +24,25 @@ Issue: Explain visual language
 Data
 ====================
 
-All turtle, shapetree and shex code snippets in this primer will assume following prefixes
+All turtle and shapetree code snippets in this primer will assume following prefixes.
 
 <figure>
   <pre class=include-code>
   path: snippets/prefixes.ttl
-  highlight: turtle
+  highlight: shex
   </pre>
-  <figcaption>common prefixes</figcaption>
+  <figcaption>common prefixes for turtle</figcaption>
+</figure>
+
+All ShExC code snippets will asssume
+
+
+<figure>
+  <pre class=include-code>
+  path: snippets/prefixes.shex
+  highlight: shex
+  </pre>
+  <figcaption>common prefixes for ShExC</figcaption>
 </figure>
 
 
@@ -60,7 +71,7 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/solidshapes.example/trees/project.ttl
-  highlight: turtle
+  highlight: shex
   show: 3-100
   </pre>
   <figcaption>Project shape tree</figcaption>
@@ -69,7 +80,7 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/solidshapes.example/trees/task.ttl
-  highlight: turtle
+  highlight: shex
   show: 3-100
   </pre>
   <figcaption>Task shape tree</figcaption>
@@ -82,8 +93,8 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/acme.example/f201471d-b1fb-40ad-9eac-867aaf09c3e5.ttl
-  highlight: turtle
-  show: 3-100
+  highlight: shex
+  show: 4-100
   </pre>
   <figcaption>ACME's data registration for projects</figcaption>
 </figure>
@@ -91,8 +102,8 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/acme.example/67417bc2-5fc1-4e6e-91c4-eea1ead97d1c.ttl
-  highlight: turtle
-  show: 3-100
+  highlight: shex
+  show: 4-100
   </pre>
   <figcaption>ACME's data registration for tasks</figcaption>
 </figure>
@@ -104,7 +115,7 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/alice.example/alice.example.ttl
-  highlight: turtle
+  highlight: shex
   show: 3-100
   </pre>
   <figcaption>Alice's WebID document</figcaption>
@@ -115,7 +126,7 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/alice.example/6a86be7b-3f60-4cc5-8ab9-f259693700d3.ttl
-  highlight: turtle
+  highlight: shex
   show: 3-100
   </pre>
   <figcaption>Alice's Registrar</figcaption>
@@ -124,7 +135,7 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/alice.example/ba4da3ec-dea4-41b2-be02-e4bf7a9477df.ttl
-  highlight: turtle
+  highlight: shex
   show: 3-100
   </pre>
   <figcaption>Alice's Remote Data Registry Set</figcaption>
@@ -133,7 +144,7 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/alice.example/6f6e4241-75a2-4780-9b2a-40da53082e54.ttl
-  highlight: turtle
+  highlight: shex
   show: 3-100
   </pre>
   <figcaption>Alice's Remote Data Registry</figcaption>
@@ -144,8 +155,8 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/alice.example/773605f0-b5bf-4d46-878d-5c167eac8b5d.ttl
-  highlight: turtle
-  show: 3-100
+  highlight: shex
+  show: 4-100
   </pre>
   <figcaption>Alice's data registration for projects</figcaption>
 </figure>
@@ -153,8 +164,8 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/alice.example/4d594c61-7cff-484a-a1d2-1f353ee4e1e7.ttl
-  highlight: turtle
-  show: 3-100
+  highlight: shex
+  show: 4-100
   </pre>
   <figcaption>Alice's data registration for tasks</figcaption>
 </figure>
@@ -162,7 +173,7 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/alice.example/33caf7be-f804-4155-a57a-92216c577bd4.ttl
-  highlight: turtle
+  highlight: shex
   show: 8-100
   </pre>
   <figcaption>Alice's remote data registration for projects @ acme.example</figcaption>
@@ -171,7 +182,7 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/alice.example/c8d29dce-eb5b-4894-9e4a-02781dbfcba3.ttl
-  highlight: turtle
+  highlight: shex
   show: 8-100
   </pre>
   <figcaption>Alice's remote data instance for P1 @ acme.example</figcaption>
@@ -180,7 +191,7 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/alice.example/a3859644-a71c-4a41-b253-d0cce25a0126.ttl
-  highlight: turtle
+  highlight: shex
   show: 8-100
   </pre>
   <figcaption>Alice's remote data instance for P3 @ acme.example</figcaption>
@@ -193,8 +204,8 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/bob.example/0af793c1-8abc-441c-aacc-f78483b34217.ttl
-  highlight: turtle
-  show: 3-100
+  highlight: shex
+  show: 4-100
   </pre>
   <figcaption>Bob's data registration for projects</figcaption>
 </figure>
@@ -202,8 +213,8 @@ All turtle, shapetree and shex code snippets in this primer will assume followin
 <figure>
   <pre class=include-code>
   path: snippets/bob.example/4675444a-8a4d-46e1-abfe-85147e5a9b76.ttl
-  highlight: turtle
-  show: 3-100
+  highlight: shex
+  show: 4-100
   </pre>
   <figcaption>Bob's data registration for tasks</figcaption>
 </figure>
