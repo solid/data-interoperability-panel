@@ -1,5 +1,5 @@
 @prefix interop: <http://www.w3.org/ns/solid/interop#> .
-@prefix trees: <https://solidshapes.example/trees/> .
+@prefix solidtrees: <https://solidshapes.example/trees/> .
 @prefix performchart: <https://performchart.example/> .
 
 performchart:\#app
@@ -16,14 +16,14 @@ performchart:\#app
 
 <#project>
     a interop:AccessNeed ;
-    interop:registeredShapeTree trees:Project ;
+    interop:registeredShapeTree solidtrees:Project ;
     interop:recursivelyAuthorize true ;
     interop:accessNecessity interop:AccessRequired ;
     interop:accessMode acl:Read .
 
 <#task> # Override to stop recursion
     a interop:AccessNeed ;
-    interop:registeredShapeTree trees:Task ;
+    interop:registeredShapeTree solidtrees:Task ;
     interop:recursivelyAuthorize false ;
     interop:accessNecessity interop:AccessRequired ;
     interop:accessMode acl:Read .
