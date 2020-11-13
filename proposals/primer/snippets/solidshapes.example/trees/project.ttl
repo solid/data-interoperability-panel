@@ -7,4 +7,8 @@ solidtrees:Project
   a shapetree:ShapeTree ;
   shapetree:expectsType shapetree:ShapeTreeResource ;
   shapetree:validatedBy solidshapes:Project ;
+    shapetree:reference [
+    shapetree:traverseViaReverseShapePath "@solidshapes:Task/ex:inProject" ;
+    shapetree:hasShapeTree solidtrees:Task
+  ] ;
   shapetree:matchesUriTemplate "{uuid}" .
