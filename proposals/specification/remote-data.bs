@@ -173,7 +173,7 @@ A <dfn>Remote Data Registry</dfn> is a collection of
     <tr>
       <th colspan=3>
         [RemoteDataRegistry](interop.ttl#RemoteDataRegistry)
-        a rdfs:subClassOf [[#datamodel-agent|Registry]]
+        a rdfs:subClassOf [Registry](interop.ttl#Registry)
       </th>
     </tr>
     <tr>
@@ -185,7 +185,7 @@ A <dfn>Remote Data Registry</dfn> is a collection of
   <tbody>
     <tr>
       <td>hasRegistration</td>
-      <td>Registration</td>
+      <td>[Registration](interop.ttl#Registration)</td>
       <td>Link to associated [=Remote Data Registrations=]</td>
     </tr>
   </tbody>
@@ -242,7 +242,7 @@ A [=Remote Data Registration=] is created when an [=Agent=] receives an
     <tr>
       <th colspan=3>
         [RemoteDataRegistration](interop.ttl#RemoteDataRegistration)
-        a rdfs:subClassOf [[#datamodel-agent|Registration]]
+        a rdfs:subClassOf [Registration](interop.ttl#Registration)
       </th>
     </tr>
     <tr>
@@ -254,12 +254,12 @@ A [=Remote Data Registration=] is created when an [=Agent=] receives an
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>Agent</td>
+      <td>[Agent](#classAgent)</td>
       <td>[=Agent=] that registered the [=Remote Data Registration=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
-      <td>Application</td>
+      <td>[Application](#classApplication)</td>
       <td>[=Application=] used to create the [=Remote Data Registration=]</td>
     </tr>
     <tr>
@@ -279,7 +279,7 @@ A [=Remote Data Registration=] is created when an [=Agent=] receives an
     </tr>
     <tr>
       <td>hasRegistration</td>
-      <td>Data Registration</td>
+      <td>[DataRegistration](#classDataRegistration)</td>
       <td>Link to the [=Data Registration=] that was shared</td>
     </tr>
     <tr>
@@ -314,7 +314,7 @@ A [=Remote Data Registration=] is created when an [=Agent=] receives an
     </tr>
     <tr>
       <td>hasRemoteDataInstance</td>
-      <td>[Remote Data Instance](#classRemoteDataInstance)</td>
+      <td>[RemoteDataInstance](#classRemoteDataInstance)</td>
       <td>Link to [=Remote Data Instance=] associated with the
       [=Remote Data Registration=]</td>
     </tr>
@@ -415,7 +415,7 @@ A [=Remote Data Instance=] is created when an [=Agent=] receives an
     </tr>
     <tr>
       <td>hasRegisteredDataInstance</td>
-      <td>RegisteredDataInstance</td>
+      <td>[=Registered Data Instance=]</td>
       <td>Link to [=Registered Data Instance=] associated with the
       [=Remote Data Instance=]</td>
     </tr>

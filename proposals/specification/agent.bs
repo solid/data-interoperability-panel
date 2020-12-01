@@ -7,14 +7,17 @@ Agent {#agents}
 
 An [=Agent=] is denoted by an [=identity=]. Dereferencing that [=identity=]
 leads to the [=Agent=], and a graph of useful information about them. This
-graph is used by the [=Agent=] to locate and access their own data, and data
-relevant to them, across the decentralized Web. Other [=Agents=] and
-[=Applications=] use this information to interact with them.
+graph is used by the [=Agent=] to lookup their own data, as well as data
+that has been shared with them. 
 
 An [=Agent=] is designed to be publicly accessible, but many of the
 things the [=Agent=] links to are designed to be private, or accessible
 only by other [=Agents=] or [=Applications=] that the [=Agent=]
 has authorized.
+
+Consequently, other [=Agents=] and
+[=Applications=] can dereference the [=identity=] of an [=Agent=] to obtain 
+the information they need to interact with them.
 
 Most of an [=Agent's=] information is stored in [=Registries=].
 A <dfn>Registry</dfn> is a place where an [=Agent=] can store and find
@@ -70,7 +73,7 @@ data on behalf of another [=Agent=], they will be linked to multiple
 [=Registries=] of the same type. A <dfn>Registry Set</dfn> is used to
 organize [=Registries=] of the same type together.
 
-An [=Agent=] links to each kind of [=Registry Sets=] through type-specific
+An [=Agent=] links to each kind of [=Registry Set=] through type-specific
 subproperties of [interop:hasRegistrySet](interop.ttl#hasRegistrySet).
 
 This allows one [=Agent=] to
@@ -123,27 +126,27 @@ of software with an [=identity=] that can be strongly authenticated.
   <tbody>
     <tr>
       <td>hasApplicationRegistrySet</td>
-      <td>ApplicationRegistrySet</td>
+      <td>[ApplicationRegistrySet](#classApplicationRegistrySet)</td>
       <td>[=Application Registry Set=] for the [=Agent=]</td>
     </tr>
     <tr>
       <td>hasDataRegistrySet</td>
-      <td>DataRegistrySet</td>
+      <td>[DataRegistrySet](#classDataRegistrySet)</td>
       <td>[=Data Registry Set=] for the [=Agent=]</td>
     </tr>
     <tr>
       <td>hasAccessGrantRegistrySet</td>
-      <td>AccessGrantRegistrySet</td>
+      <td>[AccessGrantRegistrySet](#classAccessGrantRegistrySet)</td>
       <td>[=Access Grant Registry Set=] for the [=Agent=]</td>
     </tr>
     <tr>
       <td>hasAccessReceiptRegistrySet</td>
-      <td>AccessReceiptRegistrySet</td>
+      <td>[AccessReceiptRegistrySet](#classAccessReceiptRegistrySet)</td>
       <td>[=Access Receipt Registry Set=] for the [=Agent=]</td>
     </tr>
     <tr>
       <td>hasRemoteDataRegistrySet</td>
-      <td>RemoteDataRegistrySet</td>
+      <td>[RemoteDataRegistrySet](#classRemoteDataRegistrySet)</td>
       <td>[=Remote Data Registry Set=] for the [=Agent=]</td>
     </tr>
     <tr>
@@ -217,15 +220,15 @@ is assigned to a resource to ensure it will validate against the
     </tr>
     <tr>
       <td>`-- application#set`</td>
-      <td>[ApplicationRegistrySet](#)</td>
-      <td>[ApplicationRegistrySetShape](#)</td>
-      <td>[ApplicationRegistrySetTree](#)</td>
+      <td>[ApplicationRegistrySet](#classApplicationRegistrySet)</td>
+      <td>[ApplicationRegistrySetShape](#shexApplicationRegistrySet)</td>
+      <td>[ApplicationRegistrySetTree](#treeApplicationRegistrySet)</td>
     </tr>
     <tr>
       <td>`-- data#set`</td>
-      <td>[DataRegistrySet](#)</td>
-      <td>[DataRegistrySetShape](#)</td>
-      <td>[DataRegistrySetTree](#)</td>
+      <td>[DataRegistrySet](#classDataRegistrySet)</td>
+      <td>[DataRegistrySetShape](#shexDataRegistrySet)</td>
+      <td>[DataRegistrySetTree](#treeDataRegistrySet)</td>
     </tr>
     <tr>
       <td>`-- grant#set`</td>

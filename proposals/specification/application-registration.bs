@@ -32,15 +32,15 @@ focused elements.
   <figcaption>Data model for application registration</figcaption>
 </figure>
 
-An [=Agent=] links to an [=Application Registry Sets] via the
+An [=Agent=] links to a [=Application Registry Sets=] via the
 [interop:hasApplicationRegistrySet](interop.ttl#hasApplicationRegistrySet)
 property.
 
 An [=Application Registry Set=] links to any number of [=Application Registries=]
 via the [interop:hasRegistry](interop.ttl#hasRegistry) property.
 
-Each registered [=Application=] has an [=Application Registration=]. An
-[=Application Registry=] links to any number of [=Application Registrations=]
+Each [=Application=] an [=Agent=] registers has an [=Application Registration=]. 
+An [=Application Registry=] links to any number of [=Application Registrations=]
 via the [interop:hasRegistration](interop.ttl#hasRegistration) property.
 
 <figure id="fig-appreg-agent">
@@ -108,7 +108,7 @@ made up of [=Application Registries=].
     <tr>
       <th colspan=3 text-align=left>
         [ApplicationRegistrySet](interop.ttl#ApplicationRegistrySet)
-        a rdfs:subClassOf [[#datamodel-agent|RegistrySet]]
+        a rdfs:subClassOf [RegistrySet](interop.ttl#RegistrySet)
       </th>
     </tr>
     <tr>
@@ -120,7 +120,7 @@ made up of [=Application Registries=].
   <tbody>
     <tr>
       <td>hasRegistry</td>
-      <td>Registry</td>
+      <td>[Registry](interop.ttl#Registry)</td>
       <td>Link to associated [=Application Registries=]</td>
     </tr>
   </tbody>
@@ -407,7 +407,7 @@ Issue: Is it necessary to use a one-way hash for application registration
 resource names. [Github issue](https://github.com/solid/data-interoperability-panel/issues/48)
 
 [=Application Registrations=] use containers so that registered
-[=Application=] have dedicated space to store internal, non-interoperable
+[=Applications=] have dedicated space to store internal, non-interoperable
 data. In the figure above, we can see an application-specific cache
 resource (`ex-cache-1122`) and an internal index (`ex-internal-idx`).
 
@@ -432,9 +432,7 @@ Note: Append+ indicates that Read/Write is granted
 to the subsequently created resource.
 
 <figure>
-<figcaption>Permission model for [=Application Registry=] resources. Some
-resource names have been amended with their type for readability.
-</figcaption>
+<figcaption>Permission model for [=Application Registry=] resources.</figcaption>
   <table class="data permissions" align="left">
     <col>
     <col>

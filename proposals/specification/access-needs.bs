@@ -537,7 +537,7 @@ for every unique [=shape tree=] encountered as the operation traverses the
     </tr>
     <tr>
       <td>hasRegisteredDataInstance</td>
-      <td>[RegisteredDataInstance](#)</td>
+      <td>RegisteredDataInstance</td>
       <td>Links to any specific [=Registered Data Instances=] that were
       included in the original request</td>
     </tr>
@@ -629,12 +629,12 @@ one [=Agent=] to another.
   <tbody>
     <tr>
       <td>fromAgent</td>
-      <td>Agent</td>
+      <td>[Agent](#classAgent)</td>
       <td>The [=Agent=] who sent the [=Access Request=]</td>
     </tr>
     <tr>
       <td>toAgent</td>
-      <td>Agent</td>
+      <td>[Agent](#classAgent)</td>
       <td>The [=Agent=] the [=Access Request=] is meant for</td>
     </tr>
   </tbody>
@@ -959,32 +959,59 @@ so they can be presented to an [=Agent=] in
 
 ### Compile Access Need Group ### {#compile-group}
 
-This operation takes a given [=Access Need Group=] with a number of associated
-[=Access Needs=] and processes them to produce a [=Compiled Access Group=]
-that is ready to present to a given [=Agent=]
-via the [[#grants-present]] operation.
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+        This operation takes a given [=Access Need Group=] with a number of associated
+        [=Access Needs=] and processes them to produce a [=Compiled Access Group=]
+        that is ready to present to a given [=Agent=]
+        via the [[#grants-present]] operation.
+        <ol>
+          <li>The [=shape tree=] associated with each [=Root Access Need=] is
+            traversed to the desired level of recursion, including across references.
+            A [=Compiled Access=] is added in a linked hierarchy
+            starting with the [=Root Access Need=], representing every unique
+            [=shape tree=] that was traversed.</li>
+          <li>Decorators are looked up and linked to the
+            [=Compiled Access Group=] and where available for every
+            [=Compiled Access=]</li>
+          <li>Any [=Supporting Access Needs=] are associated with [=Compiled Accesses=].</li>
+        </ol>
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`GROUP`</td>
+      <td>An [=Access Need Group=]</td>
+    </tr>
+    <tr>
+      <td>`LANG`</td>
+      <td>The [=Agent's=] preferred language</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`CAGROUP`</td>
+      <td>A [=Compiled Access Group=] generated from the input `GROUP`, with
+          an associated set of [=Compiled Accesses=]</td>
+    </tr>
+  </tbody>
+</table>
 
-1. The [=shape tree=] associated with each [=Root Access Need=] is
-    traversed to the desired level of recursion, including across references.
-    A [=Compiled Access=] is added in a linked hierarchy
-    starting with the [=Root Access Need=], representing every unique
-    [=shape tree=] that was traversed.
-2. Decorators are looked up and linked to the
-    [=Compiled Access Group=] and where available for every
-    [=Compiled Access=]
-3. Any [=Supporting Access Needs=] are associated with [=Compiled Accesses=].
-
-#### Inputs #### {#compile-group-inputs}
-
-* Let `GROUP` be an [=Access Need Group=]
-* Let `LANG` be the [=Agent's=] preferred language
-
-#### Outputs #### {#compile-group-outputs}
-
-* A [=Compiled Access Group=] generated from the input `GROUP`, with
-    an associated set of [=Compiled Accesses=].
-
-#### Operation Details #### {#compile-group-details}
+<div class="opdetails">
 
 1. Perform a validation of the RDF graph of `GROUP` against
     [interop:AccessNeedGroupShape](interop.shex#AccessNeedGroupShape).
@@ -1011,6 +1038,8 @@ via the [[#grants-present]] operation.
     linked to them via `referencesCompiledAccess` or `skos:narrower`.
 1. For each [=Root Compiled Access=] `PROOT` linked via `CAGROUP hasCompiledAccess`
     1. Call [[#link-supported]] with inputs: `PROOT`, `ALLCOMPILED`
+
+</div>
 
 ### Compile Access Need ### {#compile-need}
 

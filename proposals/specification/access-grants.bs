@@ -214,7 +214,7 @@ made up of [=Access Grant Registries=].
     <tr>
       <th colspan=3 text-align=left>
         [AccessGrantRegistrySet](interop.ttl#AccessGrantRegistrySet)
-        a rdfs:subClassOf [[#datamodel-agent|RegistrySet]]
+        a rdfs:subClassOf [RegistrySet](interop.ttl#RegistrySet)
       </th>
     </tr>
     <tr>
@@ -226,7 +226,7 @@ made up of [=Access Grant Registries=].
   <tbody>
     <tr>
       <td>hasRegistry</td>
-      <td>Registry</td>
+      <td>[Registry](interop.ttl#Registry)</td>
       <td>Link to associated [=Access Grant Registries=]</td>
     </tr>
   </tbody>
@@ -279,7 +279,7 @@ An <dfn>Access Grant Registry</dfn> is a collection of
   <tbody>
     <tr>
       <td>hasRegistration</td>
-      <td>Registration</td>
+      <td>[Registration](interop.ttl#Registration)</td>
       <td>Link to associated [=Access Grants=]</td>
     </tr>
   </tbody>
@@ -327,7 +327,7 @@ Each <dfn>Access Grant</dfn> represents access granted to one recipient; the
     <tr>
       <th colspan=3>
         [AccessGrant](interop.ttl#AccessGrant)
-        a rdfs:subClassOf [[#datamodel-agent|Registration]]
+        a rdfs:subClassOf [Registration](interop.ttl#Registration)
       </th>
     </tr>
     <tr>
@@ -339,12 +339,12 @@ Each <dfn>Access Grant</dfn> represents access granted to one recipient; the
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>Agent</td>
+      <td>[Agent](#classAgent)</td>
       <td>[=Agent=] that registered the [=Access Grant=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
-      <td>Application</td>
+      <td>[Application](#classApplication)</td>
       <td>[=Application=] used to create the [=Access Grant=]</td>
     </tr>
     <tr>
@@ -359,17 +359,17 @@ Each <dfn>Access Grant</dfn> represents access granted to one recipient; the
     </tr>
     <tr>
       <td>hasAccessGrantSubject</td>
-      <td>AccessGrantSubject</td>
+      <td>[AccessGrantSubject](#classAccessGrantSubject)</td>
       <td>Links to one [=Access Grant Subject=] who was granted access.</td>
     </tr>
     <tr>
       <td>hasCompiledAccessGroup</td>
-      <td>CompiledAccessGroup</td>
+      <td>[CompiledAccessGroup](#classCompiledAccessGroup)</td>
       <td>Links to a [=Compiled Access Group=] associated with the Access Grant.</td>
     </tr>
     <tr>
       <td>hasDataGrant</td>
-      <td>DataGrant</td>
+      <td>[DataGrant](#classDataGrant)</td>
       <td>Links to a [=Data Grant=] associated with the Access Grant.</td>
     </tr>
   </tbody>
@@ -426,12 +426,12 @@ to be specified, or a given [=Agent=] using a given [=Application=].
   <tbody>
     <tr>
       <td>accessByAgent</td>
-      <td>Agent</td>
+      <td>[Agent](#classAgent)</td>
       <td>[=Agent=] being granted access</td>
     </tr>
     <tr>
       <td>accessByApplication</td>
-      <td>Application</td>
+      <td>[Application](#classApplication)</td>
       <td>[=Application=] being granted access</td>
     </tr>
   </tbody>
@@ -473,7 +473,7 @@ for a given [=Data Registration=].
   <tbody>
     <tr>
       <td>hasRegistration</td>
-      <td>DataRegistration</td>
+      <td>[DataRegistration](#classDataRegistration)</td>
       <td>[=Data Registration=] the [=Data Grant=] applies to</td>
     </tr>
     <tr>
@@ -483,7 +483,7 @@ for a given [=Data Registration=].
     </tr>
     <tr>
       <td>satisfiesCompiledAccess</td>
-      <td>CompiledAccess</td>
+      <td>[CompiledAccess](#classCompiledAccess)</td>
       <td>Links to a [=Compiled Access=] satisfied by the [=Data Grant=]</td>
     </tr>
     <tr>
@@ -570,7 +570,7 @@ converted to an [=Access Grant=].
     <tr>
       <th colspan=3>
         [AccessInvitation](interop.ttl#AccessInvitation)
-        a rdfs:subClassOf [[#datamodel-access-grant|AccessGrant]]
+        a rdfs:subClassOf [AccessGrant](#classAccessGrant)
       </th>
     </tr>
     <tr>
@@ -582,12 +582,12 @@ converted to an [=Access Grant=].
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>Agent</td>
+      <td>[Agent](#classAgent)</td>
       <td>[=Agent=] that registered the [=Access Invitation=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
-      <td>Application</td>
+      <td>[Application](#classApplication)</td>
       <td>[=Application=] used to create the [=Access Invitation=]</td>
     </tr>
     <tr>
@@ -607,18 +607,18 @@ converted to an [=Access Grant=].
     </tr>
     <tr>
       <td>hasAccessInvitationChannel</td>
-      <td>AccessInvitationChannel</td>
+      <td>[AccessInvitationChannel](#classAccessInvitationChannel)</td>
       <td>Links to an [=Access Invitation Channel=]</td>
     </tr>
     <tr>
       <td>hasCompiledAccessGroup</td>
-      <td>CompiledAccessGroup</td>
+      <td>[CompiledAccessGroup](#classCompiledAccessGroup)</td>
       <td>Links to a [=Compiled Access Group=] associated with the
       [=Access Invitation=].</td>
     </tr>
     <tr>
       <td>hasDataGrant</td>
-      <td>DataGrant</td>
+      <td>[DataGrant](#classDataGrant)</td>
       <td>Links to a [=Data Grant=] associated with the
       [=Access Invitation=].</td>
     </tr>
