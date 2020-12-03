@@ -854,8 +854,6 @@ The [=access modes=] listed in the table below can be combined as needed.
 
 ## Operations ## {#datareg-operations}
 
-### Registering Data ### {#datareg-registrations-old}
-
 Registering data in a [=Data Registry=] is primarily concerned with the
 following two operations:
 
@@ -863,119 +861,305 @@ following two operations:
 * Storing and registering new *instances of those data types* as
     [=Registered Data Instances=]
 
-This section explains the mechanics of those operations.
+The following operations allow for the lookup, creation, and deletion
+of [=Data Registrations=] and [=Registered Data Instances=] in a
+[=Data Registry=].
+
+* [[#datareg-load]] - Load an existing [=Data Registration=]
+* [[#datareg-create]] - Create a new [=Data Registration=]
+* [[#datareg-create-instance]] - Create a new [=Registered Data Instance=] for 
+    a given [=Data Registration=]
+* [[#datareg-delete]] - Delete a [=Data Registration=]
+* [[#datareg-delete-instance]] - Delete a [=Registered Data Instance=] for
+    a given [=Data Registration=]
 
 Note: Managing [=Data Registrations=] and the [=Registered Data Instances=]
 contained within them is inextricably linked to permissioning the data
 for effective use and secure collaboration. This is covered at length
 in [[#authz]].
 
-#### Enlisting the help of a trusted agent #### {#datareg-trustedagent}
+### Load Data Registration ### {#datareg-load}
 
-In almost every case, an [=Application=] will not be trusted to manage
-[=Data Registries=], and will need the assistance of a [=trusted agent=]
-that has been authorized to assist with data registration for a given [=Agent=].
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+        This operation returns a [=Data Registration=] the corresponds
+        to a given [=shape tree=] in a [=Data Registry=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`TREE`</td>
+      <td>[=Shape tree=] to match against</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>[=Data Registry=] to look for a match within</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Data Registration=]</td>
+      <td>Loaded by matching against `TREE` in `REGISTRY`</td>
+    </tr>
+  </tbody>
+</table>
 
-Untrusted [=Applications=] can enlist the help of the
-[=Data Authorization Agent=]
-to assist with privileged operations like registering new
-[=Data Registrations=] and changing permissions.
+<div class="opdetails">
 
-The [=Data Authorization Agent=] trusted by a given [=Agent=] is linked
-with them through the
-[interop:trustsForDataAuthorization](interop.ttl#trustsForDataAuthorization)
-property.
+1. <em class="rfc2119">MUST</em> return `404` if `TREE` or `REGISTRY` 
+    cannot be successfully dereferenced.
+1. For each [=Data Registration=] `REGISTRATION` included 
+    in `REGISTRY hasRegistration`
+    1. return `REGISTRATION` if `REGISTRATION registeredShapeTree` == `TREE`
 
-<figure>
-  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me linking to Data
-  Authorization Agent</figcaption>
-  <pre highlight="turtle">
-    <#me>
-      a interop:Agent;
-      interop:trustsForDataAuthorization &lt;https://trusted.example/da/&gt; .
-  </pre>
-</figure>
+</div>
 
-An untrusted [=Application=] must work through the trusted
-[=Data Authorization Agent=] anytime that [=Data Registrations=] need to be
-managed or additional access is needed to the [=Agent's=] data.
+### Create Data Registration ### {#datareg-create}
 
-Issue: Patterns to interface with Trusted Agents will be detailed
-in the Trusted Agents section.
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+        This operation creates a new [=Data Registration=] in a 
+        [=Data Registry=] for a specific [=shape tree=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`TREE`</td>
+      <td>[=Shape tree=] to register</td>
+    </tr>
+    <tr>
+      <td>`TYPE`</td>
+      <td>Optional [rdf:type](https://www.w3.org/TR/rdf-schema/#ch_type) 
+      to associate with the registration</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>[=Data Registry=] where the registration will be created</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Data Registration=]</td>
+      <td>Created for `TREE` in `REGISTRY`</td>
+    </tr>
+  </tbody>
+</table>
 
-#### Creating the data registration entry #### {#datareg-creating}
+<div class="opdetails">
 
-[=Data Registrations=] must be created in conformance with the
-documented [[#datareg-hierarchy]] pattern.
+1. <em class="rfc2119">MUST</em> return `404` if `TREE` or `REGISTRY` 
+    cannot be successfully dereferenced.
+1. <em class="rfc2119">MUST</em> return `400` if an existing 
+    [=Data Registration=] is returned from [[#datareg-load]] with 
+    inputs: `TREE`, `REGISTRY`
+1. Let `REG` be a newly initialized [=Data Registration=]
+1. Let `REG registeredBy` be the current [=Agent=]
+1. Let `REG registeredWith` be the [=identity=] of the [=Application=]
+    executing the operation
+1. Let `REG registeredAt` be the current date and time
+1. Let `REG updatedAt` be the current date and time
+1. Let `REG registeredShapeTree` be `TREE`
+1. Let `REG registeredType` be `TYPE` if `TYPE` is not empty
+1. PUT `REG` into the `REGISTRY` container 
+    1. A \[UUID](https://www.ietf.org/rfc/rfc4122.txt) 
+        <em class="rfc2119">MUST</em> be assigned as the resource name.
+    1. [Plant](https://shapetrees.github.io/specification/spec#plant-shapetree)
+        `TREE` with `REG` as the Target Container.
+1. Assign permissions for `REG` per the [[#datareg-permissions]]
+1. Link `REG` to `REGISTRY` via `REGISTRY hasRegistration`
+1. Return `REG`
 
-The [interopt:DataRegistrationTree](interop.tree#DataRegistrationTree)
-must be assigned to the [=Data Registration=] resource.
+</div>
 
-<figure id="fig-datareg-create-registration-tree">
-  <figcaption>Definition of an
-  [interopt:DataRegistrationTree](interop.tree#DataRegistrationTree)
-  </figcaption>
-  <pre highlight="turtle">
-  <#DataRegistrationTree>
-    a st:ShapeTree ;
-    st:expectsType st:ShapeTreeContainer ;
-    st:validatedBy &lt;interops#DataRegistrationShape&gt; ;
-    st:matchesUriTemplate "{id}" .
-  </pre>
-</figure>
+### Create Data Instance ### {#datareg-create-instance}
 
-The [interopt:DataRegistrationTree](interop.tree#DataRegistrationTree)
-stipulates the following:
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+        This operation will create a new [=Registered Data Instance=] for
+        a given [=Data Registration=]. It must be a conformant instance of
+        the [=shape tree=] registered with the [=Data Registration=], per
+        the validation structure detailed in [[#datareg-hierarchy]].
+        
+        Assumes that a [=Data Registration=] has already been loaded
+        by [[#datareg-load]] and provided as input.
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`REGISTRATION`</td>
+      <td>[=Data Registration=] to associated the new 
+      [=Registered Data Instance=] with</td>
+    </tr>
+    <tr>
+      <td>`INSTANCE`</td>
+      <td>Instance corresponding with `REGISTRATION registeredShapeTree`</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Registered Data Instance=]</td>
+      <td>Created for `REGISTRATION` in `REGISTRY`</td>
+    </tr>
+  </tbody>
+</table>
 
-1. The [=Data Registration=] resource must be a container per
-    `st:expectsType st:ShapeTreeContainer`.
-1. The [=Data Registration=] instance data must be added to the RDF
-    graph of that container, and validate successfully
-    against the
-    [interops:DataRegistrationShape](interop.shex#DataRegistrationShape).
-1.  The [=Data Registration's=] properties must be set as follows:
-    * [interop:registeredBy](interop.ttl#registeredBy): linked to the [=identity=]
-        of the [=authenticated agent=] that invoked the registration
-        (i.e. the [=webid=] of the [=Agent=])
-    * [interop:registeredWith](interop.ttl#registeredWith): linked to the
-        [=ApplicationID=] of the [=trusted agent=] that facilitated the
-        registration, typically the [=data authorization agent=].
-    * [interop:registeredAt](interop.ttl#registeredAt): the `xsd:dateTime` of
-        the registration.
-    * [interop:registeredShapeTree](interop.ttl#registeredShapeTree): URI of the
-        [=shape tree=] that is being registered.
+<div class="opdetails">
 
-The [=shape tree=] associated with the [=Data Registration=] via
-[interop:registeredShapeTree](interop.ttl#registeredShapeTree)
-must also be assigned to [=Data Registration=] resource,
-per the instructions in [[#datareg-hierarchy]]. This ensures that only
-instances of that particular shape tree are added to the container.
+1. PUT `INSTANCE` into the `REGISTRATION` container
+    1. A \[UUID](https://www.ietf.org/rfc/rfc4122.txt) 
+        <em class="rfc2119">MUST</em> be assigned as the resource name.
+    1. A [target shape tree](https://shapetrees.github.io/specification/spec#create-data-instance) 
+        <em class="rfc2119">MUST</em> be assigned via the 
+        `rel=http://shapetrees.org/#targetShapeTree` HTTP Link relation
+    1. A [focus node](https://shapetrees.github.io/specification/spec#create-data-instance) for shape tree validation <em class="rfc2119">MUST</em> be assigned
+        via the `rel=http://shapetrees.org/#FocusNode` HTTP Link relation
+1. Return `INSTANCE`
 
-The [interop:hasRegisteredDataInstance](interop.ttl#hasRegisteredDataInstance)
-property is not populated until the first [=Registered Data Instance=] is
-added to the [=Data Registration=].
+</div>
 
-The [=Data Registration=] container must be named in
-accordance with the instructions in [[#datareg-hierarchy]].
+### Delete Data Registration ### {#datareg-delete}
 
-The [=Data Registration=] container must be added as a child
-member of the [=Data Registry=] container.
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation deletes a [=Data Registration=] from a
+      [=Data Registry=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`REGISTRATION`</td>
+      <td>[=Data Registration=] to delete</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>[=Data Registry=] of `REGISTRATION`</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HTTP Status Code</td>
+      <td>As returned from server</td>
+    </tr>
+  </tbody>
+</table>
 
-Access to the [=Data Registration=] must be set per the
-instructions in [[#datareg-permissions]].
+<div class="opdetails">
 
-The [=Data Registration=] must be associated with the
-[=Data Registry=] through the
-[interop:hasRegistry](interop.ttl#hasRegistry) property in
-the graph of the [=Data Registry=].
+1. <em class="rfc2119">MUST</em> return `404` if `REGISTRATION`
+    cannot be successfully dereferenced.
+1. <em class="rfc2119">MUST</em> return `400` if `REGISTRATION`
+    contains one or more [=Registered Data Instances=].
+1. Remove `REGISTRATION` from the graph of `REGISTRY` 
+    via `REGISTRY hasRegistration`
+1. DELETE `REGISTRATION`
 
+</div>
 
-#### Creating registered data instances #### {#datareg-instances}
+Issue: Cleanup of related data may need to be specified
 
-Creation of [=Registered Data Instances=] is a matter of storing instance
-resources in conformance with the
-[interop:registeredShapeTree](interop.ttl#registeredShapeTree).
+### Delete Data Instance ### {#datareg-delete-instance}
 
-Each new [=Registered Data Instance=] must be linked to the
-[=Data Registration=] via
-[interop:hasRegisteredDataInstance](interop.ttl#hasRegisteredDataInstance).
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+        This operation deletes a [=Registered Data Instance=] from a
+        [=Data Registration=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`INSTANCE`</td>
+      <td>[=Registered Data Instance=] to delete</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HTTP Status Code</td>
+      <td>As returned from server</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. <em class="rfc2119">MUST</em> return `404` if `INSTANCE`
+    cannot be successfully dereferenced.
+1. If `INSTANCE` is a container
+    1. Let `RESOURCES` be a hierarchy of all resources contained by `INSTANCE`,
+        including any child containers and resources.
+    1. DELETE each `RESOURCE` in `RESOURCES`, iterating up from the bottom
+        of the `RESOURCES` hierarchy
+1. DELETE `INSTANCE`
+
+</div>
+
+Issue: Cleanup of related data may need to be specified
