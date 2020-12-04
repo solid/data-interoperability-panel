@@ -56,7 +56,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;
   interop:registeredShapeTree IRI ;
-  interop:hasRegisteredDataInstance IRI*
+  interop:registeredType IRI*
 }
 
 # Application
@@ -86,7 +86,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   a [ interop:AccessNeed ] ;
   interop:inAccessNeedGroup IRI+ ;
   interop:registeredShapeTree IRI ;
-  interop:hasRegisteredDataInstance IRI* ;
+  interop:hasDataInstance IRI* ;
   interop:recursivelyAuthorize [ true false ] ;
   interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
@@ -111,7 +111,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasShapeTreeDecorator IRI ;
   interop:hasAccessNeedDecorator IRI? ;
   interop:hasDataGrant IRI? ;
-  interop:hasRegisteredDataInstance IRI* ;
+  interop:hasDataInstance IRI* ;
   interop:registeredShapeTree IRI ;
   interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
@@ -240,7 +240,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
                          interop:AllInstances
                          interop:InheritInstances
                          interop:NoAccess ]+ ;
-  interop:hasRegisteredDataInstance IRI* ;
+  interop:hasDataInstance IRI* ;
   interop:inheritsFrom @<#:DataGrantShape>*
 }
 
@@ -279,7 +279,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
                          interop:AllInstances
                          interop:InheritInstances
                          interop:NoAccess ]+ ;
-  interop:hasRegisteredDataInstance IRI* ;     # if specific instances are selected or inherited
+  interop:hasDataInstance IRI* ;     # if specific instances are selected or inherited
   interop:inheritsFrom @<#:DataReceiptShape>* ;
   interop:replacedBy IRI?
 }
@@ -318,7 +318,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Remote Data Instance
 <#RemoteDataInstance> {
   a [interop:RemoteDataInstance] ;
-  interop:hasRegisteredDataInstance IRI ; # Remote registered data instance
+  interop:hasDataInstance IRI ; # Remote Data Instance
   interop:registeredAt xsd:dateTime ;
   interop:providedAt xsd:dateTime ;
   interop:registeredShapeTree IRI ;       # Associated shape tree

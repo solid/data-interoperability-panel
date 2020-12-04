@@ -201,3 +201,17 @@
   st:expectsType st:ShapeTreeResource ;
   st:validatedBy <interops#RemoteDataInstanceShape> ;
   st:matchesUriTemplate "{id}" .
+
+# Application
+##############################################################################
+<#ApplicationProfileTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:contains <#ApplicationTree> ,
+              st:AllowAll .
+              
+<#ApplicationTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy <interops#ApplicationShape> ;
+  st:matchesUriTemplate "{id}" .

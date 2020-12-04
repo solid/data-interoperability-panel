@@ -96,33 +96,3 @@ each of these resources with a shape. This allows one to treat a set of
 related resources as a single grouping, and apply that to a range of
 operations including access control, data organization, data validation,
 and data migration. [[SHAPETREES]]
-
-A <dfn>Data Registry Set</dfn> is a [=Registry Set=] specifically made up of
-[=Data Registries=]. Represented by the
-[interop:DataRegistrySet](interop.ttl#DataRegistrySet) class.
-Validated by the
-[interops:DataRegistrySetShape](interop.shex#DataRegistrySetShape).
-Associated with resources by the
-[interopt:DataRegistrySetTree](interop.tree#DataRegistrySetTree).
-
-A <dfn>Data Registry</dfn> is a collection of [=Data Registrations=], each
-representing a unique type of data, stored in a specific location in a
-Solid [=pod=]. Represented by the
-[interop:DataRegistry](interop.ttl#DataRegistry) class.
-Validated by the
-[interops:DataRegistryShape](interop.shex#DataRegistryShape).
-Associated with resources through the
-[interopt:DataRegistryTree](interop.tree#DataRegistryTree).
-
-A <dfn>Data Registration</dfn> provides the [=Agent=] with a place to store
-[=Registered Data Instances=] of a particular type, conforming to a
-given [=shape tree=]. Represented by the
-[interop:DataRegistration](interop.ttl#DataRegistration) class.
-Validated by the
-[interops:DataRegistrationShape](interop.shex#DataRegistrationShape).
-Associated with resources through the
-[interopt:DataRegistrationTree](interop.tree#DataRegistrationTree).
-
-A <dfn>Registered Data Instance</dfn> is a unique, stored instance of a
-particular type of data conforming to a given [=shape tree=]. Each registered
-data instance is contained within a given [=Data Registration=].
