@@ -32,9 +32,9 @@ A [=Data Registry=] links to any number of
 [interop:hasRegistration](interop.ttl#hasRegistration) property.
 
 There is a [=Data Registration=] for each unique type of stored data. Each
-[=Data Registration=] links to any number of [=Registered Data Instances=]
+[=Data Registration=] contains and links to any number of [=Data Instances=]
 via the
-[interop:hasRegisteredDataInstance](interop.ttl#hasRegisteredDataInstance)
+<a href="https://www.w3.org/ns/ldp#contains" class="vocab">ldp:contains</a>
 property.
 
 <figure id="fig-datareg-agent">
@@ -87,11 +87,7 @@ property.
     interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
     interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
     interop:registeredShapeTree note:notebookTree ;
-    interop:registeredType note:notebook ;
-    interop:hasRegisteredDataInstance &lt;3f56c32e-96c6-4b0c-b941-eadc2bf98b18/#notebook&gt; ,
-                                  &lt;16e1eae9-20a5-489d-8380-8c07ca3805c4/#notebook&gt; ,
-                                  &lt;886785d2-6c23-46ee-9e19-5ac36b7bcd71/#notebook&gt; ,
-                                  &lt;dae5015c-d5f9-4ede-b9eb-7ca7a19854a9/#notebook&gt; .
+    interop:registeredType note:notebook .
   </pre>
 </figure>
 
@@ -212,11 +208,11 @@ conformant instances of the
 ### Data Registration ### {#datamodel-data-registration}
 
 A <dfn>Data Registration</dfn> provides the [=Agent=] with a place to store
-[=Registered Data Instances=] of a particular type, conforming to a
+[=Data Instances=] of a particular type, conforming to a
 given [=shape tree=], indicated by the
 [interop:registeredShapeTree](#classDataRegistration) property.
 
-A <dfn>Registered Data Instance</dfn> is a unique, stored instance of a
+A <dfn>Data Instance</dfn> is a unique, stored instance of a
 particular type of data, conforming to the [=shape tree=] for
 the instance's [=Data Registration=].
 
@@ -284,8 +280,7 @@ class.
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;
   interop:registeredShapeTree IRI ;
-  interop:registeredType IRI* ;
-  interop:hasRegisteredDataInstance IRI*
+  interop:registeredType IRI*
 }
 </pre>
 
@@ -429,7 +424,7 @@ be on the same [=pod=].
 <em class="rfc2119">MAY</em> use any
 resource or subject names.
 
-[=Data Registrations=] and [=Registered Data Instances=]
+[=Data Registrations=] and [=Data Instances=]
 <em class="rfc2119">MUST</em> use
 \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt)
 for resource names.
@@ -442,7 +437,7 @@ contain conformant instances of the [=shape tree=] associated with the
 Two complementary [=shape trees=] <em class="rfc2119">MUST</em> be assigned
 to the same [=Data Registration=] container to ensure that it conforms
 to general validation requirements, and to ensure
-that it only contains [=Registered Data Instances=] of the registered
+that it only contains [=Data Instances=] of the registered
 [=shape tree=] identified by
 [interop:registeredShapeTree](#classDataRegistration).
 
@@ -450,7 +445,7 @@ In the [figure below](#fig-datareg-intersecting), the
 combination of a [DataRegistrationTree](#treeDataRegistration)
 and [FooContainingTree](#treeFooContaining) on the
 same [=Data Registration=] can be observed. Furthermore, an example of
-a contained [=Registered Data Instance=] is provided, which conforms
+a contained [=Data Instance=] is provided, which conforms
 to [FooTree](#treeFoo) per the directive in
 [FooContainingTree](#treeFooContaining).
 
@@ -477,17 +472,13 @@ to [FooTree](#treeFoo) per the directive in
           Contents of the [=Data Registration=]
           <pre highlight="turtle">
           <#registration>
-            a interop:ApplicationRegistration ;
+            a interop:DataRegistration ;
             interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
             interop:registeredWith &lt;https://app.example/id#agent&gt; ;
             interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
             interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
             interop:registeredShapeTree foo:fooTree ;
-            interop:registeredType foo:fooThing ;
-            interop:hasRegisteredDataInstance
-              &lt;16e1eae9-20a5-489d-8380-8c07ca3805c4/#foo&gt; ,
-              &lt;886785d2-6c23-46ee-9e19-5ac36b7bcd71/#foo&gt; ,
-              &lt;dae5015c-d5f9-4ede-b9eb-7ca7a19854a9/#foo&gt; .
+            interop:registeredType foo:fooThing .
           </pre>
         </td>
         <td>
@@ -500,7 +491,7 @@ to [FooTree](#treeFoo) per the directive in
               st:validatedBy &lt;interops#DataRegistrationShape&gt; ;
               st:matchesUriTemplate "{id}" .
           </pre>
-          Ensure the container resource for the [=Data Registration=] only
+          And also ensure the [=Data Registration=] only
           contains resources that conform to `<#FooTree>`.
           <pre highlight="turtle">
             <#FooContainingTree>
@@ -518,7 +509,7 @@ to [FooTree](#treeFoo) per the directive in
       </tr>
       <tr>
         <td>
-          Contents of the [=Registered Data Instance=]
+          Contents of the [=Data Instance=]
           <pre highlight="turtle">
           <#foo>
             a foo:fooThing ;
@@ -526,7 +517,7 @@ to [FooTree](#treeFoo) per the directive in
           </pre>
         </td>
         <td>
-          Ensure the resource for the [=Registered Data Instance=]
+          Ensure the resource for the [=Data Instance=]
           conforms to `<#FooTree>`.
           <pre highlight="turtle">
             <#FooTree>
@@ -626,7 +617,7 @@ sending [=Access Receipts=] to the [=Agents=] who were granted access.
       </tr>
       <tr>
         <td>`---- 16e1eae9...ca3805c4`</td>
-        <td>[=Registered Data Instance=]</td>
+        <td>[=Data Instance=]</td>
         <td>Control</td>
         <td>Varies</td>
         <td>Control</td>
@@ -635,7 +626,7 @@ sending [=Access Receipts=] to the [=Agents=] who were granted access.
       </tr>
       <tr>
         <td>`---- 886785d2...5ac36b7b`</td>
-        <td>[=Registered Data Instance=]</td>
+        <td>[=Data Instance=]</td>
         <td>Control</td>
         <td>Varies</td>
         <td>Control</td>
@@ -644,7 +635,7 @@ sending [=Access Receipts=] to the [=Agents=] who were granted access.
       </tr>
       <tr>
         <td>`---- dae5015c...7ca7a198`</td>
-        <td>[=Registered Data Instance=]</td>
+        <td>[=Data Instance=]</td>
         <td>Control</td>
         <td>Varies</td>
         <td>Control</td>
@@ -662,7 +653,7 @@ sending [=Access Receipts=] to the [=Agents=] who were granted access.
       </tr>
       <tr>
         <td>`---- 9b60a354...cb9da85c`</td>
-        <td>[=Registered Data Instance=]</td>
+        <td>[=Data Instance=]</td>
         <td>Control</td>
         <td>Varies</td>
         <td>Control</td>
@@ -671,7 +662,7 @@ sending [=Access Receipts=] to the [=Agents=] who were granted access.
       </tr>
       <tr>
         <td>`---- 6e545b74...b15cbdce`</td>
-        <td>[=Registered Data Instance=]</td>
+        <td>[=Data Instance=]</td>
         <td>Control</td>
         <td>Varies</td>
         <td>Control</td>
@@ -680,7 +671,7 @@ sending [=Access Receipts=] to the [=Agents=] who were granted access.
       </tr>
       <tr>
         <td>`---- d33e01c8...ac9e3cc6`</td>
-        <td>[=Registered Data Instance=]</td>
+        <td>[=Data Instance=]</td>
         <td>Control</td>
         <td>Varies</td>
         <td>Control</td>
@@ -689,7 +680,7 @@ sending [=Access Receipts=] to the [=Agents=] who were granted access.
       </tr>
       <tr>
         <td>`---- 927108fa...14985cb9`</td>
-        <td>[=Registered Data Instance=]</td>
+        <td>[=Data Instance=]</td>
         <td>Control</td>
         <td>Varies</td>
         <td>Control</td>
@@ -698,7 +689,7 @@ sending [=Access Receipts=] to the [=Agents=] who were granted access.
       </tr>
       <tr>
         <td>`---- 180dda0b...c4f8c4dc`</td>
-        <td>[=Registered Data Instance=]</td>
+        <td>[=Data Instance=]</td>
         <td>Control</td>
         <td>Varies</td>
         <td>Control</td>
@@ -716,7 +707,7 @@ sending [=Access Receipts=] to the [=Agents=] who were granted access.
       </tr>
       <tr>
         <td>`---- 4376595a...f8d2547c`</td>
-        <td>[=Registered Data Instance=]</td>
+        <td>[=Data Instance=]</td>
         <td>Control</td>
         <td>Varies</td>
         <td>Control</td>
@@ -725,7 +716,7 @@ sending [=Access Receipts=] to the [=Agents=] who were granted access.
       </tr>
       <tr>
         <td>`---- 14c9fc6a...7f6de3ca`</td>
-        <td>[=Registered Data Instance=]</td>
+        <td>[=Data Instance=]</td>
         <td>Control</td>
         <td>Varies</td>
         <td>Control</td>
@@ -746,7 +737,7 @@ making authorization more intuitive and manageable.
 
 Access is granted to a certain type of data by granting access
 to the [[#datareg-all|entire Data Registration]], or to
-[[#datareg-specific|specific Registered Data Instances]] within it.
+[[#datareg-specific|specific Data Instances]] within it.
 
 Note: [[!WAC]] doesn't have any mechanism to extend or modify
 inherited permissions. Access Control Policies (ACP) is recommended
@@ -755,7 +746,7 @@ for optimal results.
 ### Access to a Data Registration ### {#datareg-all}
 
 Access granted at the [=Data Registration=] level
-applies to all [=Registered Data Instances=] within it.
+applies to all [=Data Instances=] within it.
 
 The [=access modes=] listed in the table below can be combined as needed.
 
@@ -774,45 +765,45 @@ The [=access modes=] listed in the table below can be combined as needed.
       <tr>
         <th scope="row">Read</th>
         <td>Can read all existing and yet to be created
-            [=Registered Data Instances=]. Includes being able to see the full
-            list of [=Registered Data Instances=] in the registration.</td>
+            [=Data Instances=]. Includes being able to see the full
+            list of [=Data Instances=] in the registration.</td>
       </tr>
       <tr>
         <th scope="row">Write</th>
         <td>Can modify the [=Data Registration=], and all existing
-            [=Registered Data Instances=] within it.
-            Can create new [=Registered Data Instances=],
+            [=Data Instances=] within it.
+            Can create new [=Data Instances=],
             and can delete them.</td>
       </tr>
       <tr>
         <th scope="row">Append</th>
-        <td>Can only create new [=Registered Data Instances=] within the
+        <td>Can only create new [=Data Instances=] within the
             [=Data Registration=].</td>
       </tr>
       <tr>
         <th scope="row">Read Permissions</th>
         <td>Can read permissions on the [=Data Registration=], as well
-            as any [=Registered Data Instances=] within it.</td>
+            as any [=Data Instances=] within it.</td>
       </tr>
       <tr>
         <th scope="row">Write Permissions</th>
         <td>Can change permissions on the [=Data Registration=], as well
-            as any [=Registered Data Instances=] within it.</td>
+            as any [=Data Instances=] within it.</td>
       </tr>
     </tbody>
   </table>
 </figure>
 
-### Access to Specific Registered Data Instances ### {#datareg-specific}
+### Access to Specific Data Instances ### {#datareg-specific}
 
-Access granted at the [=Registered Data Instance=] level apply only to
+Access granted at the [=Data Instance=] level apply only to
 that instance, and the resources within it.
 
 The [=access modes=] listed in the table below can be combined as needed.
 
 <figure>
 <figcaption>Modes of access for a Specific
-[=Registered Data Instance=]</figcaption>
+[=Data Instance=]</figcaption>
   <table class="data" align="left">
     <col>
     <col>
@@ -826,27 +817,27 @@ The [=access modes=] listed in the table below can be combined as needed.
       <tr>
         <th scope="row">Read</th>
         <td>Can list and read all resources within the
-        [=Registered Data Instance=].</td>
+        [=Data Instance=].</td>
       </tr>
       <tr>
         <th scope="row">Write</th>
-        <td>Can modify the [=Registered Data Instance=] and any resources
+        <td>Can modify the [=Data Instance=] and any resources
             within it, including creating and deleting resources.</td>
       </tr>
       <tr>
         <th scope="row">Append</th>
-        <td>Can create resources within the [=Registered Data Instance=].
-            Can add to a resource in the [=Registered Data Instance=] but cannot
+        <td>Can create resources within the [=Data Instance=].
+            Can add to a resource in the [=Data Instance=] but cannot
             remove anything from it, or delete it.</td>
       </tr>
       <tr>
         <th scope="row">Read Permissions</th>
-        <td>Can read permissions on the [=Registered Data Instance=]
+        <td>Can read permissions on the [=Data Instance=]
             and any resources within it.</td>
       </tr>
       <tr>
         <th scope="row">Write Permissions</th>
-        <td>Can change permissions on the [=Registered Data Instance=]
+        <td>Can change permissions on the [=Data Instance=]
             and any resources within it.</td>
       </tr>
     </tbody>
@@ -860,21 +851,21 @@ following two operations:
 
 * Registering new *data types* as [=Data Registrations=]
 * Storing and registering new *instances of those data types* as
-    [=Registered Data Instances=]
+    [=Data Instances=]
 
 The following operations allow for the lookup, creation, and deletion
-of [=Data Registrations=] and [=Registered Data Instances=] in a
+of [=Data Registrations=] and [=Data Instances=] in a
 [=Data Registry=].
 
 * [[#datareg-load]] - Load an existing [=Data Registration=]
 * [[#datareg-create]] - Create a new [=Data Registration=]
-* [[#datareg-create-instance]] - Create a new [=Registered Data Instance=] for 
+* [[#datareg-create-instance]] - Create a new [=Data Instance=] for 
     a given [=Data Registration=]
 * [[#datareg-delete]] - Delete a [=Data Registration=]
-* [[#datareg-delete-instance]] - Delete a [=Registered Data Instance=] for
+* [[#datareg-delete-instance]] - Delete a [=Data Instance=] for
     a given [=Data Registration=]
 
-Note: Managing [=Data Registrations=] and the [=Registered Data Instances=]
+Note: Managing [=Data Registrations=] and the [=Data Instances=]
 contained within them is inextricably linked to permissioning the data
 for effective use and secure collaboration. This is covered at length
 in [[#authz]].
@@ -1011,7 +1002,7 @@ in [[#authz]].
   <tbody>
     <tr>
       <td colspan=2>
-        This operation will create a new [=Registered Data Instance=] for
+        This operation will create a new [=Data Instance=] for
         a given [=Data Registration=]. It must be a conformant instance of
         the [=shape tree=] registered with the [=Data Registration=], per
         the validation structure detailed in [[#datareg-hierarchy]].
@@ -1028,7 +1019,7 @@ in [[#authz]].
     <tr>
       <td>`REGISTRATION`</td>
       <td>[=Data Registration=] to associated the new 
-      [=Registered Data Instance=] with</td>
+      [=Data Instance=] with</td>
     </tr>
     <tr>
       <td>`INSTANCE`</td>
@@ -1040,7 +1031,7 @@ in [[#authz]].
   </thead>
   <tbody>
     <tr>
-      <td>[=Registered Data Instance=]</td>
+      <td>[=Data Instance=]</td>
       <td>Created for `REGISTRATION` in `REGISTRY`</td>
     </tr>
   </tbody>
@@ -1105,7 +1096,7 @@ in [[#authz]].
 1. <em class="rfc2119">MUST</em> return `404` if `REGISTRATION`
     cannot be successfully dereferenced.
 1. <em class="rfc2119">MUST</em> return `400` if `REGISTRATION`
-    contains one or more [=Registered Data Instances=].
+    contains one or more [=Data Instances=].
 1. Remove `REGISTRATION` from the graph of `REGISTRY` 
     via `REGISTRY hasRegistration`
 1. DELETE `REGISTRATION`
@@ -1125,7 +1116,7 @@ Issue: Cleanup of related data may need to be specified
   <tbody>
     <tr>
       <td colspan=2>
-        This operation deletes a [=Registered Data Instance=] from a
+        This operation deletes a [=Data Instance=] from a
         [=Data Registration=].
       </td>
     </tr>
@@ -1136,7 +1127,7 @@ Issue: Cleanup of related data may need to be specified
   <tbody>
     <tr>
       <td>`INSTANCE`</td>
-      <td>[=Registered Data Instance=] to delete</td>
+      <td>[=Data Instance=] to delete</td>
     </tr>
   </tbody>
   <thead>

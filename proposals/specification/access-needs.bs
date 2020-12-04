@@ -314,12 +314,12 @@ An <dfn>Access Need</dfn> represents the requirement of one specific type
 of data represented by a [=shape tree=], as part of an [=Access Need Group=].
 
 Each [=Access Need=] represents a request to access, create, or manage
-all or a subset of [=Registered Data Instances=] associated with a single
+all or a subset of [=Data Instances=] associated with a single
 [=Data Registration=] for a given [=shape tree=].
 
-Specific [=Registered Data Instances=] may be requested by explicitly
+Specific [=Data Instances=] may be requested by explicitly
 associating them with the [=Access Need=] via
-[hasRegisteredDataInstance](#classAccessNeed).
+[hasDataInstance](#classAccessNeed).
 
 Each [=Access Need=] has one or more [=access modes=], and a property that
 indicates the necessity of the [=Access Need=]; *required* or
@@ -358,9 +358,9 @@ indicates the necessity of the [=Access Need=]; *required* or
       <td>The [=shape tree=] requested by the [=Access Need=]</td>
     </tr>
     <tr>
-      <td>hasRegisteredDataInstance</td>
+      <td>hasDataInstance</td>
       <td>-</td>
-      <td>Request specific [=Registered Data Instances=] of the registered
+      <td>Request specific [=Data Instances=] of the registered
       [=shape tree=]</td>
     </tr>
     <tr>
@@ -395,7 +395,7 @@ instance of the [AccessNeed](#classAccessNeed) class.
   a [ interop:AccessNeed ] ;
   interop:inAccessNeedGroup IRI+ ;
   interop:registeredShapeTree IRI ;
-  interop:hasRegisteredDataInstance IRI* ;
+  interop:hasDataInstance IRI* ;
   interop:recursivelyAuthorize [ true false ] ;
   interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
@@ -536,9 +536,9 @@ for every unique [=shape tree=] encountered as the operation traverses the
       established when the [=Access Grant=] is created</td>
     </tr>
     <tr>
-      <td>hasRegisteredDataInstance</td>
+      <td>hasDataInstance</td>
       <td>RegisteredDataInstance</td>
-      <td>Links to any specific [=Registered Data Instances=] that were
+      <td>Links to any specific [=Data Instances=] that were
       included in the original request</td>
     </tr>
     <tr>
@@ -594,7 +594,7 @@ validate an instance of the
   interop:hasShapeTreeDecorator IRI ;
   interop:hasAccessNeedDecorator IRI? ;
   interop:hasDataGrant IRI? ;
-  interop:hasRegisteredDataInstance IRI* ;
+  interop:hasDataInstance IRI* ;
   interop:registeredShapeTree IRI ;
   interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;

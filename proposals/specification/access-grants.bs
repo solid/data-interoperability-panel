@@ -499,14 +499,14 @@ for a given [=Data Registration=].
       <td>Identifies the access scope of the [=Data Grant=]
         <ul>
           <li>interop:AllInstances - Scope includes
-              access to all [=Registered Data Instances=] of the associated
+              access to all [=Data Instances=] of the associated
               [=Data Registration=]</li>
           <li>interop:InheritInstances - Scope includes
-              access to [=Registered Data Instances=] inherited by
+              access to [=Data Instances=] inherited by
               instances selected in the [=Data Grant=] linked via
               interop:inheritsFrom</li>
           <li>interop:SelectedInstances - Scope includes
-              access only to those [=Registered Data Instances=] specifically
+              access only to those [=Data Instances=] specifically
               selected by the [=Agent=]</li>
           <li>interop:NoAccess</li> - No access is granted
         </ul>
@@ -516,13 +516,13 @@ for a given [=Data Registration=].
       <td>inheritsFrom</td>
       <td>[DataGrant](#classDataGrant)</td>
       <td>Identifies a [=Data Grant=] whose selected
-      [=Registered Data Instances=] narrow the scope of instances to be
+      [=Data Instances=] narrow the scope of instances to be
       presented by this grant.</td>
     </tr>
     <tr>
-      <td>hasRegisteredDataInstance</td>
+      <td>hasDataInstance</td>
       <td>Instance of registeredShapeTree</td>
-      <td>Links to a [=Registered Data Instance=] of registeredShapeTree.</td>
+      <td>Links to a [=Data Instance=] of registeredShapeTree.</td>
     </tr>
   </tbody>
 </table>
@@ -1083,7 +1083,7 @@ Issue: Write standard operation for validating an invitation
                 `GRANT accessGrantSubject`.
             2. Set the [=access modes=] for `NEWSTATEMENT` to
                 the [=access modes=] linked via `DGRANT accessMode`
-                such that all [=Registered Data Instances=] in `REG` inherit
+                such that all [=Data Instances=] in `REG` inherit
                 those [=access modes=]
     1. If `DGRANT scopeOfDataGrant` includes ONLY `interop:InheritInstances`
         1. Let `IDGRANT` be the inherited [=Data Grant=]
@@ -1102,10 +1102,10 @@ Issue: Write standard operation for validating an invitation
                 `GRANT accessGrantSubject`.
             1. Set the [=access modes=] for `NEWSTATEMENT` to
                 the [=access modes=] linked via `DGRANT accessMode`
-                such that all [=Registered Data Instances=] in `REG` inherit
+                such that all [=Data Instances=] in `REG` inherit
                 those [=access modes=], with the following condition:
                     1. Access will only be granted to
-                        [=Registered Data Instances=] when a link exists between
+                        [=Data Instances=] when a link exists between
                         `IDGRANT interop:registeredShapeTree` and
                         `DGRANT interop:registeredShapeTree`.
                     1. The predicate of the link must be the same as the
@@ -1118,8 +1118,8 @@ Issue: Write standard operation for validating an invitation
             to `DGRANT interop:registeredShapeTree` via `st:references`
         1. Use instructions for `interop:SelectInstances`
     1. If `DGRANT scopeOfDataGrant` includes `interop:SelectedInstances`
-        1. Let `INSTANCES` be the [=Registered Data Instances=] linked via
-            `DGRANT interop:hasRegisteredDataInstance`
+        1. Let `INSTANCES` be the [=Data Instances=] linked via
+            `DGRANT interop:hasDataInstance`
         1. Error if there are no `INSTANCES`
         1. For each `INSTANCE` in `INSTANCES`
           1. Error if `INSTANCE` is missing
@@ -1227,7 +1227,7 @@ operations to manipulate [=Data Grants=] in accordance with the
                       1. Allow `interop:AllInstances` to be selected, which invokes
                           the [[#grants-selectall]] operation with inputs:
                           `GRANT`, `CAGROUP`, `CACCESS`
-                      1. Allow a subset of [=Registered Data Instances=] be selected,
+                      1. Allow a subset of [=Data Instances=] be selected,
                           and let `INSTANCES` be that subset, invoking
                           the [[#grants-select]] operation with inputs:
                           `INSTANCES`, `GRANT`, `CAGROUP`, `CACCESS`
@@ -1235,7 +1235,7 @@ operations to manipulate [=Data Grants=] in accordance with the
                       present the user with summary details, and the ability to
                       see specific instances.
                           1. Let `INSTANCES` be a selected set of
-                              [=Registered Data Instances=]
+                              [=Data Instances=]
                           1. If the user chooses to select
                               specific instances from this list, invoke the
                               [[#grants-select]] operation with inputs: `INSTANCES`,
@@ -1244,27 +1244,27 @@ operations to manipulate [=Data Grants=] in accordance with the
                       present the user with the specific instances they have selected,
                       and:
                           1. Let `INSTANCES` be a selected set of
-                              [=Registered Data Instances=]
-                          1. Allow the selected [=Registered Data Instances=] to be
+                              [=Data Instances=]
+                          1. Allow the selected [=Data Instances=] to be
                               adjusted, and invoke the [[#grants-select]] operation with
                               inputs: `INSTANCES`, `DATAGRANT`, `CAGROUP`, `CACCESS`.
-                          1. Allow all [=Registered Data Instances=] to be selected,
+                          1. Allow all [=Data Instances=] to be selected,
                               invoking the [[#grants-selectall]] operation with inputs:
                               `GRANT`, `CAGROUP`, `CACCESS`.
                   1. If `DATAGRANT scopeOfDataGrant` is `interop:InheritInstances`, present
-                      the inherited [=Registered Data Instances=] and:
+                      the inherited [=Data Instances=] and:
                       1. Let `INSTANCES` be a selected set of
-                          [=Registered Data Instances=]
+                          [=Data Instances=]
                       1. Allow a subset to be selected, invoking
                           the [[#grants-select]] operation with inputs: `INSTANCES`,
                           `GRANT`, `CAGROUP`, `CACCESS`
                       1. Identify the [=Compiled Access=] / [=Data Grant=]
-                          and selected [=Registered Data Instances=] that were inherited
+                          and selected [=Data Instances=] that were inherited
                           from.
                   1. If `DATAGRANT scopeOfDataGrant` includes `interop:SelectedInstances`
                       and `interop:InheritInstances`
                       1. Let `INSTANCES` be a selected set of
-                          [=Registered Data Instances=]
+                          [=Data Instances=]
                       1. Give the ability to adjust the selected instances, invoking
                           the [[#grants-select]] operation with inputs:
                           `INSTANCES`, `GRANT`, `CAGROUP`, `CACCESS`.
@@ -1299,19 +1299,19 @@ necessity has been denied.
 
 ### Select Specific Instances for Access ### {#grants-select}
 
-Used to select specific [=Registered Data Instances=] for a given
+Used to select specific [=Data Instances=] for a given
 [=Data Grant=], which has a recursive application down the hierachy,
 with subordinate [=Data Grants=] reducing their associated scope of
-[=Registered Data Instances=] to only those related to the instances above them.
+[=Data Instances=] to only those related to the instances above them.
 
-Issue: Write operation for selecting specific registered data instances
+Issue: Write operation for selecting specific Data Instances
 for a given Data Registration within an Access Grant
 
 ### Select All Instances for Access ### {#grants-selectall}
 
-Used to select all [=Registered Data Instances=] for a given [=Data Grant=].
+Used to select all [=Data Instances=] for a given [=Data Grant=].
 In the event where this is moving from a subset of inherited instances,
 this will expand to only include all inherited instances.
 
-Issue: Write operation for selecting all registered data instances
+Issue: Write operation for selecting all Data Instances
 for a given Data Registration within an Access Grant
