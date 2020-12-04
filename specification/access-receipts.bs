@@ -85,7 +85,7 @@ An [=Access Receipt Registry=] links to any number of registered
     interop:registeredShapeTree note:notebook-tree ;
     interop:accessMode acl:Read, acl:Write ;
     interop:scopeOfDataGrant interop:SelectedInstances ;
-    interop:hasRegisteredDataInstance https://alice.pod.example/data/notebook/notebook-1/#notebook ,
+    interop:hasDataInstance https://alice.pod.example/data/notebook/notebook-1/#notebook ,
                                   https://alice.pod.example/data/notebook/notebook-2/#notebook .
 
   <#note-receipt>
@@ -95,7 +95,7 @@ An [=Access Receipt Registry=] links to any number of registered
     interop:accessMode acl:Read, acl:Write ;
     interop:scopeOfDataGrant interop:inheritInstances ;
     interop:inheritsFrom <#notebook-receipt> ;
-    interop:hasRegisteredDataInstance https://alice.pod.example/data/note/note-1/#note ,
+    interop:hasDataInstance https://alice.pod.example/data/note/note-1/#note ,
                                   https://alice.pod.example/data/note/note-2/#note ,
                                   https://alice.pod.example/data/note/note-3/#note ,
                                   https://alice.pod.example/data/note/note-4/#note ,
@@ -116,7 +116,7 @@ made up of [=Access Receipt Registries=].
     <tr>
       <th colspan=3 text-align=left>
         [AccessReceiptRegistrySet](interop.ttl#AccessReceiptRegistrySet)
-        a rdfs:subClassOf [[#datamodel-agent|RegistrySet]]
+        a rdfs:subClassOf [RegistrySet](interop.ttl#RegistrySet)
       </th>
     </tr>
     <tr>
@@ -128,7 +128,7 @@ made up of [=Access Receipt Registries=].
   <tbody>
     <tr>
       <td>hasRegistry</td>
-      <td>Registry</td>
+      <td>[Registry](interop.ttl#Registry)</td>
       <td>Link to associated [=Access Receipt Registries=]</td>
     </tr>
   </tbody>
@@ -170,7 +170,7 @@ An <dfn>Access Receipt Registry</dfn> is a collection of
     <tr>
       <th colspan=3>
         [AccessReceiptRegistry](interop.ttl#AccessReceiptRegistry)
-        a rdfs:subClassOf [[#datamodel-agent|Registry]]
+        a rdfs:subClassOf [Registry](interop.ttl#Registry)
       </th>
     </tr>
     <tr>
@@ -182,7 +182,7 @@ An <dfn>Access Receipt Registry</dfn> is a collection of
   <tbody>
     <tr>
       <td>hasRegistration</td>
-      <td>Registration</td>
+      <td>[Registration](interop.ttl#Registration)</td>
       <td>Link to associated [=Access Receipts=]</td>
     </tr>
   </tbody>
@@ -227,7 +227,7 @@ Issue: Write definition for Access Receipt class
     <tr>
       <th colspan=3>
         [AccessReceipt](interop.ttl#AccessReceipt)
-        a rdfs:subClassOf [[#datamodel-agent|Registration]]
+        a rdfs:subClassOf [Registration](interop.ttl#Registration)
       </th>
     </tr>
     <tr>
@@ -239,12 +239,12 @@ Issue: Write definition for Access Receipt class
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>Agent</td>
+      <td>[Agent](#classAgent)</td>
       <td>[=Agent=] that registered the [=Access Receipt=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
-      <td>Application</td>
+      <td>[Application](#classApplication)</td>
       <td>[=Application=] used to create the [=Access Receipt=]</td>
     </tr>
     <tr>
@@ -264,19 +264,19 @@ Issue: Write definition for Access Receipt class
     </tr>
     <tr>
       <td>fromAgent</td>
-      <td>Agent</td>
+      <td>[Agent](#classAgent)</td>
       <td>[=Agent=] that granted access and sent the [=Access Receipt=]</td>
     </tr>
     <tr>
       <td>toAgent</td>
-      <td>Agent</td>
+      <td>[Agent](#classAgent)</td>
       <td>[=Agent=] who was granted access and received the [=Access Receipt=]</td>
     </tr>
     <tr>
       <td>hasDataReceipt</td>
       <td>[DataReceipt](#classDataReceipt)</td>
       <td>[=Data Receipt=] for a shared [=Data Registration=] and any shared
-      [=Registered Data Instances=]</td>
+      [=Data Instances=]</td>
     </tr>
   </tbody>
 </table>
@@ -336,7 +336,7 @@ Issue: Write definition for Data Receipt class
   <tbody>
     <tr>
       <td>hasRegistration</td>
-      <td>DataRegistration</td>
+      <td>[DataRegistration](#classDataRegistration)</td>
       <td>Remote [=Data Registration=] the [=Data Receipt=] applies to</td>
     </tr>
     <tr>
@@ -356,14 +356,14 @@ Issue: Write definition for Data Receipt class
       <td>Identifies the access scope of the [=Data Grant=]
         <ul>
           <li>interop:AllInstances - Scope includes
-              access to all [=Registered Data Instances=] of the associated
+              access to all [=Data Instances=] of the associated
               [=Data Registration=]</li>
           <li>interop:InheritInstances - Scope includes
-              access to [=Registered Data Instances=] inherited by
+              access to [=Data Instances=] inherited by
               instances selected in the [=Data Receipt=] linked via
               interop:inheritsFrom</li>
           <li>interop:SelectedInstances - Scope includes
-              access only to those [=Registered Data Instances=] specifically
+              access only to those [=Data Instances=] specifically
               selected by the [=Agent=]</li>
           <li>interop:NoAccess</li> - No access is granted
         </ul>
@@ -373,13 +373,13 @@ Issue: Write definition for Data Receipt class
       <td>inheritsFrom</td>
       <td>[DataReceipt](#classDataReceipt)</td>
       <td>Identifies a [=Data Receipt=] whose selected
-      [=Registered Data Instances=] narrow the scope of instances to be
+      [=Data Instances=] narrow the scope of instances to be
       presented by this receipt.</td>
     </tr>
     <tr>
-      <td>hasRegisteredDataInstance</td>
+      <td>hasDataInstance</td>
       <td>Instance of registeredShapeTree</td>
-      <td>Links to a [=Registered Data Instance=] of registeredShapeTree.</td>
+      <td>Links to a [=Data Instance=] of registeredShapeTree.</td>
     </tr>
     <tr>
       <td>replacedBy</td>
@@ -400,7 +400,7 @@ class.
   interop:registeredShapeTree IRI ;   # Associated shape tree
   interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   interop:scopeOfDataGrant [ interop:SelectedInstances interop:AllInstances interop:InheritInstances interop:NoAccess ]+ ;
-  interop:hasRegisteredDataInstance IRI* ;     # if specific instances are selected or inherited
+  interop:hasDataInstance IRI* ;     # if specific instances are selected or inherited
   interop:inheritsFrom @<#:DataReceiptShape>* ;
   interop:replacedBy IRI?
 }
@@ -554,8 +554,8 @@ use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
 1. Let `DATARECEIPT registeredShapeTree` be `DATAGRANT registeredShapeTree`
 1. Let `DATARECEIPT accessMode`s be the same as `DATAGRANT accessMode`s
 1. Let `DATARECEIPT scopeOfDataGrant`s be the same as `DATAGRANT scopeOfDataGrant`s
-1. Let `DATARECEIPT hasRegisteredDataInstance`s be the same as
-    `DATAGRANT hasRegisteredDataInstance`s
+1. Let `DATARECEIPT hasDataInstance`s be the same as
+    `DATAGRANT hasDataInstance`s
 1. Let `DATARECEIPT inheritsFrom`s be the same as `DATAGRANT inheritsFrom`s
 1. Return `DATARECEIPT`
 
@@ -670,13 +670,13 @@ reflect it.
                 for `RECEIPT registeredShapeTree`
         1. If `RECEIPT scopeOfDataGrant` is `interop:AllInstances`
             1. Present the [=Agent=] with summary details, and the ability
-                to view the [=Registered Data Instances=]
+                to view the [=Data Instances=]
         1. If `RECEIPT scopeOfDataGrant` includes `interop:SelectedInstances`
             1. Present the [=Agent=] with summary details, and the ability
-                to view the [=Registered Data Instances=]
+                to view the [=Data Instances=]
         1. If `RECEIPT scopeOfDataGrant` includes `interop:InheritInstances`
             1. Present the [=Agent=] with summary details, and the ability
-                to view the [=Registered Data Instances=], along with
+                to view the [=Data Instances=], along with
                 pointers to the [=Data Receipt=] they inherit from.
             1. Order this [=Data Receipt=] after the [=Data Receipt=] they
                 inherit from.

@@ -69,17 +69,76 @@ table.tree tbody td {
   font-size: 12px;
 }
 
-table.operation thead tr {
-  font-size: 14px;
+table.intersecting thead tr {
+  font-size: 14px ;
 }
 
-table.operation tbody tr:nth-child(even) {
+table.intersecting tbody tr:nth-child(odd) {
   background-color: lightgray;
   font-size: 14px;
 }
 
+table.intersecting tbody td {
+  font-size: 13px;
+  vertical-align: top ;
+  text-align: left;
+}
+
+table.intersecting td[colspan] {
+  text-align: left;
+}
+
+table.operation {
+  border-collapse: separate;
+  border: 3px solid #808080;
+  margin-bottom: .5em;
+}
+
+table.operation thead tr {
+  font-size: 14px;
+}
+
+table.operation thead th {
+  background-color: #005A9C;
+  color: #FFF;
+}
+
+table.operation th[colspan] {
+  text-align: left;
+}
+
+table.operation td[colspan] {
+  text-align: left;
+}
+
 table.operation tbody td {
-  font-size: 12px;
+  font-size: 13px;
+  text-align: left;
+}
+
+table.operation code {
+  background-color: #808080;
+  color: #FFF;
+  font-size: 13px;
+  padding-left: .2em;
+  padding-right: .2em;
+  padding-top: .05em;
+  padding-bottom: .05em;  
+}
+
+.opdetails code {
+  background-color: #808080;
+  color: #FFF;
+  font-size: 13px;
+  padding-left: .2em;
+  padding-right: .2em;
+  padding-top: .05em;
+  padding-bottom: .05em;
+}
+
+.opdetails ol {
+  margin-left: 0;
+  padding-left: 1em;
 }
 
 pre {

@@ -102,7 +102,7 @@ A [=Remote Data Registration=] may link to one or more
     interop:hasDataReceipt &lt;https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#notebook-receipt&gt; ;
     interop:registeredShapeTree note:notebook-tree ;
     interop:accessMode acl:Read, acl:Write ;
-    interop:hasRegisteredDataInstance &lt;https://alice.pod.example/data/notebook/notebook-1/#notebook&gt; .
+    interop:hasDataInstance &lt;https://alice.pod.example/data/notebook/notebook-1/#notebook&gt; .
   </pre>
 </figure>
 
@@ -173,7 +173,7 @@ A <dfn>Remote Data Registry</dfn> is a collection of
     <tr>
       <th colspan=3>
         [RemoteDataRegistry](interop.ttl#RemoteDataRegistry)
-        a rdfs:subClassOf [[#datamodel-agent|Registry]]
+        a rdfs:subClassOf [Registry](interop.ttl#Registry)
       </th>
     </tr>
     <tr>
@@ -185,7 +185,7 @@ A <dfn>Remote Data Registry</dfn> is a collection of
   <tbody>
     <tr>
       <td>hasRegistration</td>
-      <td>Registration</td>
+      <td>[Registration](interop.ttl#Registration)</td>
       <td>Link to associated [=Remote Data Registrations=]</td>
     </tr>
   </tbody>
@@ -242,7 +242,7 @@ A [=Remote Data Registration=] is created when an [=Agent=] receives an
     <tr>
       <th colspan=3>
         [RemoteDataRegistration](interop.ttl#RemoteDataRegistration)
-        a rdfs:subClassOf [[#datamodel-agent|Registration]]
+        a rdfs:subClassOf [Registration](interop.ttl#Registration)
       </th>
     </tr>
     <tr>
@@ -254,12 +254,12 @@ A [=Remote Data Registration=] is created when an [=Agent=] receives an
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>Agent</td>
+      <td>[Agent](#classAgent)</td>
       <td>[=Agent=] that registered the [=Remote Data Registration=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
-      <td>Application</td>
+      <td>[Application](#classApplication)</td>
       <td>[=Application=] used to create the [=Remote Data Registration=]</td>
     </tr>
     <tr>
@@ -279,7 +279,7 @@ A [=Remote Data Registration=] is created when an [=Agent=] receives an
     </tr>
     <tr>
       <td>hasRegistration</td>
-      <td>Data Registration</td>
+      <td>[DataRegistration](#classDataRegistration)</td>
       <td>Link to the [=Data Registration=] that was shared</td>
     </tr>
     <tr>
@@ -294,14 +294,14 @@ A [=Remote Data Registration=] is created when an [=Agent=] receives an
       <td>Identifies the scope of access that was granted
         <ul>
           <li>interop:AllInstances - Scope includes
-              access to all [=Registered Data Instances=] of the shared
+              access to all [=Data Instances=] of the shared
               [=Data Registration=]</li>
           <li>interop:InheritInstances - Scope includes
-              access to [=Registered Data Instances=] inherited by
+              access to [=Data Instances=] inherited by
               instances selected in the [=Data Receipt=] linked via
               interop:inheritsFrom</li>
           <li>interop:SelectedInstances - Scope includes
-              access only to those [=Registered Data Instances=] specifically
+              access only to those [=Data Instances=] specifically
               selected by the [=Agent=]</li>
           <li>interop:NoAccess - No access is granted</li>
         </ul>
@@ -314,7 +314,7 @@ A [=Remote Data Registration=] is created when an [=Agent=] receives an
     </tr>
     <tr>
       <td>hasRemoteDataInstance</td>
-      <td>[Remote Data Instance](#classRemoteDataInstance)</td>
+      <td>[RemoteDataInstance](#classRemoteDataInstance)</td>
       <td>Link to [=Remote Data Instance=] associated with the
       [=Remote Data Registration=]</td>
     </tr>
@@ -369,16 +369,16 @@ that the assigned resource will validate against the
 ### Remote Data Instance ### {#datamodel-remote-data-instance}
 
 An [=Agent=] maintains a <dfn>Remote Data Instance</dfn> to represent
-a [=Registered Data Instance=] that another [=Agent=] has shared with them.
+a [=Data Instance=] that another [=Agent=] has shared with them.
 
 A [=Remote Data Instance=] is created when an [=Agent=] receives an
 [=Access Receipt=] from another [=Agent=] that includes access to a specific
-[=Registered Data Instance=].
+[=Data Instance=].
 
 * A [=Remote Data Instance=] MUST be associated with a [=Data Receipt=]
 * If an [=Access Receipt=] is received with a corresponding [=Data Receipt=]
     that changes the access to a shared
-    [=Registered Data Instance=], the corresponding [=Remote Data Instance=]
+    [=Data Instance=], the corresponding [=Remote Data Instance=]
     MUST be updated, and removed altogether if that access is removed.
 
 <table class="classinfo data" align="left" id="classRemoteDataInstance">
@@ -414,20 +414,20 @@ A [=Remote Data Instance=] is created when an [=Agent=] receives an
       <td>When the [=Remote Data Instance=] was shared by remote [=Agent=]</td>
     </tr>
     <tr>
-      <td>hasRegisteredDataInstance</td>
-      <td>RegisteredDataInstance</td>
-      <td>Link to [=Registered Data Instance=] associated with the
+      <td>hasDataInstance</td>
+      <td>[=Data Instance=]</td>
+      <td>Link to [=Data Instance=] associated with the
       [=Remote Data Instance=]</td>
     </tr>
     <tr>
       <td>registeredShapeTree</td>
       <td>st:ShapeTree</td>
-      <td>Shape tree associated with the shared [=Registered Data Instance=]</td>
+      <td>Shape tree associated with the shared [=Data Instance=]</td>
     </tr>
     <tr>
       <td>accessMode</td>
       <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
-      <td>Access modes granted on the shared [=Registered Data Instance=]</td>
+      <td>Access modes granted on the shared [=Data Instance=]</td>
     </tr>
     <tr>
       <td>hasDataReceipt</td>
@@ -444,7 +444,7 @@ validate an instance of the
 <pre highlight="turtle" id="shexRemoteDataInstance">
 <#RemoteDataInstance> {
   a [interop:RemoteDataInstance] ;
-  interop:hasRegisteredDataInstance IRI ; # Remote registered data instance
+  interop:hasDataInstance IRI ; # Remote Data Instance
   interop:registeredAt xsd:dateTime ;
   interop:providedAt xsd:dataTime ;
   interop:registeredShapeTree IRI ;       # Associated shape tree
@@ -576,7 +576,7 @@ for resource names.
 
 1. <em class="rfc2119">MUST</em> return error if
     `DRECEIPT scopeOfDataGrant` includes `interop:SelectedInstances` or
-    `interop:inheritInstances` and `DRECEIPT hasRegisteredDataInstance` is empty
+    `interop:inheritInstances` and `DRECEIPT hasDataInstance` is empty
 1. Let `REMOTEDR` be an empty [=Remote Data Registration=]
 1. Let `REMOTEDR registeredBy` be the current [=Agent=]
 1. Let `REMOTEDR registeredWith` be the current [=Application=]
@@ -592,8 +592,8 @@ for resource names.
     1. Let `REMOTEDR scopeOfDataGrant` be `interop:AllInstances`
 1. If `DRECEIPT scopeOfDataGrant` is `interop:SelectedInstances`
     AND/OR `interop:InheritInstances`
-    1. For each [=Registered Data Instance=] `RDI` linked via
-        `DRECEIPT hasRegisteredDataInstance`
+    1. For each [=Data Instance=] `RDI` linked via
+        `DRECEIPT hasDataInstance`
         1. Let `REMOTEDR hasRemoteDataInstance` be linked with the
             [=Remote Data Instance=] returned from [[#remote-createremotedi]]
             with inputs: `REMOTEDR`, `RDI`, `DRECEIPT`, `RECEIPT`
@@ -603,7 +603,7 @@ for resource names.
 #### Inputs #### {#createremotedi-inputs}
 
 * Let `REMOTEDR` be a [=Remote Data Registration=]
-* Let `RDI` be a [=Registered Data Instance=]
+* Let `RDI` be a [=Data Instance=]
 * Let `DRECEIPT` be a [=Data Receipt=]
 * Let `RECEIPT` be an [=Access Receipt=]
 
@@ -620,8 +620,8 @@ for resource names.
 1. Let `REMOTEDI registeredShapeTree` be `DRECEIPT registeredShapeTree`
 1. Let `REMOTEDI accessMode`s be `DRECEIPT accessMode`s
 1. Let `REMOTEDR hasDataReceipt` be `DRECEIPT`
-1. Let `REMOTEDR hasRegisteredDataInstance` be
-    `DRECEIPT hasRegisteredDataInstance`
+1. Let `REMOTEDR hasDataInstance` be
+    `DRECEIPT hasDataInstance`
 
 ### Update Remote Data Registration ### {#remote-updateremotedr}
 
@@ -663,8 +663,8 @@ for resource names.
         `REMOTEDR hasRemoteDataInstance`
         1. Delete `REMOTEDI`
         1. Remove `REMOTEDR hasRemoteDataInstance` link to `REMOTEDI`
-    1. For each [=Registered Data Instance=] `RDI` linked via
-        `DRECEIPT hasRegisteredDataInstance`
+    1. For each [=Data Instance=] `RDI` linked via
+        `DRECEIPT hasDataInstance`
         1. Let `REMOTEDR hasRemoteDataInstance` be linked with the
             [=Remote Data Instance=] returned from [[#remote-createremotedi]]
             with inputs: `REMOTEDR`, `RDI`, `DRECEIPT`, `RECEIPT`
