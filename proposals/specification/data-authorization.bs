@@ -38,7 +38,7 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
     authorization and access control.
 
 Let `REGISTERAPP` be a boolean value that indicates whether the
-[=Application=] is requesting to be [=Registered=]
+[=Application=] is requesting to be registered
 
 Let `GRANTACCESS` be a boolean value that indicates whether the
 [=Application=] wishes to be granted access to data
@@ -47,8 +47,9 @@ Let `GRANTACCESS` be a boolean value that indicates whether the
 1. `CONTROLLER` provides their [=identity=] to `APP`
 1. `APP` dereferences the [=identity=] to
     get `CONTROLLER`'s [=identity profile document=].
-1. `APP` discovers that `AUTHZ` is the [=Authorization Agent=] for
-    `CONTROLLER` via the [[#trusted-load]] operation.
+1. `APP` discovers that `AUTHZ` is an [=Application=] that is a 
+    [=Trusted Agent=] of `CONTROLLER` for data authorization
+    via the [[#trusted-load]] operation.
 1. `APP` redirects `CONTROLLER` to `AUTHZ` via the [[#trusted-redirect]]
     operation.
     1. If `REGISTERAPP` is `true`
@@ -162,8 +163,9 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
 1. `CONTROLLER` provides `RECEIVER`'s [=identity=] to `CAPP`.
 1. `CAPP` dereferences `RECEIVER`'s [=identity=] to get `RECEIVER`'s
     [=identity profile document=].
-1. `CAPP` discovers that `CAUTHZ` is the [=Authorization Agent=] for
-    `CONTROLLER` via the [[#trusted-load]] operation.
+1. `CAPP` discovers that `CAUTHZ` is an [=Application=] that is a 
+    [=Trusted Agent=] of `CONTROLLER` for data authorization
+    via the [[#trusted-load]] operation.
 1. `CAPP` redirects `CONTROLLER` to `CAUTHZ` via the [[#trusted-redirect]]
     operation.
     1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
@@ -227,8 +229,9 @@ Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
 
 1. `CONTROLLER` would like to give `INVITEE` access to their data.
 1. `CONTROLLER` provides `INVITEE`'s e-mail address and mobile number to `CAPP`.
-1. `CAPP` discovers that `CAUTHZ` is the [=Authorization Agent=] for
-    `CONTROLLER` via the [[#trusted-load]] operation.
+1. `CAPP` discovers that `CAUTHZ` is an [=Application=] that is a 
+    [=Trusted Agent=] of `CONTROLLER` for data authorization
+    via the [[#trusted-load]] operation.
 1. `CAPP` redirects `CONTROLLER` to `CAUTHZ` via the [[#trusted-redirect]]
     operation.
     1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
