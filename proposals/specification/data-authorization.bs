@@ -37,12 +37,6 @@ Let `APP` be the [=Application=] that `CONTROLLER` wishes to use, and must
 Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
     authorization and access control.
 
-Let `REGISTERAPP` be a boolean value that indicates whether the
-[=Application=] is requesting to be registered
-
-Let `GRANTACCESS` be a boolean value that indicates whether the
-[=Application=] wishes to be granted access to data
-
 1. `CONTROLLER` decides they'd like to use `APP`
 1. `CONTROLLER` provides their [=identity=] to `APP`
 1. `APP` dereferences the [=identity=] to
@@ -52,31 +46,29 @@ Let `GRANTACCESS` be a boolean value that indicates whether the
     via the [[#trusted-load]] operation.
 1. `APP` redirects `CONTROLLER` to `AUTHZ` via the [[#trusted-redirect]]
     operation.
-    1. If `REGISTERAPP` is `true`
-        1. Let `APPREG` be an [=Application Registration=] returned by
-            [[#appreg-loadappreg]] with inputs: `CONTROLLER`, `APP`
-        1. If `APPREG` is empty let `APPREG` be the [=Application Registration=]
-            returned by [[#appreg-registerapp]] with inputs: `AGENT`, `APP`,
-            `REGISTRY`.
-    1. If `GRANTACCESS` is `true`
-        1. `AUTHZ` looks in `APP`'s [=application profile document=] for
-            [=Access Need Groups=] with an `interop:accessScenario` of
-            `interop:PersonalAccess`
-        1. Any [=Access Need Groups=] found are passed to the [[#grants-present]]
-            operation, which presents them to `CONTROLLER`.
-        1. `CONTROLLER` decides whether to grant `APP` the access requested.
-        1. `CONTROLLER` authorizes the requested [=Access Need Groups=]
-            and [=Access Needs=]:
-            1. The [[#grants-recordgrant]] operation is invoked
-                1. An [=Access Grant=] is stored in `CONTROLLER`'s
-                    [=Access Grant Registry=].
-                1. [[#grants-applyperms]] is called to apply permissions based
-                    on the [=Access Grant=].
-                1. [[#receipts-provide]] is called to store the
-                    [=Access Receipt=]. The Application has set
-                    `interop:receivesAccessReceipt` to
-                    `ReceiptInRegistration`, so the [=Access Receipt=] is
-                    stored in the [=Application Registration=] for `APP`.
+    1. Let `APPREG` be an [=Application Registration=] returned by
+        [[#appreg-loadappreg]] with inputs: `CONTROLLER`, `APP`
+    1. If `APPREG` is empty let `APPREG` be the [=Application Registration=]
+        returned by [[#appreg-registerapp]] with inputs: `AGENT`, `APP`,
+        `REGISTRY`.
+    1. `AUTHZ` looks in `APP`'s [=application profile document=] for
+        [=Access Need Groups=] with an `interop:accessScenario` of
+        `interop:PersonalAccess`
+    1. Any [=Access Need Groups=] found are passed to the [[#grants-present-access]]
+        operation, which presents them to `CONTROLLER`.
+    1. `CONTROLLER` decides whether to grant `APP` the access requested.
+    1. `CONTROLLER` authorizes the requested [=Access Need Groups=]
+        and [=Access Needs=]:
+        1. The [[#grants-recordgrant]] operation is invoked
+            1. An [=Access Grant=] is stored in `CONTROLLER`'s
+                [=Access Grant Registry=].
+            1. [[#grants-applyperms]] is called to apply permissions based
+                on the [=Access Grant=].
+            1. [[#receipts-provide]] is called to store the
+                [=Access Receipt=]. The Application has set
+                `interop:receivesAccessReceipt` to
+                `ReceiptInRegistration`, so the [=Access Receipt=] is
+                stored in the [=Application Registration=] for `APP`.
     1. `AUTHZ` redirects `CONTROLLER` back to `APP` via the
         [[#trusted-return]] operation.
 
@@ -113,7 +105,8 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
     `CONTROLLER` when a new [=Access Request=] is received.
     1. `CONTROLLER` clicks a link in the notification from `CAUTHZ`,
         opening the `CAUTHZ` user interface and invoking the
-        [[#grants-present]] operation using the [=Access Need Groups=] from
+        [[#grants-present-access]] operation using the 
+        [=Access Need Groups=] from
         the [=Access Request=].
     1. `CONTROLLER` determines whether they wish to grant the access requested.
     1. Assuming `CONTROLLER` authorizes a minimum of the
@@ -171,7 +164,7 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
     1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
         [=Access Need Groups=] with an `interop:accessScenario` of
         `interop:SharedAccess`
-    1. Any [=Access Need Groups=] found are passed to the [[#grants-present]]
+    1. Any [=Access Need Groups=] found are passed to the [[#grants-present-access]]
         operation, which presents them to `CONTROLLER`.
     1. `CONTROLLER` authorizes the data to share with `RECEIVER` based on
         the provided [=Access Need Groups=].
@@ -237,7 +230,8 @@ Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
     1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
         [=Access Need Groups=] with an `interop:accessScenario` of
         `interop:SharedAccess`
-    1. Any [=Access Need Groups=] found are passed to the [[#grants-present]]
+    1. Any [=Access Need Groups=] found are passed to 
+        the [[#grants-present-invitation]]
         operation, which presents them to `CONTROLLER`.
     1. `CONTROLLER` authorizes the data to share with `INVITEE` based on
         the provided [=Access Need Groups=].
@@ -289,3 +283,9 @@ should be that they are combined? Bad separation of concerns?
 
 Issue: This doesn't take account a sequencing of validation steps from
 one channel to another.
+
+## Application Services ## {#authz-services}
+
+### Authorize Data Service ### {#authz-service-authorize}
+
+Issue: Define data authorization service

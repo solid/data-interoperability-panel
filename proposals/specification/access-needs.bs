@@ -18,7 +18,8 @@ received by the controlling [=Agent=]. A [=Compiled Access Group=] is
 generated for each [=Access Need Group=] that was received.
 
 [=Compiled Access Groups=] and the [=Compiled Accesses=] associated
-with them are used as input to the [[#grants-present]] operation,
+with them are used as input to the [[#grants-present-access]]
+and [[#grants-present-invitation]] operations,
 and are stored as part of the [=Access Grant=] by the [[#grants-recordgrant]]
 operation.
 
@@ -463,6 +464,13 @@ corresponding [=Root Access Need=] in the source [=Access Need Group=].
       <td>Necessity of the access to the requesting party</td>
     </tr>
     <tr>
+      <td>isEnabled</td>
+      <td>xsd:boolean</td>
+      <td>Represents that the group has been enabled as 
+      part of an [=Access Grant=] when `accessNecessity` is
+      `interop:AccessOptional`</td>
+    </tr>
+    <tr>
       <td>hasCompiledAccess</td>
       <td>[CompiledAccess](#classCompiledAccess)</td>
       <td>Link to a [=Root Compiled Access=]</td>
@@ -536,6 +544,12 @@ for every unique [=shape tree=] encountered as the operation traverses the
       established when the [=Access Grant=] is created</td>
     </tr>
     <tr>
+      <td>hasRemoteDataGrant</td>
+      <td>[RemoteDataGrant](#classRemoteDataGrant)</td>
+      <td>[=Remote Data Grant=] associated with the [=Compiled Access=],
+      established when the [=Access Grant=] is created</td>
+    </tr>
+    <tr>
       <td>hasDataInstance</td>
       <td>DataInstance</td>
       <td>Links to any specific [=Data Instances=] that were
@@ -594,6 +608,7 @@ validate an instance of the
   interop:hasShapeTreeDecorator IRI ;
   interop:hasAccessNeedDecorator IRI? ;
   interop:hasDataGrant IRI? ;
+  interop:hasRemoteDataGrant IRI? ;
   interop:hasDataInstance IRI* ;
   interop:registeredShapeTree IRI ;
   interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
@@ -971,7 +986,8 @@ so they can be presented to an [=Agent=] in
         This operation takes a given [=Access Need Group=] with a number of associated
         [=Access Needs=] and processes them to produce a [=Compiled Access Group=]
         that is ready to present to a given [=Agent=]
-        via the [[#grants-present]] operation.
+        via the [[#grants-present-access]] and 
+        [[#grants-present-invitation]] operations.
         <ol>
           <li>The [=shape tree=] associated with each [=Root Access Need=] is
             traversed to the desired level of recursion, including across references.

@@ -94,12 +94,17 @@ An [=Access Receipt Registry=] links to any number of registered
     interop:registeredShapeTree note:note-tree ;
     interop:accessMode acl:Read, acl:Write ;
     interop:scopeOfDataGrant interop:inheritInstances ;
-    interop:inheritsFrom <#notebook-receipt> ;
+    interop:hasDataInheritance <#inheritance-1> ;
     interop:hasDataInstance https://alice.pod.example/data/note/note-1/#note ,
                                   https://alice.pod.example/data/note/note-2/#note ,
                                   https://alice.pod.example/data/note/note-3/#note ,
                                   https://alice.pod.example/data/note/note-4/#note ,
                                   https://alice.pod.example/data/note/note-5/#note .
+  <#inheritance-1>
+    a interop:DataInheritance ;
+    interop:inheritsFrom <#notebook-receipt> ;
+    st:traverseViaShapePath "@&lt;notes:NotebookShape&gt;/note:hasNote" .
+  
   </pre>
 </figure>
 
@@ -360,8 +365,8 @@ Issue: Write definition for Data Receipt class
               [=Data Registration=]</li>
           <li>interop:InheritInstances - Scope includes
               access to [=Data Instances=] inherited by
-              instances selected in the [=Data Receipt=] linked via
-              interop:inheritsFrom</li>
+              instances selected in the parent [=Data Receipt=], 
+              identified by linked [=Data Inheritances=]</li>
           <li>interop:SelectedInstances - Scope includes
               access only to those [=Data Instances=] specifically
               selected by the [=Agent=]</li>
@@ -370,11 +375,10 @@ Issue: Write definition for Data Receipt class
       </td>
     </tr>
     <tr>
-      <td>inheritsFrom</td>
-      <td>[DataReceipt](#classDataReceipt)</td>
-      <td>Identifies a [=Data Receipt=] whose selected
-      [=Data Instances=] narrow the scope of instances to be
-      presented by this receipt.</td>
+      <td>hasDataInheritance</td>
+      <td>[DataInheritance](#classDataInheritance)</td>
+      <td>Links to a [=Data Inheritance=] which identifies another [=Data Receipt=]
+      that access is inherited from</td>
     </tr>
     <tr>
       <td>hasDataInstance</td>
@@ -401,7 +405,7 @@ class.
   interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
   interop:scopeOfDataGrant [ interop:SelectedInstances interop:AllInstances interop:InheritInstances interop:NoAccess ]+ ;
   interop:hasDataInstance IRI* ;     # if specific instances are selected or inherited
-  interop:inheritsFrom @<#:DataReceiptShape>* ;
+  interop:hasDataInheritance @DataInheritanceShape* ;
   interop:replacedBy IRI?
 }
 </pre>
@@ -478,7 +482,6 @@ use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
 #### Inputs #### {#provide-inputs}
 
 * Let `GRANT` be an [=Access Grant=]
-* Let `CONTROLLER` be the [=Agent=] granting access
 
 #### Outputs #### {#provide-outputs}
 
@@ -556,7 +559,11 @@ use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
 1. Let `DATARECEIPT scopeOfDataGrant`s be the same as `DATAGRANT scopeOfDataGrant`s
 1. Let `DATARECEIPT hasDataInstance`s be the same as
     `DATAGRANT hasDataInstance`s
-1. Let `DATARECEIPT inheritsFrom`s be the same as `DATAGRANT inheritsFrom`s
+1. For each [=Data Inheritance=] `DI` linked via `DATAGRANT hasDataInheritance`
+    1. Let `RI` be a newly initialized `Data Inheritance` 
+    1. Let `RI st:traverseViaShapePath` be `DI st:traverseViaShapePath` 
+    1. Let `RI inheritsFrom` be linked to the [=Data Receipt=] corresponding 
+        to the [=Data Grant=] linked via `DI inheritsFrom`    
 1. Return `DATARECEIPT`
 
 #### Provide Receipt in Message #### {#provide-message}

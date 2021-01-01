@@ -76,7 +76,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
   interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
   interop:authenticatesAs IRI ;
-  interop:hasAccessNeed IRI+ ;
+  ( interop:hasAccessNeed IRI+ |
+  interop:hasTrustedNeed IRI+ ) ;
   interop:hasAccessNeedOverride IRI* ;
   interop:hasAccessDecoratorIndex IRI
 }
@@ -88,9 +89,27 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:registeredShapeTree IRI ;
   interop:hasDataInstance IRI* ;
   interop:recursivelyAuthorize [ true false ] ;
-  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:accessMode @<#:AccessModes>+ ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
 }
+
+# Trusted Need
+<#TrustedNeedShape> {
+  a [ interop:TrustedNeed ] ;
+  interop:inAccessNeedGroup IRI+ ;
+  interop:trustedWith IRI* ;
+  interop:trustedWithType @<#:TrustedWithTypes> ;
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
+}
+
+# Access Modes
+<#AccessModes> [
+  acl:Read 
+  acl:Write 
+  acl:Append 
+  acl:Control
+]
 
 # Compiled Access Group
 <#CompiledAccessGroupShape> {
@@ -101,7 +120,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
   interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
   interop:isEnabled xsd:boolean? ;
-  interop:hasCompiledAccess IRI+ ;
+  ( interop:hasCompiledAccess IRI+ |
+    interop:hasCompiledTrustedAccess IRI+ ) ;
 }
 
 # Compiled Access
@@ -111,14 +131,28 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasShapeTreeDecorator IRI ;
   interop:hasAccessNeedDecorator IRI? ;
   interop:hasDataGrant IRI? ;
+  interop:hasRemoteDataGrant IRI? ;
   interop:hasDataInstance IRI* ;
   interop:registeredShapeTree IRI ;
-  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:accessMode @<#:AccessModes>+ ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
   interop:supportedBy IRI* ;
   interop:supports IRI
   interop:referencesCompiledAccess IRI* ;
   skos:narrower IRI* ;
+}
+
+# Compiled Trusted Access
+<#CompiledTrustedAccessShape> {
+  a [ interop:CompiledTrustedAccess ] ;
+  interop:inCompiledAccessGroup IRI+ ;
+  interop:hasAccessNeedDecorator IRI? ;
+  interop:hasTrustedGrant IRI? ;
+  interop:trustedWith IRI* ;
+  interop:trustedWithTYpe @<#:TrustedWithTypes> ;
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;  
+  interop:referencesCompiledTrustedAccess IRI* ;
 }
 
 # Access Decorator Index
@@ -188,7 +222,9 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:updatedAt xsd:dateTime ;
   interop:accessGrantSubject @<#:AccessGrantSubject> ;
   interop:hasCompiledAccessGroup @<#:CompiledAccessGroupShape>+ ;
-  interop:hasDataGrant @<#:DataGrantShape>+
+  ( interop:hasDataGrant @<#:DataGrantShape>+ |
+  interop:hasTrustedGrant @<#:TrustedGrantShape>+ | 
+  interop:hasRemoteDataGrant @<#:RemoteDataGrantShape>+ ) ;
 }
 
 # Access Grant Subject
@@ -207,8 +243,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:updatedAt xsd:dateTime ;
   interop:expiresAt xsd:dateTime? ;
   interop:hasCompiledAccessGroup @<#:CompiledAccessGroupShape>+ ;
-  interop:hasDataGrant @<#:DataGrantShape>+
-  interop:hasAccessInvitationChannel @<#:AccessInvitationChannelShape>+ ;
+  ( interop:hasDataGrant @<#:DataGrantShape>+ |
+  interop:hasTrustedGrant @<#:TrustedGrantShape>+ |
+  interop:hasRemoteDataGrant @<#:RemoteDataGrantShape>+ ) ;
+  interop:hasAccessInvitationChannel @<#:AccessInvitationChannelShape>+
 }
 
 # Access Invitation Channel
@@ -235,14 +273,79 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasRegistration IRI ;
   interop:registeredShapeTree IRI ;
   interop:satisfiesCompiledAccess @<#:CompiledAccessShape>+ ;
-  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  interop:scopeOfDataGrant [ interop:SelectedInstances
-                         interop:AllInstances
-                         interop:InheritInstances
-                         interop:NoAccess ]+ ;
-  interop:hasDataInstance IRI* ;
-  interop:inheritsFrom @<#:DataGrantShape>*
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:scopeOfDataGrant @<#:DataGrantScopes>+ ;
+  interop:hasDataInheritance @<#:DataInheritanceShape>* ;
+  interop:hasDataInstance IRI* ;  
 }
+
+# Data Grant Scopes
+<#DataGrantScopes> [
+  interop:SelectedInstances
+  interop:AllInstances
+  interop:InheritInstances
+  interop:NoAccess
+]
+
+# Data Inheritance
+<#DataInheritanceShape> {
+  a [ interop:DataInheritance ] ;
+  interop:inheritsFrom [ @<#:DataGrantShape> @<#:DataReceiptShape> @<#:RemoteDataGrantShape> ];
+  st:traverseViaShapePath xsd:string
+}
+
+# Remote Data Grant
+<#RemoteDataGrantShape> {
+  a [ interop:RemoteDataGrant ] ;
+  interop:registeredShapeTree IRI ;
+  interop:satisfiesCompiledAccess @<#:CompiledAccessShape>+ ;
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:scopeOfRemoteDataGrant @<#:RemoteDataGrantScopes>+ ;
+  ( interop:hasRemoteDataRegistrationSet IRI |
+    interop:hasRemoteDataRegistrationGrant @<#:RemoteDataRegistrationGrantShape>+ ) 
+}
+
+# Remote Data Grant Scopes
+<#RemoteDataGrantScopes> [
+  interop:AllRemote
+  interop:SelectedRemote
+  interop:NoAccess
+]
+
+# Remote Data Registration Grant
+<#RemoteDataRegistrationGrantShape> {
+  a [ interop:RemoteDataRegistrationGrant ] ;  
+  interop:registeredShapeTree IRI ;
+  interop:hasRemoteDataRegistration IRI ;
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:scopeOfRemoteDataRegistrationGrant @<#:DataGrantScopes>+ ;
+  interop:hasDataInheritance @<#:DataInheritanceShape>* ;
+  interop:hasRemoteDataInstance IRI*
+}
+
+# Trusted Grant
+<#TrustedGrantShape> {
+  a [ interop:TrustedGrant ] ;
+  interop:trustedWith IRI ;
+  interop:trustedWithType @<#:TrustedWithTypes> ;
+  interop:satisfiesCompiledTrustedAccess @<#:CompiledTrustedAccessShape>+ ;
+  interop:accessMode @<#:AccessModes>+
+}
+
+# Trusted Grant Target Types
+<#TrustedWithTypes> [
+  interop:Agent 
+  interop:ApplicationRegistrySet
+  interop:DataRegistrySet
+  interop:AccessGrantRegistrySet
+  interop:AccessReceiptRegistrySet
+  interop:RemoteDataRegistrySet
+  interop:ApplicationRegistry
+  interop:DataRegistry
+  interop:AccessGrantRegistry
+  interop:AccessReceiptRegistry
+  interop:RemoteDataRegistry
+]
 
 # Access Receipt Registry Set
 <#AccessReceiptRegistrySetShape> {
@@ -274,13 +377,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   a [interop:DataReceipt] ;
   interop:hasRegistration IRI ;       # Remote data registration
   interop:registeredShapeTree IRI ;   # Associated shape tree
-  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  interop:scopeOfDataGrant [ interop:SelectedInstances
-                         interop:AllInstances
-                         interop:InheritInstances
-                         interop:NoAccess ]+ ;
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:scopeOfDataGrant @<#:DataGrantScopes>+ ;
   interop:hasDataInstance IRI* ;     # if specific instances are selected or inherited
-  interop:inheritsFrom @<#:DataReceiptShape>* ;
+  interop:hasDataInheritance @<#:DataInheritanceShape>* ;
   interop:replacedBy IRI?
 }
 
@@ -293,7 +393,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Remote Data Registry
 <#RemoteDataRegistryShape> {
   a [ interop:RemoteDataRegistry ] ;
-  interop:hasRegistration IRI*
+  interop:hasRegistration IRI* ;
+  interop:hasRemoteDataRegistrationSet IRI*
 }
 
 # Remote Data Registration
@@ -306,13 +407,17 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:providedAt xsd:dateTime ;
   interop:hasRegistration IRI ;           # Remote data registration
   interop:registeredShapeTree IRI ;       # Associated shape tree
-  interop:scopeOfDataGrant [ interop:SelectedInstances
-                         interop:AllInstances
-                         interop:InheritInstances
-                         interop:NoAccess ]+ ;
-  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:scopeOfDataGrant @<#:DataGrantScopes>+ ;
+  interop:accessMode @<#:AccessModes>+ ;
   interop:hasRemoteDataInstance IRI* ;    # if specific instances are selected or inherited
   interop:hasAccessReceipt IRI+ ;         # Associated access receipts
+}
+
+# Remote Data Registration Set
+<#RemoteDataRegistrationSetShape> {
+  a [ interop:RemoteDataRegistrationSet ] ;
+  interop:hasRemoteDataRegistration IRI* ;
+  interop:registeredShapeTree IRI 
 }
 
 # Remote Data Instance
@@ -322,6 +427,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:registeredAt xsd:dateTime ;
   interop:providedAt xsd:dateTime ;
   interop:registeredShapeTree IRI ;       # Associated shape tree
-  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:accessMode @<#:AccessModes>+ ;
   interop:hasAccessReceipt IRI+ ;         # Associated access receipts
 }
