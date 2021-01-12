@@ -73,35 +73,72 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Access Need Group
 <#AccessNeedGroupShape> {
   a [ interop:AccessNeedGroup ] ;
-  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
-  interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
-  interop:authenticatesAs IRI ;
-  ( interop:hasAccessNeed IRI+ |
-  interop:hasTrustedNeed IRI+ ) ;
-  interop:hasAccessNeedOverride IRI* ;
+  # Pointer to decorator index used for group and individual need decorators
   interop:hasAccessDecoratorIndex IRI
+  # Plain language explanation of what the access is needed for
+  interop:hasAccessNeedGroupDecorator IRI? ;
+  # Is authorizing this access required for the desired functionality
+  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
+  # Does this access need group represent access needed for personal
+  # use by a controller, or to share access with someone else
+  interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
+  # Will this access be for a piloted application or a specific agent
+  interop:authenticatesAs [ interop:Agent interop:Pilot ] ;
+  # Access needs for data, or trusted access to manage registries
+  ( interop:hasAccessNeed IRI+ | interop:hasTrustedNeed IRI+ )     
 }
 
-# Access Need
+#  Access Need
 <#AccessNeedShape> {
   a [ interop:AccessNeed ] ;
-  interop:inAccessNeedGroup IRI+ ;
+  interop:inAccessNeedGroup @<#:AccessNeedGroupShape> ;
   interop:registeredShapeTree IRI ;
+  interop:hasShapeTreeDecorator IRI ;
+  interop:hasAccessNeedDecorator IRI? ;
   interop:hasDataInstance IRI* ;
-  interop:recursivelyAuthorize [ true false ] ;
   interop:accessMode @<#:AccessModes>+ ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
+  interop:supportedBy IRI* ;  # ?
+  interop:supports IRI?       # ?
+  interop:hasReferencedAccessNeed @<#:ReferencedAccessNeedShape>* ;
+  interop:hasDataGrant @<#:DataGrantShape>? ;
+  interop:hasRemoteGrant @<#:RemoteGrantShape>? 
+}
+
+# Referenced Access Need
+<#ReferencedAccessNeedShape> {
+  a [ interop:ReferencedAccessNeed ] ;  
+  interop:hasAccessNeed @<#:AccessNeedShape> ;
+  interop:registeredShapeTree IRI ;
+  interop:hasShapeTreeDecorator IRI ;
+  interop:hasAccessNeedDecorator IRI? ;
+  interop:hasDataInstance IRI* ;
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ]
+  interop:hasReferencedDataGrant @<#:DataGrantShape>? ;
+  interop:hasReferencedRemoteGrant @<#:RemoteGrantShape>? 
 }
 
 # Trusted Need
 <#TrustedNeedShape> {
   a [ interop:TrustedNeed ] ;
   interop:inAccessNeedGroup IRI+ ;
+  interop:hasAccessNeedDecorator IRI? ;
   interop:trustedWith IRI* ;
-  interop:trustedWithType @<#:TrustedWithTypes> ;
+  interop:trustedWithType @<#:TrustedWithNeedTypes> ;
   interop:accessMode @<#:AccessModes>+ ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
+  interop:hasTrustedGrant @<#:TrustedGrantShape>? 
 }
+
+<#TrustedWithNeedTypes> [
+  interop:Agent 
+  interop:ApplicationRegistry
+  interop:DataRegistry
+  interop:AccessGrantRegistry
+  interop:AccessReceiptRegistry
+  interop:RemoteDataRegistry
+]
 
 # Access Modes
 <#AccessModes> [
@@ -110,50 +147,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   acl:Append 
   acl:Control
 ]
-
-# Compiled Access Group
-<#CompiledAccessGroupShape> {
-  a [ interop:CompiledAccessGroup ] ;
-  interop:fromAccessNeedGroup IRI ;
-  interop:hasAccessNeedGroupDecorator IRI ;
-  interop:authenticatesAs IRI ;
-  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
-  interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
-  interop:isEnabled xsd:boolean? ;
-  ( interop:hasCompiledAccess IRI+ |
-    interop:hasCompiledTrustedAccess IRI+ ) ;
-}
-
-# Compiled Access
-<#CompiledAccessShape> {
-  a [ interop:CompiledAccess ] ;
-  interop:inCompiledAccessGroup IRI+ ;
-  interop:hasShapeTreeDecorator IRI ;
-  interop:hasAccessNeedDecorator IRI? ;
-  interop:hasDataGrant IRI? ;
-  interop:hasRemoteDataGrant IRI? ;
-  interop:hasDataInstance IRI* ;
-  interop:registeredShapeTree IRI ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
-  interop:supportedBy IRI* ;
-  interop:supports IRI
-  interop:referencesCompiledAccess IRI* ;
-  skos:narrower IRI* ;
-}
-
-# Compiled Trusted Access
-<#CompiledTrustedAccessShape> {
-  a [ interop:CompiledTrustedAccess ] ;
-  interop:inCompiledAccessGroup IRI+ ;
-  interop:hasAccessNeedDecorator IRI? ;
-  interop:hasTrustedGrant IRI? ;
-  interop:trustedWith IRI* ;
-  interop:trustedWithTYpe @<#:TrustedWithTypes> ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;  
-  interop:referencesCompiledTrustedAccess IRI* ;
-}
 
 # Access Decorator Index
 <#AccessDecoratorIndexShape> {
@@ -221,7 +214,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;
   interop:accessGrantSubject @<#:AccessGrantSubject> ;
-  interop:hasCompiledAccessGroup @<#:CompiledAccessGroupShape>+ ;
+  interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+ ;
   ( interop:hasDataGrant @<#:DataGrantShape>+ |
   interop:hasTrustedGrant @<#:TrustedGrantShape>+ | 
   interop:hasRemoteDataGrant @<#:RemoteDataGrantShape>+ ) ;
@@ -242,7 +235,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;
   interop:expiresAt xsd:dateTime? ;
-  interop:hasCompiledAccessGroup @<#:CompiledAccessGroupShape>+ ;
+  interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+ ;
   ( interop:hasDataGrant @<#:DataGrantShape>+ |
   interop:hasTrustedGrant @<#:TrustedGrantShape>+ |
   interop:hasRemoteDataGrant @<#:RemoteDataGrantShape>+ ) ;
@@ -267,16 +260,46 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   :LDNInvitationChannel     # Linked Data Notification
 ]
 
-# Data Grant
+#  Data Grant
 <#DataGrantShape> {
   a [ interop:DataGrant ] ;
-  interop:hasRegistration IRI ;
+  # AccessGrant the DataGrant belongs to
+  interop:hasAccessGrant @<#:AccessGrantShape> ;
+  # AccessNeed that the DataGrant satisfies
+  interop:satisfiesAccessNeed @<#:AccessNeedShape> ;
+  # Type of data (via shape tree) to grant access to
   interop:registeredShapeTree IRI ;
-  interop:satisfiesCompiledAccess @<#:CompiledAccessShape>+ ;
+  # Data Registration for shape tree that access will be granted to
+  interop:hasDataRegistration IRI ;  
+  # Access modes that have been granted to the DataRegistration
   interop:accessMode @<#:AccessModes>+ ;
-  interop:scopeOfDataGrant @<#:DataGrantScopes>+ ;
-  interop:hasDataInheritance @<#:DataInheritanceShape>* ;
+  # What scope of access the DataGrant applies to
+  interop:scopeOfGrant @<#:DataGrantScopes> ;  
+  # Link to individual DataInstances if scope is SelectedInstances
   interop:hasDataInstance IRI* ;  
+  # If the shape tree has virtual references to other shape trees
+  # that should be included in the authorization for
+  # optional inheritance
+  interop:hasReferencedDataGrant @<#:ReferencedDataGrantShape> 
+}
+
+#  Referenced Data Grant
+<#ReferencedDataGrantShape> {
+  a [ interop:ReferencedDataGrant ] ;
+  # Primary DataGrant that references the ReferencedDataGrant
+  interop:hasDataGrant @<#:DataGrantShape> ;
+  # Access Need that the Data Grant satisfies
+  interop:satisfiesAccessNeed @<#:AccessNeedShape> ;
+  # Type of data (via shape tree) to grant access to
+  interop:registeredShapeTree IRI ;
+  # Data Registration for shape tree that access will be granted to
+  interop:hasDataRegistration IRI ;
+  # Access modes that have been granted to the data registration
+  interop:accessMode @<#:AccessModes>+ ;
+  # What scope of access the data grant applies to
+  interop:scopeOfGrant @<#:DataGrantScopes> ;  
+  # Link to individual data instances if scope is SelectedInstances
+  interop:hasDataInstance IRI*
 }
 
 # Data Grant Scopes
@@ -287,53 +310,77 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:NoAccess
 ]
 
-# Data Inheritance
-<#DataInheritanceShape> {
-  a [ interop:DataInheritance ] ;
-  interop:inheritsFrom [ @<#:DataGrantShape> @<#:DataReceiptShape> @<#:RemoteDataGrantShape> ];
-  st:traverseViaShapePath xsd:string
+#  Remote Data Grant
+<#RemoteDataGrantShape> {
+  a [ interop:RemoteDataGrant ] ;  
+  # AccessGrant the RemoteDataGrant belongs to
+  interop:hasAccessGrant @<#:AccessGrantShape> ;
+  # AccessNeed that the RemoteDataGrant satisfies
+  interop:satisfiesAccessNeed @<#:AccessNeedShape>+ ;
+  # Type of remote data (via shape tree) to grant access to
+  interop:registeredShapeTree IRI ;
+  # Remote data registration for the registeredShapeTree
+  interop:hasRemoteDataRegistration IRI ;
+  # Access modes that have been granted to the RemoteDataRegistration  
+  interop:accessMode @<#:AccessModes>+ ;
+  # Scope of access for the remote data
+  interop:scopeOfGrant @<#:RemoteDataGrantScopes>+ ;    
+  # If scope is AllRemoteFromAgent, link to one or more RemoteDataFromAgent
+  interop:hasRemoteDataFromAgent IRI* ;
+  # If Scope is SelectedRemoteInstances, link to one more more RemoteAgentDataInstances
+  interop:hasRemoteAgentDataInstance IRI* ;
+  # link to referenced grants If the access need has referenced access needs
+  interop:hasReferencedRemoteDataGrant @<#:ReferencedRemoteDataGrantShape> 
 }
 
-# Remote Data Grant
-<#RemoteDataGrantShape> {
-  a [ interop:RemoteDataGrant ] ;
+# Referenced Remote Data Grant
+<#ReferencedRemoteDataGrantShape> {
+  a [ interop:ReferencedRemoteDataGrant ] ;  
+  # RemoteDataGrant that referenecs the ReferencedRemoteDataGrant 
+  interop:hasRemoteDataGrant @<#:RemoteDataGrantShape> ;
+  # AccessNeed that the ReferencedRemoteDataGrant satisfies
+  interop:satisfiesAccessNeed @<#:AccessNeedShape>+ ;
+  # Type of remote data (via shape tree) to grant access to
   interop:registeredShapeTree IRI ;
-  interop:satisfiesCompiledAccess @<#:CompiledAccessShape>+ ;
+  # Remote data registration for the registeredShapeTree
+  interop:hasRemoteDataRegistration IRI ;
+  # Access modes that have been granted to the RemoteDataRegistration  
   interop:accessMode @<#:AccessModes>+ ;
-  interop:scopeOfRemoteDataGrant @<#:RemoteDataGrantScopes>+ ;
-  ( interop:hasRemoteDataRegistrationSet IRI |
-    interop:hasRemoteDataRegistrationGrant @<#:RemoteDataRegistrationGrantShape>+ ) 
+  # Scope of access for the remote data
+  interop:scopeOfGrant @<#:RemoteDataGrantScopes>+ ;
+  # If scope is AllRemoteFromAgent, link to one or more RemoteDataFromAgent
+  interop:hasRemoteDataFromAgent IRI* ;
+  # If Scope is SelectedRemoteInstances, link to one more more RemoteAgentDataInstances
+  interop:hasRemoteAgentDataInstance IRI*   
 }
 
 # Remote Data Grant Scopes
 <#RemoteDataGrantScopes> [
-  interop:AllRemote
-  interop:SelectedRemote
+  interop:AllRemoteInstances
+  interop:AllRemoteFromAgent
+  interop:SelectedRemoteInstances
   interop:NoAccess
 ]
-
-# Remote Data Registration Grant
-<#RemoteDataRegistrationGrantShape> {
-  a [ interop:RemoteDataRegistrationGrant ] ;  
-  interop:registeredShapeTree IRI ;
-  interop:hasRemoteDataRegistration IRI ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:scopeOfRemoteDataRegistrationGrant @<#:DataGrantScopes>+ ;
-  interop:hasDataInheritance @<#:DataInheritanceShape>* ;
-  interop:hasRemoteDataInstance IRI*
-}
 
 # Trusted Grant
 <#TrustedGrantShape> {
   a [ interop:TrustedGrant ] ;
+  # AccessGrant the TrustedGrant belongs to
+  interop:hasAccessGrant @<#:AccessGrantShape> ;
+  # TrustedNeed that the TrustedGrant satisfies
+  interop:satisfiesTrustedNeed @<#:TrustedNeedShape>+ ;
+  # Trusted resource of `trustedWithType` that access is related to
   interop:trustedWith IRI ;
+  # Type of trusted resource
   interop:trustedWithType @<#:TrustedWithTypes> ;
-  interop:satisfiesCompiledTrustedAccess @<#:CompiledTrustedAccessShape>+ ;
-  interop:accessMode @<#:AccessModes>+
+  # Access Modes that have been granted to `trustedWith` Trusted Resource
+  interop:accessMode @<#:AccessModes>+ ;
+  # Scope of access for the trusted grant
+  interop:scopeOfGrant @<#:TrustedGrantScopes>+ 
 }
 
 # Trusted Grant Target Types
-<#TrustedWithTypes> [
+<#TrustedWithGrantTypes> [
   interop:Agent 
   interop:ApplicationRegistrySet
   interop:DataRegistrySet
@@ -345,6 +392,12 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:AccessGrantRegistry
   interop:AccessReceiptRegistry
   interop:RemoteDataRegistry
+]
+
+# Trusted Grant Scopes
+<#TrustedGrantScopes> [
+  interop:NoAccess
+  interop:TrustedAccess
 ]
 
 # Access Receipt Registry Set
@@ -378,7 +431,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasRegistration IRI ;       # Remote data registration
   interop:registeredShapeTree IRI ;   # Associated shape tree
   interop:accessMode @<#:AccessModes>+ ;
-  interop:scopeOfDataGrant @<#:DataGrantScopes>+ ;
+  interop:scopeOfGrant @<#:DataGrantScopes>+ ;
   interop:hasDataInstance IRI* ;     # if specific instances are selected or inherited
   interop:hasDataInheritance @<#:DataInheritanceShape>* ;
   interop:replacedBy IRI?
@@ -393,40 +446,45 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Remote Data Registry
 <#RemoteDataRegistryShape> {
   a [ interop:RemoteDataRegistry ] ;
-  interop:hasRegistration IRI* ;
-  interop:hasRemoteDataRegistrationSet IRI*
+  interop:hasRemoteDataRegistration IRI*
 }
 
 # Remote Data Registration
-<#RemoteDataRegistration> {
-  a [interop:RemoteDataRegistration] ;
+<#RemoteDataRegistrationShape> {
+  a [ interop:RemoteDataRegistration ] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;  
+  interop:registeredShapeTree IRI 
+  interop:hasRemoteAgentDataRegistration IRI* ;
+}
+
+# Remote Agent Data Registration
+<#RemoteAgentDataRegistration> {
+  a [interop:RemoteAgentDataRegistration] ;
   interop:registeredBy IRI ;
   interop:registeredWith IRI ;
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;
   interop:providedAt xsd:dateTime ;
-  interop:hasRegistration IRI ;           # Remote data registration
+  # interop:hasRemoteAgent IRI ;
+  interop:hasDataRegistration IRI ;           # Remote data registration
   interop:registeredShapeTree IRI ;       # Associated shape tree
-  interop:scopeOfDataGrant @<#:DataGrantScopes>+ ;
+  interop:scopeOfGrant @<#:DataGrantScopes>+ ;
   interop:accessMode @<#:AccessModes>+ ;
-  interop:hasRemoteDataInstance IRI* ;    # if specific instances are selected or inherited
-  interop:hasAccessReceipt IRI+ ;         # Associated access receipts
+  interop:hasRemoteAgentDataInstance IRI* ;    # if specific instances are selected or inherited
+  interop:hasDataReceipt IRI+ ;         # Associated access receipts
 }
 
-# Remote Data Registration Set
-<#RemoteDataRegistrationSetShape> {
-  a [ interop:RemoteDataRegistrationSet ] ;
-  interop:hasRemoteDataRegistration IRI* ;
-  interop:registeredShapeTree IRI 
-}
-
-# Remote Data Instance
-<#RemoteDataInstance> {
-  a [interop:RemoteDataInstance] ;
-  interop:hasDataInstance IRI ; # Remote Data Instance
+# Remote Agent Data Instance
+<#RemoteAgentDataInstance> {
+  a [interop:RemoteAgentDataInstance] ;  
   interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
   interop:providedAt xsd:dateTime ;
   interop:registeredShapeTree IRI ;       # Associated shape tree
+  interop:hasDataInstance IRI ; # Remote Data Instance
   interop:accessMode @<#:AccessModes>+ ;
-  interop:hasAccessReceipt IRI+ ;         # Associated access receipts
+  interop:hasDataReceipt IRI+ ;         # Associated data receipts
 }

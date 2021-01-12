@@ -416,13 +416,12 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :CompiledAccess ;
   rdfs:label "Satisfies Compiled Access"@en .
 
-:scopeOfDataGrant
+:scopeOfGrant
   a rdf:property ;
-  rdfs:comment "Links to a scope identifier for the DataGrant"@en ;
+  rdfs:comment "Links to a scope identifier for one of the grant types"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :DataGrant ;
   rdfs:range [ owl:oneOf ( :AllInstances :SelectedInstances :InheritInstances :NoAccess ) ] ;
-  rdfs:label "Scope of Data Grant"@en .
+  rdfs:label "Scope of Grant"@en .
 
 :hasDataInheritance
   a rdf:property ;
@@ -664,15 +663,15 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 
 :RemoteDataRegistration
   rdfs:subClassOf :Registration ;
-  rdfs:comment "An individual member of a Remote Data Registry"@en ;
+  rdfs:comment "An individual member of a Remote Data Registry corresponding to a given shape tree"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Remote Data Registration"@en .
 
-:RemoteDataRegistrationSet
+:RemoteAgentDataRegistration
   a rdfs:Class ;
-  rdfs:comment "A collection of Remote Data Registrations conforming to a given shape tree"@en ;
+  rdfs:comment "Representing a data registration shared by another Agent"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Remote Data Registration Set"@en .
+  rdfs:label "Remote Agent Data Registration"@en .
 
 :hasRemoteDataRegistration
   a rdf:property ;
@@ -680,17 +679,11 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Has Remote Data Registration"@en .
 
-:hasRemoteDataRegistrationSet
+:hasRemoteAgentDataInstance
   a rdf:property ;
-  rdfs:comment "Links to remote data registration set of a registered shape tree"@en ;
+  rdfs:comment "Represents a Data Instance shared by another Agent"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Has Remote Data Registration Set"@en .
-
-:hasRemoteDataInstance
-  a rdf:property ;
-  rdfs:comment "Links to remote instances of the registered shape tree"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Has Remote Data Instance"@en .
+  rdfs:label "Has Remote Agent Data Instance"@en .
 
 
 

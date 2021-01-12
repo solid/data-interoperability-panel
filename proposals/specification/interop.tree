@@ -166,41 +166,41 @@
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
   st:validatedBy <interops#RemoteDataRegistryShape> ;
-  st:contains <#RemoteDataRegistrationSetTree> ,
-              st:AllowNone .
-
-# Remote Data Registration Set
-##############################################################################
-# Ensure the remote data registration set container graph contains a valid
-# RemoteDataRegistration instance, and the resources inside of
-# it are valid RemoteDataRegistration instances.
-##############################################################################
-<#RemoteDataRegistrationSetTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy <interops#RemoteDataRegistrationSetShape> ;
   st:contains <#RemoteDataRegistrationTree> ,
               st:AllowNone .
 
 # Remote Data Registration
 ##############################################################################
-# Ensure the receipt resource graph contains a valid RemoteDataRegistration
+# Ensure the remote data registration container graph contains a valid
+# RemoteDataRegistration instance, and the resources inside of
+# it are valid RemoteAgentDataRegistration instances.
 ##############################################################################
 <#RemoteDataRegistrationTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
   st:validatedBy <interops#RemoteDataRegistrationShape> ;
-  st:contains <#RemoteDataInstanceTree> ,
+  st:contains <#RemoteAgentDataRegistrationTree> ,
               st:AllowNone .
 
-# Remote Data Instance
+# Remote Agent Data Registration
 ##############################################################################
-# Ensure the receipt resource graph contains a valid RemoteDataInstance
+# Ensure the receipt resource graph contains a valid RemoteAgentDataRegistration
 ##############################################################################
-<#RemoteDataInstanceTree>
+<#RemoteAgentDataRegistrationTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy <interops#RemoteAgentDataRegistrationShape> ;
+  st:contains <#RemoteAgentDataInstanceTree> ,
+              st:AllowNone .
+
+# Remote Agent Data Instance
+##############################################################################
+# Ensure the receipt resource graph contains a valid RemoteAgentDataInstance
+##############################################################################
+<#RemoteAgentDataInstanceTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy <interops#RemoteDataInstanceShape> .
+  st:validatedBy <interops#RemoteAgentDataInstanceShape> .
 
 # Application
 ##############################################################################

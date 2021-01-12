@@ -673,12 +673,12 @@ to a specific type of [=shape tree=].
       <td>Identifies the access scope of the [=Remote Data Grant=]
         <ul>
           <li>interop:AllRemote - Scope includes
-              access to all [=Remote Data Registrations=] in a 
-              given [=Remote Data Registration Set=], linked via
-              `interop:hasRemoteDataRegistrationSet`</li>
-          <li>interop:SelectedRemote - Scope includes
-              access to selected [=Remote Data Registrations=] linked via
+              access to all [=Remote Agent Data Registrations=] in a 
+              given [=Remote Data Registration=], linked via
               `interop:hasRemoteDataRegistration`</li>
+          <li>interop:SelectedRemote - Scope includes
+              access to selected [=Remote Agent Data Registrations=] linked via
+              `interop:hasRemoteAgentDataRegistration`</li>
           <li>interop:NoAccess - No access is granted</li>
         </ul>
       </td>
@@ -689,9 +689,9 @@ to a specific type of [=shape tree=].
       <td>Mode of access for the grant</td>
     </tr>
     <tr>
-      <td>hasRemoteDataRegistrationSet</td>
-      <td>[RemoteDataRegistrationSet](#classRemoteDataRegistrationSet)</td>
-      <td>The [=Remote Data Registration Set=] that access is being granted for</td>
+      <td>hasRemoteDataRegistration</td>
+      <td>[RemoteDataRegistration](#classRemoteDataRegistration)</td>
+      <td>The [=Remote Data Registration=] that access is being granted for</td>
     </tr>
     <tr>
       <td>hasRemoteDataRegistrationGrant</td>
@@ -758,7 +758,7 @@ A <dfn>Remote Data Registration Grant</dfn> represents the access granted to an
       <td>Identifies the access scope of the [=Remote Data Registration Grant=]
         <ul>
           <li>interop:AllInstances - Scope includes
-              access to all [=Remote Data Instances=] of the associated
+              access to all [=Remote Agent Data Instances=] of the associated
               [=Remote Data Registration=]</li>
           <li>interop:InheritInstances - Scope includes
               access to [=Remote Data Instances=] inherited by
@@ -790,8 +790,8 @@ A <dfn>Remote Data Registration Grant</dfn> represents the access granted to an
     </tr>
     <tr>
       <td>hasRemoteDataInstance</td>
-      <td>[RemoteDataInstance](#classRemoteDataInstance)</td>
-      <td>A [=Remote Data Instance=] that was specifically granted access</td>
+      <td>[RemoteAgentDataInstance](#classRemoteAgentDataInstance)</td>
+      <td>A [=Remote Agent Data Instance=] that was specifically granted access</td>
     </tr>
   </tbody>
 </table>
@@ -877,6 +877,11 @@ access through a [=Trusted Grant=].
       <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
       <td>Mode of access being granted to the instance linked via `trustedWith`</td>
     </tr>
+    <tr>
+      <td>scopeOfGrant</td>
+      <td>interop:noAccess, interop:TrustedAccess</td>
+      <td>Current scope of trusted access</td>
+    </tr>
   </tbody>
 </table>
 
@@ -890,7 +895,8 @@ class.
   interop:trustedWith IRI ;
   interop:trustedWithType [ interop:Agent interop:RegistrySet interop:Registry ] ;
   interop:satisfiesCompiledTrustedAccess @<#:CompiledTrustedAccessShape>+ ;
-  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ 
+  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
+  interop:scopeOfGrant @<#:TrustedGrantScopes>+ 
 }
 </pre>
 
@@ -1175,24 +1181,40 @@ for resource names.
 
 ## Operations ## {#grants-operations}
 
-* [[#grants-initializegrant]] - Initializes a new [=Access Grant=] for a given
-    [=Access Grant Subject=] or an [=Access Invitation=] for one or more
-    [=Access Invitation Channels=] with one or more [=Access Need Groups=]
-    * [[#grants-initializedatagrant]] - Initialize a [=Data Grant=] as part
-        of [=Access Grant=] initialization
-    * [[#grants-initializeremotegrant]] - Initialize a [=Remote Data Grant=] as
-        part of [=Access Grant=] initialization
-    * [[#grants-initializetrustedgrant]] - Initialize a [=Trusted Grant=] as part
-        of [=Access Grant=] initialization
+Load or initialize the two main grant types: [=Access Grant=], [=Access Invitation=]
+
 * [[#grants-loadgrant]] - Load an existing [=Access Grant=]
     from an [=Access Grant Registry=]
 * [[#grants-loadinvitation]] - Load an existing [=Access Invitation=]
     from an [=Access Grant Registry=]
+
+* [[#grants-initializegrant]] - Initializes a new [=Access Grant=] for a given
+    [=Access Grant Subject=] with one or more [=Access Need Groups=]
+* [[#grants-initializeinvitation]] - Initializes a new [=Access Invitation=] 
+    for one or more [=Access Invitation Channels=] with one or more 
+    [=Access Need Groups=]
+
+Each [=Access Grant=] or [=Access Invitation=] will have some combination
+of [=Data Grants=], [=Remote Data Grants=], and/or [=Trusted Grants=]:
+
+* [[#grants-initializedatagrant]] - Initialize a [=Data Grant=] as part
+    of [=Access Grant=] initialization
+* [[#grants-initializeremotegrant]] - Initialize a [=Remote Data Grant=] as
+    part of [=Access Grant=] initialization
+* [[#grants-initializetrustedgrant]] - Initialize a [=Trusted Grant=] as part
+    of [=Access Grant=] initialization
+    
+Validate and Record [=Access Grants=] and [=Access Invitations=]:
+
+* [[#validate-grant]] - Validate a new or updated [=Access Grant=]
+    
 * [[#grants-recordgrant]] - Store a new or updated [=Access Grant=]
     in an [=Access Grant Registry=]
-* [[#grants-validategrant]] - Validate a new or updated [=Access Grant=]
 * [[#grants-recordinvitation]] - Store a new or updated [=Access Invitation=]
     in an [=Access Grant Registry=]
+
+Apply permissions based on the composition of an [=Access Grant=]:
+
 * [[#grants-applyperms]] - Apply permissions to [=acl resources=] based
     on [=Access Grant=] decisions.
     * [[#grants-applydataperms]] - Apply permissions for a given [=Data Grant=]
@@ -1208,10 +1230,6 @@ for resource names.
         for a given [=Access Grant Subject=], condiioned upon a graph relationship
     * [[#grants-removeresourceperms]] - Remove permissions on a given resource
         for a given [=Access Grant Subject=]
-* [[#grants-present-access]] - A non-normative operation meant to instruct
-    a developer in how to load, initialize, and manage an [=Access Grant=].    
-* [[#grants-present-invitation]] - A non-normative operation meant to instruct
-    a developer in how to load, initialize, and manage an [=Access Invitation=].
 
 ### Initialize Grant ### {#grants-initializegrant}
 
@@ -1224,11 +1242,10 @@ for resource names.
   <tbody>
     <tr>
       <td colspan=2>
-        Initialize an [=Access Grant=] or [=Access Invitation=] by processing
-        the input [=Access Need Groups=] into [=Compiled Access Groups=], 
+        Initialize an [=Access Grant=] by processing
+        the input [=Access Need Groups=] and 
         then initializing [=Data Grants=], [=Remote Data Grants=], 
-        or [=Trusted Grants=] with no access (yet) for the 
-        corresponding [=Compiled Accesses=] in each group.
+        and/or [=Trusted Grants=] with no access (yet).
       </td>
     </tr>
   </tbody>
@@ -1239,10 +1256,6 @@ for resource names.
     <tr>
       <td>`SUBJECT`</td>
       <td>The [=Access Grant Subject=] that the [=Access Grant=] is related to</td>
-    </tr>
-    <tr>
-      <td>`ICHANNELS`</td>
-      <td>A set of [=Access Invitation Channels=]</td>
     </tr>
     <tr>
       <td>`GROUPS`</td>
@@ -1258,39 +1271,88 @@ for resource names.
   </thead>
   <tbody>
     <tr>
-      <td>[=Access Grant=], [=Access Invitation=]</td>
-      <td>Newly initialized [=Access Grant=] or [=Access Invitation=]</td>
+      <td>[=Access Grant=]</td>
+      <td>Newly initialized for the [=Access Grant Subject=]</td>
     </tr>
   </tbody>
 </table>
 
 <div class="opdetails">
 
-1. <em class="rfc2119">MUST</em> return a status code of 400 if both
-    `SUBJECT` and `ICHANNELS` are provided
-1. If `SUBJECT` is provided
-    1. Let `NEW` be a newly initialized [=Access Grant=]
-    1. Let `NEW hasAccessGrantSubject` be `SUBJECT`
-1. If `ICHANNELS` is provided
-    1. Let `NEW` be a newly initialized [=Access Invitation=]
-    1. For each [=Access Invitation Channel=] `ICHANNEL` in `ICHANNELS`
-        1. Let `ICHANNEL` be linked to `NEW` via `NEW hasAccessInvitationChannel`
+1. Let `GRANT` be a newly initialized [=Access Grant=]
+1. Let `GRANT hasAccessGrantSubject` be `SUBJECT`
 1. For each [=Access Need Group=] `GROUP` in `GROUPS`
-    1. Let `CAGROUP` be the [=Compiled Access Group=] returned from
-        [[#compile-group]] with inputs `GROUP`, `LANG`
-    1. Link `CAGROUP` to `NEW` via `NEW hasCompiledAccessGroup`
-1. Let `CAGROUPS` be all [=Compiled Access Groups=] linked to `NEW`
-    via `hasCompiledAccessGroup`
-1. Let `DATAGRANTS` be an empty set of [=Data Grants=]
-1. Let `TRUSTEDGRANTS` be an empty set of [=Trusted Grants=]
-1. Let `REMOTEGRANTS` be an empty set of [=Remote Data Grants=] 
-1. For each [=Compiled Access Group=] `CAGROUP` in `CAGROUPS`
-    1. For each [=Compiled Access=] `CACCESS` in `CAGROUP`
-        1. Call [[#grants-initializedatagrant]] with inputs: `CACCESS`, `DATAGRANTS`
-        1. Call [[#grants-initializeremotegrant]] with inputs: `CACCESS`, `REMOTEGRANTS`
-    1. For each [=Compiled Trusted Access=] `CTACCESS` in `CAGROUP`
-        1. Call [[#grants-initializetrustedgrant]] with inputs: `CTACCESS`, `TRUSTEDGRANTS`
-1. Return `NEW`
+    1. Link `GROUP` to `GRANT` via `GRANT hasAccessNeedGroup`
+1. For each [=Access Need Group=] `GROUP` linked via `GRANT hasAccessNeedGroup`
+    1. For each [=Access Need=] `NEED` in `GROUP`
+        1. Call [[#grants-initializedatagrant]] with inputs: `NEED`
+        1. Call [[#grants-initializeremotegrant]] with inputs: `NEED`
+    1. For each [=Trusted Need=] `TNEED` in `GROUP`
+        1. Call [[#grants-initializetrustedgrant]] with inputs: `TNEED`
+1. Return `GRANT`
+
+</div>
+
+### Initialize Invitation ### {#grants-initializeinvitation}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+        Initialize an [=Access Invitation=] by processing
+        the input [=Access Need Groups=] and 
+        then initializing [=Data Grants=], [=Remote Data Grants=], 
+        or [=Trusted Grants=] with no access (yet).
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`ICHANNELS`</td>
+      <td>A set of [=Access Invitation Channels=]</td>
+    </tr>
+    <tr>
+      <td>`GROUPS`</td>
+      <td>[=Access Need Groups=] to associate with the [=Access Invitation=]</td>
+    </tr>
+    <tr>
+      <td>`LANG`</td>
+      <td>The [=Agent's=] preferred language</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Access Invitation=]</td>
+      <td>Newly initialized based on input [=Access Invitation Channels=]</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `INVITE` be a newly initialized [=Access Invitation=]
+1. For each [=Access Invitation Channel=] `ICHANNEL` in `ICHANNELS`
+    1. Let `ICHANNEL` be linked to `INVITE` via `INVITE hasAccessInvitationChannel`
+1. For each [=Access Need Group=] `GROUP` in `GROUPS`
+    1. Link `GROUP` to `INVITE` via `INVITE hasAccessNeedGroup`
+1. For each [=Access Need Group=] `GROUP` linked via `INVITE hasAccessNeedGroup`
+    1. For each [=Access Need=] `NEED` in `GROUP`
+        1. Call [[#grants-initializedatagrant]] with inputs: `NEED`, `GRANT`
+        1. Call [[#grants-initializeremotegrant]] with inputs: `NEED`, `GRANT`
+    1. For each [=Trusted Need=] `TNEED` in `GROUP`
+        1. Call [[#grants-initializetrustedgrant]] with inputs: `TNEED`, `GRANT`
+1. Return `INVITE`
 
 </div>
 
@@ -1306,11 +1368,10 @@ for resource names.
     <tr>
       <td colspan=2>
         Initialize a [=Data Grant=] and link it to the provided 
-        [=Compiled Access=] `CACCESS`.
-        This operation looks for a [=Data Grant=] related to the 
-        [=shape tree=] in the working `DATAGRANTS` set to update. It will 
-        create one if it doesn't find one to update, and then add it 
-        to `DATAGRANTS`.
+        [=Access Need=] `NEED`.  
+        
+        Initialize [=Referenced Data Grants=] if the [=Access Need=] `NEED`
+        has any [=Referenced Access Needs=].
       </td>
     </tr>
   </tbody>
@@ -1319,13 +1380,13 @@ for resource names.
   </thead>
   <tbody>
     <tr>
-      <td>`CACCESS`</td>
-      <td>A [=Compiled Access=]</td>
+      <td>`NEED`</td>
+      <td>An [=Access Need=]</td>
     </tr>
     <tr>
-      <td>`DATAGRANTS`</td>
-      <td>A working set of [=Data Grants=] passed in by reference</td>
-    </tr>    
+      <td>`GRANT`</td>
+      <td>[=Access Grant=] that the [=Data Grant=] will be linked to</td>
+    </tr>
   </tbody>
   <thead>
     <tr><th colspan=2>Outputs</th></tr>
@@ -1333,28 +1394,34 @@ for resource names.
   <tbody>
     <tr>
       <td>[=Data Grant=]</td>
-      <td>Initialized [=Data Grant=] corresponding to `CACCESS`</td>
+      <td>Initialized [=Data Grant=] corresponding to `NEED`</td>
     </tr>
   </tbody>
 </table>
 
 <div class="opdetails">
 
-1. Let `MATCHING` be a [=Data Grant=] in `DATAGRANTS` where
-    `CACCESS registeredShapeTree` == `MATCHING registeredShapeTree`
-1. If `MATCHING` let `CACCESS hasDataGrant` be `MATCHING`
-1. If `MATCHING` is missing
-    1. Let `NEWDATAGRANT` be a newly initialized [=Data Grant=]
-    1. Let `NEWDATAGRANT registeredShapeTree` be `CACCESS registeredShapeTree`
-    1. Let `NEWDATAGRANT hasRegistration` be a [=Data Registration=] `DR`
-        where `DR registeredShapeTree` == `NEWDATAGRANT registeredShapeTree`
-    1. Let `NEWDATAGRANT scopeOfDataGrant` be `interop:NoAccess`
-    1. Let `CACCESS hasDataGrant` be `NEWDATAGRANT`
-    1. Add `CACCESS hasDataGrant` to `DATAGRANTS`
-1. Let `DATAGRANT` be `CACCESS hasDataGrant`
-1. Let `DATAGRANT satisfiesCompiledAccess` include `CACCESS`
-1. Let `DATAGRANT accessmode`s include `CACCESS accessmode`s
-1. Return `DATAGRANT`
+1. Let `DG` be a newly initialized [=Data Grant=]
+1. Let `DG hasAccessGrant` be `GRANT`
+1. Let `DG satisfiesAccessNeed` be `NEED`
+1. Let `DG registeredShapeTree` be `NEED registeredShapeTree`
+1. Let `DG hasRegistration` be a [=Data Registration=] `DR`
+    where `DR registeredShapeTree` == `DG registeredShapeTree`
+1. Let `DG accessmode`s be `CACCESS accessmode`s
+1. Let `DG scopeOGrant` be `interop:NoAccess`
+1. Let `NEED hasDataGrant` be `DG`
+1. For each [=Referenced Access Need=] `REFNEED` linked 
+    via `NEED hasReferencedAccessNeed`
+    1. Let `REFDG` be a newly initialized [=Referenced Data Grant=]
+    1. Let `REFDG hasDataGrant` be `DG`
+    1. Let `REFDG satisfiesAccessNeed` be `REFNEED` 
+    1. Let `REFDG registeredShapeTree` be `REFNEED registeredShapeTree`
+    1. Let `REFDG hasRegistration` be a [=Data Registration=] `DR`
+        where `DR registeredShapeTree` == `REFDG registeredShapeTree` 
+    1. Let `REFDG accessMode`s be `REFNEED accessMode`s
+    1. Let `REFDG scopeOfGrant` be `interop:NoAccess`
+    1. Link `REFDG` to `DG` via `DG hasReferencedDataGrant`
+1. Return `DG`
 
 </div>
 
@@ -1370,11 +1437,10 @@ for resource names.
     <tr>
       <td colspan=2>
         Initialize a [=Remote Data Grant=] and link it to the provided 
-        [=Compiled Access=] `CACCESS`.
-        This operation looks for a [=Remote Data Grant=] related to the 
-        [=shape tree=] in the working `REMOTEGRANTS` set to update. It will 
-        create one if it doesn't find one to update, and then add it 
-        to `REMOTEGRANTS`.
+        [=Access Need=] `NEED`.
+        
+        Initialize [=Referenced Remote Data Grants=] if the [=Access Need=] `NEED`
+        has any [=Referenced Access Needs=].
       </td>
     </tr>
   </tbody>
@@ -1383,12 +1449,12 @@ for resource names.
   </thead>
   <tbody>
     <tr>
-      <td>`CACCESS`</td>
-      <td>A [=Compiled Access=]</td>
+      <td>`NEED`</td>
+      <td>An [=Access Need=]</td>
     </tr>
     <tr>
-      <td>`REMOTEGRANTS`</td>
-      <td>A working set of [=Remote Data Grants=] passed in by reference</td>
+      <td>`GRANT`</td>
+      <td>[=Access Grant=] that the [=Remote Data Grant=] will be linked to</td>
     </tr>    
   </tbody>
   <thead>
@@ -1397,26 +1463,32 @@ for resource names.
   <tbody>
     <tr>
       <td>[=Remote Data Grant=]</td>
-      <td>Initialized [=Remote Data Grant=] corresponding to `CACCESS`</td>
+      <td>Initialized [=Remote Data Grant=] corresponding to `NEED`</td>
     </tr>
   </tbody>
 </table>
 
 <div class="opdetails">
 
-1. Let `MATCHING` be a [=Remote Data Grant=] in `REMOTEGRANTS` where
-    `CACCESS registeredShapeTree` == `MATCHING registeredShapeTree`
-1. If `MATCHING` let `CACCESS hasRemoteDataGrant` be `MATCHING`
-1. If `MATCHING` is missing
-    1. Let `NEWRDGRANT` be a newly initialized [=Remote Data Grant=]
-    1. Let `NEWRDGRANT registeredShapeTree` be `CACCESS registeredShapeTree`
-    1. Let `NEWRDGRANT scopeOfDataGrant` be `interop:NoAccess`
-    1. Let `CACCESS hasRemoteDataGrant` be `NEWRDGRANT`
-    1. Add `CACCESS hasRemoteDataGrant` to `REMOTEGRANTS`
-1. Let `RDGRANT` be `CACCESS hasRemoteDataGrant`
-1. Let `RDGRANT satisfiesCompiledAccess` include `CACCESS`
-1. Let `RDGRANT accessmode`s include `CACCESS accessmode`s
-1. Return `RDGRANT`
+1. Let `RDG` be a newly initialized [=Remote Data Grant=]
+1. Let `RDG hasAccessGrant` be `GRANT`
+1. Let `RDG satisfiesAccessNeed` be `NEED`
+1. Let `RDG registeredShapeTree` be `NEED registeredShapeTree`
+1. Let `RDG accessmode`s be `NEED accessmode`s
+1. Let `RDG scopeOfGrant` be `interop:NoAccess`
+1. Let `NEED hasRemoteDataGrant` be `RDG`
+1. For each [=Referenced Access Need=] `REFNEED` linked 
+    via `NEED hasReferencedAccessNeed`
+    1. Let `REFRDG` be a newly initialized [=Referenced Remote Data Grant=]
+    1. Let `REFRDG hasRemoteDataGrant` be `RDG`
+    1. Let `REFRDG satisfiesAccessNeed` be `REFNEED` 
+    1. Let `REFRDG registeredShapeTree` be `REFNEED registeredShapeTree`
+    1. Let `REFRDG hasRegistration` be a [=Data Registration=] `DR`
+        where `DR registeredShapeTree` == `REFRDG registeredShapeTree` 
+    1. Let `REFRDG accessMode`s be `REFNEED accessMode`s
+    1. Let `REFRDG scopeOfGrant` be `interop:NoAccess`
+    1. Link `REFRDG` to `RDG` via `RDG hasReferencedRemoteDataGrant`
+1. Return `RDG`
 
 </div>
 
@@ -1432,11 +1504,7 @@ for resource names.
     <tr>
       <td colspan=2>
         Initialize a [=Trusted Grant=] and link it to the provided 
-        [=Compiled Trusted Access=] `CTACCESS`.
-        This operation looks for a [=Trusted Grant=] related to 
-        `CTACCESS trustedWith` in the working `TRUSTEDGRANTS` set to update. 
-        It will create one if it doesn't find one to update, and then add it 
-        to `TRUSTEDGRANTS`.
+        [=Trusted Need=] `TNEED`.
       </td>
     </tr>
   </tbody>
@@ -1445,12 +1513,12 @@ for resource names.
   </thead>
   <tbody>
     <tr>
-      <td>`CTACCESS`</td>
-      <td>A [=Compiled Trusted Access=]</td>
+      <td>`TNEED`</td>
+      <td>A [=Trusted Need=]</td>
     </tr>
     <tr>
-      <td>`TRUSTEDGRANTS`</td>
-      <td>A working set of [=Trusted Grants=] passed in by reference</td>
+      <td>`GRANT`</td>
+      <td>[=Access Grant=] that the [=Trusted Grant=] will be linked to</td>
     </tr>    
   </tbody>
   <thead>
@@ -1459,26 +1527,22 @@ for resource names.
   <tbody>
     <tr>
       <td>[=Trusted Grant=]</td>
-      <td>Initialized [=Trusted Grant=] corresponding to `CTACCESS`</td>
+      <td>Initialized [=Trusted Grant=] corresponding to `TNEED`</td>
     </tr>
   </tbody>
 </table>
 
 <div class="opdetails">
 
-1. Let `MATCHING` be a [=Trusted Grant=] in `TRUSTEDGRANTS` where
-    `CTACCESS trustedWith` == `MATCHING trustedWith`
-1. If `MATCHING` let `CTACCESS hasTrustedGrant` be `MATCHING`
-1. If `MATCHING` is missing
-    1. Let `NEWTRUSTEDGRANT` be a newly initialized [=Trusted Grant=]
-    1. Let `NEWTRUSTEDGRANT trustedWith` be `CTACCESS trustedWith`
-    1. Let `NEWTRUSTEDGRANT trustedWithType` be `CTACCESS trustedWithType`
-    1. Let `CTACCESS hasTrustedGrant` be `NEWTRUSTEDGRANT`
-    1. Add `CTACCESS hasTrustedGrant` to `TRUSTEDGRANTS`
-1. Let `TRUSTEDGRANT` be `CTACCESS hasTrustedGrant`
-1. Let `TRUSTEDGRANT satisfiesCompiledTrustedAccess` include `CTACCESS`
-1. Let `TRUSTEDGRANT accessmode`s include `CTACCESS accessmode`s
-1. Return `TRUSTEDGRANT`
+1. Let `TG` be a newly initialized [=Trusted Grant=]
+1. Let `TG hasAccessGrant` be `GRANT`
+1. Let `TG satisfiesTrustedNeed` be `TNEED`
+1. Let `TG trustedWith` be `interop:NoAccess`
+1. Let `TG scopeOfGrant` be `interop:NoAccess`
+1. Let `TG trustedWithType` be `TNEED trustedWithType`
+1. Let `TG accessmode`s be `TNEED accessmode`s
+1. Let `TNEED hasTrustedGrant` be `TG`
+1. Return `TG`
 
 </div>
 
@@ -1586,7 +1650,7 @@ for resource names.
 
 </div>
 
-### Validate Grant ### {#grants-validategrant}
+### Validate Grant ### {#validate-grant}
 
 <table class="data operation" align="left">
   <colgroup></colgroup>
@@ -1598,7 +1662,7 @@ for resource names.
     <tr>
       <td colspan=2>
       This operation is used to validate an [=Access Grant=]
-      or [=Access Invitation=] before it is stored in an 
+      before it is stored in an 
       [=Access Grant Registry=].
       </td>
     </tr>
@@ -1609,7 +1673,7 @@ for resource names.
   <tbody>
     <tr>
       <td>`GRANT`</td>
-      <td>An [=Access Grant=] or [=Access Invitation=]</td>
+      <td>An [=Access Grant=] to validate</td>
     </tr>
   </tbody>
   <thead>
@@ -1625,110 +1689,433 @@ for resource names.
 
 <div class="opdetails">
 
-1. If `GRANT` is an [=Access Invitation=]
-    1. Perform a validation of the RDF graph of `GRANT` against
-        [interop:AccessInvitationShape](interop.shex#AccessInvitationShape).
-        <em class="rfc2119">MUST</em> return a status code of 400 if
-        validation fails.
-1. If `GRANT` is an [=Access Grant=]
-    1. Perform a validation of the RDF graph of `GRANT` against
-        [interop:AccessGrantShape](interop.shex#AccessGrantShape).
-        <em class="rfc2119">MUST</em> return a status code of 400 if
-        validation fails.
-1. Let `CAGROUPS` be the [=Compiled Access Groups=] linked to `GRANT`
-    via `GRANT hasCompiledAccessGroup`
-1. Let `DGRANTS` be the [=Data Grants=] linked to `GRANT`
-    via `GRANT hasDataGrant`
-1. Let `TGRANTS` be the [=Trusted Grants=] linked to `GRANT` via 
-    `GRANT hasTrustedGrant`
-1. Let `RDGRANTS` be the [=Remote Data Grants=] linked to `GRANT` via 
-    `GRANT hasRemoteDataGrant`
-1. For each [=Compiled Access Group=] `CAGROUP` in `CAGROUPS`:
-    1. For each [=Compiled Access=] `CACCESS` in `CAGROUP` traversed via
-        `CACCESS skos:narrower` or `CACCESS referencesCompiledAccess`:
-        1. Let `NDGRANT` be the [=Data Grant=] associated with
-            `CACCESS` via `CACCESS hasDataGrant`
-            1. Error if `NDGRANT` is missing
-            1. Error if `NDGRANT satisfiesCompiledAccess` doesn't link to `CACCESS`
-            1. Error if `interop:RegisteredShapeTree` is not the same in `NDGRANT` and `CACCESS`
-    1. For each [=Compiled Trusted Access=] `CTACCESS` in `CAGROUP`:
-        1. Let `TGRANT` be the [=Trusted Grant=] associated with `CTACCESS`
-            via `CTACCESS hasTrustedGrant`
-            1. Error if `TGRANT` is missing
-            1. Error if `TGRANT satisfiesCompiledTrustedAccess` doesn't link to `CTACCESS`
-            1. Error if `TGRANT trustedWith` is not the same as `CTACCESS trustedWith`
-            1. Error if `TGRANT trustedWithType` is not the same as `CTACCESS trustedWithType`
-            1. Error if `TGRANT trustedWith` is not a `TGRANT trustedWithType` 
-1. For each [=Data Grant=] `DGRANT` in `DGRANTS`
-    1. Let `CA` be all [=Compiled Accesses=] across `CAGROUPS`
-    1. Let `DGCA` be all [=Compiled Accesses=] linked to `DGRANT` via
-        `DGRANT satisfiesCompiledAccess`
-    1. Let `SCOPE` be `DGRANT scopeOfDataGrant`
-    1. Error if `DGCA` is not in `CA`
-    1. Error if `DGCA` is empty
-    1. Error if `DGRANT` access modes are not an exact union of
-        `DGCA accessMode` values when `DGRANT scopeOfDataGrant` is not
-        `interop:NoAccess`
-    1. If `SCOPE` includes `interop:NoAccess`
-        1. Error if `SCOPE` includes any other scopes
-    1. If `SCOPE` includes `interop:AllInstances`
-        1. Error if `SCOPE` includes any other scopes
-    1. If `SCOPE` includes ONLY `interop:InheritInstances`
-        1. Let `INHERITANCES` be the [=Data Inheritances=] linked via 
-            `DGRANT hasDataInheritance`
-        1. Error if `INHERITANCES` is empty
-        1. For each  [=Data Inheritances=] `INHERITANCE` in `INHERITANCES`
-            1. Let `PDGRANT` be the [=Data Grant=] linked via `INHERITANCE inheritsFrom`
-            1. Error if `DGRANT interop:RegisteredShapeTree` does not have a reference
-                to `PDGRANT interop:RegisteredShapeTree` via
-                `INHERITANCE st:traverseViaShapePath`
-    1. If `SCOPE` includes `interop:InheritInstances` AND `interop:SelectedInstances`
-        1. Error if `SCOPE` includes any other scopes
-    1. If `SCOPE` includes `interop:SelectedInstances`        
-        1. Error if `DGRANT interop:hasDataInstance` is missing
-1. For each [=Remote Data Grant=] `RDGRANT` in `RDGRANTS`
-    1. Let `CA` be all [=Compiled Accesses=] across `CAGROUPS`
-    1. Let `RDGCA` be all [=Compiled Accesses=] linked to `RDGRANT` via
-        `RDGRANT satisfiesCompiledAccess`
-    1. Let `SCOPE` be `RDGRANT scopeOfRemoteDataGrant`
-    1. Error if `RDGCA` is not in `CA`
-    1. Error if `RDGCA` is empty    
-    1. If `SCOPE` is `interop:AllRemote`    
-        1. Error if `RDGRANT` access modes are not an exact union of
-            `RDGCA accessMode` values
-        1. Error if `RDGRANT hasRemoteDataRegistrationSet` is missing
-        1. Error if `RDGRANT hasRemoteDataRegistrationGrant` is not missing
-    1. If `SCOPE` is `interop:SelectedRemote`
-        1. Error if `RDGRANT hasRemoteDataRegistrationSet` is not missing 
-        1. Error if `RDGRANT hasRemoteDataRegistrationGrant` is missing
-        1. For each [=Remote Data Registration Grant=] `RDRGRANT` linked via
-            `RDGRANT hasRemoteDataRegistrationGrant`
-            1. Let `RDRSCOPE` be `RDRGRANT scopeOfRemoteDataRegistrationGrant`
-            1. Error if `RDRGRANT` access modes are not an exact union of
-                `RDGCA accessMode` values
-            1. Error if `RDRGRANT hasRemoteDataRegistration` is missing
-            1. If `RDRSCOPE` is interop:AllInstances
-                1. Error if `RDRGRANT hasDataInstance` is not missing
-            1. If `RDRSCOPE` includes interop:SelectedInstances
-                1. Error if `RDRGRANT hasDataInstance` is missing
-            1. If `RDRSCOPE` includes interop:InheritInstances    
-                1. Let `INHERITANCES` be the [=Data Inheritances=] linked via 
-                    `RDRGRANT hasDataInheritance`
-                1. Error if `INHERITANCES` is empty
-                1. For each  [=Data Inheritance=] `INHERITANCE` in `INHERITANCES`
-                    1. Let `FROMGRANT` be the [=Remote Data Registration Grant=] 
-                        linked via `INHERITANCE inheritsFrom`
-                    1. Error if `RDRGRANT interop:registeredShapeTree` does not have a 
-                        reference to `FROMGRANT interop:RegisteredShapeTree` via
-                        `INHERITANCE st:traverseViaShapePath`
-1. For each [=Trusted Grant=] `TGRANT` in `TGRANTS`
-    1. Let `CTA` be all [=Compiled Trusted Accesses=] across `CAGROUPS`
-    1. Let `TGCTA` be all [=Compiled Trusted Accesses=] linked to `TGRANT` via
-        `TGRANT satisfiesCompiledTrustedAccess` 
-    1. Error if `TGCTA` is not in `CTA`
-    1. Error if `TGCTA` is empty
-    1. Error if `TGRANT` access modes are not an exact union of
-        `TGCTA accessMode` values
+1. Perform a validation of the RDF graph of `GRANT` against
+    [interop:AccessGrantShape](interop.shex#AccessGrantShape).
+    <em class="rfc2119">MUST</em> return a status code of 400 if
+    validation fails.
+1. For each [=Access Need Group=] `GROUP` linked via `GRANT hasAccessNeedGroup`
+    1. Call [[#validate-need-group]] with inputs: `GROUP`, `GRANT`     
+1. For each [=Data Grant=] `DG` linked via `GRANT hasDataGrant`
+    1. Call [[#validate-data-grant]] with inputs: `DG`, `GRANT`
+1. For each [=Remote Data Grant=] `RDG` linked via `GRANT hasRemoteDataGrant`
+    1. Call [[#validate-remote-data-grant]] with inputs: `RDG`, `GRANT`
+1. For each [=Trusted Grant=] `TG` linked via `GRANT hasTrustedGrant`
+    1. Call [[#validate-trusted-grant]] with inputs: `TG`, `GRANT`
+1. Return Success    
+
+</div>
+
+### Validate Invitation ### {#validate-invitation}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation is used to validate an [=Access Invitation=] before it 
+      is stored in an [=Access Grant Registry=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`INVITATION`</td>
+      <td>An [=Access Invitation=] to validate</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Boolean</td>
+      <td>Success or Failure</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Perform a validation of the RDF graph of `INVITATION` against
+    [interop:AccessInvitationShape](interop.shex#AccessInvitationShape).
+    <em class="rfc2119">MUST</em> return a status code of 400 if
+    validation fails.
+1. For each [=Access Need Group=] `GROUP` linked via `INVITATION hasAccessNeedGroup`
+    1. Call [[#validate-need-group]] with inputs: `GROUP`, `INVITATION`     
+1. For each [=Data Grant=] `DG` linked via `INVITATION hasDataGrant`
+    1. Call [[#validate-data-grant]] with inputs: `DG`, `INVITATION`
+1. For each [=Remote Data Grant=] `RDG` linked via `INVITATION hasRemoteDataGrant`
+    1. Call [[#validate-remote-data-grant]] with inputs: `RDG`, `INVITATION`
+1. For each [=Trusted Grant=] `TG` linked via `INVITATION hasTrustedGrant`
+    1. Call [[#validate-trusted-grant]] with inputs: `TG`, `INVITATION`
+1. Return `Success`
+
+</div>
+
+### Validate Access Need Group ### {#validate-need-group}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation is used to validate an [=Access Need Group=] before it 
+      is stored in an [=Access Grant Registry=] as part of an [=Access Grant=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`GROUP`</td>
+      <td>An [=Access Need Group=] to validate</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>An [=Access Grant=] or [=Access Invitation=] that `GROUP` is linked to</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Boolean</td>
+      <td>Success or Failure</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. For each [=Access Need=] `NEED` in `GROUP`
+    1. Call [[#validate-need]] with inputs: `NEED`, `GROUP`, `GRANT`     
+1. For each [=Trusted Need=] `TNEED` in `GROUP`:
+    1. Call [[#validate-trusted-need]] with inputs: `TNEED`, `GROUP`, `GRANT`
+1. Return `Success`
+
+</div>
+
+### Validate Access Need ### {#validate-need}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation is used to validate an [=Access Need=] before it 
+      is stored in an [=Access Grant Registry=] as part of an [=Access Grant=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`NEED`</td>
+      <td>An [=Access Need=] to validate</td>
+    </tr>
+    <tr>
+      <td>`GROUP`</td>
+      <td>The [=Access Need Group=] that `NEED` belongs to</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>An [=Access Grant=] or [=Access Invitation=] that `GROUP` is linked to</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Boolean</td>
+      <td>Success or Failure</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `DG` be the [=Data Grant=] linked with `NEED` via `NEED hasDataGrant`
+    1. Error if `DG` is missing
+    1. Error if `DG satisfiesAccessNeed` doesn't link to `NEED`
+    1. Error if `DG registeredShapeTree` != `NEED registeredShapeTree`
+1. Let `RDG` be the [=Remote Data Grant=] linked with `NEED` via `NEED hasRemoteDataGrant`
+    1. Error if `RDG` is missing
+    1. Error if `RDG satisfiesAccessNeed` doesn't link to `NEED`
+    1. Error if `RDG registeredShapeTree` != `NEED registeredShapeTree` 
+1. For each [=Referenced Access Need=] `REFNEED` linked via `NEED hasReferencedAccessNeed` 
+    1. Error if `REFNEED hasReferencedDataGrant` is missing
+    1. Let `REFDG` be `REFNEED hasReferencedDataGrant`
+    1. Error if `REFDG satisfiesAccessNeed` != `REFNEED`  
+    1. Error if `REFDG registeredShapeTree` != `REFNEED registeredShapeTree`  
+    1. Error if `REFNEED hasReferencedRemoteDataGrant` is missing
+    1. Let `REFRDG` be `REFNEED hasReferencedRemoteDataGrant`
+    1. Error if `REFRDG satisfiesAccessNeed` != `REFNEED`  
+    1. Error if `REFRDG registeredShapeTree` != `REFNEED registeredShapeTree`   
+
+</div>
+
+### Validate Trusted Need ### {#validate-trusted-need}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation is used to validate a [=Trusted Need=] before it 
+      is stored in an [=Access Grant Registry=] as part of an [=Access Grant=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`TNEED`</td>
+      <td>A [=Trusted Need=] to validate</td>
+    </tr>
+    <tr>
+      <td>`GROUP`</td>
+      <td>The [=Access Need Group=] that `TNEED` belongs to</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>An [=Access Grant=] or [=Access Invitation=] that `GROUP` is linked to</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Boolean</td>
+      <td>Success or Failure</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `TG` be the [=Trusted Grant=] linked with `TNEED` via `TNEED hasTrustedGrant`        
+    1. Error if `TG` is missing
+    1. Error if `TG satisfiesTrustedNeed` doesn't link to `NEED`
+    1. Error if `TG trustedWith` is not a `TGRANT trustedWithType`
+
+</div>
+
+### Validate Data Grant ### {#validate-data-grant}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation is used to validate a [=Data Grant=]
+      belonging to a given [=Access Grant=] before it is
+      stored in an [=Access Grant Registry=]
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`DG`</td>
+      <td>A [=Data Grant=] to validate</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>The [=Access Grant=] or [=Access Invitation=] that `DG` is linked to</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Boolean</td>
+      <td>Success or Failure</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+  
+1. Let `SCOPE` be `DG scopeOfGrant`
+1. Let `NEED` be `DG satisfiesAccessNeed`
+1. Error if `NEED` is missing
+1. Error if `NEED` isn't linked to an [=Access Need Group=] included in
+    `GRANT hasAccessNeedGroup`
+1. Error if `DG` access modes are not an exact union of
+    `NEED accessMode` values
+1. Error if `SCOPE` is `interop:InheritInstances`
+1. For each [=Referenced Data Grant=] `REFDG` linked via `DG hasReferencedDataGrant`
+    1. Let `SCOPE` be `REFDG scopeOfGrant`
+    1. Let `REFNEED` be `REFDG satisfiesReferencedAccessNeed`
+    1. Error if `REFNEED` is missing
+    1. Error if `REFNEED` isn't linked to an [=Access Need Group=] included in
+        `GRANT hasAccessNeedGroup`
+    1. Error if `REFDG` access modes are not an exact union of
+        `REFNEED accessMode` values    
+          
+</div>
+
+### Validate Remote Data Grant ### {#validate-remote-data-grant}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      Validate a [=Remote Data Grant=]
+      belonging to a given [=Access Grant=] before it is
+      stored in an [=Access Grant Registry=]
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`RDG`</td>
+      <td>A [=Remote Data Grant=] to validate</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>An [=Access Grant=] or [=Access Invitation=] that `RDG` is linked to</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Boolean</td>
+      <td>Success or Failure</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `SCOPE` be `RDG scopeOfGrant`
+1. Let `NEED` be `RDG satisfiesAccessNeed`
+1. Error if `NEED` is missing
+1. Error if `NEED` isn't linked to an [=Access Need Group=] included in
+    `GRANT hasAccessNeedGroup`
+1. Error if `RDG` access modes are not an exact union of
+    `NEED accessMode` values
+1. If `SCOPE` is `interop:AllRemoteInstances` 
+    1. Error if either `RDG hasRemoteDataFromAgent` or 
+        `RDG hasRemoteAgentDataInstance` are not missing
+1. If `SCOPE` is `interop:AllRemoteFromAgent` 
+    1. Error if `RDG hasRemoteDataFromAgent` is missing
+    1. Error if `RDG hasRemoteAgentDataInstance` is not missing 
+1. If `SCOPE` is `interop:SelectedRemoteInstances`
+    1. Error if `RDG hasRemoteAgentDataInstance` is missing
+    1. Error if `RDG hasRemoteDataFromAgent` is not missing
+1. For each [=Referenced Remote Data Grant=] `REFRDG` linked via `DG hasReferencedRemoteDataGrant`
+    1. Let `SCOPE` be `REFRDG scopeOfGrant`
+    1. Let `REFNEED` be `REFRDG satisfiesAccessNeed`
+    1. Error if `REFNEED` is missing
+    1. Error if `REFNEED` isn't linked to an [=Access Need Group=] included in
+        `GRANT hasAccessNeedGroup`
+    1. Error if `REFRDG` access modes are not an exact union of
+        `REFNEED accessMode` values
+    1. If `SCOPE` is `interop:AllRemoteInstances` 
+        1. Error if either `REFRDG hasRemoteDataFromAgent` or 
+            `REFRDG hasRemoteAgentDataInstance` are not missing
+    1. If `SCOPE` is `interop:AllRemoteFromAgent` 
+        1. Error if `REFRDG hasRemoteDataFromAgent` is missing
+        1. Error if `REFRDG hasRemoteAgentDataInstance` is not missing 
+    1. If `SCOPE` is `interop:SelectedRemoteInstances`
+        1. Error if `REFRDG hasRemoteAgentDataInstance` is missing
+        1. Error if `REFRDG hasRemoteDataFromAgent` is not missing
+  
+</div>
+
+### Validate Trusted Grant ### {#validate-trusted-grant}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      Validate a [=Trusted Grant=]
+      belonging to a given [=Access Grant=] before it is
+      stored in an [=Access Grant Registry=]
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`TG`</td>
+      <td>A [=Trusted Grant=] to validate</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>An [=Access Grant=] or [=Access Invitation=] that `TG` is linked to</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Boolean</td>
+      <td>Success or Failure</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `TNEED` be `TG satisfiesTrustedNeed`
+1. Error if `TNEED` is missing
+1. Error if `TNEED` is not part of an [=Access Need Group=] linked via
+    `GROUP hasAccessNeedGroup`
 
 </div>
 
@@ -1776,9 +2163,6 @@ for resource names.
 
 <div class="opdetails">
 
-1. Call [[#grants-validategrant]] with inputs: `GRANT`.
-    <em class="rfc2119">MUST</em> return a status code of 400 if
-    validation fails.
 1. Add or Update `GRANT` resource in the `REGISTRY` container, conforming to
     the assigned [interopt:AccessGrantTree](interop.tree#AccessGrantTree).
 1. Link `GRANT` to the `REGISTRY` via `REGISTRY hasRegistration` if
@@ -1835,9 +2219,6 @@ means pods will also need to be registered.
 
 <div class="opdetails">
 
-1. Call [[#grants-validategrant]] with inputs: `INVITATION`.
-    <em class="rfc2119">MUST</em> return a status code of 400 if
-    validation fails.
 1. Add or Update `INVITATION` resource in the `REGISTRY` container, conforming to
     the assigned
     [interopt:AccessInvitationTree](interop.tree#AccessInvitationTree)
@@ -2392,7 +2773,7 @@ the subject identifier could? vary
 
 </div>
 
-### Present Access Grant ### {#grants-present-access}
+### Deny Access Group ### {#grants-denygroup}
 
 <table class="data operation" align="left">
   <colgroup></colgroup>
@@ -2403,355 +2784,7 @@ the subject identifier could? vary
   <tbody>
     <tr>
       <td colspan=2>
-      This operation is non-normative, and meant to instruct
-      a developer in how to load and initialize an [=Access Grant=], 
-      present it to an [=Agent=], invoke the appropriate
-      operations to manipulate [=Data Grants=], [=Remote Data Grants=], 
-      or [=Trusted Grants=] in 
-      accordance with the [=Agent's=] decisions, and then record and act 
-      upon those decisions.
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`SUBJECT`</td>
-      <td>An [=Access Grant Subject=]</td>
-    </tr>
-    <tr>
-      <td>`REGISTRY`</td>
-      <td>An [=Access Grant Registry=]</td>
-    </tr>
-    <tr>
-      <td>`GROUPS`</td>
-      <td>An optional set of [=Access Need Groups=]</td>
-    </tr>
-    <tr>
-      <td>`LANG`</td>
-      <td>The [=Agent's=] preferred language</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `GRANT` be an [=Access Grant=] returned by [[#grants-loadgrant]] with
-    inputs: `SUBJECT`, `REGISTRY`
-1. If `GRANT` is missing, let `GRANT` be an [=Access Grant=] returned
-    by [[#grants-initializegrant]] with inputs: `SUBJECT`, `REGISTRY`,
-    `GROUPS`, `LANG`.
-1. If available, present the [=Agent=] who granted access via `registeredBy`
-1. If available, present the [=Application=] used by the [=Agent=] to grant
-    access via `registeredWith`
-1. If available, present the timestamp of creation via `registeredAt`,
-    and update via `updatedAt`
-1. For each [=Compiled Access Group=] `CAGROUP` in `CAGROUPS`
-    1. Call [[#grants-present-cagroup]] with inputs: 
-        `CAGROUP`, `GRANT`, `REGISTRY`, `LANG`
-1. Call [[#grants-recordgrant]] with inputs: `GRANT`, `REGISTRY`
-
-</div>
-
-### Present Access Invitation ### {#grants-present-invitation}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation is non-normative, and meant to instruct
-      a developer in how to load and initialize an [=Access Invitation=], 
-      present it to an [=Agent=], invoke the appropriate
-      operations to manipulate [=Data Grants=], [=Remote Data Grants=], 
-      or [=Trusted Grants=] in 
-      accordance with the [=Agent's=] decisions, and then record and act 
-      upon those decisions.
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`TARGET`</td>
-      <td>The `interop:channelTarget` of an [=Access Invitation=]</td>
-    </tr>
-    <tr>
-      <td>`ICHANNELS`</td>
-      <td>A set of [=Access Invitation Channels=] for a new
-      [=Access Invitation=]</td>
-    </tr>
-    <tr>
-      <td>`REGISTRY`</td>
-      <td>An [=Access Grant Registry=]</td>
-    </tr>
-    <tr>
-      <td>`GROUPS`</td>
-      <td>An optional set of [=Access Need Groups=]</td>
-    </tr>
-    <tr>
-      <td>`LANG`</td>
-      <td>The [=Agent's=] preferred language</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `INVITATION` be an [=Access Invitation=] returned by
-    [[#grants-loadinvitation]] with inputs: `TARGET`, `REGISTRY`
-1. If `INVITATION` is missing, let `INVITATION` be an [=Access Invitation=]
-    returned by [[#grants-initializegrant]] with inputs: `ICHANNELS`,
-    `REGISTRY`, `GROUPS`, `LANG`
-1. Let `CAGROUPS` be the [=Compiled Access Groups] linked via `GRANT hasCompiledAccessGroup`
-1. If available, present the [=Agent=] who granted access via `registeredBy`
-1. If available, present the [=Application=] used by the [=Agent=] to grant
-    access via `registeredWith`
-1. If available, present the timestamp of creation via `registeredAt`,
-    and update via `updatedAt`
-1. For each [=Compiled Access Group=] `CAGROUP` in `CAGROUPS`
-    1. Call [[#grants-present-cagroup]] with inputs: 
-        `CAGROUP`, `INVITATION`, `REGISTRY`, `LANG`
-1. Call [[#grants-recordinvitation]] with inputs: `INVITATION`, `REGISTRY`
-
-</div>
-
-### Present Compiled Access Group #### {#grants-present-cagroup}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation is used to present a [=Compiled Access Group=] to
-      an [=Agent=] for the purposes of reviewing and managing the
-      [=Data Grants], [=Remote Data Grants=], and [=Trusted Grants=]
-      associated with an [=Access Grant=] or [=Access Invitation=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`CAGROUP`</td>
-      <td>A [=Compiled Access Group=] associated with `GRANT`</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>The [=Access Grant=] or [=Access Invitation=] that `CAGROUP`
-      is associated with.
-      </td>
-    </tr>
-    <tr>
-      <td>`REGISTRY`</td>
-      <td>An [=Access Grant Registry=]</td>
-    </tr>
-    <tr>
-      <td>`LANG`</td>
-      <td>The [=Agent's=] preferred language</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `GDEC` be the [=Access Need Group Decorator=] linked via
-    `CAGROUP hasAccessNeedGroupDecorator`
-1. Let `GROUPNAME` be `GDEC skos:prefLabel`
-1. Let `GROUPDESC` be `GDEC skos:definition` 
-1. Let `GRANTEETYPE` be  `CAGROUP authenticatesAs`
-1. Let `GROUPREQUIRED` be `true` if `CAGROUP accessNecessity` is 
-    `interop:AccessRequired`
-1. Let `ENABLEOPTIONAL` be `true` if `CAGROUP accessNecessity` is 
-    `interop:AccessOptional` and `CAGROUP isEnabled` is `true`
-1. If `ENABLEOPTIONAL` is not `true` 
-    1. Present an option to enable the group by letting `CAGROUP isEnabled`
-        be `true`, and let `ENABLEOPTIONAL` be `true`
-1. If `GROUPREQUIRED` is `true` or `ENABLEOPTIONAL` is `true`
-    1. To disable the group call [[#grants-denygroup]] operation with 
-            inputs: `GRANT`, `CAGROUP`
-    1. For each [=Root Compiled Access=] `ROOT` linked via
-        `CAGROUP hasCompiledAccess`
-        1. Call [[#grants-present-root-ca]] with inputs:
-            `ROOT`, `CAGROUP`, `GRANT`, `LANG`
-
-</div>
-
-### Present Root Compiled Access ### {#grants-present-root-ca}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This option is used to present a [=Root Compiled Access=] in a
-      [=Compiled Access Group=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`ROOT`</td>
-      <td>The Root [=Compiled Access=] to present</td>
-    </tr>
-    <tr>
-      <td>`CAGROUP`</td>
-      <td>The [=Compiled Access Group=] that `CACCESS` belongs to</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>The [=Access Grant=] that `CAGROUP` belongs to</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Call [[#grants-present-ca-details]] with inputs: 
-    `ROOT`, `CAGROUP`, `GRANT`    
-    
-1. For each [=Compiled Access=] `CACCESS` starting with `ROOT`
-    and traversed via `CACCESS skos:narrower` or
-    `CACCESS referencesCompiledAccess`:
-    
-    1. If `DATAGRANT scopeOfDataGrant` is `interop:NoAccess`
-        1. Allow `interop:AllInstances` to be selected, which invokes
-            the [[#grants-selectall]] operation with inputs:
-            `GRANT`, `CAGROUP`, `CACCESS`
-        1. Allow a subset of [=Data Instances=] be selected,
-            and let `INSTANCES` be that subset, invoking
-            the [[#grants-select]] operation with inputs:
-            `INSTANCES`, `GRANT`, `CAGROUP`, `CACCESS`
-    1. If `DATAGRANT scopeOfDataGrant` is `interop:AllInstances`, then
-        present the user with summary details, and the ability to
-        see specific instances.
-            1. Let `INSTANCES` be a selected set of
-                [=Data Instances=]
-            1. If the user chooses to select
-                specific instances from this list, invoke the
-                [[#grants-select]] operation with inputs: `INSTANCES`,
-                `GRANT`, `CAGROUP`, `CACCESS`.
-    1. If `DATAGRANT scopeOfDataGrant` is `interop:SelectedInstances`, then
-        present the user with the specific instances they have selected,
-        and:
-            1. Let `INSTANCES` be a selected set of
-                [=Data Instances=]
-            1. Allow the selected [=Data Instances=] to be
-                adjusted, and invoke the [[#grants-select]] operation with
-                inputs: `INSTANCES`, `DATAGRANT`, `CAGROUP`, `CACCESS`.
-            1. Allow all [=Data Instances=] to be selected,
-                invoking the [[#grants-selectall]] operation with inputs:
-                `GRANT`, `CAGROUP`, `CACCESS`.
-    1. If `DATAGRANT scopeOfDataGrant` is `interop:InheritInstances`, present
-        the inherited [=Data Instances=] and:
-        1. Let `INSTANCES` be a selected set of
-            [=Data Instances=]
-        1. Allow a subset to be selected, invoking
-            the [[#grants-select]] operation with inputs: `INSTANCES`,
-            `GRANT`, `CAGROUP`, `CACCESS`
-        1. Identify the [=Compiled Access=] / [=Data Grant=]
-            and selected [=Data Instances=] that were inherited
-            from.
-    1. If `DATAGRANT scopeOfDataGrant` includes `interop:SelectedInstances`
-        and `interop:InheritInstances`
-        1. Let `INSTANCES` be a selected set of
-            [=Data Instances=]
-        1. Give the ability to adjust the selected instances, invoking
-            the [[#grants-select]] operation with inputs:
-            `INSTANCES`, `GRANT`, `CAGROUP`, `CACCESS`.
-        1. Give the ability to revert to all inherited instances,
-            invoking the [[#grants-selectall]] operation with inputs:
-            `GRANT`, `CAGROUP`, `CACCESS`
-
-</div>
-
-### Present Compiled Access Details ### {#grants-present-ca-details}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This option is used to present the details of a [=Compiled Access=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`CACCESS`</td>
-      <td>The Root [=Compiled Access=] to present</td>
-    </tr>
-    <tr>
-      <td>`CAGROUP`</td>
-      <td>The [=Compiled Access Group=] that `CACCESS` belongs to</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `DATAGRANT` be `CACCESS hasDataGrant`
-1. Let `ANDEC` be `CACCESS hasAccessNeedDecorator`
-1. Let `STDEC` be `CACCESS hasShapeTreeDecorator`
-1. If `CACCESS accessNecessity` is `AccessOptional`,
-    and `DATAGRANT scopeOfDataGrant` is `interop:NoAccess`
-    1. Allow access selection to be enabled and managed as detailed
-        in the remainder of this operation.
-1. Present the name of the [=shape tree=] via `STDEC skos:prefLabel`
-1. Present the reason access to this data is needed via
-    `ANDEC skos:prefLabel`
-1. Present the access modes requested via `CACCESS accessMode`s
-1. For each supporting [=Compiled Access=] `SUPPORTING` linked
-    via `CACCESS supportedBy`
-    1. Present the name of the [=shape tree=] via the
-        associated [=Shape Tree Decorator=]
-    1. Present the reason access to this data is needed via the
-        associated [=Access Need Decorator=]
-    1. Present the access modes requested via
-        `SUPPORTING accessMode`s
-        
-</div>
-
-### Deny Compiled Access Group ### {#grants-denygroup}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation is used when a given [=Compiled Access Group=] with 
+      This operation is used when a given [=Access Group=] with 
       optional necessity has been denied.
       </td>
     </tr>
@@ -2765,23 +2798,170 @@ the subject identifier could? vary
       <td>An [=Access Grant=]</td>
     </tr>
     <tr>
-      <td>`CAGROUP`</td>
-      <td>A [=Compiled Access Group=]</td>
+      <td>`GROUP`</td>
+      <td>An [=Access Need Group=]</td>
     </tr>
   </tbody>
 </table>
 
 <div class="opdetails">
 
-1. Let `CAGROUP isEnabled` be `false` if `CAGROUP accessNecessity` is
-    `interop:AccessOptional`
-1. For each [=Compiled Access=] `CACCESS` in `CAGROUP`
-    1. Let `DATAGRANT` be `CACCESS hasDataGrant`
-    1. Let `DATAGRANT scopeOfDataGrant` be `interop:NoAccess`
+1. For each [=Access Need=] `NEED` in `GROUP`
+    1. Call [[#deny-data-grant]] with inputs: `NEED hasDataGrant`, `GRANT`
+    1. Call [[#deny-remote-data-grant]] with inputs: `NEED hasRemoteDataGrant`, `GRANT` 
+
+1. For each [=Trusted Need=] `TNEED` in `GROUP`
+    1. Call [[#deny-trusted-grant]] with inputs: `NEED hasTrustedGrant`, `GRANT`
 
 </div>
 
-### Select Specific Instances for Access ### {#grants-select}
+### Deny Data Grant ### {#deny-data-grant}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation is used when a given [=Data Grant=] has been denied.
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`DG`</td>
+      <td>A [=Data Grant=]</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>The [=Access Grant=] that `DG` is linked to</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `DG scopeOfGrant` be `interop:NoAccess`
+1. For each [=Referenced Data Grant=] `REFDG` linked via `DG hasReferencedDataGrant`
+    1. Call [[#deny-referenced-data-grant]] with inputs: `REFDG`, `DG`
+
+</div>
+
+### Deny Referenced Data Grant ### {#deny-referenced-data-grant}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation is used when a given [=Referenced Data Grant=] has been denied.
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`REFDG`</td>
+      <td>A [=Referenced Data Grant=]</td>
+    </tr>
+    <tr>
+      <td>`DG`</td>
+      <td>The [=Data Grant=] that `REFDG` is linked to</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `REFDG scopeOfGrant` be `interop:NoAccess`
+
+</div>
+
+### Select All Data Instances ### {#select-all-data-instances}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>      
+      Used to select all [=Data Instances=] for a given [=Data Grant=].      
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`DG`</td>
+      <td>The [=Data Grant=]</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>The [=Access Grant=] that `DATAGRANT` is associated with</td>
+    </tr>    
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `DG scopeOfGrant` be `interop:AllInstances`
+1. Remove all links for `DG hasDataInstance`  
+1. For each [=Referenced Data Grant=] `REFDG` linked via `DG hasReferencedDataGrant`
+    1. Call [[#select-all-referenced-data-instances]] with inputs: `REFDG`
+
+</div>
+
+### Select All Referenced Data Instances ### {#select-all-referenced-data-instances}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>      
+      Used to select all [=Data Instances=] for a given [=Referenced Data Grant=].      
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`REFDG`</td>
+      <td>The [=Referenced Data Grant=]</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `REFDG scopeOfGrant` be `interop:AllInstances`
+1. Remove all links for `REFDG hasDataInstance`   
+
+</div>
+
+### Select Specific Data Instance ### {#select-data-instance}
 
 <table class="data operation" align="left">
   <colgroup></colgroup>
@@ -2793,9 +2973,88 @@ the subject identifier could? vary
     <tr>
       <td colspan=2>      
       Used to select specific [=Data Instances=] for a given
-      [=Data Grant=], which has a recursive application down the hierachy,
-      with subordinate [=Data Grants=] reducing their associated scope of
-      [=Data Instances=] to only those related to the instances above them.
+      [=Data Grant=]. If the [=Data Grant=] has any [=Referenced Data Grants=],
+      this will set their scope to `interop:InheritInstances`.</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`DI`</td>
+      <td>A [=Data Instance=] selected for access</td>
+    </tr>
+    <tr>
+      <td>`DG`</td>
+      <td>The [=Data Grant=] that `DI` is associated with</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>The [=Access Grant=] that `DG` is associated with</td>
+    </tr>    
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `DG scopeOfGrant` be `interop:SelectedInstances`
+1. Let `DG hasDataInstance` be linked to one unique instance of `DI` 
+1. For each [=Referenced Data Grant=] `REFDG` linked via `DG hasReferencedDataGrant`
+    1. Call [[#select-inherited-referenced-data-instance]] with inputs: `REFDG`, `DG`
+
+</div>
+
+### Select Inherited Referenced Data Instance ### {#select-inherited-referenced-data-instance}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>      
+      Used to set the scope of a [=Referenced Data Grant=] to inherited access.
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+  
+    <tr>
+      <td>`REFDG`</td>
+      <td>The [=Referenced Data Grant=] to adjust</td>
+    </tr>
+    <tr>
+      <td>`DG`</td>
+      <td>The [=Data Grant=] that `REFDG` is linked to</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `REFDG scopeOfDataGrant` be `interop:InheritInstances`
+1. Remove all links via `REFDG hasDataInstance` 
+
+</div>
+
+### Select Specific Referenced Data Instance ### {#select-referenced-data-instance}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>      
+      Used to set the scope of a [=Referenced Data Grant=] to inherited access.
       </td>
     </tr>
   </tbody>
@@ -2804,36 +3063,486 @@ the subject identifier could? vary
   </thead>
   <tbody>
     <tr>
-      <td>`INSTANCES`</td>
-      <td>A set of [=Data Instances=] selected for access</td>
+      <td>`DI`</td>
+      <td>A [=Data Instance=] selected for access</td>
     </tr>
     <tr>
-      <td>`DATAGRANT`</td>
-      <td>The [=Data Grant=] that `INSTANCES` are associated with</td>
+      <td>`REFDG`</td>
+      <td>The [=Referenced Data Grant=] to adjust</td>
+    </tr>
+    <tr>
+      <td>`DG`</td>
+      <td>The [=Data Grant=] that `REFDG` is linked to</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `REFDG scopeOfDataGrant` be `interop:SelectedInstances`
+1. Let `REFDG hasDataInstance` be linked to one unique instance of `DI`
+
+</div>
+
+<!-- Remote Data Operations -->
+
+### Select All Remote Instances ### {#select-all-remote}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>      
+      Used to select all [=Remote Agent Data Instances=] across all 
+      [=Remote Agent Data Registrations=] for a given [=Remote Data Grant=].      
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`RDG`</td>
+      <td>The [=Remote Data Grant=]</td>
     </tr>
     <tr>
       <td>`GRANT`</td>
-      <td>The [=Access Grant=] that `DATAGRANT` is associated with</td>
+      <td>The [=Access Grant=] that `RDG` is associated with</td>
     </tr>    
   </tbody>
 </table>
 
 <div class="opdetails">
 
+1. Let `RDG scopeOfGrant` be `interop:AllRemoteInstances`
+1. Remove all links for `RDG hasRemoteDataFromAgent`  
+1. Remove all links for `RDG hasRemoteAgentDataInstance`  
+1. For each [=Referenced Remote Data Grant=] `REFRDG` linked via `RDG hasReferencedRemoteDataGrant`
+    1. Call [[#select-all-referenced-remote]] with inputs: `REFRDG`, `RDG`
 
 </div>
 
+### Select All Referenced Remote Instances ### {#select-all-referenced-remote}
 
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>      
+      Used to select all [=Remote Agent Data Instances=] across all 
+      [=Remote Agent Data Registrations=] for a given 
+      [=Referenced Remote Data Grant=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`REFRDG`</td>
+      <td>The [=Referenced Remote Data Grant=]</td>
+    </tr>
+    <tr>
+      <td>`RDG`</td>
+      <td>The [=Remote Data Grant=] that `REFRDG` is associated with</td>
+    </tr>    
+  </tbody>
+</table>
 
+<div class="opdetails">
 
-### Select All Instances for Access ### {#grants-selectall}
+1. Let `REFRDG scopeOfGrant` be `interop:AllRemoteInstances`
+1. Remove all links for `REFDG hasRemoteDataFromAgent`  
+1. Remove all links for `REFDG hasRemoteAgentDataInstance`
 
-Used to select all [=Data Instances=] for a given [=Data Grant=].
-In the event where this is moving from a subset of inherited instances,
-this will expand to only include all inherited instances.
+</div>
 
-Issue: Write operation for selecting all Data Instances
-for a given Data Registration within an Access Grant
+### Select All Remote From Agent ### {#select-all-remote-fromagent}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>      
+      Used to select all [=Remote Agent Data Instances=] associated
+      with a given [=Remote Agent Data Registration=] as part of
+      a specific [=Remote Data Grant=].      
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`RADR`</td>
+      <td>The selected [=Remote Agent Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>`RDG`</td>
+      <td>The [=Remote Data Grant=]</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>The [=Access Grant=] that `RDG` is associated with</td>
+    </tr>    
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `RDG scopeOfGrant` be `interop:AllRemoteFromAgent`
+1. Remove all links for `RDG hasRemoteAgentDataInstance`  
+1. Let `RDG hasRemoteDataFromAgent` be linked to one unique instance of `RADR`
+1. For each [=Referenced Remote Data Grant=] `REFRDG` linked via `RDG hasReferencedRemoteDataGrant`
+    1. Call [[#select-referenced-remote-fromagent]] with inputs: `RADR`, `REFRDG`
+
+</div>
+
+### Select All Referenced Remote From Agent ### {#select-referenced-remote-fromagent}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>      
+      Used to select all [=Remote Agent Data Instances=] associated
+      with a given [=Remote Agent Data Registration=] as part of
+      a specific [=Referenced Remote Data Grant=].      
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`RADR`</td>
+      <td>The selected [=Remote Agent Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>`REFRDG`</td>
+      <td>The [=Referenced Remote Data Grant=]</td>
+    </tr>
+    <tr>
+      <td>`RDG`</td>
+      <td>The [=Remote Data Grant=] that `REFRDG` is associated with</td>
+    </tr>    
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `REFRDG scopeOfGrant` be `interop:AllRemoteFromAgent`
+1. Remove all links for `REFRDG hasRemoteAgentDataInstance`
+1. Let `REFRDG hasRemoteDataFromAgent` be linked to one unique instance of `RADR`
+
+</div>
+
+### Select Specific Remote Agent Data Instances ### {#select-remote-instances}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>      
+      Used to select specific [=Remote Agent Data Instances=] associated
+      with a given [=Remote Agent Data Registration=] as part of a specific
+      [=Remote Data Grant=].</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`RADI`</td>
+      <td>A [=Remote Agent Data Instance=] selected for access</td>
+    </tr>
+    <tr>
+      <td>`RDG`</td>
+      <td>The [=Remote Data Grant=] that `RADI` is associated with</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>The [=Access Grant=] that `RDG` is associated with</td>
+    </tr>    
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `RDG scopeOfGrant` be `interop:SelectedRemoteInstances`
+1. Remove all links for `RDG hasRemoteDataFromAgent`
+1. Let `RDG hasRemoteAgentDataInstance` be linked to one unique instance of `RADI` 
+
+</div>
+
+### Select Specific Referenced Remote Agent Data Instances ### {#select-referenced-remote-instances}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>      
+      Used to select specific [=Remote Agent Data Instances=] associated
+      with a given [=Remote Agent Data Registration=] as part of a specific
+      [=Referenced Remote Data Grant=].</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`RADI`</td>
+      <td>A [=Remote Agent Data Instance=] selected for access</td>
+    </tr>
+    <tr>
+      <td>`REFRDG`</td>
+      <td>The [=Referenced Remote Data Grant=] that `RADI` is associated with</td>
+    </tr>
+    <tr>
+      <td>`RDG`</td>
+      <td>The [=Remote Data Grant=] that `RDG` is associated with</td>
+    </tr>    
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `REFRDG scopeOfGrant` be `interop:SelectedRemoteInstances`
+1. Remove all links for `REFRDG hasRemoteDataFromAgent`
+1. Let `REFRDG hasRemoteAgentDataInstance` be linked to one unique instance of `RADI` 
+
+</div>
+
+### Deny Remote Data Grant ### {#deny-remote-data-grant}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation is used when a given [=Remote Data Grant=] with 
+      optional necessity has been denied.
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`RDG`</td>
+      <td>A [=Remote Data Grant=]</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>An [=Access Grant=]</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `RDG scopeOfGrant` be `interop:NoAccess`
+1. For each [=Referenced Remote Data Grant=] `REFRDG` 
+    linked via `RDG hasReferencedRemoteDataGrant`
+    1. Call [[#deny-referenced-remote-data-grant]] with inputs: `REFRDG`, `GRANT`
+
+</div>
+
+### Deny Referenced Remote Data Grant ### {#deny-referenced-remote-data-grant}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation is used when a given [=Referenced Remote Data Grant=] with 
+      optional necessity has been denied.
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`REFRDG`</td>
+      <td>A [=Referenced Access Need=]</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>An [=Access Grant=]</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `REFRDG scopeOfGrant` be `interop:NoAccess`
+
+</div>
+
+<!-- Trusted Grant Operations -->
+
+### Select Trusted Registry Set ### {#select-trusted-registry-set}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>      
+      Used to select an entire [=Registry Set=] of a given
+      registry type for a [=Trusted Grant=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`SET`</td>
+      <td>The [=Registry Set=] selected for access</td>
+    </tr>
+    <tr>
+      <td>`TG`</td>
+      <td>The [=Trusted Grant=] that `SET` is associated with</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>The [=Access Grant=] that `TG` is associated with</td>
+    </tr>        
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `TG scopeOfGrant` be `interop:TrustedAccess`
+1. Let `TG trustedWith` be `SET`
+1. Let `TG trustedWithType` be `SET rdf:type`
+
+</div>
+
+### Select Specific Trusted Registry ### {#select-trusted-registry}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>      
+      Used to select a specific [=Registry=] of a given registry
+      type for a [=Trusted Grant=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`REG`</td>
+      <td>The [=Registry=] selected for access</td>
+    </tr>
+    <tr>
+      <td>`TG`</td>
+      <td>The [=Trusted Grant=] that `REG` is associated with</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>The [=Access Grant=] that `TG` is associated with</td>
+    </tr>        
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `TG scopeOfGrant` be `interop:TrustedAccess`
+1. Let `TG trustedWith` be `REG`
+1. Let `TG trustedWithType` be `SET rdf:type`
+
+</div>
+
+### Deny Trusted Grant ### {#deny-trusted-grant}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation is used when a given [=Trusted Grant=] has been denied.      
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`TG`</td>
+      <td>A [=Trusted Grant=]</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>An [=Access Grant=]</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `TG scopeOfGrant` be `interop:NoAccess`
+
+</div>
 
 ### Load Trusted Agent ### {#trusted-load}
 

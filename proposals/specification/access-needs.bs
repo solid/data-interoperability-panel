@@ -18,8 +18,8 @@ received by the controlling [=Agent=]. A [=Compiled Access Group=] is
 generated for each [=Access Need Group=] that was received.
 
 [=Compiled Access Groups=] and the [=Compiled Accesses=] associated
-with them are used as input to the [[#grants-present-access]]
-and [[#grants-present-invitation]] operations,
+with them are used as input to the [[#present-grant]]
+workflow,
 and are stored as part of the [=Access Grant=] by the [[#grants-recordgrant]]
 operation.
 
@@ -986,8 +986,7 @@ so they can be presented to an [=Agent=] in
         This operation takes a given [=Access Need Group=] with a number of associated
         [=Access Needs=] and processes them to produce a [=Compiled Access Group=]
         that is ready to present to a given [=Agent=]
-        via the [[#grants-present-access]] and 
-        [[#grants-present-invitation]] operations.
+        via the [[#present-grant]] workflow.
         <ol>
           <li>The [=shape tree=] associated with each [=Root Access Need=] is
             traversed to the desired level of recursion, including across references.
