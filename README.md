@@ -28,7 +28,9 @@ Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth unde
 
 ### Shape Trees
 
-[Spec](https://github.com/shapetrees/specification) - [Library](https://github.com/shapetrees/) - [Test Suite](https://github.com/shapetrees/test-suite)
+* **Specification** - [Source](https://github.com/shapetrees/specification) - [Rendered](https://shapetrees.org/TR/specification/index.html)
+* **Library** - [Source](https://github.com/shapetrees/shapetree.js) 
+* **Test Suite** - [Source](https://github.com/shapetrees/test-suite)
 
 #### Current targets
 - Publish 1.0 Draft of Shape Trees Specification
