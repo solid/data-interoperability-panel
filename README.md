@@ -12,12 +12,30 @@ Standard methods and mechanisms for interoperability, collaboration, and securit
 
 Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth understanding of the panel's focus.
 
-
 ## Initiatives in Process
 
-* **Solid Application Interoperability - Specification** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/specification) - [Rendered](https://solid.github.io/data-interoperability-panel/specification/)
-* **Solid Application Interoperability - Primer** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/primer) - [Rendered](https://solid.github.io/data-interoperability-panel/primer/)
-* **Shape Trees** - [Spec](https://github.com/shapetrees/specification) - [Library](https://github.com/shapetrees/) - [Test Suite](https://github.com/shapetrees/test-suite) - [Playground](https://github.com/shapetrees/playground)
+### Solid Application Interoperability
+
+* **Specification** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/specification) - [Rendered](https://solid.github.io/data-interoperability-panel/specification/)
+* **Primer** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/primer) - [Rendered](https://solid.github.io/data-interoperability-panel/primer/)
+
+- Publish 1.0 Draft of Application Interoperability Use Cases
+- Publish 1.0 Draft of Application Interoperability Specification
+- Publish 1.0 Draft of Application Interoperability Primer
+- Complete Typescript library implementation
+- Complete Typescript Application Service implementation
+
+### Shape Trees
+
+[Spec](https://github.com/shapetrees/specification) - [Library](https://github.com/shapetrees/) - [Test Suite](https://github.com/shapetrees/test-suite)
+
+#### Current targets
+- Publish 1.0 Draft of Shape Trees Specification
+- Publish 1.0 Draft of Shape Trees Primer
+- Complete Typescript Shape Tree Implementation
+- Complete Java Shape Trees Implementation
+- Submit Server-side Shape Tree validation to solid/specification
+- Integrate server-side Shape Tree validation into CSS
 
 ## Completed Initiatives
 
