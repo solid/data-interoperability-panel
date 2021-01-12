@@ -19,6 +19,7 @@ Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth unde
 * **Specification** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/specification) - [Rendered](https://solid.github.io/data-interoperability-panel/specification/)
 * **Primer** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/primer) - [Rendered](https://solid.github.io/data-interoperability-panel/primer/)
 
+#### Current targets
 - Publish 1.0 Draft of Application Interoperability Use Cases
 - Publish 1.0 Draft of Application Interoperability Specification
 - Publish 1.0 Draft of Application Interoperability Primer
