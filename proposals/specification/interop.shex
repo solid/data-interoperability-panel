@@ -115,6 +115,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasDataInstance IRI* ;
   interop:accessMode @<#:AccessModes>+ ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ]
+  interop:supportedBy IRI* ;  # ?
+  interop:supports IRI? ;     # ?
   interop:hasReferencedDataGrant @<#:DataGrantShape>? ;
   interop:hasReferencedRemoteGrant @<#:RemoteGrantShape>? 
 }
@@ -132,7 +134,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 }
 
 <#TrustedWithNeedTypes> [
-  interop:Agent 
+  interop:Agent  
   interop:ApplicationRegistry
   interop:DataRegistry
   interop:AccessGrantRegistry
