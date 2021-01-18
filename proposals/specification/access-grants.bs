@@ -368,27 +368,41 @@ A <dfn>Data Grant</dfn> records a decision made by an
 [=Data Registration=], in response to a given [=Access Need=] that was 
 presented to them.
 
+A [=Data Grant=] may have one or more [=Referenced Data Grants=], when the
+[=shape tree=] associated via `interop:registeredShapeTree` has one or
+more [=Shape Tree References=].
+
 Each [=Data Grant=] has an assigned scope (`interop:scopeOfGrant`), which
 determines how permissions are assigned. The following types are
 valid for a [=Data Grant=]:
 
-* <b>`interop:AllInstances`</b> - Applies to all [=Data Instances=] belonging to
-    the associated [=Data Registration=]. Permissions will be set for
-    the [=Access Grant Subject=] on the [=Data Registration=] container, 
-    and will be inherited by all member [=Data Instances=].
-* <b>`interop:SelectedInstances`</b> - Applies only to selected [=Data Instances=]
-    belonging to the associated [=Data Registration=], which are linked
-    to the [=Data Grant=] via `interop:hasDataInstance`. Permissions will
-    be set for the [=Access Grant Subject=] on each [=Data Instance=].
-* <b>`interop:NoAccess`</b> - Applies to the entire [=Data Registration=] when
-    there are no [=Data Instances=] linked via `interop:hasDataInstance`.
-    When there are [=Data Instances=] linked via `interop:hasDataInstance`,
-    this scope only applies to them. It indicates that no access is granted
-    to the [=Access Grant Subject=].
+* <b>`interop:AllInstances`</b>
+    * Applies to all [=Data Instances=] belonging to
+        the associated [=Data Registration=]. 
+    * Permissions will be set for the [=Access Grant Subject=] on the 
+        [=Data Registration=] container, 
+        and will be inherited by all member [=Data Instances=].
+* <b>`interop:SelectedInstances`</b>
+    * Applies only to selected [=Data Instances=]
+        belonging to the associated [=Data Registration=], which are linked
+        to the [=Data Grant=] via `interop:hasDataInstance`.     
+    * Permissions will be set for the [=Access Grant Subject=] on 
+        each [=Data Instance=].
+* <b>`interop:NoAccess`</b>
+    * Indicates that no access is granted to the [=Access Grant Subject=].
+    * Applies to the entire [=Data Registration=] when there are no 
+        [=Data Instances=] linked via `interop:hasDataInstance`.
+    * When there are [=Data Instances=] linked via `interop:hasDataInstance`,
+        this scope only applies to them.
 
-A [=Data Grant=] may have one or more [=Referenced Data Grants=], when the
-[=shape tree=] associated via `interop:registeredShapeTree` has one or
-more [=Shape Tree References=].
+When recording a [=Data Grant=] via [[#grants-recordgrant]]:
+
+* There must be an [=Access Need=] linked via `interop:satisfiesAccessNeed` that
+    belongs to an [=Access Need Group=] linked to the same [=Access Grant=].
+* The [=Access Need=] must link back to the [=Data Grant=] 
+    via `interop:hasDataGrant`.
+* [=Access Need=] and [=Data Grant=] must have the same `interop:accessModes`
+* [=Access Need=] and [=Data Grant=] must have the same `interop:registeredShapeTree`
 
 <figure id="fig-grants-data-grant">
   <figcaption>An [=Data Grant=] at
@@ -521,29 +535,46 @@ scope (`interop:scopeOfGrant`), which
 determines how permissions are assigned. The following types are
 valid for a [=Referenced Data Grant=]:
 
-* <b>`interop:AllInstances`</b> - Applies to all [=Data Instances=] belonging to
-    the associated [=Data Registration=]. Permissions will be set for
-    the [=Access Grant Subject=] on the [=Data Registration=] container, 
-    and will be inherited by all member [=Data Instances=].
-* <b>`interop:InheritInstances`</b> - When the [=Data Grant=] linked via 
-    `interop:hasDataGrant` has a scope of `interop:SelectedInstances`, and one
-    or more [=Data Instances=] are selected, any [=Referenced Data Grants=]
-    have the opportunity to narrow their own access scope to only include 
-    "child" [=Data Instances=] linked to the selected "parent" [=Data Instances=].
-    The link must follow the [=Shape Tree Reference=] between
-    the parent [=Data Grant=] shape tree and the [=Referenced Data Grant=] 
-    shape tree. Permissions are set conditionally for the [=Access Grant Subject=], 
-    and have the benefit of applying to current and future [=Data Instances=] 
-    associated with a parent [=Data Instance=].
-* <b>`interop:SelectedInstances`</b> - Applies only to selected [=Data Instances=]
-    belonging to the associated [=Data Registration=], which are linked
-    to the [=Data Grant=] via `interop:hasDataInstance`. Permissions will
-    be set for the [=Access Grant Subject=] on each [=Data Instance=].
-* <b>`interop:NoAccess`</b> - Applies to the entire [=Data Registration=] when
-    there are no [=Data Instances=] linked via `interop:hasDataInstance`.
-    When there are [=Data Instances=] linked via `interop:hasDataInstance`,
-    this scope only applies to them. It indicates that no access is granted
-    to the [=Access Grant Subject=].
+* <b>`interop:AllInstances`</b>
+    * Applies to all [=Data Instances=] belonging to
+        the associated [=Data Registration=]. 
+    * Permissions will be set for
+        the [=Access Grant Subject=] on the [=Data Registration=] container, 
+        and will be inherited by all member [=Data Instances=].
+* <b>`interop:InheritInstances`</b>
+    *  When the [=Data Grant=] linked via 
+        `interop:hasDataGrant` has a scope of `interop:SelectedInstances`, and one
+        or more [=Data Instances=] are selected, any [=Referenced Data Grants=]
+        have the opportunity to narrow their own access scope to only include 
+        "child" [=Data Instances=] linked to the selected "parent" [=Data Instances=].
+    * The link must follow the [=Shape Tree Reference=] between
+        the parent [=Data Grant=] shape tree and the [=Referenced Data Grant=] 
+        shape tree. 
+    * Permissions are set conditionally for the [=Access Grant Subject=], 
+        and have the benefit of applying to current and future [=Data Instances=] 
+        associated with a parent [=Data Instance=].
+* <b>`interop:SelectedInstances`</b>
+    * Applies only to selected [=Data Instances=]
+        belonging to the associated [=Data Registration=], which are linked
+        to the [=Data Grant=] via `interop:hasDataInstance`. 
+    * Permissions will be set for the [=Access Grant Subject=] on 
+        each [=Data Instance=].
+* <b>`interop:NoAccess`</b>
+    * Indicates that no access is granted to the [=Access Grant Subject=].
+    * Applies to the entire [=Data Registration=] when
+        there are no [=Data Instances=] linked via `interop:hasDataInstance`.
+    * When there are [=Data Instances=] linked via `interop:hasDataInstance`,
+        this scope only applies to them.
+
+When recording a [=Referenced Data Grant=] via [[#grants-recordgrant]]:
+
+* There must be a [=Referenced Access Need=] linked via 
+    `interop:satisfiesAccessNeed` that
+    belongs to an [=Access Need Group=] linked to the same [=Access Grant=].
+* The [=Referenced Access Need=] must link back to the [=Referenced Data Grant=] 
+    via `interop:hasReferencedDataGrant`.
+* [=Referenced Access Need=] and [=Referenced Data Grant=] must have the same `interop:accessModes`
+* [=Referenced Access Need=] and [=Referenced Data Grant=] must have the same `interop:registeredShapeTree`
 
 <figure id="fig-grants-referenced-data-grant">
   <figcaption>An [=Referenced Data Grant=] at
@@ -660,41 +691,57 @@ was presented to them. This has the net effect of allowing the
 [=Access Grant Subject=] to see data that has been shared by
 other [=Agents=].
 
+A [=Remote Data Grant=] may have one or more [=Referenced Remote Data Grants=], 
+when the [=shape tree=] associated via `interop:registeredShapeTree` has one or
+more [=Shape Tree References=].
+
 Each [=Remote Data Grant=] has an assigned scope (`interop:scopeOfGrant`), which
 determines how permissions are assigned. The following types are
 valid for a [=Remote Data Grant=]:
 
-* <b>`interop:AllRemoteInstances`</b> - Applies to all 
-    [=Remote Agent Data Instances=] belonging to all 
-    [=Remote Agent Data Registrations=] belonging to the associated
-    [=Remote Data Registration=]. Permissions will be set for
-    the [=Access Grant Subject=] on the [=Remote Data Registration=] container, 
-    and will be inherited by all member [=Remote Agent Data Registrations=],
-    and [=Remote Agent Data Instances=].
-* <b>`interop:AllRemoteFromAgent`</b> - Applies to all 
-    [=Remote Agent Data Instances=] belonging to the 
-    selected [=Remote Agent Data Registrations=] linked via 
-    `interop:hasRemoteDataFromAgent`. Permissions will be set for
-    the [=Access Grant Subject=] on the selected 
-    [=Remote Agent Data Registration=] containers, 
-    and will be inherited by all member [=Remote Agent Data Instances=].
-* <b>`interop:SelectedRemoteInstances`</b> - Applies only to selected 
-    [=Remote Agent Data Instances=] linked via 
-    `interop:hasRemoteAgentDataInstance`. Permissions will be set for
-    the [=Access Grant Subject=] on the selected 
-    [=Remote Agent Data Instance=] resources.    
-* <b>`interop:NoAccess`</b> - Applies to the entire [=Remote Data Registration=] 
-    when there are no [=Remote Agent Data Registrations=] linked via 
-    `interop:hasRemoteDataFromAgent`, and no `Remote Agent Data Instances`
-    linked via `interop:hasRemoteAgentDataInstance`.
-    When there are linked [=Remote Agent Data Registrations=] or 
-    [=Remote Agent Data Instances=]
-    this scope only applies to them. When applied, it indicates that no 
-    access is granted to the [=Access Grant Subject=].
+* <b>`interop:AllRemoteInstances`</b>
+    * Applies to all 
+        [=Remote Agent Data Instances=] belonging to all 
+        [=Remote Agent Data Registrations=] belonging to the associated
+        [=Remote Data Registration=]. 
+    * Permissions will be set for
+        the [=Access Grant Subject=] on the [=Remote Data Registration=] container, 
+        and will be inherited by all member [=Remote Agent Data Registrations=],
+        and [=Remote Agent Data Instances=].
+* <b>`interop:AllRemoteFromAgent`</b>
+    * Applies to all 
+        [=Remote Agent Data Instances=] belonging to the 
+        selected [=Remote Agent Data Registrations=] linked via 
+        `interop:hasRemoteDataFromAgent`. 
+    * Permissions will be set for
+        the [=Access Grant Subject=] on the selected 
+        [=Remote Agent Data Registration=] containers, 
+        and will be inherited by all member [=Remote Agent Data Instances=].
+* <b>`interop:SelectedRemoteInstances`</b>
+    * Applies only to selected 
+        [=Remote Agent Data Instances=] linked via 
+        `interop:hasRemoteAgentDataInstance`. 
+    * Permissions will be set for
+        the [=Access Grant Subject=] on the selected 
+        [=Remote Agent Data Instance=] resources.    
+* <b>`interop:NoAccess`</b>
+    * Indicates that no access is granted to the [=Access Grant Subject=].
+    * Applies to the entire [=Remote Data Registration=] 
+        when there are no [=Remote Agent Data Registrations=] linked via 
+        `interop:hasRemoteDataFromAgent`, and no `Remote Agent Data Instances`
+        linked via `interop:hasRemoteAgentDataInstance`.
+    * When there are linked [=Remote Agent Data Registrations=] or 
+        [=Remote Agent Data Instances=]
+        this scope only applies to them.
 
-A [=Remote Data Grant=] may have one or more [=Referenced Remote Data Grants=], 
-when the [=shape tree=] associated via `interop:registeredShapeTree` has one or
-more [=Shape Tree References=].
+When recording a [=Remote Data Grant=] via [[#grants-recordgrant]]:
+
+* There must be an [=Access Need=] linked via `interop:satisfiesAccessNeed` that
+    belongs to an [=Access Need Group=] linked to the same [=Access Grant=].
+* The [=Access Need=] must link back to the [=Remote Data Grant=] 
+    via `interop:hasRemoteDataGrant`.
+* [=Access Need=] and [=Remote Data Grant=] must have the same `interop:accessModes`
+* [=Access Need=] and [=Remote Data Grant=] must have the same `interop:registeredShapeTree`
 
 <table class="classinfo data" align="left" id="classRemoteDataGrant">
   <colgroup></colgroup>
@@ -813,38 +860,57 @@ scope (`interop:scopeOfGrant`), which determines how permissions are assigned.
 The following types are
 valid for a [=Referenced Remote Data Grant=]:
 
-* <b>`interop:AllRemoteInstances`</b> - Applies to all 
-    [=Remote Agent Data Instances=] belonging to all 
-    [=Remote Agent Data Registrations=] belonging to the associated
-    [=Remote Data Registration=]. Permissions will be set for
-    the [=Access Grant Subject=] on the [=Remote Data Registration=] container, 
-    and will be inherited by all member [=Remote Agent Data Registrations=],
-    and [=Remote Agent Data Instances=].
-* <b>`interop:AllRemoteFromAgent`</b> - Applies to all 
-    [=Remote Agent Data Instances=] belonging to the 
-    selected [=Remote Agent Data Registrations=] linked via 
-    `interop:hasRemoteDataFromAgent`. Permissions will be set for
-    the [=Access Grant Subject=] on the selected 
-    [=Remote Agent Data Registration=] containers, 
-    and will be inherited by all member [=Remote Agent Data Instances=].
-* <b>`interop:SelectedRemoteInstances`</b> - Applies only to selected 
-    [=Remote Agent Data Instances=] linked via 
-    `interop:hasRemoteAgentDataInstance`. Permissions will be set for
-    the [=Access Grant Subject=] on the selected 
-    [=Remote Agent Data Instance=] resources.    
-* <b>`interop:NoAccess`</b> - Applies to the entire [=Remote Data Registration=] 
-    when there are no [=Remote Agent Data Registrations=] linked via 
-    `interop:hasRemoteDataFromAgent`, and no `Remote Agent Data Instances`
-    linked via `interop:hasRemoteAgentDataInstance`.
-    When there are linked [=Remote Agent Data Registrations=] or 
-    [=Remote Agent Data Instances=]
-    this scope only applies to them. When applied, it indicates that no 
-    access is granted to the [=Access Grant Subject=].
+* <b>`interop:AllRemoteInstances`</b>
+    * Applies to all 
+        [=Remote Agent Data Instances=] belonging to all 
+        [=Remote Agent Data Registrations=] belonging to the associated
+        [=Remote Data Registration=]. 
+    * Permissions will be set for
+        the [=Access Grant Subject=] on the [=Remote Data Registration=] container, 
+        and will be inherited by all member [=Remote Agent Data Registrations=],
+        and [=Remote Agent Data Instances=].
+* <b>`interop:AllRemoteFromAgent`</b>
+    * Applies to all 
+        [=Remote Agent Data Instances=] belonging to the 
+        selected [=Remote Agent Data Registrations=] linked via 
+        `interop:hasRemoteDataFromAgent`. 
+    * Permissions will be set for
+        the [=Access Grant Subject=] on the selected 
+        [=Remote Agent Data Registration=] containers, 
+        and will be inherited by all member [=Remote Agent Data Instances=].
+* <b>`interop:SelectedRemoteInstances`</b>
+    * Applies only to selected 
+        [=Remote Agent Data Instances=] linked via 
+        `interop:hasRemoteAgentDataInstance`. 
+    * Permissions will be set for
+        the [=Access Grant Subject=] on the selected 
+        [=Remote Agent Data Instance=] resources.    
+* <b>`interop:NoAccess`</b>
+    * Indicates that no access is granted to the [=Access Grant Subject=].
+    * Applies to the entire [=Remote Data Registration=] 
+        when there are no [=Remote Agent Data Registrations=] linked via 
+        `interop:hasRemoteDataFromAgent`, and no `Remote Agent Data Instances`
+        linked via `interop:hasRemoteAgentDataInstance`.
+    * When there are linked [=Remote Agent Data Registrations=] or 
+        [=Remote Agent Data Instances=]
+        this scope only applies to them. 
 
 Note: The conditional inheritance used by [=Referenced Data Grants=] 
 is not used by [=Referenced Remote Data Grants=]. This
 is due to practical issues in applying authorization based on graph relationships
 that exist on other resource servers.
+
+When recording a [=Referenced Remote Data Grant=] via [[#grants-recordgrant]]:
+
+* There must be a [=Referenced Access Need=] linked via 
+    `interop:satisfiesAccessNeed` that
+    belongs to an [=Access Need Group=] linked to the same [=Access Grant=].
+* The [=Referenced Access Need=] must link back to the [=Referenced Remote Data Grant=] 
+    via `interop:hasReferencedRemoteDataGrant`.
+* [=Referenced Access Need=] and [=Referenced Remote Data Grant=] must have the same 
+    `interop:accessModes`
+* [=Referenced Access Need=] and [=Referenced Remote Data Grant=] must have the same 
+    `interop:registeredShapeTree`
 
 <table class="classinfo data" align="left" id="classReferencedRemoteDataGrant">
   <colgroup></colgroup>
@@ -1400,10 +1466,8 @@ of [=Data Grants=], [=Remote Data Grants=], and/or [=Trusted Grants=]:
 * [[#grants-initializetrustedgrant]] - Initialize a [=Trusted Grant=] as part
     of [=Access Grant=] initialization
     
-Validate and Record [=Access Grants=] and [=Access Invitations=]:
-
-* [[#validate-grant]] - Validate a new or updated [=Access Grant=]
-    
+Record [=Access Grants=] and [=Access Invitations=]:
+  
 * [[#grants-recordgrant]] - Store a new or updated [=Access Grant=]
     in an [=Access Grant Registry=]
 * [[#grants-recordinvitation]] - Store a new or updated [=Access Invitation=]
@@ -1842,475 +1906,6 @@ Apply permissions based on the composition of an [=Access Grant=]:
         1. Next if `CODE` is not empty and `ICHANNEL channelCode` != `CODE`
         1. Add `INVITATION` to `INVITATIONS`
 1. Return `INVITATIONS`
-
-</div>
-
-### Validate Grant ### {#validate-grant}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation is used to validate an [=Access Grant=]
-      before it is stored in an 
-      [=Access Grant Registry=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`GRANT`</td>
-      <td>An [=Access Grant=] to validate</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Boolean</td>
-      <td>Success or Failure</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Perform a validation of the RDF graph of `GRANT` against
-    [interop:AccessGrantShape](interop.shex#AccessGrantShape).
-    <em class="rfc2119">MUST</em> return a status code of 400 if
-    validation fails.
-1. For each [=Access Need Group=] `GROUP` linked via `GRANT hasAccessNeedGroup`
-    1. Call [[#validate-need-group]] with inputs: `GROUP`, `GRANT`     
-1. For each [=Data Grant=] `DG` linked via `GRANT hasDataGrant`
-    1. Call [[#validate-data-grant]] with inputs: `DG`, `GRANT`
-1. For each [=Remote Data Grant=] `RDG` linked via `GRANT hasRemoteDataGrant`
-    1. Call [[#validate-remote-data-grant]] with inputs: `RDG`, `GRANT`
-1. For each [=Trusted Grant=] `TG` linked via `GRANT hasTrustedGrant`
-    1. Call [[#validate-trusted-grant]] with inputs: `TG`, `GRANT`
-1. Return Success    
-
-</div>
-
-### Validate Invitation ### {#validate-invitation}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation is used to validate an [=Access Invitation=] before it 
-      is stored in an [=Access Grant Registry=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`INVITATION`</td>
-      <td>An [=Access Invitation=] to validate</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Boolean</td>
-      <td>Success or Failure</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Perform a validation of the RDF graph of `INVITATION` against
-    [interop:AccessInvitationShape](interop.shex#AccessInvitationShape).
-    <em class="rfc2119">MUST</em> return a status code of 400 if
-    validation fails.
-1. For each [=Access Need Group=] `GROUP` linked via `INVITATION hasAccessNeedGroup`
-    1. Call [[#validate-need-group]] with inputs: `GROUP`, `INVITATION`     
-1. For each [=Data Grant=] `DG` linked via `INVITATION hasDataGrant`
-    1. Call [[#validate-data-grant]] with inputs: `DG`, `INVITATION`
-1. For each [=Remote Data Grant=] `RDG` linked via `INVITATION hasRemoteDataGrant`
-    1. Call [[#validate-remote-data-grant]] with inputs: `RDG`, `INVITATION`
-1. For each [=Trusted Grant=] `TG` linked via `INVITATION hasTrustedGrant`
-    1. Call [[#validate-trusted-grant]] with inputs: `TG`, `INVITATION`
-1. Return `Success`
-
-</div>
-
-### Validate Access Need Group ### {#validate-need-group}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation is used to validate an [=Access Need Group=] before it 
-      is stored in an [=Access Grant Registry=] as part of an [=Access Grant=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`GROUP`</td>
-      <td>An [=Access Need Group=] to validate</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>An [=Access Grant=] or [=Access Invitation=] that `GROUP` is linked to</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Boolean</td>
-      <td>Success or Failure</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. For each [=Access Need=] `NEED` in `GROUP`
-    1. Call [[#validate-need]] with inputs: `NEED`, `GROUP`, `GRANT`     
-1. For each [=Trusted Need=] `TNEED` in `GROUP`:
-    1. Call [[#validate-trusted-need]] with inputs: `TNEED`, `GROUP`, `GRANT`
-1. Return `Success`
-
-</div>
-
-### Validate Access Need ### {#validate-need}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation is used to validate an [=Access Need=] before it 
-      is stored in an [=Access Grant Registry=] as part of an [=Access Grant=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`NEED`</td>
-      <td>An [=Access Need=] to validate</td>
-    </tr>
-    <tr>
-      <td>`GROUP`</td>
-      <td>The [=Access Need Group=] that `NEED` belongs to</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>An [=Access Grant=] or [=Access Invitation=] that `GROUP` is linked to</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Boolean</td>
-      <td>Success or Failure</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `DG` be the [=Data Grant=] linked with `NEED` via `NEED hasDataGrant`
-    1. Error if `DG` is missing
-    1. Error if `DG satisfiesAccessNeed` doesn't link to `NEED`
-    1. Error if `DG registeredShapeTree` != `NEED registeredShapeTree`
-1. Let `RDG` be the [=Remote Data Grant=] linked with `NEED` via `NEED hasRemoteDataGrant`
-    1. Error if `RDG` is missing
-    1. Error if `RDG satisfiesAccessNeed` doesn't link to `NEED`
-    1. Error if `RDG registeredShapeTree` != `NEED registeredShapeTree` 
-1. For each [=Referenced Access Need=] `REFNEED` linked via `NEED hasReferencedAccessNeed` 
-    1. Error if `REFNEED hasReferencedDataGrant` is missing
-    1. Let `REFDG` be `REFNEED hasReferencedDataGrant`
-    1. Error if `REFDG satisfiesAccessNeed` != `REFNEED`  
-    1. Error if `REFDG registeredShapeTree` != `REFNEED registeredShapeTree`  
-    1. Error if `REFNEED hasReferencedRemoteDataGrant` is missing
-    1. Let `REFRDG` be `REFNEED hasReferencedRemoteDataGrant`
-    1. Error if `REFRDG satisfiesAccessNeed` != `REFNEED`  
-    1. Error if `REFRDG registeredShapeTree` != `REFNEED registeredShapeTree`   
-
-</div>
-
-### Validate Trusted Need ### {#validate-trusted-need}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation is used to validate a [=Trusted Need=] before it 
-      is stored in an [=Access Grant Registry=] as part of an [=Access Grant=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`TNEED`</td>
-      <td>A [=Trusted Need=] to validate</td>
-    </tr>
-    <tr>
-      <td>`GROUP`</td>
-      <td>The [=Access Need Group=] that `TNEED` belongs to</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>An [=Access Grant=] or [=Access Invitation=] that `GROUP` is linked to</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Boolean</td>
-      <td>Success or Failure</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `TG` be the [=Trusted Grant=] linked with `TNEED` via `TNEED hasTrustedGrant`        
-    1. Error if `TG` is missing
-    1. Error if `TG satisfiesTrustedNeed` doesn't link to `NEED`
-    1. Error if `TG trustedWith` is not a `TGRANT trustedWithType`
-
-</div>
-
-### Validate Data Grant ### {#validate-data-grant}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation is used to validate a [=Data Grant=]
-      belonging to a given [=Access Grant=] before it is
-      stored in an [=Access Grant Registry=]
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`DG`</td>
-      <td>A [=Data Grant=] to validate</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>The [=Access Grant=] or [=Access Invitation=] that `DG` is linked to</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Boolean</td>
-      <td>Success or Failure</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-  
-1. Let `SCOPE` be `DG scopeOfGrant`
-1. Let `NEED` be `DG satisfiesAccessNeed`
-1. Error if `NEED` is missing
-1. Error if `NEED` isn't linked to an [=Access Need Group=] included in
-    `GRANT hasAccessNeedGroup`
-1. Error if `DG` access modes are not an exact union of
-    `NEED accessMode` values
-1. Error if `SCOPE` is `interop:InheritInstances`
-1. For each [=Referenced Data Grant=] `REFDG` linked via `DG hasReferencedDataGrant`
-    1. Let `SCOPE` be `REFDG scopeOfGrant`
-    1. Let `REFNEED` be `REFDG satisfiesReferencedAccessNeed`
-    1. Error if `REFNEED` is missing
-    1. Error if `REFNEED` isn't linked to an [=Access Need Group=] included in
-        `GRANT hasAccessNeedGroup`
-    1. Error if `REFDG` access modes are not an exact union of
-        `REFNEED accessMode` values    
-          
-</div>
-
-### Validate Remote Data Grant ### {#validate-remote-data-grant}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      Validate a [=Remote Data Grant=]
-      belonging to a given [=Access Grant=] before it is
-      stored in an [=Access Grant Registry=]
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`RDG`</td>
-      <td>A [=Remote Data Grant=] to validate</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>An [=Access Grant=] or [=Access Invitation=] that `RDG` is linked to</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Boolean</td>
-      <td>Success or Failure</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `SCOPE` be `RDG scopeOfGrant`
-1. Let `NEED` be `RDG satisfiesAccessNeed`
-1. Error if `NEED` is missing
-1. Error if `NEED` isn't linked to an [=Access Need Group=] included in
-    `GRANT hasAccessNeedGroup`
-1. Error if `RDG` access modes are not an exact union of
-    `NEED accessMode` values
-1. If `SCOPE` is `interop:AllRemoteInstances` 
-    1. Error if either `RDG hasRemoteDataFromAgent` or 
-        `RDG hasRemoteAgentDataInstance` are not missing
-1. If `SCOPE` is `interop:AllRemoteFromAgent` 
-    1. Error if `RDG hasRemoteDataFromAgent` is missing
-    1. Error if `RDG hasRemoteAgentDataInstance` is not missing 
-1. If `SCOPE` is `interop:SelectedRemoteInstances`
-    1. Error if `RDG hasRemoteAgentDataInstance` is missing
-    1. Error if `RDG hasRemoteDataFromAgent` is not missing
-1. For each [=Referenced Remote Data Grant=] `REFRDG` linked via `DG hasReferencedRemoteDataGrant`
-    1. Let `SCOPE` be `REFRDG scopeOfGrant`
-    1. Let `REFNEED` be `REFRDG satisfiesAccessNeed`
-    1. Error if `REFNEED` is missing
-    1. Error if `REFNEED` isn't linked to an [=Access Need Group=] included in
-        `GRANT hasAccessNeedGroup`
-    1. Error if `REFRDG` access modes are not an exact union of
-        `REFNEED accessMode` values
-    1. If `SCOPE` is `interop:AllRemoteInstances` 
-        1. Error if either `REFRDG hasRemoteDataFromAgent` or 
-            `REFRDG hasRemoteAgentDataInstance` are not missing
-    1. If `SCOPE` is `interop:AllRemoteFromAgent` 
-        1. Error if `REFRDG hasRemoteDataFromAgent` is missing
-        1. Error if `REFRDG hasRemoteAgentDataInstance` is not missing 
-    1. If `SCOPE` is `interop:SelectedRemoteInstances`
-        1. Error if `REFRDG hasRemoteAgentDataInstance` is missing
-        1. Error if `REFRDG hasRemoteDataFromAgent` is not missing
-  
-</div>
-
-### Validate Trusted Grant ### {#validate-trusted-grant}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      Validate a [=Trusted Grant=]
-      belonging to a given [=Access Grant=] before it is
-      stored in an [=Access Grant Registry=]
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`TG`</td>
-      <td>A [=Trusted Grant=] to validate</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>An [=Access Grant=] or [=Access Invitation=] that `TG` is linked to</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Boolean</td>
-      <td>Success or Failure</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `TNEED` be `TG satisfiesTrustedNeed`
-1. Error if `TNEED` is missing
-1. Error if `TNEED` is not part of an [=Access Need Group=] linked via
-    `GROUP hasAccessNeedGroup`
 
 </div>
 
