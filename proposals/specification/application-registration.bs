@@ -72,10 +72,11 @@ via the [interop:hasRegistration](interop.ttl#hasRegistration) property.
   <pre highlight="turtle">
   <#registry>
     a interop:ApplicationRegistry ;
-    interop:hasRegistration &lt;705563552198b6fb3efc40717872aa2ec35d669c1095cc5d665f499ec5d7e23a/#registration&gt; ,
-                        &lt;ede6aa50cb9e5fc564fdb4f0dc661685825ee3178355214086be27f9830e2a42/#registration&gt; ,
-                        &lt;150dca42b3d5661ba10a28e0aff36f212e27b0f7463fe1ef3bf1b5a45b640673/#registration&gt; ,
-                        &lt;b3564e72a3877c9cfa9e4bc4d9e47e9b7c536ae9927407c8dd00ec3b0069f536/#registration&gt; .
+    interop:hasRegistration 
+      &lt;705563552198b6fb3efc40717872aa2ec35d669c1095cc5d665f499ec5d7e23a/#registration&gt; ,
+      &lt;ede6aa50cb9e5fc564fdb4f0dc661685825ee3178355214086be27f9830e2a42/#registration&gt; ,
+      &lt;150dca42b3d5661ba10a28e0aff36f212e27b0f7463fe1ef3bf1b5a45b640673/#registration&gt; ,
+      &lt;b3564e72a3877c9cfa9e4bc4d9e47e9b7c536ae9927407c8dd00ec3b0069f536/#registration&gt; .
   </pre>
 </figure>
 
@@ -144,8 +145,7 @@ is assigned to a resource to ensure it will validate against the
 <#ApplicationRegistrySetTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#ApplicationRegistrySetShape&gt; ;
-  st:matchesUriTemplate "application" .
+  st:validatedBy &lt;interops#ApplicationRegistrySetShape&gt; .
 </pre>
 
 ### Application Registry ### {#datamodel-application-registry}
@@ -294,8 +294,7 @@ added, it is validated against [AccessReceiptTree](#treeAccessReceipt).
   st:expectsType st:ShapeTreeContainer ;
   st:validatedBy &lt;interops#ApplicationRegistrationShape&gt; ;
   st:contains <#AccessReceiptTree> ,
-                st:AllowAll ;
-  st:matchesUriTemplate "{id}" .
+                st:AllowAll .
 </pre>
 
 ## Resource Hierarchy ## {#appreg-hierarchy}

@@ -133,7 +133,7 @@ workflow.
       [=Access Grant=].
       
       Each [=Access Need Group=] represents a set of [=Access Needs=]
-      and/or [=Trusted Access Needs=].
+      and/or [=Trusted Needs=].
       </td>
     </tr>
   </tbody>
@@ -171,7 +171,8 @@ workflow.
     1. Group Description - `GDEC skos:definition`
     1. Grantee Type - `GROUP authenticatesAs`
     1. Necessity - `GROUP accessNecessity`
-1. Allow `GROUP` to be disabled via [[#grants-denygroup]] if group necessity is optional
+1. Allow `GROUP` to be disabled via [[#deny-access-need-group]] if group 
+    necessity is optional
 1. For each [=Access Need=] `NEED` linked via `GROUP hasAccessNeed`
     1. Call [[#present-need]]
 1. For each [=Trusted Need=] `TNEED` linked via 
@@ -469,7 +470,7 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
         1. The [[#grants-recordgrant]] operation is invoked
             1. An [=Access Grant=] is stored in `CONTROLLER`'s
                 [=Access Grant Registry=].
-            1. [[#grants-applyperms]] is called to apply permissions based
+            1. [[#apply-permissions]] is called to apply permissions based
                 on the [=Access Grant=].
             1. [[#receipts-provide]] is called to store the
                 [=Access Receipt=]. The Application has set
@@ -521,7 +522,7 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
         the [[#grants-recordgrant]] operation is invoked.
     1. [[#grants-recordgrant]] stores an [=Access Grant=] in `CONTROLLER`'s
         [=Access Grant Registry=].
-        1. [[#grants-applyperms]] is called to apply permissions based on the
+        1. [[#apply-permissions]] is called to apply permissions based on the
             [=Access Grant=].
         1. [[#receipts-provide]] is called to deliver the [=Access Receipt=].
             1. `CAUTHZ` dereferences `REQUESTER`'s [=identity=] to get
@@ -578,7 +579,7 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
         1. The [[#grants-recordgrant]] operation is invoked
             1. An [=Access Grant=] is stored in `CONTROLLER`'s
                 [=Access Grant Registry=].
-            1. [[#grants-applyperms]] is called to apply permissions based
+            1. [[#apply-permissions]] is called to apply permissions based
                 on the [=Access Grant=].
             1. [[#receipts-provide]] is called to store the
                 [=Access Receipt=]. `RECEIVER` has set
@@ -674,7 +675,7 @@ Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
             [=Access Grant=] initialized from the [=Access Invitation=]
             1. An [=Access Grant=] is stored in `CONTROLLER`'s
                 [=Access Grant Registry=].
-            1. [[#grants-applyperms]] is called to apply permissions
+            1. [[#apply-permissions]] is called to apply permissions
                 based on the [=Access Grant=].
             1. [[#receipts-provide]] is called to store the
                 [=Access Receipt=]. `INVITEE` has set

@@ -158,8 +158,7 @@ is assigned to a resource to ensure it will validate against the
 <#AccessReceiptRegistrySetTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#AccessReceiptRegistrySetShape&gt; ;
-  st:matchesUriTemplate "receipt" .
+  st:validatedBy &lt;interops#AccessReceiptRegistrySetShape&gt; .
 </pre>
 
 ### Access Receipt Registry ### {#datamodel-access-receipt-registry}
@@ -312,8 +311,7 @@ that the assigned resource will validate against the
 <#AccessReceiptTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#AccessReceiptShape&gt; ;
-  st:matchesUriTemplate "{id}" .
+  st:validatedBy &lt;interops#AccessReceiptShape&gt; .
 </pre>
 
 ### Data Receipt ### {#datamodel-data-receipt}
@@ -373,12 +371,6 @@ Issue: Write definition for Data Receipt class
           <li>interop:NoAccess</li> - No access is granted
         </ul>
       </td>
-    </tr>
-    <tr>
-      <td>hasDataInheritance</td>
-      <td>[DataInheritance](#classDataInheritance)</td>
-      <td>Links to a [=Data Inheritance=] which identifies another [=Data Receipt=]
-      that access is inherited from</td>
     </tr>
     <tr>
       <td>hasDataInstance</td>

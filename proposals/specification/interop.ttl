@@ -252,14 +252,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :AccessGrantSubject ;
   rdfs:label "Has Access Grant Subject"@en .
 
-:hasCompiledAccessGroup
-  a rdf:property ;
-  rdfs:comment "Link to a CompiledAccessGroup"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessGrant ;
-  rdfs:range :CompiledAccessGroup ;
-  rdfs:label "Has Compiled Access Group"@en .
-
 :hasDataGrant
   a rdf:property ;
   rdfs:comment "Link to a DataGrant"@en ;
@@ -408,27 +400,18 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Data Grant"@en .
 
-:satisfiesCompiledAccess
+:satisfiesAccessNeed
   a rdf:property ;
-  rdfs:comment "Links to a CompiledAccess that the DataGrant satisfies"@en ;
+  rdfs:comment "Links to an AccessNeed that the grant satisfies"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :DataGrant ;
-  rdfs:range :CompiledAccess ;
-  rdfs:label "Satisfies Compiled Access"@en .
+  rdfs:range [ owl:oneOf ( :AccessNeed :ReferencedAccessNeed ) ] ;
+  rdfs:label "Satisfies Access Need"@en .
 
 :scopeOfGrant
   a rdf:property ;
   rdfs:comment "Links to a scope identifier for one of the grant types"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:range [ owl:oneOf ( :AllInstances :SelectedInstances :InheritInstances :NoAccess ) ] ;
   rdfs:label "Scope of Grant"@en .
-
-:hasDataInheritance
-  a rdf:property ;
-  rdfs:comment "Links to a Data Inheritance"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range :DataInheritance ;
-  rdfs:label "Has Data Inheritance"@en .
 
 :hasRemoteDataGrant
   a rdf:property ;
@@ -468,21 +451,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "Access to selected remote instances"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Selected Remote"@en .  
-
-# DataInheritance Class
-#############################################################################
-:DataInheritance
-  a rdfs:Class ;
-  rdfs:comment "Associates a Data Grant with another it has inherited access from"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Data Inheritance"@en .
-
-:inheritsFrom
-  a rdf:property ;
-  rdfs:comment "Links to a source of scope inheritance"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range :DataGrant ;
-  rdfs:label "Inherits From"@en .
 
 # RemoteDataGrant Class
 #############################################################################
@@ -555,13 +523,13 @@ rdfs:label "Terms for application interoperability in Solid"@en .
                            :RemoteDataRegistry ) ] ;
   rdfs:label "Trusted With Type"@en .
 
-:satisfiesCompiledTrustedAccess
+:satisfiesTrustedNeed
   a rdf:property ;
-  rdfs:comment "Links to a CompiledTrustedAccess that the TrustedGrant satisfies"@en ;
+  rdfs:comment "Links to a TrustedNeed that the TrustedGrant satisfies"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :TrustedGrant ;
-  rdfs:range :CompiledTrustedAccess ;
-  rdfs:label "Satisfies Compiled Trusted Access"@en .
+  rdfs:range :TrustedNeed ;
+  rdfs:label "Satisfies Trusted Need"@en .
 
 #############################################################################
 # Access Receipts
@@ -846,6 +814,43 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range [ owl:oneOf ( acl:Read acl:Write acl:Control acl:Append ) ] ;
   rdfs:label "Requested Access Mode"@en .
 
+:hasAccessNeedGroupDecorator
+  a rdf:property ;
+  rdfs:comment "Links to an AccessNeedGroupDecorator"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessNeedGroup ;
+  rdfs:range :AccessNeedGroupDecorator ;
+  rdfs:label "Has Access Need Group Decorator"@en .
+
+:supports
+  a rdf:property ;
+  rdfs:comment "Links to an AccessNeed this AccessNeed supports"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range [ owl:oneOf ( :AccessNeed :ReferencedAccessNeed ) ] ;
+  rdfs:label "Supports"@en .
+
+:supportedBy
+  a rdf:property ;
+  rdfs:comment "Links to an AccessNeed supported by this AccessNeed"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range [ owl:oneOf ( :AccessNeed :ReferencedAccessNeed ) ] ;
+  rdfs:label "Supported By Access Need"@en .
+
+:hasShapeTreeDecorator
+  a rdf:property ;
+  rdfs:comment "Links to a ShapeTreeDecorator"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range st:ShapeTreeDecorator ;
+  rdfs:label "Has Shape Tree Decorator"@en .
+
+:hasAccessNeedDecorator
+  a rdf:property ;
+  rdfs:comment "Links to an AccessNeedDecorator"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessNeed ;
+  rdfs:range :AccessNeedDecorator ;
+  rdfs:label "Has Access Need Decorator"@en .
+
 # TrustedNeed Class
 #############################################################################
 :TrustedNeed
@@ -877,126 +882,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "Access is to be shared with other Agents"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Shared Access"@en .
-
-# CompiledAccessGroup Class
-#############################################################################
-:CompiledAccessGroup
-  a rdfs:Class ;
-  rdfs:comment "Group of CompiledAccesses compiled for evaluation"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Access Need"@en .
-
-:fromAccessNeedGroup
-  a rdf:property ;
-  rdfs:comment "Links to the AccessNeedGroup used to generate the CompiledAccessGroup"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :CompiledAccessGroup ;
-  rdfs:range :AccessNeedGroup ;
-  rdfs:label "From Access Need Group"@en .
-
-:hasAccessNeedGroupDecorator
-  a rdf:property ;
-  rdfs:comment "Links to an AccessNeedGroupDecorator"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :CompiledAccessGroup ;
-  rdfs:range :AccessNeedGroupDecorator ;
-  rdfs:label "Has Access Need Group Decorator"@en .
-
-:hasCompiledAccess
-  a rdf:property ;
-  rdfs:comment "Links to a CompiledAccess"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :CompiledAccessGroup ;
-  rdfs:range :CompiledAccess ;
-  rdfs:label "Has Compiled Access"@en .
-
-:hasCompiledTrustedAccess
-  a rdf:property ;
-  rdfs:comment "Links to a CompiledTrustedAccess"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :CompiledAccessGroup ;
-  rdfs:range :CompiledTrustedAccess ;
-  rdfs:label "Has Compiled Trusted Access"@en .
-
-# CompiledAccess Class
-#############################################################################
-:CompiledAccess
-  a rdfs:Class ;
-  rdfs:comment "Access need that have been compiled for evaluation"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Compiled Access"@en .
-
-:inCompiledAccessGroup
-  a rdf:property ;
-  rdfs:comment "Identifies the CompiledAccessGroup the CompiledAccess belongs to"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :CompiledAccess ;
-  rdfs:range :CompiledAccessGroup ;
-  rdfs:label "In Compiled Access Group"@en .
-
-:fromAccessNeed
-  a rdf:property ;
-  rdfs:comment "Links to the AccessNeed used to generate the CompiledAccess"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :CompiledAccess ;
-  rdfs:range :AccessNeed ;
-  rdfs:label "From Access Need"@en .
-
-:supports
-  a rdf:property ;
-  rdfs:comment "Links to a CompiledAccess this CompiledAccess supports"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :CompiledAccess ;
-  rdfs:range :CompiledAccess ;
-  rdfs:label "Supports"@en .
-
-:supportedBy
-  a rdf:property ;
-  rdfs:comment "Links to a CompiledAccess supported by this CompiledAccess"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :CompiledAccess ;
-  rdfs:range :CompiledAccess ;
-  rdfs:label "Supported By Compiled Access"@en .
-
-:hasShapeTreeDecorator
-  a rdf:property ;
-  rdfs:comment "Links to a ShapeTreeDecorator"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :CompiledAccess ;
-  rdfs:range st:ShapeTreeDecorator ;
-  rdfs:label "Has Shape Tree Decorator"@en .
-
-:hasAccessNeedDecorator
-  a rdf:property ;
-  rdfs:comment "Links to an AccessNeedDecorator"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :CompiledAccess ;
-  rdfs:range :AccessNeedDecorator ;
-  rdfs:label "Has Access Need Decorator"@en .
-
-:referencesCompiledAccess
-  a rdf:property ;
-  rdfs:comment "References another CompiledAccess"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :CompiledAccess ;
-  rdfs:range :CompiledAccess ;
-  rdfs:label "References Compiled Access"@en .
-
-# CompiledTrustedAccess class
-#############################################################################
-:CompiledTrustedAccess
-  a rdfs:Class ;
-  rdfs:comment "Trusted needs that have been compiled for evaluation"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Compiled Trusted Access"@en .
-
-:referencesCompiledTrustedAccess
-  a rdf:property ;
-  rdfs:comment "References another CompiledTrustedAccess"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :CompiledTrustedAccess ;
-  rdfs:range :CompiledTrustedAccess ;
-  rdfs:label "References Compiled Trusted Access"@en .
 
 # AccessDecoratorIndex class
 #############################################################################
