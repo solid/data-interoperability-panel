@@ -3,43 +3,21 @@ Remote Data Registration {#remote}
 
 ## Overview ## {#remote-overview}
 
-Issue: Write overview for Remote Data Registration
+Remote Data Registration lets [=Agents=] keep track of data that other
+[=Agents=] have shared with them. 
+
+When an [=Agent=] shares data with another [=Agent=], they record that
+decision with an [=Access Grant=], and send an [=Access Receipt=] to the
+grantee. The [=Access Receipt=] is used to update the grantee's 
+[=Remote Data Registry=] with pointers to that remote data that was
+shared with them.
 
 ## Data Model ## {#remote-datamodel}
 
-### Summary ### {#remote-datamodel-summary}
+### Remote Data Registry Set ### {#datamodel-remote-registry-set}
 
-<figure id="fig-remote-model">
-  <img src="diagrams/remote-model.svg" width=100%/>
-  <figcaption>Data model for the [=Remote Data Registry=]</figcaption>
-</figure>
-
-An [=Agent=] links to [=Remote Data Registry Sets=] via the
-[interop:hasRemoteDataRegistrySet](interop.ttl#hasAccessReceiptRegistrySet)
-property.
-
-A [=Remote Data Registry Set=] links to any number of
-[=Remote Data Registries=] via
-the [interop:hasRegistry](interop.ttl#hasRegistry) property.
-
-A [=Remote Data Registry=] links to any number of registered
-[=Remote Data Registrations=] via the
-[interop:hasRegistration](interop.ttl#hasRegistration) property.
-
-A [=Remote Data Registration=] may link to one or more
-[=Remote Data Instances=] via the
-[interop:hasRemoteDataInstance](interop.ttl#hasRemoteDataInstance) property.
-
-<figure id="fig-remote-agent">
-  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me
-  linking to an [=Remote Data Registry Set=]</figcaption>
-  <pre highlight="turtle">
-  <#me>
-    a interop:Agent;
-    interop:hasRemoteDataRegistrySet &lt;https://alice.pod.example/profile/remote#set&gt; .
-  </pre>
-  </figure>
-</figure>
+A <dfn>Remote Data Registry Set</dfn> is a [=Registry Set=] specifically
+made up of [=Remote Data Registries=].
 
 <figure id ="fig-remote-registry-set">
    <figcaption>A [=Remote Data Registry Set=] at
@@ -48,68 +26,11 @@ A [=Remote Data Registration=] may link to one or more
   <pre highlight="turtle">
   <#set>
     a interop:RemoteDataRegistrySet;
-    interop:hasRegistry &lt;https://bob.pod.example/remote/#registry&gt; ,
-                    &lt;https://bob.otherpod.example/remote/#registry&gt; .
+    interop:hasRegistry 
+      &lt;https://alice.pod.example/remote/#registry&gt; ,
+      &lt;https://alice.otherpod.example/remote/#registry&gt; .
   </pre>
 </figure>
-
-<figure id="fig-remote-registry">
-  <figcaption>An [=Remote Data Registry=] at
-  https://bob.pod.example/remote/#registry
-  linking to several registered [=Remote Data Registrations=]
-  </figcaption>
-  <pre highlight="turtle">
-  <#registry>
-    a interop:RemoteDataRegistry ;
-    interop:hasRegistration &lt;f0ebbd29-3a5a-4770-af29-cdb7693066b4/#registration&gt; ,
-                        &lt;265dff0c-b199-42d8-95b3-d1eaae91c412/#registration&gt; ,
-                        &lt;f68e95eb-a61f-408c-8d83-c4f21dae6115/#registration&gt; .
-  </pre>
-</figure>
-
-<figure id="fig-remote-registration">
-  <figcaption>An [=Remote Data Registration=] at
-  https://bob.pod.example/remote/f0ebbd29-3a5a-4770-af29-cdb7693066b4/#registration
-  </figcaption>
-  <pre highlight="turtle">
-  <#registration>
-    a interop:RemoteDataRegistration ;
-    interop:registeredBy &lt;https://bob.pod.example/profile/id#me&gt; ;
-    interop:registeredWith &lt;https://trusted.example/id#agent&gt; ;
-    interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:providedAt "2020-09-05T06:16:01Z"^^xsd:dateTime ;
-    interop:hasDataReceipt &lt;https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#notebook-receipt&gt; ;
-    interop:hasRegistration &lt;https://alice.pod.example/data/notebook-tree/#registration&gt; ;
-    interop:registeredShapeTree note:notebook-tree ;
-    interop:scopeOfDataGrant interop:SelectedInstances ;
-    interop:accessMode acl:Read, acl:Write ;
-    interop:hasRemoteDataInstance &lt;https://bob.pod.example/remote/f0ebbd29-3a5a-4770-af29-cdb7693066b4/cd04e76b-d64d-4cea-aacf-fb248a295002#instance&gt; ,
-                              &lt;https://bob.pod.example/remote/f0ebbd29-3a5a-4770-af29-cdb7693066b4/9506b58f-3c36-4c0c-a698-712baf478deb#instance&gt; .
-  </pre>
-</figure>
-
-<figure id="fig-remote-data-instance">
-  <figcaption>An [=Remote Data Instance=] at
-  https://bob.pod.example/remote/f0ebbd29-3a5a-4770-af29-cdb7693066b4/cd04e76b-d64d-4cea-aacf-fb248a295002
-  </figcaption>
-  <pre highlight="turtle">
-  <#registration>
-    a interop:RemoteDataInstance ;
-    interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:providedAt "2020-09-05T06:16:01Z"^^xsd:dateTime ;
-    interop:hasDataReceipt &lt;https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#notebook-receipt&gt; ;
-    interop:registeredShapeTree note:notebook-tree ;
-    interop:accessMode acl:Read, acl:Write ;
-    interop:hasDataInstance &lt;https://alice.pod.example/data/notebook/notebook-1/#notebook&gt; .
-  </pre>
-</figure>
-
-### Remote Data Registry Set ### {#datamodel-remote-registry-set}
-
-A <dfn>Remote Data Registry Set</dfn> is a [=Registry Set=] specifically
-made up of [=Remote Data Registries=].
 
 <table class="classinfo data" align="left" id="classRemoteDataRegistrySet">
   <colgroup></colgroup>
@@ -156,14 +77,28 @@ is assigned to a resource to ensure it will validate against the
 <#RemoteDataRegistrySetTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#RemoteDataRegistrySetShape&gt; ;
-  st:matchesUriTemplate "receipt" .
+  st:validatedBy &lt;interops#RemoteDataRegistrySetShape&gt; .
 </pre>
 
 ### Remote Data Registry ### {#datamodel-remote-data-registry}
 
 A <dfn>Remote Data Registry</dfn> is a collection of
 [=Remote Data Registrations=] stored in a specific location in a [=pod=].
+
+<figure id="fig-remote-registry">
+  <figcaption>An [=Remote Data Registry=] at
+  https://alice.pod.example/remote/#registry
+  linking to several [=Remote Data Registrations=]
+  </figcaption>
+  <pre highlight="turtle">
+  <#registry>
+    a interop:RemoteDataRegistry ;
+    interop:hasRemoteDataRegistration
+      &lt;9e80126d-178f-4a03-851b-c731194a3b0d/#registration&gt; ,
+      &lt;833ab294-9f29-4059-b76f-00efc251f2dd/#registration&gt; ,
+      &lt;656a8fd0-7cac-46a3-8b84-06f227822656/#registration&gt; .      
+  </pre>
+</figure>
 
 <table class="classinfo data" align="left" id="classRemoteDataRegistry">
   <colgroup></colgroup>
@@ -184,8 +119,8 @@ A <dfn>Remote Data Registry</dfn> is a collection of
   </thead>
   <tbody>
     <tr>
-      <td>hasRegistration</td>
-      <td>[Registration](interop.ttl#Registration)</td>
+      <td>hasRemoteDataRegistration</td>
+      <td>[RemoteDataRegistration](interop.ttl#RemoteDataRegistration)</td>
       <td>Link to associated [=Remote Data Registrations=]</td>
     </tr>
   </tbody>
@@ -198,7 +133,7 @@ validate an instance of the
 <pre highlight="turtle" id="shexRemoteDataRegistry">
 <#RemoteDataRegistryShape> {
   a [ interop:RemoteDataRegistry ] ;
-  interop:hasRegistration IRI*
+  interop:hasRemoteDataRegistration IRI* 
 }
 </pre>
 
@@ -219,20 +154,31 @@ conformant instances of the
 
 ### Remote Data Registration ### {#datamodel-remote-data-registration}
 
-An [=Agent=] maintains a <dfn>Remote Data Registration</dfn> to represent
-a [=Data Registration=] that another [=Agent=] has shared with them. It
-may represent access to the entire [=Data Registration=], or only to a
-select group of [=Remote Data Instances=] within.
+A <dfn>Remote Data Registration</dfn> represents data shared by other
+[=Agents=] corresponding to a given [=shape tree=], each of which is associated 
+with a [=Remote Agent Data Registration=].
 
-A [=Remote Data Registration=] is created when an [=Agent=] receives an
-[=Access Receipt=] from another [=Agent=] that includes access to a given
-[=Data Registration=].
+Each [=Remote Agent Data Registration=] creates a useful authorization 
+boundary for remote data from a given [=Agent=].
 
-* A [=Remote Data Registration=] MUST be associated with a [=Data Receipt=]
-* If an [=Access Receipt=] with a corresponding [=Data Receipt=] is received
-    that changes the access to a shared [=Data Registration=], the
-    corresponding [=Remote Data Registration=] MUST be updated, and
-    removed altogether if that access is removed.
+<figure id="fig-remote-data-registration">
+  <figcaption>A [=Remote Data Registration=] for a given [=shape tree=] at
+  https://alice.pod.example/remote/9e80126d-178f-4a03-851b-c731194a3b0d/#set
+  linking to several [=Remote Agent Data Registrations=]
+  </figcaption>
+  <pre highlight="turtle">
+  <#registration>
+    a interop:RemoteDataRegistration ;
+    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
+    interop:registeredWith &lt;https://trusted.example/id#agent&gt; ;
+    interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    interop:registeredShapeTree project:ProjectTree ;
+    interop:hasRemoteAgentDataRegistration
+      &lt;f0ebbd29-3a5a-4770-af29-cdb7693066b4/#registration&gt; ,
+      &lt;bedcc388-f303-4059-8645-2e93bf61e9f3/#registration&gt; .
+  </pre>
+</figure>
 
 <table class="classinfo data" align="left" id="classRemoteDataRegistration">
   <colgroup></colgroup>
@@ -273,55 +219,15 @@ A [=Remote Data Registration=] is created when an [=Agent=] receives an
       <td>Date and time the [=Remote Data Registration=] was updated</td>
     </tr>
     <tr>
-      <td>providedAt</td>
-      <td>xsd:dateTime</td>
-      <td>When the [=Remote Data Instance=] was shared by remote [=Agent=]</td>
-    </tr>
-    <tr>
-      <td>hasRegistration</td>
-      <td>[DataRegistration](#classDataRegistration)</td>
-      <td>Link to the [=Data Registration=] that was shared</td>
-    </tr>
-    <tr>
       <td>registeredShapeTree</td>
       <td>st:ShapeTree</td>
-      <td>Shape tree associated with the shared [=Data Registration=]</td>
+      <td>Associated shape tree that all linked 
+      [=Remote Agent Data Registrations=] must conform to</td>
     </tr>
     <tr>
-      <td>scopeOfDataGrant</td>
-      <td> interop:AllInstances, interop:InheritInstances,
-      interop:SelectedInstances, interop:NoAccess</td>
-      <td>Identifies the scope of access that was granted
-        <ul>
-          <li>interop:AllInstances - Scope includes
-              access to all [=Data Instances=] of the shared
-              [=Data Registration=]</li>
-          <li>interop:InheritInstances - Scope includes
-              access to [=Data Instances=] inherited by
-              instances selected in the [=Data Receipt=] linked via
-              interop:inheritsFrom</li>
-          <li>interop:SelectedInstances - Scope includes
-              access only to those [=Data Instances=] specifically
-              selected by the [=Agent=]</li>
-          <li>interop:NoAccess - No access is granted</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>accessMode</td>
-      <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
-      <td>Access modes granted on the shared [=Data Registration=]</td>
-    </tr>
-    <tr>
-      <td>hasRemoteDataInstance</td>
-      <td>[RemoteDataInstance](#classRemoteDataInstance)</td>
-      <td>Link to [=Remote Data Instance=] associated with the
-      [=Remote Data Registration=]</td>
-    </tr>
-    <tr>
-      <td>hasDataReceipt</td>
-      <td>[DataReceipt](#classDataReceipt)</td>
-      <td>Link to [=Data Receipt=] that granted this shared access</td>
+      <td>hasRemoteAgentDataRegistration</td>
+      <td>[RemoteAgentDataRegistration](interop.ttl#RemoteAgentDataRegistration)</td>
+      <td>Link to associated [=Remote Agent Data Registrations=]</td>
     </tr>
   </tbody>
 </table>
@@ -331,64 +237,88 @@ validate an instance of the
 [RemoteDataRegistration](#classRemoteDataRegistration) class.
 
 <pre highlight="turtle" id="shexRemoteDataRegistration">
-<#RemoteDataRegistration> {
-  a [interop:RemoteDataRegistration] ;
+<#RemoteDataRegistrationShape> {
+  a [ interop:RemoteDataRegistration ] ;
   interop:registeredBy IRI ;
   interop:registeredWith IRI ;
   interop:registeredAt xsd:dateTime ;
-  interop:providedAt xsd:dataTime ;
-  interop:updatedAt xsd:dateTime ;
-  interop:hasRegistration IRI ;           # Remote data registration
-  interop:registeredShapeTree IRI ;       # Associated shape tree
-  interop:scopeOfDataGrant [ interop:SelectedInstances
-                         interop:AllInstances
-                         interop:InheritInstances
-                         interop:NoAccess ]+ ;
-  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  interop:hasRemoteDataInstance IRI* ;    # if specific instances are selected or inherited
-  interop:hasDataReceipt IRI+ ;         # Associated data receipts
+  interop:updatedAt xsd:dateTime ;  
+  interop:registeredShapeTree IRI 
+  interop:hasRemoteAgentDataRegistration IRI* ;
 }
 </pre>
 
 The [RemoteDataRegistrationTree](interop.tree#RemoteDataRegistrationTree)
-is assigned to a resource via the
-[RemoteDataRegistryTree](#treeRemoteDataRegistry), and ensures
-that the assigned resource will validate against the
-[RemoteDataRegistrationShape](#shexRemoteDataRegistration).
+is assigned to a container resource to ensure that it will validate against the
+[RemoteDataRegistrationShape](#shexRemoteDataRegistration), and contain 
+only conformant instances of the
+[RemoteAgentDataRegistrationTree](#treeRemoteAgentDataRegistration).
 
 <pre highlight="turtle" id="treeRemoteDataRegistration">
 <#RemoteDataRegistrationTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
   st:validatedBy &lt;interops#RemoteDataRegistrationShape&gt; ;
-  st:matchesUriTemplate "{id}" ;
-  st:contains <#RemoteDataInstanceTree> ,
+  st:contains <#RemoteAgentDataRegistrationTree> ,
               st:AllowNone .
 </pre>
 
-### Remote Data Instance ### {#datamodel-remote-data-instance}
+### Remote Agent Data Registration ### {#datamodel-remote-agent-data-registration}
 
-An [=Agent=] maintains a <dfn>Remote Data Instance</dfn> to represent
-a [=Data Instance=] that another [=Agent=] has shared with them.
+An [=Agent=] maintains a <dfn>Remote Agent Data Registration</dfn> to represent
+access to a [=Data Registration=] that another [=Agent=] has shared with them. It
+may represent access to the entire [=Data Registration=], or only to a
+select group of [=Data Instances=] within.
 
-A [=Remote Data Instance=] is created when an [=Agent=] receives an
-[=Access Receipt=] from another [=Agent=] that includes access to a specific
-[=Data Instance=].
+A [=Remote Agent Data Registration=] is created when an [=Agent=] receives an
+[=Access Receipt=] from another [=Agent=] that includes access to a given
+[=Data Registration=].
 
-* A [=Remote Data Instance=] MUST be associated with a [=Data Receipt=]
-* If an [=Access Receipt=] is received with a corresponding [=Data Receipt=]
-    that changes the access to a shared
-    [=Data Instance=], the corresponding [=Remote Data Instance=]
-    MUST be updated, and removed altogether if that access is removed.
+* A [=Remote Agent Data Registration=] MUST be associated with at least
+    one [=Data Grant=] or [=Referenced Data Grant=] sourced from the
+    [=Access Receipt=] linked via `hasAccessReceipt`
+* Each associated [=Data Grant=] or [=Referenced Data Grant=] MUST
+    be stored as an individual resource in the 
+    [=Remote Agent Data Registration=] container.
+* If an [=Access Receipt=] with a corresponding [=Data Grant=] or 
+    [=Referenced Data Grant=] is received
+    that changes the access to a shared [=Data Registration=], the
+    corresponding [=Remote Agent Data Registrations=], stored
+    [=Data Grants=], and/or stored [=Referenced Data Grants=] MUST be updated, 
+    and removed altogether if that access is removed.
 
-<table class="classinfo data" align="left" id="classRemoteDataInstance">
+<figure id="fig-remote-agent-data-registration">
+  <figcaption>A [=Remote Agent Data Registration=] at
+  https://alice.pod.example/remote/9e80126d-178f-4a03-851b-c731194a3b0d/f0ebbd29-3a5a-4770-af29-cdb7693066b4/#registration
+  </figcaption>
+  <pre highlight="turtle">
+  <#registration>
+    a interop:RemoteAgentDataRegistration ;
+    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
+    interop:registeredWith &lt;https://trusted.example/id#agent&gt; ;
+    interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    interop:registeredShapeTree project:ProjectTree ;
+    interop:hasDataRegistration 
+      &lt;https://bob.pod.example/data/project-tree/#registration&gt; ;    
+    interop:fromAgent
+      &lt;https://bob.pod.example/profile/id#me&gt; ;
+    interop:hasAccessReceipt
+      &lt;https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#receipt&gt; ;
+    interop:satisfiesDataGrant
+      &lt;cd04e76b-d64d-4cea-aacf-fb248a295002#instance&gt; .
+  </pre>
+</figure>
+
+<table class="classinfo data" align="left" id="classRemoteAgentDataRegistration">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
     <tr>
       <th colspan=3>
-        [RemoteDataInstance](interop.ttl#RemoteDataInstance)
+        [RemoteAgentDataRegistration](interop.ttl#RemoteAgentDataRegistration)
+        a rdfs:subClassOf [Registration](interop.ttl#Registration)
       </th>
     </tr>
     <tr>
@@ -399,72 +329,92 @@ A [=Remote Data Instance=] is created when an [=Agent=] receives an
   </thead>
   <tbody>
     <tr>
+      <td>registeredBy</td>
+      <td>[Agent](#classAgent)</td>
+      <td>[=Agent=] that registered the [=Remote Agent Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>[Application](#classApplication)</td>
+      <td>[=Application=] used to create the [=Remote Agent Data Registration=]</td>
+    </tr>
+    <tr>
       <td>registeredAt</td>
       <td>xsd:dateTime</td>
-      <td>When the [=Remote Data Instance=] was created</td>
+      <td>Date and time the [=Remote Agent Data Registration=] was created</td>
     </tr>
     <tr>
       <td>updatedAt</td>
       <td>xsd:dateTime</td>
-      <td>When the [=Remote Data Instance=] was last updated</td>
-    </tr>
-    <tr>
-      <td>providedAt</td>
-      <td>xsd:dateTime</td>
-      <td>When the [=Remote Data Instance=] was shared by remote [=Agent=]</td>
-    </tr>
-    <tr>
-      <td>hasDataInstance</td>
-      <td>[=Data Instance=]</td>
-      <td>Link to [=Data Instance=] associated with the
-      [=Remote Data Instance=]</td>
+      <td>Date and time the [=Remote Agent Data Registration=] was updated</td>
     </tr>
     <tr>
       <td>registeredShapeTree</td>
       <td>st:ShapeTree</td>
-      <td>Shape tree associated with the shared [=Data Instance=]</td>
+      <td>Shape tree associated with the shared [=Data Registration=]</td>
     </tr>
     <tr>
-      <td>accessMode</td>
-      <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
-      <td>Access modes granted on the shared [=Data Instance=]</td>
+      <td>hasDataRegistration</td>
+      <td>[DataRegistration](#classDataRegistration)</td>
+      <td>Link to the [=Data Registration=] that was shared</td>
     </tr>
     <tr>
-      <td>hasDataReceipt</td>
-      <td>[DataReceipt](#classDataReceipt)</td>
-      <td>Link to [=Data Receipt=] that granted this shared access</td>
+      <td>fromAgent</td>
+      <td>[Agent](#classAgent)</td>
+      <td>Link to the [=Agent=] who the shared [=Data Registration=] belongs to</td>
+    </tr>
+    <tr>
+      <td>hasAccessReceipt</td>
+      <td>[AccessReceipt](#classAccessReceipt)</td>
+      <td>Link to [=Access Receipt=] representing data share</td>
+    </tr>
+    <tr>
+      <td>satisfiesDataGrant</td>
+      <td>[DataGrant](#classDataGrant), 
+          [ReferencedDataGrant](#classReferencedDataGrant)</td>
+      <td>Link to [=Data Grants=] or [=Referenced Data Grants=] that
+      detail the scope of access shared from `fromAgent` for 
+      the shared [=Data Registration=]. These are contained in the
+      linked [=Access Receipt=], but each is added as a resource
+      into the [=Remote Agent Data Registration=] container, for
+      authorization boundary purposes.</td>
     </tr>
   </tbody>
 </table>
 
-The [RemoteDataInstanceShape](#shexRemoteDataInstance) is used to
-validate an instance of the
-[RemoteDataInstance](#classRemoteDataInstance) class.
+The [RemoteAgentDataRegistrationShape](#shexRemoteAgentDataRegistration) 
+is used to validate an instance of the
+[RemoteAgentDataRegistration](#classRemoteAgentDataRegistration) class.
 
-<pre highlight="turtle" id="shexRemoteDataInstance">
-<#RemoteDataInstance> {
-  a [interop:RemoteDataInstance] ;
-  interop:hasDataInstance IRI ; # Remote Data Instance
+<pre highlight="turtle" id="shexRemoteAgentDataRegistration">
+<#RemoteAgentDataRegistration> {
+  a [interop:RemoteAgentDataRegistration] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI ;
   interop:registeredAt xsd:dateTime ;
-  interop:providedAt xsd:dataTime ;
-  interop:registeredShapeTree IRI ;       # Associated shape tree
-  interop:accessMode [ acl:Read acl:Write acl:Append acl:Control ]+ ;
-  interop:hasDataReceipt IRI+ ;         # Associated data receipts
+  interop:updatedAt xsd:dateTime ;
+  interop:hasDataRegistration IRI ;         
+  interop:fromAgent IRI ;                   
+  interop:registeredShapeTree IRI ;         
+  interop:hasAccessReceipt IRI* ;           
+  interop:satisfiesDataGrant IRI+           
 }
 </pre>
 
-The [RemoteDataInstanceTree](interop.tree#RemoteDataInstanceTree)
+The [RemoteAgentDataRegistrationTree](interop.tree#RemoteAgentDataRegistrationTree)
 is assigned to a resource via the
-[RemoteDataInstanceTree](#treeRemoteDataInstance), and ensures
+[RemoteDataRegistrationTree](#treeRemoteDataRegistration), and ensures
 that the assigned resource will validate against the
-[RemoteDataInstanceShape](#shexRemoteDataInstance).
+[RemoteAgentDataRegistrationShape](#shexRemoteAgentDataRegistration).
 
-<pre highlight="turtle" id="treeRemoteDataInstance">
-<#RemoteDataInstanceTree>
+<pre highlight="turtle" id="treeRemoteAgentDataRegistration">
+<#RemoteAgentDataRegistrationTree>
   a st:ShapeTree;
-  st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#RemoteDataInstanceShape&gt; ;
-  st:matchesUriTemplate "{id}" .
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy &lt;interops#RemoteAgentDataRegistrationShape&gt; ;
+  st:contains &lt;#DataGrantTree&gt; ,
+              &lt;#ReferencedDataGrantTree&gt; ,
+              st:AllowNone .
 </pre>
 
 ## Resource Hierarchy ## {#remote-hierarchy}
@@ -502,22 +452,82 @@ that the assigned resource will validate against the
       <td>[RemoteDataRegistryTree](#treeRemoteDataRegistry)</td>
     </tr>
     <tr>
-      <td>`-- f0ebbd29...b4/#registration`</td>
-      <td>[RemoteData](#classRemoteDataRegistration)</td>
+      <td>`-- 9e80126d...0d/#reg...`</td>
+      <td>[RemoteDataRegistration](#classRemoteDataRegistration)</td>
       <td>[RemoteDataRegistrationShape](#shexRemoteDataRegistration)</td>
       <td>[RemoteDataRegistrationTree](#treeRemoteDataRegistration)</td>
     </tr>
     <tr>
-      <td>`---- cd04e76b...02#instance`</td>
-      <td>[RemoteDataInstance](#classRemoteDataInstance)</td>
-      <td>[RemoteDataInstanceShape](#shexRemoteDataInstance)</td>
-      <td>[RemoteDataInstanceTree](#treeRemoteDataInstance)</td>
+      <td>`---- f0ebbd29...b4/#reg...`</td>
+      <td>[RemoteAgentDataRegistration](#classRemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](#shexRemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](#treeRemoteAgentDataRegistration)</td>
     </tr>
     <tr>
-      <td>`---- 9506b58f...eb#instance`</td>
-      <td>[RemoteDataInstance](#classRemoteDataInstance)</td>
-      <td>[RemoteDataInstanceShape](#shexRemoteDataInstance)</td>
-      <td>[RemoteDataInstanceTree](#treeRemoteDataInstance)</td>
+      <td>`------ cd04e76b...02#dg`</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[DataGrantShape](#shexDataGrant)</td>
+      <td>[DataGrantTree](#treeDataGrant)</td>
+    </tr>
+    <tr>
+      <td>`------ 9506b58f...eb#rdg`</td>
+      <td>[ReferencedDataGrant](#classReferencedDataGrant)</td>
+      <td>[ReferencedDataGrantShape](#shexReferencedDataGrant)</td>
+      <td>[ReferencedDataGrantTree](#treeReferencedDataGrant)</td>
+    </tr>
+    <tr>
+      <td>`---- bedcc388...f3/#reg...`</td>
+      <td>[RemoteAgentDataRegistration](#classRemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](#shexRemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](#treeRemoteAgentDataRegistration)</td>
+    </tr>
+    <tr>
+      <td>`------ fe111165a...01#dg`</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[DataGrantShape](#shexDataGrant)</td>
+      <td>[DataGrantTree](#treeDataGrant)</td>
+    </tr>    
+    <tr>
+      <td>`-- 833ab294...dd/#reg...`</td>
+      <td>[RemoteDataRegistration](#classRemoteDataRegistration)</td>
+      <td>[RemoteDataRegistrationShape](#shexRemoteDataRegistration)</td>
+      <td>[RemoteDataRegistrationTree](#treeRemoteDataRegistration)</td>
+    </tr>
+    <tr>
+      <td>`---- 265dff0c...12/#reg...`</td>
+      <td>[RemoteAgentDataRegistration](#classRemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](#shexRemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](#treeRemoteAgentDataRegistration)</td>
+    </tr>
+    <tr>
+      <td>`------ 62262350...4a#rdg`</td>
+      <td>[ReferencedDataGrant](#classReferencedDataGrant)</td>
+      <td>[ReferencedDataGrantShape](#shexReferencedDataGrant)</td>
+      <td>[ReferencedDataGrantTree](#treeReferencedDataGrant)</td>
+    </tr>
+    <tr>
+      <td>`-- 656a8fd0...56/#reg...`</td>
+      <td>[RemoteDataRegistration](#classRemoteDataRegistration)</td>
+      <td>[RemoteDataReg...](#shexRemoteDataRegistration)</td>
+      <td>[RemoteDataReg...](#treeRemoteDataRegistration)</td>
+    </tr>
+    <tr>
+      <td>`---- f68e95eb...15/#reg...`</td>
+      <td>[RemoteAgentDataRegistration](#classRemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](#shexRemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](#treeRemoteAgentDataRegistration)</td>
+    </tr>
+    <tr>
+      <td>`------ a2752e58...b6#dg`</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[DataGrantShape](#shexDataGrant)</td>
+      <td>[DataGrantTree](#treeDataGrant)</td>
+    </tr>
+    <tr>
+      <td>`------ d1133f58...60#dg`</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[DataGrantShape](#shexDataGrant)</td>
+      <td>[DataGrantTree](#treeDataGrant)</td>
     </tr>
   </tbody>
 </table>
@@ -529,166 +539,392 @@ be on the same [=pod=].
 [=Remote Data Registry Set=] and [=Remote Data Registry=] resources
 <em class="rfc2119">MAY</em> use any resource or subject names.
 
-[=Remote Data Registrations=] and [=Remote Data Instances=]
-<em class="rfc2119">MUST</em> use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt)
+[=Remote Data Registrations=], [=Remote Agent Data Registrations=], 
+[=Data Grants=], and [=Referenced Data Grants=] <em class="rfc2119">MUST</em> 
+use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt)
 for resource names.
+
+[=Remote Agent Data Registrations=] are organized under 
+[=Remote Data Registrations=] by `interop:registeredShapeTree` to
+provide rational boundaries for authorization.
+
+[=Data Grants=] and [=Referenced Data Grants=] are extracted from the
+associated [=Access Receipt=] are stored individually under 
+the relevant [=Remote Agent Data Registration=], and linked to it via 
+`interop:satisfiesDataGrant`. This allows the [=Agent=] to limit
+remote data access by grant for a given [=Remote Agent Data Registration=].
 
 ## Operations ## {#remote-operations}
 
-### Update Remote Data ### {#remote-update}
+* [[#load-remote-data]] - Lookup a [=Remote Data Registration=] by [=shape tree=]
+* [[#create-remote-data]] - Create a new [=Remote Data Registration=]
+* [[#update-remote-data]] - Updates a [=Remote Data Registry=] based on the contents 
+    of an [=Access Receipt=]
+* [[#load-remote-agent-data]] - Lookup a [=Remote Agent Data Registration=] by URI
+    of the shared [=Data Registration=]
+* [[#create-remote-agent-data]] - Create a new [=Remote Agent Data Registration=]
+* [[#update-remote-agent-data]] - Update a specific [=Remote Agent Data Registration=]
 
-#### Inputs #### {#updateremote-inputs}
+### Load Remote Data Registration ### {#load-remote-data}
 
-* Let `RECEIPT` be an [=Access Receipt=]
-* Let `REGISTRY` be an [=Remote Data Registry=]
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      Lookup a [=Remote Data Registration=] for a given [=shape tree=]
+      `TREE` in a [=Remote Data Registry=] `REGISTRY`      
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`TREE`</td>
+      <td>The [=shape tree=] for the [=Remote Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>The [=Remote Data Registry=] to search for a 
+      [=Remote Data Registration=]</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Remote Data Registration=]</td>
+      <td>Corresponding to `TREE` in `REGISTRY`</td>
+    </tr>
+  </tbody>
+</table>
 
-#### Outputs #### {#updateremote-outputs}
+<div class="opdetails">
 
-* Let `RECEIPT` be an [=Access Receipt=] updated with remote data associations
+1. For each [=Remote Data Registration=] `RDR` in `REGISTRY` linked via
+    `REGISTRY hasRemoteDataRegistration`
+    1. return `RDR` if `RDR registeredShapeTree` == `TREE`
 
-#### Operation Details #### {#updateremote-details}
+</div>
 
-1. For each [=Data Receipt=] `DRECEIPT` linked via `RECEIPT hasDataReceipt`
-    1. Let `REMOTEDR` be a [=Remote Data Registration=] returned from
-        [[#remote-loadremotedr]] with inputs:
-        `DRECEIPT hasRegistration`, `REGISTRY`
-        1. If `REMOTEDR` is not empty
-            1. Call [[#remote-updateremotedr]] with inputs:
-                `REMOTEDR`, `DRECEIPT`, `RECEIPT`
-        1. If `REMOTEDR` is empty
-            1. Next if `DRECEIPT scopeOfDataGrant` is `interop:NoAccess`
-            1. Call [[#remote-createremotedr]] with inputs:
-                `RECEIPT`, `DRECEIPT`, `REGISTRY`
+### Create Remote Data Registration ### {#create-remote-data}
 
-### Create Remote Data Registration ### {#remote-createremotedr}
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      Create a [=Remote Data Registration=] for a given [=shape tree=]
+      `TREE` in a [=Remote Data Registry=] `REGISTRY`      
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`TREE`</td>
+      <td>The [=shape tree=] for the [=Remote Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>The [=Remote Data Registry=] for the 
+      [=Remote Data Registration=]</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Remote Data Registration=]</td>
+      <td>Corresponding to `TREE` in `REGISTRY`</td>
+    </tr>
+  </tbody>
+</table>
 
-#### Inputs #### {#createremotedr-inputs}
+<div class="opdetails">
 
-* Let `DRECEIPT` be a [=Data Receipt=]
-* Let `RECEIPT` be a [=Access Receipt=]
-* Let `REGISTRY` be a [=Remote Data Registry=]
+1. Let `EXISTING` be a [=Remote Data Registration=] returned by 
+    [[#load-remote-data]] with inputs: `TREE`,`REGISTRY`
+    1. Error if `EXISTING`
+1. Let `RDR` be an empty [=Remote Data Registration=]
+1. Let `RDR registeredBy` be the current [=Agent=]
+1. Let `RDR registeredWith` be the current [=Application=]
+1. Let `RDR registeredAt` be the current timestamp
+1. Let `RDR updatedAt` be the current timestamp
+1. Let `RDR registeredShapeTree` be `TREE`
+1. PUT `RDR` into `REGISTRY` container
+1. Link `RDR` to `REGISTRY` via `REGISTRY hasRemoteDataRegistration`
+1. Return `RDR`
 
-#### Outputs #### {#createremotedr-outputs}
+</div>
 
-* A created [=Remote Data Registration=]
+### Update Remote Data ### {#update-remote-data}
 
-#### Operation Details #### {#createremotedr-details}
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      
+      This operation updates a [=Remote Data Registry=] `REGISTRY` based on
+      an input [=Access Receipt=] `RECEIPT`.
+      
+      It iterates over each [=Data Grant=] linked via `RECEIPT hasDataGrant`,
+      including following any [=Referenced Data Grants=].
+      
+      All [=Data Grants=] and [=Referenced Data Grants=] are added to
+      a hash map `DRHASH`. The key is the shared [=Data Registration=] associated
+      with each [=Data Grant=] or [=Referenced Data Grant=] via 
+      `hasDataRegistration`. 
+      
+      The end result is the keys of `DRHASH` are a unique
+      set of [=Data Registrations=] associated with `RECEIPT`, and each key
+      has an array of related [=Data Grants=] and [=Referenced Data Grants=] 
+      as its value. 
+      
+      Each [=Data Registration=] and the array of grants that affect it
+      are then passed to [[#update-remote-agent-data]].
+      
+      <figure id="fig-remote-drhash">
+        <img src="diagrams/apply-data-permissions-drhash.svg" width=100%/>
+      </figure>      
+      
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`RECEIPT`</td>
+      <td>An [=Access Receipt=] representing data shared with an [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>A [=Remote Data Registry=] for the [=Agent=]</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Access Receipt=]</td>
+      <td>Updated with remote data associations</td>
+    </tr>
+  </tbody>
+</table>
 
-1. <em class="rfc2119">MUST</em> return error if
-    `DRECEIPT scopeOfDataGrant` includes `interop:SelectedInstances` or
-    `interop:inheritInstances` and `DRECEIPT hasDataInstance` is empty
-1. Let `REMOTEDR` be an empty [=Remote Data Registration=]
-1. Let `REMOTEDR registeredBy` be the current [=Agent=]
-1. Let `REMOTEDR registeredWith` be the current [=Application=]
-1. Let `REMOTEDR registeredAt` be the current timestamp
-1. Let `REMOTEDR updatedAt` be the current timestamp
-1. Let `REMOTEDR providedAt` be `RECEIPT providedAt`
-1. Let `REMOTEDR hasDataReceipt` be `DRECEIPT`
-1. Let `REMOTEDR hasRegistration` be `DRECEIPT hasRegistration`
-1. Let `REMOTEDR registeredShapeTree` be `DRECEIPT registeredShape`
-1. Let `REMOTEDR scopeOfDataGrant`s be `DRECEIPT scopeOfDataGrant`s
-1. Let `REMOTEDR accessMode`s be `DRECEIPT accessMode`s
-1. If `DRECEIPT scopeOfDataGrant` is `interop:AllInstances`
-    1. Let `REMOTEDR scopeOfDataGrant` be `interop:AllInstances`
-1. If `DRECEIPT scopeOfDataGrant` is `interop:SelectedInstances`
-    AND/OR `interop:InheritInstances`
-    1. For each [=Data Instance=] `RDI` linked via
-        `DRECEIPT hasDataInstance`
-        1. Let `REMOTEDR hasRemoteDataInstance` be linked with the
-            [=Remote Data Instance=] returned from [[#remote-createremotedi]]
-            with inputs: `REMOTEDR`, `RDI`, `DRECEIPT`, `RECEIPT`
+<div class="opdetails">
 
-### Create Remote Data Instance ### {#remote-createremotedi}
+1. Let `DRHASH` be an empty hash map where a [=Data Registration=] is key and 
+    the value is an array of [=Data Grants=] and/or [=Referenced Data Grants=].
+1. For each [=Data Grant=] `DG` linked via `RECEIPT hasDataGrant`
+    1. Let `DRKEY` be `DG hasDataRegistration` added or found in `DRHASH`
+    1. Add `DG` to the value array for `DRKEY` if missing
+    1. For each [=Referenced Data Grant=] `REFDG` linked via `DG hasReferencedDataGrant`
+        1. Let `REFDRKEY` be `REFDG hasDataRegistration` added or found in `DRHASH`        
+        1. Add `REFDG` to the array for `REFDRKEY` if missing
+1. For each [=Data Registration=] `DR` in `DRHASH`
+    1. Call [[#update-remote-agent-data]] with inputs: 
+        `DR`, `DRHASH[DR]`, `RECEIPT` 
+1. Return `RECEIPT`
 
-#### Inputs #### {#createremotedi-inputs}
+</div>
 
-* Let `REMOTEDR` be a [=Remote Data Registration=]
-* Let `RDI` be a [=Data Instance=]
-* Let `DRECEIPT` be a [=Data Receipt=]
-* Let `RECEIPT` be an [=Access Receipt=]
+### Load Remote Agent Data Registration ### {#load-remote-agent-data}
 
-#### Outputs #### {#createremotedi-outputs}
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      Lookup a [=Remote Agent Data Registration=] `RADREG` in a given
+      [=Remote Data Registry=] based on the URI of a 
+      shared [=Data Registration=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`DATAREG`</td>
+      <td>A shared [=Data Registration=] to lookup</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>A [=Remote Data Registry=] to search</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Remote Agent Data Registration=]</td>
+      <td>Corresponding to `DATAREG` in `REGISTRY`</td>
+    </tr>
+  </tbody>
+</table>
 
-* A [=Remote Data Instance=] for `RDI`
+<div class="opdetails">
 
-#### Operation Details #### {#createremotedi-details}
+1. For each [=Remote Data Registration=] `RDR` in `REGISTRY` linked
+    via `REGISTRY hasRemoteDataRegistration`
+    1. If `RDR registeredShapeTree` == `DATAREG registeredShapeTree`
+      1. For each [=Remote Agent Data Registration=] `RADR` linked
+          via `RDR hasRemoteAgentDataRegistration`
+          1. return `RADR` if `RADR hasDataRegistration` == `DATAREG`
 
-1. Let `REMOTEDI` be an empty [=Remote Data Instance=]
-1. Let `REMOTEDI registeredAt` be the current timestamp
-1. Let `REMOTEDI updatedAt` be the current timestamp
-1. Let `REMOTEDI providedAt` be `RECEIPT providedAt`
-1. Let `REMOTEDI registeredShapeTree` be `DRECEIPT registeredShapeTree`
-1. Let `REMOTEDI accessMode`s be `DRECEIPT accessMode`s
-1. Let `REMOTEDR hasDataReceipt` be `DRECEIPT`
-1. Let `REMOTEDR hasDataInstance` be
-    `DRECEIPT hasDataInstance`
+</div>
 
-### Update Remote Data Registration ### {#remote-updateremotedr}
+### Create Remote Agent Data Registration ### {#create-remote-agent-data}
 
-#### Inputs #### {#updateremotedr-inputs}
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      Creates a [=Remote Agent Data Registration=] in a [=Remote Data Registry=] 
+      based on a shared [=Data Registration=] in an [=Access Receipt=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`DR`</td>
+      <td>The shared [=Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>`RECEIPT`</td>
+      <td>The [=Access Receipt=] that `DR` is shared through</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>A [=Remote Data Registry=] for the [=Agent=]</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Remote Agent Data Registration=]</td>
+      <td>Created upon success</td>
+    </tr>
+  </tbody>
+</table>
 
-* Let `REMOTEDR` be a [=Remote Data Registration=] to update
-* Let `DRECEIPT` be a [=Data Receipt=]
-* Let `RECEIPT` be a [=Access Receipt=]
+<div class="opdetails">
 
-#### Outputs #### {#updateremotedr-outputs}
 
-* An updated [=Remote Data Registration=]
+1. Let `RDR` be a [=Remote Data Registration=] returned by 
+    [[#load-remote-data]] with inputs: `DR registeredShapeTree`, `REGISTRY`
+    1. If `RDR` is missing, let `RDR` be a [=Remote Data Registration=]
+        returned by [[#create-remote-data]] with inputs: 
+        `DR registeredShapeTree`, `REGISTRY`
+1. Let `RADR` be an empty [=Remote Agent Data Registration=]
+1. Let `RADR registeredBy` be the current [=Agent=]
+1. Let `RADR registeredWith` be the current [=Application=]
+1. Let `RADR registeredAt` be the current timestamp
+1. Let `RADR updatedAt` be the current timestamp
+1. Let `RADR hasDataRegistration` be `DR`
+1. Let `RADR registeredShapeTree` be `DR registeredShapeTree`
+1. Let `RADR fromAgent` be `RECEIPT fromAgent`
+1. Let `RADR hasAccessReceipt` be `RECEIPT`
+1. PUT `RADR` into the `RDR` container
+1. Link `RADR` to `RDR` via `RDR hasRemoteAgentDataRegistration`
+1. Return `RADR`
 
-#### Operation Details #### {#updateremotedr-details}
+</div>
 
-1. <em class="rfc2119">MUST</em> return error if `REMOTEDR providedAt`
-    is later than `RECEIPT providedAt`
-1. If `REMOTEDR hasDataReceipt` is not `DRECEIPT`
-    1. Let `OLDDRECEIPT` be `REMOTEDR hasDataReceipt`
-    1. Let `REMOTEDR hasDataReceipt` be  `DRECEIPT`
-    1. Let `OLDRECEIPT replacedBy` be `DRECEIPT`
-    1. Let `OLDRECEIPT updatedAt` be the current timestamp
-1. Let `REMOTEDR accessMode`s be `DRECEIPT accessMode`s
-1. If `DRECEIPT scopeOfDataGrant` is `interop:NoAccess`
-    1. Let `REMOTEDR scopeOfDataGrant` be `interop:NoAccess`
-    1. Let `REMOTEDR accessMode` be empty
-    1. For each [=Remote Data Instance=] `REMOTEDI` linked via
-        `REMOTEDR hasRemoteDataInstance`
-        1. Delete `REMOTEDI`
-        1. Remove `REMOTEDR hasRemoteDataInstance` link to `REMOTEDI`
-1. If `DRECEIPT scopeOfDataGrant` is `interop:AllInstances`
-    1. For each [=Remote Data Instance=] `REMOTEDI` linked via
-        `REMOTEDR hasRemoteDataInstance`
-        1. Delete `REMOTEDI`
-        1. Remove `REMOTEDR hasRemoteDataInstance` link to `REMOTEDI`
-1. If `DRECEIPT scopeOfDataGrant` is `interop:SelectedInstances` or
-    `interop:InheritInstances`
-    1. For each [=Remote Data Instance=] `REMOTEDI` linked via
-        `REMOTEDR hasRemoteDataInstance`
-        1. Delete `REMOTEDI`
-        1. Remove `REMOTEDR hasRemoteDataInstance` link to `REMOTEDI`
-    1. For each [=Data Instance=] `RDI` linked via
-        `DRECEIPT hasDataInstance`
-        1. Let `REMOTEDR hasRemoteDataInstance` be linked with the
-            [=Remote Data Instance=] returned from [[#remote-createremotedi]]
-            with inputs: `REMOTEDR`, `RDI`, `DRECEIPT`, `RECEIPT`
-1. Let `REMOTEDR updatedAt` be the current timestamp
-1. Return `REMOTEDR`
+### Update Remote Agent Data Registration ### {#update-remote-agent-data}
 
-Issue: It might be more elegant to not wipe out the remote data instances
-and recreate them with changes.
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      Update an existing [=Remote Agent Data Registration=]  
+      with a set of [=Data Grants=] and/or [=Referenced Data Grants=].
+      Create the [=Remote Agent Data Registration=] if it doesn't exist.
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`DR`</td>
+      <td>The shared [=Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>`DATAGRANTS`</td>
+      <td>An array of [=Data Grants=] and [=Referenced Data Grants=]
+      associated with `DR` in `RECEIPT`</td>
+    </tr>
+    <tr>
+      <td>`RECEIPT`</td>
+      <td>[=Access Receipt=] associated with `DR` and `DATAGRANTS`</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Remote Agent Data Registration=]</td>
+      <td>Updated based on the input `DATAGRANTS`</td>
+    </tr>
+  </tbody>
+</table>
 
-Issue: Someone should be able to grant a given [=Agent=] different modes of
-access for different selected instances in a given registration.
+<div class="opdetails">
 
-### Load Remote Data Registration ### {#remote-loadremotedr}
+1. Let `RADR` be a [=Remote Agent Data Registration=] returned from
+    calling [[#load-remote-agent-data]] with inputs: `DR`, `REGISTRY`
+1. If `RADR` is missing
+    1. Call [[#create-remote-agent-data]] with inputs: `RECEIPT`, `REGISTRY`
+1. For each `DATAGRANT` in `DATAGRANTS`
+    1. PUT `DATAGRANT` into `RADR` container if it does not already exist
+    1. PATCH `DATAGRANT` in `RADR` container if it already exists 
+1. Return `RADR`
 
-#### Inputs #### {#loadremotedr-inputs}
-
-* Let `DATAREG` be a [=Data Registration=] to lookup
-* Let `REGISTRY` be a [=Remote Data Registry=] to load from
-
-#### Outputs #### {#loadremotedr-outputs}
-
-* A [=Remote Data Registration=] corresponding to `REMOTEDR`
-
-#### Operation Details #### {#loadremotedr-details}
-
-1. For each [=Remote Data Registration=] `REMOTEDR` in `REGISTRY`
-    1. return `REMOTEDR` if `REMOTEDR hasRegistration` == `DATAREG`
+</div> 
