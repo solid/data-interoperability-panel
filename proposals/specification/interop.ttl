@@ -460,13 +460,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Remote Data Grant"@en .
 
-:scopeOfRemoteDataGrant
-  a rdf:property ;
-  rdfs:comment "Links to a scope identifier for a RemoteDataGrant"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range [ owl:oneOf ( :AllRemote :SelectedRemote :NoAccess ) ] ;
-  rdfs:label "Scope of Remote Data Grant"@en .
-
 :hasRemoteDataRegistrationGrant
   a rdf:property ;
   rdfs:comment "Links to a Remote Data Registration Grant"@en ;
@@ -481,13 +474,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "Access granted to a remote data registration in a remote data registry"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Remote Data Registration Grant"@en .
-
-:scopeOfRemoteDataRegistrationGrant
-  a rdf:property ;
-  rdfs:comment "Links to a scope identifier for a RemoteDataRegistrationGrant"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range [ owl:oneOf ( :AllInstances :SelectedInstances :InheritInstances :NoAccess ) ] ;
-  rdfs:label "Scope of Remote Data Registration Grant"@en .
 
 # TrustedGrant Class
 #############################################################################
@@ -547,7 +533,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:label "Access Receipt Registry"@en .
 
 :AccessReceipt
-  rdfs:subClassOf :Registration
+  rdfs:subClassOf :AccessGrant
   rdfs:comment "A record of access granted by another Agent in the ecosystem"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Receipt"@en .
@@ -559,9 +545,9 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :Agent ;
   rdfs:label "From Agent"@en .
 
-:toAgent
+:viaAgent
   a rdf:property ;
-  rdfs:comment "Agent receiving a message"@en ;
+  rdfs:comment "Agent providing access on behalf of fromAgent"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:range :Agent ;
   rdfs:label "To Agent"@en .
@@ -572,14 +558,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:range :AccessReceipt ;
   rdfs:label "Has Access Receipt"@en .
-
-:hasDataReceipt
-  a rdf:property ;
-  rdfs:comment "Agent receiving a message"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessReceipt ;
-  rdfs:range :DataReceipt ;
-  rdfs:label "Has Data Receipt"@en .
 
 :receivesAccessReceipt
   a rdf:property ;
@@ -599,20 +577,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "Receive access receipt in direct message"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Receipt In Message"@en .
-
-# DataReceipt Class
-#############################################################################
-:DataReceipt
-  a rdfs:Class ;
-  rdfs:comment "Access to a specific data registration in an Access Receipt"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Data Receipt"@en .
-
-:replacedBy
-  a rdf:property ;
-  rdfs:comment "Replaced by another instance"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "replacedBy"@en .
 
 #############################################################################
 # Remote Data Registration
@@ -641,19 +605,18 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Remote Agent Data Registration"@en .
 
+:satisfiesDataGrant
+  a rdf:property ;
+  rdfs:comment "Links to DataGrant or ReferencedDataGrant the RADR satisfies"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range [ owl:oneOf ( :DataGrant :ReferencedDataGrant ) ] ;
+  rdfs:label "Satisfies Data Grant"@en .
+
 :hasRemoteDataRegistration
   a rdf:property ;
   rdfs:comment "Links to remote data registration of the registered shape tree"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Has Remote Data Registration"@en .
-
-:hasRemoteAgentDataInstance
-  a rdf:property ;
-  rdfs:comment "Represents a Data Instance shared by another Agent"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Has Remote Agent Data Instance"@en .
-
-
 
 #############################################################################
 # Application

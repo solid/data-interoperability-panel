@@ -98,7 +98,9 @@ assigned to each [=Registry Set=], depending on the sensitivity of the
     interop:hasRemoteDataRegistrySet &lt;https://alice.pod.example/profile/remote#set&gt; ;
     ######## Inboxes ########
     interop:hasInbox &lt;https://alice.pod.example/inbox/general&gt; ;
-    interop:hasAccessInbox &lt;https://alice.pod.example/inbox/access&gt; .
+    interop:hasAccessInbox &lt;https://alice.pod.example/inbox/access&gt; ;
+    ######## Options ########
+    interop:receivesAccessReceipt interop:ReceiptInMessage .
   </pre>
 </figure>
 
@@ -159,6 +161,14 @@ of software with an [=identity=] that can be strongly authenticated.
       <td>ldp:inbox</td>
       <td>An inbox for access related messages sent to the [=Agent=]</td>
     </tr>
+    <tr>
+      <td>receivesAccessReceipt</td>
+      <td>interop:ReceiptInMessage,
+      interop:ReceiptInRegistration</td>
+      <td>Identifies whether [=Access Receipts=] should be sent directly
+      to the [=Application=] or provided in the [=Application Registration=]
+      if the [=Agent=] is also an [=Application=]</td>      
+    </tr>
   </tbody>
 </table>
 
@@ -174,7 +184,8 @@ The [AgentShape](#shexAgent) is used to validate an instance of the
   interop:hasAccessReceiptRegistrySet IRI ;
   interop:hasRemoteDataRegistrySet IRI ;
   interop:hasInbox IRI ;
-  interop:hasAccessInbox IRI
+  interop:hasAccessInbox IRI ;
+  interop:receivesAccessReceipt [ interop:ReceiptInMessage interop:ReceiptInRegistration ]
 }
 </pre>
 

@@ -520,6 +520,17 @@ class.
 }
 </pre>
 
+The [DataGrantTree] ensures
+that the assigned resource will validate against the
+[DataGrantShape](#shexDataGrant).
+
+<pre highlight="turtle" id="treeDataGrant">
+<#DataGrantTree>
+  a st:ShapeTree ;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;interops:DataGrantShape&gt; .
+</pre>
+
 ### Referenced Data Grant ### {#datamodel-referenced-data-grant}
 
 A <dfn>Referenced Data Grant</dfn> is linked from a [=Data Grant=], and 
@@ -682,10 +693,21 @@ class.
 }
 </pre>
 
+The [ReferencedDataGrantTree] ensures
+that the assigned resource will validate against the
+[ReferencedDataGrantShape](#shexReferencedDataGrant).
+
+<pre highlight="turtle" id="treeReferencedDataGrant">
+<#ReferencedDataGrantTree>
+  a st:ShapeTree ;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;interops:ReferencedDataGrantShape&gt; .
+</pre>
+
 ### Remote Data Grant ### {#datamodel-remote-data-grant}
 
-A <dfn>Remote Data Grant</dfn> records a decision made by an [=Agent=] to
-assign permissions for an [=Access Grant Subject=] to a 
+A <dfn>Remote Data Grant</dfn> records an authorization decision made by 
+an [=Agent=] for an [=Access Grant Subject=] on a 
 [=Remote Data Registration=], in response to a given [=Access Need=] that 
 was presented to them. This has the net effect of allowing the
 [=Access Grant Subject=] to see data that has been shared by
@@ -699,39 +721,43 @@ Each [=Remote Data Grant=] has an assigned scope (`interop:scopeOfGrant`), which
 determines how permissions are assigned. The following types are
 valid for a [=Remote Data Grant=]:
 
-* <b>`interop:AllRemoteInstances`</b>
+* <b>`interop:AllRemote`</b>
     * Applies to all 
-        [=Remote Agent Data Instances=] belonging to all 
+        [=Data Grants=] and [=Referenced Data Grants=] associated with all 
         [=Remote Agent Data Registrations=] belonging to the associated
         [=Remote Data Registration=]. 
     * Permissions will be set for
         the [=Access Grant Subject=] on the [=Remote Data Registration=] container, 
         and will be inherited by all member [=Remote Agent Data Registrations=],
-        and [=Remote Agent Data Instances=].
+        and the [=Data Grants=] and [=Referenced Data Grants=] contained
+        by them.
 * <b>`interop:AllRemoteFromAgent`</b>
     * Applies to all 
-        [=Remote Agent Data Instances=] belonging to the 
+        [=Data Grants=] and [=Referenced Data Grants=] belonging to the 
         selected [=Remote Agent Data Registrations=] linked via 
         `interop:hasRemoteDataFromAgent`. 
     * Permissions will be set for
         the [=Access Grant Subject=] on the selected 
         [=Remote Agent Data Registration=] containers, 
-        and will be inherited by all member [=Remote Agent Data Instances=].
-* <b>`interop:SelectedRemoteInstances`</b>
+        and will be inherited by all [=Data Grants=] and 
+        [=Referenced Data Grants=] contained by them.
+* <b>`interop:SelectedRemote`</b>
     * Applies only to selected 
-        [=Remote Agent Data Instances=] linked via 
-        `interop:hasRemoteAgentDataInstance`. 
+        [=Data Grants=] and/or [=Referenced Data Grants=] linked  
+        via `interop:hasDataGrant`, `interop:hasReferencedDataGrant`.
     * Permissions will be set for
         the [=Access Grant Subject=] on the selected 
-        [=Remote Agent Data Instance=] resources.    
+        [=Data Grant=] and/or [=Referenced Data Grant=] resources stored
+        in [=Remote Agent Data Registrations=].
 * <b>`interop:NoAccess`</b>
     * Indicates that no access is granted to the [=Access Grant Subject=].
     * Applies to the entire [=Remote Data Registration=] 
         when there are no [=Remote Agent Data Registrations=] linked via 
-        `interop:hasRemoteDataFromAgent`, and no `Remote Agent Data Instances`
-        linked via `interop:hasRemoteAgentDataInstance`.
-    * When there are linked [=Remote Agent Data Registrations=] or 
-        [=Remote Agent Data Instances=]
+        `interop:hasRemoteDataFromAgent`, and no 
+        [=Data Grants=] and/or [=Referenced Data Grants=] linked  
+        via `interop:hasDataGrant`, `interop:hasReferencedDataGrant`.
+    * When there are linked [=Remote Agent Data Registrations=], 
+        [=Data Grants=], and/or [=Referenced Data Grants=],
         this scope only applies to them.
 
 When recording a [=Remote Data Grant=] via [[#grants-recordgrant]]:
@@ -787,21 +813,16 @@ When recording a [=Remote Data Grant=] via [[#grants-recordgrant]]:
     </tr>
     <tr>
       <td>scopeOfGrant</td>
-      <td>interop:AllRemote, interop:SelectedRemote, interop:NoAccess</td>
+      <td>interop:AllRemote, interop:AllRemoteFromAgent, 
+      interop:SelectedRemote, interop:NoAccess</td>
       <td>Identifies the access scope of the [=Remote Data Grant=]
         <ul>
-          <li>interop:AllRemoteInstances - Access to all
-              [=Remote Agent Data Instances=] in all 
-              [=Remote Agent Data Registrations=] in a 
-              given [=Remote Data Registration=]</li>
-          <li>interop:AllRemoteFromAgent - Access to all 
-            [=Remote Agent Data Instances=] for a specific 
-            [=Remote Agent Data Registration=] in a given 
-            [=Remote Data Registration=].</li>
-          <li>interop:SelectedRemoteInstances - Scope includes
-            access to only specifically selected 
-            [=Remote Agent Data Instances=]</li>
-          <li>interop:NoAccess - No access is granted</li>
+          <li>interop:AllRemote - All remote data for a given 
+          [=Remote Data Registration=]</li>
+          <li>interop:AllRemoteFromAgent - All remote data from a given 
+          [=Agent=] for a given [=Remote Data Registration=]</li>
+          <li>interop:SelectedRemote - Only selected access</li>
+          <li>interop:NoAccess - No access</li>
         </ul>
       </td>
     </tr>
@@ -812,10 +833,20 @@ When recording a [=Remote Data Grant=] via [[#grants-recordgrant]]:
         scope is `AllRemoteFromAgent`</td>
     </tr>
     <tr>
-      <td>hasRemoteDataAgentDataInstance</td>
-      <td>[RemoteAgentDataInstance](#classRemoteAgentDataInstance)</td>
-      <td>Link to a [=Remote Agent Data Instance=] when 
-        scope is `SelectedRemoteInstances`</td>
+      <td>hasDataGrant</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>Link to a [=Data Grant=] resource that was extracted from an
+        [=Access Receipt=] and stored under the relevant 
+        [=Remote Agent Data Registration=] when the
+        scope is `SelectedRemote`</td>
+    </tr>
+    <tr>
+      <td>hasReferencedDataGrant</td>
+      <td>[ReferencedDataGrant](#classReferencedDataGrant)</td>
+      <td>Link to a [=Referenced Data Grant=] resource that was extracted from an
+        [=Access Receipt=] and stored under the relevant 
+        [=Remote Agent Data Registration=] when the
+        scope is `SelectedRemote`</td>
     </tr>
     <tr>
       <td>hasReferencedRemoteDataGrant</td>
@@ -840,7 +871,8 @@ instance of the [RemoteDataGrant](#classRemoteDataGrant) class.
   interop:accessMode @<#:AccessModes>+ ;
   interop:scopeOfGrant @<#:RemoteDataGrantScopes>+ ;    
   interop:hasRemoteDataFromAgent IRI* ;
-  interop:hasRemoteAgentDataInstance IRI* ;
+  interop:hasDataGrant IRI* ;
+  interop:hasReferencedDataGrant IRI* ;
   interop:hasReferencedRemoteDataGrant @<#:ReferencedRemoteDataGrantShape> 
 }
 </pre>
@@ -848,8 +880,8 @@ instance of the [RemoteDataGrant](#classRemoteDataGrant) class.
 ### Referenced Remote Data Grant ### {#datamodel-referenced-remote-data-grant}
 
 A <dfn>Referenced Remote Data Grant</dfn> is linked from a [=Remote Data Grant=], 
-and records a decision made by an [=Agent=] to assign permissions for an 
-[=Access Grant Subject=] to a [=Remote Data Registration=], 
+and records an authorization decision made by an [=Agent=] for an 
+[=Access Grant Subject=] on a [=Remote Data Registration=], 
 based on a [=Referenced Access Need=] that was presented to them. It stipulates 
 that the [=shape tree=] of the [=Referenced Remote Data Grant=] is effectively 
 a "child" of the [=shape tree=] associated with the parent [=Remote Data Grant=] 
@@ -860,45 +892,44 @@ scope (`interop:scopeOfGrant`), which determines how permissions are assigned.
 The following types are
 valid for a [=Referenced Remote Data Grant=]:
 
-* <b>`interop:AllRemoteInstances`</b>
+* <b>`interop:AllRemote`</b>
     * Applies to all 
-        [=Remote Agent Data Instances=] belonging to all 
+        [=Data Grants=] and [=Referenced Data Grants=] associated with all 
         [=Remote Agent Data Registrations=] belonging to the associated
-        [=Remote Data Registration=]. 
+        [=Remote Data Registration=].  
     * Permissions will be set for
         the [=Access Grant Subject=] on the [=Remote Data Registration=] container, 
         and will be inherited by all member [=Remote Agent Data Registrations=],
-        and [=Remote Agent Data Instances=].
+        and the [=Data Grants=] and [=Referenced Data Grants=] contained
+        by them.
 * <b>`interop:AllRemoteFromAgent`</b>
     * Applies to all 
-        [=Remote Agent Data Instances=] belonging to the 
+        [=Data Grants=] and [=Referenced Data Grants=] belonging to the 
         selected [=Remote Agent Data Registrations=] linked via 
         `interop:hasRemoteDataFromAgent`. 
     * Permissions will be set for
         the [=Access Grant Subject=] on the selected 
         [=Remote Agent Data Registration=] containers, 
-        and will be inherited by all member [=Remote Agent Data Instances=].
-* <b>`interop:SelectedRemoteInstances`</b>
+        and will be inherited by all [=Data Grants=] and 
+        [=Referenced Data Grants=] contained by them.
+* <b>`interop:SelectedRemote`</b>
     * Applies only to selected 
-        [=Remote Agent Data Instances=] linked via 
-        `interop:hasRemoteAgentDataInstance`. 
+        [=Data Grants=] and/or [=Referenced Data Grants=] linked  
+        via `interop:hasDataGrant`, `interop:hasReferencedDataGrant`.
     * Permissions will be set for
         the [=Access Grant Subject=] on the selected 
-        [=Remote Agent Data Instance=] resources.    
+        [=Data Grant=] and/or [=Referenced Data Grant=] resources stored
+        in [=Remote Agent Data Registrations=].
 * <b>`interop:NoAccess`</b>
     * Indicates that no access is granted to the [=Access Grant Subject=].
     * Applies to the entire [=Remote Data Registration=] 
         when there are no [=Remote Agent Data Registrations=] linked via 
-        `interop:hasRemoteDataFromAgent`, and no `Remote Agent Data Instances`
-        linked via `interop:hasRemoteAgentDataInstance`.
-    * When there are linked [=Remote Agent Data Registrations=] or 
-        [=Remote Agent Data Instances=]
-        this scope only applies to them. 
-
-Note: The conditional inheritance used by [=Referenced Data Grants=] 
-is not used by [=Referenced Remote Data Grants=]. This
-is due to practical issues in applying authorization based on graph relationships
-that exist on other resource servers.
+        `interop:hasRemoteDataFromAgent`, and no 
+        [=Data Grants=] and/or [=Referenced Data Grants=] linked  
+        via `interop:hasDataGrant`, `interop:hasReferencedDataGrant`.
+    * When there are linked [=Remote Agent Data Registrations=], 
+        [=Data Grants=], and/or [=Referenced Data Grants=],
+        this scope only applies to them.
 
 When recording a [=Referenced Remote Data Grant=] via [[#grants-recordgrant]]:
 
@@ -957,21 +988,16 @@ When recording a [=Referenced Remote Data Grant=] via [[#grants-recordgrant]]:
     </tr>
     <tr>
       <td>scopeOfGrant</td>
-      <td>interop:AllRemote, interop:SelectedRemote, interop:NoAccess</td>
+      <td>interop:AllRemote, AllRemoteFromAgent, 
+      interop:SelectedRemote, interop:NoAccess</td>
       <td>Identifies the access scope of the [=Remote Data Grant=]
         <ul>
-          <li>interop:AllRemoteInstances - Access to all
-              [=Remote Agent Data Instances=] in all 
-              [=Remote Agent Data Registrations=] in a 
-              given [=Remote Data Registration=]</li>
-          <li>interop:AllRemoteFromAgent - Access to all 
-            [=Remote Agent Data Instances=] for selected 
-            [=Remote Agent Data Registrations=] in a given 
-            [=Remote Data Registration=].</li>
-          <li>interop:SelectedRemoteInstances - Scope includes
-            access to only specifically selected 
-            [=Remote Agent Data Instances=]</li>
-          <li>interop:NoAccess - No access is granted</li>
+          <li>interop:AllRemote - All remote data for a given 
+          [=Remote Data Registration=]</li>
+          <li>interop:AllRemoteFromAgent - All remote data from a given 
+          [=Agent=] for a given [=Remote Data Registration=]</li>
+          <li>interop:SelectedRemote - Only selected access</li>
+          <li>interop:NoAccess - No access</li>
         </ul>
       </td>
     </tr>
@@ -982,10 +1008,20 @@ When recording a [=Referenced Remote Data Grant=] via [[#grants-recordgrant]]:
         scope is `AllRemoteFromAgent`</td>
     </tr>
     <tr>
-      <td>hasRemoteDataAgentDataInstance</td>
-      <td>[RemoteAgentDataInstance](#classRemoteAgentDataInstance)</td>
-      <td>Link to a [=Remote Agent Data Instance=] when 
-        scope is `SelectedRemoteInstances`</td>
+      <td>hasDataGrant</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>Link to a [=Data Grant=] resource that was extracted from an
+        [=Access Receipt=] and stored under the relevant 
+        [=Remote Agent Data Registration=] when the
+        scope is `SelectedRemote`</td>
+    </tr>
+    <tr>
+      <td>hasReferencedDataGrant</td>
+      <td>[ReferencedDataGrant](#classReferencedDataGrant)</td>
+      <td>Link to a [=Referenced Data Grant=] resource that was extracted from an
+        [=Access Receipt=] and stored under the relevant 
+        [=Remote Agent Data Registration=] when the
+        scope is `SelectedRemote`</td>
     </tr>
   </tbody>
 </table>
@@ -1004,7 +1040,8 @@ to validate an instance of the
   interop:accessMode @<#:AccessModes>+ ;
   interop:scopeOfGrant @<#:RemoteDataGrantScopes>+ ;
   interop:hasRemoteDataFromAgent IRI* ;
-  interop:hasRemoteAgentDataInstance IRI*   
+  interop:hasDataGrant IRI* ;
+  interop:hasReferencedDataGrant IRI* 
 }
 </pre>
 
@@ -1958,7 +1995,7 @@ Apply permissions based on the composition of an [=Access Grant=]:
 1. Link `GRANT` to the `REGISTRY` via `REGISTRY hasRegistration` if
         it has not already been added
 1. Call [[#apply-permissions]] with inputs: `GRANT`
-1. Call [[#receipts-provide]] with inputs: `GRANT`
+1. Call [[#provide-access-receipt]] with inputs: `GRANT`
 1. Return `GRANT`
 
 </div>
@@ -2419,11 +2456,13 @@ Issue: Write standard operation for validating an invitation
       [=Data Grant=] or [=Referenced Data Grant=] with that scope will
       update the associated value.
       
-      * `interop:AllInstances` - An array of `interop:accessMode` values
-      * `interop:SelectedInstances` - A hash map with [=Data Instance=] as
-          key and an array of `interop:accessMode` values
-      * `interop:InheritInstances` - A hash map with the parent 
-          [=Data Instance=] as key and an array of `interop:accessMode` values          
+      * `interop:AllRemote` - An array of `interop:accessMode` values
+      * `interop:AllRemoteFromAgent` - A hash map with 
+          [=Remote Agent Data Registration=] as key and an array of 
+          `interop:accessMode` values
+      * `interop:SelectedRemote` - A hash map with [=Data Grant=] or
+          [=Referenced Data Grant=] as key and an array of 
+          `interop:accessMode` values
       * `interop:NoAccess` - Boolean `true` or `false`
       
       <figure id="fig-remote-data-scopehash">
@@ -2468,21 +2507,22 @@ Issue: Write standard operation for validating an invitation
 1. Call [[#remove-resource-permissions]] with inputs: `RDR`, `SUBJECT`
 1. For each [=Remote Agent Data Registration=] `RADR` linked via `RDR hasRemoteAgentDataRegistration`
     1. Call [[#remove-resource-permissions]] with inputs: `RADR`, `SUBJECT`  
-    1. For each [=Remote Agent Data Instance=] `RADI` linked via `RADR hasRemoteAgentDataInstance`
-        1. Call [[#remove-resource-permissions]] with inputs: `RADI`, `SUBJECT` 
+    1. For each [=Data Grant=] or [=Referenced Data Grant=] `DATAGRANT` linked 
+        via `RADR satisfiesDataGrant`
+        1. Call [[#remove-resource-permissions]] with inputs: `DATAGRANT`, `SUBJECT` 
 
 1. Let `SCOPEHASH` be a hash map with keys: 
-    `interop:AllRemoteInstances`, `interop:AllRemoteFromAgent`, 
-    `interop:SelectedRemoteInstances`, `interop:NoAccess`
+    `interop:AllRemote`, `interop:AllRemoteFromAgent`, 
+    `interop:SelectedRemote`, `interop:NoAccess`
 1. Let `SCOPEHASH[interop:AllRemoteFromAgent]` be an empty hash map where
     [=Remote Agent Data Registrations=] are keys with an array of 
     `interop:AccessMode`s as values
-1. Let `SCOPEHASH[interop:SelectedRemoteInstances]` be an empty hash map where
-    selected [=Remote Agent Data Instances=] are keys with an array of 
+1. Let `SCOPEHASH[interop:SelectedRemote]` be an empty hash map where
+    selected [=Data Grants=] or [=Referenced Data Grants=] are keys with an array of 
     `interop:AccessMode`s as values
 1. For each [=Remote Data Grant=] or [=Referenced Remote Data Grant=] `REMOTEGRANT` in `REMOTEGRANTS`
-    1. If `REMOTEGRANT scopeOfGrant` is `interop:AllRemoteInstances`
-        1. Let `SCOPEHASH[interop:AllRemoteInstances]` value be a union of current
+    1. If `REMOTEGRANT scopeOfGrant` is `interop:AllRemote`
+        1. Let `SCOPEHASH[interop:AllRemote]` value be a union of current
             `interop:accessMode`s and `REMOTEGRANT accessMode`s
     1. If `REMOTEGRANT scopeOfGrant` is `interop:NoAccess`
         1. Let `SCOPEHASH[interop:NoAccess]` value be `true` 
@@ -2493,24 +2533,25 @@ Issue: Write standard operation for validating an invitation
                 found in `SCOPEHASH[interop:AllRemoteFromAgent][RADR]`
             1. Let `SCOPEHASH[interop:AllRemoteFromAgent][RADR]` value be 
                 a union of current `interop:accessMode`s and `REMOTEGRANT accessMode`s
-    1. If `REMOTEGRANT scopeOfGrant` is `interop:SelectedRemoteInstances`
-        1. For each [=Remote Agent Data Instance=] `RADI` 
-            linked via `REMOTEGRANT hasRemoteAgentDataInstance`
-            1. Let `RADIKEY` be [=Remote Agent Data Instance=] `RADI` added or 
-                found in `SCOPEHASH[interop:SelectedRemoteInstances][RADI]`
-            1. Let `SCOPEHASH[interop:SelectedRemoteInstances][RADI]` value be 
+    1. If `REMOTEGRANT scopeOfGrant` is `interop:SelectedRemote`
+        1. For each [=Data Grant=] or [=Referenced Data Grant=] `DATAGRANT`
+            linked via `REMOTEGRANT hasDataGrant` or `REMOTEGRANT hasReferencedDataGrant`
+            1. Let `GRANTKEY` be `DATAGRANT` added or 
+                found in `SCOPEHASH[interop:SelectedRemote][DATAGRANT]`
+            1. Let `SCOPEHASH[interop:SelectedRemote][DATAGRANT]` value be 
                 a union of current `interop:accessMode`s and `REMOTEGRANT accessMode`s
 
-1. If `SCOPEHASH[interop:AllRemoteInstances]` is not empty
+1. If `SCOPEHASH[interop:AllRemote]` is not empty
     1. Call [[#apply-resource-permissions]]  with inputs: `RDR`, `SUBJECT`, `MODES`
 1. If `SCOPEHASH[interop:AllRemoteFromAgent]` is not empty                 
     1. For each [=Remote Agent Data Registration=] `RADR` in `SCOPEHASH[interop:AllRemoteFromAgent]`
         1. Call [[#apply-resource-permissions]]  with inputs: 
             `SCOPEHASH[interop:AllRemoteFromAgent][RADR]`, `SUBJECT`, `MODES`
-1. If `SCOPEHASH[interop:SelectedRemoteInstances]` is not empty                 
-    1. For each [=Remote Agent Data Instance=] `RADI` in `SCOPEHASH[interop:SelectedRemoteInstances]`
+1. If `SCOPEHASH[interop:SelectedRemote]` is not empty                 
+    1. For each [=Data Grant=] or [=Referenced Data Grant=] `DATAGRANT` in 
+        `SCOPEHASH[interop:SelectedRemote]`
         1. Call [[#apply-resource-permissions]]  with inputs: 
-            `SCOPEHASH[interop:SelectedRemoteInstances][RADI]`, `SUBJECT`, `MODES`
+            `SCOPEHASH[interop:SelectedRemote][DATAGRANT]`, `SUBJECT`, `MODES`
 
 </div>
 
@@ -3090,8 +3131,9 @@ the subject identifier could? vary
   <tbody>
     <tr>
       <td colspan=2>      
-      Used to select all [=Remote Agent Data Instances=] across all 
-      [=Remote Agent Data Registrations=] for a given [=Remote Data Grant=].      
+      Used to select all received [=Data Grants=] and [=Referenced Data Grants=] 
+      across all [=Remote Agent Data Registrations=] for a given 
+      [=Remote Data Grant=].      
       </td>
     </tr>
   </tbody>
@@ -3112,9 +3154,10 @@ the subject identifier could? vary
 
 <div class="opdetails">
 
-1. Let `RDG scopeOfGrant` be `interop:AllRemoteInstances`
+1. Let `RDG scopeOfGrant` be `interop:AllRemote`
 1. Remove all links for `RDG hasRemoteDataFromAgent`  
-1. Remove all links for `RDG hasRemoteAgentDataInstance`  
+1. Remove all links for `RDG hasDataGrant` 
+1. Remove all links for `RDG hasReferencedDataGrant`   
 1. For each [=Referenced Remote Data Grant=] `REFRDG` linked via `RDG hasReferencedRemoteDataGrant`
     1. Call [[#select-all-referenced-remote]] with inputs: `REFRDG`, `RDG`
 
@@ -3131,8 +3174,8 @@ the subject identifier could? vary
   <tbody>
     <tr>
       <td colspan=2>      
-      Used to select all [=Remote Agent Data Instances=] across all 
-      [=Remote Agent Data Registrations=] for a given 
+      Used to select all received [=Data Grants=] and [=Referenced Data Grants=] 
+      across all [=Remote Agent Data Registrations=] for a given 
       [=Referenced Remote Data Grant=].
       </td>
     </tr>
@@ -3154,9 +3197,10 @@ the subject identifier could? vary
 
 <div class="opdetails">
 
-1. Let `REFRDG scopeOfGrant` be `interop:AllRemoteInstances`
+1. Let `REFRDG scopeOfGrant` be `interop:AllRemote`
 1. Remove all links for `REFDG hasRemoteDataFromAgent`  
-1. Remove all links for `REFDG hasRemoteAgentDataInstance`
+1. Remove all links for `REFDG hasDataGrant` 
+1. Remove all links for `REFDG hasReferencedDataGrant`   
 
 </div>
 
@@ -3171,8 +3215,8 @@ the subject identifier could? vary
   <tbody>
     <tr>
       <td colspan=2>      
-      Used to select all [=Remote Agent Data Instances=] associated
-      with a given [=Remote Agent Data Registration=] as part of
+      Used to select all received [=Data Grants=] and [=Referenced Data Grants=] 
+      associated with a given [=Remote Agent Data Registration=] as part of
       a specific [=Remote Data Grant=].      
       </td>
     </tr>
@@ -3199,7 +3243,8 @@ the subject identifier could? vary
 <div class="opdetails">
 
 1. Let `RDG scopeOfGrant` be `interop:AllRemoteFromAgent`
-1. Remove all links for `RDG hasRemoteAgentDataInstance`  
+1. Remove all links for `RDG hasDataGrant`  
+1. Remove all links for `RDG hasReferencedDataGrant`  
 1. Let `RDG hasRemoteDataFromAgent` be linked to one unique instance of `RADR`
 1. For each [=Referenced Remote Data Grant=] `REFRDG` linked via `RDG hasReferencedRemoteDataGrant`
     1. Call [[#select-referenced-remote-fromagent]] with inputs: `RADR`, `REFRDG`
@@ -3217,8 +3262,8 @@ the subject identifier could? vary
   <tbody>
     <tr>
       <td colspan=2>      
-      Used to select all [=Remote Agent Data Instances=] associated
-      with a given [=Remote Agent Data Registration=] as part of
+      Used to select all received [=Data Grants=] and [=Referenced Data Grants=] 
+      associated with a given [=Remote Agent Data Registration=] as part of
       a specific [=Referenced Remote Data Grant=].      
       </td>
     </tr>
@@ -3245,12 +3290,13 @@ the subject identifier could? vary
 <div class="opdetails">
 
 1. Let `REFRDG scopeOfGrant` be `interop:AllRemoteFromAgent`
-1. Remove all links for `REFRDG hasRemoteAgentDataInstance`
+1. Remove all links for `REFRDG hasDataGrant`  
+1. Remove all links for `REFRDG hasReferencedDataGrant`  
 1. Let `REFRDG hasRemoteDataFromAgent` be linked to one unique instance of `RADR`
 
 </div>
 
-### Select Specific Remote Agent Data Instances ### {#select-remote-instances}
+### Select Specific Remote Agent Data Grants ### {#select-remote-agent-data-grants}
 
 <table class="data operation" align="left">
   <colgroup></colgroup>
@@ -3261,9 +3307,9 @@ the subject identifier could? vary
   <tbody>
     <tr>
       <td colspan=2>      
-      Used to select specific [=Remote Agent Data Instances=] associated
-      with a given [=Remote Agent Data Registration=] as part of a specific
-      [=Remote Data Grant=].</td>
+      Used to select specific [=Data Grants=] and [=Referenced Data Grants=]  
+      associated with a given [=Remote Agent Data Registration=] as part of 
+      a specific [=Remote Data Grant=].</td>
     </tr>
   </tbody>
   <thead>
@@ -3271,12 +3317,12 @@ the subject identifier could? vary
   </thead>
   <tbody>
     <tr>
-      <td>`RADI`</td>
-      <td>A [=Remote Agent Data Instance=] selected for access</td>
+      <td>`DATAGRANT`</td>
+      <td>A [=Data Grant=] or [=Referenced Data Grant=] selected for access</td>
     </tr>
     <tr>
       <td>`RDG`</td>
-      <td>The [=Remote Data Grant=] that `RADI` is associated with</td>
+      <td>The [=Remote Data Grant=] that `DATAGRANT` is associated with</td>
     </tr>
     <tr>
       <td>`GRANT`</td>
@@ -3287,13 +3333,16 @@ the subject identifier could? vary
 
 <div class="opdetails">
 
-1. Let `RDG scopeOfGrant` be `interop:SelectedRemoteInstances`
+1. Let `RDG scopeOfGrant` be `interop:SelectedRemote`
 1. Remove all links for `RDG hasRemoteDataFromAgent`
-1. Let `RDG hasRemoteAgentDataInstance` be linked to one unique instance of `RADI` 
+1. If `DATAGRANT` is a [=Data Grant=]
+  1. Let `RDG hasDataGrant` be linked to `DATAGRANT`
+1. If `DATAGRANT` is a [=Referenced Data Grant=]
+  1. Let `RDG hasReferencedDataGrant` be linked to `DATAGRANT`  
 
 </div>
 
-### Select Specific Referenced Remote Agent Data Instances ### {#select-referenced-remote-instances}
+### Select Specific Referenced Remote Agent Data Instances ### {#select-referenced-remote-agent-data-grants}
 
 <table class="data operation" align="left">
   <colgroup></colgroup>
@@ -3304,9 +3353,9 @@ the subject identifier could? vary
   <tbody>
     <tr>
       <td colspan=2>      
-      Used to select specific [=Remote Agent Data Instances=] associated
-      with a given [=Remote Agent Data Registration=] as part of a specific
-      [=Referenced Remote Data Grant=].</td>
+      Used to select specific [=Data Grants=] and [=Referenced Data Grants=]  
+      associated with a given [=Remote Agent Data Registration=] as part of a 
+      specific [=Referenced Remote Data Grant=].</td>
     </tr>
   </tbody>
   <thead>
@@ -3314,25 +3363,28 @@ the subject identifier could? vary
   </thead>
   <tbody>
     <tr>
-      <td>`RADI`</td>
-      <td>A [=Remote Agent Data Instance=] selected for access</td>
+      <td>`DATAGRANT`</td>
+      <td>A [=Data Grant=] or [=Referenced Data Grant=] selected for access</td>
     </tr>
     <tr>
       <td>`REFRDG`</td>
-      <td>The [=Referenced Remote Data Grant=] that `RADI` is associated with</td>
+      <td>The [=Referenced Remote Data Grant=] that `DATAGRANT` is associated with</td>
     </tr>
     <tr>
       <td>`RDG`</td>
-      <td>The [=Remote Data Grant=] that `RDG` is associated with</td>
+      <td>The [=Remote Data Grant=] that `REFRDG` is associated with</td>
     </tr>    
   </tbody>
 </table>
 
 <div class="opdetails">
 
-1. Let `REFRDG scopeOfGrant` be `interop:SelectedRemoteInstances`
+1. Let `REFRDG scopeOfGrant` be `interop:SelectedRemote`
 1. Remove all links for `REFRDG hasRemoteDataFromAgent`
-1. Let `REFRDG hasRemoteAgentDataInstance` be linked to one unique instance of `RADI` 
+1. If `DATAGRANT` is a [=Data Grant=]
+  1. Let `REFRDG hasDataGrant` be linked to `DATAGRANT`
+1. If `DATAGRANT` is a [=Referenced Data Grant=]
+  1. Let `REFRDG hasReferencedDataGrant` be linked to `DATAGRANT`
 
 </div>
 

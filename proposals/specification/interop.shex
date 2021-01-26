@@ -10,7 +10,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasAccessReceiptRegistrySet IRI ;
   interop:hasRemoteDataRegistrySet IRI ;
   interop:hasInbox IRI ;
-  interop:hasAccessInbox IRI
+  interop:hasAccessInbox IRI ;
+  interop:receivesAccessReceipt [ interop:ReceiptInMessage interop:ReceiptInRegistration ]
 }
 
 # Application Registry Set
@@ -68,6 +69,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:applicationAuthorName xsd:string ;
   interop:applicationThumbanil IRI? ;
   interop:hasAccessNeedGroup IRI* ;
+  interop:receivesAccessReceipt [ interop:ReceiptInMessage interop:ReceiptInRegistration ]
 }
 
 # Access Need Group
@@ -329,8 +331,9 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:scopeOfGrant @<#:RemoteDataGrantScopes>+ ;    
   # If scope is AllRemoteFromAgent, link to one or more RemoteDataFromAgent
   interop:hasRemoteDataFromAgent IRI* ;
-  # If Scope is SelectedRemoteInstances, link to one more more RemoteAgentDataInstances
-  interop:hasRemoteAgentDataInstance IRI* ;
+  # If Scope is SelectedRemote, link to one more more Data Grants or Referenced Data Grants
+  interop:hasDataGrant IRI* ;
+  interop:hasReferencedDataGrant IRI* ;
   # link to referenced grants If the access need has referenced access needs
   interop:hasReferencedRemoteDataGrant @<#:ReferencedRemoteDataGrantShape> 
 }
@@ -352,8 +355,9 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:scopeOfGrant @<#:RemoteDataGrantScopes>+ ;
   # If scope is AllRemoteFromAgent, link to one or more RemoteDataFromAgent
   interop:hasRemoteDataFromAgent IRI* ;
-  # If Scope is SelectedRemoteInstances, link to one more more RemoteAgentDataInstances
-  interop:hasRemoteAgentDataInstance IRI*   
+  # If Scope is SelectedRemote, link to one more more Data Grants or Referenced Data Grants
+  interop:hasDataGrant IRI* ;
+  interop:hasReferencedDataGrant IRI* 
 }
 
 # Remote Data Grant Scopes
@@ -417,26 +421,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Access Receipt
 <#AccessReceiptShape> {
   a [interop:AccessReceipt] ;
-  interop:fromAgent IRI ;             # Agent who sent the receipt
-  interop:toAgent IRI ;               # Recipient of the receipt
   interop:registeredBy IRI ;
   interop:registeredWith IRI? ;
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;
   interop:providedAt xsd:dateTime ;
-  interop:hasDataReceipt @<#:DataReceiptShape> ;
-}
-
-# Data Receipt
-<#DataReceiptShape> {
-  a [interop:DataReceipt] ;
-  interop:hasRegistration IRI ;       # Remote data registration
-  interop:registeredShapeTree IRI ;   # Associated shape tree
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:scopeOfGrant @<#:DataGrantScopes>+ ;
-  interop:hasDataInstance IRI* ;     # if specific instances are selected or inherited
-  interop:hasDataInheritance @<#:DataInheritanceShape>* ;
-  interop:replacedBy IRI?
+  interop:fromAgent IRI ;             # Agent who sent the receipt
+  interop:viaAgent IRI ;             # Trusted agent on behalf of fromAgent
+  interop:hasAccessGrantSubject @<#:AccessGrantSubject> ;  # Subject / recipient
+  interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+ ;
+  ( interop:hasDataGrant @<#:DataGrantShape>+ |
+  interop:hasTrustedGrant @<#:TrustedGrantShape>+ | 
+  interop:hasRemoteDataGrant @<#:RemoteDataGrantShape>+ ) ;
 }
 
 # Remote Data Registry Set
@@ -458,8 +454,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:registeredWith IRI ;
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;  
-  interop:registeredShapeTree IRI 
-  interop:hasRemoteAgentDataRegistration IRI* ;
+  interop:registeredShapeTree IRI ;
+  interop:hasRemoteAgentDataRegistration IRI*
 }
 
 # Remote Agent Data Registration
@@ -469,24 +465,9 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:registeredWith IRI ;
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;
-  interop:providedAt xsd:dateTime ;
-  # interop:hasRemoteAgent IRI ;
-  interop:hasDataRegistration IRI ;           # Remote data registration
-  interop:registeredShapeTree IRI ;       # Associated shape tree
-  interop:scopeOfGrant @<#:DataGrantScopes>+ ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:hasRemoteAgentDataInstance IRI* ;    # if specific instances are selected or inherited
-  interop:hasDataReceipt IRI+ ;         # Associated access receipts
-}
-
-# Remote Agent Data Instance
-<#RemoteAgentDataInstance> {
-  a [interop:RemoteAgentDataInstance] ;  
-  interop:registeredAt xsd:dateTime ;
-  interop:updatedAt xsd:dateTime ;
-  interop:providedAt xsd:dateTime ;
-  interop:registeredShapeTree IRI ;       # Associated shape tree
-  interop:hasDataInstance IRI ; # Remote Data Instance
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:hasDataReceipt IRI+ ;         # Associated data receipts
+  interop:hasDataRegistration IRI ;         # Remote data registration
+  interop:fromAgent IRI ;                   # Agent owner of remote data registration
+  interop:registeredShapeTree IRI ;         # Associated shape tree
+  interop:hasAccessReceipt IRI* ;           # Associated access receipt
+  interop:satisfiesDataGrant IRI*           # Data grants or Referenced Data Grants
 }

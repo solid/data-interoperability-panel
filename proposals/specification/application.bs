@@ -39,7 +39,8 @@ by linking to [=Access Need Groups=] via the
     interop:applicationAuthor &lt;https://app.example/org/id#agent&gt; ;
     interop:applicationAuthorName "Example Organization" ;
     interop:applicationThumbnail &lt;https://app.example/profile/thumb.svg&gt; ;
-    interop:hasAccessNeedGroup &lt;#exampleAccessNeedGroup&gt; .
+    interop:hasAccessNeedGroup &lt;#exampleAccessNeedGroup&gt; ;
+    interop:receivesAccessReceipt interop:ReceiptInRegistration .
   </pre>
 </figure>
 
@@ -97,6 +98,13 @@ they've been granted access to.
       <td>[=Access Need Group=] representing types of data the
       [=Application=] needs to operate</td>
     </tr>
+    <tr>
+      <td>receivesAccessReceipt</td>
+      <td>interop:ReceiptInMessage,
+      interop:ReceiptInRegistration</td>
+      <td>Identifies whether [=Access Receipts=] should be sent directly
+      to the [=Application=] or provided in the [=Application Registration=]</td>      
+    </tr>
   </tbody>
 </table>
 
@@ -112,6 +120,7 @@ The [ApplicationShape](#shexApplication) is used to validate an instance of the
   interop:applicationAuthorName xsd:string ;
   interop:applicationThumbanil IRI? ;
   interop:hasAccessNeedGroup IRI* ;
+  interop:receivesAccessReceipt [ interop:ReceiptInMessage interop:ReceiptInRegistration ]
 }
 </pre>
 

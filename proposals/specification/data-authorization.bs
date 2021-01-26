@@ -292,7 +292,7 @@ presented as follows:
 1. Manage the scope of data to be granted `RDG scopeOfGrant`:
     1. **No Access** - `interop:NoAccess` (if necessity is optional)
         1. Enable via [[#deny-remote-data-grant]]  
-    1. **All Remote Instances** - `interop:AllRemoteInstances`
+    1. **All Remote Data** - `interop:AllRemote`
         1. Enable via [[#select-all-remote]]
     1. **All Remote From Agent** - `interop:AllRemoteFromAgent`
         1. Present existing [=Remote Agent Data Registrations=] corresponding
@@ -300,35 +300,35 @@ presented as follows:
             linked via `RDG hasRemoteDataFromAgent`
         1. Allow one or more to be chosen 
         1. Enable via [[#select-all-remote-fromagent]]
-    1. **Only Selected Remote Instances** - `interop:SelectedRemoteInstances`
-        1. Present existing [=Remote Agent Data Instances=], corresponding to
-            `NEED registeredShapeTree` and optionally organized by
+    1. **Only Selected Remote Data** - `interop:SelectedRemote`
+        1. Present existing [=Data Grants=] and/or [=Referenced Data Grants=], 
+            corresponding to `NEED registeredShapeTree` and optionally organized by
             [=Remote Agent Data Registrations=], identifying any existing selections
-            linked via `RDG hasRemoteAgentDataInstance`
+            linked via `RDG hasDataGrant` and/or `RDG:hasReferencedDataGrant`
         1. Allow one or more to be chosen
-        1. Enable via [[#select-remote-instances]], providing the selected 
-            [=Remote Agent Data Instances=]
+        1. Enable via [[#select-remote-agent-data-grants]], providing the selected 
+            [=Data Grants=] and/or [=Referenced Data Grants=].
 1. For each [=Referenced Access Need=] `REFNEED` linked via `NEED hasReferencedAccessNeed`
     1. Let `REFRDG` be the [=Referenced Remote Data Grant=] linked via `NEED hasReferencedRemoteDataGrant`
     1. Manage the scope of data to be granted `REFRDG scopeOfGrant`:
         1. **No Access** - `interop:NoAccess` (if necessity is optional)
             1. Enable via [[#deny-referenced-remote-data-grant]]  
-        1. **All Remote Instances** - `interop:AllRemoteInstances`
+        1. **All Remote Data** - `interop:AllRemote`
             1. Enable via [[#select-all-referenced-remote]]
         1. **All Remote From Agent** - `interop:AllRemoteFromAgent`
             1. Present existing [=Remote Agent Data Registrations=] corresponding
                 to `NEED registeredShapeTree`, identifying any existing selections
-                linked via `RDG hasRemoteDataFromAgent`
+                linked via `REFRDG hasRemoteDataFromAgent`
             1. Allow one or more to be chosen 
             1. Enable via [[#select-referenced-remote-fromagent]]
-        1. **Only Selected Remote Instances** - `interop:SelectedRemoteInstances`
-            1. Present existing [=Remote Agent Data Instances=], corresponding to
-                `NEED registeredShapeTree` and optionally organized by
+        1. **Only Selected Remote Data** - `interop:SelectedRemote`
+            1. Present existing [=Data Grants=] and/or [=Referenced Data Grants=], 
+                corresponding to `NEED registeredShapeTree` and optionally organized by
                 [=Remote Agent Data Registrations=], identifying any existing selections
-                linked via `RDG hasRemoteAgentDataInstance`
+                linked via `REFRDG hasDataGrant` and/or `REFRDG hasReferencedDataGrant`
             1. Allow one or more to be chosen
-            1. Enable via [[#select-referenced-remote-instances]], providing the selected 
-                [=Remote Agent Data Instances=] 
+            1. Enable via [[#select-referenced-remote-agent-data-grants]], providing the selected 
+                [=Data Grants=] and/or [=Referenced Data Grants=].
         
 
 </div>
@@ -472,7 +472,7 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
                 [=Access Grant Registry=].
             1. [[#apply-permissions]] is called to apply permissions based
                 on the [=Access Grant=].
-            1. [[#receipts-provide]] is called to store the
+            1. [[#provide-access-receipt]] is called to store the
                 [=Access Receipt=]. The Application has set
                 `interop:receivesAccessReceipt` to
                 `ReceiptInRegistration`, so the [=Access Receipt=] is
@@ -524,7 +524,7 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
         [=Access Grant Registry=].
         1. [[#apply-permissions]] is called to apply permissions based on the
             [=Access Grant=].
-        1. [[#receipts-provide]] is called to deliver the [=Access Receipt=].
+        1. [[#provide-access-receipt]] is called to deliver the [=Access Receipt=].
             1. `CAUTHZ` dereferences `REQUESTER`'s [=identity=] to get
                 `REQUESTER`'s [=identity profile document=].
             1. `REQUESTER` has set `interop:receivesAccessReceipt` to
@@ -534,13 +534,13 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
 1. `RAUTHZ` monitors `REQUESTER`'s access inbox autonomously. It notifies
     `REQUESTER` when a new [=Access Receipt=] is received.
     1. `REQUESTER` clicks the link in the notification, opening the
-        `RAUTHZ` user interface and invoking the [[#receipts-present]]
-        operation to approve the [=Access Receipt=].
+        `RAUTHZ` user interface, and presenting the [=Access Receipt=]
+        to `REQUESTER`.        
     1. `REQUESTER` accepts the [=Access Receipt=], and `RAUTHZ`
-        invokes the [[#receipts-record]] operation.
-        1. [[#receipts-record]] is called to store the [=Access Receipt=]
+        invokes the [[#record-access-receipt]] operation.
+        1. [[#record-access-receipt]] is called to store the [=Access Receipt=]
             in `REQUESTER`'s [=Access Receipt Registry=].
-        1. [[#remote-update]] is called to update `REQUESTER`'s
+        1. [[#update-remote-data]] is called to update `REQUESTER`'s
             [=Remote Data Registry=] to reflect what is in the
             [=Access Receipt=].
 
@@ -581,7 +581,7 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
                 [=Access Grant Registry=].
             1. [[#apply-permissions]] is called to apply permissions based
                 on the [=Access Grant=].
-            1. [[#receipts-provide]] is called to store the
+            1. [[#provide-access-receipt]] is called to store the
                 [=Access Receipt=]. `RECEIVER` has set
                 `interop:receivesAccessReceipt` to
                 `ReceiptInMessage`, so the [=Access Receipt=] is posted
@@ -592,13 +592,12 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
 1. `RAUTHZ` monitors `RECEIVER`'s access inbox autonomously. It notifies
     `RECEIVER` when a new [=Access Receipt=] is received.
     1. `RECEIVER` clicks the link in the notification, opening the
-        `RAUTHZ` user interface and invoking the [[#receipts-present]]
-        operation to approve the [=Access Receipt=].
+        `RAUTHZ` user interface to review the [=Access Receipt=].
     1. `RECEIVER` accepts the [=Access Receipt=], and `RAUTHZ`
-        invokes the [[#receipts-record]] operation.
-        1. [[#receipts-record]] is called to store the [=Access Receipt=]
+        invokes the [[#record-access-receipt]] operation.
+        1. [[#record-access-receipt]] is called to store the [=Access Receipt=]
             in `RECEIVER`'s [=Access Receipt Registry=].
-        1. [[#remote-update]] is called to update `RECEIVER`'s
+        1. [[#update-remote-data]] is called to update `RECEIVER`'s
             [=Remote Data Registry=] to reflect what is in the
             [=Access Receipt=].
 
@@ -677,7 +676,7 @@ Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
                 [=Access Grant Registry=].
             1. [[#apply-permissions]] is called to apply permissions
                 based on the [=Access Grant=].
-            1. [[#receipts-provide]] is called to store the
+            1. [[#provide-access-receipt]] is called to store the
                 [=Access Receipt=]. `INVITEE` has set
                 `interop:receivesAccessReceipt` to
                 `ReceiptInMessage`, so the [=Access Receipt=] is posted
