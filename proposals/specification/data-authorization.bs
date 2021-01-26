@@ -451,8 +451,8 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
     get `CONTROLLER`'s [=identity profile document=].
 1. `APP` discovers that `AUTHZ` is an [=Application=] that is a 
     [=Trusted Agent=] of `CONTROLLER` for data authorization
-    via the [[#trusted-load]] operation.
-1. `APP` redirects `CONTROLLER` to `AUTHZ` via the [[#trusted-redirect]]
+    via the [[#load-application-service]] operation.
+1. `APP` redirects `CONTROLLER` to `AUTHZ` via the [[#redirect-to-application-service]]
     operation.
     1. Let `APPREG` be an [=Application Registration=] returned by
         [[#appreg-loadappreg]] with inputs: `CONTROLLER`, `APP`
@@ -478,7 +478,7 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
                 `ReceiptInRegistration`, so the [=Access Receipt=] is
                 stored in the [=Application Registration=] for `APP`.
     1. `AUTHZ` redirects `CONTROLLER` back to `APP` via the
-        [[#trusted-return]] operation.
+        [[#return-from-application-service]] operation.
 
 ### Another Agent Requests Access ### {#authz-agentrequest}
 
@@ -566,8 +566,8 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
     [=identity profile document=].
 1. `CAPP` discovers that `CAUTHZ` is an [=Application=] that is a 
     [=Trusted Agent=] of `CONTROLLER` for data authorization
-    via the [[#trusted-load]] operation.
-1. `CAPP` redirects `CONTROLLER` to `CAUTHZ` via the [[#trusted-redirect]]
+    via the [[#load-application-service]] operation.
+1. `CAPP` redirects `CONTROLLER` to `CAUTHZ` via the [[#redirect-to-application-service]]
     operation.
     1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
         [=Access Need Groups=] with an `interop:accessScenario` of
@@ -588,7 +588,7 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
                 to the access inbox identified via `hasAccessInbox` in
                 `RECEIVER`'s '[=identity profile document=].
     1. `CAUTHZ` redirects `CONTROLLER` back to `CAPP` via the
-        [[#trusted-return]] operation.
+        [[#return-from-application-service]] operation.
 1. `RAUTHZ` monitors `RECEIVER`'s access inbox autonomously. It notifies
     `RECEIVER` when a new [=Access Receipt=] is received.
     1. `RECEIVER` clicks the link in the notification, opening the
@@ -631,8 +631,8 @@ Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
 1. `CONTROLLER` provides `INVITEE`'s e-mail address and mobile number to `CAPP`.
 1. `CAPP` discovers that `CAUTHZ` is an [=Application=] that is a 
     [=Trusted Agent=] of `CONTROLLER` for data authorization
-    via the [[#trusted-load]] operation.
-1. `CAPP` redirects `CONTROLLER` to `CAUTHZ` via the [[#trusted-redirect]]
+    via the [[#load-application-service]] operation.
+1. `CAPP` redirects `CONTROLLER` to `CAUTHZ` via the [[#redirect-to-application-service]]
     operation.
     1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
         [=Access Need Groups=] with an `interop:accessScenario` of
@@ -654,7 +654,7 @@ Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
                     medium associated with the [=Access Invitation Channel=]
                     type
     1. `CAUTHZ` redirects `CONTROLLER` back to `CAPP` via the
-        [[#trusted-return]] operation.
+        [[#return-from-application-service]] operation.
 1. `INVITEE` receives a notification associated with one of the
     [=Access Invitation Channels=].
     1. `INVITEE` clicks a link in the notification to register an
