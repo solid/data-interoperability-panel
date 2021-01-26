@@ -46,15 +46,12 @@ thing, data model, abstract entity, etc.) with a DID document,
 equivalent to an [=identity profile document=], to allow trustable
 interactions with that subject. [[DID]]
 
-An <dfn>ApplicationID</dfn> is a web resource at an HTTP URI uniquely associated
-with a given [=application=]. For [=server-side applications=], it may also
-serve as an [=identity=]. An [=application profile document=] can be
-accessed by dereferencing the ApplicationID.
+An <dfn>application identity</dfn> is a web resource at an HTTP URI 
+that uniquely identifies a given [=Application=], and dereferences to an
+[=application profile document=].
 
 An <dfn>application profile document</dfn> is a linked data document
-obtained by dereferencing the URI for a given [=ApplicationID=]. It contains
-useful information about an application that can be employed in
-various workflows including application registration and data authorization.
+obtained by dereferencing the URI for a given [=application identity=].
 
 An <dfn>acl resource</dfn> as defined by [[WAC]] may be directly
 associated with a resource or indirectly associated with a resource
@@ -72,27 +69,20 @@ a specific [=Agent=] using a specific [=User-Piloted Application=].
 
 An <dfn>authorization statement</dfn> is ...
 
-A <dfn>trusted agent</dfn> is any [=application=] that a
-[=Agent=] trusts to perform actions for them. These
-actions typically require some leve
-
-An <dfn>application registration agent</dfn> is a type of [=trusted agent=]
-that an [=Agent=] uses to register and manage applications that
-interface with their [=pod=].
-
-A <dfn>data authorization agent</dfn> is a type of [=trusted agent=]
-that assists a [=Agent=] with the managing the data
-in their [=Data Registries=], and authorizing access to it from other
-[=authorization subjects=].
-
 A <dfn>shape</dfn> provides a schema that RDF data graphs must meet in order
 to be considered conformant. A shape associated with a given resource in a
 [=pod=] ensures that any data stored in that resource must conform to the
 associated shape. Shape languages include [[SHEX]] and [[SHACL]].
 
-A <dfn>shape tree</dfn> defines a prospective tree of related resources
+A <dfn>Shape Tree</dfn> defines a prospective tree of related resources
 which can be read and written by applications. The shape tree associates
 each of these resources with a shape. This allows one to treat a set of
 related resources as a single grouping, and apply that to a range of
 operations including access control, data organization, data validation,
 and data migration. [[SHAPETREES]]
+
+A <dfn>Shape Tree Decorator</dfn> provides additional human-readable
+description and context for a given [=shape tree=].
+
+A <dfn>Shape Tree Reference</dfn> provides the necessary context to
+associate instances of related shape trees via a ShapePath

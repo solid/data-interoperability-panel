@@ -140,8 +140,7 @@ is assigned to a resource to ensure it will validate against the
 <#DataRegistrySetTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#DataRegistrySetShape&gt; ;
-  st:matchesUriTemplate "application" .
+  st:validatedBy &lt;interops#DataRegistrySetShape&gt; .
 </pre>
 
 ### Data Registry ### {#datamodel-data-registry}
@@ -294,8 +293,7 @@ to ensure that the [=Data Registration=] will validate against the
 <#DataRegistrationTree>
   a st:ShapeTree;
   st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy &lt;interops#DataRegistrationShape&gt; ;
-  st:matchesUriTemplate "{id}" .
+  st:validatedBy &lt;interops#DataRegistrationShape&gt; .
 </pre>
 
 ## Resource Hierarchy ## {#datareg-hierarchy}
@@ -488,8 +486,7 @@ to [FooTree](#treeFoo) per the directive in
             <#DataRegistrationTree>
               a st:ShapeTree;
               st:expectsType st:ShapeTreeContainer ;
-              st:validatedBy &lt;interops#DataRegistrationShape&gt; ;
-              st:matchesUriTemplate "{id}" .
+              st:validatedBy &lt;interops#DataRegistrationShape&gt; .
           </pre>
           And also ensure the [=Data Registration=] only
           contains resources that conform to `<#FooTree>`.
@@ -497,14 +494,13 @@ to [FooTree](#treeFoo) per the directive in
             <#FooContainingTree>
               a st:ShapeTree;
               st:expectsType st:ShapeTreeContainer ;
-              st:contains <#FooTree> ;
-              st:matchesUriTemplate "{id}" .
+              st:contains <#FooTree> .
           </pre>
         </td>
       </tr>
       <tr>
         <td colspan=2>
-        `---- 16e1eae9-20a5-489d-8380-8c07ca3805c4#foo`
+        `------ 16e1eae9-20a5-489d-8380-8c07ca3805c4#foo`
         </td>
       </tr>
       <tr>
@@ -523,8 +519,7 @@ to [FooTree](#treeFoo) per the directive in
             <#FooTree>
               a st:ShapeTree;
               st:expectsType st:ShapeTreeResource ;
-              st:validatedBy &lt;foo#FooShape&gt; ;
-              st:matchesUriTemplate "{id}" .
+              st:validatedBy &lt;foo#FooShape&gt; .
           </pre>
         </td>
       </tr>

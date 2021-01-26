@@ -1,0 +1,639 @@
+<!doctype html><html lang="en">
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Solid Application Interoperability Use Cases and Requirements</title>
+  <meta content="w3c/ED" name="w3c-status">
+  <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
+  <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
+  <meta content="Bikeshed version c5172e83, updated Fri Nov 20 15:35:20 2020 -0800" name="generator">
+  <link href="https://solid.github.io/data-interoperability-panel/ucr/" rel="canonical">
+  <meta content="f13c39692f7997c49cb97f5b3a48556c6dd25e6b" name="document-revision">
+<style>
+
+  table.collections thead tr {
+    font-size: 16px;
+  }
+
+  table.collections tbody tr:nth-child(even) {
+    background-color: lightgray;
+    font-size: 12px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    table.collections tbody tr:nth-child(even) {
+      background-color: DarkSlateGray;
+    }
+  }
+
+  table.collections tbody td {
+    font-size: 12px;
+  }
+
+  figcaption {
+    text-align: left;
+  }
+
+  a[data-link-type=dfn] {
+    color: #000000;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    a[data-link-type=dfn] {
+      color: #FFFFFF;
+    }
+  }
+
+}
+
+</style>
+<style>/* style-autolinks */
+
+.css.css, .property.property, .descriptor.descriptor {
+    color: var(--a-normal-text);
+    font-size: inherit;
+    font-family: inherit;
+}
+.css::before, .property::before, .descriptor::before {
+    content: "‘";
+}
+.css::after, .property::after, .descriptor::after {
+    content: "’";
+}
+.property, .descriptor {
+    /* Don't wrap property and descriptor names */
+    white-space: nowrap;
+}
+.type { /* CSS value <type> */
+    font-style: italic;
+}
+pre .property::before, pre .property::after {
+    content: "";
+}
+[data-link-type="property"]::before,
+[data-link-type="propdesc"]::before,
+[data-link-type="descriptor"]::before,
+[data-link-type="value"]::before,
+[data-link-type="function"]::before,
+[data-link-type="at-rule"]::before,
+[data-link-type="selector"]::before,
+[data-link-type="maybe"]::before {
+    content: "‘";
+}
+[data-link-type="property"]::after,
+[data-link-type="propdesc"]::after,
+[data-link-type="descriptor"]::after,
+[data-link-type="value"]::after,
+[data-link-type="function"]::after,
+[data-link-type="at-rule"]::after,
+[data-link-type="selector"]::after,
+[data-link-type="maybe"]::after {
+    content: "’";
+}
+
+[data-link-type].production::before,
+[data-link-type].production::after,
+.prod [data-link-type]::before,
+.prod [data-link-type]::after {
+    content: "";
+}
+
+[data-link-type=element],
+[data-link-type=element-attr] {
+    font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    font-size: .9em;
+}
+[data-link-type=element]::before { content: "<" }
+[data-link-type=element]::after  { content: ">" }
+
+[data-link-type=biblio] {
+    white-space: pre;
+}</style>
+<style>/* style-colors */
+
+/* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
+:root {
+    color-scheme: light dark;
+
+    --text: black;
+    --bg: white;
+
+    --unofficial-watermark: url(https://www.w3.org/StyleSheets/TR/2016/logos/UD-watermark);
+
+    --logo-bg: #1a5e9a;
+    --logo-active-bg: #c00;
+    --logo-text: white;
+
+    --tocnav-normal-text: #707070;
+    --tocnav-normal-bg: var(--bg);
+    --tocnav-hover-text: var(--tocnav-normal-text);
+    --tocnav-hover-bg: #f8f8f8;
+    --tocnav-active-text: #c00;
+    --tocnav-active-bg: var(--tocnav-normal-bg);
+
+    --tocsidebar-text: var(--text);
+    --tocsidebar-bg: #f7f8f9;
+    --tocsidebar-shadow: rgba(0,0,0,.1);
+    --tocsidebar-heading-text: hsla(203,20%,40%,.7);
+
+    --toclink-text: var(--text);
+    --toclink-underline: #3980b5;
+    --toclink-visited-text: var(--toclink-text);
+    --toclink-visited-underline: #054572;
+
+    --heading-text: #005a9c;
+
+    --hr-text: var(--text);
+
+    --algo-border: #def;
+
+    --del-text: red;
+    --del-bg: transparent;
+    --ins-text: #080;
+    --ins-bg: transparent;
+
+    --a-normal-text: #034575;
+    --a-normal-underline: #707070;
+    --a-visited-text: var(--a-normal-text);
+    --a-visited-underline: #bbb;
+    --a-hover-bg: rgba(75%, 75%, 75%, .25);
+    --a-active-text: #c00;
+    --a-active-underline: #c00;
+
+    --blockquote-border: silver;
+    --blockquote-bg: transparent;
+    --blockquote-text: currentcolor;
+
+    --issue-border: #e05252;
+    --issue-bg: #fbe9e9;
+    --issue-text: var(--text);
+    --issueheading-text: #831616;
+
+    --example-border: #e0cb52;
+    --example-bg: #fcfaee;
+    --example-text: var(--text);
+    --exampleheading-text: #574b0f;
+
+    --note-border: #52e052;
+    --note-bg: #e9fbe9;
+    --note-text: var(--text);
+    --noteheading-text: hsl(120, 70%, 30%);
+    --notesummary-underline: silver;
+
+    --assertion-border: #aaa;
+    --assertion-bg: #eee;
+    --assertion-text: black;
+
+    --advisement-border: orange;
+    --advisement-bg: #fec;
+    --advisement-text: var(--text);
+    --advisementheading-text: #b35f00;
+
+    --warning-border: red;
+    --warning-bg: hsla(40,100%,50%,0.95);
+    --warning-text: var(--text);
+
+    --amendment-border: #330099;
+    --amendment-bg: #F5F0FF;
+    --amendment-text: var(--text);
+    --amendmentheading-text: #220066;
+
+    --def-border: #8ccbf2;
+    --def-bg: #def;
+    --def-text: var(--text);
+    --defrow-border: #bbd7e9;
+
+    --datacell-border: silver;
+
+    --indexinfo-text: #707070;
+
+    --indextable-hover-text: black;
+    --indextable-hover-bg: #f7f8f9;
+
+    --outdatedspec-bg: rgba(0, 0, 0, .5);
+    --outdatedspec-text: black;
+    --outdated-bg: maroon;
+    --outdated-text: white;
+    --outdated-shadow: red;
+
+    --editedrec-bg: darkorange;
+}</style>
+<style>/* style-counters */
+
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
+}
+
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}</style>
+<style>/* style-md-lists */
+
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}</style>
+<style>/* style-selflinks */
+
+:root {
+    --selflink-text: white;
+    --selflink-bg: gray;
+    --selflink-hover-text: black;
+}
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: var(--selflink-bg);
+    color: var(--selflink-text);
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: var(--selflink-hover-text);
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }
+</style>
+<style>/* style-darkmode */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: #ddd;
+        --bg: black;
+
+        --unofficial-watermark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cg fill='%23100808' transform='translate(200 200) rotate(-45) translate(-200 -200)' stroke='%23100808' stroke-width='3'%3E%3Ctext x='50%25' y='220' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EUNOFFICIAL%3C/text%3E%3Ctext x='50%25' y='305' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EDRAFT%3C/text%3E%3C/g%3E%3C/svg%3E");
+
+        --logo-bg: #1a5e9a;
+        --logo-active-bg: #c00;
+        --logo-text: white;
+
+        --tocnav-normal-text: #999;
+        --tocnav-normal-bg: var(--bg);
+        --tocnav-hover-text: var(--tocnav-normal-text);
+        --tocnav-hover-bg: #080808;
+        --tocnav-active-text: #f44;
+        --tocnav-active-bg: var(--tocnav-normal-bg);
+
+        --tocsidebar-text: var(--text);
+        --tocsidebar-bg: #080808;
+        --tocsidebar-shadow: rgba(255,255,255,.1);
+        --tocsidebar-heading-text: hsla(203,20%,40%,.7);
+
+        --toclink-text: var(--text);
+        --toclink-underline: #6af;
+        --toclink-visited-text: var(--toclink-text);
+        --toclink-visited-underline: #054572;
+
+        --heading-text: #8af;
+
+        --hr-text: var(--text);
+
+        --algo-border: #456;
+
+        --del-text: #f44;
+        --del-bg: transparent;
+        --ins-text: #4a4;
+        --ins-bg: transparent;
+
+        --a-normal-text: #6af;
+        --a-normal-underline: #555;
+        --a-visited-text: var(--a-normal-text);
+        --a-visited-underline: var(--a-normal-underline);
+        --a-hover-bg: rgba(25%, 25%, 25%, .2);
+        --a-active-text: #f44;
+        --a-active-underline: var(--a-active-text);
+
+        --borderedblock-bg: rgba(255, 255, 255, .05);
+
+        --blockquote-border: silver;
+        --blockquote-bg: var(--borderedblock-bg);
+        --blockquote-text: currentcolor;
+
+        --issue-border: #e05252;
+        --issue-bg: var(--borderedblock-bg);
+        --issue-text: var(--text);
+        --issueheading-text: hsl(0deg, 70%, 70%);
+
+        --example-border: hsl(50deg, 90%, 60%);
+        --example-bg: var(--borderedblock-bg);
+        --example-text: var(--text);
+        --exampleheading-text: hsl(50deg, 70%, 70%);
+
+        --note-border: hsl(120deg, 100%, 35%);
+        --note-bg: var(--borderedblock-bg);
+        --note-text: var(--text);
+        --noteheading-text: hsl(120, 70%, 70%);
+        --notesummary-underline: silver;
+
+        --assertion-border: #444;
+        --assertion-bg: var(--borderedblock-bg);
+        --assertion-text: var(--text);
+
+        --advisement-border: orange;
+        --advisement-bg: #222218;
+        --advisement-text: var(--text);
+        --advisementheading-text: #f84;
+
+        --warning-border: red;
+        --warning-bg: hsla(40,100%,20%,0.95);
+        --warning-text: var(--text);
+
+        --amendment-border: #330099;
+        --amendment-bg: #080010;
+        --amendment-text: var(--text);
+        --amendmentheading-text: #cc00ff;
+
+        --def-border: #8ccbf2;
+        --def-bg: #080818;
+        --def-text: var(--text);
+        --defrow-border: #136;
+
+        --datacell-border: silver;
+
+        --indexinfo-text: #aaa;
+
+        --indextable-hover-text: var(--text);
+        --indextable-hover-bg: #181818;
+
+        --outdatedspec-bg: rgba(255, 255, 255, .5);
+        --outdatedspec-text: black;
+        --outdated-bg: maroon;
+        --outdated-text: white;
+        --outdated-shadow: red;
+
+        --editedrec-bg: darkorange;
+    }
+    /* In case a transparent-bg image doesn't expect to be on a dark bg,
+       which is quite common in practice... */
+    img { background: white; }
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --selflink-text: black;
+        --selflink-bg: silver;
+        --selflink-hover-text: white;
+    }
+}
+</style>
+ <body class="h-entry">
+  <div class="head">
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
+   <h1 class="p-name no-ref" id="title">Solid Application Interoperability Use Cases and Requirements</h1>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-01-26">26 January 2021</time></span></h2>
+   <div data-fill-with="spec-metadata">
+    <dl>
+     <dt>This version:
+     <dd><a class="u-url" href="https://solid.github.io/data-interoperability-panel/ucr/">https://solid.github.io/data-interoperability-panel/ucr/</a>
+     <dt>Issue Tracking:
+     <dd><a href="https://github.com/solid/data-interoperability-panel/issues/">GitHub</a>
+     <dt class="editor">Editor:
+     <dd class="editor p-author h-card vcard"><span class="p-name fn">Solid Data Interoperability Panel</span>
+    </dl>
+   </div>
+   <div data-fill-with="warning"></div>
+   <p class="copyright" data-fill-with="copyright"> MIT License Copyright 2019 - 2020 W3C Solid Community Group </p>
+   <hr title="Separator for header">
+  </div>
+  <div class="p-summary" data-fill-with="abstract">
+   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
+   <p>Use Cases and Requirements for Application Interoperability in
+
+    the Solid ecosystem.</p>
+  </div>
+  <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
+  <div data-fill-with="status">
+   <p></p>
+  </div>
+  <div data-fill-with="at-risk"></div>
+  <nav data-fill-with="table-of-contents" id="toc">
+   <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
+   <ol class="toc" role="directory">
+    <li><a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
+    <li>
+     <a href="#usecases"><span class="secno">2</span> <span class="content">Use Cases</span></a>
+     <ol class="toc">
+      <li>
+       <a href="#uc-authz"><span class="secno">2.1</span> <span class="content">Data Authorization</span></a>
+       <ol class="toc">
+        <li><a href="#trusted-people"><span class="secno">2.1.1</span> <span class="content">People trusting people</span></a>
+        <li><a href="#trusted-applications"><span class="secno">2.1.2</span> <span class="content">People trusting applications</span></a>
+        <li><a href="#trusted-organization"><span class="secno">2.1.3</span> <span class="content">Organizations trusting people and applications</span></a>
+       </ol>
+     </ol>
+    <li><a href="#requirements"><span class="secno">3</span> <span class="content">Requirements</span></a>
+    <li>
+     <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
+     <ol class="toc">
+      <li><a href="#w3c-conventions"><span class="secno"></span> <span class="content">Document conventions</span></a>
+      <li><a href="#w3c-conformant-algorithms"><span class="secno"></span> <span class="content">Conformant Algorithms</span></a>
+     </ol>
+    <li>
+     <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
+     <ol class="toc">
+      <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
+     </ol>
+   </ol>
+  </nav>
+  <main>
+   <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
+   <p>The <a href="#usecases">§ 2 Use Cases</a> in this document represent real-world scenarios that
+an interoperable Solid application ecosystem should support.</p>
+   <p>The <a href="#requirements">§ 3 Requirements</a> in this
+document are derived from those use cases, and inform the contents of the
+Application Interoperability specification.</p>
+   <h2 class="heading settled" data-level="2" id="usecases"><span class="secno">2. </span><span class="content">Use Cases</span><a class="self-link" href="#usecases"></a></h2>
+   <h3 class="heading settled" data-level="2.1" id="uc-authz"><span class="secno">2.1. </span><span class="content">Data Authorization</span><a class="self-link" href="#uc-authz"></a></h3>
+   <p>TODO - Change all of these to "People sharing data with..." and then
+have full access / control as a subset for trusted agent cases</p>
+   <p>TODO - Make sure that we have embedded / piloted use case in here</p>
+   <h4 class="heading settled" data-level="2.1.1" id="trusted-people"><span class="secno">2.1.1. </span><span class="content">People trusting people</span><a class="self-link" href="#trusted-people"></a></h4>
+   <h5 class="heading settled" data-level="2.1.1.1" id="trusted-person"><span class="secno">2.1.1.1. </span><span class="content">Agent gives control to another individual</span><a class="self-link" href="#trusted-person"></a></h5>
+   <p>Bob is Alice’s brother. Alice needs some assistance getting her life and
+finances organized, and asks Bob for help.</p>
+   <p>Alice trusts Bob completely, and so she gives him the ability to help her
+manage all of her data, manage the applications and services authorized to 
+use her data, and also manage who else can access that data.</p>
+   <h5 class="heading settled" data-level="2.1.1.2" id="trusted-person-grant-app"><span class="secno">2.1.1.2. </span><span class="content">Trusted person grants access to another application</span><a class="self-link" href="#trusted-person-grant-app"></a></h5>
+   <p>Finsync is an application service that synchronizes bank transactions from
+various banks into a pod. Bob authorizes
+Finsync to store Alice’s banking data from three of her banks into
+her pod.</p>
+   <p>TODO - make sure that this properly covers directing / storing the data in the
+right registry</p>
+   <h5 class="heading settled" data-level="2.1.1.3" id="trusted-person-pilots-app"><span class="secno">2.1.1.3. </span><span class="content">Trusted person uses a piloted application to access data</span><a class="self-link" href="#trusted-person-pilots-app"></a></h5>
+   <p>Bob has been using an application called Finmanage to manage his own finances.
+Consequently, he decides it will be helpful to use to manage Alice’s 
+data as well. Bob uses Finmange to view and annotate the financial 
+transactions stored in Alice’s pod.</p>
+   <h5 class="heading settled" data-level="2.1.1.4" id="trusted-person-grant-person"><span class="secno">2.1.1.4. </span><span class="content">Trusted Agent grants another agent access to registered data</span><a class="self-link" href="#trusted-person-grant-person"></a></h5>
+   <p>Bob gives Juan read access to Alice’s financial records, because Juan is
+Alice’s accountant. Juan is sent a notification from Bob on behalf of Alice 
+that lets him know he has been given access. Juan updates his records so 
+he remembers that Alice’s financial data has been shared with him. Bob 
+keeps a record of the decision in Alice’s pod.</p>
+   <h5 class="heading settled" data-level="2.1.1.5" id="trusted-person-make-trusted"><span class="secno">2.1.1.5. </span><span class="content">Trusted Agent makes another person a trusted agent</span><a class="self-link" href="#trusted-person-make-trusted"></a></h5>
+   <p>Alice realizes that Bob’s help has been invaluable, and asks Bob to help
+her retain a personal assistant who can devote more time than Bob 
+has available. After an exhaustive amount of interviewing, Bob hires Max to 
+be Alice’s trusted personal assistant. Bob grants Max the access 
+manage all of Alice’s data, manage the applications and services authorized to 
+use her data, and also manage who else can access that data.</p>
+   <h5 class="heading settled" data-level="2.1.1.6" id="trusted-person-remove-person"><span class="secno">2.1.1.6. </span><span class="content">Trusted Agent removes another agent’s access to registered data</span><a class="self-link" href="#trusted-person-remove-person"></a></h5>
+   <p>Bob removes Deborah’s access to Alice’s mortgage records, as Deborah is no
+longer Alice’s mortgage broker. Deborah receives a notification from Bob 
+on behalf of Alice letting her know that she no longer has access to 
+this data, and updates her records accordingly.</p>
+   <h4 class="heading settled" data-level="2.1.2" id="trusted-applications"><span class="secno">2.1.2. </span><span class="content">People trusting applications</span><a class="self-link" href="#trusted-applications"></a></h4>
+   <h5 class="heading settled" data-level="2.1.2.1" id="trusted-app-full-service"><span class="secno">2.1.2.1. </span><span class="content">Person gives full access and control to another application</span><a class="self-link" href="#trusted-app-full-service"></a></h5>
+   <p>Alice uses her pod extensively, exchanging data and information with a
+number of services, applications, and people. To help ensure the integrity 
+of her data, and repair potential issues across her pods and registries, 
+she trusts an application called PodMedic to help ensure her pod and data 
+are in good working order, and are safe. PodMedic doesn’t interface with 
+other people or applications, but it has full access to all of her 
+registries and data.</p>
+   <h5 class="heading settled" data-level="2.1.2.2" id="trusted-app-work-access"><span class="secno">2.1.2.2. </span><span class="content">Person gives full access and control to a specific pod</span><a class="self-link" href="#trusted-app-work-access"></a></h5>
+   <p>Alice has two pods, one hosted by her employer Acme, and another that
+she self-hosts for personal content.</p>
+   <p>Her employer has a data management service called AcmeIO that requires full
+access to the data in Alice’s work pod. Since both her work and personal
+pod are linked through her identity, she makes AcmeIO a trusted agent,
+but only for the data in her work pod.</p>
+   <h5 class="heading settled" data-level="2.1.2.3" id="trusted-app-registration"><span class="secno">2.1.2.3. </span><span class="content">Person trusts application to help them register new applications</span><a class="self-link" href="#trusted-app-registration"></a></h5>
+   <p>Alice likes to discover new ways to extract value from the data in her pod,
+which means trying out new applications and services that are compatible
+with the data she has. She trusts an application called DataManage to
+help her determine if an application is safe to use, and then register that 
+application.</p>
+   <h5 class="heading settled" data-level="2.1.2.4" id="trusted-app-authorization"><span class="secno">2.1.2.4. </span><span class="content">Person trusts application to help them authorize access to data</span><a class="self-link" href="#trusted-app-authorization"></a></h5>
+   <p>Alice wants to use an application called FinanceInsight to help her
+understand trends in her cashflow and spending activity, using financial
+data stored in her pod. First she needs to grant FinanceInsight access
+to that data. Since she has a lot of other data in her pod, she needs 
+to grant FinanceInsight access only to the data it needs.</p>
+   <p>Because there’s a lot of finance data spread across her pod, along with
+some data that is related in context, she needs help to make sure that she’s
+giving FinanceInsight access to all of the data it needs to operate, but no
+more.</p>
+   <p>Alice trusts an application called DataManage to help her interpret the kind
+of data that FinanceInsight needs, then present access decisions to her
+so that she can smart intuitive, smart choices. Once she makes those 
+decisions, DataManage changes the permissions for her.</p>
+   <h4 class="heading settled" data-level="2.1.3" id="trusted-organization"><span class="secno">2.1.3. </span><span class="content">Organizations trusting people and applications</span><a class="self-link" href="#trusted-organization"></a></h4>
+   <h5 class="heading settled" data-level="2.1.3.1" id="trusted-org-admins"><span class="secno">2.1.3.1. </span><span class="content">Organization has data storage and trusted administrators</span><a class="self-link" href="#trusted-org-admins"></a></h5>
+   <p>Acme is an organization that stores data in a Solid pod. Paul and Eric both
+work for Acme, and are trusted to manage all of Acme’s data, 
+the applications and services authorized to 
+use it, and also manage who else can access that data.</p>
+   <h5 class="heading settled" data-level="2.1.3.2" id="trusted-org-app"><span class="secno">2.1.3.2. </span><span class="content">Trusted administrator authorizes an application to access data</span><a class="self-link" href="#trusted-org-app"></a></h5>
+   <p>Acme generates analytic reports that it distributes to its customers through
+an application called AcmeReport. Paul authorizes AcmeReport to have read 
+access to analytic reports, so it can distribute them to Acme customers.</p>
+   <h5 class="heading settled" data-level="2.1.3.3" id="trusted-org-person"><span class="secno">2.1.3.3. </span><span class="content">Trusted administrator authorizes a person to access data</span><a class="self-link" href="#trusted-org-person"></a></h5>
+   <p>Acme also allows their customers to access analytic reports directly. Eric
+grants Acme’s customer group read acecss to analytic reports.</p>
+   <h2 class="heading settled" data-level="3" id="requirements"><span class="secno">3. </span><span class="content">Requirements</span><a class="self-link" href="#requirements"></a></h2>
+  </main>
+  <div data-fill-with="conformance">
+   <h2 class="no-ref no-num heading settled" id="w3c-conformance"><span class="content">Conformance</span><a class="self-link" href="#w3c-conformance"></a></h2>
+   <h3 class="no-ref no-num heading settled" id="w3c-conventions"><span class="content">Document conventions</span><a class="self-link" href="#w3c-conventions"></a></h3>
+   <p>Conformance requirements are expressed
+    with a combination of descriptive assertions
+    and RFC 2119 terminology.
+    The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL”
+    in the normative parts of this document
+    are to be interpreted as described in RFC 2119.
+    However, for readability,
+    these words do not appear in all uppercase letters in this specification. </p>
+   <p>All of the text of this specification is normative
+    except sections explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a> </p>
+   <p>Examples in this specification are introduced with the words “for example”
+    or are set apart from the normative text
+    with <code>class="example"</code>,
+    like this: </p>
+   <div class="example" id="w3c-example">
+    <a class="self-link" href="#w3c-example"></a> 
+    <p>This is an example of an informative example. </p>
+   </div>
+   <p>Informative notes begin with the word “Note”
+    and are set apart from the normative text
+    with <code>class="note"</code>,
+    like this: </p>
+   <p class="note" role="note">Note, this is an informative note. </p>
+   <h3 class="no-ref no-num heading settled" id="w3c-conformant-algorithms"><span class="content">Conformant Algorithms</span><a class="self-link" href="#w3c-conformant-algorithms"></a></h3>
+   <p>Requirements phrased in the imperative as part of algorithms
+    (such as "strip any leading space characters"
+    or "return false and abort these steps")
+    are to be interpreted with the meaning of the key word
+    ("must", "should", "may", etc)
+    used in introducing the algorithm. </p>
+   <p>Conformance requirements phrased as algorithms or specific steps
+    can be implemented in any manner,
+    so long as the end result is equivalent.
+    In particular, the algorithms defined in this specification
+    are intended to be easy to understand
+    and are not intended to be performant.
+    Implementers are encouraged to optimize. </p>
+  </div>
+<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
+  <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
+  <dl>
+   <dt id="biblio-rfc2119">[RFC2119]
+   <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
+  </dl>
