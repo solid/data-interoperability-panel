@@ -46,7 +46,7 @@ Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth unde
 
 ## Meetings
 
-Panel meetings are held most Tuesdays at 10:00AM EST / 4:00PM CEST. Check-in on [gitter](https://gitter.im/solid/data-interoperability-panel) for weekly agenda.
+Panel meetings are held most Tuesdays at 10:00AM Eastern / 4:00PM Central European. Check-in on [gitter](https://gitter.im/solid/data-interoperability-panel) for weekly agenda.
 
 Meeting URL: https://meet.jit.si/solid-data-interoperability
 
