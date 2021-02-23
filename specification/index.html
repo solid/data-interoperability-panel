@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version c5172e83, updated Fri Nov 20 15:35:20 2020 -0800" name="generator">
+  <meta content="Bikeshed version b94c7e755, updated Fri Feb 19 16:28:59 2021 -0800" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="f96e99932571acb9cd0b789969e4400a77c94ba5" name="document-revision">
+  <meta content="1f64bcc3d77fa1a2064e9caf08f6eb38876aa5c7" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -556,7 +556,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-02-16">16 February 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-02-23">23 February 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -777,18 +777,18 @@ assigned to each <a data-link-type="dfn" href="#registry-set" id="ref-for-regist
    <figure>
     <figcaption><a data-link-type="dfn" href="#agent" id="ref-for-agent③④">Agent</a> at https://alice.pod.example/profile/id#me</figcaption>
 <pre class="highlight"><c- g>&lt;#me></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>Agent</c-><c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Agent</c-><c- p>;</c->
   <c- c>######## Registry Sets ########</c->
-  <c- nn>interop:</c-><c- f>hasApplicationRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/application#set></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/data#set></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessGrantRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/grant#set></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessReceiptRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/receipt#set></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRemoteDataRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/remote#set></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasApplicationRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/application#set></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/data#set></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/grant#set></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessReceiptRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/receipt#set></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/remote#set></c-> <c- p>;</c->
   <c- c>######## Inboxes ########</c->
-  <c- nn>interop:</c-><c- f>hasInbox</c-> <c- g>&lt;https://alice.pod.example/inbox/general></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessInbox</c-> <c- g>&lt;https://alice.pod.example/inbox/access></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasInbox</c-> <c- g>&lt;https://alice.pod.example/inbox/general></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessInbox</c-> <c- g>&lt;https://alice.pod.example/inbox/access></c-> <c- p>;</c->
   <c- c>######## Options ########</c->
-  <c- nn>interop:</c-><c- f>receivesAccessReceipt</c-> <c- nn>interop:</c-><c- f>ReceiptInMessage</c-> <c- p>.</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>receivesAccessReceipt</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReceiptInMessage</c-> <c- p>.</c->
 </pre>
    </figure>
    <h4 class="heading settled" data-level="2.2.2" id="datamodel-agent"><span class="secno">2.2.2. </span><span class="content">Agent</span><a class="self-link" href="#datamodel-agent"></a></h4>
@@ -843,22 +843,22 @@ of software with an <a data-link-type="dfn" href="#identity" id="ref-for-identit
    </table>
    <p>The <a href="#shexAgent">AgentShape</a> is used to validate an instance of the <a href="#classAgent">Agent</a> class.</p>
 <pre class="highlight" id="shexAgent"><c- g>&lt;#AgentShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>Agent</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasApplicationRegistrySet</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataRegistrySet</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessGrantRegistrySet</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessReceiptRegistrySet</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRemoteDataRegistrySet</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasInbox</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessInbox</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>receivesAccessReceipt</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>ReceiptInMessage</c-> <c- nn>interop:</c-><c- f>ReceiptInRegistration</c-> <c- p>]</c->
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Agent</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasApplicationRegistrySet</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistrySet</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantRegistrySet</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessReceiptRegistrySet</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataRegistrySet</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasInbox</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessInbox</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>receivesAccessReceipt</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReceiptInMessage</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReceiptInRegistration</c-> <c- p>]</c->
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#AgentTree">AgentTree</a> is assigned to a resource to ensure it will validate against the <a href="#shexAgent">AgentShape</a>.</p>
 <pre class="highlight" id="treeAgent"><c- g>&lt;#AgentTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AgentShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AgentShape></c-> <c- p>.</c->
 </pre>
    <h3 class="heading settled" data-level="2.3" id="agents-hierarchy"><span class="secno">2.3. </span><span class="content">Resource Hierarchy</span><a class="self-link" href="#agents-hierarchy"></a></h3>
    <table align="left" class="data tree">
@@ -1028,14 +1028,14 @@ by linking to <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
    <figure>
     <figcaption><a data-link-type="dfn" href="#application" id="ref-for-application②②">Application</a> at https://app.example/profile/id#app</figcaption>
 <pre class="highlight"><c- g>&lt;#app></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>Application</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>applicationName</c-> <c- s>"Example Application"</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>applicationDescription</c-> <c- s>"This is a description of the Example Application"</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>applicationAuthor</c-> <c- g>&lt;https://app.example/org/id#agent></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>applicationAuthorName</c-> <c- s>"Example Organization"</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>applicationThumbnail</c-> <c- g>&lt;https://app.example/profile/thumb.svg></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#exampleAccessNeedGroup></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>receivesAccessReceipt</c-> <c- nn>interop:</c-><c- f>ReceiptInRegistration</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Application</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>applicationName</c-> <c- s>"Example Application"</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>applicationDescription</c-> <c- s>"This is a description of the Example Application"</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>applicationAuthor</c-> <c- g>&lt;https://app.example/org/id#agent></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>applicationAuthorName</c-> <c- s>"Example Organization"</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>applicationThumbnail</c-> <c- g>&lt;https://app.example/profile/thumb.svg></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#exampleAccessNeedGroup></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>receivesAccessReceipt</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReceiptInRegistration</c-> <c- p>.</c->
 </pre>
    </figure>
    <h4 class="heading settled" data-level="3.2.2" id="datamodel-application"><span class="secno">3.2.2. </span><span class="content">Application</span><a class="self-link" href="#datamodel-application"></a></h4>
@@ -1087,21 +1087,21 @@ they’ve been granted access to.</p>
    </table>
    <p>The <a href="#shexApplication">ApplicationShape</a> is used to validate an instance of the <a href="#classApplication">Application</a> class.</p>
 <pre class="highlight" id="shexApplication"><c- g>&lt;#ApplicationShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>Application</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>applicationName</c-> <c- nn>xsd:</c-><c- f>string</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>applicationDescription</c-> <c- nn>xsd:</c-><c- f>string</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>applicationAuthor</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>applicationAuthorName</c-> <c- nn>xsd:</c-><c- f>string</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>applicationThumbanil</c-> IRI? <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedGroup</c-> IRI* <c- p>;</c->
-  <c- nn>interop:</c-><c- f>receivesAccessReceipt</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>ReceiptInMessage</c-> <c- nn>interop:</c-><c- f>ReceiptInRegistration</c-> <c- p>]</c->
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Application</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>applicationName</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>string</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>applicationDescription</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>string</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>applicationAuthor</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>applicationAuthorName</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>string</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>applicationThumbanil</c-> IRI? <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> IRI* <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>receivesAccessReceipt</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReceiptInMessage</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReceiptInRegistration</c-> <c- p>]</c->
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#ApplicationTree">ApplicationTree</a> is assigned to a resource to ensure it will validate against the <a href="#shexApplication">ApplicationShape</a>.</p>
 <pre class="highlight" id="treeApplication"><c- g>&lt;#ApplicationTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#ApplicationShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#ApplicationShape></c-> <c- p>.</c->
 </pre>
    <h3 class="heading settled" data-level="3.3" id="app-hierarchy"><span class="secno">3.3. </span><span class="content">Resource Hierarchy</span><a class="self-link" href="#app-hierarchy"></a></h3>
    <table align="left" class="data tree">
@@ -1228,16 +1228,16 @@ An <a data-link-type="dfn" href="#application-registry" id="ref-for-application-
     <figcaption><a data-link-type="dfn" href="#agent" id="ref-for-agent⑤⑥">Agent</a> at https://alice.pod.example/profile/id#me
   linking to an <a data-link-type="dfn" href="#application-registry-set" id="ref-for-application-registry-set③">Application Registry Set</a></figcaption>
 <pre class="highlight"><c- g>&lt;#me></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>Agent</c-><c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasApplicationRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/application#set></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Agent</c-><c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasApplicationRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/application#set></c-> <c- p>.</c->
 </pre>
    </figure>
    <figure id="fig-appreg-registry-set">
     <figcaption>An <a data-link-type="dfn" href="#application-registry-set" id="ref-for-application-registry-set④">Application Registry Set</a> at
    https://alice.pod.example/profile/application#set linking to two different <a data-link-type="dfn" href="#application-registry" id="ref-for-application-registry②">Application Registries</a></figcaption>
 <pre class="highlight"><c- g>&lt;#set></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>ApplicationRegistrySet</c-><c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistry</c-> <c- g>&lt;https://alice.pod.example/applications/#registry></c-> <c- p>,</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ApplicationRegistrySet</c-><c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c-> <c- g>&lt;https://alice.pod.example/applications/#registry></c-> <c- p>,</c->
                   <c- g>&lt;https://alice.otherpod.example/applications/#registry></c-> <c- p>.</c->
 </pre>
    </figure>
@@ -1245,8 +1245,8 @@ An <a data-link-type="dfn" href="#application-registry" id="ref-for-application-
     <figcaption>An <a data-link-type="dfn" href="#application-registry" id="ref-for-application-registry③">Application Registry</a> at https://alice.pod.example/applications/#registry
   linking to several <a data-link-type="dfn" href="#application-registration" id="ref-for-application-registration④">Application Registrations</a></figcaption>
 <pre class="highlight"><c- g>&lt;#registry></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>ApplicationRegistry</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistration</c-> 
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ApplicationRegistry</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c-> 
     <c- g>&lt;705563552198b6fb3efc40717872aa2ec35d669c1095cc5d665f499ec5d7e23a/#registration></c-> <c- p>,</c->
     <c- g>&lt;ede6aa50cb9e5fc564fdb4f0dc661685825ee3178355214086be27f9830e2a42/#registration></c-> <c- p>,</c->
     <c- g>&lt;150dca42b3d5661ba10a28e0aff36f212e27b0f7463fe1ef3bf1b5a45b640673/#registration></c-> <c- p>,</c->
@@ -1257,13 +1257,13 @@ An <a data-link-type="dfn" href="#application-registry" id="ref-for-application-
     <figcaption>An <a data-link-type="dfn" href="#application-registration" id="ref-for-application-registration⑤">Application Registration</a> at
   https://alice.pod.example/applications/705563552198b6fb3efc40717872aa2ec35d669c1095cc5d665f499ec5d7e23a/#registration </figcaption>
 <pre class="highlight"><c- g>&lt;#registration></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>ApplicationRegistration</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> <c- g>&lt;https://trusted.example/id#agent></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2020-04-04T20:15:47.000Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- s>"2020-04-04T21:11:33.000Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredApplication</c-> <c- g>&lt;https://app.example/profile/id#agent></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessReceipt</c-> <c- g>&lt;./04ca5ba7-0166-4312-ae96-09b9f3a25ba0#receipt></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ApplicationRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://trusted.example/id#agent></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-04-04T20:15:47.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-04-04T21:11:33.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredApplication</c-> <c- g>&lt;https://app.example/profile/id#agent></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessReceipt</c-> <c- g>&lt;./04ca5ba7-0166-4312-ae96-09b9f3a25ba0#receipt></c-> <c- p>.</c->
 </pre>
    </figure>
    <h4 class="heading settled" data-level="4.2.2" id="datamodel-application-registry-set"><span class="secno">4.2.2. </span><span class="content">Application Registry Set</span><a class="self-link" href="#datamodel-application-registry-set"></a></h4>
@@ -1289,15 +1289,15 @@ made up of <a data-link-type="dfn" href="#application-registry" id="ref-for-appl
    <p>The <a href="#shexApplicationRegistrySet">ApplicationRegistrySetShape</a> is used to validate
 an instance of the <a href="#classApplicationRegistrySet">ApplicationRegistrySet</a> class.</p>
 <pre class="highlight" id="shexApplicationRegistrySet"><c- g>&lt;#ApplicationRegistrySetShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>ApplicationRegistrySet</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistry</c-> IRI+
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ApplicationRegistrySet</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c-> IRI+
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#ApplicationRegistrySetTree">ApplicationRegistrySetTree</a> is assigned to a resource to ensure it will validate against the <a href="#shexApplicationRegistrySet">ApplicationRegistrySetShape</a>.</p>
 <pre class="highlight" id="treeApplicationRegistrySet"><c- g>&lt;#ApplicationRegistrySetTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#ApplicationRegistrySetShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#ApplicationRegistrySetShape></c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="4.2.3" id="datamodel-application-registry"><span class="secno">4.2.3. </span><span class="content">Application Registry</span><a class="self-link" href="#datamodel-application-registry"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="application-registry">Application Registry</dfn> is a collection of <a data-link-type="dfn" href="#application-registration" id="ref-for-application-registration⑥">Application Registrations</a> stored in a specific location in a <a data-link-type="dfn" href="#pod" id="ref-for-pod">pod</a>.</p>
@@ -1321,19 +1321,19 @@ an instance of the <a href="#classApplicationRegistrySet">ApplicationRegistrySet
    <p>The <a href="#shexApplicationRegistry">ApplicationRegistryShape</a> is used to validate an
 instance of the <a href="#classApplicationRegistry">ApplicationRegistry</a> class.</p>
 <pre class="highlight" id="shexApplicationRegistry"><c- g>&lt;#ApplicationRegistryShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>ApplicationRegistry</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistration</c-> IRI*
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ApplicationRegistry</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c-> IRI*
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#ApplicationRegistryTree">ApplicationRegistryTree</a> is assigned
 to a container resource to ensure that it will validate against the <a href="#shexApplicationRegistry">ApplicationRegistryShape</a>, and contain only
 conformant instances of the <a href="#treeApplicationRegistration">ApplicationRegistrationTree</a>.</p>
 <pre class="highlight" id="treeApplicationRegistry"><c- g>&lt;#ApplicationRegistryTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#ApplicationRegistryShape></c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>contains</c-> <c- g>&lt;#ApplicationRegistrationTree></c-> <c- p>,</c->
-              <c- nn>st:</c-><c- f>AllowNone</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#ApplicationRegistryShape></c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>contains</c-> <c- g>&lt;#ApplicationRegistrationTree></c-> <c- p>,</c->
+              <c- nn>st</c-><c- p>:</c-><c- f>AllowNone</c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="4.2.4" id="datamodel-application-registration"><span class="secno">4.2.4. </span><span class="content">Application Registration</span><a class="self-link" href="#datamodel-application-registration"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="application-registration">Application Registration</dfn> provides the <a data-link-type="dfn" href="#agent" id="ref-for-agent⑤⑦">Agent</a> with a place to maintain metadata, state, preferences, and
@@ -1380,13 +1380,13 @@ have elected to use.</p>
    <p>The <a href="#shexApplicationRegistration">ApplicationRegistrationShape</a> is used
 to validate an instance of the <a href="#classApplicationRegistration">ApplicationRegistration</a> class.</p>
 <pre class="highlight" id="shexApplicationRegistration"><c- g>&lt;#ApplicationRegistrationShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>ApplicationRegistration</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredApplication</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessReceipt</c-> IRI?
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ApplicationRegistration</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredApplication</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessReceipt</c-> IRI?
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#ApplicationRegistrationTree">ApplicationRegistrationTree</a> is assigned to a resource via the <a href="#treeApplicationRegistry">ApplicationRegistryTree</a>,
@@ -1394,11 +1394,11 @@ to ensure that the <a data-link-type="dfn" href="#application-registration" id="
 include any resources, but ensures that if an <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt③">Access Receipt</a> is
 added, it is validated against <a href="#treeAccessReceipt">AccessReceiptTree</a>.</p>
 <pre class="highlight" id="treeApplicationRegistration"><c- g>&lt;#ApplicationRegistrationTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#ApplicationRegistrationShape></c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>contains</c-> <c- g>&lt;#AccessReceiptTree></c-> <c- p>,</c->
-                <c- nn>st:</c-><c- f>AllowAll</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#ApplicationRegistrationShape></c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>contains</c-> <c- g>&lt;#AccessReceiptTree></c-> <c- p>,</c->
+                <c- nn>st</c-><c- p>:</c-><c- f>AllowAll</c-> <c- p>.</c->
 </pre>
    <h3 class="heading settled" data-level="4.3" id="appreg-hierarchy"><span class="secno">4.3. </span><span class="content">Resource Hierarchy</span><a class="self-link" href="#appreg-hierarchy"></a></h3>
    <table align="left" class="data tree">
@@ -1755,16 +1755,16 @@ data boundaries that make data storage and authorization more intuitive.</p>
     <figcaption><a data-link-type="dfn" href="#agent" id="ref-for-agent⑥⑦">Agent</a> at https://alice.pod.example/profile/id#me
   linking to a <a data-link-type="dfn" href="#data-registry-set" id="ref-for-data-registry-set③">Data Registry Set</a></figcaption>
 <pre class="highlight"><c- g>&lt;#me></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>Agent</c-><c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/data#set></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Agent</c-><c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistrySet</c-> <c- g>&lt;https://alice.pod.example/profile/data#set></c-> <c- p>.</c->
 </pre>
    </figure>
    <figure id="fig-datareg-registry-set">
     <figcaption>A <a data-link-type="dfn" href="#data-registry-set" id="ref-for-data-registry-set④">Data Registry Set</a> at
    https://alice.pod.example/profile/data#set linking to two different <a data-link-type="dfn" href="#data-registry" id="ref-for-data-registry②">Data Registries</a></figcaption>
 <pre class="highlight"><c- g>&lt;#set></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>DataRegistrySet</c-><c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistry</c-> <c- g>&lt;https://alice.pod.example/data/#registry></c-> <c- p>,</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistrySet</c-><c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c-> <c- g>&lt;https://alice.pod.example/data/#registry></c-> <c- p>,</c->
                   <c- g>&lt;https://alice.otherpod.example/data/#registry></c-> <c- p>.</c->
 </pre>
    </figure>
@@ -1772,8 +1772,8 @@ data boundaries that make data storage and authorization more intuitive.</p>
     <figcaption>A <a data-link-type="dfn" href="#data-registry" id="ref-for-data-registry③">Data Registry</a> at https://alice.pod.example/data/#registry
   linking to several <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration③">Data Registrations</a></figcaption>
 <pre class="highlight"><c- g>&lt;#registry></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>DataRegistry</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistration</c-> <c- g>&lt;8501f084-deb9-4775-8a35-2040df435d21/#registration></c-> <c- p>,</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistry</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c-> <c- g>&lt;8501f084-deb9-4775-8a35-2040df435d21/#registration></c-> <c- p>,</c->
                       <c- g>&lt;df4ab227-2f15-455d-8ca2-fad10fb9f9bc/#registration></c-> <c- p>,</c->
                       <c- g>&lt;d0954df2-e7c3-40b4-9eeb-65df92d9167e/#registration></c-> <c- p>,</c->
                       <c- g>&lt;87da9aa5-3f6c-4bc2-a5d4-adb7efcaee5d/#registration></c-> <c- p>,</c->
@@ -1785,13 +1785,13 @@ data boundaries that make data storage and authorization more intuitive.</p>
     <figcaption>A <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration④">Data Registration</a> at
   https://alice.pod.example/data/8501f084-deb9-4775-8a35-2040df435d21/#registration </figcaption>
 <pre class="highlight"><c- g>&lt;#registration></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>DataRegistration</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> <c- g>&lt;https://app.example/id#agent></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2020-04-04T20:15:47.000Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- s>"2020-04-04T21:11:33.000Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- nn>note:</c-><c- f>notebookTree</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredType</c-> <c- nn>note:</c-><c- f>notebook</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://app.example/id#agent></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-04-04T20:15:47.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-04-04T21:11:33.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>note</c-><c- p>:</c-><c- f>notebookTree</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredType</c-> <c- nn>note</c-><c- p>:</c-><c- f>notebook</c-> <c- p>.</c->
 </pre>
    </figure>
    <h4 class="heading settled" data-level="5.2.2" id="datamodel-data-registry-set"><span class="secno">5.2.2. </span><span class="content">Data Registry Set</span><a class="self-link" href="#datamodel-data-registry-set"></a></h4>
@@ -1817,15 +1817,15 @@ made up of <a data-link-type="dfn" href="#data-registry" id="ref-for-data-regist
    <p>The <a href="#shexDataRegistrySet">DataRegistrySetShape</a> is used to validate
 an instance of the <a href="#classDataRegistrySet">DataRegistrySet</a> class.</p>
 <pre class="highlight" id="shexDataRegistrySet"><c- g>&lt;#DataRegistrySetShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>DataRegistrySet</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistry</c-> IRI+
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistrySet</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c-> IRI+
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#DataRegistrySetTree">DataRegistrySetTree</a> is assigned to a resource to ensure it will validate against the <a href="#shexDataRegistrySet">DataRegistrySetShape</a>.</p>
 <pre class="highlight" id="treeDataRegistrySet"><c- g>&lt;#DataRegistrySetTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#DataRegistrySetShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#DataRegistrySetShape></c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="5.2.3" id="datamodel-data-registry"><span class="secno">5.2.3. </span><span class="content">Data Registry</span><a class="self-link" href="#datamodel-data-registry"></a></h4>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="data-registry">Data Registry</dfn> is a collection of <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑤">Data Registrations</a>, each
@@ -1854,19 +1854,19 @@ query engines or indexing schemes.</p>
    <p>The <a href="#shexDataRegistry">DataRegistryShape</a> is used to validate an
 instance of the <a href="#classDataRegistry">DataRegistry</a> class.</p>
 <pre class="highlight" id="shexDataRegistry"><c- g>&lt;#DataRegistryShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>DataRegistry</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistration</c-> IRI*
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistry</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c-> IRI*
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#DataRegistryTree">DataRegistryTree</a> is assigned
 to a container resource to ensure that it will validate against the <a href="#shexDataRegistry">DataRegistryShape</a>, and contain only
 conformant instances of the <a href="#treeDataRegistration">DataRegistrationTree</a>.</p>
 <pre class="highlight" id="treeDataRegistry"><c- g>&lt;#DataRegistryTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#DataRegistryShape></c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>contains</c-> <c- g>&lt;#DataRegistrationTree></c-> <c- p>,</c->
-              <c- nn>st:</c-><c- f>AllowNone</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#DataRegistryShape></c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>contains</c-> <c- g>&lt;#DataRegistrationTree></c-> <c- p>,</c->
+              <c- nn>st</c-><c- p>:</c-><c- f>AllowNone</c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="5.2.4" id="datamodel-data-registration"><span class="secno">5.2.4. </span><span class="content">Data Registration</span><a class="self-link" href="#datamodel-data-registration"></a></h4>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="data-registration">Data Registration</dfn> provides the <a data-link-type="dfn" href="#agent" id="ref-for-agent⑥⑧">Agent</a> with a place to store <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance①">Data Instances</a> of a particular type, conforming to a
@@ -1914,21 +1914,21 @@ the instance’s <a data-link-type="dfn" href="#data-registration" id="ref-for-d
    <p>The <a href="#shexDataRegistration">DataRegistrationShape</a> is used
 to validate an instance of the <a href="#classDataRegistration">DataRegistration</a> class.</p>
 <pre class="highlight" id="shexDataRegistration"><c- g>&lt;#DataRegistrationShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>DataRegistration</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredType</c-> IRI*
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredType</c-> IRI*
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#DataRegistrationTree">DataRegistrationTree</a> is assigned to a resource via the <a href="#treeDataRegistry">DataRegistryTree</a>,
 to ensure that the <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration①②">Data Registration</a> will validate against the <a href="#shexDataRegistration">DataRegistrationShape</a>.</p>
 <pre class="highlight" id="treeDataRegistration"><c- g>&lt;#DataRegistrationTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#DataRegistrationShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#DataRegistrationShape></c-> <c- p>.</c->
 </pre>
    <h3 class="heading settled" data-level="5.3" id="datareg-hierarchy"><span class="secno">5.3. </span><span class="content">Resource Hierarchy</span><a class="self-link" href="#datareg-hierarchy"></a></h3>
    <table align="left" class="data tree">
@@ -2056,27 +2056,27 @@ to <a href="#treeFoo">FooTree</a> per the directive in <a href="#treeFooContaini
        <td>
          Contents of the <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration①⑨">Data Registration</a> 
 <pre class="highlight"><c- g>&lt;#registration></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>DataRegistration</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> <c- g>&lt;https://app.example/id#agent></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2020-04-04T20:15:47.000Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- s>"2020-04-04T21:11:33.000Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- nn>foo:</c-><c- f>fooTree</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredType</c-> <c- nn>foo:</c-><c- f>fooThing</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://app.example/id#agent></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-04-04T20:15:47.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-04-04T21:11:33.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>foo</c-><c- p>:</c-><c- f>fooTree</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredType</c-> <c- nn>foo</c-><c- p>:</c-><c- f>fooThing</c-> <c- p>.</c->
 </pre>
        <td>
          Ensure the container resource for the <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration②⓪">Data Registration</a> conforms to <code>interops#DataRegistrationShape</code>. 
 <pre class="highlight"><c- g>&lt;#DataRegistrationTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#DataRegistrationShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#DataRegistrationShape></c-> <c- p>.</c->
 </pre>
         <p>And also ensure the <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration②①">Data Registration</a> only
           contains resources that conform to <code>&lt;#FooTree></code>.</p>
 <pre class="highlight"><c- g>&lt;#FooContainingTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>contains</c-> <c- g>&lt;#FooTree></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>contains</c-> <c- g>&lt;#FooTree></c-> <c- p>.</c->
 </pre>
       <tr>
        <td colspan="2"> <code>------ 16e1eae9-20a5-489d-8380-8c07ca3805c4#foo</code> 
@@ -2084,15 +2084,15 @@ to <a href="#treeFoo">FooTree</a> per the directive in <a href="#treeFooContaini
        <td>
          Contents of the <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤">Data Instance</a> 
 <pre class="highlight"><c- g>&lt;#foo></c->
-  <c- b>a</c-> <c- nn>foo:</c-><c- f>fooThing</c-> <c- p>;</c->
-  <c- nn>foo:</c-><c- f>isExample</c-> <c- s>"of an instance"</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>foo</c-><c- p>:</c-><c- f>fooThing</c-> <c- p>;</c->
+  <c- nn>foo</c-><c- p>:</c-><c- f>isExample</c-> <c- s>"of an instance"</c-> <c- p>.</c->
 </pre>
        <td>
          Ensure the resource for the <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑥">Data Instance</a> conforms to <code>&lt;#FooTree></code>. 
 <pre class="highlight"><c- g>&lt;#FooTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;foo#FooShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;foo#FooShape></c-> <c- p>.</c->
 </pre>
     </table>
    </figure>
@@ -3429,12 +3429,12 @@ language-specific content mappings.</p>
    <figure id="ttl-access-need-group">
     <figcaption>An example <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group③⑧">Access Need Group</a></figcaption>
 <pre class="highlight"><c- g>&lt;#ng-project-management></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessNeedGroup</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessNecessity</c-> <c- nn>interop:</c-><c- f>accessRequired</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessScenario</c-> <c- nn>interop:</c-><c- f>PersonalAccess</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>authenticatesAs</c-> <c- nn>interop:</c-><c- f>Pilot</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessDecoratorIndex</c-> <c- nn>nn:</c-><c- f>index</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeed</c-> <c- g>&lt;#need-project></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedGroup</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessScenario</c-> <c- nn>interop</c-><c- p>:</c-><c- f>PersonalAccess</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>authenticatesAs</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Pilot</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessDecoratorIndex</c-> <c- nn>nn</c-><c- p>:</c-><c- f>index</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeed</c-> <c- g>&lt;#need-project></c-> <c- p>.</c->
 </pre>
    </figure>
    <table align="left" class="classinfo data" id="classAccessNeedGroup">
@@ -3481,13 +3481,13 @@ language-specific content mappings.</p>
    <p>The <a href="#shexAccessNeedGroup">AccessNeedGroupShape</a> is used to validate an
 instance of the <a href="#classAccessNeedGroup">AccessNeedGroup</a> class.</p>
 <pre class="highlight" id="shexAccessNeedGroup"><c- g>&lt;#AccessNeedGroupShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessNeedGroup</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessNecessity</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessRequired</c-> <c- nn>interop:</c-><c- f>AccessOptional</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessScenario</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>PersonalAccess</c-> <c- nn>interop:</c-><c- f>SharedAccess</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>authenticatesAs</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeed</c-> IRI+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedOverride</c-> IRI* <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessDecoratorIndex</c-> IRI
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedGroup</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessRequired</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessOptional</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessScenario</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>PersonalAccess</c-> <c- nn>interop</c-><c- p>:</c-><c- f>SharedAccess</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>authenticatesAs</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeed</c-> IRI+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedOverride</c-> IRI* <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessDecoratorIndex</c-> IRI
 <c- p>}</c->
 </pre>
    <h4 class="heading settled" data-level="7.2.2" id="needs-access-need"><span class="secno">7.2.2. </span><span class="content">Access Need</span><a class="self-link" href="#needs-access-need"></a></h4>
@@ -3508,16 +3508,16 @@ indicates the necessity of the <a data-link-type="dfn" href="#access-need" id="r
    <figure id="ttl-access-need">
     <figcaption>An example <a data-link-type="dfn" href="#access-need" id="ref-for-access-need③③">Access Need</a></figcaption>
 <pre class="highlight"><c- g>&lt;#need-project></c->
-    <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessNeed</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>inAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- nn>pm:</c-><c- f>ProjectTree</c-> <c- p>;</c->        
-    <c- nn>interop:</c-><c- f>hasAccessNeedDecorator</c-> <c- nn>nn-index:</c-><c- f>projectDecorator</c->
-    <c- nn>interop:</c-><c- f>accessNecessity</c-> <c- nn>interop:</c-><c- f>accessRequired</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>accessMode</c-> <c- nn>acl:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl:</c-><c- f>write</c-><c- p>,</c-> <c- nn>acl:</c-><c- f>Control</c-> <c- p>;</c->        
-    <c- nn>interop:</c-><c- f>hasReferencedAccessNeed</c-> 
+    <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeed</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c->        
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedDecorator</c-> <c- nn>nn-index</c-><c- p>:</c-><c- f>projectDecorator</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>write</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Control</c-> <c- p>;</c->        
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedAccessNeed</c-> 
         <c- g>&lt;#need-issue></c-><c- p>,</c-> <c- g>&lt;#need-task></c-><c- p>,</c-> <c- g>&lt;#need-release></c-><c- p>,</c-> <c- g>&lt;#need-document></c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>hasRemoteDataGrant</c-> <c- g>&lt;#remote-data-grant-project></c-> <c- p>.</c->  
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataGrant</c-> <c- g>&lt;#remote-data-grant-project></c-> <c- p>.</c->  
 </pre>
    </figure>
    <table align="left" class="classinfo data" id="classAccessNeed">
@@ -3590,19 +3590,19 @@ indicates the necessity of the <a data-link-type="dfn" href="#access-need" id="r
    <p>The <a href="#shexAccessNeed">AccessNeedShape</a> is used to validate an
 instance of the <a href="#classAccessNeed">AccessNeed</a> class.</p>
 <pre class="highlight" id="shexAccessNeed"><c- g>&lt;#AccessNeedShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessNeed</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>inAccessNeedGroup</c-> @<c- g>&lt;#:AccessNeedGroupShape></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasShapeTreeDecorator</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedDecorator</c-> IRI? <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataInstance</c-> IRI* <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessNecessity</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessRequired</c-> <c- nn>interop:</c-><c- f>AccessOptional</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>supportedBy</c-> IRI* <c- p>;</c->  
-  <c- nn>interop:</c-><c- f>supports</c-> IRI? <c- p>;</c->       
-  <c- nn>interop:</c-><c- f>hasReferencedAccessNeed</c-> @<c- g>&lt;#:ReferencedAccessNeedShape></c->* <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataGrant</c-> @<c- g>&lt;#:DataGrantShape></c->? <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRemoteGrant</c-> @<c- g>&lt;#:RemoteGrantShape></c->? 
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeed</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessNeedGroup</c-> @<c- g>&lt;#:AccessNeedGroupShape></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasShapeTreeDecorator</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedDecorator</c-> IRI? <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataInstance</c-> IRI* <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessRequired</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessOptional</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>supportedBy</c-> IRI* <c- p>;</c->  
+  <c- nn>interop</c-><c- p>:</c-><c- f>supports</c-> IRI? <c- p>;</c->       
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedAccessNeed</c-> @<c- g>&lt;#:ReferencedAccessNeedShape></c->* <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> @<c- g>&lt;#:DataGrantShape></c->? <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteGrant</c-> @<c- g>&lt;#:RemoteGrantShape></c->? 
 <c- p>}</c->
 </pre>
    <h4 class="heading settled" data-level="7.2.3" id="needs-referenced-access-need"><span class="secno">7.2.3. </span><span class="content">Referenced Access Need</span><a class="self-link" href="#needs-referenced-access-need"></a></h4>
@@ -3612,14 +3612,14 @@ is <code>st:referenced</code> by the <a data-link-type="dfn" href="#shape-tree" 
    <figure id="ttl-referenced-access-need">
     <figcaption>An example <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need①④">Referenced Access Need</a> linked from the <a href="#ttl-access-need">prior example</a> of an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need④⑥">Access Need</a></figcaption>
 <pre class="highlight"><c- g>&lt;#need-issue></c->
-    <c- b>a</c-> <c- nn>interop:</c-><c- f>ReferencedAccessNeed</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>hasAccessNeed</c-> <c- g>&lt;#need-project></c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>hasAccessNeedDecorator</c-> <c- nn>nn-index:</c-><c- f>issueDecorator</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- nn>pm:</c-><c- f>IssueTree</c-> <c- p>;</c->        
-    <c- nn>interop:</c-><c- f>accessNecessity</c-> <c- nn>interop:</c-><c- f>accessRequired</c-> <c- p>;</c->    
-    <c- nn>interop:</c-><c- f>accessMode</c-> <c- nn>acl:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl:</c-><c- f>write</c-><c- p>,</c-> <c- nn>acl:</c-><c- f>Control</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>hasReferencedDataGrant</c-> <c- g>&lt;#data-grant-issue></c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>hasReferencedRemoteDataGrant</c-> <c- g>&lt;#remote-data-grant-issue></c-> <c- p>.</c->
+    <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedAccessNeed</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeed</c-> <c- g>&lt;#need-project></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedDecorator</c-> <c- nn>nn-index</c-><c- p>:</c-><c- f>issueDecorator</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm</c-><c- p>:</c-><c- f>IssueTree</c-> <c- p>;</c->        
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c->    
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>write</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Control</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> <c- g>&lt;#data-grant-issue></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedRemoteDataGrant</c-> <c- g>&lt;#remote-data-grant-issue></c-> <c- p>.</c->
 </pre>
    </figure>
    <table align="left" class="classinfo data" id="classReferencedAccessNeed">
@@ -3685,18 +3685,18 @@ is <code>st:referenced</code> by the <a data-link-type="dfn" href="#shape-tree" 
    <p>The <a href="#shexReferencedAccessNeed">ReferencedAccessNeedShape</a> is used to validate an
 instance of the <a href="#classReferencedAccessNeed">ReferencedAccessNeed</a> class.</p>
 <pre class="highlight" id="shexReferencedAccessNeed"><c- g>&lt;#ReferencedAccessNeedShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>ReferencedAccessNeed</c-> <c- p>]</c-> <c- p>;</c->  
-  <c- nn>interop:</c-><c- f>hasAccessNeed</c-> @<c- g>&lt;#:AccessNeedShape></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasShapeTreeDecorator</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedDecorator</c-> IRI? <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataInstance</c-> IRI* <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessNecessity</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessRequired</c-> <c- nn>interop:</c-><c- f>AccessOptional</c-> <c- p>]</c->
-  <c- nn>interop:</c-><c- f>supportedBy</c-> IRI* <c- p>;</c->  <c- c># ?</c->
-  <c- nn>interop:</c-><c- f>supports</c-> IRI? <c- p>;</c->     <c- c># ?</c->
-  <c- nn>interop:</c-><c- f>hasReferencedDataGrant</c-> @<c- g>&lt;#:DataGrantShape></c->? <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasReferencedRemoteGrant</c-> @<c- g>&lt;#:RemoteGrantShape></c->? 
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedAccessNeed</c-> <c- p>]</c-> <c- p>;</c->  
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeed</c-> @<c- g>&lt;#:AccessNeedShape></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasShapeTreeDecorator</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedDecorator</c-> IRI? <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataInstance</c-> IRI* <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessRequired</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessOptional</c-> <c- p>]</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>supportedBy</c-> IRI* <c- p>;</c->  <c- c># ?</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>supports</c-> IRI? <c- p>;</c->     <c- c># ?</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> @<c- g>&lt;#:DataGrantShape></c->? <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedRemoteGrant</c-> @<c- g>&lt;#:RemoteGrantShape></c->? 
 <c- p>}</c->
 </pre>
    <h4 class="heading settled" data-level="7.2.4" id="needs-trusted"><span class="secno">7.2.4. </span><span class="content">Trusted Need</span><a class="self-link" href="#needs-trusted"></a></h4>
@@ -3744,23 +3744,23 @@ indicates the necessity of the <a data-link-type="dfn" href="#access-need" id="r
    <p>The <a href="#shexTrustedNeed">TrustedNeedShape</a> is used to validate an
 instance of the <a href="#classTrustedNeed">TrustedNeed</a> class.</p>
 <pre class="highlight" id="shexTrustedNeed"><c- g>&lt;#TrustedNeedShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>TrustedNeed</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>inAccessNeedGroup</c-> IRI+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedDecorator</c-> IRI? <c- p>;</c->
-  <c- nn>interop:</c-><c- f>trustedWith</c-> IRI* <c- p>;</c->
-  <c- nn>interop:</c-><c- f>trustedWithType</c-> @<c- g>&lt;#:TrustedWithNeedTypes></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessNecessity</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessRequired</c-> <c- nn>interop:</c-><c- f>AccessOptional</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasTrustedGrant</c-> @<c- g>&lt;#:TrustedGrantShape></c->? 
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>TrustedNeed</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessNeedGroup</c-> IRI+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedDecorator</c-> IRI? <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>trustedWith</c-> IRI* <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>trustedWithType</c-> @<c- g>&lt;#:TrustedWithNeedTypes></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessRequired</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessOptional</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasTrustedGrant</c-> @<c- g>&lt;#:TrustedGrantShape></c->? 
 <c- p>}</c->
 
 <c- g>&lt;#TrustedWithNeedTypes></c-> <c- p>[</c->
-  <c- nn>interop:</c-><c- f>Agent</c-> 
-  <c- nn>interop:</c-><c- f>ApplicationRegistry</c->
-  <c- nn>interop:</c-><c- f>DataRegistry</c->
-  <c- nn>interop:</c-><c- f>AccessGrantRegistry</c->
-  <c- nn>interop:</c-><c- f>AccessReceiptRegistry</c->
-  <c- nn>interop:</c-><c- f>RemoteDataRegistry</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>Agent</c-> 
+  <c- nn>interop</c-><c- p>:</c-><c- f>ApplicationRegistry</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistry</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistry</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>AccessReceiptRegistry</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistry</c->
 <c- p>]</c->
 </pre>
    <h4 class="heading settled" data-level="7.2.5" id="needs-access-request"><span class="secno">7.2.5. </span><span class="content">Access Request</span><a class="self-link" href="#needs-access-request"></a></h4>
@@ -3795,10 +3795,10 @@ one <a data-link-type="dfn" href="#agent" id="ref-for-agent①①①">Agent</a> 
    <p>The <a href="#shexAccessRequest">AccessRequestShape</a> is used to
 validate an instance of the <a href="#classAccessRequest">AccessRequest</a> class.</p>
 <pre class="highlight" id="shexAccessRequest"><c- g>&lt;#AccessRequestShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-><c- nn>interop:</c-><c- f>AccessRequest</c-><c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>fromAgent</c-> IRI <c- p>;</c->             <c- c># Agent who sent the receipt</c->
-  <c- nn>interop:</c-><c- f>toAgent</c-> IRI <c- p>;</c->               <c- c># Recipient of the receipt</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedGroup</c-> @<c- g>&lt;#:AccessNeedGroupShape></c->+
+  <c- b>a</c-> <c- p>[</c-><c- nn>interop</c-><c- p>:</c-><c- f>AccessRequest</c-><c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>fromAgent</c-> IRI <c- p>;</c->             <c- c># Agent who sent the receipt</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>toAgent</c-> IRI <c- p>;</c->               <c- c># Recipient of the receipt</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> @<c- g>&lt;#:AccessNeedGroupShape></c->+
 <c- p>}</c->
 </pre>
    <figure id="fig-access-request">
@@ -3806,33 +3806,33 @@ validate an instance of the <a href="#classAccessRequest">AccessRequest</a> clas
 <pre class="highlight"><c- k>@prefix</c-> <c- nn>interop:</c-> <c- g>&lt;http://www.w3.org/ns/solid/interop#></c-> <c- p>.</c->
 <c- k>@prefix</c-> <c- nn>note:</c-> <c- g>&lt;http://shapetrees.pub/ns/note#></c-> <c- p>.</c->
 
-<c- g>&lt;></c-> <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessRequest</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>fromAgent</c-> https<c- p>:</c->//alice<c- p>.</c->pod<c- p>.</c->example/profile/id<c- c>#me ;</c->
-  <c- nn>interop:</c-><c- f>toAgent</c-> https<c- p>:</c->//bob<c- p>.</c->pod<c- p>.</c->example/profile/id<c- c>#me ;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#notebook-collaboration-group></c-> <c- p>.</c->
+<c- g>&lt;></c-> <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessRequest</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>fromAgent</c-> <c- nn>https</c-><c- p>:</c->//alice<c- p>.</c->pod<c- p>.</c->example/profile/id<c- c>#me ;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>toAgent</c-> <c- nn>https</c-><c- p>:</c->//bob<c- p>.</c->pod<c- p>.</c->example/profile/id<c- c>#me ;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#notebook-collaboration-group></c-> <c- p>.</c->
 
 <c- g>&lt;#need-group-photos></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessNeedGroup</c-> <c- p>;</c->    
-  <c- nn>interop:</c-><c- f>hasAccessDecoratorIndex</c-> photoapp-index <c- p>;</c->    
-  <c- nn>interop:</c-><c- f>accessNecessity</c-> <c- nn>interop:</c-><c- f>accessRequired</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessScenario</c-> <c- nn>interop:</c-><c- f>SharedAccess</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>authenticatesAs</c-> <c- nn>interop:</c-><c- f>Agent</c-> <c- p>;</c->    
-  <c- nn>interop:</c-><c- f>hasAccessNeed</c-> <c- g>&lt;#need-photo-album></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedGroup</c-> <c- p>;</c->    
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessDecoratorIndex</c-> photoapp-index <c- p>;</c->    
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessScenario</c-> <c- nn>interop</c-><c- p>:</c-><c- f>SharedAccess</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>authenticatesAs</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Agent</c-> <c- p>;</c->    
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeed</c-> <c- g>&lt;#need-photo-album></c-> <c- p>.</c->
 
 <c- g>&lt;#need-photo-album></c->
-    <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessNeed</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>inAccessNeedGroup</c-> <c- g>&lt;#need-group-photos></c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- nn>photo:</c-><c- f>PhotoAlbumTree</c-> <c- p>;</c->        
-    <c- nn>interop:</c-><c- f>accessNecessity</c-> <c- nn>interop:</c-><c- f>accessRequired</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>accessMode</c-> <c- nn>acl:</c-><c- f>read</c-> <c- p>;</c->    
-    <c- nn>interop:</c-><c- f>hasReferencedAccessNeed</c-> <c- g>&lt;#need-photo></c-> <c- p>.</c->
+    <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeed</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inAccessNeedGroup</c-> <c- g>&lt;#need-group-photos></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>photo</c-><c- p>:</c-><c- f>PhotoAlbumTree</c-> <c- p>;</c->        
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>read</c-> <c- p>;</c->    
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedAccessNeed</c-> <c- g>&lt;#need-photo></c-> <c- p>.</c->
 
 <c- g>&lt;#need-photo></c->
-    <c- b>a</c-> <c- nn>interop:</c-><c- f>ReferencedAccessNeed</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>inAccessNeedGroup</c-> <c- g>&lt;#need-group-photos></c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- nn>photo:</c-><c- f>PhotoTree</c-> <c- p>;</c->        
-    <c- nn>interop:</c-><c- f>accessNecessity</c-> <c- nn>interop:</c-><c- f>accessRequired</c-> <c- p>;</c->    
-    <c- nn>interop:</c-><c- f>accessMode</c-> <c- nn>acl:</c-><c- f>read</c-> <c- p>.</c->
+    <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedAccessNeed</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inAccessNeedGroup</c-> <c- g>&lt;#need-group-photos></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>photo</c-><c- p>:</c-><c- f>PhotoTree</c-> <c- p>;</c->        
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c->    
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>read</c-> <c- p>.</c->
 </pre>
    </figure>
    <h4 class="heading settled" data-level="7.2.6" id="needs-access-decorator-index"><span class="secno">7.2.6. </span><span class="content">Access Decorator Index</span><a class="self-link" href="#needs-access-decorator-index"></a></h4>
@@ -3861,9 +3861,9 @@ validate an instance of the <a href="#classAccessRequest">AccessRequest</a> clas
    <p>The <a href="#shexAccessDecoratorIndex">AccessDecoratorIndexShape</a> is used to
 validate an instance of the <a href="#classAccessDecoratorIndex">AccessDecoratorIndex</a> class.</p>
 <pre class="highlight" id="shexAccessDecoratorIndex"><c- g>&lt;#AccessDecoratorIndexShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessDecoratorIndex</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>defaultLanguage</c-> <c- nn>xsd:</c-><c- f>language</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasSeries</c-> @AccessDecoratorSeries+ <c- p>;</c->
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessDecoratorIndex</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>defaultLanguage</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>language</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasSeries</c-> @AccessDecoratorSeries+ <c- p>;</c->
 <c- p>}</c->
 </pre>
    <figure id="fig-access-need-decorator-index">
@@ -3872,26 +3872,26 @@ validate an instance of the <a href="#classAccessDecoratorIndex">AccessDecorator
 <c- k>@prefix</c-> <c- nn>xsd:</c-> <c- g>&lt;http://www.w3.org/2001/XMLSchema#></c-> <c- p>.</c->
 
 <c- g>&lt;></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessDecoratorIndex</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>defaultLanguage</c-> <c- s>"en"</c-><c- o>^^</c->xsd:language <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasSeries</c-> <c- g>&lt;#series-en></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessDecoratorIndex</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>defaultLanguage</c-> <c- s>"en"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>language</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasSeries</c-> <c- g>&lt;#series-en></c-> <c- p>.</c->
 
 <c- g>&lt;#series-en></c->
-    <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessDecoratorSeries</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>usesLanguage</c-> <c- s>"en"</c-><c- o>^^</c->xsd:language <c- p>;</c->
-    <c- nn>interop:</c-><c- f>hasVersion</c-> <c- g>&lt;#en-v10></c-><c- p>,</c-> <c- g>&lt;#en-v11></c-> <c- p>.</c->
+    <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessDecoratorSeries</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>usesLanguage</c-> <c- s>"en"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>language</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasVersion</c-> <c- g>&lt;#en-v10></c-><c- p>,</c-> <c- g>&lt;#en-v11></c-> <c- p>.</c->
 
 <c- g>&lt;#en-v10></c->
-    <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessDecoratorVersion</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>isVersion</c-> <c- s>"1.0.0"</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>hasSHA256</c-> <c- s>"98198123981273981273918273912738"</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>hasAccessDecoratorResource</c-> <c- g>&lt;notebook-decorator-en-1.0></c-> <c- p>.</c->
+    <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessDecoratorVersion</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>isVersion</c-> <c- s>"1.0.0"</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasSHA256</c-> <c- s>"98198123981273981273918273912738"</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessDecoratorResource</c-> <c- g>&lt;notebook-decorator-en-1.0></c-> <c- p>.</c->
 
 <c- g>&lt;#en-v11></c->
-    <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessDecoratorVersion</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>isVersion</c-> <c- s>"1.1.0"</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>hasSHA256</c-> <c- s>"12312312371273712731872371273712"</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>hasAccessDecoratorResource</c-> <c- g>&lt;notebook-decorator-en-1.1></c-> <c- p>.</c->
+    <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessDecoratorVersion</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>isVersion</c-> <c- s>"1.1.0"</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasSHA256</c-> <c- s>"12312312371273712731872371273712"</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessDecoratorResource</c-> <c- g>&lt;notebook-decorator-en-1.1></c-> <c- p>.</c->
 </pre>
    </figure>
    <h5 class="heading settled" data-level="7.2.6.1" id="needs-access-decorator-series"><span class="secno">7.2.6.1. </span><span class="content">Access Decorator Series</span><a class="self-link" href="#needs-access-decorator-series"></a></h5>
@@ -3921,9 +3921,9 @@ more <a data-link-type="dfn" href="#access-decorator-version" id="ref-for-access
    <p>The <a href="#shexAccessDecoratorSeries">AccessDecoratorSeriesShape</a> is used to
 validate an instance of the <a href="#classAccessDecoratorSeries">AccessDecoratorSeries</a> class.</p>
 <pre class="highlight" id="shexAccessDecoratorSeries"><c- g>&lt;#AccessDecoratorSeriesShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessDecoratorSeries</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>usesLanguage</c-> <c- nn>xsd:</c-><c- f>language</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasVersion</c-> @AccessDecoratorVersion+ <c- p>;</c->
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessDecoratorSeries</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>usesLanguage</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>language</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasVersion</c-> @AccessDecoratorVersion+ <c- p>;</c->
 <c- p>}</c->
 </pre>
    <h5 class="heading settled" data-level="7.2.6.2" id="needs-access-decorator-version"><span class="secno">7.2.6.2. </span><span class="content">Access Decorator Version</span><a class="self-link" href="#needs-access-decorator-version"></a></h5>
@@ -3957,10 +3957,10 @@ a given <a data-link-type="dfn" href="#access-decorator-resource" id="ref-for-ac
    <p>The <a href="#shexAccessDecoratorVersion">AccessDecoratorVersionShape</a> is used to
 validate an instance of the <a href="#classAccessDecoratorVersion">AccessDecoratorVersion</a> class.</p>
 <pre class="highlight" id="shexAccessDecoratorVersion"><c- g>&lt;#AccessDecoratorVersionShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessDecoratorVersion</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>isVersion</c-> <c- nn>xsd:</c-><c- f>string</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasSHA256</c-> <c- nn>xsd:</c-><c- f>string</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessDecoratorResource</c-> IRI <c- p>;</c->
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessDecoratorVersion</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>isVersion</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>string</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasSHA256</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>string</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessDecoratorResource</c-> IRI <c- p>;</c->
 <c- p>}</c->
 </pre>
    <h4 class="heading settled" data-level="7.2.7" id="needs-access-decorator-resource"><span class="secno">7.2.7. </span><span class="content">Access Decorator Resource</span><a class="self-link" href="#needs-access-decorator-resource"></a></h4>
@@ -4015,10 +4015,10 @@ more in depth description that explains why a given <a data-link-type="dfn" href
    <p>The <a href="#shexAccessNeedGroupDecorator">AccessNeedGroupDecoratorShape</a> is used to
 validate an instance of the <a href="#classAccessNeedGroupDecorator">AccessNeedGroupDecorator</a> class.</p>
 <pre class="highlight" id="shexAccessNeedGroupDecorator"><c- g>&lt;#AccessNeedGroupDecoratorShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessNeedGroupDecorator</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedGroup</c-> IRI <c- p>;</c->
-  <c- nn>skos:</c-><c- f>prefLabel</c-> <c- nn>xsd:</c-><c- f>string</c-> <c- p>;</c->
-  <c- nn>skos:</c-><c- f>definition</c-> <c- nn>xsd:</c-><c- f>string</c->
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedGroupDecorator</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> IRI <c- p>;</c->
+  <c- nn>skos</c-><c- p>:</c-><c- f>prefLabel</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>string</c-> <c- p>;</c->
+  <c- nn>skos</c-><c- p>:</c-><c- f>definition</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>string</c->
 <c- p>}</c->
 </pre>
    <h5 class="heading settled" data-level="7.2.7.2" id="needs-access-need-decorator"><span class="secno">7.2.7.2. </span><span class="content">Access Need Decorator</span><a class="self-link" href="#needs-access-need-decorator"></a></h5>
@@ -4053,10 +4053,10 @@ explanation of why that data type is being requested.</p>
    <p>The <a href="#shexAccessNeedDecorator">AccessNeedDecoratorShape</a> is used to
 validate an instance of the <a href="#classAccessNeedDecorator">AccessNeedDecorator</a> class.</p>
 <pre class="highlight" id="shexAccessNeedDecorator"><c- g>&lt;#AccessNeedDecoratorShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessNeedDecorator</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedGroup</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
-  <c- nn>skos:</c-><c- f>prefLabel</c-> <c- nn>xsd:</c-><c- f>string</c->
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedDecorator</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
+  <c- nn>skos</c-><c- p>:</c-><c- f>prefLabel</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>string</c->
 <c- p>}</c->
 </pre>
    <h3 class="heading settled" data-level="7.3" id="needs-operations"><span class="secno">7.3. </span><span class="content">Operations</span><a class="self-link" href="#needs-operations"></a></h3>
@@ -4253,8 +4253,8 @@ made up of <a data-link-type="dfn" href="#access-grant-registry" id="ref-for-acc
     <figcaption>An <a data-link-type="dfn" href="#access-grant-registry-set" id="ref-for-access-grant-registry-set③">Access Grant Registry Set</a> at
    https://alice.pod.example/profile/grant#set linking to two different <a data-link-type="dfn" href="#access-grant-registry" id="ref-for-access-grant-registry①⓪">Access Grant Registries</a></figcaption>
 <pre class="highlight"><c- g>&lt;#set></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessGrantRegistrySet</c-><c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistry</c-> <c- g>&lt;https://alice.pod.example/grants/#registry></c-> <c- p>,</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistrySet</c-><c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c-> <c- g>&lt;https://alice.pod.example/grants/#registry></c-> <c- p>,</c->
                   <c- g>&lt;https://alice.otherpod.example/grants/#registry></c-> <c- p>.</c->
 </pre>
    </figure>
@@ -4278,15 +4278,15 @@ made up of <a data-link-type="dfn" href="#access-grant-registry" id="ref-for-acc
    <p>The <a href="#shexAccessGrantRegistrySet">AccessGrantRegistrySetShape</a> is used to validate
 an instance of the <a href="#classAccessGrantRegistrySet">AccessGrantRegistrySet</a> class.</p>
 <pre class="highlight" id="shexAccessGrantRegistrySet"><c- g>&lt;#AccessGrantRegistrySetShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessGrantRegistrySet</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistry</c-> IRI+
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistrySet</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c-> IRI+
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#AccessGrantRegistrySetTree">AccessGrantRegistrySetTree</a> is assigned to a resource to ensure it will validate against the <a href="#shexAccessGrantRegistrySet">AccessGrantRegistrySetShape</a>.</p>
 <pre class="highlight" id="treeAccessGrantRegistrySet"><c- g>&lt;#AccessGrantRegistrySetTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessGrantRegistrySetShape></c-> <c- p>.</c->  
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessGrantRegistrySetShape></c-> <c- p>.</c->  
 </pre>
    <h4 class="heading settled" data-level="8.2.3" id="datamodel-access-registry"><span class="secno">8.2.3. </span><span class="content">Access Grant Registry</span><a class="self-link" href="#datamodel-access-registry"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-grant-registry">Access Grant Registry</dfn> is a collection of <a data-link-type="dfn" href="#access-grant" id="ref-for-access-grant③③">Access Grants</a> stored in a specific location in a <a data-link-type="dfn" href="#pod" id="ref-for-pod⑤">pod</a>.</p>
@@ -4294,8 +4294,8 @@ an instance of the <a href="#classAccessGrantRegistrySet">AccessGrantRegistrySet
     <figcaption>An <a data-link-type="dfn" href="#access-grant-registry" id="ref-for-access-grant-registry①②">Access Grant Registry</a> at https://alice.pod.example/grants/#registry
   linking to several registered <a data-link-type="dfn" href="#access-grant" id="ref-for-access-grant③④">Access Grants</a> or <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation⑦">Access Invitations</a></figcaption>
 <pre class="highlight"><c- g>&lt;#registry></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessGrantRegistry</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistration</c-> 
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistry</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c-> 
     <c- g>&lt;ab3d0023-3860-4358-ae33-8d3af1097b9d#grant></c-> <c- p>,</c->
     <c- g>&lt;ad7b935f-ced9-4ce6-835f-5c6abc046228#grant></c-> <c- p>,</c->
     <c- g>&lt;5ed73c65-ce77-4c8a-8f7e-9715b90307e6#grant></c-> <c- p>,</c->
@@ -4322,20 +4322,20 @@ an instance of the <a href="#classAccessGrantRegistrySet">AccessGrantRegistrySet
    <p>The <a href="#shexAccessGrantRegistry">AccessGrantRegistryShape</a> is used to validate an
 instance of the <a href="#classAccessGrantRegistry">AccessGrantRegistry</a> class.</p>
 <pre class="highlight" id="shexAccessGrantRegistry"><c- g>&lt;#AccessGrantRegistryShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessGrantRegistry</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistration</c-> IRI*
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistry</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c-> IRI*
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#AccessGrantRegistryTree">AccessGrantRegistryTree</a> is assigned
 to a container resource to ensure that it will validate against the <a href="#shexAccessGrantRegistry">AccessGrantRegistryShape</a>, and contain only
 conformant instances of the <a href="#treeAccessGrant">AccessGrantTree</a> and <a href="#treeAccessInvitation">AccessInvitationTree</a>.</p>
 <pre class="highlight" id="treeAccessGrantRegistry"><c- g>&lt;#AccessGrantRegistryTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessGrantRegistryShape></c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>contains</c-> <c- g>&lt;#AccessGrantTree></c-> <c- p>,</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessGrantRegistryShape></c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>contains</c-> <c- g>&lt;#AccessGrantTree></c-> <c- p>,</c->
               <c- g>&lt;#AccessInvitationTree></c-> <c- p>,</c->
-              <c- nn>st:</c-><c- f>AllowNone</c-> <c- p>.</c->
+              <c- nn>st</c-><c- p>:</c-><c- f>AllowNone</c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.4" id="datamodel-access-grant"><span class="secno">8.2.4. </span><span class="content">Access Grant</span><a class="self-link" href="#datamodel-access-grant"></a></h4>
    <p>Each <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-grant">Access Grant</dfn> represents access granted to an <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject④">Access Grant Subject</a>, based on access criteria detailed in one or more <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group⑤⑤">Access Need Groups</a>.</p>
@@ -4346,15 +4346,15 @@ conformant instances of the <a href="#treeAccessGrant">AccessGrantTree</a> and <
     <figcaption>An <a data-link-type="dfn" href="#access-grant" id="ref-for-access-grant③⑥">Access Grant</a> at
   https://alice.pod.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d#grant </figcaption>
 <pre class="highlight"><c- g>&lt;#grant></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessGrant</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> <c- g>&lt;https://trusted.example/id#agent></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessGrantSubject</c-> <c- g>&lt;#grant-subject></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->    
-  <c- nn>interop:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRemoteDataGrant</c-> <c- g>&lt;#remote-data-grant-project></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrant</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://trusted.example/id#agent></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-> <c- g>&lt;#grant-subject></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->    
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataGrant</c-> <c- g>&lt;#remote-data-grant-project></c-> <c- p>.</c->
 </pre>
    </figure>
    <table align="left" class="classinfo data" id="classAccessGrant">
@@ -4409,25 +4409,25 @@ conformant instances of the <a href="#treeAccessGrant">AccessGrantTree</a> and <
    <p>The <a href="#shexAccessGrant">AccessGrantShape</a> is used to validate an instance
 of the <a href="#classAccessGrant">AccessGrant</a> class.</p>
 <pre class="highlight" id="shexAccessGrant"><c- g>&lt;#AccessGrantShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessGrant</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> IRI? <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessGrantSubject</c-> @<c- g>&lt;#:AccessGrantSubject></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedGroup</c-> @<c- g>&lt;#:AccessNeedGroupShape></c->+ <c- p>;</c->
-  <c- p>(</c-> <c- nn>interop:</c-><c- f>hasDataGrant</c-> @<c- g>&lt;#:DataGrantShape></c->+ |
-  <c- nn>interop:</c-><c- f>hasTrustedGrant</c-> @<c- g>&lt;#:TrustedGrantShape></c->+ | 
-  <c- nn>interop:</c-><c- f>hasRemoteDataGrant</c-> @<c- g>&lt;#:RemoteDataGrantShape></c->+ <c- p>)</c-> <c- p>;</c->
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrant</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> IRI? <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-> @<c- g>&lt;#:AccessGrantSubject></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> @<c- g>&lt;#:AccessNeedGroupShape></c->+ <c- p>;</c->
+  <c- p>(</c-> <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> @<c- g>&lt;#:DataGrantShape></c->+ |
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasTrustedGrant</c-> @<c- g>&lt;#:TrustedGrantShape></c->+ | 
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataGrant</c-> @<c- g>&lt;#:RemoteDataGrantShape></c->+ <c- p>)</c-> <c- p>;</c->
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#AccessGrantTree">AccessGrantTree</a> is assigned to a
 resource via the <a href="#treeAccessGrantRegistry">AccessGrantRegistryTree</a>, and ensure
 that the assigned resource will validate against the <a href="#shexAccessGrant">AccessGrantShape</a>.</p>
 <pre class="highlight" id="treeAccessGrant"><c- g>&lt;#AccessGrantTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessGrantShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessGrantShape></c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.5" id="datamodel-access-grant-subject"><span class="secno">8.2.5. </span><span class="content">Access Grant Subject</span><a class="self-link" href="#datamodel-access-grant-subject"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-grant-subject">Access Grant Subject</dfn> represents a unique combination of
@@ -4436,9 +4436,9 @@ who and what is being granted access. For example, it allows a single <a data-li
     <figcaption>An <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject⑥">Access Grant Subject</a> at
   https://alice.pod.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d#grant-subject </figcaption>
 <pre class="highlight"><c- g>&lt;#grant-subject></c->
-    <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>accessByAgent</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>accessByApplication</c-> <c- g>&lt;https://acmeproject.example/profile/id#application></c-> <c- p>.</c->
+    <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessByApplication</c-> <c- g>&lt;https://acmeproject.example/profile/id#application></c-> <c- p>.</c->
 </pre>
    </figure>
    <table align="left" class="classinfo data" id="classAccessGrantSubject">
@@ -4465,9 +4465,9 @@ who and what is being granted access. For example, it allows a single <a data-li
    <p>The <a href="#shexAccessGrantSubject">AccessGrantSubjectShape</a> is used to validate
 an instance of the <a href="#classAccessGrantSubject">AccessGrantSubject</a> class.</p>
 <pre class="highlight" id="shexAccessGrantSubject"><c- g>&lt;#AccessGrantSubjectShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessGrantSubject</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessGrantSubjectAgent</c-> IRI? <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessGrantSubjectApplication</c-> IRI?
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessGrantSubjectAgent</c-> IRI? <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessGrantSubjectApplication</c-> IRI?
 <c- p>}</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.6" id="datamodel-data-grant"><span class="secno">8.2.6. </span><span class="content">Data Grant</span><a class="self-link" href="#datamodel-data-grant"></a></h4>
@@ -4527,16 +4527,16 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
     <figcaption>An <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant①⑦">Data Grant</a> at
   https://alice.pod.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d#data-grant-project </figcaption>
 <pre class="highlight"><c- g>&lt;#data-grant-project></c->
-    <c- b>a</c-> <c- nn>interop:</c-><c- f>DataGrant</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>hasAccessGrant</c-> <c- g>&lt;#grant></c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>satisfiesAccessNeed</c-> <c- g>&lt;#need-project></c-> <c- p>;</c->    
-    <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- nn>pm:</c-><c- f>ProjectTree</c-> <c- p>;</c->        
-    <c- nn>interop:</c-><c- f>hasDataRegistration</c-> <c- nn>data:</c-><c- f>project-tree-reg</c-> <c- p>;</c->
-    <c- nn>interop:</c-><c- f>accessMode</c-> <c- nn>acl:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl:</c-><c- f>write</c-><c- p>,</c-> <c- nn>acl:</c-><c- f>Control</c-> <c- p>;</c->
+    <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrant</c-> <c- g>&lt;#grant></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- g>&lt;#need-project></c-> <c- p>;</c->    
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c->        
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>data</c-><c- p>:</c-><c- f>project-tree-reg</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>write</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Control</c-> <c- p>;</c->
     <c- c># Scope grants access to all instances in the project</c->
     <c- c># data registration, now and in the future, with no conditions</c->
-    <c- nn>interop:</c-><c- f>scopeOfGrant</c-> <c- nn>interop:</c-><c- f>AllInstances</c-> <c- p>;</c->    
-    <c- nn>interop:</c-><c- f>hasReferencedDataGrant</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>;</c->    
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c->
         <c- g>&lt;#data-grant-issue></c-> <c- p>,</c->  
         <c- g>&lt;#data-grant-task></c-> <c- p>,</c-> 
         <c- g>&lt;#data-grant-release></c-> <c- p>,</c->
@@ -4604,23 +4604,23 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
    <p>The <a href="#shexDataGrant">DataGrantShape</a> is used to
 validate an instance of the <a href="#classDataGrant">DataGrant</a> class.</p>
 <pre class="highlight" id="shexDataGrant"><c- g>&lt;#DataGrantShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>DataGrant</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessGrant</c-> @<c- g>&lt;#:AccessGrantShape></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>satisfiesAccessNeed</c-> @<c- g>&lt;#:AccessNeedShape></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataRegistration</c-> IRI <c- p>;</c->  
-  <c- nn>interop:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:DataGrantScopes></c-> <c- p>;</c->  
-  <c- nn>interop:</c-><c- f>hasDataInstance</c-> IRI* <c- p>;</c->  
-  <c- nn>interop:</c-><c- f>hasReferencedDataGrant</c-> @<c- g>&lt;#:ReferencedDataGrantShape></c-> 
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrant</c-> @<c- g>&lt;#:AccessGrantShape></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> @<c- g>&lt;#:AccessNeedShape></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> IRI <c- p>;</c->  
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:DataGrantScopes></c-> <c- p>;</c->  
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataInstance</c-> IRI* <c- p>;</c->  
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> @<c- g>&lt;#:ReferencedDataGrantShape></c-> 
 <c- p>}</c->
 </pre>
    <p>The [DataGrantTree] ensures
 that the assigned resource will validate against the <a href="#shexDataGrant">DataGrantShape</a>.</p>
 <pre class="highlight" id="treeDataGrant"><c- g>&lt;#DataGrantTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops:DataGrantShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops:DataGrantShape></c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.7" id="datamodel-referenced-data-grant"><span class="secno">8.2.7. </span><span class="content">Referenced Data Grant</span><a class="self-link" href="#datamodel-referenced-data-grant"></a></h4>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="referenced-data-grant">Referenced Data Grant</dfn> is linked from a <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant②②">Data Grant</a>, and
@@ -4696,13 +4696,13 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
     <figcaption>An <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant①⑦">Referenced Data Grant</a> at
   https://alice.pod.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d#data-grant-issue </figcaption>
 <pre class="highlight"><c- g>&lt;#data-grant-issue></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>ReferencedDataGrant</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>satisfiesAccessNeed</c-> <c- g>&lt;#need-issue></c-> <c- p>;</c->        
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- nn>pm:</c-><c- f>IssueTree</c-> <c- p>;</c->    
-  <c- nn>interop:</c-><c- f>hasDataRegistration</c-> <c- nn>data:</c-><c- f>issue-tree-reg</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessMode</c-> <c- nn>acl:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl:</c-><c- f>write</c-><c- p>,</c-> <c- nn>acl:</c-><c- f>Control</c-> <c- p>;</c->    
-  <c- nn>interop:</c-><c- f>scopeOfGrant</c-> <c- nn>interop:</c-><c- f>AllInstances</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedDataGrant</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- g>&lt;#need-issue></c-> <c- p>;</c->        
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm</c-><c- p>:</c-><c- f>IssueTree</c-> <c- p>;</c->    
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>data</c-><c- p>:</c-><c- f>issue-tree-reg</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>write</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Control</c-> <c- p>;</c->    
+  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>.</c->
 </pre>
    </figure>
    <table align="left" class="classinfo data" id="classReferencedDataGrant">
@@ -4763,22 +4763,22 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
    <p>The <a href="#shexReferencedDataGrant">ReferencedDataGrantShape</a> is used to
 validate an instance of the <a href="#classReferencedDataGrant">ReferencedDataGrant</a> class.</p>
 <pre class="highlight" id="shexReferencedDataGrant"><c- g>&lt;#ReferencedDataGrantShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>ReferencedDataGrant</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataGrant</c-> @<c- g>&lt;#:DataGrantShape></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>satisfiesAccessNeed</c-> @<c- g>&lt;#:AccessNeedShape></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataRegistration</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:DataGrantScopes></c-> <c- p>;</c->  
-  <c- nn>interop:</c-><c- f>hasDataInstance</c-> IRI*
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedDataGrant</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> @<c- g>&lt;#:DataGrantShape></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> @<c- g>&lt;#:AccessNeedShape></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:DataGrantScopes></c-> <c- p>;</c->  
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataInstance</c-> IRI*
 <c- p>}</c->
 </pre>
    <p>The [ReferencedDataGrantTree] ensures
 that the assigned resource will validate against the <a href="#shexReferencedDataGrant">ReferencedDataGrantShape</a>.</p>
 <pre class="highlight" id="treeReferencedDataGrant"><c- g>&lt;#ReferencedDataGrantTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops:ReferencedDataGrantShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops:ReferencedDataGrantShape></c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.8" id="datamodel-remote-data-grant"><span class="secno">8.2.8. </span><span class="content">Remote Data Grant</span><a class="self-link" href="#datamodel-remote-data-grant"></a></h4>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="remote-data-grant">Remote Data Grant</dfn> records an authorization decision made by
@@ -4919,17 +4919,17 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
    <p>The <a href="#shexRemoteDataGrant">RemoteDataGrantShape</a> is used to validate an
 instance of the <a href="#classRemoteDataGrant">RemoteDataGrant</a> class.</p>
 <pre class="highlight" id="shexRemoteDataGrant"><c- g>&lt;#RemoteDataGrantShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>RemoteDataGrant</c-> <c- p>]</c-> <c- p>;</c->  
-  <c- nn>interop:</c-><c- f>hasAccessGrant</c-> @<c- g>&lt;#:AccessGrantShape></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>satisfiesAccessNeed</c-> @<c- g>&lt;#:AccessNeedShape></c->+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRemoteDataRegistration</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:RemoteDataGrantScopes></c->+ <c- p>;</c->    
-  <c- nn>interop:</c-><c- f>hasRemoteDataFromAgent</c-> IRI* <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataGrant</c-> IRI* <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasReferencedDataGrant</c-> IRI* <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasReferencedRemoteDataGrant</c-> @<c- g>&lt;#:ReferencedRemoteDataGrantShape></c-> 
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>]</c-> <c- p>;</c->  
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrant</c-> @<c- g>&lt;#:AccessGrantShape></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> @<c- g>&lt;#:AccessNeedShape></c->+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataRegistration</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:RemoteDataGrantScopes></c->+ <c- p>;</c->    
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataFromAgent</c-> IRI* <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> IRI* <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> IRI* <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedRemoteDataGrant</c-> @<c- g>&lt;#:ReferencedRemoteDataGrantShape></c-> 
 <c- p>}</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.9" id="datamodel-referenced-remote-data-grant"><span class="secno">8.2.9. </span><span class="content">Referenced Remote Data Grant</span><a class="self-link" href="#datamodel-referenced-remote-data-grant"></a></h4>
@@ -5065,16 +5065,16 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
    <p>The <a href="#shexReferencedRemoteDataGrant">ReferencedRemoteDataGrantShape</a> is used
 to validate an instance of the <a href="#classRemoteDataGrant">ReferencedRemoteDataGrant</a> class.</p>
 <pre class="highlight" id="shexReferencedRemoteDataGrant"><c- g>&lt;#ReferencedRemoteDataGrantShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>ReferencedRemoteDataGrant</c-> <c- p>]</c-> <c- p>;</c->  
-  <c- nn>interop:</c-><c- f>hasRemoteDataGrant</c-> @<c- g>&lt;#:RemoteDataGrantShape></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>satisfiesAccessNeed</c-> @<c- g>&lt;#:AccessNeedShape></c->+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRemoteDataRegistration</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:RemoteDataGrantScopes></c->+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRemoteDataFromAgent</c-> IRI* <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataGrant</c-> IRI* <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasReferencedDataGrant</c-> IRI* 
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedRemoteDataGrant</c-> <c- p>]</c-> <c- p>;</c->  
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataGrant</c-> @<c- g>&lt;#:RemoteDataGrantShape></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> @<c- g>&lt;#:AccessNeedShape></c->+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataRegistration</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:RemoteDataGrantScopes></c->+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataFromAgent</c-> IRI* <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> IRI* <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> IRI* 
 <c- p>}</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.10" id="datamodel-trusted-grant"><span class="secno">8.2.10. </span><span class="content">Trusted Grant</span><a class="self-link" href="#datamodel-trusted-grant"></a></h4>
@@ -5162,13 +5162,13 @@ nor to the <a data-link-type="dfn" href="#registry" id="ref-for-registry①⑧">
    <p>The <a href="#shexTrustedGrant">TrustedGrantShape</a> is used to
 validate an instance of the <a href="#classTrustedGrant">TrustedGrant</a> class.</p>
 <pre class="highlight" id="shexTrustedGrant"><c- g>&lt;#TrustedGrantShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>TrustedGrant</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessGrant</c-> @<c- g>&lt;#:AccessGrantShape></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>satisfiesTrustedNeed</c-> @<c- g>&lt;#:TrustedNeedShape></c->+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>trustedWith</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>trustedWithType</c-> @<c- g>&lt;#:TrustedWithTypes></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
-  <c- nn>interop:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:TrustedGrantScopes></c->+ 
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>TrustedGrant</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrant</c-> @<c- g>&lt;#:AccessGrantShape></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesTrustedNeed</c-> @<c- g>&lt;#:TrustedNeedShape></c->+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>trustedWith</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>trustedWithType</c-> @<c- g>&lt;#:TrustedWithTypes></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:TrustedGrantScopes></c->+ 
 <c- p>}</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.11" id="datamodel-access-invitation"><span class="secno">8.2.11. </span><span class="content">Access Invitation</span><a class="self-link" href="#datamodel-access-invitation"></a></h4>
@@ -5189,15 +5189,15 @@ converted to an <a data-link-type="dfn" href="#access-grant" id="ref-for-access-
     <figcaption>An <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation①⓪">Access Invitation</a> at
   https://alice.pod.example/grants/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f#invitation </figcaption>
 <pre class="highlight"><c- g>&lt;#invitation></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessInvitation</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> https<c- p>:</c->//alice<c- p>.</c->pod<c- p>.</c->example/profile/id<c- c>#me ;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> https<c- p>:</c->//trusted<c- p>.</c->example/id<c- c>#agent ;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2020-09-13T19:32:52Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- s>"2020-09-13T19:32:52Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>expiresAt</c-> <c- s>"2020-09-20T19:32:52Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessInvitationChannel</c-> 
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessInvitation</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- nn>https</c-><c- p>:</c->//alice<c- p>.</c->pod<c- p>.</c->example/profile/id<c- c>#me ;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- nn>https</c-><c- p>:</c->//trusted<c- p>.</c->example/id<c- c>#agent ;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-13T19:32:52Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-13T19:32:52Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>expiresAt</c-> <c- s>"2020-09-20T19:32:52Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessInvitationChannel</c-> 
     <c- g>&lt;#phone-channel></c-> <c- p>,</c-> 
     <c- g>&lt;#email-channel></c-> <c- p>.</c->
 </pre>
@@ -5259,26 +5259,26 @@ converted to an <a data-link-type="dfn" href="#access-grant" id="ref-for-access-
    <p>The <a href="#shexAccessInvitation">AccessInvitationShape</a> is used to validate an
 instance of the <a href="#classAccessInvitation">AccessInvitation</a> class.</p>
 <pre class="highlight" id="shexAccessInvitation"><c- g>&lt;#AccessInvitationShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessInvitation</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> IRI? <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>expiresAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c->? <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedGroup</c-> @<c- g>&lt;#:AccessNeedGroupShape></c->+ <c- p>;</c->
-  <c- p>(</c-> <c- nn>interop:</c-><c- f>hasDataGrant</c-> @<c- g>&lt;#:DataGrantShape></c->+ |
-  <c- nn>interop:</c-><c- f>hasTrustedGrant</c-> @<c- g>&lt;#:TrustedGrantShape></c->+ |
-  <c- nn>interop:</c-><c- f>hasRemoteDataGrant</c-> @<c- g>&lt;#:RemoteDataGrantShape></c->+ <c- p>)</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessInvitationChannel</c-> @<c- g>&lt;#:AccessInvitationChannelShape></c->+
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessInvitation</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> IRI? <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>expiresAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c->? <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> @<c- g>&lt;#:AccessNeedGroupShape></c->+ <c- p>;</c->
+  <c- p>(</c-> <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> @<c- g>&lt;#:DataGrantShape></c->+ |
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasTrustedGrant</c-> @<c- g>&lt;#:TrustedGrantShape></c->+ |
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataGrant</c-> @<c- g>&lt;#:RemoteDataGrantShape></c->+ <c- p>)</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessInvitationChannel</c-> @<c- g>&lt;#:AccessInvitationChannelShape></c->+
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#AccessInvitationTree">AccessInvitationTree</a> is assigned
 to a resource via the <a href="#treeAccessGrantRegistry">AccessGrantRegistryTree</a>, and ensures
 that the assigned resource will validate against the <a href="#shexAccessInvitation">AccessInvitationShape</a>.</p>
 <pre class="highlight" id="treeAccessInvitation"><c- g>&lt;#AccessInvitationTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessInvitationShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessInvitationShape></c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.12" id="datamodel-access-invitation-channel"><span class="secno">8.2.12. </span><span class="content">Access Invitation Channel</span><a class="self-link" href="#datamodel-access-invitation-channel"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-invitation-channel">Access Invitation Channel</dfn> represents a mechanism through
@@ -5286,18 +5286,18 @@ which an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-in
    <figure id="fig-grants-invitation-channel">
     <figcaption>Example <a data-link-type="dfn" href="#access-invitation-channel" id="ref-for-access-invitation-channel⑧">Access Invitation Channels</a></figcaption>
 <pre class="highlight"><c- g>&lt;#phone-channel></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>PhoneInvitationChannel</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>channelTarget</c-> <c- s>"(555) 555-1212"</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>channelCode</c-> <c- s>"654345"</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>isValidated</c-> <c- l>false</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>remainingAttempts</c-> <c- mi>3</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>PhoneInvitationChannel</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>channelTarget</c-> <c- s>"(555) 555-1212"</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>channelCode</c-> <c- s>"654345"</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>isValidated</c-> <c- l>false</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>remainingAttempts</c-> <c- mi>3</c-> <c- p>.</c->
 
 <c- g>&lt;#email-channel></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>EmailInvitationChannel</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>channelTarget</c-> <c- s>"bob@example.com"</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>channelCode</c-> <c- s>"434567"</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>isValidated</c-> <c- l>true</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>remainingAttempts</c-> <c- mi>3</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>EmailInvitationChannel</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>channelTarget</c-> <c- s>"bob@example.com"</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>channelCode</c-> <c- s>"434567"</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>isValidated</c-> <c- l>true</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>remainingAttempts</c-> <c- mi>3</c-> <c- p>.</c->
 </pre>
    </figure>
    <table align="left" class="classinfo data" id="classAccessInvitationChannel">
@@ -5342,18 +5342,18 @@ which an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-in
 validate an instance of the <a href="#classAccessInvitation">AccessInvitationChannel</a> class.</p>
 <pre class="highlight" id="shexAccessInvitationChannel"><c- g>&lt;#AccessInvitationChannelShape></c-> <c- p>{</c->
    <c- b>a</c-> @<c- g>&lt;#ChannelTypes></c-> <c- p>;</c->
-   <c- nn>interop:</c-><c- f>channelTarget</c-> <c- nn>xsd:</c-><c- f>string</c-> <c- p>;</c->
-   <c- nn>interop:</c-><c- f>channelCode</c-> <c- nn>xsd:</c-><c- f>string</c-> <c- p>;</c->
-   <c- nn>interop:</c-><c- f>isValidated</c-> <c- nn>xsd:</c-><c- f>boolean</c-> <c- p>;</c->
-   <c- nn>interop:</c-><c- f>remainingAttempts</c-> <c- nn>xsd:</c-><c- f>integer</c->
+   <c- nn>interop</c-><c- p>:</c-><c- f>channelTarget</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>string</c-> <c- p>;</c->
+   <c- nn>interop</c-><c- p>:</c-><c- f>channelCode</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>string</c-> <c- p>;</c->
+   <c- nn>interop</c-><c- p>:</c-><c- f>isValidated</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>boolean</c-> <c- p>;</c->
+   <c- nn>interop</c-><c- p>:</c-><c- f>remainingAttempts</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>integer</c->
 <c- p>}</c->
 
 <c- g>&lt;#ChannelTypes></c-> <c- p>[</c->
-  <c- nn>:</c-><c- f>PhoneInvitationChannel</c->   <c- c># Telephone</c->
-  <c- nn>:</c-><c- f>EmailInvitationChannel</c->   <c- c># E-mail</c->
-  <c- nn>:</c-><c- f>SMSInvitationChannel</c->     <c- c># SMS (Simple Messaging Service)</c->
-  <c- nn>:</c-><c- f>OfflineInvitationChannel</c-> <c- c># Other communication, e.g. verbal, shared note</c->
-  <c- nn>:</c-><c- f>LDNInvitationChannel</c->     <c- c># Linked Data Notification</c->
+  <c- p>:</c-><c- f>PhoneInvitationChannel</c->   <c- c># Telephone</c->
+  <c- p>:</c-><c- f>EmailInvitationChannel</c->   <c- c># E-mail</c->
+  <c- p>:</c-><c- f>SMSInvitationChannel</c->     <c- c># SMS (Simple Messaging Service)</c->
+  <c- p>:</c-><c- f>OfflineInvitationChannel</c-> <c- c># Other communication, e.g. verbal, shared note</c->
+  <c- p>:</c-><c- f>LDNInvitationChannel</c->     <c- c># Linked Data Notification</c->
 <c- p>]</c->
 </pre>
    <h3 class="heading settled" data-level="8.3" id="grants-hierarchy"><span class="secno">8.3. </span><span class="content">Resource Hierarchy</span><a class="self-link" href="#grants-hierarchy"></a></h3>
@@ -7420,8 +7420,8 @@ made up of <a data-link-type="dfn" href="#access-receipt-registry" id="ref-for-a
     <figcaption>An <a data-link-type="dfn" href="#access-receipt-registry-set" id="ref-for-access-receipt-registry-set①">Access Receipt Registry Set</a> at
    https://bob.pod.example/profile/receipt#set linking to two different <a data-link-type="dfn" href="#access-receipt-registry" id="ref-for-access-receipt-registry④">Access Receipt Registries</a></figcaption>
 <pre class="highlight"><c- g>&lt;#set></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessReceiptRegistrySet</c-><c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistry</c-> 
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessReceiptRegistrySet</c-><c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c-> 
     <c- g>&lt;https://bob.pod.example/receipts/#registry></c-> <c- p>,</c->
     <c- g>&lt;https://bob.otherpod.example/receipts/#registry></c-> <c- p>.</c->
 </pre>
@@ -7446,15 +7446,15 @@ made up of <a data-link-type="dfn" href="#access-receipt-registry" id="ref-for-a
    <p>The <a href="#shexAccessReceiptRegistrySet">AccessReceiptRegistrySetShape</a> is used to
 validate an instance of the <a href="#classAccessReceiptRegistrySet">AccessReceiptRegistrySet</a> class.</p>
 <pre class="highlight" id="shexAccessReceiptRegistrySet"><c- g>&lt;#AccessReceiptRegistrySetShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessReceiptRegistrySet</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistry</c-> IRI+
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessReceiptRegistrySet</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c-> IRI+
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#AccessReceiptRegistrySetTree">AccessReceiptRegistrySetTree</a> is assigned to a resource to ensure it will validate against the <a href="#shexAccessReceiptRegistrySet">AccessReceiptRegistrySetShape</a>.</p>
 <pre class="highlight" id="treeAccessReceiptRegistrySet"><c- g>&lt;#AccessReceiptRegistrySetTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessReceiptRegistrySetShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessReceiptRegistrySetShape></c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="9.2.2" id="datamodel-access-receipt-registry"><span class="secno">9.2.2. </span><span class="content">Access Receipt Registry</span><a class="self-link" href="#datamodel-access-receipt-registry"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-receipt-registry">Access Receipt Registry</dfn> is a collection of <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt③⑧">Access Receipts</a> stored in a specific location in a <a data-link-type="dfn" href="#pod" id="ref-for-pod⑦">pod</a>.</p>
@@ -7463,8 +7463,8 @@ validate an instance of the <a href="#classAccessReceiptRegistrySet">AccessRecei
   https://bob.pod.example/receipts/#registry
   linking to several registered <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt③⑨">Access Receipts</a> </figcaption>
 <pre class="highlight"><c- g>&lt;#registry></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessReceiptRegistry</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistration</c-> 
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessReceiptRegistry</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c-> 
     <c- g>&lt;fa6d6553-0308-4abd-bce6-888df653695a#receipt></c-> <c- p>,</c->
     <c- g>&lt;d49eae8c-e138-4153-86ed-63832deadc6b#receipt></c-> <c- p>,</c->
     <c- g>&lt;506a0cee-1dc9-4720-a768-294aa0284502#receipt></c-> <c- p>.</c->
@@ -7490,18 +7490,18 @@ validate an instance of the <a href="#classAccessReceiptRegistrySet">AccessRecei
    <p>The <a href="#shexAccessReceiptRegistry">AccessReceiptRegistryShape</a> is used to
 validate an instance of the <a href="#classAccessReceiptRegistry">AccessReceiptRegistry</a> class.</p>
 <pre class="highlight" id="shexAccessReceiptRegistry"><c- g>&lt;#AccessReceiptRegistryShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>AccessReceiptRegistry</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistration</c-> IRI*
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessReceiptRegistry</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c-> IRI*
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#AccessReceiptRegistryTree">AccessReceiptRegistryTree</a> is assigned to a container resource to ensure that it will validate against the <a href="#shexAccessReceiptRegistry">AccessReceiptRegistryShape</a>, and contain only
 conformant instances of the <a href="#treeAccessReceipt">AccessReceiptTree</a>.</p>
 <pre class="highlight" id="treeAccessReceiptRegistry"><c- g>&lt;#AccessReceiptRegistryTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessReceiptRegistryShape></c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>contains</c-> <c- g>&lt;#AccessReceiptTree></c-> <c- p>,</c->
-              <c- nn>st:</c-><c- f>AllowNone</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessReceiptRegistryShape></c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>contains</c-> <c- g>&lt;#AccessReceiptTree></c-> <c- p>,</c->
+              <c- nn>st</c-><c- p>:</c-><c- f>AllowNone</c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="9.2.3" id="datamodel-access-receipt"><span class="secno">9.2.3. </span><span class="content">Access Receipt</span><a class="self-link" href="#datamodel-access-receipt"></a></h4>
    <p>An <a data-link-type="dfn" href="#agent" id="ref-for-agent①⑤⑨">Agent</a> provides an <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-receipt">Access Receipt</dfn> to another <a data-link-type="dfn" href="#agent" id="ref-for-agent①⑥⓪">Agent</a> or <a data-link-type="dfn" href="#application" id="ref-for-application①⓪④">Application</a> after granting them access to some scope of data as the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject⑤④">Access Grant Subject</a> of an <a data-link-type="dfn" href="#access-grant" id="ref-for-access-grant①⓪⑤">Access Grant</a>.</p>
@@ -7514,17 +7514,17 @@ of access granted.</p>
     <figcaption>An <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt④②">Access Receipt</a> at
   https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#receipt </figcaption>
 <pre class="highlight"><c- g>&lt;#receipt></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>AccessReceipt</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> https<c- p>:</c->//bob<c- p>.</c->pod<c- p>.</c->example/profile/id<c- c>#me ;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> https<c- p>:</c->//trusted<c- p>.</c->example/id<c- c>#agent ;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>fromAgent</c-> https<c- p>:</c->//alice<c- p>.</c->pod<c- p>.</c->example/profile/id<c- c>#me ;</c->
-  <c- nn>interop:</c-><c- f>viaAgent</c-> https<c- p>:</c->//alice<c- p>.</c->pod<c- p>.</c->example/profile/id<c- c>#me ;</c->
-  <c- nn>interop:</c-><c- f>hasAccessGrantSubject</c-> <c- g>&lt;#grant-subject></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessReceipt</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- nn>https</c-><c- p>:</c->//bob<c- p>.</c->pod<c- p>.</c->example/profile/id<c- c>#me ;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- nn>https</c-><c- p>:</c->//trusted<c- p>.</c->example/id<c- c>#agent ;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>fromAgent</c-> <c- nn>https</c-><c- p>:</c->//alice<c- p>.</c->pod<c- p>.</c->example/profile/id<c- c>#me ;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>viaAgent</c-> <c- nn>https</c-><c- p>:</c->//alice<c- p>.</c->pod<c- p>.</c->example/profile/id<c- c>#me ;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-> <c- g>&lt;#grant-subject></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>.</c->
 </pre>
    </figure>
    <table align="left" class="classinfo data" id="classAccessReceipt">
@@ -7593,28 +7593,28 @@ of access granted.</p>
    <p>The <a href="#shexAccessReceipt">AccessReceiptShape</a> is used to validate an instance
 of the <a href="#classAccessReceipt">AccessReceipt</a> class.</p>
 <pre class="highlight" id="shexAccessReceipt"><c- g>&lt;#AccessReceiptShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-><c- nn>interop:</c-><c- f>AccessReceipt</c-><c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> IRI? <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>providedAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>fromAgent</c-> IRI <c- p>;</c->             <c- c># Agent who sent the receipt</c->
-  <c- nn>interop:</c-><c- f>viaAgent</c-> IRI <c- p>;</c->             <c- c># Trusted agent on behalf of fromAgent</c->
-  <c- nn>interop:</c-><c- f>hasAccessGrantSubject</c-> @<c- g>&lt;#:AccessGrantSubject></c-> <c- p>;</c->  <c- c># Subject / recipient</c->
-  <c- nn>interop:</c-><c- f>hasAccessNeedGroup</c-> @<c- g>&lt;#:AccessNeedGroupShape></c->+ <c- p>;</c->
-  <c- p>(</c-> <c- nn>interop:</c-><c- f>hasDataGrant</c-> @<c- g>&lt;#:DataGrantShape></c->+ |
-  <c- nn>interop:</c-><c- f>hasTrustedGrant</c-> @<c- g>&lt;#:TrustedGrantShape></c->+ | 
-  <c- nn>interop:</c-><c- f>hasRemoteDataGrant</c-> @<c- g>&lt;#:RemoteDataGrantShape></c->+ <c- p>)</c-> <c- p>;</c->
+  <c- b>a</c-> <c- p>[</c-><c- nn>interop</c-><c- p>:</c-><c- f>AccessReceipt</c-><c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> IRI? <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>fromAgent</c-> IRI <c- p>;</c->             <c- c># Agent who sent the receipt</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>viaAgent</c-> IRI <c- p>;</c->             <c- c># Trusted agent on behalf of fromAgent</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-> @<c- g>&lt;#:AccessGrantSubject></c-> <c- p>;</c->  <c- c># Subject / recipient</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> @<c- g>&lt;#:AccessNeedGroupShape></c->+ <c- p>;</c->
+  <c- p>(</c-> <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> @<c- g>&lt;#:DataGrantShape></c->+ |
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasTrustedGrant</c-> @<c- g>&lt;#:TrustedGrantShape></c->+ | 
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataGrant</c-> @<c- g>&lt;#:RemoteDataGrantShape></c->+ <c- p>)</c-> <c- p>;</c->
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#AccessReceiptTree">AccessReceiptTree</a> is assigned to a
 resource via the <a href="#treeAccessGrantRegistry">AccessGrantRegistryTree</a>, and ensures
 that the assigned resource will validate against the <a href="#shexAccessReceipt">AccessReceiptShape</a>.</p>
 <pre class="highlight" id="treeAccessReceipt"><c- g>&lt;#AccessReceiptTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessReceiptShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessReceiptShape></c-> <c- p>.</c->
 </pre>
    <h3 class="heading settled" data-level="9.3" id="receipts-hierarchy"><span class="secno">9.3. </span><span class="content">Resource Hierarchy</span><a class="self-link" href="#receipts-hierarchy"></a></h3>
    <table align="left" class="data tree">
@@ -7975,8 +7975,8 @@ made up of <a data-link-type="dfn" href="#remote-data-registry" id="ref-for-remo
     <figcaption>A <a data-link-type="dfn" href="#remote-data-registry-set" id="ref-for-remote-data-registry-set①">Remote Data Registry Set</a> at
    https://bob.pod.example/profile/remote#set linking to two different <a data-link-type="dfn" href="#remote-data-registry" id="ref-for-remote-data-registry①②">Remote Data Registries</a></figcaption>
 <pre class="highlight"><c- g>&lt;#set></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>RemoteDataRegistrySet</c-><c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistry</c-> 
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistrySet</c-><c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c-> 
     <c- g>&lt;https://alice.pod.example/remote/#registry></c-> <c- p>,</c->
     <c- g>&lt;https://alice.otherpod.example/remote/#registry></c-> <c- p>.</c->
 </pre>
@@ -8001,15 +8001,15 @@ made up of <a data-link-type="dfn" href="#remote-data-registry" id="ref-for-remo
    <p>The <a href="#shexRemoteDataRegistrySet">RemoteDataRegistrySetShape</a> is used to
 validate an instance of the <a href="#classRemoteDataRegistrySet">RemoteDataRegistrySet</a> class.</p>
 <pre class="highlight" id="shexRemoteDataRegistrySet"><c- g>&lt;#RemoteDataRegistrySetShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>RemoteDataRegistrySet</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRegistry</c-> IRI+
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistrySet</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c-> IRI+
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#RemoteDataRegistrySetTree">RemoteDataRegistrySetTree</a> is assigned to a resource to ensure it will validate against the <a href="#shexRemoteDataRegistrySet">RemoteDataRegistrySetShape</a>.</p>
 <pre class="highlight" id="treeRemoteDataRegistrySet"><c- g>&lt;#RemoteDataRegistrySetTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#RemoteDataRegistrySetShape></c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#RemoteDataRegistrySetShape></c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="10.2.2" id="datamodel-remote-data-registry"><span class="secno">10.2.2. </span><span class="content">Remote Data Registry</span><a class="self-link" href="#datamodel-remote-data-registry"></a></h4>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="remote-data-registry">Remote Data Registry</dfn> is a collection of <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration②③">Remote Data Registrations</a> stored in a specific location in a <a data-link-type="dfn" href="#pod" id="ref-for-pod⑨">pod</a>.</p>
@@ -8018,8 +8018,8 @@ validate an instance of the <a href="#classRemoteDataRegistrySet">RemoteDataRegi
   https://alice.pod.example/remote/#registry
   linking to several <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration②④">Remote Data Registrations</a> </figcaption>
 <pre class="highlight"><c- g>&lt;#registry></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>RemoteDataRegistry</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRemoteDataRegistration</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistry</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataRegistration</c->
     <c- g>&lt;9e80126d-178f-4a03-851b-c731194a3b0d/#registration></c-> <c- p>,</c->
     <c- g>&lt;833ab294-9f29-4059-b76f-00efc251f2dd/#registration></c-> <c- p>,</c->
     <c- g>&lt;656a8fd0-7cac-46a3-8b84-06f227822656/#registration></c-> <c- p>.</c->      
@@ -8045,18 +8045,18 @@ validate an instance of the <a href="#classRemoteDataRegistrySet">RemoteDataRegi
    <p>The <a href="#shexRemoteDataRegistry">RemoteDataRegistryShape</a> is used to
 validate an instance of the <a href="#classRemoteDataRegistry">RemoteDataRegistry</a> class.</p>
 <pre class="highlight" id="shexRemoteDataRegistry"><c- g>&lt;#RemoteDataRegistryShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>RemoteDataRegistry</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRemoteDataRegistration</c-> IRI* 
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistry</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataRegistration</c-> IRI* 
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#RemoteDataRegistryTree">RemoteDataRegistryTree</a> is assigned to a container resource to ensure that it will validate against the <a href="#shexRemoteDataRegistry">RemoteDataRegistryShape</a>, and contain only
 conformant instances of the <a href="#treeRemoteDataRegistration">RemoteDataRegistrationTree</a>.</p>
 <pre class="highlight" id="treeRemoteDataRegistry"><c- g>&lt;#RemoteDataRegistryTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#RemoteDataRegistryShape></c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>contains</c-> <c- g>&lt;#RemoteDataRegistrationTree></c-> <c- p>,</c->
-              <c- nn>st:</c-><c- f>AllowNone</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#RemoteDataRegistryShape></c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>contains</c-> <c- g>&lt;#RemoteDataRegistrationTree></c-> <c- p>,</c->
+              <c- nn>st</c-><c- p>:</c-><c- f>AllowNone</c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="10.2.3" id="datamodel-remote-data-registration"><span class="secno">10.2.3. </span><span class="content">Remote Data Registration</span><a class="self-link" href="#datamodel-remote-data-registration"></a></h4>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="remote-data-registration">Remote Data Registration</dfn> represents data shared by other <a data-link-type="dfn" href="#agent" id="ref-for-agent①⑦⑥">Agents</a> corresponding to a given <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree⑤⑨">shape tree</a>, each of which is associated 
@@ -8068,13 +8068,13 @@ boundary for remote data from a given <a data-link-type="dfn" href="#agent" id="
   https://alice.pod.example/remote/9e80126d-178f-4a03-851b-c731194a3b0d/#set
   linking to several <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration④⓪">Remote Agent Data Registrations</a> </figcaption>
 <pre class="highlight"><c- g>&lt;#registration></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>RemoteDataRegistration</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> <c- g>&lt;https://trusted.example/id#agent></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- nn>project:</c-><c- f>ProjectTree</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasRemoteAgentDataRegistration</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://trusted.example/id#agent></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>project</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteAgentDataRegistration</c->
     <c- g>&lt;f0ebbd29-3a5a-4770-af29-cdb7693066b4/#registration></c-> <c- p>,</c->
     <c- g>&lt;bedcc388-f303-4059-8645-2e93bf61e9f3/#registration></c-> <c- p>.</c->
 </pre>
@@ -8119,23 +8119,23 @@ boundary for remote data from a given <a data-link-type="dfn" href="#agent" id="
    <p>The <a href="#shexRemoteDataRegistration">RemoteDataRegistrationShape</a> is used to
 validate an instance of the <a href="#classRemoteDataRegistration">RemoteDataRegistration</a> class.</p>
 <pre class="highlight" id="shexRemoteDataRegistration"><c- g>&lt;#RemoteDataRegistrationShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop:</c-><c- f>RemoteDataRegistration</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->  
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> IRI 
-  <c- nn>interop:</c-><c- f>hasRemoteAgentDataRegistration</c-> IRI* <c- p>;</c->
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistration</c-> <c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->  
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI 
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteAgentDataRegistration</c-> IRI* <c- p>;</c->
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#RemoteDataRegistrationTree">RemoteDataRegistrationTree</a> is assigned to a container resource to ensure that it will validate against the <a href="#shexRemoteDataRegistration">RemoteDataRegistrationShape</a>, and contain 
 only conformant instances of the <a href="#treeRemoteAgentDataRegistration">RemoteAgentDataRegistrationTree</a>.</p>
 <pre class="highlight" id="treeRemoteDataRegistration"><c- g>&lt;#RemoteDataRegistrationTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#RemoteDataRegistrationShape></c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>contains</c-> <c- g>&lt;#RemoteAgentDataRegistrationTree></c-> <c- p>,</c->
-              <c- nn>st:</c-><c- f>AllowNone</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#RemoteDataRegistrationShape></c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>contains</c-> <c- g>&lt;#RemoteAgentDataRegistrationTree></c-> <c- p>,</c->
+              <c- nn>st</c-><c- p>:</c-><c- f>AllowNone</c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="10.2.4" id="datamodel-remote-agent-data-registration"><span class="secno">10.2.4. </span><span class="content">Remote Agent Data Registration</span><a class="self-link" href="#datamodel-remote-agent-data-registration"></a></h4>
    <p>An <a data-link-type="dfn" href="#agent" id="ref-for-agent①⑦⑨">Agent</a> maintains a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="remote-agent-data-registration">Remote Agent Data Registration</dfn> to represent
@@ -8160,19 +8160,19 @@ and removed altogether if that access is removed.</p>
     <figcaption>A <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration④⑦">Remote Agent Data Registration</a> at
   https://alice.pod.example/remote/9e80126d-178f-4a03-851b-c731194a3b0d/f0ebbd29-3a5a-4770-af29-cdb7693066b4/#registration </figcaption>
 <pre class="highlight"><c- g>&lt;#registration></c->
-  <c- b>a</c-> <c- nn>interop:</c-><c- f>RemoteAgentDataRegistration</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> <c- g>&lt;https://trusted.example/id#agent></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c->xsd:dateTime <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> <c- nn>project:</c-><c- f>ProjectTree</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataRegistration</c-> 
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteAgentDataRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.pod.example/profile/id#me></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://trusted.example/id#agent></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>project</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> 
     <c- g>&lt;https://bob.pod.example/data/project-tree/#registration></c-> <c- p>;</c->    
-  <c- nn>interop:</c-><c- f>fromAgent</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>fromAgent</c->
     <c- g>&lt;https://bob.pod.example/profile/id#me></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasAccessReceipt</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessReceipt</c->
     <c- g>&lt;https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#receipt></c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>satisfiesDataGrant</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesDataGrant</c->
     <c- g>&lt;cd04e76b-d64d-4cea-aacf-fb248a295002#instance></c-> <c- p>.</c->
 </pre>
    </figure>
@@ -8232,27 +8232,27 @@ and removed altogether if that access is removed.</p>
    </table>
    <p>The <a href="#shexRemoteAgentDataRegistration">RemoteAgentDataRegistrationShape</a> is used to validate an instance of the <a href="#classRemoteAgentDataRegistration">RemoteAgentDataRegistration</a> class.</p>
 <pre class="highlight" id="shexRemoteAgentDataRegistration"><c- g>&lt;#RemoteAgentDataRegistration></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-><c- nn>interop:</c-><c- f>RemoteAgentDataRegistration</c-><c- p>]</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredWith</c-> IRI <c- p>;</c->
-  <c- nn>interop:</c-><c- f>registeredAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>updatedAt</c-> <c- nn>xsd:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop:</c-><c- f>hasDataRegistration</c-> IRI <c- p>;</c->         
-  <c- nn>interop:</c-><c- f>fromAgent</c-> IRI <c- p>;</c->                   
-  <c- nn>interop:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->         
-  <c- nn>interop:</c-><c- f>hasAccessReceipt</c-> IRI* <c- p>;</c->           
-  <c- nn>interop:</c-><c- f>satisfiesDataGrant</c-> IRI+           
+  <c- b>a</c-> <c- p>[</c-><c- nn>interop</c-><c- p>:</c-><c- f>RemoteAgentDataRegistration</c-><c- p>]</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> IRI <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> IRI <c- p>;</c->         
+  <c- nn>interop</c-><c- p>:</c-><c- f>fromAgent</c-> IRI <c- p>;</c->                   
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->         
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessReceipt</c-> IRI* <c- p>;</c->           
+  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesDataGrant</c-> IRI+           
 <c- p>}</c->
 </pre>
    <p>The <a href="interop.tree#RemoteAgentDataRegistrationTree">RemoteAgentDataRegistrationTree</a> is assigned to a resource via the <a href="#treeRemoteDataRegistration">RemoteDataRegistrationTree</a>, and ensures
 that the assigned resource will validate against the <a href="#shexRemoteAgentDataRegistration">RemoteAgentDataRegistrationShape</a>.</p>
 <pre class="highlight" id="treeRemoteAgentDataRegistration"><c- g>&lt;#RemoteAgentDataRegistrationTree></c->
-  <c- b>a</c-> <c- nn>st:</c-><c- f>ShapeTree</c-><c- p>;</c->
-  <c- nn>st:</c-><c- f>expectsType</c-> <c- nn>st:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#RemoteAgentDataRegistrationShape></c-> <c- p>;</c->
-  <c- nn>st:</c-><c- f>contains</c-> <c- g>&lt;#DataGrantTree></c-> <c- p>,</c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#RemoteAgentDataRegistrationShape></c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>contains</c-> <c- g>&lt;#DataGrantTree></c-> <c- p>,</c->
               <c- g>&lt;#ReferencedDataGrantTree></c-> <c- p>,</c->
-              <c- nn>st:</c-><c- f>AllowNone</c-> <c- p>.</c->
+              <c- nn>st</c-><c- p>:</c-><c- f>AllowNone</c-> <c- p>.</c->
 </pre>
    <h3 class="heading settled" data-level="10.3" id="remote-hierarchy"><span class="secno">10.3. </span><span class="content">Resource Hierarchy</span><a class="self-link" href="#remote-hierarchy"></a></h3>
    <table align="left" class="data tree">
