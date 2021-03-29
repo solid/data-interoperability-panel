@@ -20,6 +20,7 @@ Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth unde
 * **Primer** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/primer) - [Rendered](https://solid.github.io/data-interoperability-panel/primer/)
 * **Resources**
   * [Application Interoperability Walkthrough - Part 1](https://solid-interop-public.s3.amazonaws.com/application-interoperability-walkthrough-part-1.mp4) (VIDEO)
+  * [Application Interoperability Walkthrough - Part 2](https://solid-interop-public.s3.amazonaws.com/application-interoperability-walkthrough-part-2.mp4) (VIDEO)
 
 #### Current targets
 - Publish 1.0 Draft of Application Interoperability Use Cases
