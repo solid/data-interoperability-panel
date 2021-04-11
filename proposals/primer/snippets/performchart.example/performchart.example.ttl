@@ -1,0 +1,29 @@
+@prefix interop: <http://www.w3.org/ns/solid/interop#> .
+@prefix solidtrees: <https://solidshapes.example/trees/> .
+@prefix performchart: <https://performchart.example/> .
+
+performchart:\#app
+  a interop:Application ;
+  interop:applicationName "PerformChart" ;
+  interop:applicationDescription
+    "Creates performance statistics and visualisation for the projects you work on" ;
+  interop:hasAccessNeedGroup <#access> .
+
+<#access>
+  interop:hasAccessNeed <#project> ;
+  interop:hasAccessNeedOverride <#task> ;
+  interop:hasAccessDecoratorIndex performchart:44430955-4844-466b-9e1b-04893d0a0d50 .
+
+<#project>
+    a interop:AccessNeed ;
+    interop:registeredShapeTree solidtrees:Project ;
+    interop:recursivelyAuthorize true ;
+    interop:accessNecessity interop:AccessRequired ;
+    interop:accessMode acl:Read .
+
+<#task> # Override to stop recursion
+    a interop:AccessNeed ;
+    interop:registeredShapeTree solidtrees:Task ;
+    interop:recursivelyAuthorize false ;
+    interop:accessNecessity interop:AccessRequired ;
+    interop:accessMode acl:Read .

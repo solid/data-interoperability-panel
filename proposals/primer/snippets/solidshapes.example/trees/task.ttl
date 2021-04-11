@@ -1,8 +1,8 @@
-@prefix shapes: <https://solidshapes.example/shapes/> .
-@prefix trees: <https://solidshapes.example/trees/> .
+@prefix solidshapes: <https://solidshapes.example/shapes/> .
+@prefix solidtrees: <https://solidshapes.example/trees/> .
 
-trees:Task
-  a tree:ShapeTree ;
-  tree:expectsType tree:ShapeTreeResource ;
-  tree:validatedBy shapes:Task ;
-  tree:matchesUriTemplate "{uuid}" .
+solidtrees:Task
+  a shapetree:ShapeTree ;
+  shapetree:expectsType shapetree:ShapeTreeResource ;
+  shapetree:validatedBy solidshapes:Task ;
+  shapetree:matchesUriTemplate "{uuid}" .
