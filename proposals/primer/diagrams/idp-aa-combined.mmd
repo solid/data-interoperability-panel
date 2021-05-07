@@ -22,15 +22,21 @@ sequenceDiagram
     note over OPAA: 👩 Alice grants access via consent screen based on Access Needs
     note over OPAA: Authorization Agent records Access Grants and updates Application Registration
     OPAA -->> App: Redirect with authorization code
-    App ->> OPAA: Exchanges code for ID Token and Access Token
+    App ->> OPAA: Exchanges code for ID Token and Access Token 🔑
     note over App: ⚠️ Application uses WebID from ID Token
     note over App: Application discovers its registration from ID Token
+    App ->> OPAA: Fetch Application Registration 🔑
+    OPAA ->> App: Application Registration
+    App ->> OPAA: Fetch Access Receipt 🔑
+    OPAA ->> App: Access Receipt
+    opt data grants in separate resources
+      loop for each data grant IRI
+        App ->> OPAA: Fetch Data Grant 🔑
+        OPAA ->> App: Data Grant
+      end
+    end
     opt live update
-      note over App: Application subscribes for live updates to its registration
+      note over App: 🔑 Application subscribes for live updates to its registration
     end
-    loop initially and on each update
-      App ->> OPAA: Fetch Application Registration with Access Receipt
-      OPAA ->> App: Application Registration with Access Receipt
-    end
-    App ->> Pod: Fetch Project 1 (uses access token)
+    App ->> Pod: Fetch Project 1 🔑
     Pod ->> App: Project 1 Document
