@@ -9,6 +9,14 @@ Editor: elf Pavlik
 Abstract: Primer for the Solid interoperability.
 </pre>
 
+<style>
+
+  .sequence-diagram {
+    max-width: 100%;
+  }
+
+</style>
+
 Introduction
 =====================
 
@@ -251,3 +259,15 @@ All ShExC code snippets will asssume
   </pre>
   <figcaption>PerformChart's application profile document</figcaption>
 </figure>
+
+## Sequence diagrams
+
+### Combined OIDC Provider and Authorization Agent
+
+#### Authorization Agent stores Registrations and Grants
+
+<img class="sequence-diagram" src="diagrams/idp-aa-combined.mmd.svg" />
+
+#### Authorization Agent gets Registrations and Grants from Storage
+
+<img class="sequence-diagram" src="diagrams/idp-aa-combined-external-storage.mmd.svg" />
