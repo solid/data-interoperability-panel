@@ -1,0 +1,58 @@
+sequenceDiagram
+    autonumber
+    participant App as Application (Client)
+    participant OPAA as Alice's OIDC Provider & Authorization Agent
+    participant AlicePod as Alice's Pod
+    participant AcmePod as ACME's Pod
+    participant AppID as Application's WebID Document
+    participant WebID as Alice's WebID Document
+    note over App: 👩 Alice enters her WebID
+    App ->> WebID: Resolve Alice's WebID
+    WebID ->> App: Alice's WebID Document
+    note over App: Discovers Alice's OIDC Provider and Authorization Agent from WebID Document
+    App -->> OPAA: Initiate Solid-OIDC via redirect
+    opt No active session with OP
+    note over OPAA: 👩 Alice authenticates with OP
+    end
+    OPAA ->> AppID: Resolve Application's WebID
+    AppID ->> OPAA: Application's WebID Document
+    OPAA ->> AlicePod: Fetch application registration 🗝️
+    opt No existing registration
+    AlicePod ->> OPAA: 404 Not Found
+    OPAA ->> AlicePod: Create application registration 🗝️
+    end
+    AlicePod ->> OPAA: Application Registration
+    note over OPAA: Authorization Agent finds Access Needs in Application's WebID Document
+    note over OPAA: 👩 Alice grants access via consent screen based on Access Needs
+    note over OPAA: Authorization Agent generates Access Grant and Access Receipt
+    OPAA ->> AlicePod: Store Access Grant in Access Grants Registry 🗝️
+    OPAA ->> AlicePod: Store Access Receipt in Application Registration 🗝️
+    OPAA -->> App: Redirect with authorization code
+    App ->> OPAA: Exchanges code for ID Token and (🔑 ) Access Token
+    note over App: ⚠️ Application uses WebID from ID Token
+    note over App: Application discovers its registration from ID Token
+    App ->> AlicePod: Fetch Application Registration 🔑
+    AlicePod ->> App: Application Registration
+    App ->> AlicePod: Fetch Access Receipt 🔑
+    AlicePod ->> App: Access Receipt
+    opt data grants in separate resources
+      loop for each data grant IRI
+        App ->> AlicePod: Fetch Data Grant 🔑
+        AlicePod ->> App: Data Grant
+      end
+    end
+    opt live update
+      note over App: 🔑 Application subscribes for live updates to its registration
+    end
+    App ->> AlicePod: Fetch Project A 🔑
+    AlicePod ->> App: Project A Document
+    loop for each Task in Project A
+      App ->> AlicePod: Fetch Task 🔑
+      AlicePod ->> App: Task Document
+    end
+    App ->> AcmePod: Fetch Project 1 🔑
+    AcmePod ->> App: Project 1 Document
+    loop for each Task in Project 1
+      App ->> AcmePod: Fetch Task 🔑
+      AcmePod ->> App: Task Document
+    end

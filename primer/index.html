@@ -6,9 +6,16 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version c6f50773a, updated Fri Apr 16 16:45:47 2021 -0700" name="generator">
+  <meta content="Bikeshed version 5c7bc9381, updated Wed May 12 18:18:08 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/primer/" rel="canonical">
-  <meta content="c20059fcde16c084c991c2618b3290b6a725ea1f" name="document-revision">
+  <meta content="a1c6ceb46aae3e8b270d0003a7f559f92b17cc27" name="document-revision">
+<style>
+
+  .sequence-diagram {
+    max-width: 100%;
+  }
+
+</style>
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -518,7 +525,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability Primer</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-05-11">11 May 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-05-18">18 May 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -575,6 +582,16 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
         <li><a href="#data-registrations②"><span class="secno">2.4.1</span> <span class="content">Data Registrations</span></a>
        </ol>
       <li><a href="#performchartexample"><span class="secno">2.5</span> <span class="content">performchart.example</span></a>
+      <li>
+       <a href="#sequence-diagrams"><span class="secno">2.6</span> <span class="content">Sequence diagrams</span></a>
+       <ol class="toc">
+        <li>
+         <a href="#combined-oidc-provider-and-authorization-agent"><span class="secno">2.6.1</span> <span class="content">Combined OIDC Provider and Authorization Agent</span></a>
+         <ol class="toc">
+          <li><a href="#authorization-agent-stores-registrations-and-grants"><span class="secno">2.6.1.1</span> <span class="content">Authorization Agent stores Registrations and Grants</span></a>
+          <li><a href="#authorization-agent-gets-registrations-and-grants-from-storage"><span class="secno">2.6.1.2</span> <span class="content">Authorization Agent gets Registrations and Grants from Storage</span></a>
+         </ol>
+       </ol>
      </ol>
     <li>
      <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
@@ -897,6 +914,12 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </pre>
     <figcaption>PerformChart’s application profile document</figcaption>
    </figure>
+   <h3 class="heading settled" data-level="2.6" id="sequence-diagrams"><span class="secno">2.6. </span><span class="content">Sequence diagrams</span><a class="self-link" href="#sequence-diagrams"></a></h3>
+   <h4 class="heading settled" data-level="2.6.1" id="combined-oidc-provider-and-authorization-agent"><span class="secno">2.6.1. </span><span class="content">Combined OIDC Provider and Authorization Agent</span><a class="self-link" href="#combined-oidc-provider-and-authorization-agent"></a></h4>
+   <h5 class="heading settled" data-level="2.6.1.1" id="authorization-agent-stores-registrations-and-grants"><span class="secno">2.6.1.1. </span><span class="content">Authorization Agent stores Registrations and Grants</span><a class="self-link" href="#authorization-agent-stores-registrations-and-grants"></a></h5>
+   <p><img class="sequence-diagram" src="diagrams/idp-aa-combined.mmd.svg"></p>
+   <h5 class="heading settled" data-level="2.6.1.2" id="authorization-agent-gets-registrations-and-grants-from-storage"><span class="secno">2.6.1.2. </span><span class="content">Authorization Agent gets Registrations and Grants from Storage</span><a class="self-link" href="#authorization-agent-gets-registrations-and-grants-from-storage"></a></h5>
+   <p><img class="sequence-diagram" src="diagrams/idp-aa-combined-external-storage.mmd.svg"></p>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="w3c-conformance"><span class="content">Conformance</span><a class="self-link" href="#w3c-conformance"></a></h2>
