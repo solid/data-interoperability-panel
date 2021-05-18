@@ -1,0 +1,48 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix oa: <http://www.w3.org/ns/oa#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sol: <http://solid.org/shapes/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix terms: <http://purl.org/dc/terms/>.
+@prefix XML: <http://www.w3.org/2001/XMLSchema#>.
+@prefix bookm: <http://www.w3.org/2002/01/bookmark#>.
+@prefix : <#> .
+
+:WebAnnotationShape
+    rdf:type rdfs:Class;
+    rdf:type sh:NodeShape;
+    sh:targetClass  oa:Annotation ;
+    sh:property [
+        sh:path terms:creator;
+        sh:description "An entity primarily responsible for making the resource.";
+        sh:name "Created By";
+        sh:nodeKind sh:IRI;
+    ];
+    sh:property [
+        sh:path terms:created;
+        sh:name "Date Created";
+        sh:description "Date of creation of the resource.";
+        sh:datatype XML:dateTime;
+    ];
+    sh:property [
+        sh:path oa:hasBody;
+        sh:name "Body Details";
+        sh:description "The object of the relationship is a resource that is a body of the Annotation.";
+        sh:nodeKind sh:IRI;
+    ];
+    sh:property [
+        sh:path oa:bodyValue;
+        sh:name "Details";
+        sh:description "The object of the predicate is a plain text string to be used as the content of the body of the Annotation.";
+        sh:datatype xsd:string;
+    ];
+    sh:property [
+        sh:path oa:hasTarget;
+        sh:name "Annotation Target";
+        sh:description "The relationship between an Annotation and its Target.";
+        sh:nodeKind sh:IRI;
+    ].
