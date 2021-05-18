@@ -1,0 +1,40 @@
+Security {#security}
+=====================
+
+## Application Authorization ## {#security-appauthz}
+
+For authorization purposes, client [=Applications=] in use today fall into
+two buckets:
+
+<dfn>Strongly identifiable applications</dfn> can be identified by
+third parties independently from the user or [=Agent=] controlling them.
+Only [=server-side applications=] are
+strongly identifiable. As confidential clients, they can keep secrets
+and can present attestations and third-party credentials
+via DNS / domain certificates.
+
+In the case of a [=strongly identifiable application=], the [=identity=]
+of [=Agent=] and the [=Application=] are one and the same. The [=Application=]
+has its own [=identity=]. A given [=Agent=] can authorize a given
+[=Application=] to access data based solely on the [=identity=] of that
+[=Application=].
+
+<dfn>Weakly identifiable applications</dfn> include in-browser Javascript
+[=Applications=] and native desktop or mobile [=Applications=]. They are
+considered weakly identifiable because they
+are not able to keep secrets on an instance level. They are often referred to
+as public clients. Native apps should be strongly-identifiable in theory
+(since they are able to keep secrets on an instance level), but not in
+practice because the OS manufacturers do not make their trust
+infrastructure available. Weakly identifiable clients are only strongly
+identifiable to the user or [=Agent=] controlling them.
+
+In the case of [=Weakly identifiable applications=], the ability for a Solid
+pod to limit access to data by the [=Application=] in use is only as strong as
+the trustworthiness of the [=Agent=] piloting that [=Application=], along with
+their ability to avoid using malicious [=Applications=]. The
+[=identity=] of the [=Application=] can be manipulated
+by the [=Agent=] in control. This means that Alice can strongly control
+the [=Applications=] that she uses to access her own data, but has
+limited ability to control the [=Applications=] that Bob uses to access the data
+she shares with him.

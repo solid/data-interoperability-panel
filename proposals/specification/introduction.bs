@@ -1,0 +1,42 @@
+Introduction {#introduction}
+=====================
+
+Solid affords us the opportunity to create a valuable and
+powerful ecosystem where people and organizations retain control
+of their data, but are also able to put it to work and use it
+to its full potential. The fundamentals of Solid make this possible,
+but further definition of standard methods and mechanisms must be established
+to make it practical, intuitive, and secure.
+
+Note: See
+[[PROBLEMS-AND-GOALS|Problems and Goals for Interoperability in Solid]]
+for a detailed explanation of the problem space.
+
+This specification details how [=Agents=] in the Solid ecosystem
+can read, write, and manage data stored in a Solid pod using
+disparate [=Applications=], either individually or in collaboration with 
+other [=Agents=].
+
+[[#appreg]] lets [=Agents=] register and track the [=Applications=] they've
+decided to use.
+
+[[#datareg]] lets [=Agents=] register, organize, and lookup their data.
+Data is stored uniformly, avoiding complex physical hierarchies.
+[=Shape trees=] and [=shapes=] provide strong data validation and
+intuitive data boundaries.
+
+[[#authz]] provides the means for an [=Agent=] to grant other [=Agents=]
+and [=Applications=] access to data in their control.
+
+* [[#needs]] let [=Agents=] and [=Applications=] express which data they
+    need access to, and patterns to request those needs.
+
+* [[#grants]] let [=Agents=] manage and track access they've granted to
+    other [=Agents=] and [=Applications=].
+
+* [[#receipts]] are provided by [=Agents=] to other [=Agents=]
+    and [=Applications=] to let them know about the access they've been
+    granted.
+
+* [[#remote]] lets [=Agents=] maintain a local registry of remote data
+    that has been shared with them by other [=Agents=].

@@ -1,0 +1,257 @@
+Application {#app}
+=====================
+
+## Overview ## {#app-overview}
+
+[=Applications=] are pieces of software that [=Agents=] use to
+access, manipulate, and manage the data in their control, and the data
+they've been granted access to.
+
+An [=Application=] is denoted by an [=identity=]. Dereferencing that
+[=identity=] leads to an [=Application=] profile instance, and a graph of
+useful information about them.
+
+The information in the [=Application=] profile is used during [[#appreg]]
+and [[#authz]] to help [=Agents=] determine whether they want to use
+the [=Application=], what kind of data it needs access to, and whether
+they'll willing to give it that access.
+
+The [=Application=] profile is designed to be publicly accessible.
+
+## Data Model ## {#app-datamodel}
+
+### Summary ###  {#app-datamodel-summary}
+
+An [=Application=] provides summary detail about itself, and its
+author, via properties in the [Application](#classApplication) class.
+
+An [=Application=] identifies the types of data it requires access to
+by linking to [=Access Need Groups=] via the
+[interop:hasAccessNeedGroup](#classAccessNeedGroup) property.
+
+<figure>
+  <figcaption>[=Application=] at https://app.example/profile/id#app</figcaption>
+  <pre highlight="turtle">
+  <#app>
+    a interop:Application ;
+    interop:applicationName "Example Application" ;
+    interop:applicationDescription "This is a description of the Example Application" ;
+    interop:applicationAuthor &lt;https://app.example/org/id#agent&gt; ;
+    interop:applicationAuthorName "Example Organization" ;
+    interop:applicationThumbnail &lt;https://app.example/profile/thumb.svg&gt; ;
+    interop:hasAccessNeedGroup &lt;#exampleAccessNeedGroup&gt; ;
+    interop:receivesAccessReceipt interop:ReceiptInRegistration .
+  </pre>
+</figure>
+
+### Application ### {#datamodel-application}
+
+An <dfn>Application</dfn> is a piece of software that an [=Agent=] uses to
+access, manipulate, and manage the data in their control, as well as the data
+they've been granted access to.
+
+<table class="classinfo data" align="left" id="classApplication">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3 text-align=left>
+        [Application](interop.ttl#Application)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>applicationName</td>
+      <td>xsd:string</td>
+      <td>Name of the [=Application=]</td>
+    </tr>
+    <tr>
+      <td>applicationDescription</td>
+      <td>xsd:string</td>
+      <td>Description of the [=Application=]</td>
+    </tr>
+    <tr>
+      <td>applicationAuthor</td>
+      <td>[Agent](#classAgent)</td>
+      <td>[=Agent=] that authored the [=Application=]</td>
+    </tr>
+    <tr>
+      <td>applicationAuthorName</td>
+      <td>xsd:string</td>
+      <td>Name of the Author</td>
+    </tr>
+    <tr>
+      <td>applicationThumbnail</td>
+      <td>binary image</td>
+      <td>Thumbnail for the [=Application=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessNeedGroup</td>
+      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
+      <td>[=Access Need Group=] representing types of data the
+      [=Application=] needs to operate</td>
+    </tr>
+    <tr>
+      <td>receivesAccessReceipt</td>
+      <td>interop:ReceiptInMessage,
+      interop:ReceiptInRegistration</td>
+      <td>Identifies whether [=Access Receipts=] should be sent directly
+      to the [=Application=] or provided in the [=Application Registration=]</td>      
+    </tr>
+  </tbody>
+</table>
+
+The [ApplicationShape](#shexApplication) is used to validate an instance of the
+[Application](#classApplication) class.
+
+<pre highlight="turtle" id="shexApplication">
+<#ApplicationShape> {
+  a [ interop:Application ] ;
+  interop:applicationName xsd:string ;
+  interop:applicationDescription xsd:string ;
+  interop:applicationAuthor IRI ;
+  interop:applicationAuthorName xsd:string ;
+  interop:applicationThumbanil IRI? ;
+  interop:hasAccessNeedGroup IRI* ;
+  interop:receivesAccessReceipt [ interop:ReceiptInMessage interop:ReceiptInRegistration ]
+}
+</pre>
+
+The [ApplicationTree](interop.tree#ApplicationTree)
+is assigned to a resource to ensure it will validate against the
+[ApplicationShape](#shexApplication).
+
+<pre highlight="turtle" id="treeApplication">
+<#ApplicationTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;interops#ApplicationShape&gt; .
+</pre>
+
+## Resource Hierarchy ## {#app-hierarchy}
+
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Class</th>
+      <th>Shape</th>
+      <th>Shape Tree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`/profile/`</td>
+      <td>-</td>
+      <td>-</td>
+      <td>[ApplicationProfileTree](ecosystem.tree#ApplicationProfileTree)</td>
+    </tr>
+    <tr>
+      <td>`-- id#app`</td>
+      <td>[Application](#classApplication)</td>
+      <td>[ApplicationShape](#shexApplication)</td>
+      <td>[ApplicationTree](#treeApplication)</td>
+    </tr>
+    <tr>
+      <td>`-- thumb.svg`</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+
+[=Application=] resources <em class="rfc2119">MAY</em> use any resource or
+subject names. The names used herein have been selected for comprehension
+and readability.
+
+## Permission Model ## {#app-permissions}
+
+The permission model for the resources detailed in
+[[#agents-hierarchy]] are illustrated in the table below.
+
+<b>Notable items:</b>
+
+* The [=identity profile document=] `id` which contains the [=Application=]
+    instance gives the public read-only access.
+* The thumbnail resource `thumb.svg` gives the public read-only access.
+
+<figure>
+<figcaption>Permission model for [=Application=] resources</figcaption>
+  <table class="data permissions" align="left">
+    <col>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup span=2></colgroup>
+    <thead>
+      <tr>
+        <th></th>
+        <th scope="colgroup">Agent</th>
+        <th scope="colgroup">Public</th>
+        <th scope="colgroup">Trusted Agents</th>
+        <th scope="colgroup">Other Agents Granted Access</th>
+      </tr>
+      <tr>
+        <th scope="col">Resource</th>
+        <th scope="col">Access</th>
+        <th scope="col">Access</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`/profile/`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- id`</td>
+        <td>Control</td>
+        <td>Read</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- thumb.svg`</td>
+        <td>Control</td>
+        <td>Read</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+## Application Services ## {#app-services}
+
+### Load Application Service ### {#load-application-service}
+
+Issue: Detail how an application service is looked up in the
+[=Application=] Profile.
+
+### Redirect to Application Service ### {#redirect-to-application-service}
+
+Issue: Detail how an [=Agent=] can be redirected to an application service 
+
+### Return from Application Service ### {#return-from-application-service}
+
+Issue: detail how an [=Agent=] is returned back from an application service

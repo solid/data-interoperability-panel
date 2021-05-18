@@ -2,35 +2,63 @@
 
 [![Join the chat at https://gitter.im/solid/data-interoperability-panel](https://badges.gitter.im/solid/data-interoperability-panel.svg)](https://gitter.im/solid/data-interoperability-panel?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Focused on ensuring the seamless and safe interoperability of data as
-it is read and written by different users and/or applications.
+## Purpose
 
-Areas of interest include vocabularies, shapes, footprints, indexes,
-and the mechanisms through which these things (and others) work together
-to achieve interoperability.
+We must be able to support data interoperability across applications while enabling secure collaboration and query using intuitive data boundaries.
 
-For contributing members see the
-[Panels List](https://github.com/solid/process/blob/master/panels.md#data-interoperability).
+Diversity in how the same data will be accessed and manipulated by different entities and applications exacerbates the need for reliable mechanisms that protect against data corruption, data leakage, or broken workflows
 
-## Projects
+Standard methods and mechanisms for interoperability, collaboration, and security of data in a Solid Pod must realize these needs, and it must be done without changing the fundamentals of Solid.
 
-- [Data Validation](https://github.com/solid/data-interoperability-panel/tree/master/data-validation)
-- [Data Discovery](https://github.com/solid/data-interoperability-panel/tree/master/data-discovery)
-- [Data Portability](https://github.com/solid/data-interoperability-panel/tree/master/data-portability)
-- [User Profile Data Model](https://github.com/solid/data-interoperability-panel/tree/master/user-profile)
-- [User Preferences Data Model](https://github.com/solid/data-interoperability-panel/tree/master/user-preferences)
+Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth understanding of the panel's focus.
 
-[Submit an issue](https://github.com/solid/data-interoperability-panel/issues/new)
-to propose a project for the panel to undertake.
+## Initiatives in Process
+
+### Solid Application Interoperability
+
+* **Specification** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/specification) - [Rendered](https://solid.github.io/data-interoperability-panel/specification/)
+* **Primer** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/primer) - [Rendered](https://solid.github.io/data-interoperability-panel/primer/)
+* **Resources**
+  * [Application Interoperability Walkthrough - Part 1](https://solid-interop-public.s3.amazonaws.com/application-interoperability-walkthrough-part-1.mp4) (VIDEO)
+  * [Application Interoperability Walkthrough - Part 2](https://solid-interop-public.s3.amazonaws.com/application-interoperability-walkthrough-part-2.mp4) (VIDEO)
+
+#### Current targets
+- Publish 1.0 Draft of Application Interoperability Use Cases
+- Publish 1.0 Draft of Application Interoperability Specification
+- Publish 1.0 Draft of Application Interoperability Primer
+- Complete Typescript library implementation
+- Complete Typescript Application Service implementation
+
+### Shape Trees
+
+* **Specification** - [Source](https://github.com/shapetrees/specification) - [Rendered](https://shapetrees.org/TR/specification/index.html)
+* **Library** - [Source](https://github.com/shapetrees/shapetree.js) 
+* **Test Suite** - [Source](https://github.com/shapetrees/test-suite)
+
+#### Current targets
+- Publish 1.0 Draft of Shape Trees Specification
+- Publish 1.0 Draft of Shape Trees Primer
+- Complete Typescript Shape Tree Implementation
+- Complete Java Shape Trees Implementation
+- Submit Server-side Shape Tree validation to solid/specification
+- Integrate server-side Shape Tree validation into CSS
+
+## Completed Initiatives
+
+[Resource Metadata](https://github.com/solid/data-interoperability-panel/tree/master/archive/resource-metadata) - Resource Metadata was [submitted](solid/specification#156) as a candidate proposal to the solid/specification. It was renamed to Auxiliary Resources during Editorial Review.
 
 ## Meetings
 
-| Date | Agenda | Minutes |
-| ---- | ------ | ------- |
-| [8/13/2019](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-08132019.md) | [Agenda](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-08132019.md#agenda) | [Minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/1-08132019.md#minutes) |
+Panel meetings are held most Tuesdays at 10:00AM Eastern / 4:00PM Central European. Check-in on [gitter](https://gitter.im/solid/data-interoperability-panel) for weekly agenda.
 
-## Communication Channels
+Meeting URL: https://meet.jit.si/solid-data-interoperability
 
-| Type | Location |
-| ---- | ---- |
-| Chat | <https://gitter.im/solid/data-interoperability-panel> |
+Panel meeting minutes are recorded live and are [available here](https://github.com/solid/data-interoperability-panel/blob/master/meetings/)
+
+## Process
+
+Initiative proposals must be [submitted as issues](https://github.com/solid/data-interoperability-panel/issues/new), and receive support from members of the panel. At least three panelists (not including the panelist proposing the project) must support creation of the project, with no panel members actively rejecting it. Initiative proposals with support will be prioritized and undertaken by the panel.
+
+Substantive changes submitted to active panel initiatives should be submitted as pull requests, and should receive at least two approved reviews from panelists, with no one actively rejecting.
+
+Panel members should work together to settle deadlocks. It may be helpful to request the perspective of a Solid Editor that would ultimately be responsible for accepting submitted candidate proposals to settle deadlocks.

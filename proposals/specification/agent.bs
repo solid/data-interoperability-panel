@@ -1,0 +1,378 @@
+Agent {#agents}
+=====================
+
+## Overview ## {#agents-overview}
+
+[=Agents=] represent the primary actors in an interoperable Solid [=ecosystem=].
+
+An [=Agent=] is denoted by an [=identity=]. Dereferencing that [=identity=]
+leads to the [=Agent=], and a graph of useful information about them. This
+graph is used by the [=Agent=] to look up their own data, as well as data
+that has been shared with them. 
+
+An [=Agent=] is designed to be publicly accessible, but many of the
+things the [=Agent=] links to are designed to be private, or accessible
+only by other [=Agents=] or [=Applications=] that the [=Agent=]
+has authorized.
+
+Consequently, other [=Agents=] and
+[=Applications=] can dereference the [=identity=] of an [=Agent=] to obtain 
+the information they need to interact with them.
+
+Most of an [=Agent's=] information is stored in [=Registries=].
+A <dfn>Registry</dfn> is a place where an [=Agent=] can store and find
+different types of data, often for particular purposes. Each type
+of [=Registry=] serves a specific purpose or function.
+
+<table class="classinfo data" align="left" id="agentRegistries">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Registry</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Application Registry</td>
+      <td>Records the [=Applications=] that a given [=Agent=] uses
+      or has given access to.
+      <i>See [[#appreg|Application Registration]]</i></td>
+    </tr>
+    <tr>
+      <td>Data Registry</td>
+      <td>Stores and organizes data types for interoperable use by different
+      [=Applications=] and shared with other [=Agents=]
+      <i>See [[#datareg|Data Registration]]</i></td>
+    </tr>
+    <tr>
+      <td>Access Grant Registry</td>
+      <td>Records access granted to other [=Agents=] and/or [=Applications=]
+      <i>See [[#grants|Access Grants]]</i></td>
+    </tr>
+    <tr>
+      <td>Access Receipt Registry</td>
+      <td>Tracks access that has been granted by other [=Agents=]
+      <i>See [[#receipts|Access Receipts]]</i></td>
+    </tr>
+    <tr>
+      <td>Remote Data Registry</td>
+      <td>Local references to data that has been shared by other [=Agents=]
+      <i>See [[#remote|Remote Data Registration]]</i></td>
+    </tr>
+  </tbody>
+</table>
+
+## Data Model ## {#agents-datamodel}
+
+### Summary ### {#agents-datamodel-summary}
+
+When an [=Agent=] has more than one pod, or is managing
+data on behalf of another [=Agent=], they will be linked to multiple
+[=Registries=] of the same type. A <dfn>Registry Set</dfn> is used to
+organize [=Registries=] of the same type together.
+
+An [=Agent=] links to each kind of [=Registry Set=] through type-specific
+subproperties of [interop:hasRegistrySet](interop.ttl#hasRegistrySet).
+
+This allows one [=Agent=] to
+link to many [=Registries=] across the Web, without exposing those
+[=Registries=] in a public document. Different permissions can be
+assigned to each [=Registry Set=], depending on the sensitivity of the
+[=Registries=] they link to.
+
+[=Registry Sets=] link to [=Registries=] through the
+[interop:hasRegistry](interop.ttl#hasRegistry) property.
+
+<figure>
+  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me</figcaption>
+  <pre highlight="turtle">
+  <#me>
+    a interop:Agent;
+    ######## Registry Sets ########
+    interop:hasApplicationRegistrySet &lt;https://alice.pod.example/profile/application#set&gt; ;
+    interop:hasDataRegistrySet &lt;https://alice.pod.example/profile/data#set&gt; ;
+    interop:hasAccessGrantRegistrySet &lt;https://alice.pod.example/profile/grant#set&gt; ;
+    interop:hasAccessReceiptRegistrySet &lt;https://alice.pod.example/profile/receipt#set&gt; ;
+    interop:hasRemoteDataRegistrySet &lt;https://alice.pod.example/profile/remote#set&gt; ;
+    ######## Inboxes ########
+    interop:hasInbox &lt;https://alice.pod.example/inbox/general&gt; ;
+    interop:hasAccessInbox &lt;https://alice.pod.example/inbox/access&gt; ;
+    ######## Options ########
+    interop:receivesAccessReceipt interop:ReceiptInMessage .
+  </pre>
+</figure>
+
+### Agent ### {#datamodel-agent}
+
+An <dfn>Agent</dfn> is a distinct individual, group, organization, or piece
+of software with an [=identity=] that can be strongly authenticated.
+
+<table class="classinfo data" align="left" id="classAgent">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3 text-align=left>
+        [Agent](interop.ttl#Agent)
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasApplicationRegistrySet</td>
+      <td>[ApplicationRegistrySet](#classApplicationRegistrySet)</td>
+      <td>[=Application Registry Set=] for the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasDataRegistrySet</td>
+      <td>[DataRegistrySet](#classDataRegistrySet)</td>
+      <td>[=Data Registry Set=] for the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessGrantRegistrySet</td>
+      <td>[AccessGrantRegistrySet](#classAccessGrantRegistrySet)</td>
+      <td>[=Access Grant Registry Set=] for the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessReceiptRegistrySet</td>
+      <td>[AccessReceiptRegistrySet](#classAccessReceiptRegistrySet)</td>
+      <td>[=Access Receipt Registry Set=] for the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasRemoteDataRegistrySet</td>
+      <td>[RemoteDataRegistrySet](#classRemoteDataRegistrySet)</td>
+      <td>[=Remote Data Registry Set=] for the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasInbox</td>
+      <td>ldp:inbox</td>
+      <td>A general inbox for messages sent to the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessInbox</td>
+      <td>ldp:inbox</td>
+      <td>An inbox for access related messages sent to the [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>receivesAccessReceipt</td>
+      <td>interop:ReceiptInMessage,
+      interop:ReceiptInRegistration</td>
+      <td>Identifies whether [=Access Receipts=] should be sent directly
+      to the [=Application=] or provided in the [=Application Registration=]
+      if the [=Agent=] is also an [=Application=]</td>      
+    </tr>
+  </tbody>
+</table>
+
+The [AgentShape](#shexAgent) is used to validate an instance of the
+[Agent](#classAgent) class.
+
+<pre highlight="turtle" id="shexAgent">
+<#AgentShape> {
+  a [ interop:Agent ] ;
+  interop:hasApplicationRegistrySet IRI ;
+  interop:hasDataRegistrySet IRI ;
+  interop:hasAccessGrantRegistrySet IRI ;
+  interop:hasAccessReceiptRegistrySet IRI ;
+  interop:hasRemoteDataRegistrySet IRI ;
+  interop:hasInbox IRI ;
+  interop:hasAccessInbox IRI ;
+  interop:receivesAccessReceipt [ interop:ReceiptInMessage interop:ReceiptInRegistration ]
+}
+</pre>
+
+The [AgentTree](interop.tree#AgentTree)
+is assigned to a resource to ensure it will validate against the
+[AgentShape](#shexAgent).
+
+<pre highlight="turtle" id="treeAgent">
+<#AgentTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;interops#AgentShape&gt; .
+</pre>
+
+## Resource Hierarchy ## {#agents-hierarchy}
+
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Class</th>
+      <th>Shape</th>
+      <th>Shape Tree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`/profile/`</td>
+      <td>-</td>
+      <td>-</td>
+      <td>[ProfileTree](#treeAgent)</td>
+    </tr>
+    <tr>
+      <td>`-- id#me`</td>
+      <td>[Agent](#classAgent)</td>
+      <td>[AgentShape](#shexAgent)</td>
+      <td>[AgentTree](#treeAgent)</td>
+    </tr>
+    <tr>
+      <td>`-- application#set`</td>
+      <td>[ApplicationRegistrySet](#classApplicationRegistrySet)</td>
+      <td>[ApplicationRegistrySetShape](#shexApplicationRegistrySet)</td>
+      <td>[ApplicationRegistrySetTree](#treeApplicationRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`-- data#set`</td>
+      <td>[DataRegistrySet](#classDataRegistrySet)</td>
+      <td>[DataRegistrySetShape](#shexDataRegistrySet)</td>
+      <td>[DataRegistrySetTree](#treeDataRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`-- grant#set`</td>
+      <td>[AccessGrantRegistrySet](#classAccessGrantRegistrySet)</td>
+      <td>[AccessGrantRegistrySetShape](#shexAccessGrantRegistrySet)</td>
+      <td>[AccessGrantRegistrySetTree](#treeAccessGrantRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`-- receipt#set`</td>
+      <td>[AccessReceiptRegistrySet](#classAccessReceiptRegistrySet)</td>
+      <td>[AccessReceiptRegistrySetShape](#shexAccessReceiptRegistrySet)</td>
+      <td>[AccessReceiptRegistrySetTree](#treeAccessReceiptRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`-- remote#set`</td>
+      <td>[RemoteDataRegistrySet](#classRemoteDataRegistrySet)</td>
+      <td>[RemoteDataRegistrySetShape](#shexRemoteDataRegistrySet)</td>
+      <td>[RemoteDataRegistrySetTree](#treeRemoteDataRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`/inbox/access`</td>
+      <td><a href="https://www.w3.org/ns/ldp#inbox" class="vocab">ldp:inbox</a></td>
+      <td>-</td>
+      <td>[AccessInboxTree](interop.tree#treeAccessInbox)</td>
+    </tr>
+    <tr>
+      <td>`/inbox/general`</td>
+      <td><a href="https://www.w3.org/ns/ldp#inbox" class="vocab">ldp:inbox</a></td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+
+[=Agent=] resources <em class="rfc2119">MAY</em> use any resource or
+subject names. The names used herein have been selected for comprehension
+and readability.
+
+## Permission Model ## {#agents-permissions}
+
+The permission model for the resources detailed in
+[[#agents-hierarchy]] are illustrated in the table below.
+
+<b>Notable items:</b>
+
+* The [=identity profile document=] `id` which contains the [=Agent=] instance
+    gives the public read-only access.
+* [=Registry Sets=] are not publicly exposed. Only the [=Agent=]
+    or their [=Trusted Agents=] and [=Applications=] can see the [=Registries=]
+    listed by them.
+
+<figure>
+<figcaption>Permission model for [=Agent=] resources</figcaption>
+  <table class="data permissions" align="left">
+    <col>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup span=2></colgroup>
+    <thead>
+      <tr>
+        <th></th>
+        <th scope="colgroup">Agent</th>
+        <th scope="colgroup">Public</th>
+        <th scope="colgroup">Trusted Agents</th>
+        <th scope="colgroup">Other Agents Granted Access</th>
+      </tr>
+      <tr>
+        <th scope="col">Resource</th>
+        <th scope="col">Access</th>
+        <th scope="col">Access</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`/profile/`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- id`</td>
+        <td>Control</td>
+        <td>Read</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+
+      <tr>
+        <td>`-- application`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- data`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- access`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- receipt`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- remote`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>

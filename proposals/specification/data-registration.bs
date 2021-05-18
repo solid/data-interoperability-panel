@@ -1,0 +1,1152 @@
+Data Registration {#datareg}
+=====================
+
+## Overview ## {#datareg-overview}
+
+Data Registration lets [=Agents=] store and manage the data they control.
+Data of various types is organized and stored in a uniform way to aid
+validation, authorization, discovery, and more.
+
+Complex hierarchies that hinder interoperability are avoided
+by storing data in a relatively flat hierarchy. This creates natural
+data boundaries that make data storage and authorization more intuitive.
+
+## Data Model ## {#datareg-datamodel}
+
+### Summary ### {#datareg-datamodel-summary}
+
+<figure id="fig-datareg-model">
+  <img src="diagrams/datareg-model.svg" width=100%/>
+  <figcaption>Data model for data registration</figcaption>
+</figure>
+
+An [=Agent=] links to a [=Data Registry Set=] via the
+[interop:hasDataRegistrySet](interop.ttl#hasDataRegistrySet)
+property.
+
+A [=Data Registry Set=] links to any number of [=Data Registries=]
+via the [interop:hasRegistry](interop.ttl#hasRegistry) property.
+
+A [=Data Registry=] links to any number of
+[=Data Registrations=] via the
+[interop:hasRegistration](interop.ttl#hasRegistration) property.
+
+There is a [=Data Registration=] for each unique type of stored data. Each
+[=Data Registration=] contains and links to any number of [=Data Instances=]
+via the
+<a href="https://www.w3.org/ns/ldp#contains" class="vocab">ldp:contains</a>
+property.
+
+<figure id="fig-datareg-agent">
+  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me
+  linking to a [=Data Registry Set=]</figcaption>
+  <pre highlight="turtle">
+  <#me>
+    a interop:Agent;
+    interop:hasDataRegistrySet &lt;https://alice.pod.example/profile/data#set&gt; .
+  </pre>
+  </figure>
+</figure>
+
+<figure id ="fig-datareg-registry-set">
+   <figcaption>A [=Data Registry Set=] at
+   https://alice.pod.example/profile/data#set linking to two different
+  [=Data Registries=]</figcaption>
+  <pre highlight="turtle">
+  <#set>
+    a interop:DataRegistrySet;
+    interop:hasRegistry &lt;https://alice.pod.example/data/#registry&gt; ,
+                    &lt;https://alice.otherpod.example/data/#registry&gt; .
+  </pre>
+</figure>
+
+<figure id="fig-datareg-registry">
+  <figcaption>A [=Data Registry=] at https://alice.pod.example/data/#registry
+  linking to several [=Data Registrations=]</figcaption>
+  <pre highlight="turtle">
+  <#registry>
+    a interop:DataRegistry ;
+    interop:hasRegistration &lt;8501f084-deb9-4775-8a35-2040df435d21/#registration&gt; ,
+                        &lt;df4ab227-2f15-455d-8ca2-fad10fb9f9bc/#registration&gt; ,
+                        &lt;d0954df2-e7c3-40b4-9eeb-65df92d9167e/#registration&gt; ,
+                        &lt;87da9aa5-3f6c-4bc2-a5d4-adb7efcaee5d/#registration&gt; ,
+                        &lt;bc3d8522-7f00-4d90-a01b-54ec01591640/#registration&gt; ,
+                        &lt;3a3ee852-ff49-46ea-b7a8-65cec55879a4/#registration&gt; .
+  </pre>
+</figure>
+
+<figure id="fig-datareg-registration">
+  <figcaption>A [=Data Registration=] at
+  https://alice.pod.example/data/8501f084-deb9-4775-8a35-2040df435d21/#registration
+  </figcaption>
+  <pre highlight="turtle">
+  <#registration>
+    a interop:DataRegistration ;
+    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
+    interop:registeredWith &lt;https://app.example/id#agent&gt; ;
+    interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
+    interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
+    interop:registeredShapeTree note:notebookTree ;
+    interop:registeredType note:notebook .
+  </pre>
+</figure>
+
+### Data Registry Set ### {#datamodel-data-registry-set}
+
+A <dfn>Data Registry Set</dfn> is a [=Registry Set=] specifically
+made up of [=Data Registries=].
+
+<table class="classinfo data" align="left" id="classDataRegistrySet">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3 text-align=left>
+        [DataRegistrySet](interop.ttl#DataRegistrySet)
+        a rdfs:subClassOf <a href="interop.ttl#RegistrySet" class="vocab">RegistrySet</a>
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistry</td>
+      <td>[Registry](interop.ttl#Registry)</td>
+      <td>Link to associated [=Data Registries=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [DataRegistrySetShape](#shexDataRegistrySet) is used to validate
+an instance of the [DataRegistrySet](#classDataRegistrySet) class.
+
+<pre highlight="turtle" id="shexDataRegistrySet">
+<#DataRegistrySetShape> {
+  a [ interop:DataRegistrySet ] ;
+  interop:hasRegistry IRI+
+}
+</pre>
+
+The [DataRegistrySetTree](interop.tree#DataRegistrySetTree)
+is assigned to a resource to ensure it will validate against the
+[DataRegistrySetShape](#shexDataRegistrySet).
+
+<pre highlight="turtle" id="treeDataRegistrySet">
+<#DataRegistrySetTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeResource ;
+  st:validatedBy &lt;interops#DataRegistrySetShape&gt; .
+</pre>
+
+### Data Registry ### {#datamodel-data-registry}
+
+A <dfn>Data Registry</dfn> is a collection of [=Data Registrations=], each
+representing a unique type of data associated with a given [=shape tree=].
+
+A [=Data Registry=] can be used for basic discovery, but it is not
+designed nor intended to be an efficient means to query or index data.
+However, it is *intended* to be used as reliable source data for different
+query engines or indexing schemes.
+
+<table class="classinfo data" align="left" id="classDataRegistry">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [DataRegistry](interop.ttl#DataRegistry)
+        a rdfs:subClassOf <a href="interop.ttl#Registry" class="vocab">Registry</a>
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>[DataRegistration](#classDataRegistration)</td>
+      <td>Link to an associated [=Data Registration=]</td>
+    </tr>
+  </tbody>
+</table>
+
+The [DataRegistryShape](#shexDataRegistry) is used to validate an
+instance of the [DataRegistry](#classDataRegistry) class.
+
+<pre highlight="turtle" id="shexDataRegistry">
+<#DataRegistryShape> {
+  a [ interop:DataRegistry ] ;
+  interop:hasRegistration IRI*
+}
+</pre>
+
+The [DataRegistryTree](interop.tree#DataRegistryTree) is assigned
+to a container resource to ensure that it will validate against the
+[DataRegistryShape](#shexDataRegistry), and contain only
+conformant instances of the
+[DataRegistrationTree](#treeDataRegistration).
+
+<pre highlight="turtle" id="treeDataRegistry">
+<#DataRegistryTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy &lt;interops#DataRegistryShape&gt; ;
+  st:contains <#DataRegistrationTree> ,
+              st:AllowNone .
+</pre>
+
+### Data Registration ### {#datamodel-data-registration}
+
+A <dfn>Data Registration</dfn> provides the [=Agent=] with a place to store
+[=Data Instances=] of a particular type, conforming to a
+given [=shape tree=], indicated by the
+[interop:registeredShapeTree](#classDataRegistration) property.
+
+A <dfn>Data Instance</dfn> is a unique, stored instance of a
+particular type of data, conforming to the [=shape tree=] for
+the instance's [=Data Registration=].
+
+<table class="classinfo data" align="left" id="classDataRegistration">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th colspan=3>
+        [DataRegistration](interop.ttl#DataRegistration)
+        a rdfs:subClassOf <a href="interop.ttl#Registration" class="vocab">Registration</a>
+      </th>
+    </tr>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>[Agent](#classAgent)</td>
+      <td>[=Agent=] that registered the [=Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>[Application](#classApplication)</td>
+      <td>[=Application=] used to create the [=Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Data Registration=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Data Registration=] was updated</td>
+    </tr>
+    <tr>
+      <td>registeredShapeTree</td>
+      <td><a href="https://w3.org/ns/st/terms" class="vocab">st:ShapeTree</a></td>
+      <td>The [=Shape Tree=] that was registered</td>
+    </tr>
+    <tr>
+      <td>registeredType</td>
+      <td><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" class="vocab">rdf:type</a></td>
+      <td>Type of data registered</td>
+    </tr>
+  </tbody>
+</table>
+
+The [DataRegistrationShape](#shexDataRegistration) is used
+to validate an instance of the
+[DataRegistration](#classDataRegistration)
+class.
+
+<pre highlight="turtle" id="shexDataRegistration">
+<#DataRegistrationShape> {
+  a [ interop:DataRegistration ] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:registeredShapeTree IRI ;
+  interop:registeredType IRI*
+}
+</pre>
+
+The [DataRegistrationTree](interop.tree#DataRegistrationTree)
+is assigned to a resource via the
+[DataRegistryTree](#treeDataRegistry),
+to ensure that the [=Data Registration=] will validate against the
+[DataRegistrationShape](#shexDataRegistration).
+
+<pre highlight="turtle" id="treeDataRegistration">
+<#DataRegistrationTree>
+  a st:ShapeTree;
+  st:expectsType st:ShapeTreeContainer ;
+  st:validatedBy &lt;interops#DataRegistrationShape&gt; .
+</pre>
+
+## Resource Hierarchy ## {#datareg-hierarchy}
+
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Class</th>
+      <th>Shape</th>
+      <th>Shape Tree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`/profile/`</td>
+      <td>-</td>
+      <td>-</td>
+      <td>[ProfileTree](#treeAgent)</td>
+    </tr>
+    <tr>
+      <td>`-- data#set`</td>
+      <td>[DataRegistrySet](#classDataRegistrySet)</td>
+      <td>[DataRegistrySetShape](#shexDataRegistrySet)</td>
+      <td>[DataRegistrySetTree](#treeDataRegistrySet)</td>
+    </tr>
+    <tr>
+      <td>`/data/#registry`</td>
+      <td>[DataRegistry](#classDataRegistry)</td>
+      <td>[DataRegistryShape](#shexDataRegistry)</td>
+      <td>[DataRegistryTree](#treeDataRegistry)</td>
+    </tr>
+    <tr>
+      <td>`-- 8501f084...2040df43/#registration`</td>
+      <td>[DataRegistration](#classDataRegistration)</td>
+      <td>[DataRegistrationShape](#shexDataRegistration)</td>
+      <td>[DataRegistrationTree](#treeDataRegistration),
+          [FooContainingTree](#treeFooContaining)</td>
+    </tr>
+    <tr>
+      <td>`---- 16e1eae9...ca3805c4/#foo`</td>
+      <td>[FooInstance](#classFoo)</td>
+      <td>[FooShape](#shexFoo)</td>
+      <td>[FooTree](#treeFoo)</td>
+    </tr>
+    <tr>
+      <td>`---- 886785d2...5ac36b7b/#foo`</td>
+      <td>[FooInstance](#classFoo)</td>
+      <td>[FooShape](#shexFoo)</td>
+      <td>[FooTree](#treeFoo)</td>
+    </tr>
+    <tr>
+      <td>`---- dae5015c...7ca7a198/#foo`</td>
+      <td>[FooInstance](#classFoo)</td>
+      <td>[FooShape](#shexFoo)</td>
+      <td>[FooTree](#treeFoo)</td>
+    </tr>
+    <tr>
+      <td>`-- df4ab227...fad10fb9/#registration`</td>
+      <td>[DataRegistration](#classDataRegistration)</td>
+      <td>[DataRegistrationShape](#shexDataRegistration)</td>
+      <td>[DataRegistrationTree](#treeDataRegistration),
+          [BarContainingTree](#treeFooContaining)</td>
+    </tr>
+    <tr>
+      <td>`---- 9b60a354...cb9da85c/#bar`</td>
+      <td>[BarInstance](#classFoo)</td>
+      <td>[BarShape](#shexFoo)</td>
+      <td>[BarTree](#treeFoo)</td>
+    </tr>
+    <tr>
+      <td>`---- 6e545b74...b15cbdce/#bar`</td>
+      <td>[BarInstance](#classFoo)</td>
+      <td>[BarShape](#shexFoo)</td>
+      <td>[BarTree](#treeFoo)</td>
+    </tr>
+    <tr>
+      <td>`---- d33e01c8...ac9e3cc6/#bar`</td>
+      <td>[BarInstance](#classFoo)</td>
+      <td>[BarShape](#shexFoo)</td>
+      <td>[BarTree](#treeFoo)</td>
+    </tr>
+    <tr>
+      <td>`---- 927108fa...14985cb9/#bar`</td>
+      <td>[BarInstance](#classFoo)</td>
+      <td>[BarShape](#shexFoo)</td>
+      <td>[BarTree](#treeFoo)</td>
+    </tr>
+    <tr>
+      <td>`---- 180dda0b...c4f8c4dc/#bar`</td>
+      <td>[BarInstance](#classFoo)</td>
+      <td>[BarShape](#shexFoo)</td>
+      <td>[BarTree](#treeFoo)</td>
+    </tr>
+    <tr>
+      <td>`-- 3c9c9cff...fc7f916b/#registration`</td>
+      <td>[DataRegistration](#classDataRegistration)</td>
+      <td>[DataRegistrationShape](#shexDataRegistration)</td>
+      <td>[DataRegistrationTree](#treeDataRegistration),
+          [BazContainingTree](#treeFooContaining)</td>
+    </tr>
+    <tr>
+      <td>`---- 4376595a...f8d2547c/#baz`</td>
+      <td>[BazInstance](#classFoo)</td>
+      <td>[BazShape](#shexFoo)</td>
+      <td>[BazTree](#treeFoo)</td>
+    </tr>
+    <tr>
+      <td>`---- 14c9fc6a...7f6de3ca/#baz`</td>
+      <td>[BazInstance](#classFoo)</td>
+      <td>[BazShape](#shexFoo)</td>
+      <td>[BazTree](#treeFoo)</td>
+    </tr>
+  </tbody>
+</table>
+
+The [=Data Registry Set=] and the [=Data Registry=]
+<em class="rfc2119">MAY</em> or <em class="rfc2119">MAY NOT</em>
+be on the same [=pod=].
+
+[=Data Registry Set=] and [=Data Registry=] resources
+<em class="rfc2119">MAY</em> use any
+resource or subject names.
+
+[=Data Registrations=] and [=Data Instances=]
+<em class="rfc2119">MUST</em> use
+\[UUIDs](https://www.ietf.org/rfc/rfc4122.txt)
+for resource names.
+
+A [=Data Registration=] container <em class="rfc2119">MUST</em>
+contain conformant instances of the [=shape tree=] associated with the
+[=Data Registration=] via
+[interop:registeredShapeTree](#classDataRegistration).
+
+Two complementary [=shape trees=] <em class="rfc2119">MUST</em> be assigned
+to the same [=Data Registration=] container to ensure that it conforms
+to general validation requirements, and to ensure
+that it only contains [=Data Instances=] of the registered
+[=shape tree=] identified by
+[interop:registeredShapeTree](#classDataRegistration).
+
+In the [figure below](#fig-datareg-intersecting), the
+combination of a [DataRegistrationTree](#treeDataRegistration)
+and [FooContainingTree](#treeFooContaining) on the
+same [=Data Registration=] can be observed. Furthermore, an example of
+a contained [=Data Instance=] is provided, which conforms
+to [FooTree](#treeFoo) per the directive in
+[FooContainingTree](#treeFooContaining).
+
+<div id="treeFooContaining"></div>
+<div id="treeFoo"></div>
+<div id="shexFoo"></div>
+<div id="classFoo"></div>
+
+<figure id="fig-datareg-intersecting">
+  <figcaption>Intersecting [=shape trees=] for a [=Data Registration=]
+  and the [=shape tree=] registered with it
+  </figcaption>
+  <table class="data intersecting" align="left">
+    <col>
+    <col>
+    <tbody>
+      <tr>
+        <td colspan=2>
+        `-- 8501f084-deb9-4775-8a35-2040df435d21/#registration`
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Contents of the [=Data Registration=]
+          <pre highlight="turtle">
+          <#registration>
+            a interop:DataRegistration ;
+            interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
+            interop:registeredWith &lt;https://app.example/id#agent&gt; ;
+            interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
+            interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
+            interop:registeredShapeTree foo:fooTree ;
+            interop:registeredType foo:fooThing .
+          </pre>
+        </td>
+        <td>
+          Ensure the container resource for the [=Data Registration=]
+          conforms to `interops#DataRegistrationShape`.
+          <pre highlight="turtle">
+            <#DataRegistrationTree>
+              a st:ShapeTree;
+              st:expectsType st:ShapeTreeContainer ;
+              st:validatedBy &lt;interops#DataRegistrationShape&gt; .
+          </pre>
+          And also ensure the [=Data Registration=] only
+          contains resources that conform to `<#FooTree>`.
+          <pre highlight="turtle">
+            <#FooContainingTree>
+              a st:ShapeTree;
+              st:expectsType st:ShapeTreeContainer ;
+              st:contains <#FooTree> .
+          </pre>
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2>
+        `------ 16e1eae9-20a5-489d-8380-8c07ca3805c4#foo`
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Contents of the [=Data Instance=]
+          <pre highlight="turtle">
+          <#foo>
+            a foo:fooThing ;
+            foo:isExample "of an instance" .
+          </pre>
+        </td>
+        <td>
+          Ensure the resource for the [=Data Instance=]
+          conforms to `<#FooTree>`.
+          <pre highlight="turtle">
+            <#FooTree>
+              a st:ShapeTree;
+              st:expectsType st:ShapeTreeResource ;
+              st:validatedBy &lt;foo#FooShape&gt; .
+          </pre>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+## Permission Model ## {#datareg-permissions}
+
+Almost all of the collaborative use cases between [=Agents=]
+in the [=ecosystem=] are based on data furnished through the
+[=Data Registry=].
+
+Only the [=Agent=] or [=Trusted Agents=] have the ability to manage
+contents and permissions across [=Data Registries=], including
+the creation and modification of [=Data Registrations=]. The
+[table below](#permDataRegistry) illustrates this using the
+[[#datareg-hierarchy|resource hierarchy]] from the previous section.
+*Other Agents* are granted varying levels of access by the [=Agent=] or their 
+[=Trusted Agents=].
+
+Note: [[#authz]] provides patterns for managing [=Access Grants=] and 
+sending [=Access Receipts=] to the [=Agents=] who were granted access.
+
+<figure id="permDataRegistry">
+<figcaption>Permission model for [=Data Registry=] resources.
+</figcaption>
+  <table class="data permissions" align="left">
+    <col>
+    <col>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup span=2></colgroup>
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th scope="colgroup">Agent</th>
+        <th scope="colgroup">Public</th>
+        <th scope="colgroup">Trusted Agents</th>
+        <th scope="colgroup">Other Agents</th>
+      </tr>
+      <tr>
+        <th scope="col">Resource</th>
+        <th scope="col"></th>
+        <th scope="col">Access</th>
+        <th scope="col">Access</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`/profile/`</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- data`</td>
+        <td>[=Data Registry Set=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`/data/`</td>
+        <td>[=Data Registry=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- 8501f084...2040df43`</td>
+        <td>[=Data Registration=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`---- 16e1eae9...ca3805c4`</td>
+        <td>[=Data Instance=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`---- 886785d2...5ac36b7b`</td>
+        <td>[=Data Instance=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`---- dae5015c...7ca7a198`</td>
+        <td>[=Data Instance=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`-- df4ab227...fad10fb9`</td>
+        <td>[=Data Registration=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`---- 9b60a354...cb9da85c`</td>
+        <td>[=Data Instance=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`---- 6e545b74...b15cbdce`</td>
+        <td>[=Data Instance=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`---- d33e01c8...ac9e3cc6`</td>
+        <td>[=Data Instance=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`---- 927108fa...14985cb9`</td>
+        <td>[=Data Instance=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`---- 180dda0b...c4f8c4dc`</td>
+        <td>[=Data Instance=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`-- 3c9c9cff...fc7f916b`</td>
+        <td>[=Data Registration=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`---- 4376595a...f8d2547c`</td>
+        <td>[=Data Instance=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+      <tr>
+        <td>`---- 14c9fc6a...7f6de3ca`</td>
+        <td>[=Data Instance=]</td>
+        <td>Control</td>
+        <td>Varies</td>
+        <td>Control</td>
+        <td>Grantee</td>
+        <td>Varies</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+A signficant amount
+of flexibility is needed in granting other Agents access to 
+data in the registry. It is also important to avoid 
+the creation of permission swamps that are unwieldy for [=Agents=] to manage.
+
+Organizing data by [=shape tree=] creates natural permission boundaries,
+making authorization more intuitive and manageable.
+
+Access is granted to a certain type of data by granting access
+to the [[#datareg-all|entire Data Registration]], or to
+[[#datareg-specific|specific Data Instances]] within it.
+
+Note: [[!WAC]] doesn't have any mechanism to extend or modify
+inherited permissions. Access Control Policies (ACP) is recommended
+for optimal results.
+
+### Access to a Data Registration ### {#datareg-all}
+
+Access granted at the [=Data Registration=] level
+applies to all [=Data Instances=] within it.
+
+The [=access modes=] listed in the table below can be combined as needed.
+
+<figure>
+<figcaption>Modes of access for a [=Data Registration=]</figcaption>
+  <table class="data" align="left">
+    <col>
+    <col>
+    <thead>
+      <tr>
+        <th scope="col">Mode</th>
+        <th scope="col">Resultant Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Read</th>
+        <td>Can read all existing and yet to be created
+            [=Data Instances=]. Includes being able to see the full
+            list of [=Data Instances=] in the registration.</td>
+      </tr>
+      <tr>
+        <th scope="row">Write</th>
+        <td>Can modify the [=Data Registration=], and all existing
+            [=Data Instances=] within it.
+            Can create new [=Data Instances=],
+            and can delete them.</td>
+      </tr>
+      <tr>
+        <th scope="row">Append</th>
+        <td>Can only create new [=Data Instances=] within the
+            [=Data Registration=].</td>
+      </tr>
+      <tr>
+        <th scope="row">Read Permissions</th>
+        <td>Can read permissions on the [=Data Registration=], as well
+            as any [=Data Instances=] within it.</td>
+      </tr>
+      <tr>
+        <th scope="row">Write Permissions</th>
+        <td>Can change permissions on the [=Data Registration=], as well
+            as any [=Data Instances=] within it.</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+### Access to Specific Data Instances ### {#datareg-specific}
+
+Access granted at the [=Data Instance=] level apply only to
+that instance, and the resources within it.
+
+The [=access modes=] listed in the table below can be combined as needed.
+
+<figure>
+<figcaption>Modes of access for a Specific
+[=Data Instance=]</figcaption>
+  <table class="data" align="left">
+    <col>
+    <col>
+    <thead>
+      <tr>
+        <th scope="col">Mode</th>
+        <th scope="col">Resultant Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Read</th>
+        <td>Can list and read all resources within the
+        [=Data Instance=].</td>
+      </tr>
+      <tr>
+        <th scope="row">Write</th>
+        <td>Can modify the [=Data Instance=] and any resources
+            within it, including creating and deleting resources.</td>
+      </tr>
+      <tr>
+        <th scope="row">Append</th>
+        <td>Can create resources within the [=Data Instance=].
+            Can add to a resource in the [=Data Instance=] but cannot
+            remove anything from it, or delete it.</td>
+      </tr>
+      <tr>
+        <th scope="row">Read Permissions</th>
+        <td>Can read permissions on the [=Data Instance=]
+            and any resources within it.</td>
+      </tr>
+      <tr>
+        <th scope="row">Write Permissions</th>
+        <td>Can change permissions on the [=Data Instance=]
+            and any resources within it.</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+## Operations ## {#datareg-operations}
+
+Registering data in a [=Data Registry=] is primarily concerned with the
+following two operations:
+
+* Registering new *data types* as [=Data Registrations=]
+* Storing and registering new *instances of those data types* as
+    [=Data Instances=]
+
+The following operations allow for the lookup, creation, and deletion
+of [=Data Registrations=] and [=Data Instances=] in a
+[=Data Registry=].
+
+* [[#datareg-load]] - Load an existing [=Data Registration=]
+* [[#datareg-create]] - Create a new [=Data Registration=]
+* [[#datareg-create-instance]] - Create a new [=Data Instance=] for 
+    a given [=Data Registration=]
+* [[#datareg-delete]] - Delete a [=Data Registration=]
+* [[#datareg-delete-instance]] - Delete a [=Data Instance=] for
+    a given [=Data Registration=]
+
+Note: Managing [=Data Registrations=] and the [=Data Instances=]
+contained within them is inextricably linked to permissioning the data
+for effective use and secure collaboration. This is covered at length
+in [[#authz]].
+
+### Load Data Registration ### {#datareg-load}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+        This operation returns a [=Data Registration=] the corresponds
+        to a given [=shape tree=] in a [=Data Registry=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`TREE`</td>
+      <td>[=Shape tree=] to match against</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>[=Data Registry=] to look for a match within</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Data Registration=]</td>
+      <td>Loaded by matching against `TREE` in `REGISTRY`</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. <em class="rfc2119">MUST</em> return `404` if `TREE` or `REGISTRY` 
+    cannot be successfully dereferenced.
+1. For each [=Data Registration=] `REGISTRATION` included 
+    in `REGISTRY hasRegistration`
+    1. return `REGISTRATION` if `REGISTRATION registeredShapeTree` == `TREE`
+
+</div>
+
+### Create Data Registration ### {#datareg-create}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+        This operation creates a new [=Data Registration=] in a 
+        [=Data Registry=] for a specific [=shape tree=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`TREE`</td>
+      <td>[=Shape tree=] to register</td>
+    </tr>
+    <tr>
+      <td>`TYPE`</td>
+      <td>Optional [rdf:type](https://www.w3.org/TR/rdf-schema/#ch_type) 
+      to associate with the registration</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>[=Data Registry=] where the registration will be created</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Data Registration=]</td>
+      <td>Created for `TREE` in `REGISTRY`</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. <em class="rfc2119">MUST</em> return `404` if `TREE` or `REGISTRY` 
+    cannot be successfully dereferenced.
+1. <em class="rfc2119">MUST</em> return `400` if an existing 
+    [=Data Registration=] is returned from [[#datareg-load]] with 
+    inputs: `TREE`, `REGISTRY`
+1. Let `REG` be a newly initialized [=Data Registration=]
+1. Let `REG registeredBy` be the current [=Agent=]
+1. Let `REG registeredWith` be the [=identity=] of the [=Application=]
+    executing the operation
+1. Let `REG registeredAt` be the current date and time
+1. Let `REG updatedAt` be the current date and time
+1. Let `REG registeredShapeTree` be `TREE`
+1. Let `REG registeredType` be `TYPE` if `TYPE` is not empty
+1. PUT `REG` into the `REGISTRY` container 
+    1. A \[UUID](https://www.ietf.org/rfc/rfc4122.txt) 
+        <em class="rfc2119">MUST</em> be assigned as the resource name.
+    1. [Plant](https://shapetrees.github.io/specification/spec#plant-shapetree)
+        `TREE` with `REG` as the Target Container.
+1. Assign permissions for `REG` per the [[#datareg-permissions]]
+1. Link `REG` to `REGISTRY` via `REGISTRY hasRegistration`
+1. Return `REG`
+
+</div>
+
+### Create Data Instance ### {#datareg-create-instance}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+        This operation will create a new [=Data Instance=] for
+        a given [=Data Registration=]. It must be a conformant instance of
+        the [=shape tree=] registered with the [=Data Registration=], per
+        the validation structure detailed in [[#datareg-hierarchy]].
+        
+        Assumes that a [=Data Registration=] has already been loaded
+        by [[#datareg-load]] and provided as input.
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`REGISTRATION`</td>
+      <td>[=Data Registration=] to associated the new 
+      [=Data Instance=] with</td>
+    </tr>
+    <tr>
+      <td>`INSTANCE`</td>
+      <td>Instance corresponding with `REGISTRATION registeredShapeTree`</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Data Instance=]</td>
+      <td>Created for `REGISTRATION` in `REGISTRY`</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. PUT `INSTANCE` into the `REGISTRATION` container
+    1. A \[UUID](https://www.ietf.org/rfc/rfc4122.txt) 
+        <em class="rfc2119">MUST</em> be assigned as the resource name.
+    1. A [target shape tree](https://shapetrees.github.io/specification/spec#create-data-instance) 
+        <em class="rfc2119">MUST</em> be assigned via the 
+        `rel=http://shapetrees.org/#targetShapeTree` HTTP Link relation
+    1. A [focus node](https://shapetrees.github.io/specification/spec#create-data-instance) for shape tree validation <em class="rfc2119">MUST</em> be assigned
+        via the `rel=http://shapetrees.org/#FocusNode` HTTP Link relation
+1. Return `INSTANCE`
+
+</div>
+
+### Delete Data Registration ### {#datareg-delete}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation deletes a [=Data Registration=] from a
+      [=Data Registry=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`REGISTRATION`</td>
+      <td>[=Data Registration=] to delete</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>[=Data Registry=] of `REGISTRATION`</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HTTP Status Code</td>
+      <td>As returned from server</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. <em class="rfc2119">MUST</em> return `404` if `REGISTRATION`
+    cannot be successfully dereferenced.
+1. <em class="rfc2119">MUST</em> return `400` if `REGISTRATION`
+    contains one or more [=Data Instances=].
+1. Remove `REGISTRATION` from the graph of `REGISTRY` 
+    via `REGISTRY hasRegistration`
+1. DELETE `REGISTRATION`
+
+</div>
+
+Issue: Cleanup of related data may need to be specified
+
+### Delete Data Instance ### {#datareg-delete-instance}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+        This operation deletes a [=Data Instance=] from a
+        [=Data Registration=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`INSTANCE`</td>
+      <td>[=Data Instance=] to delete</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HTTP Status Code</td>
+      <td>As returned from server</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. <em class="rfc2119">MUST</em> return `404` if `INSTANCE`
+    cannot be successfully dereferenced.
+1. If `INSTANCE` is a container
+    1. Let `RESOURCES` be a hierarchy of all resources contained by `INSTANCE`,
+        including any child containers and resources.
+    1. DELETE each `RESOURCE` in `RESOURCES`, iterating up from the bottom
+        of the `RESOURCES` hierarchy
+1. DELETE `INSTANCE`
+
+</div>
+
+Issue: Cleanup of related data may need to be specified

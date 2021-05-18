@@ -1,0 +1,698 @@
+Data Authorization {#authz}
+=====================
+
+## Overview ## {#authz-overview}
+
+The ability for one [=Agent=] to grant others access to data in their control
+is a fundamental element of a collaborative interoperable ecosystem.
+
+Data Authorization represents several key elements that
+work together to grant, adjust, and rescind access to data controlled
+by an ecosystem participant.
+
+* A common way to express [[#needs]] allows [=ecosystem=] participants to
+    convey the types or specific instances of data they require.
+
+* [[#grants]] record access decisions made by an [=Agent=] on the data in their
+    control.
+
+* [[#receipts]] reflect [=Access Grants=] that one [=Agent=] has provided
+    to another [=Agent=]
+
+## Workflows ## {#authz-workflows}
+
+The following workflows represent the authorization patterns
+enabled by this specification.
+
+### Presenting an Access Grant ###  {#present-grant}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This workflow details how an [=Access Grant=] is 
+      presented to a given [=Agent=] for data in their control, 
+      based on the [=Access Need Groups=] associated.
+
+      Each [=Access Grant=] is associated with a specific 
+      [=Access Grant Subject=], and one or more [=Access Need Groups=]. 
+      The [=Access Grant Subject=] may be another [=Agent=], an 
+      [=Agent=] using an [=Application=], or an [=Application=] 
+      operating as an [=Agent=].
+
+      Access Grant presentation may be invoked from a number of 
+      workflows and contexts, including but not limited to 
+      [[#authz-apprequest]], [[#authz-agentrequest]], 
+      [[#authz-controllershare]], and 
+      [[#authz-controllerinvite]].
+
+      This workflow is composed of several operations:
+      
+      1. [[#present-grant]]
+          1. [[#present-needgroup]] - Called for each [=Access Need Group=]
+              1. [[#present-need]] - Called for each [=Access Need=] in the 
+                  [=Access Need Group=]
+              1. [[#present-trustedneed]] - Called for each [=Trusted Need=] in
+                  the [=Access Need Group=]
+
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`SUBJECT`</td>
+      <td>This may be a tuple of [=Agent=] and [=Application=] in the 
+      case of a [=weakly identifiable application=], or [=Application=] 
+      and [=Application=] in the case
+      of a [=strongly identifiable application=]</td>
+    </tr>        
+    <tr>
+      <td>`NEEDGROUPS`</td>
+      <td>[=Access Need Groups=] to use when a new
+      [=Access Grant=] is being initialized</td>
+    </tr>
+  </tbody>
+</table>
+
+Note: All user experience herein is meant to inform how the
+data model and operations work. The design and style should be 
+considered non-normative. Example data has been incorporated into 
+the provided designs to further comprehension of the proposed 
+workflow.
+
+<figure id="fig-present-grant">
+  <figcaption>An example [=Access Grant=] for an Application.</figcaption>
+  <img src="diagrams/present-grant.svg" width=100%/>  
+</figure>
+
+<div class="opdetails">
+
+1. Let `GRANT` be an existing [=Access Grant=] for `SUBJECT` returned by 
+    [[#grants-loadgrant]]
+    1. If `GRANT` is missing, create one via [[#grants-initializegrant]]         
+1. Present information about the [=Application=] `APP` if the 
+    [=Access Grant Subject=] is for an [=Application=]:
+    1. Application Name - `APP applicationName`
+    1. Application Identity - `APP` URI
+    1. Application Author Name - `APP applicationAuthorName`
+    1. Application Author Identity - `APP applicationAuthor`
+    1. Application Thumbnail - `APP applicationThumbnail`
+    1. Application Summary - `APP applicationDescription`
+1. Present information about the [=Agent=] `AGENT` if the
+    [=Access Grant Subject=] is not an [=Application=]
+    1. Agent Name `AGENT fullName`
+    2. Agent Identity - `AGENT` URI
+1. Call [[#present-needgroup]] for each [=Access Need Group=] linked
+    via `GRANT hasAccessNeedGroup`.    
+1. Present an option to authorize the grant by calling [[#grants-recordgrant]],
+    or cancel.
+
+</div>
+
+#### Presenting an Access Need Group #### {#present-needgroup}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This sub-operation of [[#present-grant]] presents an 
+      input [=Access Need Group=] associated with a specific 
+      [=Access Grant=].
+      
+      Each [=Access Need Group=] represents a set of [=Access Needs=]
+      and/or [=Trusted Needs=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`GROUP`</td>
+      <td>The [=Access Need Group=] to present</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>The [=Access Grant=] that `GROUP` is linked to</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure id="fig-present-needgroup">
+  <figcaption>
+  Depicting an [=Access Need=] 
+  associated with a given [=Access Need Group=], and several 
+  [=Referenced Access Needs=] linked to it. The controller
+  chose to grant access to all instances now and in the future.
+  </figcaption>
+  <img src="diagrams/present-needgroup.svg" width=100%/>  
+</figure>
+
+<div class="opdetails">
+
+1. Let `GDEC` be the [=Access Need Group Decorator=] linked via
+    `GROUP hasAccessNeedGroupDecorator`
+1. Present information about the [=Access Need Group=] `GROUP`
+    1. Group Name - `GDEC skos:prefLabel` 
+    1. Group Description - `GDEC skos:definition`
+    1. Grantee Type - `GROUP authenticatesAs`
+    1. Necessity - `GROUP accessNecessity`
+1. Allow `GROUP` to be disabled via [[#deny-access-need-group]] if group 
+    necessity is optional
+1. For each [=Access Need=] `NEED` linked via `GROUP hasAccessNeed`
+    1. Call [[#present-need]]
+1. For each [=Trusted Need=] `TNEED` linked via 
+    `GROUP hasTrustedNeed`
+    1. Call [[#present-trustedneed]]
+              
+</div>
+
+#### Presenting a Data Access Need #### {#present-need}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This sub-operation of [[#present-needgroup]] presents an 
+      [=Access Need=] for an input [=Access Need Group=].
+      
+      Each discrete [=Access Need=] is related to a specific type of 
+      data, identified by a [=shape tree=].
+      
+      Each [=Access Need=] directly linked to an [=Access Need Group=]
+      may have zero or more [=Referenced Access Needs=] associated with it.
+      Each [=Referenced Access Need=] is presented under the [=Access Need=]
+      it is linked to.
+
+      The controller can grant access to all data for the 
+      [=Access Need=] and the [=Referenced Access Needs=], select 
+      specific instances of the [=Access Need=] and narrow the 
+      [=Referenced Access Need=] instances to only those related.
+      Manual selection with no inheritance can also be done 
+      instead.
+      
+      Access to which data has been shared with the controller in their 
+      [=Remote Data Registry=] is also requested through [=Access Needs=].
+      In most cases, controllers won't need to do fine-grained instance
+      selection of remote data, but should be allowed the ability if
+      they desire.        
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`NEED`</td>
+      <td>The [=Access Need=] to present
+    </tr>
+    <tr>
+      <td>`GROUP`</td>
+      <td>The [=Access Need Group=] that `NEED` is linked to</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>The [=Access Grant=] that `GROUP` is linked to</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure id="fig-present-inherited">
+  <figcaption>
+  Depicting an [=Access Need=] with two selected [=Data Instances=],
+  with access to the [=Referenced Access Needs=] set based on
+  whether there is a link to the selected instances.
+  </figcaption>
+  <img src="diagrams/present-needgroup-inherited.svg" width=100%/>  
+</figure>
+
+<div class="opdetails">
+
+1. Call [[#present-need-details]] to explain the [=Access Need=]
+1. Let `DG` be the [=Data Grant=] linked via `NEED hasDataGrant`
+1. Manage the scope of data to be granted `DG scopeOfGrant`:
+    1. **No Access** - `interop:NoAccess` (if necessity is optional)
+        1. Enable via [[#deny-data-grant]]  
+    1. **All Current and Future** - `interop:AllInstances`
+        1. Enable via [[#select-all-data-instances]]
+    1. **Only Selected Instances** - `interop:SelectedInstances`
+        1. Present existing [=Data Instances=] corresponding to
+            `DG registeredShapeTree`, identifying any existing selections
+            linked via `DG hasDataInstance`
+        1. Allow one or more to be chosen
+        1. Enable via [[#select-data-instance]], providing each selected [=Data Instance=]
+1. For each [=Referenced Access Need=] `REFNEED` linked via `NEED hasReferencedAccessNeed`
+    1. Let `REFDG` be the [=Referenced Data Grant=] linked via `NEED hasReferencedDataGrant`
+    1. Call [[#present-need-details]] to explain the [=Referenced Access Need=]
+        1. Manage the scope of data to be granted `REFDG scopeOfGrant`:
+            1. **No Access** - `interop:NoAccess` (if necessity is optional)
+                1. Enable via [[#deny-referenced-data-grant]]  
+            1. **All Current and Future** - `interop:AllInstances`
+                1. Enable via [[#select-all-referenced-data-instances]]
+            1. **Only Inherited Instances** - `interop:InheritInstances` (if `DG scopeOfGrant` is `interop:SelectedInstances`)
+                1. Present [=Data Instances=] of `REFNEED registeredShapeTree`
+                    linked to all [=Data Instances=] for `DG` via
+                    `st:traverseViaShapePath` of `DG registeredShapeTree`
+            1. **Only Selected Instances** - `interop:SelectedInstances`
+                1. Present existing [=Data Instances=] corresponding to
+                    `REFDG registeredShapeTree`, identifying any existing 
+                    selections linked via `REFDG hasDataInstance`
+                1. Allow one or more to be chosen
+                1. Enable via [[#select-referenced-data-instance]], providing 
+                    each selected [=Data Instance=].
+
+Note: Access to data in the [=Remote Data Registry=] is similarly managed per
+[=Access Need=]. User interfaces may opt to present
+simpler options, and mix the selection in with local data,
+like in the [figure](#fig-present-inherited) above. However, for the
+comprehension and completeness, options for remote data access are 
+presented as follows:
+
+1. Let `RDG` be the [=Remote Data Grant=] linked via `NEED hasRemoteDataGrant`
+1. Manage the scope of data to be granted `RDG scopeOfGrant`:
+    1. **No Access** - `interop:NoAccess` (if necessity is optional)
+        1. Enable via [[#deny-remote-data-grant]]  
+    1. **All Remote Data** - `interop:AllRemote`
+        1. Enable via [[#select-all-remote]]
+    1. **All Remote From Agent** - `interop:AllRemoteFromAgent`
+        1. Present existing [=Remote Agent Data Registrations=] corresponding
+            to `NEED registeredShapeTree`, identifying any existing selections
+            linked via `RDG hasRemoteDataFromAgent`
+        1. Allow one or more to be chosen 
+        1. Enable via [[#select-all-remote-fromagent]]
+    1. **Only Selected Remote Data** - `interop:SelectedRemote`
+        1. Present existing [=Data Grants=] and/or [=Referenced Data Grants=], 
+            corresponding to `NEED registeredShapeTree` and optionally organized by
+            [=Remote Agent Data Registrations=], identifying any existing selections
+            linked via `RDG hasDataGrant` and/or `RDG:hasReferencedDataGrant`
+        1. Allow one or more to be chosen
+        1. Enable via [[#select-remote-agent-data-grants]], providing the selected 
+            [=Data Grants=] and/or [=Referenced Data Grants=].
+1. For each [=Referenced Access Need=] `REFNEED` linked via `NEED hasReferencedAccessNeed`
+    1. Let `REFRDG` be the [=Referenced Remote Data Grant=] linked via `NEED hasReferencedRemoteDataGrant`
+    1. Manage the scope of data to be granted `REFRDG scopeOfGrant`:
+        1. **No Access** - `interop:NoAccess` (if necessity is optional)
+            1. Enable via [[#deny-referenced-remote-data-grant]]  
+        1. **All Remote Data** - `interop:AllRemote`
+            1. Enable via [[#select-all-referenced-remote]]
+        1. **All Remote From Agent** - `interop:AllRemoteFromAgent`
+            1. Present existing [=Remote Agent Data Registrations=] corresponding
+                to `NEED registeredShapeTree`, identifying any existing selections
+                linked via `REFRDG hasRemoteDataFromAgent`
+            1. Allow one or more to be chosen 
+            1. Enable via [[#select-referenced-remote-fromagent]]
+        1. **Only Selected Remote Data** - `interop:SelectedRemote`
+            1. Present existing [=Data Grants=] and/or [=Referenced Data Grants=], 
+                corresponding to `NEED registeredShapeTree` and optionally organized by
+                [=Remote Agent Data Registrations=], identifying any existing selections
+                linked via `REFRDG hasDataGrant` and/or `REFRDG hasReferencedDataGrant`
+            1. Allow one or more to be chosen
+            1. Enable via [[#select-referenced-remote-agent-data-grants]], providing the selected 
+                [=Data Grants=] and/or [=Referenced Data Grants=].
+        
+
+</div>
+
+##### Presenting Data Access Need Details ##### {#present-need-details}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>  
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This sub-operation of [[#present-need]] is used to present specific
+      details of an [=Access Need=] or [=Referenced Access Need=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`NEED`</td>
+      <td>The [=Access Need=] or [=Referenced Access Need=] to present</td>
+    </tr>
+  </tbody>
+</table>
+
+1. Let `STDEC` be the [=Shape Tree Decorator=] linked via `NEED hasShapeTreeDecorator`
+1. Let `ANDEC` be the [=Access Need Decorator=] linked via `NEED hasAccessNeedDecorator`
+1. Present information about the [=Access Need=]:
+    1. Shape Tree Name -  `STDEC skos:prefLabel`
+    1. Shape Tree Description - `STDEC skos:definition`
+    1. Access Modes - `NEED accessMode`s
+    1. Necessity - `NEED accessNecessity`
+
+#### Presenting a Trusted Need #### {#present-trustedneed}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This workflow explains how to present a [=Trusted Need=] for
+      an input [=Access Need Group=] associated with a given 
+      [=Access Grant=].
+      
+      Each discrete [=Trusted Need=] is related to a specific type of 
+      trusted resource.
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`TNEED`</td>
+      <td>The [=Trusted Need=] to present
+    </tr>
+    <tr>
+      <td>`GROUP`</td>
+      <td>The [=Access Need Group=] that `TNEED` is linked to</td>
+    </tr>
+    <tr>
+      <td>`GRANT`</td>
+      <td>The [=Access Grant=] that `GROUP` is linked to</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure id="fig-present-trustedneed">
+  <figcaption>
+  Depicting [=Trusted Needs=] for an [=Application=] that will be
+  used as an authorization agent, requiring elevated access across
+  the board.
+  </figcaption>
+  <img src="diagrams/present-needgroup-trustedneed.svg" width=100%/>  
+</figure>
+
+1. Let `TNEED` be the [=Access Need Decorator=] linked via `TNEED hasAccessNeedDecorator`
+1. Let `TG` be the [=Trusted Grant=] linked via `TNEED hasTrustedGrant`
+1. Present information about the [=Trusted Need=]:
+    1. Trusted Need Type -  `STDEC skos:prefLabel`
+    1. Trusted Need Description - `STDEC skos:definition`
+    1. Access Modes - `TNEED accessMode`s
+    1. Necessity - `TNEED accessNecessity`
+1. Manage the scope of the trusted grant `TG scopeOfGrant`:
+    1. Next if `TNEED trustedWithType` is `interop:Agent`
+    1. **All Registries** - where `rdf:type` of [=Registry=] is `TNEED trustedWithType`
+        1. Enable via [[#select-trusted-registry-set]]
+    1. **Specific TYPE Registries**
+        1. Present existing [=Registries=] where `rdf:type` is `TNEED trustedWithType`
+        1. Allow one or more [=Registries=] to be chosen
+        1. Enable via [[#select-trusted-registry]], providing each selected [=Registrys=]
+
+### Application Requests Access ### {#authz-apprequest}
+
+Let `CONTROLLER` be an [=Agent=] that wants to give an
+    [=Application=] `APP` access to data in their control.
+
+Let `APP` be the [=Application=] that `CONTROLLER` wishes to use, and must
+    grant access to. `APP` may be an [=Application=] that is piloted by the
+    [=Agent=], or it may be an autonomous service that operates independently.
+    The following workflow applies to both cases.
+
+Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
+    authorization and access control.
+
+1. `CONTROLLER` decides they'd like to use `APP`
+1. `CONTROLLER` provides their [=identity=] to `APP`
+1. `APP` dereferences the [=identity=] to
+    get `CONTROLLER`'s [=identity profile document=].
+1. `APP` discovers that `AUTHZ` is an [=Application=] that is a 
+    [=Trusted Agent=] of `CONTROLLER` for data authorization
+    via the [[#load-application-service]] operation.
+1. `APP` redirects `CONTROLLER` to `AUTHZ` via the [[#redirect-to-application-service]]
+    operation.
+    1. Let `APPREG` be an [=Application Registration=] returned by
+        [[#appreg-loadappreg]] with inputs: `CONTROLLER`, `APP`
+    1. If `APPREG` is empty let `APPREG` be the [=Application Registration=]
+        returned by [[#appreg-registerapp]] with inputs: `AGENT`, `APP`,
+        `REGISTRY`.
+    1. `AUTHZ` looks in `APP`'s [=application profile document=] for
+        [=Access Need Groups=] with an `interop:accessScenario` of
+        `interop:PersonalAccess`
+    1. Any [=Access Need Groups=] found are passed to the [[#present-grant]]
+        workflow, which presents them to `CONTROLLER`.
+    1. `CONTROLLER` decides whether to grant `APP` the access requested.
+    1. `CONTROLLER` authorizes the requested [=Access Need Groups=]
+        and [=Access Needs=]:
+        1. The [[#grants-recordgrant]] operation is invoked
+            1. An [=Access Grant=] is stored in `CONTROLLER`'s
+                [=Access Grant Registry=].
+            1. [[#apply-permissions]] is called to apply permissions based
+                on the [=Access Grant=].
+            1. [[#provide-access-receipt]] is called to store the
+                [=Access Receipt=]. The Application has set
+                `interop:receivesAccessReceipt` to
+                `ReceiptInRegistration`, so the [=Access Receipt=] is
+                stored in the [=Application Registration=] for `APP`.
+    1. `AUTHZ` redirects `CONTROLLER` back to `APP` via the
+        [[#return-from-application-service]] operation.
+
+### Another Agent Requests Access ### {#authz-agentrequest}
+
+Let `REQUESTER` be an [=Agent=] requesting data from another
+    [=Agent=] `CONTROLLER` with a known [=identity=].
+
+Let `REQAPP` be an [=Application=] piloted by `REQUESTER`
+
+Let `RAUTHZ` be an [=Application=] trusted by `REQUESTER` for
+    authorization and access control.
+
+Let `CONTROLLER` be an [=Agent=] in control of data that
+    `REQUESTER` would like to access.
+
+Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
+    authorization and access control.
+
+1. `REQUESTER` would like access to `CONTROLLER`'s data.
+1. `REQUESTER` provides `CONTROLLER`'s [=identity=] to `REQAPP`.
+1. `REQAPP` dereferences `CONTROLLER`'s [=identity=] to get `CONTROLLER`'s
+    [=identity profile document=].
+1. `REQAPP` uses [=Access Need Groups=] from its
+    [=application profile document=] with an `interop:accessScenario` of
+    `interop:SharedAccess` to identify [=Access Need Groups=] to request
+    from `CONTROLLER`.
+1. `CONTROLLER` has an `interop:receivesAccessReceipt` value of `ReceiptInMessage`
+    in their [=identity profile document=].
+1. `REQAPP` puts the [=Access Need Groups=] into an [=Access Request=]
+    and posts it to the access inbox identified by `interop:hasAccessInbox`
+    in the `CONTROLLER`'s [=identity profile document=].
+1. `CAUTHZ` monitors `CONTROLLER`'s access inbox autonomously. It notifies
+    `CONTROLLER` when a new [=Access Request=] is received.
+    1. `CONTROLLER` clicks a link in the notification from `CAUTHZ`,
+        opening the `CAUTHZ` user interface and invoking the
+        [[##present-grant]] workflow using the 
+        [=Access Need Groups=] from
+        the [=Access Request=].
+    1. `CONTROLLER` determines whether they wish to grant the access requested.
+    1. Assuming `CONTROLLER` authorizes a minimum of the
+        required [=Access Need Groups=] and [=Access Needs=],
+        the [[#grants-recordgrant]] operation is invoked.
+    1. [[#grants-recordgrant]] stores an [=Access Grant=] in `CONTROLLER`'s
+        [=Access Grant Registry=].
+        1. [[#apply-permissions]] is called to apply permissions based on the
+            [=Access Grant=].
+        1. [[#provide-access-receipt]] is called to deliver the [=Access Receipt=].
+            1. `CAUTHZ` dereferences `REQUESTER`'s [=identity=] to get
+                `REQUESTER`'s [=identity profile document=].
+            1. `REQUESTER` has set `interop:receivesAccessReceipt` to
+                `ReceiptInMessage`, so the [=Access Receipt=] is posted
+                to the access inbox identified via `hasAccessInbox` in
+                `REQUESTER`'s '[=identity profile document=].
+1. `RAUTHZ` monitors `REQUESTER`'s access inbox autonomously. It notifies
+    `REQUESTER` when a new [=Access Receipt=] is received.
+    1. `REQUESTER` clicks the link in the notification, opening the
+        `RAUTHZ` user interface, and presenting the [=Access Receipt=]
+        to `REQUESTER`.        
+    1. `REQUESTER` accepts the [=Access Receipt=], and `RAUTHZ`
+        invokes the [[#record-access-receipt]] operation.
+        1. [[#record-access-receipt]] is called to store the [=Access Receipt=]
+            in `REQUESTER`'s [=Access Receipt Registry=].
+        1. [[#update-remote-data]] is called to update `REQUESTER`'s
+            [=Remote Data Registry=] to reflect what is in the
+            [=Access Receipt=].
+
+### Controller Shares Access ### {#authz-controllershare}
+
+Let `CONTROLLER` be an [=Agent=] in control of data that
+    they would like to authorize `RECEIVER` to access.
+
+Let `CAPP` be an [=Application=] piloted by `CONTROLLER`
+
+Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
+    authorization and access control.
+
+Let `RECEIVER` be an [=Agent=] receiving access to data from another
+    [=Agent=] `CONTROLLER`.
+
+Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
+    authorization and access control.
+
+1. `CONTROLLER` would like to give `RECEIVER` access to their data.
+1. `CONTROLLER` provides `RECEIVER`'s [=identity=] to `CAPP`.
+1. `CAPP` dereferences `RECEIVER`'s [=identity=] to get `RECEIVER`'s
+    [=identity profile document=].
+1. `CAPP` discovers that `CAUTHZ` is an [=Application=] that is a 
+    [=Trusted Agent=] of `CONTROLLER` for data authorization
+    via the [[#load-application-service]] operation.
+1. `CAPP` redirects `CONTROLLER` to `CAUTHZ` via the [[#redirect-to-application-service]]
+    operation.
+    1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
+        [=Access Need Groups=] with an `interop:accessScenario` of
+        `interop:SharedAccess`
+    1. Any [=Access Need Groups=] found are passed to the [[##present-grant]]
+        workflow, which presents them to `CONTROLLER`.
+    1. `CONTROLLER` authorizes the data to share with `RECEIVER` based on
+        the provided [=Access Need Groups=].
+        1. The [[#grants-recordgrant]] operation is invoked
+            1. An [=Access Grant=] is stored in `CONTROLLER`'s
+                [=Access Grant Registry=].
+            1. [[#apply-permissions]] is called to apply permissions based
+                on the [=Access Grant=].
+            1. [[#provide-access-receipt]] is called to store the
+                [=Access Receipt=]. `RECEIVER` has set
+                `interop:receivesAccessReceipt` to
+                `ReceiptInMessage`, so the [=Access Receipt=] is posted
+                to the access inbox identified via `hasAccessInbox` in
+                `RECEIVER`'s '[=identity profile document=].
+    1. `CAUTHZ` redirects `CONTROLLER` back to `CAPP` via the
+        [[#return-from-application-service]] operation.
+1. `RAUTHZ` monitors `RECEIVER`'s access inbox autonomously. It notifies
+    `RECEIVER` when a new [=Access Receipt=] is received.
+    1. `RECEIVER` clicks the link in the notification, opening the
+        `RAUTHZ` user interface to review the [=Access Receipt=].
+    1. `RECEIVER` accepts the [=Access Receipt=], and `RAUTHZ`
+        invokes the [[#record-access-receipt]] operation.
+        1. [[#record-access-receipt]] is called to store the [=Access Receipt=]
+            in `RECEIVER`'s [=Access Receipt Registry=].
+        1. [[#update-remote-data]] is called to update `RECEIVER`'s
+            [=Remote Data Registry=] to reflect what is in the
+            [=Access Receipt=].
+
+### Controller Shares Access with Invited Agent ### {#authz-controllerinvite}
+
+Controlling Agent initiates sharing their data with an Agent that doesn't
+have an identity or a pod.
+
+Let `CONTROLLER` be an [=Agent=] in control of data that
+    they would like to authorize `INVITEE` to access.
+
+Let `CAPP` be an [=Application=] piloted by `CONTROLLER`
+
+Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
+    authorization and access control.
+
+Let `CISERVICE` be an [=Application=] trusted by `CONTROLLER` to validate
+    invitations made to `INVITEE`s.
+
+Let `INVITEE` be a person without an [=identity=] or [=pod=] that `CONTROLLER`
+    would like to authorize to access their data. `CONTROLLER` knows their
+    e-mail address and mobile phone number.
+
+LET `PROVIDER` be a service that hosts [=identities=] and [=pods=] who
+    provisions the same for `INVITEE`
+
+Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
+    `INVITEE` for authorization and access control.
+
+1. `CONTROLLER` would like to give `INVITEE` access to their data.
+1. `CONTROLLER` provides `INVITEE`'s e-mail address and mobile number to `CAPP`.
+1. `CAPP` discovers that `CAUTHZ` is an [=Application=] that is a 
+    [=Trusted Agent=] of `CONTROLLER` for data authorization
+    via the [[#load-application-service]] operation.
+1. `CAPP` redirects `CONTROLLER` to `CAUTHZ` via the [[#redirect-to-application-service]]
+    operation.
+    1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
+        [=Access Need Groups=] with an `interop:accessScenario` of
+        `interop:SharedAccess`
+    1. Any [=Access Need Groups=] found are passed to 
+        the [[##present-grant]]
+        workflow, which presents them to `CONTROLLER`.
+    1. `CONTROLLER` authorizes the data to share with `INVITEE` based on
+        the provided [=Access Need Groups=].
+        1. The [[#grants-recordinvitation]] operation is invoked
+            1. An [=Access Invitation=] is stored in `CONTROLLER`'s
+                [=Access Grant Registry=].
+            1. [[#grants-deliverinvitation]] is called to create an
+                invitation entry for each [=Access Invitation Channel=] in
+                the [=Access Invitation=] with `CISERVICE`
+            1. For each [=Access Invitation Channel=] in the
+                [=Access Invitation=]
+                1. `CISERVICE` sends a notification to `INIVITEE` using the
+                    medium associated with the [=Access Invitation Channel=]
+                    type
+    1. `CAUTHZ` redirects `CONTROLLER` back to `CAPP` via the
+        [[#return-from-application-service]] operation.
+1. `INVITEE` receives a notification associated with one of the
+    [=Access Invitation Channels=].
+    1. `INVITEE` clicks a link in the notification to register an
+        identity and pod with `PROVIDER`.
+    1. `INVITEE` clicks a link in the notification bringing them to the
+        `CISERVICE` user interface to validate the invitation by
+        invoking [[#grants-validateinvitation]].
+        1. If validation is successful, but there are other
+            [=Access Invitation Channels=] left to validate, the `INVITEE` will
+            be prompted to validate them. Continue until failure or
+            validation of all [=Access Invitation Channels=] are succesful.
+        1. `CISERVICE` initializes a new [=Access Grant=] via
+            [[#grants-initializegrant]], using the contents of
+            the [=Access Invitation=], and the new registered
+            [=identity=] for `INVITEE`.
+        1. `CISERVICE` calls [[#grants-recordgrant]] using the
+            [=Access Grant=] initialized from the [=Access Invitation=]
+            1. An [=Access Grant=] is stored in `CONTROLLER`'s
+                [=Access Grant Registry=].
+            1. [[#apply-permissions]] is called to apply permissions
+                based on the [=Access Grant=].
+            1. [[#provide-access-receipt]] is called to store the
+                [=Access Receipt=]. `INVITEE` has set
+                `interop:receivesAccessReceipt` to
+                `ReceiptInMessage`, so the [=Access Receipt=] is posted
+                to the access inbox identified via `hasAccessInbox` in
+                `INVITEE`'s '[=identity profile document=].
+
+
+Issue: Should we assume that CISERVICE is able to manage grants, or should
+it need to redirect through the authorization agent? Perhaps the recommendation
+should be that they are combined? Bad separation of concerns?
+
+Issue: This doesn't take account a sequencing of validation steps from
+one channel to another.
+
+## Application Services ## {#authz-services}
+
+### Authorize Data Service ### {#authz-service-authorize}
+
+Issue: Define data authorization service

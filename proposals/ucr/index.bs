@@ -1,0 +1,210 @@
+<pre class='metadata'>
+Title: Solid Application Interoperability Use Cases and Requirements
+Shortname: interop-ucr
+Level: 1
+Status: w3c/ED
+Group: solid-cg
+Max ToC Depth: 3
+URL: https://solid.github.io/data-interoperability-panel/ucr/
+Editor: Solid Data Interoperability Panel
+Abstract: Use Cases and Requirements for Application Interoperability in 
+    the Solid ecosystem.
+</pre>
+
+<!-- For bikeshed style overrides -->
+<style>
+
+  table.collections thead tr {
+    font-size: 16px;
+  }
+
+  table.collections tbody tr:nth-child(even) {
+    background-color: lightgray;
+    font-size: 12px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    table.collections tbody tr:nth-child(even) {
+      background-color: DarkSlateGray;
+    }
+  }
+
+  table.collections tbody td {
+    font-size: 12px;
+  }
+
+  figcaption {
+    text-align: left;
+  }
+
+  a[data-link-type=dfn] {
+    color: #000000;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    a[data-link-type=dfn] {
+      color: #FFFFFF;
+    }
+  }
+
+}
+
+</style>
+
+<div boilerplate="copyright">
+MIT License Copyright 2019 - 2020 W3C Solid Community Group
+</div>
+
+Introduction {#intro}
+================================================================================
+
+The [[#usecases]] in this document represent real-world scenarios that
+an interoperable Solid application ecosystem should support. 
+
+The [[#requirements]] in this
+document are derived from those use cases, and inform the contents of the
+Application Interoperability specification.
+
+Use Cases {#usecases}
+================================================================================
+
+## Data Authorization ## {#uc-authz}
+
+TODO - Change all of these to "People sharing data with..." and then
+have full access / control as a subset for trusted agent cases
+
+TODO - Make sure that we have embedded / piloted use case in here
+
+### People trusting people ### {#trusted-people}
+
+#### Agent gives control to another individual #### {#trusted-person}
+
+Bob is Alice's brother. Alice needs some assistance getting her life and 
+finances organized, and asks Bob for help.
+
+Alice trusts Bob completely, and so she gives him the ability to help her 
+manage all of her data, manage the applications and services authorized to 
+use her data, and also manage who else can access that data.
+
+#### Trusted person grants access to another application #### {#trusted-person-grant-app}
+
+Finsync is an application service that synchronizes bank transactions from 
+various banks into a pod. Bob authorizes
+Finsync to store Alice's banking data from three of her banks into
+her pod.
+
+TODO - make sure that this properly covers directing / storing the data in the
+right registry
+
+#### Trusted person uses a piloted application to access data #### {#trusted-person-pilots-app}
+
+Bob has been using an application called Finmanage to manage his own finances. 
+Consequently, he decides it will be helpful to use to manage Alice's 
+data as well. Bob uses Finmange to view and annotate the financial 
+transactions stored in Alice's pod.
+
+#### Trusted Agent grants another agent access to registered data #### {#trusted-person-grant-person}
+
+Bob gives Juan read access to Alice's financial records, because Juan is 
+Alice's accountant. Juan is sent a notification from Bob on behalf of Alice 
+that lets him know he has been given access. Juan updates his records so 
+he remembers that Alice's financial data has been shared with him. Bob 
+keeps a record of the decision in Alice's pod.
+
+#### Trusted Agent makes another person a trusted agent #### {#trusted-person-make-trusted}
+
+Alice realizes that Bob's help has been invaluable, and asks Bob to help
+her retain a personal assistant who can devote more time than Bob 
+has available. After an exhaustive amount of interviewing, Bob hires Max to 
+be Alice's trusted personal assistant. Bob grants Max the access 
+manage all of Alice's data, manage the applications and services authorized to 
+use her data, and also manage who else can access that data.
+
+#### Trusted Agent removes another agent's access to registered data #### {#trusted-person-remove-person}
+
+Bob removes Deborah's access to Alice's mortgage records, as Deborah is no 
+longer Alice's mortgage broker. Deborah receives a notification from Bob 
+on behalf of Alice letting her know that she no longer has access to 
+this data, and updates her records accordingly.
+
+
+### People trusting applications ### {#trusted-applications}
+
+#### Person gives full access and control to another application #### {#trusted-app-full-service}
+
+Alice uses her pod extensively, exchanging data and information with a 
+number of services, applications, and people. To help ensure the integrity 
+of her data, and repair potential issues across her pods and registries, 
+she trusts an application called PodMedic to help ensure her pod and data 
+are in good working order, and are safe. PodMedic doesn't interface with 
+other people or applications, but it has full access to all of her 
+registries and data.
+
+#### Person gives full access and control to a specific pod #### {#trusted-app-work-access}
+
+Alice has two pods, one hosted by her employer Acme, and another that
+she self-hosts for personal content.
+
+Her employer has a data management service called AcmeIO that requires full
+access to the data in Alice's work pod. Since both her work and personal
+pod are linked through her identity, she makes AcmeIO a trusted agent,
+but only for the data in her work pod.
+
+#### Person trusts application to help them register new applications #### {#trusted-app-registration}
+
+Alice likes to discover new ways to extract value from the data in her pod,
+which means trying out new applications and services that are compatible
+with the data she has. She trusts an application called DataManage to
+help her determine if an application is safe to use, and then register that 
+application.
+
+#### Person trusts application to help them authorize access to data #### {#trusted-app-authorization}
+
+Alice wants to use an application called FinanceInsight to help her
+understand trends in her cashflow and spending activity, using financial
+data stored in her pod. First she needs to grant FinanceInsight access
+to that data. Since she has a lot of other data in her pod, she needs 
+to grant FinanceInsight access only to the data it needs.
+
+Because there's a lot of finance data spread across her pod, along with
+some data that is related in context, she needs help to make sure that she's
+giving FinanceInsight access to all of the data it needs to operate, but no
+more.
+
+Alice trusts an application called DataManage to help her interpret the kind
+of data that FinanceInsight needs, then present access decisions to her
+so that she can smart intuitive, smart choices. Once she makes those 
+decisions, DataManage changes the permissions for her.
+
+### Organizations trusting people and applications ### {#trusted-organization}
+
+#### Organization has data storage and trusted administrators #### {#trusted-org-admins}
+
+Acme is an organization that stores data in a Solid pod. Paul and Eric both
+work for Acme, and are trusted to manage all of Acme's data, 
+the applications and services authorized to 
+use it, and also manage who else can access that data.
+
+#### Trusted administrator authorizes an application to access data #### {#trusted-org-app}
+
+Acme generates analytic reports that it distributes to its customers through
+an application called AcmeReport. Paul authorizes AcmeReport to have read 
+access to analytic reports, so it can distribute them to Acme customers.
+
+#### Trusted administrator authorizes a person to access data #### {#trusted-org-person}
+
+Acme also allows their customers to access analytic reports directly. Eric
+grants Acme's customer group read acecss to analytic reports.
+
+## Data Discovery ## {#discovery}
+
+### Application can discover publicly accessible resources already known by the user ### {#public-discovery}
+
+Bob cultivates various interests and contributes to many independent wikis,
+including cocoascript.example, airwall.example, frogman.example, etc.
+Bob discovers a new application to edit wiki pages, wikitor.example, and
+he authorizes it to read and write wiki pages on his behalf. Bob expects
+that wikitor will find all the wiki pages to which he has already contributed.
+
+Requirements {#requirements}
+================================================================================

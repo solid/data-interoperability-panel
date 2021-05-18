@@ -1,0 +1,88 @@
+Definitions {#definitions}
+=====================
+
+<b>All definitions as stated below should be considered in the context of
+an interoperable [=ecosystem=] for [=Solid=], whether explicitly stated
+or not.</b>
+
+<dfn>Solid</dfn> is a protocol made up of a number of open web standards
+aimed at decentralizing data on the web.
+
+A Solid <dfn>pod</dfn> is a place for storing and accessing data via
+the [=Solid=] protocol, with mechanisms for controlling who or what can
+access that data.
+
+An interoperable <dfn>ecosystem</dfn> is
+a collection of [=Solid=] compatible [=applications=] developed by one or more
+entities, used by a community of users, that can safely access and manipulate
+the same kinds of data in [=pods=].
+
+A <dfn>server-side application</dfn> runs on a dedicated server. They may
+also act as autonomous [=authenticated agents=].
+
+A <dfn>user-piloted application</dfn> runs on a user's device, with the user
+as the [=authenticated agent=]. They include in-browser javascript
+applications, native desktop applications, and mobile applications.
+
+An <dfn>authenticated agent</dfn> is an [=agent=] that has strongly
+authenticated their [=identity=] by proving control of the
+[=identity profile document=] via an authentication protocol such as
+[[WEBID-OIDC]].
+
+An <dfn>identity</dfn> is a unique URI that can be dereferenced
+to return an [=identity profile document=]. Compatible
+identity systems include [=WebID=] and [=DID=].
+
+An <dfn>identity profile document</dfn> is a linked data document obtained by
+dereferencing the URI for a given [=identity=]. It provides information that
+can be used to prove that a given [=Agent=] controls the document.
+
+A <dfn>WebID</dfn> is a web resource at an HTTP URI which refers to an
+[=agent=]. An [=identity profile document=] can be accessed by
+dereferencing the WebID. [[WEBID]]
+
+A <dfn>DID</dfn> is a URI that associates a DID subject (e.g. an [=agent=],
+thing, data model, abstract entity, etc.) with a DID document,
+equivalent to an [=identity profile document=], to allow trustable
+interactions with that subject. [[DID]]
+
+An <dfn>application identity</dfn> is a web resource at an HTTP URI 
+that uniquely identifies a given [=Application=], and dereferences to an
+[=application profile document=].
+
+An <dfn>application profile document</dfn> is a linked data document
+obtained by dereferencing the URI for a given [=application identity=].
+
+An <dfn>acl resource</dfn> as defined by [[WAC]] may be directly
+associated with a resource or indirectly associated with a resource
+through inheritance. It determines which [=authorization subjects=] can
+access a resource, and the modes of access they have for it.
+
+An <dfn>access mode</dfn> denotes operations (e.g. read, write)
+that a given [=authorization subject=] can perform on a resource.
+
+An <dfn>authorization subject</dfn> is the target of a given authorization
+statement in an [=acl resource=]. It is either an [=Agent=] (individual,
+group, [=server-side application=]), a
+[=User-Piloted Application=] in use by *any* [=Agent=], or a combination of
+a specific [=Agent=] using a specific [=User-Piloted Application=].
+
+An <dfn>authorization statement</dfn> is ...
+
+A <dfn>shape</dfn> provides a schema that RDF data graphs must meet in order
+to be considered conformant. A shape associated with a given resource in a
+[=pod=] ensures that any data stored in that resource must conform to the
+associated shape. Shape languages include [[SHEX]] and [[SHACL]].
+
+A <dfn>Shape Tree</dfn> defines a prospective tree of related resources
+which can be read and written by applications. The shape tree associates
+each of these resources with a shape. This allows one to treat a set of
+related resources as a single grouping, and apply that to a range of
+operations including access control, data organization, data validation,
+and data migration. [[SHAPETREES]]
+
+A <dfn>Shape Tree Decorator</dfn> provides additional human-readable
+description and context for a given [=shape tree=].
+
+A <dfn>Shape Tree Reference</dfn> provides the necessary context to
+associate instances of related shape trees via a ShapePath
