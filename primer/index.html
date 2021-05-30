@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 800b43329, updated Tue May 25 14:13:32 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/primer/" rel="canonical">
-  <meta content="02db3395cc754b581ad20375bfb7912de47c3ada" name="document-revision">
+  <meta content="f3381be2215e2f2212a2825bd664ee6c307d0b3c" name="document-revision">
 <style>
 
   .sequence-diagram {
@@ -618,18 +618,18 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h2 class="heading settled" data-level="2" id="data"><span class="secno">2. </span><span class="content">Data</span><a class="self-link" href="#data"></a></h2>
    <p>All turtle and shapetree code snippets in this primer will assume following prefixes.</p>
    <figure>
-<pre class="include-code highlight"><c- o>@</c-><c- k>prefix</c-> <c- nn>xsd</c-><c- p>:</c-> <c- nl>&lt;http://www.w3.org/2001/XMLSchema#></c-> <c- p>.</c->
-<c- o>@</c-><c- k>prefix</c-> <c- nn>rdf</c-><c- p>:</c-> <c- nl>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#></c-> <c- p>.</c->
-<c- o>@</c-><c- k>prefix</c-> <c- nn>rdfs</c-><c- p>:</c-> <c- nl>&lt;http://www.w3.org/2000/01/rdf-schema#></c-> <c- p>.</c->
-<c- o>@</c-><c- k>prefix</c-> <c- nn>dcterms</c-><c- p>:</c-> <c- nl>&lt;http://purl.org/dc/terms/></c-> <c- p>.</c->
-<c- o>@</c-><c- k>prefix</c-> <c- nn>solid</c-><c- p>:</c-> <c- nl>&lt;http://www.w3.org/ns/solid/terms#></c-> <c- p>.</c->
-<c- o>@</c-><c- k>prefix</c-> <c- nn>interop</c-><c- p>:</c-> <c- nl>&lt;http://www.w3.org/ns/solid/interop#></c-> <c- p>.</c->
-<c- o>@</c-><c- k>prefix</c-> <c- nn>solidshapes</c-><c- p>:</c-> <c- nl>&lt;https://solidshapes.example/shapes/></c-> <c- p>.</c->
-<c- o>@</c-><c- k>prefix</c-> <c- nn>solidtrees</c-><c- p>:</c-> <c- nl>&lt;https://solidshapes.example/trees/></c-> <c- p>.</c->
-<c- o>@</c-><c- k>prefix</c-> <c- nn>ex</c-><c- p>:</c-> <c- nl>&lt;https://namespace.example/></c-> <c- p>.</c->
-<c- o>@</c-><c- k>prefix</c-> <c- nn>acme</c-><c- p>:</c-> <c- nl>&lt;https://acme.example/></c-> <c- p>.</c->
-<c- o>@</c-><c- k>prefix</c-> <c- nn>alice</c-><c- p>:</c-> <c- nl>&lt;https://alice.example/></c-> <c- p>.</c->
-<c- o>@</c-><c- k>prefix</c-> <c- nn>bob</c-><c- p>:</c-> <c- nl>&lt;https://bob.example/></c-> <c- p>.</c->
+<pre class="include-code highlight"><c- k>@prefix</c-> <c- nn>xsd:</c-> <c- g>&lt;http://www.w3.org/2001/XMLSchema#></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>rdf:</c-> <c- g>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>rdfs:</c-> <c- g>&lt;http://www.w3.org/2000/01/rdf-schema#></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>dcterms:</c-> <c- g>&lt;http://purl.org/dc/terms/></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>solid:</c-> <c- g>&lt;http://www.w3.org/ns/solid/terms#></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>interop:</c-> <c- g>&lt;http://www.w3.org/ns/solid/interop#></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>solidshapes:</c-> <c- g>&lt;https://solidshapes.example/shapes/></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>ex:</c-> <c- g>&lt;https://namespace.example/></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>acme:</c-> <c- g>&lt;https://acme.example/></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>alice:</c-> <c- g>&lt;https://alice.example/></c-> <c- p>.</c->
+<c- k>@prefix</c-> <c- nn>bob:</c-> <c- g>&lt;https://bob.example/></c-> <c- p>.</c->
 </pre>
     <figcaption>common prefixes for turtle</figcaption>
    </figure>
@@ -660,7 +660,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h4 class="heading settled" data-level="2.1.2" id="shape-trees"><span class="secno">2.1.2. </span><span class="content">Shape Trees</span><a class="self-link" href="#shape-trees"></a></h4>
    <figure>
 <pre class="include-code highlight"><c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c->
-  <c- k>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
   <c- nn>shapetree</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
   <c- nn>shapetree</c-><c- p>:</c-><c- f>validatedBy</c-> <c- nn>solidshapes</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
     <c- nn>shapetree</c-><c- p>:</c-><c- f>reference</c-> <c- p>[</c->
@@ -673,7 +673,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c->
-  <c- k>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
   <c- nn>shapetree</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
   <c- nn>shapetree</c-><c- p>:</c-><c- f>validatedBy</c-> <c- nn>solidshapes</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
   <c- nn>shapetree</c-><c- p>:</c-><c- f>matchesUriTemplate</c-> <c- s>"{uuid}"</c-> <c- p>.</c->
@@ -684,10 +684,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h4 class="heading settled" data-level="2.2.1" id="data-registrations"><span class="secno">2.2.1. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations"></a></h4>
    <figure>
 <pre class="include-code highlight"><c- nn>acme</c-><c- p>:</c-><c- f>4d594c61-7cff-484a-a1d2-1f353ee4e1e7</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- nl>&lt;https://garry.example/#id></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- nl>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-08-23T21:12:27.000Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://garry.example/#id></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-08-23T21:12:27.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRegisteredDataInstance</c-> <c- nn>acme</c-><c- p>:</c-><c- f>9005ea66-fcc3-47af-b082-5da78140bc53\#project</c-> <c- p>,</c->
                                     <c- nn>acme</c-><c- p>:</c-><c- f>df0aa24c-fe28-4e9f-9f35-2a9a29d63a06\#project</c-> <c- p>,</c->
@@ -697,10 +697,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>acme</c-><c- p>:</c-><c- f>4d594c61-7cff-484a-a1d2-1f353ee4e1e7</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- nl>&lt;https://garry.example/#id></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- nl>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-08-23T21:12:45.000Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://garry.example/#id></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-08-23T21:12:45.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRegisteredDataInstance</c-> <c- nn>acme</c-><c- p>:</c-><c- f>9b982a4b-2642-496b-9990-d4464fb36771\#task</c-> <c- p>,</c->
                                     <c- nn>acme</c-><c- p>:</c-><c- f>cf5d7d37-ae8e-40c1-a5d1-ef22cf228507\#task</c-> <c- p>,</c->
@@ -716,7 +716,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h4 class="heading settled" data-level="2.3.1" id="webid-document"><span class="secno">2.3.1. </span><span class="content">WebID Document</span><a class="self-link" href="#webid-document"></a></h4>
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>\#id</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Agent</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Agent</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantRegistrySet</c-> <c- nn>alice</c-><c- p>:</c-><c- f>40c34ba8-5d85-47e5-af40-abc3e7fecdec</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataRegistrySet</c-> <c- nn>alice</c-><c- p>:</c-><c- f>ba4da3ec-dea4-41b2-be02-e4bf7a9477df</c-> <c- p>.</c->
 </pre>
@@ -725,7 +725,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h4 class="heading settled" data-level="2.3.2" id="registry-sets"><span class="secno">2.3.2. </span><span class="content">Registry Sets</span><a class="self-link" href="#registry-sets"></a></h4>
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>ba4da3ec-dea4-41b2-be02-e4bf7a9477df</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistrySet</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistrySet</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c->
     <c- nn>alice</c-><c- p>:</c-><c- f>6f6e4241-75a2-4780-9b2a-40da53082e54</c-> <c- p>.</c->
 </pre>
@@ -733,7 +733,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>6f6e4241-75a2-4780-9b2a-40da53082e54</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistry</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistry</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c->
     <c- nn>alice</c-><c- p>:</c-><c- f>33caf7be-f804-4155-a57a-92216c577bd4</c-> <c- p>.</c->
 </pre>
@@ -741,7 +741,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>40c34ba8-5d85-47e5-af40-abc3e7fecdec</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistrySet</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistrySet</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c->
     <c- nn>alice</c-><c- p>:</c-><c- f>3c7f1d03-0721-4eb1-9adf-6a8690f33b35</c-> <c- p>.</c->
 </pre>
@@ -749,7 +749,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>3c7f1d03-0721-4eb1-9adf-6a8690f33b35</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistry</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistry</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c-> <c- nn>alice</c-><c- p>:</c-><c- f>6b1b6e39-75e4-44f8-84f3-104b1a8210ad</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s Access Grant Registry</figcaption>
@@ -757,10 +757,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h4 class="heading settled" data-level="2.3.3" id="data-registrations①"><span class="secno">2.3.3. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations①"></a></h4>
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>773605f0-b5bf-4d46-878d-5c167eac8b5d</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- nl>&lt;https://alice.example/#id></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- nl>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-10-17T11:42:35.000Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-10-17T11:42:35.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRegisteredDataInstance</c-> <c- nn>alice</c-><c- p>:</c-><c- f>ccbd77ae-f769-4e07-b41f-5136501e13e7\#project</c-> <c- p>.</c->
 </pre>
@@ -768,10 +768,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>4d594c61-7cff-484a-a1d2-1f353ee4e1e7</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- nl>&lt;https://alice.example/#id></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- nl>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-10-17T11:42:36.000Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-10-17T11:42:36.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRegisteredDataInstance</c-> <c- nn>alice</c-><c- p>:</c-><c- f>576520a6-af5a-4cf9-8b40-8b1512b59c73\#task</c-> <c- p>,</c->
                                     <c- nn>alice</c-><c- p>:</c-><c- f>106a82aa-6911-4a7e-a49b-383cbaa9da66\#task</c-> <c- p>.</c->
@@ -780,12 +780,12 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>33caf7be-f804-4155-a57a-92216c577bd4</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistration</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- nl>&lt;https://alice.example/#id></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- nl>&lt;https://jarvis.alice.example/#agent></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:16:01Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://jarvis.alice.example/#agent></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:16:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasDataReceipt</c->
     <c- nn>alice</c-><c- p>:</c-><c- f>23dd1856-ac91-4acb-85ce-7f335057c8ae</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c->
@@ -801,10 +801,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>c8d29dce-eb5b-4894-9e4a-02781dbfcba3</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataInstance</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:16:01Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataInstance</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:16:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasDataReceipt</c->
     <c- nn>alice</c-><c- p>:</c-><c- f>23dd1856-ac91-4acb-85ce-7f335057c8ae</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
@@ -816,10 +816,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>a3859644-a71c-4a41-b253-d0cce25a0126</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataInstance</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:16:01Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataInstance</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:16:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasDataReceipt</c->
     <c- nn>alice</c-><c- p>:</c-><c- f>23dd1856-ac91-4acb-85ce-7f335057c8ae</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
@@ -832,27 +832,27 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h4 class="heading settled" data-level="2.3.4" id="access-grants"><span class="secno">2.3.4. </span><span class="content">Access Grants</span><a class="self-link" href="#access-grants"></a></h4>
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>6b1b6e39-75e4-44f8-84f3-104b1a8210ad</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrant</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrant</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#me</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- nl>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-> <c- nl>&lt;#subject></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> <c- nl>&lt;#project-grant></c-><c- p>,</c-> <c- nl>&lt;#task-grant></c-> <c- p>.</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-> <c- g>&lt;#subject></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#project-grant></c-><c- p>,</c-> <c- g>&lt;#task-grant></c-> <c- p>.</c->
 
-<c- nl>&lt;#subject></c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
+<c- g>&lt;#subject></c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#me</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>accessByApplication</c-> <c- nl>&lt;https://performchart.example/#app></c-> <c- p>.</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessByApplication</c-> <c- g>&lt;https://performchart.example/#app></c-> <c- p>.</c->
 
-<c- nl>&lt;#project-grant></c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
+<c- g>&lt;#project-grant></c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfDataGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>.</c->
 
-<c- nl>&lt;#task-grant></c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
+<c- g>&lt;#task-grant></c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtree</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfDataGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>.</c->
@@ -863,10 +863,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h4 class="heading settled" data-level="2.4.1" id="data-registrations②"><span class="secno">2.4.1. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations②"></a></h4>
    <figure>
 <pre class="include-code highlight"><c- nn>bob</c-><c- p>:</c-><c- f>0af793c1-8abc-441c-aacc-f78483b34217</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- nl>&lt;https://bob.example/#id></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- nl>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2019-03-14T13:42:31.000Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://bob.example/#id></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2019-03-14T13:42:31.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRegisteredDataInstance</c-> <c- nn>bob</c-><c- p>:</c-><c- f>e293da85-59cf-45e6-9c1c-c721cfa59893\#project</c-> <c- p>.</c->
 </pre>
@@ -874,10 +874,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>bob</c-><c- p>:</c-><c- f>4675444a-8a4d-46e1-abfe-85147e5a9b76</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- nl>&lt;https://bob.example/#id></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- nl>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2019-03-14T13:42:32.000Z"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://bob.example/#id></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2019-03-14T13:42:32.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRegisteredDataInstance</c-> <c- nn>bob</c-><c- p>:</c-><c- f>17fe4de3-6c6a-4ebe-9b75-b942cfdfa087\#task</c-> <c- p>,</c->
                                     <c- nn>bob</c-><c- p>:</c-><c- f>df5581b7-c047-49f8-9f34-ed8fc6570548\#task</c-> <c- p>.</c->
@@ -887,28 +887,28 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h3 class="heading settled" data-level="2.5" id="performchartexample"><span class="secno">2.5. </span><span class="content">performchart.example</span><a class="self-link" href="#performchartexample"></a></h3>
    <figure>
 <pre class="include-code highlight"><c- nn>performchart</c-><c- p>:</c-><c- f>\#app</c->
-  <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Application</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Application</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>applicationName</c-> <c- s>"PerformChart"</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>applicationDescription</c->
     <c- s>"Creates performance statistics and visualisation for the projects you work on"</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- nl>&lt;#access></c-> <c- p>.</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#access></c-> <c- p>.</c->
 
-<c- nl>&lt;#access></c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeed</c-> <c- nl>&lt;#project></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedOverride</c-> <c- nl>&lt;#task></c-> <c- p>;</c->
+<c- g>&lt;#access></c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeed</c-> <c- g>&lt;#project></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedOverride</c-> <c- g>&lt;#task></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessDecoratorIndex</c-> <c- nn>performchart</c-><c- p>:</c-><c- f>44430955-4844-466b-9e1b-04893d0a0d50</c-> <c- p>.</c->
 
-<c- nl>&lt;#project></c->
-    <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeed</c-> <c- p>;</c->
+<c- g>&lt;#project></c->
+    <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeed</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>recursivelyAuthorize</c-> <c- kc>true</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>recursivelyAuthorize</c-> <c- l>true</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessRequired</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-> <c- p>.</c->
 
-<c- nl>&lt;#task></c-> <c- c># Override to stop recursion</c->
-    <c- k>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeed</c-> <c- p>;</c->
+<c- g>&lt;#task></c-> <c- c># Override to stop recursion</c->
+    <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeed</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>recursivelyAuthorize</c-> <c- kc>false</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>recursivelyAuthorize</c-> <c- l>false</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessRequired</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-> <c- p>.</c->
 </pre>
