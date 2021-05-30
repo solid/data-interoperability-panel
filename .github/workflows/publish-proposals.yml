@@ -3,7 +3,7 @@
 name: publish proposals
 on:
   push:
-    # only concerned with changes in the master branch
+    # only concerned with changes in the main branch
     branches: [ main ]
     # only invoke when a bikeshed document is updated
     # paths: [ '*.bs' ]
@@ -33,7 +33,7 @@ jobs:
         run: for index in proposals/*/index.bs; do bikeshed spec $index; done
 
       - name: generate svg
-        run: for diagram in proposals/**/*.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
+        run: for diagram in proposals/*/diagrams/*.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
 
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3
