@@ -4,7 +4,7 @@ name: publish proposals
 on:
   push:
     # only concerned with changes in the master branch
-    branches: [ master ]
+    branches: [ main ]
     # only invoke when a bikeshed document is updated
     # paths: [ '*.bs' ]
 
@@ -20,22 +20,23 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.8'
-    
+
       - name: upgrade pip
         run: python3 -m pip install --upgrade pip
-                    
+
       - name: install bikeshed
         run: |
           python3 -m pip install --upgrade bikeshed
           bikeshed update
-          
+
       - name: generate html
         run: for index in proposals/*/index.bs; do bikeshed spec $index; done
-          
+
+      - name: generate svg
+        run: for diagram in proposals/**/*.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
+
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          #github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./proposals
-          #publish_branch: master
-          personal_token: ${{ secrets.GITHUB_TOKEN }} 
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
