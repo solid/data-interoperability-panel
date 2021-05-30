@@ -23,7 +23,10 @@ flowchart LR
     AliceProTasks -- ldp:contains --> TAp2
     AliceProTasks -- ldp:contains --> TAp3
     AliceProTasks -- ldp:contains --> TAp4
-    PAp1RFT -. pm:hasTask .-> TAp1
-    PAp1RFT -. pm:hasTask .-> TAp2
-    PAp2RFT -. pm:hasTask .-> TAp3
+    PAp1 x-. pm:hasTask .-x TAp1
+    PAp1 x-. pm:hasTask .-x TAp2
+    PAp2 x-. pm:hasTask .-x TAp3
+    PAp1RFT --> TAp1
+    PAp1RFT --> TAp2
+    PAp2RFT --> TAp3
   end
