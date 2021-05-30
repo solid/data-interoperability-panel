@@ -1,0 +1,12 @@
+@prefix pm: <https://vocab.example/project-management/> .
+@prefix tbd: <https://tbd.example/> .
+@prefix alice-pro: <https://pro.alice.example/> .
+
+alice-pro:aa97cee2-e698-4972-8f1c-0acf909f1377
+  a tbd:ReferencesList ;
+  tbd:referencesOf alice-pro:7a130c38-668a-4775-821a-08b38f2306fb\#project ;
+  tbd:referenceShapePath "@solidshapes:Project/pm:hasTask/@solidshapes:Task" .
+
+alice-pro:7a130c38-668a-4775-821a-08b38f2306fb\#project
+  pm:hasTask
+    alice-pro:4d713903-d114-4890-a87c-eaed50c33e5e\#task .
