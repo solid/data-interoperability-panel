@@ -1,0 +1,32 @@
+flowchart LR
+
+  AliceProRegistry(["🗄️ Data Registry (Professional)"])
+  AliceProProjects["📁 Projects 🌿"]
+  AliceProTasks["📁 Tasks 🌿"]
+  PAp1("📄 P-Ap-1")
+  PAp1RFT("Tasks of P-Ap-1")
+  PAp2("📄 P-Ap-2")
+  PAp2RFT("Tasks of P-Ap-2")
+  TAp1("📄 T-Ap-1")
+  TAp2("📄 T-Ap-2")
+  TAp3("📄 T-Ap-3")
+  TAp4("📄 T-Ap-4")
+
+  subgraph pro.alice.example
+    AliceProRegistry -- :hasDataRegistration --> AliceProProjects
+    AliceProProjects -- ldp:contains --> PAp1
+    AliceProProjects -- ldp:contains --> PAp2
+    PAp1 -- tbd:hasReferencedList --> PAp1RFT
+    PAp2 -- tbd:hasReferencedList --> PAp2RFT
+    AliceProRegistry -- :hasDataRegistration --> AliceProTasks
+    AliceProTasks -- ldp:contains --> TAp1
+    AliceProTasks -- ldp:contains --> TAp2
+    AliceProTasks -- ldp:contains --> TAp3
+    AliceProTasks -- ldp:contains --> TAp4
+    PAp1 x-. pm:hasTask .-x TAp1
+    PAp1 x-. pm:hasTask .-x TAp2
+    PAp2 x-. pm:hasTask .-x TAp3
+    PAp1RFT --> TAp1
+    PAp1RFT --> TAp2
+    PAp2RFT --> TAp3
+  end

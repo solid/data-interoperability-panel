@@ -1,0 +1,24 @@
+flowchart LR
+
+  AliceHomeRegistry(["🗄️ Data Registry (Home)"])
+  AliceHomeProjects["📁 Projects 🌿"]
+  AliceHomeTasks["📁 Tasks 🌿"]
+  PAh1("📄 P-Ah-1")
+  PAh1RFT("Tasks of P-Ah-1")
+  TAh1("📄 T-Ah-1")
+  TAh2("📄 T-Ah-2")
+  TAh3("📄 T-Ah-3")
+
+  subgraph home.alice.example
+    AliceHomeRegistry -- :hasDataRegistration --> AliceHomeProjects
+    AliceHomeProjects -- ldp:contains --> PAh1
+    PAh1 -- tbd:hasReferencedList --> PAh1RFT
+    AliceHomeRegistry -- :hasDataRegistration --> AliceHomeTasks
+    AliceHomeTasks -- ldp:contains --> TAh1
+    AliceHomeTasks -- ldp:contains --> TAh2
+    AliceHomeTasks -- ldp:contains --> TAh3
+    PAh1 x-. pm:hasTask .-x TAh1
+    PAh1 x-. pm:hasTask .-x TAh2
+    PAh1RFT --> TAh1
+    PAh1RFT --> TAh2
+  end
