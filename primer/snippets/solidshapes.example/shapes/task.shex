@@ -1,7 +1,9 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX solidshapes: <https://solidshapes.example/shapes/>
-PREFIX ex: <https://namespace.example/>
+PREFIX pm: <https://vocab.example/project-management/>
 
 solidshapes:TaskShape {
-  a [ ex:Task ] ;
-  ex:inProject IRI
+  a [ pm:Task ] ;
+  rdfs:label xsd:string
 }

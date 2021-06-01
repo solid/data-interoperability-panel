@@ -1,5 +1,5 @@
 @prefix shapetree: <http://www.w3.org/ns/shapetree#> .
-@prefix ex: <https://namespace.example/> .
+@prefix pm: <https://vocab.example/project-management/> .
 @prefix solidshapes: <https://solidshapes.example/shapes/> .
 @prefix solidtrees: <https://solidshapes.example/trees/> .
 
@@ -7,8 +7,8 @@ solidtrees:Project
   a shapetree:ShapeTree ;
   shapetree:expectsType shapetree:ShapeTreeResource ;
   shapetree:validatedBy solidshapes:Project ;
-    shapetree:reference [
-    shapetree:traverseViaReverseShapePath "@solidshapes:Task/ex:inProject" ;
-    shapetree:hasShapeTree solidtrees:Task
-  ] ;
-  shapetree:matchesUriTemplate "{uuid}" .
+  shapetree:references urn:uuid:54b5e4f6-c6b5-4c9a-b885-cbf69d08370d .
+
+urn:uuid:54b5e4f6-c6b5-4c9a-b885-cbf69d08370d
+  shapetree:hasShapeTree solidtrees:Task ;
+  shapetree:traverseViaPath "@solidshapes:Project/pm:hasTask" .
