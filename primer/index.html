@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 800b43329, updated Tue May 25 14:13:32 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/primer/" rel="canonical">
-  <meta content="064b7ca153d6186450dd315ba50a84da62569a70" name="document-revision">
+  <meta content="91b4d6437b20864b0407fa0eb338db8a5f86091f" name="document-revision">
 <style>
 
   .sequence-diagram, .flowchart-diagram {
@@ -587,23 +587,32 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
         <li><a href="#data-registry①"><span class="secno">2.5.1</span> <span class="content">Data Registry</span></a>
         <li><a href="#data-registrations②"><span class="secno">2.5.2</span> <span class="content">Data Registrations</span></a>
         <li><a href="#data-instances①"><span class="secno">2.5.3</span> <span class="content">Data Instances</span></a>
-        <li><a href="#remote-data-registrations"><span class="secno">2.5.4</span> <span class="content">Remote Data Registrations</span></a>
-        <li><a href="#access-grants"><span class="secno">2.5.5</span> <span class="content">Access Grants</span></a>
        </ol>
       <li>
-       <a href="#bobexample"><span class="secno">2.6</span> <span class="content">bob.example</span></a>
+       <a href="#authaliceexample"><span class="secno">2.6</span> <span class="content">auth.alice.example</span></a>
        <ol class="toc">
-        <li><a href="#data-registrations③"><span class="secno">2.6.1</span> <span class="content">Data Registrations</span></a>
+        <li><a href="#access-grant-registry"><span class="secno">2.6.1</span> <span class="content">Access Grant Registry</span></a>
+        <li><a href="#access-grant"><span class="secno">2.6.2</span> <span class="content">Access Grant</span></a>
+        <li><a href="#application-registry"><span class="secno">2.6.3</span> <span class="content">Application Registry</span></a>
+        <li><a href="#application-registration"><span class="secno">2.6.4</span> <span class="content">Application Registration</span></a>
+        <li><a href="#access-receipt"><span class="secno">2.6.5</span> <span class="content">Access Receipt</span></a>
+        <li><a href="#remote-data-registrations"><span class="secno">2.6.6</span> <span class="content">Remote Data Registrations</span></a>
+        <li><a href="#access-grants"><span class="secno">2.6.7</span> <span class="content">Access Grants</span></a>
        </ol>
-      <li><a href="#performchartexample"><span class="secno">2.7</span> <span class="content">performchart.example</span></a>
       <li>
-       <a href="#sequence-diagrams"><span class="secno">2.8</span> <span class="content">Sequence diagrams</span></a>
+       <a href="#bobexample"><span class="secno">2.7</span> <span class="content">bob.example</span></a>
+       <ol class="toc">
+        <li><a href="#data-registrations③"><span class="secno">2.7.1</span> <span class="content">Data Registrations</span></a>
+       </ol>
+      <li><a href="#performchartexample"><span class="secno">2.8</span> <span class="content">performchart.example</span></a>
+      <li>
+       <a href="#sequence-diagrams"><span class="secno">2.9</span> <span class="content">Sequence diagrams</span></a>
        <ol class="toc">
         <li>
-         <a href="#combined-oidc-provider-and-authorization-agent"><span class="secno">2.8.1</span> <span class="content">Combined OIDC Provider and Authorization Agent</span></a>
+         <a href="#combined-oidc-provider-and-authorization-agent"><span class="secno">2.9.1</span> <span class="content">Combined OIDC Provider and Authorization Agent</span></a>
          <ol class="toc">
-          <li><a href="#authorization-agent-stores-registrations-and-grants"><span class="secno">2.8.1.1</span> <span class="content">Authorization Agent stores Registrations and Grants</span></a>
-          <li><a href="#authorization-agent-gets-registrations-and-grants-from-storage"><span class="secno">2.8.1.2</span> <span class="content">Authorization Agent gets Registrations and Grants from Storage</span></a>
+          <li><a href="#authorization-agent-stores-registrations-and-grants"><span class="secno">2.9.1.1</span> <span class="content">Authorization Agent stores Registrations and Grants</span></a>
+          <li><a href="#authorization-agent-gets-registrations-and-grants-from-storage"><span class="secno">2.9.1.2</span> <span class="content">Authorization Agent gets Registrations and Grants from Storage</span></a>
          </ol>
        </ol>
      </ol>
@@ -1009,7 +1018,145 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </pre>
     <figcaption>Alice’s <strong>home</strong> task 3</figcaption>
    </figure>
-   <h4 class="heading settled" data-level="2.5.4" id="remote-data-registrations"><span class="secno">2.5.4. </span><span class="content">Remote Data Registrations</span><a class="self-link" href="#remote-data-registrations"></a></h4>
+   <h3 class="heading settled" data-level="2.6" id="authaliceexample"><span class="secno">2.6. </span><span class="content">auth.alice.example</span><a class="self-link" href="#authaliceexample"></a></h3>
+   <h4 class="heading settled" data-level="2.6.1" id="access-grant-registry"><span class="secno">2.6.1. </span><span class="content">Access Grant Registry</span><a class="self-link" href="#access-grant-registry"></a></h4>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>0d0a1f64-39b1-438f-85f6-37cafee3ce21</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistry</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69</c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s access grant registry</figcaption>
+   </figure>
+   <h4 class="heading settled" data-level="2.6.2" id="access-grant"><span class="secno">2.6.2. </span><span class="content">Access Grant</span><a class="self-link" href="#access-grant"></a></h4>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrant</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://jarvis.alice.example/#agent></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-> <c- g>&lt;#grant-subject></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
+      <c- g>&lt;#data-grant-project-pro></c-> <c- p>,</c->
+      <c- g>&lt;#data-grant-project-home></c-> <c- p>.</c->
+
+<c- g>&lt;#grant-subject></c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c->  <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessByApplication</c-> <c- g>&lt;https://projectron.example/#app></c-> <c- p>.</c->
+
+<c- g>&lt;#data-grant-project-pro></c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>773605f0-b5bf-4d46-878d-5c167eac8b5d</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> <c- g>&lt;#data-grant-task-pro></c-> <c- p>.</c->
+
+<c- g>&lt;#data-grant-task-pro></c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedDataGrant</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>4d594c61-7cff-484a-a1d2-1f353ee4e1e7</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>.</c->
+
+<c- g>&lt;#data-grant-project-home></c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-home</c-><c- p>:</c-><c- f>f6ccd3a4-45ea-4f98-8a36-98eac92a6720</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> <c- g>&lt;#data-grant-task-home></c-> <c- p>.</c->
+
+<c- g>&lt;#data-grant-task-home></c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedDataGrant</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-home</c-><c- p>:</c-><c- f>92f43be4-d12c-4ca3-9bd6-c18e83167b2f</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s access grant for Projectron</figcaption>
+   </figure>
+   <h4 class="heading settled" data-level="2.6.3" id="application-registry"><span class="secno">2.6.3. </span><span class="content">Application Registry</span><a class="self-link" href="#application-registry"></a></h4>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>1cf3e08b-ffe2-465a-ac5b-94ce165cb8f0</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ApplicationRegistry</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>bcf22534-0187-4ae4-b88f-fe0f9fa96659</c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s application registry</figcaption>
+   </figure>
+   <h4 class="heading settled" data-level="2.6.4" id="application-registration"><span class="secno">2.6.4. </span><span class="content">Application Registration</span><a class="self-link" href="#application-registration"></a></h4>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>bcf22534-0187-4ae4-b88f-fe0f9fa96659</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ApplicationRegistration</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://jarvis.alice.example/#agent></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-04-04T20:15:47.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-04-04T21:11:33.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredApplication</c-> <c- g>&lt;https://projectron.example/#app></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessReceipt</c-> <c- nn>alice-auth</c-><c- p>:</c-><c- f>dd442d1b-bcc7-40e2-bbb9-4abfa7309fbe</c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s application registration for Projectron</figcaption>
+   </figure>
+   <h4 class="heading settled" data-level="2.6.5" id="access-receipt"><span class="secno">2.6.5. </span><span class="content">Access Receipt</span><a class="self-link" href="#access-receipt"></a></h4>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>dd442d1b-bcc7-40e2-bbb9-4abfa7309fbe</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessReceipt</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://jarvis.alice.example/#agent></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>fromAgent</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>viaAgent</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#grant-subject</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
+      <c- nn>alice-home</c-><c- p>:</c-><c- f>92f43be4-d12c-4ca3-9bd6-c18e83167b2f\#data-grant-project-pro</c-> <c- p>,</c->
+      <c- nn>alice-home</c-><c- p>:</c-><c- f>92f43be4-d12c-4ca3-9bd6-c18e83167b2f\#data-grant-project-home</c-> <c- p>.</c->
+
+<c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#grant-subject</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c->  <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessByApplication</c-> <c- g>&lt;https://projectron.example/#app></c-> <c- p>.</c->
+
+<c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-project-pro</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>773605f0-b5bf-4d46-878d-5c167eac8b5d</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-task-pro</c-> <c- p>.</c->
+
+<c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-task-pro</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedDataGrant</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>4d594c61-7cff-484a-a1d2-1f353ee4e1e7</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>.</c->
+
+<c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-project-home</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-home</c-><c- p>:</c-><c- f>f6ccd3a4-45ea-4f98-8a36-98eac92a6720</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-task-home</c-> <c- p>.</c->
+
+<c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-task-home</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedDataGrant</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-home</c-><c- p>:</c-><c- f>92f43be4-d12c-4ca3-9bd6-c18e83167b2f</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s access receipt for Projectron</figcaption>
+   </figure>
+   <h4 class="heading settled" data-level="2.6.6" id="remote-data-registrations"><span class="secno">2.6.6. </span><span class="content">Remote Data Registrations</span><a class="self-link" href="#remote-data-registrations"></a></h4>
    <p class="issue" id="issue-1b5d4828⑦"><a class="self-link" href="#issue-1b5d4828⑦"></a> Snippet below needs to be updated</p>
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>33caf7be-f804-4155-a57a-92216c577bd4</c->
@@ -1064,7 +1211,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </pre>
     <figcaption>Alice’s remote data instance for P3 @ acme.example</figcaption>
    </figure>
-   <h4 class="heading settled" data-level="2.5.5" id="access-grants"><span class="secno">2.5.5. </span><span class="content">Access Grants</span><a class="self-link" href="#access-grants"></a></h4>
+   <h4 class="heading settled" data-level="2.6.7" id="access-grants"><span class="secno">2.6.7. </span><span class="content">Access Grants</span><a class="self-link" href="#access-grants"></a></h4>
    <p class="issue" id="issue-1b5d4828①⓪"><a class="self-link" href="#issue-1b5d4828①⓪"></a> Snippet below needs to be updated</p>
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>6b1b6e39-75e4-44f8-84f3-104b1a8210ad</c->
@@ -1095,8 +1242,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </pre>
     <figcaption>Alice’s access grant to PerformChart</figcaption>
    </figure>
-   <h3 class="heading settled" data-level="2.6" id="bobexample"><span class="secno">2.6. </span><span class="content">bob.example</span><a class="self-link" href="#bobexample"></a></h3>
-   <h4 class="heading settled" data-level="2.6.1" id="data-registrations③"><span class="secno">2.6.1. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations③"></a></h4>
+   <h3 class="heading settled" data-level="2.7" id="bobexample"><span class="secno">2.7. </span><span class="content">bob.example</span><a class="self-link" href="#bobexample"></a></h3>
+   <h4 class="heading settled" data-level="2.7.1" id="data-registrations③"><span class="secno">2.7.1. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations③"></a></h4>
    <p class="issue" id="issue-1b5d4828①①"><a class="self-link" href="#issue-1b5d4828①①"></a> Snippet below needs to be updated</p>
    <figure>
 <pre class="include-code highlight"><c- nn>bob</c-><c- p>:</c-><c- f>0af793c1-8abc-441c-aacc-f78483b34217</c->
@@ -1122,7 +1269,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </pre>
     <figcaption>Bob’s data registration for tasks</figcaption>
    </figure>
-   <h3 class="heading settled" data-level="2.7" id="performchartexample"><span class="secno">2.7. </span><span class="content">performchart.example</span><a class="self-link" href="#performchartexample"></a></h3>
+   <h3 class="heading settled" data-level="2.8" id="performchartexample"><span class="secno">2.8. </span><span class="content">performchart.example</span><a class="self-link" href="#performchartexample"></a></h3>
    <p class="issue" id="issue-1b5d4828①③"><a class="self-link" href="#issue-1b5d4828①③"></a> Snippet below needs to be updated</p>
    <figure>
 <pre class="include-code highlight"><c- nn>performchart</c-><c- p>:</c-><c- f>\#app</c->
@@ -1153,11 +1300,11 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </pre>
     <figcaption>PerformChart’s application profile document</figcaption>
    </figure>
-   <h3 class="heading settled" data-level="2.8" id="sequence-diagrams"><span class="secno">2.8. </span><span class="content">Sequence diagrams</span><a class="self-link" href="#sequence-diagrams"></a></h3>
-   <h4 class="heading settled" data-level="2.8.1" id="combined-oidc-provider-and-authorization-agent"><span class="secno">2.8.1. </span><span class="content">Combined OIDC Provider and Authorization Agent</span><a class="self-link" href="#combined-oidc-provider-and-authorization-agent"></a></h4>
-   <h5 class="heading settled" data-level="2.8.1.1" id="authorization-agent-stores-registrations-and-grants"><span class="secno">2.8.1.1. </span><span class="content">Authorization Agent stores Registrations and Grants</span><a class="self-link" href="#authorization-agent-stores-registrations-and-grants"></a></h5>
+   <h3 class="heading settled" data-level="2.9" id="sequence-diagrams"><span class="secno">2.9. </span><span class="content">Sequence diagrams</span><a class="self-link" href="#sequence-diagrams"></a></h3>
+   <h4 class="heading settled" data-level="2.9.1" id="combined-oidc-provider-and-authorization-agent"><span class="secno">2.9.1. </span><span class="content">Combined OIDC Provider and Authorization Agent</span><a class="self-link" href="#combined-oidc-provider-and-authorization-agent"></a></h4>
+   <h5 class="heading settled" data-level="2.9.1.1" id="authorization-agent-stores-registrations-and-grants"><span class="secno">2.9.1.1. </span><span class="content">Authorization Agent stores Registrations and Grants</span><a class="self-link" href="#authorization-agent-stores-registrations-and-grants"></a></h5>
    <p><img class="sequence-diagram" src="diagrams/idp-aa-combined.mmd.svg"></p>
-   <h5 class="heading settled" data-level="2.8.1.2" id="authorization-agent-gets-registrations-and-grants-from-storage"><span class="secno">2.8.1.2. </span><span class="content">Authorization Agent gets Registrations and Grants from Storage</span><a class="self-link" href="#authorization-agent-gets-registrations-and-grants-from-storage"></a></h5>
+   <h5 class="heading settled" data-level="2.9.1.2" id="authorization-agent-gets-registrations-and-grants-from-storage"><span class="secno">2.9.1.2. </span><span class="content">Authorization Agent gets Registrations and Grants from Storage</span><a class="self-link" href="#authorization-agent-gets-registrations-and-grants-from-storage"></a></h5>
    <p><img class="sequence-diagram" src="diagrams/idp-aa-combined-external-storage.mmd.svg"></p>
   </main>
   <div data-fill-with="conformance">
