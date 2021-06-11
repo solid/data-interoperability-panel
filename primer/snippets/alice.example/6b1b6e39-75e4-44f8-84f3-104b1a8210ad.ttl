@@ -1,3 +1,5 @@
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix acl: <http://www.w3.org/ns/auth/acl#> .
 @prefix interop: <http://www.w3.org/ns/solid/interop#> .
 @prefix solidtrees: <https://solidshapes.example/trees/> .
 @prefix alice: <https://alice.example/> .
@@ -24,6 +26,6 @@ alice:6b1b6e39-75e4-44f8-84f3-104b1a8210ad
 
 <#task-grant>
   a interop:DataGrant ;
-  interop:registeredShapeTree solidtree:Task ;
+  interop:registeredShapeTree solidtrees:Task ;
   interop:accessMode acl:Read ;
   interop:scopeOfDataGrant interop:AllInstances .
