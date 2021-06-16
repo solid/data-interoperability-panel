@@ -16,7 +16,9 @@ alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69
     interop:hasAccessNeedGroup <#need-group-pm> ;
     interop:hasDataGrant
       <#data-grant-project-pro> ,
-      <#data-grant-project-home> .
+      <#data-grant-task-pro> ,
+      <#data-grant-project-home> ,
+      <#data-grant-task-home> .
 
 <#grant-subject>
   a interop:AccessGrantSubject ;
@@ -28,27 +30,27 @@ alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69
     interop:registeredShapeTree solidtrees:Project ;
     interop:hasDataRegistration alice-pro:773605f0-b5bf-4d46-878d-5c167eac8b5d ;
     interop:accessMode acl:Read, acl:Write ;
-    interop:scopeOfGrant interop:AllInstances ;
-    interop:hasReferencedDataGrant <#data-grant-task-pro> .
+    interop:scopeOfGrant interop:AllInstances .
 
 <#data-grant-task-pro>
-  a interop:ReferencedDataGrant ;
+  a interop:DataGrant ;
     interop:registeredShapeTree solidtrees:Task ;
     interop:hasDataRegistration alice-pro:4d594c61-7cff-484a-a1d2-1f353ee4e1e7 ;
     interop:accessMode acl:Read, acl:Write ;
-    interop:scopeOfGrant interop:InheritInstances .
+    interop:scopeOfGrant interop:InheritInstances ;
+    interop:inheritsFromGrant <#data-grant-project-pro> .
 
 <#data-grant-project-home>
   a interop:DataGrant ;
     interop:registeredShapeTree solidtrees:Project ;
     interop:hasDataRegistration alice-home:f6ccd3a4-45ea-4f98-8a36-98eac92a6720 ;
     interop:accessMode acl:Read, acl:Write ;
-    interop:scopeOfGrant interop:AllInstances ;
-    interop:hasReferencedDataGrant <#data-grant-task-home> .
+    interop:scopeOfGrant interop:AllInstances .
 
 <#data-grant-task-home>
-  a interop:ReferencedDataGrant ;
+  a interop:DataGrant ;
     interop:registeredShapeTree solidtrees:Task ;
     interop:hasDataRegistration alice-home:92f43be4-d12c-4ca3-9bd6-c18e83167b2f ;
     interop:accessMode acl:Read, acl:Write ;
-    interop:scopeOfGrant interop:InheritInstances .
+    interop:scopeOfGrant interop:InheritInstances ;
+    interop:inheritsFromGrant <#data-grant-project-home> .
