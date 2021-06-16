@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version 800b43329, updated Tue May 25 14:13:32 2021 -0700" name="generator">
+  <meta content="Bikeshed version 21183bac3, updated Tue Jun 15 10:19:19 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="bb86f2f56d53c3292a7ad91ca98c3b90368323b5" name="document-revision">
+  <meta content="5ffa7f8e61e63f2f0a0e1748b34573ff290f1c57" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -115,11 +115,11 @@ table.operation code {
   padding-left: .2em;
   padding-right: .2em;
   padding-top: .05em;
-  padding-bottom: .05em;  
+  padding-bottom: .05em;
 }
 
 .opdetails code {
-  background-color: #DCDCDC; 
+  background-color: #DCDCDC;
   color: #000;
   font-weight: bold;
   font-size: 13px;
@@ -556,7 +556,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-06-11">11 June 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-06-16">16 June 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -4286,7 +4286,7 @@ an instance of the <a href="#classAccessGrantRegistrySet">AccessGrantRegistrySet
 <pre class="highlight" id="treeAccessGrantRegistrySet"><c- g>&lt;#AccessGrantRegistrySetTree></c->
   <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-><c- p>;</c->
   <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessGrantRegistrySetShape></c-> <c- p>.</c->  
+  <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops#AccessGrantRegistrySetShape></c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.3" id="datamodel-access-registry"><span class="secno">8.2.3. </span><span class="content">Access Grant Registry</span><a class="self-link" href="#datamodel-access-registry"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-grant-registry">Access Grant Registry</dfn> is a collection of <a data-link-type="dfn" href="#access-grant" id="ref-for-access-grant③③">Access Grants</a> stored in a specific location in a <a data-link-type="dfn" href="#pod" id="ref-for-pod⑤">pod</a>.</p>
@@ -4295,7 +4295,7 @@ an instance of the <a href="#classAccessGrantRegistrySet">AccessGrantRegistrySet
   linking to several registered <a data-link-type="dfn" href="#access-grant" id="ref-for-access-grant③④">Access Grants</a> or <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation⑦">Access Invitations</a></figcaption>
 <pre class="highlight"><c- g>&lt;#registry></c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistry</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c-> 
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c->
     <c- g>&lt;ab3d0023-3860-4358-ae33-8d3af1097b9d#grant></c-> <c- p>,</c->
     <c- g>&lt;ad7b935f-ced9-4ce6-835f-5c6abc046228#grant></c-> <c- p>,</c->
     <c- g>&lt;5ed73c65-ce77-4c8a-8f7e-9715b90307e6#grant></c-> <c- p>,</c->
@@ -4352,7 +4352,7 @@ conformant instances of the <a href="#treeAccessGrant">AccessGrantTree</a> and <
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-> <c- g>&lt;#grant-subject></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->    
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataGrant</c-> <c- g>&lt;#remote-data-grant-project></c-> <c- p>.</c->
 </pre>
@@ -4417,7 +4417,7 @@ of the <a href="#classAccessGrant">AccessGrant</a> class.</p>
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-> @<c- g>&lt;#:AccessGrantSubject></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> @<c- g>&lt;#:AccessNeedGroupShape></c->+ <c- p>;</c->
   <c- p>(</c-> <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> @<c- g>&lt;#:DataGrantShape></c->+ |
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasTrustedGrant</c-> @<c- g>&lt;#:TrustedGrantShape></c->+ | 
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasTrustedGrant</c-> @<c- g>&lt;#:TrustedGrantShape></c->+ |
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataGrant</c-> @<c- g>&lt;#:RemoteDataGrantShape></c->+ <c- p>)</c-> <c- p>;</c->
 <c- p>}</c->
 </pre>
@@ -4471,7 +4471,7 @@ an instance of the <a href="#classAccessGrantSubject">AccessGrantSubject</a> cla
 <c- p>}</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.6" id="datamodel-data-grant"><span class="secno">8.2.6. </span><span class="content">Data Grant</span><a class="self-link" href="#datamodel-data-grant"></a></h4>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="data-grant">Data Grant</dfn> records a decision made by an <a data-link-type="dfn" href="#agent" id="ref-for-agent①③②">Agent</a> to assign permissions for an <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject⑦">Access Grant Subject</a> to a <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑤⑤">Data Registration</a>, in response to a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑤⑤">Access Need</a> that was 
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="data-grant">Data Grant</dfn> records a decision made by an <a data-link-type="dfn" href="#agent" id="ref-for-agent①③②">Agent</a> to assign permissions for an <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject⑦">Access Grant Subject</a> to a <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑤⑤">Data Registration</a>, in response to a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑤⑤">Access Need</a> that was
 presented to them.</p>
    <p>A <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant⑨">Data Grant</a> may have one or more <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant⑥">Referenced Data Grants</a>, when the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree④④">shape tree</a> associated via <code>interop:registeredShapeTree</code> has one or
 more <a data-link-type="dfn" href="#shape-tree-reference" id="ref-for-shape-tree-reference">Shape Tree References</a>.</p>
@@ -4486,7 +4486,7 @@ valid for a <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant①
        <p>Applies to all <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤⑦">Data Instances</a> belonging to
 the associated <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑤⑥">Data Registration</a>.</p>
       <li data-md>
-       <p>Permissions will be set for the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject⑧">Access Grant Subject</a> on the <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑤⑦">Data Registration</a> container, 
+       <p>Permissions will be set for the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject⑧">Access Grant Subject</a> on the <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑤⑦">Data Registration</a> container,
 and will be inherited by all member <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤⑧">Data Instances</a>.</p>
      </ul>
     <li data-md>
@@ -4529,16 +4529,16 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
 <pre class="highlight"><c- g>&lt;#data-grant-project></c->
     <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrant</c-> <c- g>&lt;#grant></c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- g>&lt;#need-project></c-> <c- p>;</c->    
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c->        
+    <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- g>&lt;#need-project></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>data</c-><c- p>:</c-><c- f>project-tree-reg</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>write</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Control</c-> <c- p>;</c->
     <c- c># Scope grants access to all instances in the project</c->
     <c- c># data registration, now and in the future, with no conditions</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>;</c->    
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c->
-        <c- g>&lt;#data-grant-issue></c-> <c- p>,</c->  
-        <c- g>&lt;#data-grant-task></c-> <c- p>,</c-> 
+        <c- g>&lt;#data-grant-issue></c-> <c- p>,</c->
+        <c- g>&lt;#data-grant-task></c-> <c- p>,</c->
         <c- g>&lt;#data-grant-release></c-> <c- p>,</c->
         <c- g>&lt;#data-grant-document></c-> <c- p>.</c->
 </pre>
@@ -4566,7 +4566,7 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
      <tr>
       <td>registeredShapeTree
       <td>st:ShapeTree
-      <td><a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑥⓪">Data Registration</a> for the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree④⑤">shape tree</a> that access 
+      <td><a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑥⓪">Data Registration</a> for the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree④⑤">shape tree</a> that access
       will be granted to
      <tr>
       <td>hasDataRegistration
@@ -4608,11 +4608,11 @@ validate an instance of the <a href="#classDataGrant">DataGrant</a> class.</p>
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrant</c-> @<c- g>&lt;#:AccessGrantShape></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> @<c- g>&lt;#:AccessNeedShape></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> IRI <c- p>;</c->  
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> IRI <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:DataGrantScopes></c-> <c- p>;</c->  
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataInstance</c-> IRI* <c- p>;</c->  
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> @<c- g>&lt;#:ReferencedDataGrantShape></c-> 
+  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:DataGrantScopes></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataInstance</c-> IRI* <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> @<c- g>&lt;#:ReferencedDataGrantShape></c->
 <c- p>}</c->
 </pre>
    <p>The [DataGrantTree] ensures
@@ -4623,9 +4623,10 @@ that the assigned resource will validate against the <a href="#shexDataGrant">Da
   <c- nn>st</c-><c- p>:</c-><c- f>validatedBy</c-> <c- g>&lt;interops:DataGrantShape></c-> <c- p>.</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.7" id="datamodel-referenced-data-grant"><span class="secno">8.2.7. </span><span class="content">Referenced Data Grant</span><a class="self-link" href="#datamodel-referenced-data-grant"></a></h4>
+   <div class="issue no-marker" id="issue-d41d8cd9"><a class="self-link" href="#issue-d41d8cd9"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/124" style="text-transform:none">solid/data-interoperability-panel/124</a><a href="https://github.com/solid/data-interoperability-panel/issues/124">Referenced Data Grant - improving ergonomy of traversal</a></div>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="referenced-data-grant">Referenced Data Grant</dfn> is linked from a <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant②②">Data Grant</a>, and
-records a decision made by an <a data-link-type="dfn" href="#agent" id="ref-for-agent①③④">Agent</a> to assign permissions for an <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject①①">Access Grant Subject</a> to a <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑥③">Data Registration</a>, based on a <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need②②">Referenced Access Need</a> that was presented to them. It stipulates that the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree④⑥">shape tree</a> of the <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant⑧">Referenced Data Grant</a> is effectively a "child" 
-of the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree④⑦">shape tree</a> associated with the parent <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant②③">Data Grant</a> that 
+records a decision made by an <a data-link-type="dfn" href="#agent" id="ref-for-agent①③④">Agent</a> to assign permissions for an <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject①①">Access Grant Subject</a> to a <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑥③">Data Registration</a>, based on a <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need②②">Referenced Access Need</a> that was presented to them. It stipulates that the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree④⑥">shape tree</a> of the <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant⑧">Referenced Data Grant</a> is effectively a "child"
+of the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree④⑦">shape tree</a> associated with the parent <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant②③">Data Grant</a> that
 references it.</p>
    <p>Like <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant②④">Data Grants</a>, each <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant⑨">Referenced Data Grant</a> has an assigned
 scope (<code>interop:scopeOfGrant</code>), which
@@ -4640,7 +4641,7 @@ valid for a <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-re
 the associated <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑥④">Data Registration</a>.</p>
       <li data-md>
        <p>Permissions will be set for
-the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject①②">Access Grant Subject</a> on the <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑥⑤">Data Registration</a> container, 
+the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject①②">Access Grant Subject</a> on the <a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑥⑤">Data Registration</a> container,
 and will be inherited by all member <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑥⑦">Data Instances</a>.</p>
      </ul>
     <li data-md>
@@ -4648,7 +4649,7 @@ and will be inherited by all member <a data-link-type="dfn" href="#data-instance
      <ul>
       <li data-md>
        <p>When the <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant②⑤">Data Grant</a> linked via <code>interop:hasDataGrant</code> has a scope of <code>interop:SelectedInstances</code>, and one
-or more <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑥⑧">Data Instances</a> are selected, any <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant①①">Referenced Data Grants</a> have the opportunity to narrow their own access scope to only include 
+or more <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑥⑧">Data Instances</a> are selected, any <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant①①">Referenced Data Grants</a> have the opportunity to narrow their own access scope to only include
 "child" <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑥⑨">Data Instances</a> linked to the selected "parent" <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑦⓪">Data Instances</a>.</p>
       <li data-md>
        <p>The link must follow the <a data-link-type="dfn" href="#shape-tree-reference" id="ref-for-shape-tree-reference①">Shape Tree Reference</a> between
@@ -4698,10 +4699,10 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
 <pre class="highlight"><c- g>&lt;#data-grant-issue></c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedDataGrant</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- g>&lt;#need-issue></c-> <c- p>;</c->        
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm</c-><c- p>:</c-><c- f>IssueTree</c-> <c- p>;</c->    
+  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- g>&lt;#need-issue></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm</c-><c- p>:</c-><c- f>IssueTree</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>data</c-><c- p>:</c-><c- f>issue-tree-reg</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>write</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Control</c-> <c- p>;</c->    
+  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>write</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Control</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>.</c->
 </pre>
    </figure>
@@ -4728,7 +4729,7 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
      <tr>
       <td>registeredShapeTree
       <td>st:ShapeTree
-      <td><a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑥⑧">Data Registration</a> for the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree④⑧">shape tree</a> that access 
+      <td><a data-link-type="dfn" href="#data-registration" id="ref-for-data-registration⑥⑧">Data Registration</a> for the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree④⑧">shape tree</a> that access
       will be granted to
      <tr>
       <td>hasDataRegistration
@@ -4769,7 +4770,7 @@ validate an instance of the <a href="#classReferencedDataGrant">ReferencedDataGr
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> IRI <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:DataGrantScopes></c-> <c- p>;</c->  
+  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:DataGrantScopes></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasDataInstance</c-> IRI*
 <c- p>}</c->
 </pre>
@@ -4782,7 +4783,7 @@ that the assigned resource will validate against the <a href="#shexReferencedDat
 </pre>
    <h4 class="heading settled" data-level="8.2.8" id="datamodel-remote-data-grant"><span class="secno">8.2.8. </span><span class="content">Remote Data Grant</span><a class="self-link" href="#datamodel-remote-data-grant"></a></h4>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="remote-data-grant">Remote Data Grant</dfn> records an authorization decision made by
-an <a data-link-type="dfn" href="#agent" id="ref-for-agent①③⑥">Agent</a> for an <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject①⑥">Access Grant Subject</a> on a <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration">Remote Data Registration</a>, in response to a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑥①">Access Need</a> that 
+an <a data-link-type="dfn" href="#agent" id="ref-for-agent①③⑥">Agent</a> for an <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject①⑥">Access Grant Subject</a> on a <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration">Remote Data Registration</a>, in response to a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑥①">Access Need</a> that
 was presented to them. This has the net effect of allowing the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject①⑦">Access Grant Subject</a> to see data that has been shared by
 other <a data-link-type="dfn" href="#agent" id="ref-for-agent①③⑦">Agents</a>.</p>
    <p>A <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote-data-grant④">Remote Data Grant</a> may have one or more <a data-link-type="dfn" href="#referenced-remote-data-grant" id="ref-for-referenced-remote-data-grant②">Referenced Remote Data Grants</a>,
@@ -4799,7 +4800,7 @@ valid for a <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote
        <p>Applies to all <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant③①">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant②①">Referenced Data Grants</a> associated with all <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration④">Remote Agent Data Registrations</a> belonging to the associated <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration①">Remote Data Registration</a>.</p>
       <li data-md>
        <p>Permissions will be set for
-the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject①⑧">Access Grant Subject</a> on the <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration②">Remote Data Registration</a> container, 
+the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject①⑧">Access Grant Subject</a> on the <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration②">Remote Data Registration</a> container,
 and will be inherited by all member <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration⑤">Remote Agent Data Registrations</a>,
 and the <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant③②">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant②②">Referenced Data Grants</a> contained
 by them.</p>
@@ -4808,18 +4809,18 @@ by them.</p>
      <p><b><code>interop:AllRemoteFromAgent</code></b></p>
      <ul>
       <li data-md>
-       <p>Applies to all <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant③③">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant②③">Referenced Data Grants</a> belonging to the 
+       <p>Applies to all <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant③③">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant②③">Referenced Data Grants</a> belonging to the
 selected <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration⑥">Remote Agent Data Registrations</a> linked via <code>interop:hasRemoteDataFromAgent</code>.</p>
       <li data-md>
        <p>Permissions will be set for
-the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject①⑨">Access Grant Subject</a> on the selected <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration⑦">Remote Agent Data Registration</a> containers, 
+the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject①⑨">Access Grant Subject</a> on the selected <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration⑦">Remote Agent Data Registration</a> containers,
 and will be inherited by all <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant③④">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant②④">Referenced Data Grants</a> contained by them.</p>
      </ul>
     <li data-md>
      <p><b><code>interop:SelectedRemote</code></b></p>
      <ul>
       <li data-md>
-       <p>Applies only to selected <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant③⑤">Data Grants</a> and/or <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant②⑤">Referenced Data Grants</a> linked  
+       <p>Applies only to selected <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant③⑤">Data Grants</a> and/or <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant②⑤">Referenced Data Grants</a> linked
 via <code>interop:hasDataGrant</code>, <code>interop:hasReferencedDataGrant</code>.</p>
       <li data-md>
        <p>Permissions will be set for
@@ -4832,7 +4833,7 @@ in <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-re
       <li data-md>
        <p>Indicates that no access is granted to the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject②①">Access Grant Subject</a>.</p>
       <li data-md>
-       <p>Applies to the entire <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration③">Remote Data Registration</a> when there are no <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration⑨">Remote Agent Data Registrations</a> linked via <code>interop:hasRemoteDataFromAgent</code>, and no <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant③⑦">Data Grants</a> and/or <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant②⑦">Referenced Data Grants</a> linked  
+       <p>Applies to the entire <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration③">Remote Data Registration</a> when there are no <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration⑨">Remote Agent Data Registrations</a> linked via <code>interop:hasRemoteDataFromAgent</code>, and no <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant③⑦">Data Grants</a> and/or <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant②⑦">Referenced Data Grants</a> linked
 via <code>interop:hasDataGrant</code>, <code>interop:hasReferencedDataGrant</code>.</p>
       <li data-md>
        <p>When there are linked <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration①⓪">Remote Agent Data Registrations</a>, <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant③⑧">Data Grants</a>, and/or <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant②⑧">Referenced Data Grants</a>,
@@ -4885,7 +4886,7 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
       <td>Mode of access for the grant
      <tr>
       <td>scopeOfGrant
-      <td>interop:AllRemote, interop:AllRemoteFromAgent, 
+      <td>interop:AllRemote, interop:AllRemoteFromAgent,
       interop:SelectedRemote, interop:NoAccess
       <td>
        Identifies the access scope of the <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote-data-grant①④">Remote Data Grant</a> 
@@ -4898,7 +4899,7 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
      <tr>
       <td>hasRemoteDataFromAgent
       <td><a href="#classRemoteAgentDataRegistration">RemoteAgentDataRegistration</a>
-      <td>Link to a <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration①①">Remote Agent Data Registration</a> when 
+      <td>Link to a <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration①①">Remote Agent Data Registration</a> when
         scope is <code>AllRemoteFromAgent</code>
      <tr>
       <td>hasDataGrant
@@ -4919,27 +4920,27 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
    <p>The <a href="#shexRemoteDataGrant">RemoteDataGrantShape</a> is used to validate an
 instance of the <a href="#classRemoteDataGrant">RemoteDataGrant</a> class.</p>
 <pre class="highlight" id="shexRemoteDataGrant"><c- g>&lt;#RemoteDataGrantShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>]</c-> <c- p>;</c->  
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>]</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrant</c-> @<c- g>&lt;#:AccessGrantShape></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> @<c- g>&lt;#:AccessNeedShape></c->+ <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataRegistration</c-> IRI <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:RemoteDataGrantScopes></c->+ <c- p>;</c->    
+  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:RemoteDataGrantScopes></c->+ <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataFromAgent</c-> IRI* <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> IRI* <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> IRI* <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedRemoteDataGrant</c-> @<c- g>&lt;#:ReferencedRemoteDataGrantShape></c-> 
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedRemoteDataGrant</c-> @<c- g>&lt;#:ReferencedRemoteDataGrantShape></c->
 <c- p>}</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.9" id="datamodel-referenced-remote-data-grant"><span class="secno">8.2.9. </span><span class="content">Referenced Remote Data Grant</span><a class="self-link" href="#datamodel-referenced-remote-data-grant"></a></h4>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="referenced-remote-data-grant">Referenced Remote Data Grant</dfn> is linked from a <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote-data-grant①⑤">Remote Data Grant</a>,
-and records an authorization decision made by an <a data-link-type="dfn" href="#agent" id="ref-for-agent①③⑨">Agent</a> for an <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject②②">Access Grant Subject</a> on a <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration⑦">Remote Data Registration</a>, 
-based on a <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need②⑧">Referenced Access Need</a> that was presented to them. It stipulates 
-that the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree⑤②">shape tree</a> of the <a data-link-type="dfn" href="#referenced-remote-data-grant" id="ref-for-referenced-remote-data-grant④">Referenced Remote Data Grant</a> is effectively 
+and records an authorization decision made by an <a data-link-type="dfn" href="#agent" id="ref-for-agent①③⑨">Agent</a> for an <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject②②">Access Grant Subject</a> on a <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration⑦">Remote Data Registration</a>,
+based on a <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need②⑧">Referenced Access Need</a> that was presented to them. It stipulates
+that the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree⑤②">shape tree</a> of the <a data-link-type="dfn" href="#referenced-remote-data-grant" id="ref-for-referenced-remote-data-grant④">Referenced Remote Data Grant</a> is effectively
 a "child" of the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree⑤③">shape tree</a> associated with the parent <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote-data-grant①⑥">Remote Data Grant</a> that references it.</p>
    <p>Like <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote-data-grant①⑦">Remote Data Grants</a>, each <a data-link-type="dfn" href="#referenced-remote-data-grant" id="ref-for-referenced-remote-data-grant⑤">Referenced Remote Data Grant</a> has an assigned
-scope (<code>interop:scopeOfGrant</code>), which determines how permissions are assigned. 
+scope (<code>interop:scopeOfGrant</code>), which determines how permissions are assigned.
 The following types are
 valid for a <a data-link-type="dfn" href="#referenced-remote-data-grant" id="ref-for-referenced-remote-data-grant⑥">Referenced Remote Data Grant</a>:</p>
    <ul>
@@ -4950,7 +4951,7 @@ valid for a <a data-link-type="dfn" href="#referenced-remote-data-grant" id="ref
        <p>Applies to all <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant④⓪">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant③⓪">Referenced Data Grants</a> associated with all <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration①④">Remote Agent Data Registrations</a> belonging to the associated <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration⑧">Remote Data Registration</a>.</p>
       <li data-md>
        <p>Permissions will be set for
-the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject②③">Access Grant Subject</a> on the <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration⑨">Remote Data Registration</a> container, 
+the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject②③">Access Grant Subject</a> on the <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration⑨">Remote Data Registration</a> container,
 and will be inherited by all member <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration①⑤">Remote Agent Data Registrations</a>,
 and the <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant④①">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant③①">Referenced Data Grants</a> contained
 by them.</p>
@@ -4959,18 +4960,18 @@ by them.</p>
      <p><b><code>interop:AllRemoteFromAgent</code></b></p>
      <ul>
       <li data-md>
-       <p>Applies to all <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant④②">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant③②">Referenced Data Grants</a> belonging to the 
+       <p>Applies to all <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant④②">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant③②">Referenced Data Grants</a> belonging to the
 selected <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration①⑥">Remote Agent Data Registrations</a> linked via <code>interop:hasRemoteDataFromAgent</code>.</p>
       <li data-md>
        <p>Permissions will be set for
-the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject②④">Access Grant Subject</a> on the selected <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration①⑦">Remote Agent Data Registration</a> containers, 
+the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject②④">Access Grant Subject</a> on the selected <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration①⑦">Remote Agent Data Registration</a> containers,
 and will be inherited by all <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant④③">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant③③">Referenced Data Grants</a> contained by them.</p>
      </ul>
     <li data-md>
      <p><b><code>interop:SelectedRemote</code></b></p>
      <ul>
       <li data-md>
-       <p>Applies only to selected <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant④④">Data Grants</a> and/or <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant③④">Referenced Data Grants</a> linked  
+       <p>Applies only to selected <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant④④">Data Grants</a> and/or <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant③④">Referenced Data Grants</a> linked
 via <code>interop:hasDataGrant</code>, <code>interop:hasReferencedDataGrant</code>.</p>
       <li data-md>
        <p>Permissions will be set for
@@ -4983,7 +4984,7 @@ in <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-re
       <li data-md>
        <p>Indicates that no access is granted to the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject②⑥">Access Grant Subject</a>.</p>
       <li data-md>
-       <p>Applies to the entire <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration①⓪">Remote Data Registration</a> when there are no <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration①⑨">Remote Agent Data Registrations</a> linked via <code>interop:hasRemoteDataFromAgent</code>, and no <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant④⑥">Data Grants</a> and/or <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant③⑥">Referenced Data Grants</a> linked  
+       <p>Applies to the entire <a data-link-type="dfn" href="#remote-data-registration" id="ref-for-remote-data-registration①⓪">Remote Data Registration</a> when there are no <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration①⑨">Remote Agent Data Registrations</a> linked via <code>interop:hasRemoteDataFromAgent</code>, and no <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant④⑥">Data Grants</a> and/or <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant③⑥">Referenced Data Grants</a> linked
 via <code>interop:hasDataGrant</code>, <code>interop:hasReferencedDataGrant</code>.</p>
       <li data-md>
        <p>When there are linked <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration②⓪">Remote Agent Data Registrations</a>, <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant④⑦">Data Grants</a>, and/or <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant③⑦">Referenced Data Grants</a>,
@@ -5036,7 +5037,7 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
       <td>Mode of access for the grant
      <tr>
       <td>scopeOfGrant
-      <td>interop:AllRemote, AllRemoteFromAgent, 
+      <td>interop:AllRemote, AllRemoteFromAgent,
       interop:SelectedRemote, interop:NoAccess
       <td>
        Identifies the access scope of the <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote-data-grant①⑨">Remote Data Grant</a> 
@@ -5049,7 +5050,7 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
      <tr>
       <td>hasRemoteDataFromAgent
       <td><a href="#classRemoteAgentDataRegistration">RemoteAgentDataRegistration</a>
-      <td>Link to a <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration②①">Remote Agent Data Registration</a> when 
+      <td>Link to a <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration②①">Remote Agent Data Registration</a> when
         scope is <code>AllRemoteFromAgent</code>
      <tr>
       <td>hasDataGrant
@@ -5065,7 +5066,7 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
    <p>The <a href="#shexReferencedRemoteDataGrant">ReferencedRemoteDataGrantShape</a> is used
 to validate an instance of the <a href="#classRemoteDataGrant">ReferencedRemoteDataGrant</a> class.</p>
 <pre class="highlight" id="shexReferencedRemoteDataGrant"><c- g>&lt;#ReferencedRemoteDataGrantShape></c-> <c- p>{</c->
-  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedRemoteDataGrant</c-> <c- p>]</c-> <c- p>;</c->  
+  <c- b>a</c-> <c- p>[</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedRemoteDataGrant</c-> <c- p>]</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataGrant</c-> @<c- g>&lt;#:RemoteDataGrantShape></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> @<c- g>&lt;#:AccessNeedShape></c->+ <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> IRI <c- p>;</c->
@@ -5074,7 +5075,7 @@ to validate an instance of the <a href="#classRemoteDataGrant">ReferencedRemoteD
   <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:RemoteDataGrantScopes></c->+ <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataFromAgent</c-> IRI* <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> IRI* <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> IRI* 
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c-> IRI*
 <c- p>}</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.10" id="datamodel-trusted-grant"><span class="secno">8.2.10. </span><span class="content">Trusted Grant</span><a class="self-link" href="#datamodel-trusted-grant"></a></h4>
@@ -5092,13 +5093,13 @@ valid for a <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-gr
     <li data-md>
      <p><b><code>interop:TrustedAccess</code></b> - Applies to trusted resource linked
 via <code>interop:trustedWith</code>. Permissions will
-be set for the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject②⑦">Access Grant Subject</a> on the trusted resource. If <code>trustedWithType</code> is a type of <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set①①">Registry Set</a>, the permissions 
+be set for the <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject②⑦">Access Grant Subject</a> on the trusted resource. If <code>trustedWithType</code> is a type of <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set①①">Registry Set</a>, the permissions
 will be applied to the <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set①②">Registry Set</a> resource, as well as all of
 the <a data-link-type="dfn" href="#registry" id="ref-for-registry①⑦">Registries</a> linked from that <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set①③">Registry Set</a>.</p>
     <li data-md>
      <p><b><code>interop:NoAccess</code></b> - Indicates that no access is granted
 to <code>trustedWith</code>. If <code>trustedWith</code> is a <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set①④">Registry Set</a>,
-it indicates that no access is granted to the <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set①⑤">Registry Set</a> resource, 
+it indicates that no access is granted to the <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set①⑤">Registry Set</a> resource,
 nor to the <a data-link-type="dfn" href="#registry" id="ref-for-registry①⑧">Registries</a> linked from that <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set①⑥">Registry Set</a>.</p>
    </ul>
    <table align="left" class="classinfo data" id="classTrustedGrant">
@@ -5168,7 +5169,7 @@ validate an instance of the <a href="#classTrustedGrant">TrustedGrant</a> class.
   <c- nn>interop</c-><c- p>:</c-><c- f>trustedWith</c-> IRI <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>trustedWithType</c-> @<c- g>&lt;#:TrustedWithTypes></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> @<c- g>&lt;#:AccessModes></c->+ <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:TrustedGrantScopes></c->+ 
+  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> @<c- g>&lt;#:TrustedGrantScopes></c->+
 <c- p>}</c->
 </pre>
    <h4 class="heading settled" data-level="8.2.11" id="datamodel-access-invitation"><span class="secno">8.2.11. </span><span class="content">Access Invitation</span><a class="self-link" href="#datamodel-access-invitation"></a></h4>
@@ -5178,7 +5179,7 @@ decentralized <a data-link-type="dfn" href="#identity" id="ref-for-identity②�
 must be first invited through another channel (such as phone or email).</p>
    <p>Like an <a data-link-type="dfn" href="#access-grant" id="ref-for-access-grant④⑨">Access Grant</a>, an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation⑧">Access Invitation</a> links to access
 criteria detailed in one or more <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group⑥①">Access Need Groups</a>, with
-associated <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant④⑨">Data Grants</a> or <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant①②">Trusted Grants</a> indicating the 
+associated <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant④⑨">Data Grants</a> or <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant①②">Trusted Grants</a> indicating the
 intended access to be granted.</p>
    <p>However, instead of linking to an <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject②⑧">Access Grant Subject</a>, an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation⑨">Access Invitation</a> links to one or more <a data-link-type="dfn" href="#access-invitation-channel" id="ref-for-access-invitation-channel⑥">Access Invitation Channels</a>.</p>
    <p>Each channel represents a mechanism through which the invitation can
@@ -5197,8 +5198,8 @@ converted to an <a data-link-type="dfn" href="#access-grant" id="ref-for-access-
   <c- nn>interop</c-><c- p>:</c-><c- f>expiresAt</c-> <c- s>"2020-09-20T19:32:52Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessInvitationChannel</c-> 
-    <c- g>&lt;#phone-channel></c-> <c- p>,</c-> 
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessInvitationChannel</c->
+    <c- g>&lt;#phone-channel></c-> <c- p>,</c->
     <c- g>&lt;#email-channel></c-> <c- p>.</c->
 </pre>
    </figure>
@@ -5241,7 +5242,7 @@ converted to an <a data-link-type="dfn" href="#access-grant" id="ref-for-access-
      <tr>
       <td>hasAccessNeedGroup
       <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
-      <td>Links to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group⑥②">Access Need Group</a> associated with 
+      <td>Links to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group⑥②">Access Need Group</a> associated with
       the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation①⑥">Access Invitation</a>.
      <tr>
       <td>hasDataGrant
@@ -5485,8 +5486,8 @@ for a given <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-acc
     <tbody>
      <tr>
       <td colspan="2"> Initialize an <a data-link-type="dfn" href="#access-grant" id="ref-for-access-grant⑥③">Access Grant</a> by processing
-        the input <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group⑥⑤">Access Need Groups</a> and 
-        then initializing <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant⑤④">Data Grants</a>, <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote-data-grant②④">Remote Data Grants</a>, 
+        the input <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group⑥⑤">Access Need Groups</a> and
+        then initializing <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant⑤④">Data Grants</a>, <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote-data-grant②④">Remote Data Grants</a>,
         and/or <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant①⑦">Trusted Grants</a> with no access (yet). 
     <thead>
      <tr>
@@ -5553,8 +5554,8 @@ for a given <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-acc
     <tbody>
      <tr>
       <td colspan="2"> Initialize an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation②⑦">Access Invitation</a> by processing
-        the input <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group⑥⑨">Access Need Groups</a> and 
-        then initializing <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant⑤⑤">Data Grants</a>, <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote-data-grant②⑤">Remote Data Grants</a>, 
+        the input <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group⑥⑨">Access Need Groups</a> and
+        then initializing <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant⑤⑤">Data Grants</a>, <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote-data-grant②⑤">Remote Data Grants</a>,
         or <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant①⑧">Trusted Grants</a> with no access (yet). 
     <thead>
      <tr>
@@ -5856,7 +5857,7 @@ via <code>NEED hasReferencedAccessNeed</code></p>
       <th colspan="2">Description
     <tbody>
      <tr>
-      <td colspan="2"> This operation will load an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation③①">Access Invitation</a> from a 
+      <td colspan="2"> This operation will load an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation③①">Access Invitation</a> from a
       given <a data-link-type="dfn" href="#access-grant-registry" id="ref-for-access-grant-registry②①">Access Grant Registry</a> 
     <thead>
      <tr>
@@ -6640,7 +6641,7 @@ a union of current <code>interop:accessMode</code>s and <code>REMOTEGRANT access
     <tbody>
      <tr>
       <td colspan="2">
-        This operation applies permissions on a given resource for a given <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject④⑥">Access Grant Subject</a>. Those permissions are conditioned upon the 
+        This operation applies permissions on a given resource for a given <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject④⑥">Access Grant Subject</a>. Those permissions are conditioned upon the
       existence of a graph link between a node in the resource and another node
       in another resource on the same pod. 
        <p>It clears any existing permissions for
@@ -6689,7 +6690,7 @@ the subject identifier could? vary</p>
       <p>Set <code>NEWSTATEMENT</code> <a data-link-type="dfn" href="#access-grant-subject" id="ref-for-access-grant-subject④⑨">Access Grant Subject</a> to <code>SUBJECT</code></p>
      <li data-md>
       <p>Set a condition on <code>NEWSTATEMENT</code> that access is only permitted when
-a graph link is present composed of 
+a graph link is present composed of
 subject: <code>CONDSUB</code>, predicate: <code>CONDPRED</code>, object: <code>CONDOBJ</code></p>
      <li data-md>
       <p>Set the <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mode⑨">access modes</a> for <code>NEWSTATEMENT</code> to <code>MODES</code></p>
@@ -6755,7 +6756,7 @@ associated with <code>SUBJECT</code>.</p>
       <th colspan="2">Description
     <tbody>
      <tr>
-      <td colspan="2"> This operation is used when a given <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group⑦③">Access Need Group</a> with 
+      <td colspan="2"> This operation is used when a given <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group⑦③">Access Need Group</a> with
       optional necessity has been denied. 
     <thead>
      <tr>
@@ -7169,7 +7170,7 @@ associated with <code>SUBJECT</code>.</p>
       <th colspan="2">Description
     <tbody>
      <tr>
-      <td colspan="2"> Used to select specific <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant⑨③">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant⑦③">Referenced Data Grants</a> associated with a given <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration③⑥">Remote Agent Data Registration</a> as part of 
+      <td colspan="2"> Used to select specific <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant⑨③">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant⑦③">Referenced Data Grants</a> associated with a given <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration③⑥">Remote Agent Data Registration</a> as part of
       a specific <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote-data-grant④⑦">Remote Data Grant</a>.
     <thead>
      <tr>
@@ -7210,7 +7211,7 @@ associated with <code>SUBJECT</code>.</p>
       <th colspan="2">Description
     <tbody>
      <tr>
-      <td colspan="2"> Used to select specific <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant⑨⑥">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant⑦⑥">Referenced Data Grants</a> associated with a given <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration③⑦">Remote Agent Data Registration</a> as part of a 
+      <td colspan="2"> Used to select specific <a data-link-type="dfn" href="#data-grant" id="ref-for-data-grant⑨⑥">Data Grants</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant⑦⑥">Referenced Data Grants</a> associated with a given <a data-link-type="dfn" href="#remote-agent-data-registration" id="ref-for-remote-agent-data-registration③⑦">Remote Agent Data Registration</a> as part of a
       specific <a data-link-type="dfn" href="#referenced-remote-data-grant" id="ref-for-referenced-remote-data-grant③⓪">Referenced Remote Data Grant</a>.
     <thead>
      <tr>
@@ -7251,7 +7252,7 @@ associated with <code>SUBJECT</code>.</p>
       <th colspan="2">Description
     <tbody>
      <tr>
-      <td colspan="2"> This operation is used when a given <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote-data-grant⑤⓪">Remote Data Grant</a> with 
+      <td colspan="2"> This operation is used when a given <a data-link-type="dfn" href="#remote-data-grant" id="ref-for-remote-data-grant⑤⓪">Remote Data Grant</a> with
       optional necessity has been denied. 
     <thead>
      <tr>
@@ -7285,7 +7286,7 @@ associated with <code>SUBJECT</code>.</p>
       <th colspan="2">Description
     <tbody>
      <tr>
-      <td colspan="2"> This operation is used when a given <a data-link-type="dfn" href="#referenced-remote-data-grant" id="ref-for-referenced-remote-data-grant③③">Referenced Remote Data Grant</a> with 
+      <td colspan="2"> This operation is used when a given <a data-link-type="dfn" href="#referenced-remote-data-grant" id="ref-for-referenced-remote-data-grant③③">Referenced Remote Data Grant</a> with
       optional necessity has been denied. 
     <thead>
      <tr>
@@ -8962,6 +8963,7 @@ should be that they are combined? Bad separation of concerns?<a href="#issue-d5f
    <div class="issue"> This doesn’t take account a sequencing of validation steps from
 one channel to another.<a href="#issue-d1e70f49"> ↵ </a></div>
    <div class="issue"> Define data authorization service<a href="#issue-abd7def3"> ↵ </a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/124" style="text-transform:none">solid/data-interoperability-panel/124</a><a href="https://github.com/solid/data-interoperability-panel/issues/124">Referenced Data Grant - improving ergonomy of traversal</a><a href="#issue-d41d8cd9"> ↵ </a></div>
    <div class="issue"> Need to properly factor in multi-pod scenarios. Must identify the
 proper access registry to store things in based on the data registration, which
 means pods will also need to be registered.<a href="#issue-4a203aca"> ↵ </a></div>
