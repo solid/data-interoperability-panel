@@ -1,3 +1,4 @@
+@prefix uuid: <urn:uuid> .
 @prefix shapetree: <http://www.w3.org/ns/shapetree#> .
 @prefix pm: <https://vocab.example/project-management/> .
 @prefix solidshapes: <https://solidshapes.example/shapes/> .
@@ -7,8 +8,8 @@ solidtrees:Project
   a shapetree:ShapeTree ;
   shapetree:expectsType shapetree:ShapeTreeResource ;
   shapetree:validatedBy solidshapes:Project ;
-  shapetree:references urn:uuid:54b5e4f6-c6b5-4c9a-b885-cbf69d08370d .
+  shapetree:references uuid:54b5e4f6-c6b5-4c9a-b885-cbf69d08370d .
 
-urn:uuid:54b5e4f6-c6b5-4c9a-b885-cbf69d08370d
+uuid:54b5e4f6-c6b5-4c9a-b885-cbf69d08370d
   shapetree:hasShapeTree solidtrees:Task ;
   shapetree:traverseViaPath "@solidshapes:Project/pm:hasTask" .
