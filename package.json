@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node scripts/validate-snippets.js",
     "postinstall": "node scripts/prepare-export.js"
   },
   "main": "dist/index.json",
   "license": "MIT",
-  "dependencies": {
-    "@mermaid-js/mermaid-cli": "^8.10.1"
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^8.10.1",
+    "turtle-validator": "^1.1.1"
   }
 }
