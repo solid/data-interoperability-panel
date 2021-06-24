@@ -18,7 +18,9 @@ alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69
       <#data-grant-project-pro> ,
       <#data-grant-task-pro> ,
       <#data-grant-project-home> ,
-      <#data-grant-task-home> .
+      <#data-grant-task-home> ,
+      <#data-grant-acme-projects> ,
+      <#data-grant-acme-tasks> .
 
 <#grant-subject>
   a interop:AccessGrantSubject ;
@@ -54,3 +56,17 @@ alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69
     interop:accessMode acl:Read, acl:Write ;
     interop:scopeOfGrant interop:InheritInstances ;
     interop:inheritsFromGrant <#data-grant-project-home> .
+
+<#data-grant-acme-projects>
+  a interop:RemoteDataGrant ;
+    interop:registeredShapeTree solidtrees:Project ;
+    interop:hasRemoteDataFromAgent alice-auth:3a019d90-c7fb-4e65-865d-4254ef064667 ;
+    interop:accessMode acl:Read, acl:Write ;
+    interop:scopeOfGrant interop:AllRemoteFromAgent .
+
+<#data-grant-acme-tasks>
+  a interop:RemoteDataGrant ;
+    interop:registeredShapeTree solidtrees:Task ;
+    interop:accessMode acl:Read, acl:Write ;
+    interop:scopeOfGrant interop:InheritInstances ;
+    interop:inheritsFromGrant <#data-grant-acme-projects> .

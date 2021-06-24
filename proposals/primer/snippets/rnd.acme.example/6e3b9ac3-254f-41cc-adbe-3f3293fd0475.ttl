@@ -1,14 +1,14 @@
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX solidtrees: <https://solidshapes.example/trees/>
-PREFIX acme: <https://acme.example/>
+PREFIX acme-rnd: <https://rnd.acme.example/>
 
-acme:4d594c61-7cff-484a-a1d2-1f353ee4e1e7
+acme-rnd:6e3b9ac3-254f-41cc-adbe-3f3293fd0475
   a interop:DataRegistration ;
   interop:registeredBy <https://garry.example/#id> ;
   interop:registeredWith <https://solidmin.example/#app> ;
   interop:registeredAt "2020-08-23T21:12:27.000Z"^^xsd:dateTime ;
   interop:registeredShapeTree solidtrees:Project ;
-  interop:hasRegisteredDataInstance acme:9005ea66-fcc3-47af-b082-5da78140bc53\#project ,
-                                    acme:df0aa24c-fe28-4e9f-9f35-2a9a29d63a06\#project ,
-                                    acme:21270a16-f07d-417e-9d7c-274cbd8d24f0\#project .
+  ldp:contains
+    acme-rnd:02c8217e-9933-4681-9fe3-f9d207a77a91\#project ,
+    acme-rnd:18e75c28-3649-4c24-9e58-530df3813ca3\#project .
