@@ -1,6 +1,7 @@
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX solidshapes: <https://solidshapes.example/shapes/>
+PREFIX solidtrees: <https://solidshapes.example/trees/>
 PREFIX pm: <https://vocab.example/project-management/>
 PREFIX tbd: <https://tbd.example/>
 
@@ -13,12 +14,10 @@ solidshapes:ProjectShape {
 
 <#TaskReferencesList> {
   a [ tbd:ReferencesList ] ;
-  tbd:referencesOf @solidshapes:ProjectShape ;
-  tbd:referenceShapePath ["@solidshapes:Project/pm:hasTask/@solidshapes:Task"]
+  tbd:referencedTree solidtrees:Task .
 }
 
 <#MilestoneReferencesList> {
   a [ tbd:ReferencesList ] ;
-  tbd:referencesOf @solidshapes:MilestoneShape ;
-  tbd:referenceShapePath ["@solidshapes:Project/pm:hasMilestone/@solidshapes:Milestone"]
+  tbd:referencedTree solidtrees:Milestone .
 }
