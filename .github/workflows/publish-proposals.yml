@@ -33,7 +33,11 @@ jobs:
         run: for index in proposals/*/index.bs; do bikeshed spec $index; done
 
       - name: generate svg
-        run: for diagram in proposals/*/diagrams/*.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
+        run: for diagram in proposals/*/diagrams/*.seq.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
+
+      - name: generate png
+        run: for diagram in proposals/*/diagrams/*.flow.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram -o /data/$diagram.png; done
+
 
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3
