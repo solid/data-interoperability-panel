@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 3d6a6fcbb, updated Wed Jun 16 16:19:39 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/primer/" rel="canonical">
-  <meta content="9cca7baf1a8707ad6fe7b93a54a9921b00cd7433" name="document-revision">
+  <meta content="27afc1913dbfc8c0d31bb36d0057bca46f65dbeb" name="document-revision">
 <style>
 
   .sequence-diagram, .flowchart-diagram {
@@ -525,7 +525,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability Primer</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-06-21">21 June 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-06-29">29 June 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -684,6 +684,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <h3 class="heading settled" data-level="2.1" id="solidshapesexample"><span class="secno">2.1. </span><span class="content">solidshapes.example</span><a class="self-link" href="#solidshapesexample"></a></h3>
    <h4 class="heading settled" data-level="2.1.1" id="shapes"><span class="secno">2.1.1. </span><span class="content">Shapes</span><a class="self-link" href="#shapes"></a></h4>
+   <div class="issue no-marker" id="issue-d41d8cd9"><a class="self-link" href="#issue-d41d8cd9"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a></div>
    <figure>
 <pre class="include-code highlight"><c- nn>solidshapes</c-><c- p>:</c-><c- f>ProjectShape</c-> <c- p>{</c->
   <c- k>a</c-> <c- p>[</c-> <c- nn>pm</c-><c- p>:</c-><c- f>Project</c-> <c- p>]</c-> <c- p>;</c->
@@ -694,14 +695,12 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 
 <c- nl>&lt;#TaskReferencesList></c-> <c- p>{</c->
   <c- k>a</c-> <c- p>[</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencesOf</c-> <c- o>@</c-><c- nn>solidshapes</c-><c- p>:</c-><c- f>ProjectShape</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referenceShapePath</c-> <c- p>[</c-><c- s>"@solidshapes:Project/pm:hasTask/@solidshapes:Task"</c-><c- p>]</c->
+  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
 <c- p>}</c->
 
 <c- nl>&lt;#MilestoneReferencesList></c-> <c- p>{</c->
   <c- k>a</c-> <c- p>[</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencesOf</c-> <c- o>@</c-><c- nn>solidshapes</c-><c- p>:</c-><c- f>MilestoneShape</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referenceShapePath</c-> <c- p>[</c-><c- s>"@solidshapes:Project/pm:hasMilestone/@solidshapes:Milestone"</c-><c- p>]</c->
+  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Milestone</c-> <c- p>.</c->
 <c- p>}</c->
 </pre>
     <figcaption>Project shape (ShEx)</figcaption>
@@ -715,6 +714,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <figcaption>Task shape (ShEx)</figcaption>
    </figure>
    <h4 class="heading settled" data-level="2.1.2" id="shape-trees"><span class="secno">2.1.2. </span><span class="content">Shape Trees</span><a class="self-link" href="#shape-trees"></a></h4>
+   <div class="issue no-marker" id="issue-d41d8cd9①"><a class="self-link" href="#issue-d41d8cd9①"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a></div>
    <figure>
 <pre class="include-code highlight"><c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c->
   <c- b>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
@@ -724,7 +724,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 
 <c- nn>uuid</c-><c- p>:</c-><c- f>54b5e4f6-c6b5-4c9a-b885-cbf69d08370d</c->
   <c- nn>shapetree</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>traverseViaPath</c-> <c- s>"@solidshapes:Project/pm:hasTask"</c-> <c- p>.</c->
+  <c- nn>shapetree</c-><c- p>:</c-><c- f>viaPredicate</c-> <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- p>.</c->
 </pre>
     <figcaption>Project shape tree</figcaption>
    </figure>
@@ -845,8 +845,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-10-17T11:42:35.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>ldp</c-><c- p>:</c-><c- f>contains</c->
-    <c- nn>alice-pro</c-><c- p>:</c-><c- f>ccbd77ae-f769-4e07-b41f-5136501e13e7</c-> <c- p>,</c->
-    <c- nn>alice-pro</c-><c- p>:</c-><c- f>7a130c38-668a-4775-821a-08b38f2306fb</c-> <c- p>.</c->
+    <c- nn>alice-pro</c-><c- p>:</c-><c- f>ccbd77ae-f769-4e07-b41f-5136501e13e7\#project</c-> <c- p>,</c->
+    <c- nn>alice-pro</c-><c- p>:</c-><c- f>7a130c38-668a-4775-821a-08b38f2306fb\#project</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s data registration for <strong>pro</strong> projects</figcaption>
    </figure>
@@ -861,14 +861,15 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-10-17T11:42:36.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
   <c- nn>ldp</c-><c- p>:</c-><c- f>contains</c->
-    <c- nn>alice-pro</c-><c- p>:</c-><c- f>576520a6-af5a-4cf9-8b40-8b1512b59c73</c-> <c- p>,</c->
-    <c- nn>alice-pro</c-><c- p>:</c-><c- f>106a82aa-6911-4a7e-a49b-383cbaa9da66</c-> <c- p>,</c->
-    <c- nn>alice-pro</c-><c- p>:</c-><c- f>4d713903-d114-4890-a87c-eaed50c33e5e</c-> <c- p>,</c->
-    <c- nn>alice-pro</c-><c- p>:</c-><c- f>210cf13a-4082-487f-ab2b-ad54edb234a0</c-> <c- p>.</c->
+    <c- nn>alice-pro</c-><c- p>:</c-><c- f>576520a6-af5a-4cf9-8b40-8b1512b59c73\#task</c-> <c- p>,</c->
+    <c- nn>alice-pro</c-><c- p>:</c-><c- f>106a82aa-6911-4a7e-a49b-383cbaa9da66\#task</c-> <c- p>,</c->
+    <c- nn>alice-pro</c-><c- p>:</c-><c- f>4d713903-d114-4890-a87c-eaed50c33e5e\#task</c-> <c- p>,</c->
+    <c- nn>alice-pro</c-><c- p>:</c-><c- f>210cf13a-4082-487f-ab2b-ad54edb234a0\#task</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s data registration for <strong>pro</strong> tasks</figcaption>
    </figure>
    <h4 class="heading settled" data-level="2.4.3" id="data-instances"><span class="secno">2.4.3. </span><span class="content">Data Instances</span><a class="self-link" href="#data-instances"></a></h4>
+   <div class="issue no-marker" id="issue-d41d8cd9②"><a class="self-link" href="#issue-d41d8cd9②"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a></div>
    <figure>
 <pre class="include-code highlight"><c- nn>alice-pro</c-><c- p>:</c-><c- f>ccbd77ae-f769-4e07-b41f-5136501e13e7\#project</c->
   <c- b>a</c-> <c- nn>pm</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
@@ -876,7 +877,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <c- nn>tbd</c-><c- p>:</c-><c- f>hasReferenceList</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>5db9103b-392c-41a4-b823-100c213e24ff</c-> <c- p>.</c->
 
 <c- nn>alice-pro</c-><c- p>:</c-><c- f>5db9103b-392c-41a4-b823-100c213e24ff</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referenceShapePath</c-> <c- s>"@solidshapes:Project/pm:hasTask/@solidshapes:Task"</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
+  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s <strong>pro</strong> project 1</figcaption>
    </figure>
@@ -884,7 +886,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 <pre class="include-code highlight"><c- nn>alice-pro</c-><c- p>:</c-><c- f>5db9103b-392c-41a4-b823-100c213e24ff</c->
   <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
   <c- nn>tbd</c-><c- p>:</c-><c- f>referencesOf</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>ccbd77ae-f769-4e07-b41f-5136501e13e7\#project</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referenceShapePath</c-> <c- s>"@solidshapes:Project/pm:hasTask/@solidshapes:Task"</c-> <c- p>.</c->
+  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
+  <c- nn>tbd</c-><c- p>:</c-><c- f>referencePredicate</c-> <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- p>.</c->
 
 <c- nn>alice-pro</c-><c- p>:</c-><c- f>ccbd77ae-f769-4e07-b41f-5136501e13e7\#project</c->
   <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c->
@@ -900,7 +903,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <c- nn>tbd</c-><c- p>:</c-><c- f>hasReferenceList</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>aa97cee2-e698-4972-8f1c-0acf909f1377</c-> <c- p>.</c->
 
 <c- nn>alice-pro</c-><c- p>:</c-><c- f>aa97cee2-e698-4972-8f1c-0acf909f1377</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referenceShapePath</c-> <c- s>"@solidshapes:Project/pm:hasTask/@solidshapes:Task"</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
+  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s <strong>pro</strong> project 2</figcaption>
    </figure>
@@ -908,7 +912,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 <pre class="include-code highlight"><c- nn>alice-pro</c-><c- p>:</c-><c- f>aa97cee2-e698-4972-8f1c-0acf909f1377</c->
   <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
   <c- nn>tbd</c-><c- p>:</c-><c- f>referencesOf</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>7a130c38-668a-4775-821a-08b38f2306fb\#project</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referenceShapePath</c-> <c- s>"@solidshapes:Project/pm:hasTask/@solidshapes:Task"</c-> <c- p>.</c->
+  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
+  <c- nn>tbd</c-><c- p>:</c-><c- f>referencePredicate</c-> <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- p>.</c->
 
 <c- nn>alice-pro</c-><c- p>:</c-><c- f>7a130c38-668a-4775-821a-08b38f2306fb\#project</c->
   <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c->
@@ -968,7 +973,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-10-17T11:42:35.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>ldp</c-><c- p>:</c-><c- f>contains</c->
-    <c- nn>alice-home</c-><c- p>:</c-><c- f>0fd3daa3-dd6b-4484-826b-9ebaef099241</c-> <c- p>.</c->
+    <c- nn>alice-home</c-><c- p>:</c-><c- f>0fd3daa3-dd6b-4484-826b-9ebaef099241\#project</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s data registration for <strong>home</strong> projects</figcaption>
    </figure>
@@ -983,13 +988,14 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-10-17T11:42:36.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
   <c- nn>ldp</c-><c- p>:</c-><c- f>contains</c->
-    <c- nn>alice-home</c-><c- p>:</c-><c- f>f950bae5-247c-49b2-a537-b12cda8d5758</c-> <c- p>,</c->
-    <c- nn>alice-home</c-><c- p>:</c-><c- f>46fea403-8605-473b-a9a1-a86f50fb1633</c-> <c- p>,</c->
-    <c- nn>alice-home</c-><c- p>:</c-><c- f>72eb1958-5ad1-4268-96cb-739a71592cc0</c-> <c- p>.</c->
+    <c- nn>alice-home</c-><c- p>:</c-><c- f>f950bae5-247c-49b2-a537-b12cda8d5758\#task</c-> <c- p>,</c->
+    <c- nn>alice-home</c-><c- p>:</c-><c- f>46fea403-8605-473b-a9a1-a86f50fb1633\#task</c-> <c- p>,</c->
+    <c- nn>alice-home</c-><c- p>:</c-><c- f>72eb1958-5ad1-4268-96cb-739a71592cc0\#task</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s data registration for <strong>home</strong> tasks</figcaption>
    </figure>
    <h4 class="heading settled" data-level="2.5.3" id="data-instances①"><span class="secno">2.5.3. </span><span class="content">Data Instances</span><a class="self-link" href="#data-instances①"></a></h4>
+   <div class="issue no-marker" id="issue-d41d8cd9③"><a class="self-link" href="#issue-d41d8cd9③"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a></div>
    <figure>
 <pre class="include-code highlight"><c- nn>alice-home</c-><c- p>:</c-><c- f>0fd3daa3-dd6b-4484-826b-9ebaef099241\#project</c->
   <c- b>a</c-> <c- nn>pm</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
@@ -997,7 +1003,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <c- nn>tbd</c-><c- p>:</c-><c- f>hasReferenceList</c-> <c- nn>alice-home</c-><c- p>:</c-><c- f>11f5ee6e-8ccf-4a70-96a8-f5174aaf9a27</c-> <c- p>.</c->
 
 <c- nn>alice-home</c-><c- p>:</c-><c- f>11f5ee6e-8ccf-4a70-96a8-f5174aaf9a27</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referenceShapePath</c-> <c- s>"@solidshapes:Project/pm:hasTask/@solidshapes:Task"</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
+  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s <strong>home</strong> project 1</figcaption>
    </figure>
@@ -1005,7 +1012,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 <pre class="include-code highlight"><c- nn>alice-home</c-><c- p>:</c-><c- f>11f5ee6e-8ccf-4a70-96a8-f5174aaf9a27</c->
   <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
   <c- nn>tbd</c-><c- p>:</c-><c- f>referencesOf</c-> <c- nn>alice-home</c-><c- p>:</c-><c- f>0fd3daa3-dd6b-4484-826b-9ebaef099241\#project</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referenceShapePath</c-> <c- s>"@solidshapes:Project/pm:hasTask/@solidshapes:Task"</c-> <c- p>.</c->
+  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
+  <c- nn>tbd</c-><c- p>:</c-><c- f>referencePredicate</c-> <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- p>.</c->
 
 <c- nn>alice-home</c-><c- p>:</c-><c- f>0fd3daa3-dd6b-4484-826b-9ebaef099241\#project</c->
   <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c->
@@ -1391,6 +1399,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div style="counter-reset:issue">
    <div class="issue"> Write introduction<a href="#issue-e5197cdd"> ↵ </a></div>
    <div class="issue"> Explain visual language<a href="#issue-81cb35ef"> ↵ </a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9"> ↵ </a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9①"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828①"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828②"> ↵ </a></div>
@@ -1398,6 +1408,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828④"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828⑤"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828⑥"> ↵ </a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9②"> ↵ </a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9③"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828⑦"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828⑧"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828⑨"> ↵ </a></div>

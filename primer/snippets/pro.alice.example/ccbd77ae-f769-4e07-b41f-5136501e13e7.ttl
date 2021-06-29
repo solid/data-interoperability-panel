@@ -1,4 +1,5 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix solidtrees: <https://solidshapes.example/trees/> .
 @prefix pm: <https://vocab.example/project-management/> .
 @prefix tbd: <https://tbd.example/> .
 @prefix alice-pro: <https://pro.alice.example/> .
@@ -9,4 +10,5 @@ alice-pro:ccbd77ae-f769-4e07-b41f-5136501e13e7\#project
   tbd:hasReferenceList alice-pro:5db9103b-392c-41a4-b823-100c213e24ff .
 
 alice-pro:5db9103b-392c-41a4-b823-100c213e24ff
-  tbd:referenceShapePath "@solidshapes:Project/pm:hasTask/@solidshapes:Task" .
+  a tbd:ReferencesList ;
+  tbd:referencedTree solidtrees:Task .
