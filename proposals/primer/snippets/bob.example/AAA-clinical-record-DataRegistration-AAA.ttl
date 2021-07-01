@@ -1,0 +1,12 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX bob: <https://bob.example/>
+
+bob:AAA-clinical-record-DataRegistration-AAA
+  a interop:DataRegistration ;
+  interop:registeredBy <https://bob.example/#id> ;
+  interop:registeredWith <https://solidmin.example/#app> ;
+  interop:registeredAt "2019-03-14T13:42:32.000Z"^^xsd:dateTime ;
+  interop:registeredShapeTree solidtrees:Task ;
+  interop:hasRegisteredDataInstance bob:BBB-clinical-record-DataInstance-BBB#clinRec1 .
