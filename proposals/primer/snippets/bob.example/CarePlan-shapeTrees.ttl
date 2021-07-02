@@ -1,0 +1,13 @@
+fhirshapes:CarePlan
+  a shapetree:ShapeTree ;
+  shapetree:expectsType shapetree:ShapeTreeResource ;
+  shapetree:validatedBy fhirshapes:CarePlan ;
+  shapetree:references [
+    shapetree:hasShapeTree fhirshapes:Location ;
+    shapetree:shapePathLocator "@<AppointmentLocation>~fhir:link"
+  ] .
+
+fhirshapes:Location
+  a shapetree:ShapeTree ;
+  shapetree:expectsType shapetree:ShapeTreeResource ;
+  shapetree:validatedBy solidshapes:Location .

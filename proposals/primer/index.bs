@@ -556,11 +556,6 @@ simplied <a href="snippets/bob.example/CarePlan-shapes.shex">schema</a>,
 </figure>
 
 This CarePlan for <a href="https://bioportal.bioontology.org/ontologies/ICD10/?p=classes&conceptid=http%3A%2F%2Fpurl.bioontology.org%2Fontology%2FICD10%2FE16.2">unspecified hypoglyceamia</a> includes a reference to Bob's home address.
-Anyone overseeing logistics for the CarePlan's Appointments will need access to that location.
-This is selected with the ShapePath <code class="ShapePath">@&lt;AppointmentLocation>~fhir:link</code>.
-(If the schema did not provide a specific shape for <code>AppointmentLocation</code>,
-we would need the long form of the path, i.e.,
-<code class="ShapePath">@&lt;CarePlan>~fhir:activity~fhir:plannedActivityDetail[fhir:kind="Appointment"]~fhir:CodeableReference.reference~fhir:link</code>.)
 The referenced <code>../Location/HomeAddress</code> contains contact information and addresses:
 
 <figure>
@@ -571,6 +566,23 @@ The referenced <code>../Location/HomeAddress</code> contains contact information
   </pre>
   <figcaption>simplified Location for Bob</figcaption>
 </figure>
+
+Anyone overseeing logistics for the CarePlan's Appointments will need access to that location.
+This is selected with the ShapePath <code class="ShapePath">@&lt;AppointmentLocation>~fhir:link</code>.
+(If the schema did not provide a specific shape for <code>AppointmentLocation</code>,
+we would need the long form of the path, i.e.
+<code class="ShapePath">@&lt;CarePlan>~fhir:activity~fhir:plannedActivityDetail[fhir:kind="Appointment"]~fhir:CodeableReference.reference~fhir:link</code>.)
+
+<figure>
+  <pre class=include-code>
+  path: snippets/bob.example/CarePlan-shapeTrees.ttl
+  highlight: shex
+  show: 1-100
+  </pre>
+  <figcaption>simplified Care Plan ShapeTree</figcaption>
+</figure>
+
+An authentication agent can now allow a user to set permissions on the <code>HypoglycemiaManagement</code> CarePlan and extend those permissions to the referenced <code>Location/HomeAddress</code>.
 
 <figure>
   <pre class=include-code>
