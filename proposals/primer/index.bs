@@ -558,7 +558,9 @@ simplied <a href="snippets/bob.example/CarePlan-shapes.shex">schema</a>,
 This CarePlan for <a href="https://bioportal.bioontology.org/ontologies/ICD10/?p=classes&conceptid=http%3A%2F%2Fpurl.bioontology.org%2Fontology%2FICD10%2FE16.2">unspecified hypoglyceamia</a> includes a reference to Bob's home address.
 Anyone overseeing logistics for the CarePlan's Appointments will need access to that location.
 This is selected with the ShapePath <code class="ShapePath">@&lt;AppointmentLocation>~fhir:link</code>.
-(If the schema did not provide a specific shape for <code>AppointmentLocation</code>, we would need the long form of the path, i.e. <code class="ShapePath">@&lt;CarePlan>~fhir:activity~fhir:plannedActivityDetail[fhir:kind="Appointment"]~fhir:CodeableReference.reference~fhir:link</code>.)
+(If the schema did not provide a specific shape for <code>AppointmentLocation</code>,
+we would need the long form of the path, i.e.,
+<code class="ShapePath">@&lt;CarePlan>~fhir:activity~fhir:plannedActivityDetail[fhir:kind="Appointment"]~fhir:CodeableReference.reference~fhir:link</code>.)
 The referenced ../Location/HomeAddress contains contact information and addresses:
 
 <figure>
