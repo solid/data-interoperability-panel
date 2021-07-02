@@ -601,7 +601,7 @@ The Shape Tree Locator resides in a POD and associates instance data with the Sh
   <pre class=include-code>
   path: snippets/bob.example/CarePlan-shapeTreeLocator.ttl
   highlight: turtle
-  show: 5-100
+  show: 6-100
   </pre>
   <figcaption>simplified Care Plan ShapeTree Locator</figcaption>
 </figure>
@@ -610,15 +610,35 @@ The Shape Tree Locator resides in a POD and associates instance data with the Sh
 
 An authentication agent can now allow a user to set permissions on <code>A-CarePlan-F/A-HypoglycemiaManagement-F</code> and extend those permissions to the referenced <code>A-Location-F/A-HomeAddress-F</code>:
 
-1. A HEAD on <code>A-CarePlan-F/A-HypoglycemiaManagement-F</code> includes a Link: header rel=<code>http://shapetrees.org/#ShapeTreeLocator</code> pointing to <code>A-HypoglycemiaManagement-F?stloc#locator</code>.
-2. The Shape Tree Locator <code>st:hasShapeTree<code> <code>fhirshapetree:CarePlan</code>.
-3. The Shape Tree <code>fhirshapetree:CarePlan</code> references <code>fhirshapeTree:Location</code> with the shape path <code>@&lt;AppointmentLocation&gt;~fhir:link<code>, which, when evaluated on the FHIR Care Plan schema, identifies this <code>fhir:link</code> triple constraint in the schema:
+1. A HEAD on <code>A-CarePlan-F/A-HypoglycemiaManagement-F</code> includes:
+    <pre>
+      Link: A-HypoglycemiaManagement-F?stloc#loc rel=http://shapetrees.org/#ShapeTreeLocator
+    </pre>
+2. The Shape Tree Locator <code>A-HypoglycemiaManagement-F?stloc#loc</code> has the Shape Tree <code>fhirshapetree:CarePlan</code>:
+    <pre class=include-code>
+      path: snippets/bob.example/CarePlan-shapeTreeLocator.ttl
+      highlight: turtle
+      show: 13-14
+    </pre>
+    and states that the node <code>A-HypoglycemiaManagement-F</code> conforms to the shape <code>fhirshapes:CarePlan</code>:
+    <pre class=include-code>
+      path: snippets/bob.example/CarePlan-shapeTreeLocator.ttl
+      highlight: turtle
+      show: 15-16
+    </pre>
+3. The Shape Tree <code>fhirshapetree:CarePlan</code> references <code>fhirshapeTree:Location</code> with the shape path <code>@&lt;AppointmentLocation&gt;~fhir:link<code>:
+    <pre class=include-code>
+      path: snippets/bob.example/CarePlan-shapeTrees.ttl
+      highlight: turtle
+      show: 15-18
+    </pre>
+4. When evaluated on the FHIR Care Plan schema, this Shape Path identifies this <code>fhir:link</code> triple constraint in the schema:
     <pre class=include-code>
       path: snippets/bob.example/CarePlan-shapes.shex
       highlight: shex
       show: 35-38
     </pre>
-4. When validating <code>A-CarePlan-F/A-HypoglycemiaManagement-F</code> against <code>fhirshapes:CarePlan</code>. the <code>fhir:link</code> triple in
+5. When validating <code>A-HypoglycemiaManagement-F</code> against <code>fhirshapes:CarePlan</code>. the <code>fhir:link</code> triple in
     <pre class=include-code>
       path: snippets/bob.example/fhir/CarePlan/HypoglycemiaManagement.ttl
       highlight: shex
