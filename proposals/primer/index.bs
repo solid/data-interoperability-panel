@@ -610,7 +610,7 @@ The Shape Tree Locator resides in a POD and associates instance data with the Sh
 
 An authentication agent can now allow a user to set permissions on <code>A-CarePlan-F/A-HypoglycemiaManagement-F</code> and extend those permissions to the referenced <code>A-Location-F/A-HomeAddress-F</code>:
 
-1. A HEAD on <code>A-CarePlan-F/A-HypoglycemiaManagement-F</code> includes:
+1. The HTTP headers for <code>A-CarePlan-F/A-HypoglycemiaManagement-F</code> identify that resource's Shape Tree Locator:
     <pre>
       Link: A-HypoglycemiaManagement-F?stloc#loc rel=http://shapetrees.org/#ShapeTreeLocator
     </pre>
@@ -626,7 +626,7 @@ An authentication agent can now allow a user to set permissions on <code>A-CareP
       highlight: turtle
       show: 15-16
     </pre>
-3. The Shape Tree <code>fhirshapetree:CarePlan</code> references <code>fhirshapeTree:Location</code> with the shape path <code>@&lt;AppointmentLocation&gt;~fhir:link<code>:
+3. The Shape Tree <code>fhirshapetree:CarePlan</code> references <code>fhirshapeTree:Location</code> with the Shape Path <code>@&lt;AppointmentLocation&gt;~fhir:link<code>:
     <pre class=include-code>
       path: snippets/bob.example/CarePlan-shapeTrees.ttl
       highlight: turtle
@@ -638,13 +638,13 @@ An authentication agent can now allow a user to set permissions on <code>A-CareP
       highlight: shex
       show: 35-38
     </pre>
-5. When validating <code>A-HypoglycemiaManagement-F</code> against <code>fhirshapes:CarePlan</code>. the <code>fhir:link</code> triple in
+5. When validating the node <code>A-HypoglycemiaManagement-F</code> against the shape <code>fhirshapes:CarePlan</code>, the <code>fhir:link</code> triple in
     <pre class=include-code>
       path: snippets/bob.example/fhir/CarePlan/HypoglycemiaManagement.ttl
       highlight: shex
       show: 43-45
     </pre>
-     matches the above <code>fhir:link</code> triple constraint.
+     matches the <code>fhir:link</code> triple constraint identified by the Shape Path.
 
 #### Clinical data registration
 
