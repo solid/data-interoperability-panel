@@ -6,12 +6,12 @@ PREFIX sct: <http://snomed.info/id/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX icd10: <http://hl7.org/fhir/ValueSet/icd-10>
 PREFIX hl7code: <http://terminology.hl7.org/CodeSystem/>
-BASE <http://bob.example/fhir/CarePlan/>
+BASE <http://bob.example/data/A-CarePlan-F/>
 
-<HypoglycemiaManagement> a fhir:CarePlan;
+<A-HypoglycemiaManagement-F> a fhir:CarePlan;
   fhir:partOf [
     fhir:Reference.type fhir:CarePlan;
-    fhir:link <Wellness> ;
+    fhir:link <A-Wellness-F> ;
     fhir:Reference.display "Dietetic care plan"
   ];
   fhir:status "active";
@@ -21,7 +21,7 @@ BASE <http://bob.example/fhir/CarePlan/>
     fhir:CodeableConcept.text "Hypoglycemia management plan"
   ];
   fhir:subject [
-    fhir:link <../Person/Me>;
+    fhir:link <../A-Person-F/A-Me-F>;
     fhir:Reference.display "J.R. \"Bob\" Dobbs"
   ];
   fhir:activity [
@@ -41,7 +41,7 @@ BASE <http://bob.example/fhir/CarePlan/>
           ]
         ] ;
         fhir:CodeableReference.reference [
-          fhir:link <../Location/HomeAddress>;
+          fhir:link <../A-Location-F/A-HomeAddress-F>;
         ]
       ];
       fhir:reported true
