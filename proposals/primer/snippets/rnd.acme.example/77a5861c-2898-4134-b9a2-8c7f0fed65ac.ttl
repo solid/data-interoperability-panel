@@ -1,0 +1,15 @@
+PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX pm: <https://vocab.example/project-management/>
+PREFIX tbd: <https://tbd.example/>
+PREFIX acme-rnd: <https://rnd.acme.example/>
+
+acme-rnd:77a5861c-2898-4134-b9a2-8c7f0fed65ac
+  a tbd:ReferencesList ;
+  tbd:referencesOf acme-rnd:18e75c28-3649-4c24-9e58-530df3813ca3\#project ;
+  tbd:referencedTree solidtrees:Task ;
+  tbd:referencePredicate pm:hasTask .
+
+acme-rnd:18e75c28-3649-4c24-9e58-530df3813ca3\#project
+  pm:hasTask
+    acme-rnd:d1a7b2ff-a021-40f1-8c16-ab56407a0740\#task ,
+    acme-rnd:58814556-9955-482f-9d1f-0a89677f9881\#task .
