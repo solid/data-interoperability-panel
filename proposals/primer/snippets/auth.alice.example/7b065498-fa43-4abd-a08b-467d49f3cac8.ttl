@@ -1,0 +1,42 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX omni-auth: <https://auth.omni.example/>
+PREFIX omni-na: <https://na.omni.example/>
+PREFIX alice-auth: <https://auth.alice.example/>
+
+alice-auth:7b065498-fa43-4abd-a08b-467d49f3cac8
+  a interop:AccessReceipt ;
+    interop:registeredBy <https://alice.example/#id> ;
+    interop:registeredWith <https://jarvis.alice.example/#agent> ;
+    interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    interop:providedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+    interop:fromAgent <https://omni.example/#corp> ;
+    interop:viaAgent <https://omni.example/#corp> ;
+    interop:hasAccessGrantSubject
+      omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#grant-subject ;
+    interop:hasDataGrant
+      omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-project-na ,
+      omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-task-na .
+
+omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#grant-subject
+  a interop:AccessGrantSubject ;
+    interop:accessByAgent  <https://alice.example/#id> .
+
+omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-project-na
+  a interop:DataGrant ;
+    interop:registeredShapeTree solidtrees:Project ;
+    interop:hasDataRegistration omni-na:823e7976-13cc-4641-be0f-a4a78c2d7140 ;
+    interop:accessMode acl:Read, acl:Write ;
+    interop:scopeOfGrant interop:AllInstances .
+
+omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-task-na
+  a interop:DataGrant ;
+    interop:registeredShapeTree solidtrees:Task ;
+    interop:hasDataRegistration omni-na:6b800a8a-1d53-45b5-81bd-e76f1a87bdd3 ;
+    interop:accessMode acl:Read, acl:Write ;
+    interop:scopeOfGrant interop:InheritInstances ;
+    interop:inheritsFromGrant
+      omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-project-na .

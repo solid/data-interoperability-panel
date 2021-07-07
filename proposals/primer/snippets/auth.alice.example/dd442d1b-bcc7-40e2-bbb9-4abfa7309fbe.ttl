@@ -1,10 +1,10 @@
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix acl: <http://www.w3.org/ns/auth/acl#> .
-@prefix interop: <http://www.w3.org/ns/solid/interop#> .
-@prefix solidtrees: <https://solidshapes.example/trees/> .
-@prefix alice-auth: <https://auth.alice.example/> .
-@prefix alice-pro: <https://pro.alice.example/> .
-@prefix alice-home: <https://home.alice.example/> .
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX alice-auth: <https://auth.alice.example/>
+PREFIX alice-pro: <https://pro.alice.example/>
+PREFIX alice-home: <https://home.alice.example/>
 
 alice-auth:dd442d1b-bcc7-40e2-bbb9-4abfa7309fbe
   a interop:AccessReceipt ;
@@ -22,7 +22,11 @@ alice-auth:dd442d1b-bcc7-40e2-bbb9-4abfa7309fbe
       alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-project-pro ,
       alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-task-pro ,
       alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-project-home ,
-      alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-task-home .
+      alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-task-home ,
+      alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-acme-projects,
+      alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-acme-tasks ,
+      alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-omni-projects,
+      alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-omni-tasks .
 
 alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#grant-subject
   a interop:AccessGrantSubject ;
@@ -34,7 +38,9 @@ alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-project-pro
     interop:registeredShapeTree solidtrees:Project ;
     interop:hasDataRegistration alice-pro:773605f0-b5bf-4d46-878d-5c167eac8b5d ;
     interop:accessMode acl:Read, acl:Write ;
-    interop:scopeOfGrant interop:AllInstances .
+    interop:scopeOfGrant interop:SelectedInstances ;
+    interop:hasDataInstance
+      alice-pro:7a130c38-668a-4775-821a-08b38f2306fb\#project .
 
 alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-task-pro
   a interop:DataGrant ;
@@ -60,3 +66,35 @@ alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-task-home
     interop:scopeOfGrant interop:InheritInstances ;
     interop:inheritsFromGrant
       alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-project-home .
+
+alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-acme-projects
+  a interop:RemoteDataGrant ;
+    interop:registeredShapeTree solidtrees:Project ;
+    interop:hasRemoteDataFromAgent alice-auth:3a019d90-c7fb-4e65-865d-4254ef064667 ;
+    interop:accessMode acl:Read, acl:Write ;
+    interop:scopeOfGrant interop:AllRemoteFromAgent .
+
+alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-acme-tasks
+  a interop:RemoteDataGrant ;
+    interop:registeredShapeTree solidtrees:Task ;
+    interop:accessMode acl:Read, acl:Write ;
+    interop:scopeOfGrant interop:InheritInstances ;
+    interop:inheritsFromGrant
+     alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-acme-projects .
+
+alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-omni-projects
+  a interop:RemoteDataGrant ;
+    interop:registeredShapeTree solidtrees:Project ;
+    interop:hasRemoteDataFromAgent alice-auth:19479afc-00b9-4f7b-b602-9cc612d4b9cf ;
+    interop:accessMode acl:Read, acl:Write ;
+    interop:scopeOfGrant interop:SelectedRemote ;
+    interop:hasDataGrant
+      alice-auth:02f8366f-a1cf-4511-81d3-10cddfdce00f\#grant-copy .
+
+alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-omni-tasks
+  a interop:RemoteDataGrant ;
+    interop:registeredShapeTree solidtrees:Task ;
+    interop:accessMode acl:Read, acl:Write ;
+    interop:scopeOfGrant interop:InheritInstances ;
+    interop:inheritsFromGrant
+      alice-auth:3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-omni-projects .

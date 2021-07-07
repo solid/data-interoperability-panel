@@ -1,0 +1,15 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ldp: <http://www.w3.org/ns/ldp#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX acme-finance: <https://finance.acme.example/>
+
+acme-finance:882eea27-b968-44e7-b8f5-87b234089057
+  a interop:DataRegistration ;
+  interop:registeredBy <https://garry.example/#id> ;
+  interop:registeredWith <https://solidmin.example/#app> ;
+  interop:registeredAt "2020-08-23T21:12:27.000Z"^^xsd:dateTime ;
+  interop:registeredShapeTree solidtrees:Project ;
+  ldp:contains
+    acme-finance:e7a5a287-9481-417e-91bf-40ea738fa737\#project ,
+    acme-finance:c2883a4d-cece-43c2-9568-5f0aa1ac64be\#project .
