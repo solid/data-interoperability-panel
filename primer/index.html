@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 3d6a6fcbb, updated Wed Jun 16 16:19:39 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/primer/" rel="canonical">
-  <meta content="0f05cfea461c095325642b2e4b1b820ee3ae0ab5" name="document-revision">
+  <meta content="bf4dd619e86b6d5e09c45da337bf033e92a158e1" name="document-revision">
 <style>
 
   .sequence-diagram, .flowchart-diagram {
@@ -525,7 +525,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability Primer</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-06-29">29 June 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-07-07">7 July 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -641,34 +641,34 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h2 class="heading settled" data-level="2" id="data"><span class="secno">2. </span><span class="content">Data</span><a class="self-link" href="#data"></a></h2>
    <p>All turtle and shapetree code snippets in this primer will assume following prefixes.</p>
    <figure>
-<pre class="include-code highlight"><c- k>@prefix</c-> <c- nn>xsd:</c-> <c- g>&lt;http://www.w3.org/2001/XMLSchema#></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>rdf:</c-> <c- g>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>rdfs:</c-> <c- g>&lt;http://www.w3.org/2000/01/rdf-schema#></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>dcterms:</c-> <c- g>&lt;http://purl.org/dc/terms/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>solid:</c-> <c- g>&lt;http://www.w3.org/ns/solid/terms#></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>acl:</c-> <c- g>&lt;http://www.w3.org/ns/auth/acl#></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>interop:</c-> <c- g>&lt;http://www.w3.org/ns/solid/interop#></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>shapetree:</c-> <c- g>&lt;http://www.w3.org/ns/shapetree#></c-> <c- p>.</c->
+<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>xsd:</c-> <c- g>&lt;http://www.w3.org/2001/XMLSchema#></c->
+<c- k>PREFIX</c-> <c- nn>rdf:</c-> <c- g>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#></c->
+<c- k>PREFIX</c-> <c- nn>rdfs:</c-> <c- g>&lt;http://www.w3.org/2000/01/rdf-schema#></c->
+<c- k>PREFIX</c-> <c- nn>dcterms:</c-> <c- g>&lt;http://purl.org/dc/terms/></c->
+<c- k>PREFIX</c-> <c- nn>solid:</c-> <c- g>&lt;http://www.w3.org/ns/solid/terms#></c->
+<c- k>PREFIX</c-> <c- nn>acl:</c-> <c- g>&lt;http://www.w3.org/ns/auth/acl#></c->
+<c- k>PREFIX</c-> <c- nn>interop:</c-> <c- g>&lt;http://www.w3.org/ns/solid/interop#></c->
+<c- k>PREFIX</c-> <c- nn>shapetree:</c-> <c- g>&lt;http://www.w3.org/ns/shapetree#></c->
 
 <c- c># Fictional</c->
-<c- k>@prefix</c-> <c- nn>solidshapes:</c-> <c- g>&lt;https://solidshapes.example/shapes/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>pm:</c-> <c- g>&lt;https://vocab.example/project-management/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>tbd:</c-> <c- g>&lt;https://tbd.example/></c-> <c- p>.</c->
+<c- k>PREFIX</c-> <c- nn>solidshapes:</c-> <c- g>&lt;https://solidshapes.example/shapes/></c->
+<c- k>PREFIX</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c->
+<c- k>PREFIX</c-> <c- nn>pm:</c-> <c- g>&lt;https://vocab.example/project-management/></c->
+<c- k>PREFIX</c-> <c- nn>tbd:</c-> <c- g>&lt;https://tbd.example/></c->
 
 <c- c># ACME</c->
-<c- k>@prefix</c-> <c- nn>acme:</c-> <c- g>&lt;https://acme.example/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>acme-rnd:</c-> <c- g>&lt;https://rnd.acme.example/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>acme-finance:</c-> <c- g>&lt;https://finance.acme.example/></c-> <c- p>.</c->
+<c- k>PREFIX</c-> <c- nn>acme:</c-> <c- g>&lt;https://acme.example/></c->
+<c- k>PREFIX</c-> <c- nn>acme-rnd:</c-> <c- g>&lt;https://rnd.acme.example/></c->
+<c- k>PREFIX</c-> <c- nn>acme-finance:</c-> <c- g>&lt;https://finance.acme.example/></c->
 
 <c- c># Alice</c->
-<c- k>@prefix</c-> <c- nn>alice:</c-> <c- g>&lt;https://alice.example/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>alice-auth:</c-> <c- g>&lt;https://auth.alice.example/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>alice-pro:</c-> <c- g>&lt;https://pro.alice.example/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>alice-home:</c-> <c- g>&lt;https://home.alice.example/></c-> <c- p>.</c->
+<c- k>PREFIX</c-> <c- nn>alice:</c-> <c- g>&lt;https://alice.example/></c->
+<c- k>PREFIX</c-> <c- nn>alice-auth:</c-> <c- g>&lt;https://auth.alice.example/></c->
+<c- k>PREFIX</c-> <c- nn>alice-pro:</c-> <c- g>&lt;https://pro.alice.example/></c->
+<c- k>PREFIX</c-> <c- nn>alice-home:</c-> <c- g>&lt;https://home.alice.example/></c->
 
 <c- c># Bob</c->
-<c- k>@prefix</c-> <c- nn>bob:</c-> <c- g>&lt;https://bob.example/></c-> <c- p>.</c->
+<c- k>PREFIX</c-> <c- nn>bob:</c-> <c- g>&lt;https://bob.example/></c->
 </pre>
     <figcaption>common prefixes for turtle</figcaption>
    </figure>
@@ -740,7 +740,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h4 class="heading settled" data-level="2.2.1" id="data-registrations"><span class="secno">2.2.1. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations"></a></h4>
    <p class="issue" id="issue-1b5d4828"><a class="self-link" href="#issue-1b5d4828"></a> Snippet below needs to be updated</p>
    <figure>
-<pre class="include-code highlight"><c- k>@prefix</c-> <c- nn>acme:</c-> <c- g>&lt;https://acme.example/></c-> <c- p>.</c->
+<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>acme:</c-> <c- g>&lt;https://acme.example/></c->
 
 <c- nn>acme</c-><c- p>:</c-><c- f>4d594c61-7cff-484a-a1d2-1f353ee4e1e7</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
@@ -756,7 +756,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <p class="issue" id="issue-1b5d4828①"><a class="self-link" href="#issue-1b5d4828①"></a> Snippet below needs to be updated</p>
    <figure>
-<pre class="include-code highlight"><c- k>@prefix</c-> <c- nn>acme:</c-> <c- g>&lt;https://acme.example/></c-> <c- p>.</c->
+<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>acme:</c-> <c- g>&lt;https://acme.example/></c->
 
 <c- nn>acme</c-><c- p>:</c-><c- f>4d594c61-7cff-484a-a1d2-1f353ee4e1e7</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
@@ -835,8 +835,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <h4 class="heading settled" data-level="2.4.2" id="data-registrations①"><span class="secno">2.4.2. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations①"></a></h4>
    <figure>
-<pre class="include-code highlight"><c- k>@prefix</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>alice-pro:</c-> <c- g>&lt;https://pro.alice.example/></c-> <c- p>.</c->
+<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c->
+<c- k>PREFIX</c-> <c- nn>alice-pro:</c-> <c- g>&lt;https://pro.alice.example/></c->
 
 <c- nn>alice-pro</c-><c- p>:</c-><c- f>773605f0-b5bf-4d46-878d-5c167eac8b5d</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
@@ -851,8 +851,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <figcaption>Alice’s data registration for <strong>pro</strong> projects</figcaption>
    </figure>
    <figure>
-<pre class="include-code highlight"><c- k>@prefix</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>alice-pro:</c-> <c- g>&lt;https://pro.alice.example/></c-> <c- p>.</c->
+<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c->
+<c- k>PREFIX</c-> <c- nn>alice-pro:</c-> <c- g>&lt;https://pro.alice.example/></c->
 
 <c- nn>alice-pro</c-><c- p>:</c-><c- f>4d594c61-7cff-484a-a1d2-1f353ee4e1e7</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
@@ -963,8 +963,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <h4 class="heading settled" data-level="2.5.2" id="data-registrations②"><span class="secno">2.5.2. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations②"></a></h4>
    <figure>
-<pre class="include-code highlight"><c- k>@prefix</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>alice-home:</c-> <c- g>&lt;https://home.alice.example/></c-> <c- p>.</c->
+<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c->
+<c- k>PREFIX</c-> <c- nn>alice-home:</c-> <c- g>&lt;https://home.alice.example/></c->
 
 <c- nn>alice-home</c-><c- p>:</c-><c- f>f6ccd3a4-45ea-4f98-8a36-98eac92a6720</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
@@ -978,8 +978,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <figcaption>Alice’s data registration for <strong>home</strong> projects</figcaption>
    </figure>
    <figure>
-<pre class="include-code highlight"><c- k>@prefix</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>alice-home:</c-> <c- g>&lt;https://home.alice.example/></c-> <c- p>.</c->
+<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c->
+<c- k>PREFIX</c-> <c- nn>alice-home:</c-> <c- g>&lt;https://home.alice.example/></c->
 
 <c- nn>alice-home</c-><c- p>:</c-><c- f>92f43be4-d12c-4ca3-9bd6-c18e83167b2f</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
@@ -1245,8 +1245,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h4 class="heading settled" data-level="2.6.7" id="access-grants"><span class="secno">2.6.7. </span><span class="content">Access Grants</span><a class="self-link" href="#access-grants"></a></h4>
    <p class="issue" id="issue-1b5d4828①⓪"><a class="self-link" href="#issue-1b5d4828①⓪"></a> Snippet below needs to be updated</p>
    <figure>
-<pre class="include-code highlight"><c- k>@prefix</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c-> <c- p>.</c->
-<c- k>@prefix</c-> <c- nn>alice:</c-> <c- g>&lt;https://alice.example/></c-> <c- p>.</c->
+<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c->
+<c- k>PREFIX</c-> <c- nn>alice:</c-> <c- g>&lt;https://alice.example/></c->
 
 <c- nn>alice</c-><c- p>:</c-><c- f>6b1b6e39-75e4-44f8-84f3-104b1a8210ad</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrant</c-> <c- p>;</c->
@@ -1280,7 +1280,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h4 class="heading settled" data-level="2.7.1" id="data-registrations③"><span class="secno">2.7.1. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations③"></a></h4>
    <p class="issue" id="issue-1b5d4828①①"><a class="self-link" href="#issue-1b5d4828①①"></a> Snippet below needs to be updated</p>
    <figure>
-<pre class="include-code highlight"><c- k>@prefix</c-> <c- nn>bob:</c-> <c- g>&lt;https://bob.example/></c-> <c- p>.</c->
+<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>bob:</c-> <c- g>&lt;https://bob.example/></c->
 
 <c- nn>bob</c-><c- p>:</c-><c- f>0af793c1-8abc-441c-aacc-f78483b34217</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
@@ -1294,7 +1294,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <p class="issue" id="issue-1b5d4828①②"><a class="self-link" href="#issue-1b5d4828①②"></a> Snippet below needs to be updated</p>
    <figure>
-<pre class="include-code highlight"><c- k>@prefix</c-> <c- nn>bob:</c-> <c- g>&lt;https://bob.example/></c-> <c- p>.</c->
+<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>bob:</c-> <c- g>&lt;https://bob.example/></c->
 
 <c- nn>bob</c-><c- p>:</c-><c- f>4675444a-8a4d-46e1-abfe-85147e5a9b76</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
@@ -1310,7 +1310,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h3 class="heading settled" data-level="2.8" id="performchartexample"><span class="secno">2.8. </span><span class="content">performchart.example</span><a class="self-link" href="#performchartexample"></a></h3>
    <p class="issue" id="issue-1b5d4828①③"><a class="self-link" href="#issue-1b5d4828①③"></a> Snippet below needs to be updated</p>
    <figure>
-<pre class="include-code highlight"><c- k>@prefix</c-> <c- nn>performchart:</c-> <c- g>&lt;https://performchart.example/></c-> <c- p>.</c->
+<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>performchart:</c-> <c- g>&lt;https://performchart.example/></c->
 
 <c- nn>performchart</c-><c- p>:</c-><c- f>\#app</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Application</c-> <c- p>;</c->
