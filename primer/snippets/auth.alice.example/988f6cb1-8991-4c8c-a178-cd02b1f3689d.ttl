@@ -1,0 +1,15 @@
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX alice-auth: <https://auth.alice.example/>
+PREFIX acme-auth: <https://auth.acme.example/>
+PREFIX acme-finance: <https://finance.acme.example/>
+
+alice-auth:988f6cb1-8991-4c8c-a178-cd02b1f3689d\#grant-copy
+  a interop:DataGrant ;
+  interop:registeredShapeTree solidtrees:Project ;
+  interop:hasDataRegistration acme-finance:882eea27-b968-44e7-b8f5-87b234089057 ;
+  interop:accessMode acl:Read, acl:Write ;
+  interop:scopeOfGrant interop:AllInstances ;
+  interop:copyOfGrant
+    acme-auth:7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-finance .
