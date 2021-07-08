@@ -8,11 +8,14 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 3d6a6fcbb, updated Wed Jun 16 16:19:39 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/primer/" rel="canonical">
-  <meta content="fb60ee5ae97acaba4ec6a1ab9752044ea6a92855" name="document-revision">
+  <meta content="590647f1324818fc05a46ad564c8979956f6d1e5" name="document-revision">
 <style>
 
   .sequence-diagram, .flowchart-diagram {
     max-width: 100%;
+  }
+  .ShapePath {
+    color: #a67f59
   }
 
 </style>
@@ -525,7 +528,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability Primer</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-07-07">7 July 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-07-08">8 July 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -627,6 +630,15 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
        <a href="#bobexample"><span class="secno">2.13</span> <span class="content">bob.example</span></a>
        <ol class="toc">
         <li><a href="#data-registrations⑤"><span class="secno">2.13.1</span> <span class="content">Data Registrations</span></a>
+        <li>
+         <a href="#clinical-example"><span class="secno">2.13.2</span> <span class="content">Clinical example</span></a>
+         <ol class="toc">
+          <li><a href="#clinical-data-described-by-shex-shapes"><span class="secno">2.13.2.1</span> <span class="content">Clinical data described by ShEx shapes</span></a>
+          <li><a href="#related-information-in-clinical-data"><span class="secno">2.13.2.2</span> <span class="content">Related information in clinical data</span></a>
+          <li><a href="#clinical-data-shape-tree-and-shape-tree-locator"><span class="secno">2.13.2.3</span> <span class="content">Clinical data Shape Tree and Shape Tree Locator</span></a>
+          <li><a href="#following-shapepath-references-for-access-controls"><span class="secno">2.13.2.4</span> <span class="content">Following ShapePath references for access controls</span></a>
+          <li><a href="#clinical-data-registration"><span class="secno">2.13.2.5</span> <span class="content">Clinical data registration</span></a>
+         </ol>
        </ol>
       <li><a href="#performchartexample"><span class="secno">2.14</span> <span class="content">performchart.example</span></a>
       <li>
@@ -673,7 +685,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 <c- k>PREFIX</c-> <c- nn>solid:</c-> <c- g>&lt;http://www.w3.org/ns/solid/terms#></c->
 <c- k>PREFIX</c-> <c- nn>acl:</c-> <c- g>&lt;http://www.w3.org/ns/auth/acl#></c->
 <c- k>PREFIX</c-> <c- nn>interop:</c-> <c- g>&lt;http://www.w3.org/ns/solid/interop#></c->
-<c- k>PREFIX</c-> <c- nn>shapetree:</c-> <c- g>&lt;http://www.w3.org/ns/shapetree#></c->
+<c- k>PREFIX</c-> <c- nn>shapetree:</c-> <c- g>&lt;http://www.w3.org/ns/shapetrees#></c->
 
 <c- c># Fictional</c->
 <c- k>PREFIX</c-> <c- nn>solidshapes:</c-> <c- g>&lt;https://solidshapes.example/shapes/></c->
@@ -1914,10 +1926,260 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </pre>
     <figcaption>Bob’s data registration for tasks</figcaption>
    </figure>
-   <h3 class="heading settled" data-level="2.14" id="performchartexample"><span class="secno">2.14. </span><span class="content">performchart.example</span><a class="self-link" href="#performchartexample"></a></h3>
-   <p class="issue" id="issue-1b5d4828⑦"><a class="self-link" href="#issue-1b5d4828⑦"></a> Snippet below needs to be updated</p>
+   <h4 class="heading settled" data-level="2.13.2" id="clinical-example"><span class="secno">2.13.2. </span><span class="content">Clinical example</span><a class="self-link" href="#clinical-example"></a></h4>
+   <p>To optimize for data and tool reusability, clinical data tends to use complex structures composed of generic properties.
+For instance, the FHIR <code>link</code> property links many different types of document (see the <a href="http://build.fhir.org/careplan.html#CarePlan">graphical</a> and <a href="http://build.fhir.org/careplan.shex.html">ShEx</a> representations of a FHIR Care Plan).</p>
+   <p class="note" role="note"><span>Note:</span> <span class="issue" id="issue-80498731"><a class="self-link" href="#issue-80498731"></a>if accepted, move to notation section</span> In the following examples, resources have descriptive names.
+The convention <code>A-&lt;descriptive name>-F</code> indicates that the system may provide any name to avoid collisions.
+One strategy for this is to use UUIDs for every such path fragment.</p>
+   <p class="note" role="note"><span>Note:</span> <span class="issue" id="issue-80498731①"><a class="self-link" href="#issue-80498731①"></a>if accepted, move to notation section</span> Examples that represent instance data within a POD typically start with a <c- k>BASE</c-> directive to clarify where they would reside on the POD.</p>
+   <h5 class="heading settled" data-level="2.13.2.1" id="clinical-data-described-by-shex-shapes"><span class="secno">2.13.2.1. </span><span class="content">Clinical data described by ShEx shapes</span><a class="self-link" href="#clinical-data-described-by-shex-shapes"></a></h5>
+   <p>The following <a href="snippets/bob.example/CarePlan-shapes.shex">FHIR Care Plan schema</a> and <a href="snippets/bob.example/CarePlan-instance.ttl">example Care Plan data</a> have been simplified for presentation here:</p>
    <figure>
-<pre class="include-code highlight"><c- nn>performchart</c-><c- p>:</c-><c- f>\#app</c->
+<pre class="include-code highlight"><c- nl>&lt;CarePlan></c-> <c- k>CLOSED</c-> <c- p>{</c->
+  <c- k>a</c-> <c- p>[</c-><c- nn>fhir</c-><c- p>:</c-><c- f>CarePlan</c-><c- p>];</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>partOf</c-> <c- o>@</c-><c- nl>&lt;Reference></c-><c- o>*</c-><c- p>;</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>status</c-> <c- o>@</c-><c- nl>&lt;code></c-> <c- ow>AND</c-> <c- o>@</c-><c- nn>fhirvs</c-><c- p>:</c-><c- f>request-status</c-><c- p>;</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>intent</c-> <c- o>@</c-><c- nl>&lt;code></c-> <c- ow>AND</c-> <c- o>@</c-><c- nn>fhirvs</c-><c- p>:</c-><c- f>care-plan-intent</c-><c- p>;</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>category</c-> <c- o>@</c-><c- nl>&lt;CodeableConcept></c-><c- o>*</c-><c- p>;</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>subject</c-> <c- o>@</c-><c- nl>&lt;Reference></c-><c- p>;</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>activity</c-> <c- k>CLOSED</c-> <c- p>{</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>performedActivity</c-> <c- o>@</c-><c- nl>&lt;CodeableReference></c-><c- o>*</c-><c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>plannedActivityReference</c-> <c- o>@</c-><c- nl>&lt;Reference></c-><c- o>?</c-><c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>plannedActivityDetail</c-> <c- k>CLOSED</c-> <c- p>{</c->
+      <c- nn>fhir</c-><c- p>:</c-><c- f>kind</c-> <c- o>@</c-><c- nl>&lt;code></c-> <c- ow>AND</c-> <c- o>@</c-><c- nn>fhirvs</c-><c- p>:</c-><c- f>care-plan-activity-kind</c-><c- o>?</c-><c- p>;</c->
+      <c- nn>fhir</c-><c- p>:</c-><c- f>code</c-> <c- o>@</c-><c- nl>&lt;CodeableConcept></c-><c- o>?</c-><c- p>;</c->
+      <c- nn>fhir</c-><c- p>:</c-><c- f>status</c-> <c- o>@</c-><c- nl>&lt;code></c-> <c- ow>AND</c-> <c- o>@</c-><c- nn>fhirvs</c-><c- p>:</c-><c- f>care-plan-activity-status</c-><c- p>;</c->
+      <c- nn>fhir</c-><c- p>:</c-><c- f>location</c-> <c- o>@</c-><c- nl>&lt;CodeableReference></c-><c- o>?</c-><c- p>;</c->
+      <c- nn>fhir</c-><c- p>:</c-><c- f>reported</c-> <c- o>@</c-><c- nl>&lt;boolean></c-> <c- ow>OR</c-> <c- o>@</c-><c- nl>&lt;Reference></c-> <c- o>?</c-><c- p>;</c->
+    <c- p>}</c-> <c- ow>AND</c-> <c- o>@</c-><c- nl>&lt;AppointmentConstraints></c-><c- o>?</c-><c- p>;</c->
+  <c- p>}</c-><c- o>*</c-><c- p>;</c->
+<c- p>}</c->
+
+<c- nl>&lt;AppointmentConstraints></c-> <c- p>{</c-> <c- nn>fhir</c-><c- p>:</c-><c- f>kind</c-> <c- ow>NOT</c-> <c- p>[</c-><c- s>"Appointment"</c-><c- p>]</c-><c- o>?</c-> <c- p>}</c-> <c- ow>OR</c-> <c- p>{</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>location</c-> <c- p>{</c->
+    <c- c># Appointment location MUST have a reference</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableReference.reference</c-> <c- o>@</c-><c- nl>&lt;AppointmentLocation></c->
+  <c- p>}</c->
+<c- p>}</c->
+
+<c- nl>&lt;AppointmentLocation></c-> <c- p>{</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>link</c-> <c- k>IRI</c->
+<c- p>}</c->
+</pre>
+    <figcaption>simplified FHIR Care Plan (ShEx) shapes</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- k>BASE</c-> <c- g>&lt;http://bob.example/data/A-CarePlan-F/></c->
+
+<c- g>&lt;A-HypoglycemiaManagement-F></c-> <c- b>a</c-> <c- nn>fhir</c-><c- p>:</c-><c- f>CarePlan</c-><c- p>;</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>partOf</c-> <c- p>[</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>Reference.type</c-> <c- nn>fhir</c-><c- p>:</c-><c- f>CarePlan</c-><c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>link</c-> <c- g>&lt;A-Wellness-F></c-> <c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>Reference.display</c-> <c- s>"Dietetic care plan"</c->
+  <c- p>];</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>status</c-> <c- s>"active"</c-><c- p>;</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>intent</c-> <c- s>"plan"</c-><c- p>;</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>category</c-> <c- p>[</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableConcept.coding</c-> <c- p>[</c-> <c- b>a</c-> <c- nn>sct</c-><c- p>:</c-><c- f>737433005</c-> <c- p>]</c-> <c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableConcept.text</c-> <c- s>"Hypoglycemia management plan"</c->
+  <c- p>];</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>subject</c-> <c- p>[</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>link</c-> <c- g>&lt;../A-Person-F/A-Me-F></c-><c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>Reference.display</c-> <c- s>"J.R. \"Bob\" Dobbs"</c->
+  <c- p>];</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>activity</c-> <c- p>[</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>plannedActivityDetail</c-> <c- p>[</c->
+      <c- nn>fhir</c-><c- p>:</c-><c- f>kind</c-> <c- s>"Appointment"</c-><c- p>;</c->
+      <c- nn>fhir</c-><c- p>:</c-><c- f>code</c-> <c- p>[</c->
+        <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableConcept.coding</c-> <c- p>[</c-> <c- b>a</c-> <c- nn>sct</c-><c- p>:</c-><c- f>425604002</c-> <c- p>];</c->
+        <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableConcept.coding</c-> <c- p>[</c-> <c- b>a</c-> <c- nn>icd10</c-><c- p>:</c-><c- f>E16.2XXD</c-> <c- p>];</c->
+        <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableConcept.text</c-> <c- s>"Follow-up encounter"</c->
+      <c- p>];</c->
+      <c- nn>fhir</c-><c- p>:</c-><c- f>status</c-> <c- s>"scheduled"</c-><c- p>;</c->
+      <c- nn>fhir</c-><c- p>:</c-><c- f>location</c-> <c- p>[</c->
+        <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableReference.concept</c-> <c- p>[</c->
+          <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableConcept.coding</c-> <c- p>[</c->
+            <c- b>a</c-> <c- nn>hl7code</c-><c- p>:</c-><c- f>v3-RoleCode\#PTRES</c-> <c- p>;</c->
+            <c- nn>fhir</c-><c- p>:</c-><c- f>Coding.display</c-> <c- s>"Patient's Residence"</c->
+          <c- p>]</c->
+        <c- p>]</c-> <c- p>;</c->
+        <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableReference.reference</c-> <c- p>[</c->
+          <c- nn>fhir</c-><c- p>:</c-><c- f>link</c-> <c- g>&lt;../A-Location-F/A-HomeAddress-F></c-><c- p>;</c->
+        <c- p>]</c->
+      <c- p>];</c->
+      <c- nn>fhir</c-><c- p>:</c-><c- f>reported</c-> <c- l>true</c->
+    <c- p>]</c->
+  <c- p>]</c-> <c- p>.</c->
+</pre>
+    <figcaption>simplified FHIR Care Plan instance data
+  [<a href="http://shex.io/webapps/shex.js/doc/shex-simple?schema=PREFIX%20fhir%3A%20%3Chttp%3A%2F%2Fhl7.org%2Ffhir%2F%3E%20%0APREFIX%20fhirvs%3A%20%3Chttp%3A%2F%2Fhl7.org%2Ffhir%2FValueSet%2F%3E%0APREFIX%20xsd%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%20%0ABASE%20%3Chttp%3A%2F%2Fhl7.org%2Ffhir%2Fshape%2F%3E%0A%0ASTART%3D%40%3CCarePlan%3E%0A%0A%3CCarePlan%3E%20CLOSED%20%7B%0A%20%20a%20%5Bfhir%3ACarePlan%5D%3B%0A%20%20fhir%3ApartOf%20%40%3CReference%3E*%3B%0A%20%20fhir%3Astatus%20%40%3Ccode%3E%20AND%20%40fhirvs%3Arequest-status%3B%0A%20%20fhir%3Aintent%20%40%3Ccode%3E%20AND%20%40fhirvs%3Acare-plan-intent%3B%0A%20%20fhir%3Acategory%20%40%3CCodeableConcept%3E*%3B%0A%20%20fhir%3Asubject%20%40%3CReference%3E%3B%0A%20%20fhir%3Aactivity%20CLOSED%20%7B%0A%20%20%20%20fhir%3AperformedActivity%20%40%3CCodeableReference%3E*%3B%0A%20%20%20%20fhir%3AplannedActivityReference%20%40%3CReference%3E%3F%3B%0A%20%20%20%20fhir%3AplannedActivityDetail%20CLOSED%20%7B%0A%20%20%20%20%20%20fhir%3Akind%20%40%3Ccode%3E%20AND%20%40fhirvs%3Acare-plan-activity-kind%3F%3B%0A%20%20%20%20%20%20fhir%3Acode%20%40%3CCodeableConcept%3E%3F%3B%0A%20%20%20%20%20%20fhir%3Astatus%20%40%3Ccode%3E%20AND%20%40fhirvs%3Acare-plan-activity-status%3B%0A%20%20%20%20%20%20fhir%3Alocation%20%40%3CCodeableReference%3E%3F%3B%0A%20%20%20%20%20%20fhir%3Areported%20%40%3Cboolean%3E%20OR%20%40%3CReference%3E%20%3F%3B%0A%20%20%20%20%7D%20AND%20%40%3CAppointmentConstraints%3E%3F%3B%0A%20%20%7D*%3B%0A%7D%0A%0A%3CAppointmentConstraints%3E%20%7B%20fhir%3Akind%20NOT%20%5B%22Appointment%22%5D%3F%20%7D%20OR%20%7B%0A%20%20fhir%3Alocation%20%7B%0A%20%20%20%20%23%20Appointment%20location%20MUST%20have%20a%20reference%0A%20%20%20%20fhir%3ACodeableReference.reference%20%40%3CAppointmentLocation%3E%0A%20%20%7D%0A%7D%0A%0A%3CAppointmentLocation%3E%20%7B%0A%20%20fhir%3Alink%20IRI%0A%7D%0A%0A%23%20Complex%20datatypes%0A%0A%3CReference%3E%20CLOSED%20%7B%0A%20%20fhir%3Alink%20IRI%3F%3B%0A%20%20fhir%3AReference.reference%20%40%3Cstring%3E%3F%3B%0A%20%20fhir%3AReference.type%20IRI%3F%3B%0A%20%20fhir%3AReference.display%20xsd%3Astring%3F%3B%0A%7D%0A%0A%3CCodeableReference%3E%20CLOSED%20%7B%0A%20%20fhir%3ACodeableReference.concept%20%40%3CCodeableConcept%3E%3F%3B%0A%20%20fhir%3ACodeableReference.reference%20%40%3CReference%3E%3F%3B%0A%7D%0A%0A%3CCodeableConcept%3E%20CLOSED%20%7B%0A%20%20a%20NONLITERAL*%3B%0A%20%20fhir%3ACodeableConcept.coding%20%40%3CCoding%3E*%3B%0A%20%20fhir%3ACodeableConcept.text%20%40%3Cstring%3E%3F%3B%0A%7D%0A%0A%3CCoding%3E%20CLOSED%20%7B%0A%20%20a%20NONLITERAL%3F%3B%0A%20%20fhir%3ACoding.display%20xsd%3Astring%3F%0A%7D%0A%0A%23%20XSD%20datatypes%0A%0A%3Ccode%3E%20xsd%3Astring%0A%3Cstring%3E%20xsd%3Astring%0A%3Cboolean%3E%20xsd%3Aboolean%0A%3CpositiveInt%3E%20xsd%3ApositiveInteger%0A%3Cdecimal%3E%20xsd%3Adecimal%0A%0A%23%20value%20sets%0A%0Afhirvs%3Acare-plan-activity-status%0A%20%20%5B%22not-started%22%20%22scheduled%22%20%22in-progress%22%20%22on-hold%22%20%22completed%22%20%22cancelled%22%0A%20%20%20%22stopped%22%20%22unknown%22%20%22entered-in-error%22%5D%0Afhirvs%3Arequest-status%0A%20%20%5B%22draft%22%20%22active%22%20%22on-hold%22%20%22revoked%22%20%22completed%22%20%22entered-in-error%22%20%22unknown%22%5D%0Afhirvs%3Acare-plan-intent%0A%20%20%5B%22proposal%22%20%22plan%22%20%22order%22%20%22option%22%20%22directive%22%5D%0Afhirvs%3Aunits-of-time%0A%20%20%5B%22s%22%20%22min%22%20%22h%22%20%22d%22%20%22wk%22%20%22mo%22%20%22a%22%5D%0Afhirvs%3Acare-plan-activity-kind%0A%20%20%5B%22Appointment%22%20%22CommunicationRequest%22%20%22DeviceRequest%22%20%22MedicationRequest%22%0A%20%20%20%22NutritionOrder%22%20%22Task%22%20%22ServiceRequest%22%20%22VisionPrescription%22%5D%0A&amp;data=%23%20c.f.%20http%3A%2F%2Fbuild.fhir.org%2Fcareplan.html%23CarePlan%0A%0APREFIX%20fhir%3A%20%3Chttp%3A%2F%2Fhl7.org%2Ffhir%2F%3E%0APREFIX%20loinc%3A%20%3Chttp%3A%2F%2Floinc.org%2Frdf%23%3E%0APREFIX%20sct%3A%20%3Chttp%3A%2F%2Fsnomed.info%2Fid%2F%3E%0APREFIX%20xsd%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0APREFIX%20icd10%3A%20%3Chttp%3A%2F%2Fhl7.org%2Ffhir%2FValueSet%2Ficd-10%3E%0APREFIX%20hl7code%3A%20%3Chttp%3A%2F%2Fterminology.hl7.org%2FCodeSystem%2F%3E%0ABASE%20%3Chttp%3A%2F%2Fbob.example%2Ffhir%2FCarePlan%2F%3E%0A%0A%3CHypoglycemiaManagement%3E%20a%20fhir%3ACarePlan%3B%0A%20%20fhir%3ApartOf%20%5B%0A%20%20%20%20fhir%3AReference.type%20fhir%3ACarePlan%3B%0A%20%20%20%20fhir%3Alink%20%3CWellness%3E%20%3B%0A%20%20%20%20fhir%3AReference.display%20%22Dietetic%20care%20plan%22%0A%20%20%5D%3B%0A%20%20fhir%3Astatus%20%22active%22%3B%0A%20%20fhir%3Aintent%20%22plan%22%3B%0A%20%20fhir%3Acategory%20%5B%0A%20%20%20%20fhir%3ACodeableConcept.coding%20%5B%20a%20sct%3A737433005%20%5D%20%3B%0A%20%20%20%20fhir%3ACodeableConcept.text%20%22Hypoglycemia%20management%20plan%22%0A%20%20%5D%3B%0A%20%20fhir%3Asubject%20%5B%0A%20%20%20%20fhir%3Alink%20%3C..%2FPerson%2FMe%3E%3B%0A%20%20%20%20fhir%3AReference.display%20%22J.R.%20%5C%22Bob%5C%22%20Dobbs%22%0A%20%20%5D%3B%0A%20%20fhir%3Aactivity%20%5B%0A%20%20%20%20fhir%3AplannedActivityDetail%20%5B%0A%20%20%20%20%20%20fhir%3Akind%20%22Appointment%22%3B%0A%20%20%20%20%20%20fhir%3Acode%20%5B%0A%20%20%20%20%20%20%20%20fhir%3ACodeableConcept.coding%20%5B%20a%20sct%3A425604002%20%5D%3B%0A%20%20%20%20%20%20%20%20fhir%3ACodeableConcept.coding%20%5B%20a%20icd10%3AE16.2XXD%20%5D%3B%0A%20%20%20%20%20%20%20%20fhir%3ACodeableConcept.text%20%22Follow-up%20encounter%22%0A%20%20%20%20%20%20%5D%3B%0A%20%20%20%20%20%20fhir%3Astatus%20%22scheduled%22%3B%0A%20%20%20%20%20%20fhir%3Alocation%20%5B%0A%20%20%20%20%20%20%20%20fhir%3ACodeableReference.concept%20%5B%0A%20%20%20%20%20%20%20%20%20%20fhir%3ACodeableConcept.coding%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20a%20hl7code%3Av3-RoleCode%5C%23PTRES%20%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20fhir%3ACoding.display%20%22Patient%27s%20Residence%22%0A%20%20%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20%20%20%20%20%5D%20%3B%0A%20%20%20%20%20%20%20%20fhir%3ACodeableReference.reference%20%5B%0A%20%20%20%20%20%20%20%20%20%20fhir%3Alink%20%3C..%2FLocation%2FHomeAddress%3E%3B%0A%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20%20%20%5D%3B%0A%20%20%20%20%20%20fhir%3Areported%20true%0A%20%20%20%20%5D%0A%20%20%5D%20.%0A&amp;manifestURL=http%3A%2F%2Fshex.io%2Fwebapps%2Fshex.js%2Fexamples%2Fmanifest.json&amp;shape-map=%3CHypoglycemiaManagement%3E%40%3CCarePlan%3E&amp;interface=appinfo&amp;success=proof&amp;regexpEngine=eval-threaded-nerr">try it</a>] </figcaption>
+   </figure>
+   <h5 class="heading settled" data-level="2.13.2.2" id="related-information-in-clinical-data"><span class="secno">2.13.2.2. </span><span class="content">Related information in clinical data</span><a class="self-link" href="#related-information-in-clinical-data"></a></h5>
+   <p>This CarePlan for <a href="https://bioportal.bioontology.org/ontologies/ICD10/?p=classes&amp;conceptid=http%3A%2F%2Fpurl.bioontology.org%2Fontology%2FICD10%2FE16.2">unspecified hypoglyceamia</a> includes a reference to Bob’s home address.
+The referenced <code>../Location/HomeAddress</code> contains contact information and addresses:</p>
+   <figure>
+<pre class="include-code highlight"><c- k>BASE</c-> <c- nl>&lt;http://bob.example/data/A-Location-F></c->
+
+<c- nl>&lt;A-HomeAddress-F></c-> <c- k>a</c-> <c- nn>fhir</c-><c- p>:</c-><c- f>Location</c-><c- p>;</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>nodeRole</c-> <c- nn>fhir</c-><c- p>:</c-><c- f>treeRoot</c-><c- p>;</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>status</c-> <c- s>"active"</c-><c- p>;</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>description</c-> <c- s>"Patient's Home"</c-><c- p>;</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>mode</c-> <c- s>"instance"</c-><c- p>;</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>type</c-> <c- p>[</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableConcept.coding</c-> <c- p>[</c->
+      <c- nn>fhir</c-><c- p>:</c-><c- f>link</c-> <c- nn>hl7code</c-><c- p>:</c-><c- f>v3-RoleCode\#PTRES</c-><c- p>;</c->
+      <c- nn>fhir</c-><c- p>:</c-><c- f>Coding.display</c-> <c- s>"Patient's Residence"</c->
+    <c- p>]</c->
+  <c- p>];</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>telecom</c-> <c- p>[</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>ContactPoint.system</c-> <c- s>"phone"</c-><c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>ContactPoint.value</c-> <c- s>"(+1) 734-677-7777"</c->
+  <c- p>],</c-> <c- p>[</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>ContactPoint.system</c-> <c- s>"fax"</c-><c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>ContactPoint.value</c-> <c- s>"(+1) 734-677-6622"</c->
+  <c- p>],</c-> <c- p>[</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>ContactPoint.system</c-> <c- s>"email"</c-><c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>ContactPoint.value</c-> <c- s>"hq@HL7.org"</c->
+  <c- p>];</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>address</c-> <c- p>[</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>Address.line</c-> <c- s>"3300 Washtenaw Avenue, Suite 227"</c-><c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>Address.city</c-> <c- s>"Ann Arbor"</c-><c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>Address.state</c-> <c- s>"MI"</c-><c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>Address.postalCode</c-> <c- s>"48104"</c-><c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>Address.country</c-> <c- s>"USA"</c->
+  <c- p>];</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>physicalType</c-> <c- p>[</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableConcept.coding</c-> <c- p>[</c->
+      <c- k>a</c-> <c- nn>hl7code</c-><c- p>:</c-><c- f>location-physical-type\#bu</c-> <c- p>;</c->
+      <c- nn>fhir</c-><c- p>:</c-><c- f>Coding.display</c-> <c- s>"Building"</c->
+    <c- p>]</c->
+  <c- p>];</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>position</c-> <c- p>[</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>longitude</c-> <c- s>"42.256500"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>decimal</c-><c- p>;</c->
+    <c- nn>fhir</c-><c- p>:</c-><c- f>latitude</c-> <c- s>"-83.694710"</c-><c- o>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>decimal</c->
+  <c- p>]</c-> <c- p>.</c->
+</pre>
+    <figcaption>simplified Location for Bob</figcaption>
+   </figure>
+   <p>Anyone overseeing logistics for the CarePlan’s Appointments will need access to that location.
+This is selected with the ShapePath <code class="ShapePath">@&lt;AppointmentLocation> ~ fhir:link</code>.
+(If the schema did not provide a specific shape for <code>AppointmentLocation</code>,
+we would need to start a path from a defined shape, e.g., <code class="ShapePath">@&lt;CarePlan> ~ fhir:activity ~ fhir:plannedActivityDetail[fhir:kind="Appointment"] ~ fhir:CodeableReference.reference ~ fhir:link</code>.)</p>
+   <h5 class="heading settled" data-level="2.13.2.3" id="clinical-data-shape-tree-and-shape-tree-locator"><span class="secno">2.13.2.3. </span><span class="content">Clinical data Shape Tree and Shape Tree Locator</span><a class="self-link" href="#clinical-data-shape-tree-and-shape-tree-locator"></a></h5>
+   <p>The Care Plan Shape Tree resource captures the conventions for resources hierarchies of Care Plans (see <a href="https://shapetrees.org/TR/specification/#tree">specification</a>).
+It it typically hosted on a Web site geared towards hosting standards. <span class="issue" id="issue-3383df8c"><a class="self-link" href="#issue-3383df8c"></a>I’m trying to set expectations about what’s in the POD and what’s out there on teh interwebs.</span></p>
+   <figure>
+<pre class="include-code highlight"><c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>CarePlanContainer</c->
+  <c- k>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- nn>shapetree</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
+  <c- nn>shapetree</c-><c- p>:</c-><c- f>contains</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>CarePlan</c-> <c- p>.</c->
+
+<c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>CarePlan</c->
+  <c- k>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- nn>shapetree</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>shapetree</c-><c- p>:</c-><c- f>validatedBy</c-> <c- nn>fhirshapes</c-><c- p>:</c-><c- f>CarePlan</c-> <c- p>;</c->
+  <c- nn>shapetree</c-><c- p>:</c-><c- f>references</c-> <c- p>[</c->
+    <c- nn>shapetree</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>Location</c-> <c- p>;</c->
+    <c- nn>shapetree</c-><c- p>:</c-><c- f>shapePathLocator</c-> <c- s>"@&lt;AppointmentLocation>~fhir:link"</c->
+  <c- p>]</c-> <c- p>.</c->
+
+<c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>Location</c->
+  <c- k>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- nn>shapetree</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>shapetree</c-><c- p>:</c-><c- f>validatedBy</c-> <c- nn>fhirshapes</c-><c- p>:</c-><c- f>Location</c-> <c- p>.</c->
+</pre>
+    <figcaption>simplified Care Plan Shape Tree</figcaption>
+   </figure>
+   <p>The Shape Tree Locator resides in a POD and associates instance data with the Shape Trees that describe it (see <a href="https://shapetrees.org/TR/specification/#locator">specification</a>).</p>
+   <figure>
+<pre class="include-code highlight"><c- k>BASE</c-> <c- g>&lt;http://bob.example/data/A-CarePlan-F/></c->
+
+<c- g>&lt;A-HypoglycemiaManagement-F?stloc#loc></c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeLocator</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>location</c-> <c- p>[</c->
+    <c- nn>st</c-><c- p>:</c-><c- f>hasRootShapeTree</c-> <c- nn>fhirshapetree</c-><c- p>:</c-><c- f>CarePlanContainer</c-> <c- p>;</c->
+    <c- nn>st</c-><c- p>:</c-><c- f>hasRootShapeTreeInstance</c-> <c- g>&lt;..></c-> <c- p>;</c->
+
+    <c- nn>st</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>fhirshapetree</c-><c- p>:</c-><c- f>CarePlan</c-> <c- p>;</c->
+    <c- nn>st</c-><c- p>:</c-><c- f>node</c-> <c- g>&lt;A-HypoglycemiaManagement-F></c-> <c- p>;</c->
+    <c- nn>st</c-><c- p>:</c-><c- f>shape</c-> <c- nn>fhirshapes</c-><c- p>:</c-><c- f>CarePlan</c-> <c- p>;</c->
+<c- p>]</c-> <c- p>.</c->
+</pre>
+    <figcaption>simplified Care Plan ShapeTree Locator</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- k>BASE</c-> <c- g>&lt;http://bob.example/data/A-Location-F/></c->
+
+<c- g>&lt;A-HomeAddress-F?stloc#loc></c->
+  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTreeLocator</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>location</c-> <c- p>[</c->
+    <c- nn>st</c-><c- p>:</c-><c- f>hasRootShapeTree</c-> <c- nn>fhirshapetree</c-><c- p>:</c-><c- f>LocationContainer</c-> <c- p>;</c->
+    <c- nn>st</c-><c- p>:</c-><c- f>hasRootShapeTreeInstance</c-> <c- g>&lt;..></c-> <c- p>;</c->
+
+    <c- nn>st</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>fhirshapetree</c-><c- p>:</c-><c- f>Location</c-> <c- p>;</c->
+    <c- nn>st</c-><c- p>:</c-><c- f>node</c-> <c- g>&lt;A-HomeAddress-F></c-> <c- p>;</c->
+    <c- nn>st</c-><c- p>:</c-><c- f>shape</c-> <c- nn>fhirshapes</c-><c- p>:</c-><c- f>Location</c-> <c- p>;</c->
+<c- p>]</c-> <c- p>.</c->
+</pre>
+    <figcaption>simplified (Clinical) Location ShapeTree Locator</figcaption>
+   </figure>
+   <h5 class="heading settled" data-level="2.13.2.4" id="following-shapepath-references-for-access-controls"><span class="secno">2.13.2.4. </span><span class="content">Following ShapePath references for access controls</span><a class="self-link" href="#following-shapepath-references-for-access-controls"></a></h5>
+   <p>An authentication agent can now allow a user to set permissions on <code>A-CarePlan-F/A-HypoglycemiaManagement-F</code> and extend those permissions to the referenced <code>A-Location-F/A-HomeAddress-F</code>:</p>
+   <ol>
+    <li data-md>
+     <p>The HTTP headers for <code>A-CarePlan-F/A-HypoglycemiaManagement-F</code> identify that resource’s Shape Tree Locator:</p>
+<pre>Link: A-HypoglycemiaManagement-F?stloc#loc rel=http://shapetrees.org/#ShapeTreeLocator
+</pre>
+    <li data-md>
+     <p>The Shape Tree Locator <code>A-HypoglycemiaManagement-F?stloc#loc</code> has the Shape Tree <code>fhirshapetree:CarePlan</code>:</p>
+<pre class="include-code highlight">    <c- nn>st</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>fhirshapetree</c-><c- p>:</c-><c- f>CarePlan</c-> <c- p>;</c->
+</pre>
+     <p>and states that the node <code>A-HypoglycemiaManagement-F</code> conforms to the shape <code>fhirshapes:CarePlan</code>:</p>
+<pre class="include-code highlight">    <c- nn>st</c-><c- p>:</c-><c- f>node</c-> <c- g>&lt;A-HypoglycemiaManagement-F></c-> <c- p>;</c->
+    <c- nn>st</c-><c- p>:</c-><c- f>shape</c-> <c- nn>fhirshapes</c-><c- p>:</c-><c- f>CarePlan</c-> <c- p>;</c->
+</pre>
+    <li data-md>
+     <p>The Shape Tree <code>fhirshapetree:CarePlan</code> references <code>fhirshapeTree:Location</code> with the Shape Path <code>@&lt;AppointmentLocation>~fhir:link<code>:</code></code></p>
+     <code><code> <pre class="include-code highlight">    <c- nn>shapetree</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>Location</c-> <c- p>;</c->
+    <c- nn>shapetree</c-><c- p>:</c-><c- f>shapePathLocator</c-> <c- s>"@&lt;AppointmentLocation>~fhir:link"</c->
+  <c- p>]</c-> <c- p>.</c->
+</pre></code></code>
+    <li data-md>
+     <p><code><code>When evaluated on the FHIR Care Plan schema, this Shape Path identifies this <code>fhir:link</code> triple constraint in the schema:</code></code></p>
+     <code><code> <pre class="include-code highlight"><c- nl>&lt;AppointmentLocation></c-> <c- p>{</c->
+  <c- nn>fhir</c-><c- p>:</c-><c- f>link</c-> <c- k>IRI</c->
+<c- p>}</c->
+</pre></code></code>
+    <li data-md>
+     <p><code><code>When validating the node <code>A-HypoglycemiaManagement-F</code> against the shape <code>fhirshapes:CarePlan</code>, the <code>fhir:link</code> triple in</code></code></p>
+     <code><code> <pre class="include-code highlight">        <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableReference.reference</c-> <c- p>[</c->
+          <c- nn>fhir</c-><c- p>:</c-><c- f>link</c-> <c- nl>&lt;../A-Location-F/A-HomeAddress-F></c-><c- p>;</c->
+        <c- p>]</c->
+</pre><p>matches the <code>fhir:link</code> triple constraint identified by the Shape Path.</p> </code></code>
+   </ol>
+   <code><code> <h5 class="heading settled" data-level="2.13.2.5" id="clinical-data-registration"><span class="secno">2.13.2.5. </span><span class="content">Clinical data registration</span><a class="self-link" href="#clinical-data-registration"></a></h5> <p>The CarePlan data registration would reference the <code>/data/A-CarePlan-F/</code> container which includes <code>A-HypoglycemiaManagement-F</code> and <code>A-Wellness-F</code> mentioned above:</p> <figure> <pre class="include-code highlight"><c- k>BASE</c-> <c- g>&lt;https://bob.example/></c->
+
+<c- g>&lt;/system/registrations/A-fhir-CarePlan-DataRegistration-F></c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://bob.example/#id></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2019-03-14T13:42:32.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>CarePlan</c-> <c- p>;</c->
+  <c- nn>ldp</c-><c- p>:</c-><c- f>contains</c->
+      <c- g>&lt;/data/A-CarePlan-F/A-Wellness-F></c-> <c- p>,</c->
+      <c- g>&lt;/data/A-CarePlan-F/A-HypoglycemiaManagement-F></c-> <c- p>.</c->
+</pre> <figcaption>data registration for FHIR Care Plan</figcaption> </figure> <figure> <pre class="include-code highlight"><c- k>BASE</c-> <c- g>&lt;https://bob.example/></c->
+
+<c- g>&lt;/system/registrations/A-fhir-Location-DataRegistration-F></c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://bob.example/#id></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2019-03-14T13:42:32.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>Location</c-> <c- p>;</c->
+  <c- nn>ldp</c-><c- p>:</c-><c- f>contains</c->
+      <c- g>&lt;/data/A-Location-F/A-HomeAddress-F></c-> <c- p>.</c->
+</pre> <figcaption>data registration for FHIR Location</figcaption> </figure> <h3 class="heading settled" data-level="2.14" id="performchartexample"><span class="secno">2.14. </span><span class="content">performchart.example</span><a class="self-link" href="#performchartexample"></a></h3> <p class="issue" id="issue-1b5d4828⑦"><a class="self-link" href="#issue-1b5d4828⑦"></a> Snippet below needs to be updated</p> <figure> <pre class="include-code highlight"><c- nn>performchart</c-><c- p>:</c-><c- f>\#app</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Application</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>applicationName</c-> <c- s>"PerformChart"</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>applicationDescription</c->
@@ -1942,58 +2204,34 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <c- nn>interop</c-><c- p>:</c-><c- f>recursivelyAuthorize</c-> <c- l>false</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessRequired</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-> <c- p>.</c->
-</pre>
-    <figcaption>PerformChart’s application profile document</figcaption>
-   </figure>
-   <h3 class="heading settled" data-level="2.15" id="sequence-diagrams"><span class="secno">2.15. </span><span class="content">Sequence diagrams</span><a class="self-link" href="#sequence-diagrams"></a></h3>
-   <h4 class="heading settled" data-level="2.15.1" id="combined-oidc-provider-and-authorization-agent"><span class="secno">2.15.1. </span><span class="content">Combined OIDC Provider and Authorization Agent</span><a class="self-link" href="#combined-oidc-provider-and-authorization-agent"></a></h4>
-   <h5 class="heading settled" data-level="2.15.1.1" id="authorization-agent-stores-registrations-and-grants"><span class="secno">2.15.1.1. </span><span class="content">Authorization Agent stores Registrations and Grants</span><a class="self-link" href="#authorization-agent-stores-registrations-and-grants"></a></h5>
-   <p><img class="sequence-diagram" src="diagrams/idp-aa-combined.seq.mmd.svg"></p>
-   <h5 class="heading settled" data-level="2.15.1.2" id="authorization-agent-gets-registrations-and-grants-from-storage"><span class="secno">2.15.1.2. </span><span class="content">Authorization Agent gets Registrations and Grants from Storage</span><a class="self-link" href="#authorization-agent-gets-registrations-and-grants-from-storage"></a></h5>
-   <p><img class="sequence-diagram" src="diagrams/idp-aa-combined-external-storage.seq.mmd.svg"></p>
+</pre> <figcaption>PerformChart’s application profile document</figcaption> </figure> <h3 class="heading settled" data-level="2.15" id="sequence-diagrams"><span class="secno">2.15. </span><span class="content">Sequence diagrams</span><a class="self-link" href="#sequence-diagrams"></a></h3> <h4 class="heading settled" data-level="2.15.1" id="combined-oidc-provider-and-authorization-agent"><span class="secno">2.15.1. </span><span class="content">Combined OIDC Provider and Authorization Agent</span><a class="self-link" href="#combined-oidc-provider-and-authorization-agent"></a></h4> <h5 class="heading settled" data-level="2.15.1.1" id="authorization-agent-stores-registrations-and-grants"><span class="secno">2.15.1.1. </span><span class="content">Authorization Agent stores Registrations and Grants</span><a class="self-link" href="#authorization-agent-stores-registrations-and-grants"></a></h5> <p><img class="sequence-diagram" src="diagrams/idp-aa-combined.seq.mmd.svg"></p> <h5 class="heading settled" data-level="2.15.1.2" id="authorization-agent-gets-registrations-and-grants-from-storage"><span class="secno">2.15.1.2. </span><span class="content">Authorization Agent gets Registrations and Grants from Storage</span><a class="self-link" href="#authorization-agent-gets-registrations-and-grants-from-storage"></a></h5> <p><img class="sequence-diagram" src="diagrams/idp-aa-combined-external-storage.seq.mmd.svg"></p> </code></code>
   </main>
-  <div data-fill-with="conformance">
-   <h2 class="no-ref no-num heading settled" id="w3c-conformance"><span class="content">Conformance</span><a class="self-link" href="#w3c-conformance"></a></h2>
-   <h3 class="no-ref no-num heading settled" id="w3c-conventions"><span class="content">Document conventions</span><a class="self-link" href="#w3c-conventions"></a></h3>
-   <p>Conformance requirements are expressed
+  <code><code> <div data-fill-with="conformance"> <h2 class="no-ref no-num heading settled" id="w3c-conformance"><span class="content">Conformance</span><a class="self-link" href="#w3c-conformance"></a></h2> <h3 class="no-ref no-num heading settled" id="w3c-conventions"><span class="content">Document conventions</span><a class="self-link" href="#w3c-conventions"></a></h3> <p>Conformance requirements are expressed
     with a combination of descriptive assertions
     and RFC 2119 terminology.
     The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL”
     in the normative parts of this document
     are to be interpreted as described in RFC 2119.
     However, for readability,
-    these words do not appear in all uppercase letters in this specification. </p>
-   <p>All of the text of this specification is normative
-    except sections explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a> </p>
-   <p>Examples in this specification are introduced with the words “for example”
+    these words do not appear in all uppercase letters in this specification. </p><p>All of the text of this specification is normative
+    except sections explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a> </p><p>Examples in this specification are introduced with the words “for example”
     or are set apart from the normative text
     with <code>class="example"</code>,
-    like this: </p>
-   <div class="example" id="w3c-example">
-    <a class="self-link" href="#w3c-example"></a> 
-    <p>This is an example of an informative example. </p>
-   </div>
-   <p>Informative notes begin with the word “Note”
+    like this: </p><div class="example" id="w3c-example"><a class="self-link" href="#w3c-example"></a> <p>This is an example of an informative example. </p></div> <p>Informative notes begin with the word “Note”
     and are set apart from the normative text
     with <code>class="note"</code>,
-    like this: </p>
-   <p class="note" role="note">Note, this is an informative note. </p>
-   <h3 class="no-ref no-num heading settled" id="w3c-conformant-algorithms"><span class="content">Conformant Algorithms</span><a class="self-link" href="#w3c-conformant-algorithms"></a></h3>
-   <p>Requirements phrased in the imperative as part of algorithms
+    like this: </p><p class="note" role="note">Note, this is an informative note. </p><h3 class="no-ref no-num heading settled" id="w3c-conformant-algorithms"><span class="content">Conformant Algorithms</span><a class="self-link" href="#w3c-conformant-algorithms"></a></h3> <p>Requirements phrased in the imperative as part of algorithms
     (such as "strip any leading space characters"
     or "return false and abort these steps")
     are to be interpreted with the meaning of the key word
     ("must", "should", "may", etc)
-    used in introducing the algorithm. </p>
-   <p>Conformance requirements phrased as algorithms or specific steps
+    used in introducing the algorithm. </p><p>Conformance requirements phrased as algorithms or specific steps
     can be implemented in any manner,
     so long as the end result is equivalent.
     In particular, the algorithms defined in this specification
     are intended to be easy to understand
     and are not intended to be performant.
-    Implementers are encouraged to optimize. </p>
-  </div>
-<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
+    Implementers are encouraged to optimize. </p></div> <script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script> </code></code>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
@@ -2018,5 +2256,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9⑥"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828⑤"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828⑥"> ↵ </a></div>
+   <div class="issue">if accepted, move to notation section<a href="#issue-80498731"> ↵ </a></div>
+   <div class="issue">if accepted, move to notation section<a href="#issue-80498731①"> ↵ </a></div>
+   <div class="issue">I’m trying to set expectations about what’s in the POD and what’s out there on teh interwebs.<a href="#issue-3383df8c"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828⑦"> ↵ </a></div>
   </div>

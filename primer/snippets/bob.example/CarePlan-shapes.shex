@@ -1,0 +1,85 @@
+PREFIX fhir: <http://hl7.org/fhir/> 
+PREFIX fhirvs: <http://hl7.org/fhir/ValueSet/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+BASE <http://hl7.org/fhir/shape->
+
+START=@<CarePlan>
+
+<CarePlan> CLOSED {
+  a [fhir:CarePlan];
+  fhir:partOf @<Reference>*;
+  fhir:status @<code> AND @fhirvs:request-status;
+  fhir:intent @<code> AND @fhirvs:care-plan-intent;
+  fhir:category @<CodeableConcept>*;
+  fhir:subject @<Reference>;
+  fhir:activity CLOSED {
+    fhir:performedActivity @<CodeableReference>*;
+    fhir:plannedActivityReference @<Reference>?;
+    fhir:plannedActivityDetail CLOSED {
+      fhir:kind @<code> AND @fhirvs:care-plan-activity-kind?;
+      fhir:code @<CodeableConcept>?;
+      fhir:status @<code> AND @fhirvs:care-plan-activity-status;
+      fhir:location @<CodeableReference>?;
+      fhir:reported @<boolean> OR @<Reference> ?;
+    } AND @<AppointmentConstraints>?;
+  }*;
+}
+
+<AppointmentConstraints> { fhir:kind NOT ["Appointment"]? } OR {
+  fhir:location {
+    # Appointment location MUST have a reference
+    fhir:CodeableReference.reference @<AppointmentLocation>
+  }
+}
+
+<AppointmentLocation> {
+  fhir:link IRI
+}
+
+# Complex datatypes
+
+<Reference> CLOSED {
+  fhir:link IRI?;
+  fhir:Reference.reference @<string>?;
+  fhir:Reference.type IRI?;
+  fhir:Reference.display xsd:string?;
+}
+
+<CodeableReference> CLOSED {
+  fhir:CodeableReference.concept @<CodeableConcept>?;
+  fhir:CodeableReference.reference @<Reference>?;
+}
+
+<CodeableConcept> CLOSED {
+  a NONLITERAL*;
+  fhir:CodeableConcept.coding @<Coding>*;
+  fhir:CodeableConcept.text @<string>?;
+}
+
+<Coding> CLOSED {
+  a NONLITERAL?;
+  fhir:Coding.display xsd:string?
+}
+
+# XSD datatypes
+
+<code> xsd:string
+<string> xsd:string
+<boolean> xsd:boolean
+<positiveInt> xsd:positiveInteger
+<decimal> xsd:decimal
+
+# value sets
+
+fhirvs:care-plan-activity-status
+  ["not-started" "scheduled" "in-progress" "on-hold" "completed" "cancelled"
+   "stopped" "unknown" "entered-in-error"]
+fhirvs:request-status
+  ["draft" "active" "on-hold" "revoked" "completed" "entered-in-error" "unknown"]
+fhirvs:care-plan-intent
+  ["proposal" "plan" "order" "option" "directive"]
+fhirvs:units-of-time
+  ["s" "min" "h" "d" "wk" "mo" "a"]
+fhirvs:care-plan-activity-kind
+  ["Appointment" "CommunicationRequest" "DeviceRequest" "MedicationRequest"
+   "NutritionOrder" "Task" "ServiceRequest" "VisionPrescription"]

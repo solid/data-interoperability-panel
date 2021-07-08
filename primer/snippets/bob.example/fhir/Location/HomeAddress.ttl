@@ -1,0 +1,45 @@
+PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX hl7code: <http://terminology.hl7.org/CodeSystem/>
+BASE <http://bob.example/data/A-Location-F>
+
+<A-HomeAddress-F> a fhir:Location;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:status "active";
+  fhir:description "Patient's Home";
+  fhir:mode "instance";
+  fhir:type [
+    fhir:CodeableConcept.coding [
+      fhir:link hl7code:v3-RoleCode\#PTRES;
+      fhir:Coding.display "Patient's Residence"
+    ]
+  ];
+  fhir:telecom [
+    fhir:ContactPoint.system "phone";
+    fhir:ContactPoint.value "(+1) 734-677-7777"
+  ], [
+    fhir:ContactPoint.system "fax";
+    fhir:ContactPoint.value "(+1) 734-677-6622"
+  ], [
+    fhir:ContactPoint.system "email";
+    fhir:ContactPoint.value "hq@HL7.org"
+  ];
+  fhir:address [
+    fhir:Address.line "3300 Washtenaw Avenue, Suite 227";
+    fhir:Address.city "Ann Arbor";
+    fhir:Address.state "MI";
+    fhir:Address.postalCode "48104";
+    fhir:Address.country "USA"
+  ];
+  fhir:physicalType [
+    fhir:CodeableConcept.coding [
+      a hl7code:location-physical-type\#bu ;
+      fhir:Coding.display "Building"
+    ]
+  ];
+  fhir:position [
+    fhir:longitude "42.256500"^^xsd:decimal;
+    fhir:latitude "-83.694710"^^xsd:decimal
+  ] .

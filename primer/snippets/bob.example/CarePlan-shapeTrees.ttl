@@ -1,0 +1,22 @@
+PREFIX shapetree: <http://www.w3.org/ns/shapetrees>
+PREFIX fhirshapes: <http://hl7.org/fhir/shape->
+PREFIX fhirshapeTree: <http://hl7.org/fhir/shapeTree->
+
+fhirshapeTree:CarePlanContainer
+  a shapetree:ShapeTree ;
+  shapetree:expectsType shapetree:ShapeTreeContainer ;
+  shapetree:contains fhirshapeTree:CarePlan .
+
+fhirshapeTree:CarePlan
+  a shapetree:ShapeTree ;
+  shapetree:expectsType shapetree:ShapeTreeResource ;
+  shapetree:validatedBy fhirshapes:CarePlan ;
+  shapetree:references [
+    shapetree:hasShapeTree fhirshapeTree:Location ;
+    shapetree:shapePathLocator "@<AppointmentLocation>~fhir:link"
+  ] .
+
+fhirshapeTree:Location
+  a shapetree:ShapeTree ;
+  shapetree:expectsType shapetree:ShapeTreeResource ;
+  shapetree:validatedBy fhirshapes:Location .

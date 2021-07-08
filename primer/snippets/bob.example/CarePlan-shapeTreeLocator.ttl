@@ -1,0 +1,17 @@
+PREFIX st: <http://www.w3.org/ns/shapetrees#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>  
+PREFIX ex: <http://www.example/ns/ex#>
+PREFIX fhirshapes: <http://hl7.org/fhir/shape->
+PREFIX fhirshapeTree: <http://hl7.org/fhir/shapeTree->
+BASE <http://bob.example/data/A-CarePlan-F/>
+
+<A-HypoglycemiaManagement-F?stloc#loc>
+  a st:ShapeTreeLocator ;
+  st:location [
+    st:hasRootShapeTree fhirshapetree:CarePlanContainer ;
+    st:hasRootShapeTreeInstance <..> ;
+
+    st:hasShapeTree fhirshapetree:CarePlan ;
+    st:node <A-HypoglycemiaManagement-F> ;
+    st:shape fhirshapes:CarePlan ;
+] .
