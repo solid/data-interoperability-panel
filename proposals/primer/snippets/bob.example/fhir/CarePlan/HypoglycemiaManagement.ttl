@@ -1,0 +1,49 @@
+# c.f. http://build.fhir.org/careplan.html#CarePlan
+
+PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX loinc: <http://loinc.org/rdf#>
+PREFIX sct: <http://snomed.info/id/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX icd10: <http://hl7.org/fhir/ValueSet/icd-10>
+PREFIX hl7code: <http://terminology.hl7.org/CodeSystem/>
+BASE <http://bob.example/data/A-CarePlan-F/>
+
+<A-HypoglycemiaManagement-F> a fhir:CarePlan;
+  fhir:partOf [
+    fhir:Reference.type fhir:CarePlan;
+    fhir:link <A-Wellness-F> ;
+    fhir:Reference.display "Dietetic care plan"
+  ];
+  fhir:status "active";
+  fhir:intent "plan";
+  fhir:category [
+    fhir:CodeableConcept.coding [ a sct:737433005 ] ;
+    fhir:CodeableConcept.text "Hypoglycemia management plan"
+  ];
+  fhir:subject [
+    fhir:link <../A-Person-F/A-Me-F>;
+    fhir:Reference.display "J.R. \"Bob\" Dobbs"
+  ];
+  fhir:activity [
+    fhir:plannedActivityDetail [
+      fhir:kind "Appointment";
+      fhir:code [
+        fhir:CodeableConcept.coding [ a sct:425604002 ];
+        fhir:CodeableConcept.coding [ a icd10:E16.2XXD ];
+        fhir:CodeableConcept.text "Follow-up encounter"
+      ];
+      fhir:status "scheduled";
+      fhir:location [
+        fhir:CodeableReference.concept [
+          fhir:CodeableConcept.coding [
+            a hl7code:v3-RoleCode\#PTRES ;
+            fhir:Coding.display "Patient's Residence"
+          ]
+        ] ;
+        fhir:CodeableReference.reference [
+          fhir:link <../A-Location-F/A-HomeAddress-F>;
+        ]
+      ];
+      fhir:reported true
+    ]
+  ] .
