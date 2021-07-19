@@ -18,25 +18,9 @@ alice-auth:7b065498-fa43-4abd-a08b-467d49f3cac8
     interop:hasAccessGrantSubject
       omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#grant-subject ;
     interop:hasDataGrant
-      omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-project-na ,
-      omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-task-na .
+      omni-auth:a7f7d66d-13ba-4ba6-8908-3ea9c2703fce ,
+      omni-auth:73c5f23c-099e-452e-ab29-cbfc8c8a19f8 .
 
 omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#grant-subject
   a interop:AccessGrantSubject ;
     interop:accessByAgent  <https://alice.example/#id> .
-
-omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-project-na
-  a interop:DataGrant ;
-    interop:registeredShapeTree solidtrees:Project ;
-    interop:hasDataRegistration omni-na:823e7976-13cc-4641-be0f-a4a78c2d7140 ;
-    interop:accessMode acl:Read, acl:Write ;
-    interop:scopeOfGrant interop:AllInstances .
-
-omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-task-na
-  a interop:DataGrant ;
-    interop:registeredShapeTree solidtrees:Task ;
-    interop:hasDataRegistration omni-na:6b800a8a-1d53-45b5-81bd-e76f1a87bdd3 ;
-    interop:accessMode acl:Read, acl:Write ;
-    interop:scopeOfGrant interop:InheritInstances ;
-    interop:inheritsFromGrant
-      omni-auth:11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-project-na .
