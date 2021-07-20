@@ -13,24 +13,10 @@ alice-auth:7b513402-d2a2-455f-a6d1-4a54ef90cb78
     interop:hasAccessGrantSubject
       alice-auth:6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#grant-subject ;
     interop:hasDataGrant
-      alice-auth:6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#data-grant-projects ,
-      alice-auth:6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#data-grant-tasks .
+      alice-auth:a691ee69-97d8-45c0-bb03-8e887b2db806 ,
+      alice-auth:ecdf7b5e-5123-4a93-87bc-86ef6de389ff .
 
 alice-auth:6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#grant-subject
   a interop:AccessGrantSubject ;
     interop:accessByAgent  <https://alice.example/#id> ;
     interop:accessByApplication <https://performchat.example/#app> .
-
-alice-auth:6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#data-grant-projects
-  a interop:RemoteDataGrant ;
-    interop:registeredShapeTree solidtrees:Project ;
-    interop:hasRemoteDataRegistration alice-auth:33caf7be-f804-4155-a57a-92216c577bd4 ;
-    interop:accessMode acl:Read ;
-    interop:scopeOfGrant interop:AllRemote .
-
-alice-auth:6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#data-grant-tasks
-  a interop:RemoteDataGrant ;
-    interop:registeredShapeTree solidtrees:Task ;
-    interop:accessMode acl:Read ;
-    interop:scopeOfGrant interop:InheritInstances ;
-    interop:inheritsFromGrant alice-auth:6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#data-grant-projects .

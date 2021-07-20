@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version 3d6a6fcbb, updated Wed Jun 16 16:19:39 2021 -0700" name="generator">
+  <meta content="Bikeshed version bb6b91100, updated Mon Jul 12 16:52:37 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/primer/" rel="canonical">
-  <meta content="590647f1324818fc05a46ad564c8979956f6d1e5" name="document-revision">
+  <meta content="ff695463ff727f397861192df6bb422ab9da6a4a" name="document-revision">
 <style>
 
   .sequence-diagram, .flowchart-diagram {
@@ -528,7 +528,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability Primer</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-07-08">8 July 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-07-20">20 July 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -600,7 +600,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
        <a href="#aliceexample"><span class="secno">2.9</span> <span class="content">alice.example</span></a>
        <ol class="toc">
         <li><a href="#webid-document"><span class="secno">2.9.1</span> <span class="content">WebID Document</span></a>
-        <li><a href="#registry-sets"><span class="secno">2.9.2</span> <span class="content">Registry Sets</span></a>
        </ol>
       <li>
        <a href="#proaliceexample"><span class="secno">2.10</span> <span class="content">pro.alice.example</span></a>
@@ -1010,48 +1009,66 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c->
       <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#grant-subject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
-      <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-rnd</c-> <c- p>,</c->
-      <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-task-rnd</c-> <c- p>,</c->
-      <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-finance</c-> <c- p>,</c->
-      <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-task-finance</c-> <c- p>.</c->
+      <c- nn>acme-auth</c-><c- p>:</c-><c- f>f8064946-cb67-469a-8b28-652fd17090f6</c-> <c- p>,</c->
+      <c- nn>acme-auth</c-><c- p>:</c-><c- f>cafafd6f-9cc6-4a5d-9cbd-8eeea95d3d4e</c-> <c- p>,</c->
+      <c- nn>acme-auth</c-><c- p>:</c-><c- f>80ef3361-730b-4f7c-93ba-4a4415de7264</c-> <c- p>,</c->
+      <c- nn>acme-auth</c-><c- p>:</c-><c- f>6e069259-7836-4495-ba35-fc7eca97e5aa</c-> <c- p>.</c->
 
 <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#grant-subject</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c->  <c- g>&lt;https://alice.example/#id></c-> <c- p>.</c->
-
-<c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-rnd</c->
+</pre>
+    <figcaption>ACME’s access grant for Alice</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>acme-auth</c-><c- p>:</c-><c- f>f8064946-cb67-469a-8b28-652fd17090f6</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>acme-rnd</c-><c- p>:</c-><c- f>6e3b9ac3-254f-41cc-adbe-3f3293fd0475</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>.</c->
-
-<c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-task-rnd</c->
+<c- nn>acme-auth</c-><c- p>:</c-><c- f>cafafd6f-9cc6-4a5d-9cbd-8eeea95d3d4e</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
+      <c- nn>acme-auth</c-><c- p>:</c-><c- f>f8064946-cb67-469a-8b28-652fd17090f6</c-> <c- p>.</c->
+</pre>
+    <figcaption>ACME’s data grant for Alice - RnD Projects</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>acme-auth</c-><c- p>:</c-><c- f>cafafd6f-9cc6-4a5d-9cbd-8eeea95d3d4e</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>acme-rnd</c-><c- p>:</c-><c- f>f56235d6-4e58-4492-97ec-42d3b5bfa539</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
-      <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-rnd</c-> <c- p>.</c->
-
-<c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-finance</c->
+      <c- nn>acme-auth</c-><c- p>:</c-><c- f>f8064946-cb67-469a-8b28-652fd17090f6</c-> <c- p>.</c->
+</pre>
+    <figcaption>ACME’s data grant for Alice - RnD Tasks</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>acme-auth</c-><c- p>:</c-><c- f>80ef3361-730b-4f7c-93ba-4a4415de7264</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>acme-finance</c-><c- p>:</c-><c- f>882eea27-b968-44e7-b8f5-87b234089057</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>.</c->
-
-<c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-task-finance</c->
+<c- nn>acme-auth</c-><c- p>:</c-><c- f>6e069259-7836-4495-ba35-fc7eca97e5aa</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
+      <c- nn>acme-auth</c-><c- p>:</c-><c- f>80ef3361-730b-4f7c-93ba-4a4415de7264</c-> <c- p>.</c->
+</pre>
+    <figcaption>ACME’s data grant for Alice - Finance Projects</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>acme-auth</c-><c- p>:</c-><c- f>6e069259-7836-4495-ba35-fc7eca97e5aa</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>acme-finance</c-><c- p>:</c-><c- f>4f3fbf70-49df-47ce-a573-dc54366b01ad</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
-      <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-finance</c-> <c- p>.</c->
+      <c- nn>acme-auth</c-><c- p>:</c-><c- f>80ef3361-730b-4f7c-93ba-4a4415de7264</c-> <c- p>.</c->
 </pre>
-    <figcaption>ACME’s access grant for Alice</figcaption>
+    <figcaption>ACME’s data grant for Alice - Finance Tasks</figcaption>
    </figure>
    <h3 class="heading settled" data-level="2.6" id="omniexample"><span class="secno">2.6. </span><span class="content">omni.example</span><a class="self-link" href="#omniexample"></a></h3>
    <figure>
@@ -1144,30 +1161,39 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c->
       <c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#grant-subject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
-      <c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-project-na</c-> <c- p>,</c->
-      <c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-task-na</c-> <c- p>.</c->
+      <c- nn>omni-auth</c-><c- p>:</c-><c- f>a7f7d66d-13ba-4ba6-8908-3ea9c2703fce</c-> <c- p>,</c->
+      <c- nn>omni-auth</c-><c- p>:</c-><c- f>73c5f23c-099e-452e-ab29-cbfc8c8a19f8</c-> <c- p>.</c->
 
 <c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#grant-subject</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c->  <c- g>&lt;https://alice.example/#id></c-> <c- p>.</c->
-
-<c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-project-na</c->
+</pre>
+    <figcaption>Omni’s access grant for Alice</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>omni-auth</c-><c- p>:</c-><c- f>a7f7d66d-13ba-4ba6-8908-3ea9c2703fce</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>omni-na</c-><c- p>:</c-><c- f>823e7976-13cc-4641-be0f-a4a78c2d7140</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>.</c->
-
-<c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-task-na</c->
+<c- nn>omni-auth</c-><c- p>:</c-><c- f>73c5f23c-099e-452e-ab29-cbfc8c8a19f8</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
+      <c- nn>omni-auth</c-><c- p>:</c-><c- f>a7f7d66d-13ba-4ba6-8908-3ea9c2703fce</c-> <c- p>.</c->
+</pre>
+    <figcaption>Omni’s data grant for Alice - NA Projects</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>omni-auth</c-><c- p>:</c-><c- f>73c5f23c-099e-452e-ab29-cbfc8c8a19f8</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>omni-na</c-><c- p>:</c-><c- f>6b800a8a-1d53-45b5-81bd-e76f1a87bdd3</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
-      <c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-project-na</c-> <c- p>.</c->
+      <c- nn>omni-auth</c-><c- p>:</c-><c- f>a7f7d66d-13ba-4ba6-8908-3ea9c2703fce</c-> <c- p>.</c->
 </pre>
-    <figcaption>ACME’s access grant for Alice</figcaption>
+    <figcaption>Omni’s data grant for Alice - NA Tasks</figcaption>
    </figure>
    <h3 class="heading settled" data-level="2.9" id="aliceexample"><span class="secno">2.9. </span><span class="content">alice.example</span><a class="self-link" href="#aliceexample"></a></h3>
    <h4 class="heading settled" data-level="2.9.1" id="webid-document"><span class="secno">2.9.1. </span><span class="content">WebID Document</span><a class="self-link" href="#webid-document"></a></h4>
@@ -1179,42 +1205,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataRegistrySet</c-> <c- nn>alice</c-><c- p>:</c-><c- f>ba4da3ec-dea4-41b2-be02-e4bf7a9477df</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s WebID document</figcaption>
-   </figure>
-   <h4 class="heading settled" data-level="2.9.2" id="registry-sets"><span class="secno">2.9.2. </span><span class="content">Registry Sets</span><a class="self-link" href="#registry-sets"></a></h4>
-   <p class="issue" id="issue-1b5d4828①"><a class="self-link" href="#issue-1b5d4828①"></a> Snippet below needs to be updated</p>
-   <figure>
-<pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>ba4da3ec-dea4-41b2-be02-e4bf7a9477df</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistrySet</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c->
-    <c- nn>alice</c-><c- p>:</c-><c- f>6f6e4241-75a2-4780-9b2a-40da53082e54</c-> <c- p>.</c->
-</pre>
-    <figcaption>Alice’s Remote Data Registry Set</figcaption>
-   </figure>
-   <p class="issue" id="issue-1b5d4828②"><a class="self-link" href="#issue-1b5d4828②"></a> Snippet below needs to be updated</p>
-   <figure>
-<pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>6f6e4241-75a2-4780-9b2a-40da53082e54</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataRegistry</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c->
-    <c- nn>alice</c-><c- p>:</c-><c- f>33caf7be-f804-4155-a57a-92216c577bd4</c-> <c- p>.</c->
-</pre>
-    <figcaption>Alice’s Remote Data Registry</figcaption>
-   </figure>
-   <p class="issue" id="issue-1b5d4828③"><a class="self-link" href="#issue-1b5d4828③"></a> Snippet below needs to be updated</p>
-   <figure>
-<pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>40c34ba8-5d85-47e5-af40-abc3e7fecdec</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistrySet</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistry</c->
-    <c- nn>alice</c-><c- p>:</c-><c- f>3c7f1d03-0721-4eb1-9adf-6a8690f33b35</c-> <c- p>.</c->
-</pre>
-    <figcaption>Alice’s Access Grant Registry Set</figcaption>
-   </figure>
-   <p class="issue" id="issue-1b5d4828④"><a class="self-link" href="#issue-1b5d4828④"></a> Snippet below needs to be updated</p>
-   <figure>
-<pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>3c7f1d03-0721-4eb1-9adf-6a8690f33b35</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistry</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c-> <c- nn>alice</c-><c- p>:</c-><c- f>6b1b6e39-75e4-44f8-84f3-104b1a8210ad</c-> <c- p>.</c->
-</pre>
-    <figcaption>Alice’s Access Grant Registry</figcaption>
    </figure>
    <h3 class="heading settled" data-level="2.10" id="proaliceexample"><span class="secno">2.10. </span><span class="content">pro.alice.example</span><a class="self-link" href="#proaliceexample"></a></h3>
    <p><img class="flowchart-diagram" src="diagrams/pro.alice.example.flow.mmd.png"></p>
@@ -1448,21 +1438,24 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-> <c- g>&lt;#grant-subject></c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
-      <c- g>&lt;#data-grant-project-pro></c-> <c- p>,</c->
-      <c- g>&lt;#data-grant-task-pro></c-> <c- p>,</c->
-      <c- g>&lt;#data-grant-project-home></c-> <c- p>,</c->
-      <c- g>&lt;#data-grant-task-home></c-> <c- p>,</c->
-      <c- g>&lt;#data-grant-acme-projects></c-> <c- p>,</c->
-      <c- g>&lt;#data-grant-acme-tasks></c-> <c- p>,</c->
-      <c- g>&lt;#data-grant-omni-projects></c-> <c- p>,</c->
-      <c- g>&lt;#data-grant-omni-tasks></c-> <c- p>.</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>cd247a67-0879-4301-abd0-828f63abb252</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>9827ae00-2778-4655-9f22-08bb9daaee26</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>7b2bc4ff-b4b8-47b8-96f6-06695f4c5126</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>54b1a123-23ca-4733-9371-700b52b9c567</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>e2765d6c-848a-4fc0-9092-556903730263</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>6a9feb57-252b-43b2-8470-5a938888b2fa</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>329eb90a-feb9-4c95-a427-2ef23989abe9</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>fe442ef3-5200-4b06-b4bc-fc0b495603a9</c-> <c- p>.</c->
 
 <c- g>&lt;#grant-subject></c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c->  <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessByApplication</c-> <c- g>&lt;https://projectron.example/#app></c-> <c- p>.</c->
-
-<c- g>&lt;#data-grant-project-pro></c->
+</pre>
+    <figcaption>Alice’s access grant for Projectron</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>cd247a67-0879-4301-abd0-828f63abb252</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>773605f0-b5bf-4d46-878d-5c167eac8b5d</c-> <c- p>;</c->
@@ -1470,61 +1463,98 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>SelectedInstances</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataInstance</c->
       <c- nn>alice-pro</c-><c- p>:</c-><c- f>7a130c38-668a-4775-821a-08b38f2306fb\#project</c-> <c- p>.</c->
-
-<c- g>&lt;#data-grant-task-pro></c->
+<c- nn>alice-auth</c-><c- p>:</c-><c- f>9827ae00-2778-4655-9f22-08bb9daaee26</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>cd247a67-0879-4301-abd0-828f63abb252</c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s data grant for Projectron - Pro Projects</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>9827ae00-2778-4655-9f22-08bb9daaee26</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>4d594c61-7cff-484a-a1d2-1f353ee4e1e7</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c-> <c- g>&lt;#data-grant-project-pro></c-> <c- p>.</c->
-
-<c- g>&lt;#data-grant-project-home></c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>cd247a67-0879-4301-abd0-828f63abb252</c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s data grant for Projectron - Pro Tasks</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>7b2bc4ff-b4b8-47b8-96f6-06695f4c5126</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-home</c-><c- p>:</c-><c- f>f6ccd3a4-45ea-4f98-8a36-98eac92a6720</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>.</c->
-
-<c- g>&lt;#data-grant-task-home></c->
+<c- nn>alice-auth</c-><c- p>:</c-><c- f>54b1a123-23ca-4733-9371-700b52b9c567</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>7b2bc4ff-b4b8-47b8-96f6-06695f4c5126</c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s data grant for Projectron - Home Projects</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>54b1a123-23ca-4733-9371-700b52b9c567</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-home</c-><c- p>:</c-><c- f>92f43be4-d12c-4ca3-9bd6-c18e83167b2f</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c-> <c- g>&lt;#data-grant-project-home></c-> <c- p>.</c->
-
-<c- g>&lt;#data-grant-acme-projects></c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>7b2bc4ff-b4b8-47b8-96f6-06695f4c5126</c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s data grant for Projectron - Home Tasks</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>e2765d6c-848a-4fc0-9092-556903730263</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataFromAgent</c-> <c- nn>alice-auth</c-><c- p>:</c-><c- f>3a019d90-c7fb-4e65-865d-4254ef064667</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllRemoteFromAgent</c-> <c- p>.</c->
-
-<c- g>&lt;#data-grant-acme-tasks></c->
+<c- nn>alice-auth</c-><c- p>:</c-><c- f>6a9feb57-252b-43b2-8470-5a938888b2fa</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>e2765d6c-848a-4fc0-9092-556903730263</c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s remote data grant for Projectron - ACME’s Projects</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>6a9feb57-252b-43b2-8470-5a938888b2fa</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c-> <c- g>&lt;#data-grant-acme-projects></c-> <c- p>.</c->
-
-<c- g>&lt;#data-grant-omni-projects></c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritRemoteInstances</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>e2765d6c-848a-4fc0-9092-556903730263</c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s remote data grant for Projectron - ACME’s Tasks</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>329eb90a-feb9-4c95-a427-2ef23989abe9</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataFromAgent</c-> <c- nn>alice-auth</c-><c- p>:</c-><c- f>19479afc-00b9-4f7b-b602-9cc612d4b9cf</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>SelectedRemote</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>02f8366f-a1cf-4511-81d3-10cddfdce00f\#grant-copy</c-> <c- p>.</c->
-
-<c- g>&lt;#data-grant-omni-tasks></c->
+      <c- nn>omni-auth</c-><c- p>:</c-><c- f>a7f7d66d-13ba-4ba6-8908-3ea9c2703fce</c-> <c- p>.</c->
+<c- nn>alice-auth</c-><c- p>:</c-><c- f>fe442ef3-5200-4b06-b4bc-fc0b495603a9</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>329eb90a-feb9-4c95-a427-2ef23989abe9</c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s remote data grant for Projectron - Omni’s Projects</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>fe442ef3-5200-4b06-b4bc-fc0b495603a9</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c-> <c- g>&lt;#data-grant-omni-projects></c-> <c- p>.</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritRemoteInstances</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>329eb90a-feb9-4c95-a427-2ef23989abe9</c-> <c- p>.</c->
 </pre>
-    <figcaption>Alice’s access grant for Projectron</figcaption>
+    <figcaption>Alice’s remote data grant for Projectron - Omni’s Tasks</figcaption>
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>6b1b6e39-75e4-44f8-84f3-104b1a8210ad</c->
@@ -1535,29 +1565,39 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-> <c- g>&lt;#grant-subject></c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
-      <c- g>&lt;#data-grant-projects></c-> <c- p>,</c->
-      <c- g>&lt;#data-grant-tasks></c-> <c- p>.</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>a691ee69-97d8-45c0-bb03-8e887b2db806</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>ecdf7b5e-5123-4a93-87bc-86ef6de389ff</c-> <c- p>.</c->
 
 <c- g>&lt;#grant-subject></c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c->  <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessByApplication</c-> <c- g>&lt;https://performchat.example/#app></c-> <c- p>.</c->
-
-<c- g>&lt;#data-grant-projects></c->
+</pre>
+    <figcaption>Alice’s access grant for PerformChart</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>a691ee69-97d8-45c0-bb03-8e887b2db806</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataRegistration</c-> <c- nn>alice-auth</c-><c- p>:</c-><c- f>33caf7be-f804-4155-a57a-92216c577bd4</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllRemote</c-> <c- p>.</c->
-
-<c- g>&lt;#data-grant-tasks></c->
+<c- nn>alice-auth</c-><c- p>:</c-><c- f>ecdf7b5e-5123-4a93-87bc-86ef6de389ff</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>a691ee69-97d8-45c0-bb03-8e887b2db806</c-> <c- p>.</c->
+</pre>
+    <figcaption>Alice’s remote data grant for PerformChart - Projects</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>ecdf7b5e-5123-4a93-87bc-86ef6de389ff</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c-> <c- g>&lt;#data-grant-projects></c-> <c- p>.</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritRemoteInstances</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>a691ee69-97d8-45c0-bb03-8e887b2db806</c-> <c- p>.</c->
 </pre>
-    <figcaption>Alice’s access grant for PerformChart</figcaption>
+    <figcaption>Alice’s remote data grant for PerformChart - Tasks</figcaption>
    </figure>
    <h4 class="heading settled" data-level="2.12.3" id="application-registry"><span class="secno">2.12.3. </span><span class="content">Application Registry</span><a class="self-link" href="#application-registry"></a></h4>
    <figure>
@@ -1596,11 +1636,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <h4 class="heading settled" data-level="2.12.5" id="access-receipt"><span class="secno">2.12.5. </span><span class="content">Access Receipt</span><a class="self-link" href="#access-receipt"></a></h4>
    <figure>
-<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>b6c24b2a-3d4c-4518-8c1f-d739a51cca0d</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessReceipt</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://jarvis.alice.example/#agent></c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
+<pre class="include-code highlight">    <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>fromAgent</c-> <c- g>&lt;https://acme.example/#corp></c-> <c- p>;</c->
@@ -1608,46 +1644,14 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c->
       <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#grant-subject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
-      <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-rnd</c-> <c- p>,</c->
-      <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-task-rnd</c-> <c- p>,</c->
-      <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-finance</c-> <c- p>,</c->
-      <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-task-finance</c-> <c- p>.</c->
+      <c- nn>acme-auth</c-><c- p>:</c-><c- f>f8064946-cb67-469a-8b28-652fd17090f6</c-> <c- p>,</c->
+      <c- nn>acme-auth</c-><c- p>:</c-><c- f>cafafd6f-9cc6-4a5d-9cbd-8eeea95d3d4e</c-> <c- p>,</c->
+      <c- nn>acme-auth</c-><c- p>:</c-><c- f>80ef3361-730b-4f7c-93ba-4a4415de7264</c-> <c- p>,</c->
+      <c- nn>acme-auth</c-><c- p>:</c-><c- f>6e069259-7836-4495-ba35-fc7eca97e5aa</c-> <c- p>.</c->
 
 <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#grant-subject</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c->  <c- g>&lt;https://alice.example/#id></c-> <c- p>.</c->
-
-<c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-rnd</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>acme-rnd</c-><c- p>:</c-><c- f>6e3b9ac3-254f-41cc-adbe-3f3293fd0475</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>.</c->
-
-<c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-task-rnd</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>acme-rnd</c-><c- p>:</c-><c- f>f56235d6-4e58-4492-97ec-42d3b5bfa539</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
-      <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-rnd</c-> <c- p>.</c->
-
-<c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-finance</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>acme-finance</c-><c- p>:</c-><c- f>882eea27-b968-44e7-b8f5-87b234089057</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>.</c->
-
-<c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-task-finance</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>acme-finance</c-><c- p>:</c-><c- f>4f3fbf70-49df-47ce-a573-dc54366b01ad</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
-      <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-finance</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s access receipt from ACME</figcaption>
    </figure>
@@ -1664,36 +1668,17 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c->
       <c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#grant-subject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
-      <c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-project-na</c-> <c- p>,</c->
-      <c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-task-na</c-> <c- p>.</c->
+      <c- nn>omni-auth</c-><c- p>:</c-><c- f>a7f7d66d-13ba-4ba6-8908-3ea9c2703fce</c-> <c- p>,</c->
+      <c- nn>omni-auth</c-><c- p>:</c-><c- f>73c5f23c-099e-452e-ab29-cbfc8c8a19f8</c-> <c- p>.</c->
 
 <c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#grant-subject</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c->  <c- g>&lt;https://alice.example/#id></c-> <c- p>.</c->
-
-<c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-project-na</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>omni-na</c-><c- p>:</c-><c- f>823e7976-13cc-4641-be0f-a4a78c2d7140</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>.</c->
-
-<c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-task-na</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>omni-na</c-><c- p>:</c-><c- f>6b800a8a-1d53-45b5-81bd-e76f1a87bdd3</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
-      <c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-project-na</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s access receipt from Omni</figcaption>
    </figure>
    <figure>
-<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>dd442d1b-bcc7-40e2-bbb9-4abfa7309fbe</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessReceipt</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://jarvis.alice.example/#agent></c-> <c- p>;</c->
+<pre class="include-code highlight">    <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://jarvis.alice.example/#agent></c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
@@ -1703,85 +1688,19 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#grant-subject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-project-pro</c-> <c- p>,</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-task-pro</c-> <c- p>,</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-project-home</c-> <c- p>,</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-task-home</c-> <c- p>,</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-acme-projects</c-><c- p>,</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-acme-tasks</c-> <c- p>,</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-omni-projects</c-><c- p>,</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-omni-tasks</c-> <c- p>.</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>cd247a67-0879-4301-abd0-828f63abb252</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>9827ae00-2778-4655-9f22-08bb9daaee26</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>7b2bc4ff-b4b8-47b8-96f6-06695f4c5126</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>54b1a123-23ca-4733-9371-700b52b9c567</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>e2765d6c-848a-4fc0-9092-556903730263</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>6a9feb57-252b-43b2-8470-5a938888b2fa</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>329eb90a-feb9-4c95-a427-2ef23989abe9</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>fe442ef3-5200-4b06-b4bc-fc0b495603a9</c-> <c- p>.</c->
 
 <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#grant-subject</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c->  <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessByApplication</c-> <c- g>&lt;https://projectron.example/#app></c-> <c- p>.</c->
-
-<c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-project-pro</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>773605f0-b5bf-4d46-878d-5c167eac8b5d</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>SelectedInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataInstance</c->
-      <c- nn>alice-pro</c-><c- p>:</c-><c- f>7a130c38-668a-4775-821a-08b38f2306fb\#project</c-> <c- p>.</c->
-
-<c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-task-pro</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>4d594c61-7cff-484a-a1d2-1f353ee4e1e7</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-project-pro</c-> <c- p>.</c->
-
-<c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-project-home</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-home</c-><c- p>:</c-><c- f>f6ccd3a4-45ea-4f98-8a36-98eac92a6720</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>.</c->
-
-<c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-task-home</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-home</c-><c- p>:</c-><c- f>92f43be4-d12c-4ca3-9bd6-c18e83167b2f</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-project-home</c-> <c- p>.</c->
-
-<c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-acme-projects</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataFromAgent</c-> <c- nn>alice-auth</c-><c- p>:</c-><c- f>3a019d90-c7fb-4e65-865d-4254ef064667</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllRemoteFromAgent</c-> <c- p>.</c->
-
-<c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-acme-tasks</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
-     <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-acme-projects</c-> <c- p>.</c->
-
-<c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-omni-projects</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataFromAgent</c-> <c- nn>alice-auth</c-><c- p>:</c-><c- f>19479afc-00b9-4f7b-b602-9cc612d4b9cf</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>SelectedRemote</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>02f8366f-a1cf-4511-81d3-10cddfdce00f\#grant-copy</c-> <c- p>.</c->
-
-<c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-omni-tasks</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#data-grant-omni-projects</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s access receipt for Projectron</figcaption>
    </figure>
@@ -1795,27 +1714,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c->
       <c- nn>alice-auth</c-><c- p>:</c-><c- f>6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#grant-subject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#data-grant-projects</c-> <c- p>,</c->
-      <c- nn>alice-auth</c-><c- p>:</c-><c- f>6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#data-grant-tasks</c-> <c- p>.</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>a691ee69-97d8-45c0-bb03-8e887b2db806</c-> <c- p>,</c->
+      <c- nn>alice-auth</c-><c- p>:</c-><c- f>ecdf7b5e-5123-4a93-87bc-86ef6de389ff</c-> <c- p>.</c->
 
 <c- nn>alice-auth</c-><c- p>:</c-><c- f>6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#grant-subject</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c->  <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessByApplication</c-> <c- g>&lt;https://performchat.example/#app></c-> <c- p>.</c->
-
-<c- nn>alice-auth</c-><c- p>:</c-><c- f>6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#data-grant-projects</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataRegistration</c-> <c- nn>alice-auth</c-><c- p>:</c-><c- f>33caf7be-f804-4155-a57a-92216c577bd4</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllRemote</c-> <c- p>.</c->
-
-<c- nn>alice-auth</c-><c- p>:</c-><c- f>6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#data-grant-tasks</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>RemoteDataGrant</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>InheritInstances</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c-> <c- nn>alice-auth</c-><c- p>:</c-><c- f>6b1b6e39-75e4-44f8-84f3-104b1a8210ad\#data-grant-projects</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s access receipt for PerformChart</figcaption>
    </figure>
@@ -1844,34 +1749,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>fromAgent</c-> <c- g>&lt;https://acme.example/#corp></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesDataGrant</c->
-    <c- nn>alice-auth</c-><c- p>:</c-><c- f>e62a2329-d545-48bd-8d01-98b42213ad1e\#grant-copy</c-> <c- p>,</c->
-    <c- nn>alice-auth</c-><c- p>:</c-><c- f>988f6cb1-8991-4c8c-a178-cd02b1f3689d\#grant-copy</c-> <c- p>.</c->
+    <c- nn>acme-auth</c-><c- p>:</c-><c- f>f8064946-cb67-469a-8b28-652fd17090f6</c-> <c- p>,</c->
+    <c- nn>acme-auth</c-><c- p>:</c-><c- f>80ef3361-730b-4f7c-93ba-4a4415de7264</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s remote data registration for projects from ACME</figcaption>
-   </figure>
-   <figure>
-<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>e62a2329-d545-48bd-8d01-98b42213ad1e\#grant-copy</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>acme-rnd</c-><c- p>:</c-><c- f>6e3b9ac3-254f-41cc-adbe-3f3293fd0475</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>copyOfGrant</c->
-    <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-rnd</c-> <c- p>.</c->
-</pre>
-    <figcaption>Alice’s copy of data grant for projects from ACME - rnd</figcaption>
-   </figure>
-   <figure>
-<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>988f6cb1-8991-4c8c-a178-cd02b1f3689d\#grant-copy</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>acme-finance</c-><c- p>:</c-><c- f>882eea27-b968-44e7-b8f5-87b234089057</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>copyOfGrant</c->
-    <c- nn>acme-auth</c-><c- p>:</c-><c- f>7b6915b4-c135-4025-899c-ce53875bffe2\#data-grant-project-finance</c-> <c- p>.</c->
-</pre>
-    <figcaption>Alice’s copy of data grant for projects from ACME - finance</figcaption>
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>19479afc-00b9-4f7b-b602-9cc612d4b9cf</c->
@@ -1883,25 +1764,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>fromAgent</c-> <c- g>&lt;https://omni.example/#corp></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesDataGrant</c->
-    <c- nn>alice-auth</c-><c- p>:</c-><c- f>02f8366f-a1cf-4511-81d3-10cddfdce00f\#grant-copy</c-> <c- p>.</c->
+    <c- nn>omni-auth</c-><c- p>:</c-><c- f>a7f7d66d-13ba-4ba6-8908-3ea9c2703fce</c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s remote data registration for projects from Omni</figcaption>
    </figure>
-   <figure>
-<pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>02f8366f-a1cf-4511-81d3-10cddfdce00f\#grant-copy</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>omni-na</c-><c- p>:</c-><c- f>823e7976-13cc-4641-be0f-a4a78c2d7140</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>copyOfGrant</c->
-    <c- nn>omni-auth</c-><c- p>:</c-><c- f>11558b5c-a827-4355-bdff-6c200f9377e3\#data-grant-project-na</c-> <c- p>.</c->
-</pre>
-    <figcaption>Alice’s copy of data grant for projects from Omni - na</figcaption>
-   </figure>
    <h3 class="heading settled" data-level="2.13" id="bobexample"><span class="secno">2.13. </span><span class="content">bob.example</span><a class="self-link" href="#bobexample"></a></h3>
    <h4 class="heading settled" data-level="2.13.1" id="data-registrations⑤"><span class="secno">2.13.1. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations⑤"></a></h4>
-   <p class="issue" id="issue-1b5d4828⑤"><a class="self-link" href="#issue-1b5d4828⑤"></a> Snippet below needs to be updated</p>
+   <p class="issue" id="issue-1b5d4828①"><a class="self-link" href="#issue-1b5d4828①"></a> Snippet below needs to be updated</p>
    <figure>
 <pre class="include-code highlight"><c- nn>bob</c-><c- p>:</c-><c- f>0af793c1-8abc-441c-aacc-f78483b34217</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
@@ -1913,7 +1782,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </pre>
     <figcaption>Bob’s data registration for projects</figcaption>
    </figure>
-   <p class="issue" id="issue-1b5d4828⑥"><a class="self-link" href="#issue-1b5d4828⑥"></a> Snippet below needs to be updated</p>
+   <p class="issue" id="issue-1b5d4828②"><a class="self-link" href="#issue-1b5d4828②"></a> Snippet below needs to be updated</p>
    <figure>
 <pre class="include-code highlight"><c- nn>bob</c-><c- p>:</c-><c- f>4675444a-8a4d-46e1-abfe-85147e5a9b76</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
@@ -2179,7 +2048,7 @@ It it typically hosted on a Web site geared towards hosting standards. <span cla
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>Location</c-> <c- p>;</c->
   <c- nn>ldp</c-><c- p>:</c-><c- f>contains</c->
       <c- g>&lt;/data/A-Location-F/A-HomeAddress-F></c-> <c- p>.</c->
-</pre> <figcaption>data registration for FHIR Location</figcaption> </figure> <h3 class="heading settled" data-level="2.14" id="performchartexample"><span class="secno">2.14. </span><span class="content">performchart.example</span><a class="self-link" href="#performchartexample"></a></h3> <p class="issue" id="issue-1b5d4828⑦"><a class="self-link" href="#issue-1b5d4828⑦"></a> Snippet below needs to be updated</p> <figure> <pre class="include-code highlight"><c- nn>performchart</c-><c- p>:</c-><c- f>\#app</c->
+</pre> <figcaption>data registration for FHIR Location</figcaption> </figure> <h3 class="heading settled" data-level="2.14" id="performchartexample"><span class="secno">2.14. </span><span class="content">performchart.example</span><a class="self-link" href="#performchartexample"></a></h3> <p class="issue" id="issue-1b5d4828③"><a class="self-link" href="#issue-1b5d4828③"></a> Snippet below needs to be updated</p> <figure> <pre class="include-code highlight"><c- nn>performchart</c-><c- p>:</c-><c- f>\#app</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Application</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>applicationName</c-> <c- s>"PerformChart"</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>applicationDescription</c->
@@ -2248,16 +2117,12 @@ It it typically hosted on a Web site geared towards hosting standards. <span cla
    <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9③"> ↵ </a></div>
    <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9④"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828"> ↵ </a></div>
-   <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828①"> ↵ </a></div>
-   <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828②"> ↵ </a></div>
-   <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828③"> ↵ </a></div>
-   <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828④"> ↵ </a></div>
    <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9⑤"> ↵ </a></div>
    <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9⑥"> ↵ </a></div>
-   <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828⑤"> ↵ </a></div>
-   <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828⑥"> ↵ </a></div>
+   <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828①"> ↵ </a></div>
+   <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828②"> ↵ </a></div>
    <div class="issue">if accepted, move to notation section<a href="#issue-80498731"> ↵ </a></div>
    <div class="issue">if accepted, move to notation section<a href="#issue-80498731①"> ↵ </a></div>
    <div class="issue">I’m trying to set expectations about what’s in the POD and what’s out there on teh interwebs.<a href="#issue-3383df8c"> ↵ </a></div>
-   <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828⑦"> ↵ </a></div>
+   <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828③"> ↵ </a></div>
   </div>

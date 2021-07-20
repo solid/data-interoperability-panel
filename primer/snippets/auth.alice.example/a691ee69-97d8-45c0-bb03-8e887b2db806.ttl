@@ -1,0 +1,14 @@
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX alice-auth: <https://auth.alice.example/>
+
+alice-auth:a691ee69-97d8-45c0-bb03-8e887b2db806
+  a interop:RemoteDataGrant ;
+    interop:registeredShapeTree solidtrees:Project ;
+    interop:hasRemoteDataRegistration alice-auth:33caf7be-f804-4155-a57a-92216c577bd4 ;
+    interop:accessMode acl:Read ;
+    interop:scopeOfGrant interop:AllRemote .
+alice-auth:ecdf7b5e-5123-4a93-87bc-86ef6de389ff
+    interop:inheritsFromGrant
+      alice-auth:a691ee69-97d8-45c0-bb03-8e887b2db806 .
