@@ -1,0 +1,15 @@
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX acme-auth: <https://auth.acme.example/>
+PREFIX acme-rnd: <https://rnd.acme.example/>
+
+acme-auth:f8064946-cb67-469a-8b28-652fd17090f6
+  a interop:DataGrant ;
+    interop:registeredShapeTree solidtrees:Project ;
+    interop:hasDataRegistration acme-rnd:6e3b9ac3-254f-41cc-adbe-3f3293fd0475 ;
+    interop:accessMode acl:Read, acl:Write ;
+    interop:scopeOfGrant interop:AllInstances .
+acme-auth:cafafd6f-9cc6-4a5d-9cbd-8eeea95d3d4e
+    interop:inheritsFromGrant
+      acme-auth:f8064946-cb67-469a-8b28-652fd17090f6 .

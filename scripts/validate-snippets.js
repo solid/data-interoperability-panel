@@ -4,7 +4,8 @@ const { exit } = require('process')
 const validator = require('turtle-validator')
 
 SNIPPETS_PATH = 'proposals/primer/snippets'
-IGNORE_HOSTS = [ 'solidshapes.example' ]
+// TODO (elf-pavlik) adjust to handle bob.example
+IGNORE_HOSTS = [ 'solidshapes.example', 'bob.example' ]
 
 var exitCode = 0
 

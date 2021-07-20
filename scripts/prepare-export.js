@@ -2,7 +2,8 @@ const fs = require('fs')
 const path = require('path')
 
 SNIPPETS_PATH = 'proposals/primer/snippets'
-IGNORE_HOSTS = [ 'solidshapes.example' ]
+// TODO (elf-pavlik) adjust to handle bob.example
+IGNORE_HOSTS = [ 'solidshapes.example', 'bob.example' ]
 
 // delete existing dist
 fs.rmdirSync('dist',{ recursive: true })
