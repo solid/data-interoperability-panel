@@ -5,8 +5,10 @@ SNIPPETS_PATH = 'proposals/primer/snippets'
 // TODO (elf-pavlik) adjust to handle bob.example
 IGNORE_HOSTS = [ 'solidshapes.example', 'bob.example' ]
 
-// delete existing dist
-fs.rmdirSync('dist',{ recursive: true })
+// delete existing dist if exists
+if (fs.existsSync('dist')) {
+  fs.rmdirSync('dist',{ recursive: true })
+}
 
 // create dist directory
 fs.mkdirSync('dist')
