@@ -5,13 +5,13 @@ PREFIX alice-auth: <https://auth.alice.example/>
 PREFIX omni-auth: <https://auth.omni.example/>
 
 alice-auth:329eb90a-feb9-4c95-a427-2ef23989abe9
-  a interop:RemoteDataGrant ;
+  a interop:DataConsent ;
     interop:registeredShapeTree solidtrees:Project ;
-    interop:hasRemoteDataFromAgent alice-auth:19479afc-00b9-4f7b-b602-9cc612d4b9cf ;
     interop:accessMode acl:Read, acl:Write ;
-    interop:scopeOfGrant interop:SelectedRemote ;
-    interop:hasDataGrant
+    interop:onDataOwnedBy <https://omni.example/#corp> ;
+    interop:scopeOfConsent interop:SelectedRemote ;
+    interop:selectedDataGrant
       omni-auth:a7f7d66d-13ba-4ba6-8908-3ea9c2703fce .
 alice-auth:fe442ef3-5200-4b06-b4bc-fc0b495603a9
-    interop:inheritsFromGrant
+    interop:inheritsFromConsent
       alice-auth:329eb90a-feb9-4c95-a427-2ef23989abe9 .

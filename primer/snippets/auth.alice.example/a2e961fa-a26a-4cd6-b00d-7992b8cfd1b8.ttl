@@ -1,0 +1,21 @@
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX alice-auth: <https://auth.alice.example/>
+PREFIX omni-auth: <https://auth.omni.example/>
+PREFIX omni-na: <https://na.omni.example/>
+
+alice-auth:a2e961fa-a26a-4cd6-b00d-7992b8cfd1b8
+  a interop:DelegatedDataGrant ;
+  interop:dataOwner <https://omni.example/#corp> ;
+  interop:registeredShapeTree solidtrees:Task ;
+  interop:hasDataRegistration omni-na:6b800a8a-1d53-45b5-81bd-e76f1a87bdd3 ;
+  interop:accessMode acl:Read, acl:Write ;
+  interop:scopeOfGrant interop:InheritInstances ;
+  interop:delegationOfGrant
+    omni-auth:73c5f23c-099e-452e-ab29-cbfc8c8a19f8 ;
+  interop:inheritsFromGrant
+    alice-auth:92328851-ffb0-427d-847e-f6d9c8417648 .
+
+omni-na:6b800a8a-1d53-45b5-81bd-e76f1a87bdd3
+  interop:iriPrefix "https://na.omni.example/" .

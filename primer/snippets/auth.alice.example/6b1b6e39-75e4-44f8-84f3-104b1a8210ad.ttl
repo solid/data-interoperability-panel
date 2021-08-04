@@ -4,16 +4,20 @@ PREFIX alice-auth: <https://auth.alice.example/>
 
 alice-auth:6b1b6e39-75e4-44f8-84f3-104b1a8210ad
   a interop:AccessGrant ;
-    interop:registeredBy <https://alice.example/#id> ;
-    interop:registeredWith <https://jarvis.alice.example/#agent> ;
-    interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:hasAccessGrantSubject <#grant-subject> ;
-    interop:hasDataGrant
-      alice-auth:a691ee69-97d8-45c0-bb03-8e887b2db806 ,
-      alice-auth:ecdf7b5e-5123-4a93-87bc-86ef6de389ff .
+  interop:registeredBy <https://alice.example/#id> ;
+  interop:registeredWith <https://jarvis.alice.example/#agent> ;
+  interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+  interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+  interop:hasAccessGrantSubject <#grant-subject> ;
+  interop:hasDataGrant
+    alice-auth:995eda6f-1567-41de-b55a-97260e6b38d9 ,
+    alice-auth:d8f282b3-4a0e-4093-90d1-169cf7a090e8 ,
+    alice-auth:1d2e21fb-b8be-4ca7-acf7-13bf2340801f ,
+    alice-auth:cb7b6b70-2c62-4ec6-88b8-b20ffb42d0b2 ,
+    alice-auth:ae7564dd-73f7-490a-9a0b-76215ffca9d3 ,
+    alice-auth:0978d42e-3eb3-4137-9c7f-160759e77860 .
 
 <#grant-subject>
   a interop:AccessGrantSubject ;
-    interop:accessByAgent  <https://alice.example/#id> ;
-    interop:accessByApplication <https://performchat.example/#app> .
+  interop:accessByAgent  <https://alice.example/#id> ;
+  interop:accessByApplication <https://performchart.example/#app> .

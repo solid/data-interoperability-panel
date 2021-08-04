@@ -1,0 +1,23 @@
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX alice-auth: <https://auth.alice.example/>
+PREFIX acme-auth: <https://auth.acme.example/>
+PREFIX acme-finance: <https://finance.acme.example/>
+
+alice-auth:7be5a39f-583d-4464-8ad8-a39e24b99fce
+  a interop:DelegatedDataGrant ;
+  interop:dataOwner <https://acme.example/#corp> ;
+  interop:registeredShapeTree solidtrees:Project ;
+  interop:hasDataRegistration acme-finance:882eea27-b968-44e7-b8f5-87b234089057 ;
+  interop:accessMode acl:Read, acl:Write ;
+  interop:scopeOfGrant interop:AllInstances ;
+  interop:delegationOfGrant
+    acme-auth:80ef3361-730b-4f7c-93ba-4a4415de7264 .
+
+alice-auth:68dd1212-b0f3-4611-aae2-f9f5ea30ee07
+  interop:inheritsFromGrant
+    alice-auth:7be5a39f-583d-4464-8ad8-a39e24b99fce .
+
+acme-finance:882eea27-b968-44e7-b8f5-87b234089057
+  interop:iriPrefix "https://finance.acme.example/" .

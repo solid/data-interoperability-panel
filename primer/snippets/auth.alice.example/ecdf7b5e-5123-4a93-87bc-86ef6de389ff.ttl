@@ -4,9 +4,9 @@ PREFIX solidtrees: <https://solidshapes.example/trees/>
 PREFIX alice-auth: <https://auth.alice.example/>
 
 alice-auth:ecdf7b5e-5123-4a93-87bc-86ef6de389ff
-  a interop:RemoteDataGrant ;
-    interop:registeredShapeTree solidtrees:Task ;
-    interop:accessMode acl:Read ;
-    interop:scopeOfGrant interop:InheritRemoteInstances ;
-    interop:inheritsFromGrant
-      alice-auth:a691ee69-97d8-45c0-bb03-8e887b2db806 .
+  a interop:DataConsent ;
+  interop:registeredShapeTree solidtrees:Task ;
+  interop:accessMode acl:Read ;
+  interop:scopeOfConsent interop:InheritRemoteInstances ;
+  interop:inheritsFromConsent
+    alice-auth:a691ee69-97d8-45c0-bb03-8e887b2db806 .
