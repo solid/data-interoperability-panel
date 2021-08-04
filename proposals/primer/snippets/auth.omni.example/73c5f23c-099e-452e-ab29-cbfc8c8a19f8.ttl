@@ -6,9 +6,13 @@ PREFIX omni-na: <https://na.omni.example/>
 
 omni-auth:73c5f23c-099e-452e-ab29-cbfc8c8a19f8
   a interop:DataGrant ;
+    interop:dataOwner <https://omni.example/#corp> ;
     interop:registeredShapeTree solidtrees:Task ;
     interop:hasDataRegistration omni-na:6b800a8a-1d53-45b5-81bd-e76f1a87bdd3 ;
     interop:accessMode acl:Read, acl:Write ;
     interop:scopeOfGrant interop:InheritInstances ;
     interop:inheritsFromGrant
       omni-auth:a7f7d66d-13ba-4ba6-8908-3ea9c2703fce .
+
+omni-na:6b800a8a-1d53-45b5-81bd-e76f1a87bdd3
+  interop:iriPrefix "https://na.omni.example/" .

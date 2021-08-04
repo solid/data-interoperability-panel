@@ -1,18 +1,21 @@
 PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX alice-auth: <https://auth.alice.example/>
 PREFIX acme-auth: <https://auth.acme.example/>
 PREFIX acme-rnd: <https://rnd.acme.example/>
 
-acme-auth:cafafd6f-9cc6-4a5d-9cbd-8eeea95d3d4e
-  a interop:DataGrant ;
+alice-auth:c205e9da-2dc5-4d1f-8be9-a3f90c13eedc
+  a interop:DelegatedDataGrant ;
     interop:dataOwner <https://acme.example/#corp> ;
     interop:registeredShapeTree solidtrees:Task ;
     interop:hasDataRegistration acme-rnd:f56235d6-4e58-4492-97ec-42d3b5bfa539 ;
     interop:accessMode acl:Read, acl:Write ;
     interop:scopeOfGrant interop:InheritInstances ;
+    interop:delegationOfGrant
+      acme-auth:cafafd6f-9cc6-4a5d-9cbd-8eeea95d3d4e ;
     interop:inheritsFromGrant
-      acme-auth:f8064946-cb67-469a-8b28-652fd17090f6 .
+      alice-auth:12daf870-a343-4684-b828-c67c5c9c997a .
 
 acme-rnd:f56235d6-4e58-4492-97ec-42d3b5bfa539
   interop:iriPrefix "https://rnd.acme.example/" .
