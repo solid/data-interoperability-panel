@@ -5,7 +5,9 @@ PREFIX st: <http://www.w3.org/ns/shapetree#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 
 <>
 dcterms:issued "2020-06-14"^^xsd:date ;
@@ -28,7 +30,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "Links an Agent to an inbox"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :Agent ;
-  rdfs:range IRI ;
+  # TODO rdfs:range
   rdfs:label "Has Inbox"@en .
 
 :hasAccessInbox
@@ -36,7 +38,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "Links an Agent to an Access inbox for Access Receipts"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :Agent ;
-  rdfs:range IRI ;
+  # TODO rdfs:range
   rdfs:label "Has Access Inbox"@en .
 
 :hasRegistrySet
@@ -231,7 +233,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:label "Access Grant Registry"@en .
 
 :AccessGrant
-  rdfs:subClassOf :Registration
+  rdfs:subClassOf :Registration ;
   rdfs:comment "Records an access grant made by an Agent to another Agent for data in their control"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Grant"@en .
@@ -431,26 +433,26 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "Access to selected instances"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Selected Instances"@en .
-  
+
 :InheritInstances
   rdfs:comment "Access to inherited instances"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Inherit Instances"@en .  
+  rdfs:label "Inherit Instances"@en .
 
 :NoAccess
   rdfs:comment "No access"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "No Access"@en .  
+  rdfs:label "No Access"@en .
 
 :AllRemote
   rdfs:comment "Access to all remote instances"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "All Remote"@en .  
+  rdfs:label "All Remote"@en .
 
 :SelectedRemote
   rdfs:comment "Access to selected remote instances"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Selected Remote"@en .  
+  rdfs:label "Selected Remote"@en .
 
 # RemoteDataGrant Class
 #############################################################################
@@ -465,7 +467,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "Links to a Remote Data Registration Grant"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:range :RemoteDataRegistrationGrant ;
-  rdfs:label "Has Remote Data Registration Grant"@en .  
+  rdfs:label "Has Remote Data Registration Grant"@en .
 
 # RemoteDataRegistrationGrant Class
 #############################################################################
@@ -496,16 +498,16 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "Type of the target linked via TrustedWith"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :TrustedGrant ;
-  rdfs:range [ owl:oneOf ( :Agent,
-                           :ApplicationRegistrySet,
-                           :DataRegistrySet,
-                           :AccessGrantRegistrySet,
-                           :AccessReceiptRegistrySet,
-                           :RemoteDataRegistrySet,
-                           :ApplicationRegistry,
-                           :DataRegistry,
-                           :AccessGrantRegistry,
-                           :AccessReceiptRegistry,
+  rdfs:range [ owl:oneOf ( :Agent
+                           :ApplicationRegistrySet
+                           :DataRegistrySet
+                           :AccessGrantRegistrySet
+                           :AccessReceiptRegistrySet
+                           :RemoteDataRegistrySet
+                           :ApplicationRegistry
+                           :DataRegistry
+                           :AccessGrantRegistry
+                           :AccessReceiptRegistry
                            :RemoteDataRegistry ) ] ;
   rdfs:label "Trusted With Type"@en .
 
@@ -533,7 +535,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:label "Access Receipt Registry"@en .
 
 :AccessReceipt
-  rdfs:subClassOf :AccessGrant
+  rdfs:subClassOf :AccessGrant ;
   rdfs:comment "A record of access granted by another Agent in the ecosystem"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Receipt"@en .
@@ -750,7 +752,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 
 :recursivelyAuthorize
   a rdf:property ;
-  xrdfs:comment "Continue traversing shape tree hierarchy for authorization when true"@en ;
+  rdfs:comment "Continue traversing shape tree hierarchy for authorization when true"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :AccessNeed ;
   rdfs:range xsd:boolean ;
@@ -821,7 +823,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "Request for trusted access to key resources"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Trusted Need"@en .
-  
+
 # IRIs for accessNecessity types
 #############################################################################
 :AccessRequired
