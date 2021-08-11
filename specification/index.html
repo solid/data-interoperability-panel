@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version 59d067506, updated Fri Jul 23 15:43:29 2021 -0700" name="generator">
+  <meta content="Bikeshed version 4f053d00e, updated Tue Aug 10 14:13:32 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="eb6e1dc84e905cdfd358aed2a4771346694909ab" name="document-revision">
+  <meta content="2d6ab3cb017c20dad7438800512d5dcd39c23be6" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -556,7 +556,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-08-04">4 August 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-08-11">11 August 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -6233,7 +6233,7 @@ parent <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance�
         <p>Let <code>REF</code> be the <a data-link-type="dfn" href="#shape-tree-reference" id="ref-for-shape-tree-reference③">Shape Tree Reference</a> from
   calling <a href="#get-shape-tree-reference">§ 8.4.15 Get Shape Tree Reference</a> with inputs: <code>DR registeredShapeTree</code>, <code>DI registeredShapeTree</code></p>
        <li data-md>
-        <p>Let <code>PRED</code> be the rdf:property extracted from <code>REF traverseViaShapePath</code></p>
+        <p>Let <code>PRED</code> be the rdf:Property extracted from <code>REF traverseViaShapePath</code></p>
        <li data-md>
         <p>Call <a href="#apply-conditional-permissions">§ 8.4.20 Apply Conditional Resource Permissions</a> with inputs: <code>DR</code>, <code>SUBJECT</code>, <code>MODES</code>, <code>DI</code>, <code>PRED</code>, <code>NULL</code></p>
       </ol>
@@ -8842,69 +8842,69 @@ associate instances of related shape trees via a ShapePath</p>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#access-decorator-index">Access Decorator Index</a><span>, in §7.2.6</span>
-   <li><a href="#access-decorator-resource">Access Decorator Resource</a><span>, in §7.2.7</span>
-   <li><a href="#access-decorator-series">Access Decorator Series</a><span>, in §7.2.6.1</span>
-   <li><a href="#access-decorator-version">Access Decorator Version</a><span>, in §7.2.6.2</span>
-   <li><a href="#access-grant">Access Grant</a><span>, in §8.2.4</span>
-   <li><a href="#access-grant-registry">Access Grant Registry</a><span>, in §8.2.3</span>
-   <li><a href="#access-grant-registry-set">Access Grant Registry Set</a><span>, in §8.2.2</span>
-   <li><a href="#access-grant-subject">Access Grant Subject</a><span>, in §8.2.5</span>
-   <li><a href="#access-invitation">Access Invitation</a><span>, in §8.2.11</span>
-   <li><a href="#access-invitation-channel">Access Invitation Channel</a><span>, in §8.2.12</span>
-   <li><a href="#access-mode">access mode</a><span>, in §12</span>
-   <li><a href="#access-need">Access Need</a><span>, in §7.2.2</span>
-   <li><a href="#access-need-decorator">Access Need Decorator</a><span>, in §7.2.7.2</span>
-   <li><a href="#access-need-group">Access Need Group</a><span>, in §7.2.1</span>
-   <li><a href="#access-need-group-decorator">Access Need Group Decorator</a><span>, in §7.2.7.1</span>
-   <li><a href="#access-receipt">Access Receipt</a><span>, in §9.2.3</span>
-   <li><a href="#access-receipt-registry">Access Receipt Registry</a><span>, in §9.2.2</span>
-   <li><a href="#access-receipt-registry-set">Access Receipt Registry Set</a><span>, in §9.2.1</span>
-   <li><a href="#access-request">Access Request</a><span>, in §7.2.5</span>
-   <li><a href="#acl-resource">acl resource</a><span>, in §12</span>
-   <li><a href="#agent">Agent</a><span>, in §2.2.2</span>
-   <li><a href="#application">Application</a><span>, in §3.2.2</span>
-   <li><a href="#application-identity">application identity</a><span>, in §12</span>
-   <li><a href="#application-profile-document">application profile document</a><span>, in §12</span>
-   <li><a href="#application-registration">Application Registration</a><span>, in §4.2.4</span>
-   <li><a href="#application-registry">Application Registry</a><span>, in §4.2.3</span>
-   <li><a href="#application-registry-set">Application Registry Set</a><span>, in §4.2.2</span>
-   <li><a href="#authenticated-agent">authenticated agent</a><span>, in §12</span>
-   <li><a href="#authorization-statement">authorization statement</a><span>, in §12</span>
-   <li><a href="#authorization-subject">authorization subject</a><span>, in §12</span>
-   <li><a href="#data-grant">Data Grant</a><span>, in §8.2.6</span>
-   <li><a href="#data-instance">Data Instance</a><span>, in §5.2.4</span>
-   <li><a href="#data-registration">Data Registration</a><span>, in §5.2.4</span>
-   <li><a href="#data-registry">Data Registry</a><span>, in §5.2.3</span>
-   <li><a href="#data-registry-set">Data Registry Set</a><span>, in §5.2.2</span>
-   <li><a href="#did">DID</a><span>, in §12</span>
-   <li><a href="#ecosystem">ecosystem</a><span>, in §12</span>
-   <li><a href="#identity">identity</a><span>, in §12</span>
-   <li><a href="#identity-profile-document">identity profile document</a><span>, in §12</span>
-   <li><a href="#pod">pod</a><span>, in §12</span>
-   <li><a href="#referenced-access-need">Referenced Access Need</a><span>, in §7.2.3</span>
-   <li><a href="#referenced-data-grant">Referenced Data Grant</a><span>, in §8.2.7</span>
-   <li><a href="#referenced-remote-data-grant">Referenced Remote Data Grant</a><span>, in §8.2.9</span>
-   <li><a href="#registry">Registry</a><span>, in §2.1</span>
-   <li><a href="#registry-set">Registry Set</a><span>, in §2.2.1</span>
-   <li><a href="#remote-agent-data-registration">Remote Agent Data Registration</a><span>, in §10.2.4</span>
-   <li><a href="#remote-data-grant">Remote Data Grant</a><span>, in §8.2.8</span>
-   <li><a href="#remote-data-registration">Remote Data Registration</a><span>, in §10.2.3</span>
-   <li><a href="#remote-data-registry">Remote Data Registry</a><span>, in §10.2.2</span>
-   <li><a href="#remote-data-registry-set">Remote Data Registry Set</a><span>, in §10.2.1</span>
-   <li><a href="#server-side-application">server-side application</a><span>, in §12</span>
-   <li><a href="#shape">shape</a><span>, in §12</span>
-   <li><a href="#shape-tree">Shape Tree</a><span>, in §12</span>
-   <li><a href="#shape-tree-decorator">Shape Tree Decorator</a><span>, in §12</span>
-   <li><a href="#shape-tree-reference">Shape Tree Reference</a><span>, in §12</span>
-   <li><a href="#solid">Solid</a><span>, in §12</span>
-   <li><a href="#strongly-identifiable-applications">Strongly identifiable applications</a><span>, in §11.1</span>
-   <li><a href="#trusted-agent">Trusted Agent</a><span>, in §8.2.10</span>
-   <li><a href="#trusted-grant">Trusted Grant</a><span>, in §8.2.10</span>
-   <li><a href="#trusted-need">Trusted Need</a><span>, in §7.2.4</span>
-   <li><a href="#user-piloted-application">user-piloted application</a><span>, in §12</span>
-   <li><a href="#weakly-identifiable-applications">Weakly identifiable applications</a><span>, in §11.1</span>
-   <li><a href="#webid">WebID</a><span>, in §12</span>
+   <li><a href="#access-decorator-index">Access Decorator Index</a><span>, in § 7.2.6</span>
+   <li><a href="#access-decorator-resource">Access Decorator Resource</a><span>, in § 7.2.7</span>
+   <li><a href="#access-decorator-series">Access Decorator Series</a><span>, in § 7.2.6.1</span>
+   <li><a href="#access-decorator-version">Access Decorator Version</a><span>, in § 7.2.6.2</span>
+   <li><a href="#access-grant">Access Grant</a><span>, in § 8.2.4</span>
+   <li><a href="#access-grant-registry">Access Grant Registry</a><span>, in § 8.2.3</span>
+   <li><a href="#access-grant-registry-set">Access Grant Registry Set</a><span>, in § 8.2.2</span>
+   <li><a href="#access-grant-subject">Access Grant Subject</a><span>, in § 8.2.5</span>
+   <li><a href="#access-invitation">Access Invitation</a><span>, in § 8.2.11</span>
+   <li><a href="#access-invitation-channel">Access Invitation Channel</a><span>, in § 8.2.12</span>
+   <li><a href="#access-mode">access mode</a><span>, in § 12</span>
+   <li><a href="#access-need">Access Need</a><span>, in § 7.2.2</span>
+   <li><a href="#access-need-decorator">Access Need Decorator</a><span>, in § 7.2.7.2</span>
+   <li><a href="#access-need-group">Access Need Group</a><span>, in § 7.2.1</span>
+   <li><a href="#access-need-group-decorator">Access Need Group Decorator</a><span>, in § 7.2.7.1</span>
+   <li><a href="#access-receipt">Access Receipt</a><span>, in § 9.2.3</span>
+   <li><a href="#access-receipt-registry">Access Receipt Registry</a><span>, in § 9.2.2</span>
+   <li><a href="#access-receipt-registry-set">Access Receipt Registry Set</a><span>, in § 9.2.1</span>
+   <li><a href="#access-request">Access Request</a><span>, in § 7.2.5</span>
+   <li><a href="#acl-resource">acl resource</a><span>, in § 12</span>
+   <li><a href="#agent">Agent</a><span>, in § 2.2.2</span>
+   <li><a href="#application">Application</a><span>, in § 3.2.2</span>
+   <li><a href="#application-identity">application identity</a><span>, in § 12</span>
+   <li><a href="#application-profile-document">application profile document</a><span>, in § 12</span>
+   <li><a href="#application-registration">Application Registration</a><span>, in § 4.2.4</span>
+   <li><a href="#application-registry">Application Registry</a><span>, in § 4.2.3</span>
+   <li><a href="#application-registry-set">Application Registry Set</a><span>, in § 4.2.2</span>
+   <li><a href="#authenticated-agent">authenticated agent</a><span>, in § 12</span>
+   <li><a href="#authorization-statement">authorization statement</a><span>, in § 12</span>
+   <li><a href="#authorization-subject">authorization subject</a><span>, in § 12</span>
+   <li><a href="#data-grant">Data Grant</a><span>, in § 8.2.6</span>
+   <li><a href="#data-instance">Data Instance</a><span>, in § 5.2.4</span>
+   <li><a href="#data-registration">Data Registration</a><span>, in § 5.2.4</span>
+   <li><a href="#data-registry">Data Registry</a><span>, in § 5.2.3</span>
+   <li><a href="#data-registry-set">Data Registry Set</a><span>, in § 5.2.2</span>
+   <li><a href="#did">DID</a><span>, in § 12</span>
+   <li><a href="#ecosystem">ecosystem</a><span>, in § 12</span>
+   <li><a href="#identity">identity</a><span>, in § 12</span>
+   <li><a href="#identity-profile-document">identity profile document</a><span>, in § 12</span>
+   <li><a href="#pod">pod</a><span>, in § 12</span>
+   <li><a href="#referenced-access-need">Referenced Access Need</a><span>, in § 7.2.3</span>
+   <li><a href="#referenced-data-grant">Referenced Data Grant</a><span>, in § 8.2.7</span>
+   <li><a href="#referenced-remote-data-grant">Referenced Remote Data Grant</a><span>, in § 8.2.9</span>
+   <li><a href="#registry">Registry</a><span>, in § 2.1</span>
+   <li><a href="#registry-set">Registry Set</a><span>, in § 2.2.1</span>
+   <li><a href="#remote-agent-data-registration">Remote Agent Data Registration</a><span>, in § 10.2.4</span>
+   <li><a href="#remote-data-grant">Remote Data Grant</a><span>, in § 8.2.8</span>
+   <li><a href="#remote-data-registration">Remote Data Registration</a><span>, in § 10.2.3</span>
+   <li><a href="#remote-data-registry">Remote Data Registry</a><span>, in § 10.2.2</span>
+   <li><a href="#remote-data-registry-set">Remote Data Registry Set</a><span>, in § 10.2.1</span>
+   <li><a href="#server-side-application">server-side application</a><span>, in § 12</span>
+   <li><a href="#shape">shape</a><span>, in § 12</span>
+   <li><a href="#shape-tree">Shape Tree</a><span>, in § 12</span>
+   <li><a href="#shape-tree-decorator">Shape Tree Decorator</a><span>, in § 12</span>
+   <li><a href="#shape-tree-reference">Shape Tree Reference</a><span>, in § 12</span>
+   <li><a href="#solid">Solid</a><span>, in § 12</span>
+   <li><a href="#strongly-identifiable-applications">Strongly identifiable applications</a><span>, in § 11.1</span>
+   <li><a href="#trusted-agent">Trusted Agent</a><span>, in § 8.2.10</span>
+   <li><a href="#trusted-grant">Trusted Grant</a><span>, in § 8.2.10</span>
+   <li><a href="#trusted-need">Trusted Need</a><span>, in § 7.2.4</span>
+   <li><a href="#user-piloted-application">user-piloted application</a><span>, in § 12</span>
+   <li><a href="#weakly-identifiable-applications">Weakly identifiable applications</a><span>, in § 11.1</span>
+   <li><a href="#webid">WebID</a><span>, in § 12</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-dfn-containing-service-worker-registration">
    <a href="https://w3c.github.io/ServiceWorker/#dfn-containing-service-worker-registration">https://w3c.github.io/ServiceWorker/#dfn-containing-service-worker-registration</a><b>Referenced in:</b>
@@ -8924,28 +8924,28 @@ associate instances of related shape trees via a ShapePath</p>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
    <dt id="biblio-rfc2119">[RFC2119]
-   <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
+   <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-service-workers-1">[SERVICE-WORKERS-1]
-   <dd>Alex Russell; et al. <a href="https://www.w3.org/TR/service-workers-1/">Service Workers 1</a>. 19 November 2019. CR. URL: <a href="https://www.w3.org/TR/service-workers-1/">https://www.w3.org/TR/service-workers-1/</a>
+   <dd>Alex Russell; et al. <a href="https://www.w3.org/TR/service-workers-1/"><cite>Service Workers 1</cite></a>. 19 November 2019. CR. URL: <a href="https://www.w3.org/TR/service-workers-1/">https://www.w3.org/TR/service-workers-1/</a>
    <dt id="biblio-wac">[WAC]
-   <dd><a href="https://solid.github.io/specification/wac/">Web Access Control</a>. URL: <a href="https://solid.github.io/specification/wac/">https://solid.github.io/specification/wac/</a>
+   <dd><a href="https://solid.github.io/specification/wac/"><cite>Web Access Control</cite></a>. URL: <a href="https://solid.github.io/specification/wac/">https://solid.github.io/specification/wac/</a>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
    <dt id="biblio-did">[DID]
-   <dd>Drummond Reed; et al. <a href="https://www.w3.org/TR/did-core/">Decentralized Identifiers (DIDs) v1.0</a>. URL: <a href="https://www.w3.org/TR/did-core/">https://www.w3.org/TR/did-core/</a>
+   <dd>Drummond Reed; et al. <a href="https://www.w3.org/TR/did-core/"><cite>Decentralized Identifiers (DIDs) v1.0</cite></a>. URL: <a href="https://www.w3.org/TR/did-core/">https://www.w3.org/TR/did-core/</a>
    <dt id="biblio-problems-and-goals">[PROBLEMS-AND-GOALS]
-   <dd>Justin Bingham; et al. <a href="https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md">Problems and Goals for Interoperability, Collaboration, and Security in a Solid Pod</a>. URL: <a href="https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md">https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md</a>
+   <dd>Justin Bingham; et al. <a href="https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md"><cite>Problems and Goals for Interoperability, Collaboration, and Security in a Solid Pod</cite></a>. URL: <a href="https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md">https://github.com/solid/data-interoperability-panel/blob/master/problems-and-goals.md</a>
    <dt id="biblio-shacl">[SHACL]
-   <dd>Holger Knublauch; Dimitris Kontokostas. <a href="https://www.w3.org/TR/shacl/">Shapes Constraint Language (SHACL)</a>. URL: <a href="https://www.w3.org/TR/shacl/">https://www.w3.org/TR/shacl/</a>
+   <dd>Holger Knublauch; Dimitris Kontokostas. <a href="https://www.w3.org/TR/shacl/"><cite>Shapes Constraint Language (SHACL)</cite></a>. URL: <a href="https://www.w3.org/TR/shacl/">https://www.w3.org/TR/shacl/</a>
    <dt id="biblio-shapetrees">[SHAPETREES]
-   <dd>Justin Bingham; et al. <a href="https://shapetrees.org/TR/specification/index.html">Shape Trees</a>. URL: <a href="https://shapetrees.org/TR/specification/index.html">https://shapetrees.org/TR/specification/index.html</a>
+   <dd>Justin Bingham; et al. <a href="https://shapetrees.org/TR/specification/index.html"><cite>Shape Trees</cite></a>. URL: <a href="https://shapetrees.org/TR/specification/index.html">https://shapetrees.org/TR/specification/index.html</a>
    <dt id="biblio-shex">[SHEX]
-   <dd>Eric Prud'hommeaux; et al. <a href="http://shex.io/shex-semantics/index.html">Shape Expressions Language 2.1</a>. URL: <a href="http://shex.io/shex-semantics/index.html">http://shex.io/shex-semantics/index.html</a>
+   <dd>Eric Prud'hommeaux; et al. <a href="http://shex.io/shex-semantics/index.html"><cite>Shape Expressions Language 2.1</cite></a>. URL: <a href="http://shex.io/shex-semantics/index.html">http://shex.io/shex-semantics/index.html</a>
    <dt id="biblio-webid">[WEBID]
-   <dd>Tim Berners-Lee; Henry Story; Andrei Sambra. <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/">WebID 1.0</a>. URL: <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/">https://www.w3.org/2005/Incubator/webid/spec/identity/</a>
+   <dd>Tim Berners-Lee; Henry Story; Andrei Sambra. <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/"><cite>WebID 1.0</cite></a>. URL: <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/">https://www.w3.org/2005/Incubator/webid/spec/identity/</a>
    <dt id="biblio-webid-oidc">[WEBID-OIDC]
-   <dd>Dmitri Zagidulin. <a href="https://github.com/solid/webid-oidc-spec">WebID-OIDC Authentication Specification</a>. URL: <a href="https://github.com/solid/webid-oidc-spec">https://github.com/solid/webid-oidc-spec</a>
+   <dd>Dmitri Zagidulin. <a href="https://github.com/solid/webid-oidc-spec"><cite>WebID-OIDC Authentication Specification</cite></a>. URL: <a href="https://github.com/solid/webid-oidc-spec">https://github.com/solid/webid-oidc-spec</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
