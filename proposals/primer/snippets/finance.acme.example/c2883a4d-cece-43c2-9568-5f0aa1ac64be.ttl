@@ -1,14 +1,9 @@
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX solidtrees: <https://solidshapes.example/trees/>
 PREFIX pm: <https://vocab.example/project-management/>
-PREFIX tbd: <https://tbd.example/>
 PREFIX acme-finance: <https://finance.acme.example/>
 
 acme-finance:c2883a4d-cece-43c2-9568-5f0aa1ac64be\#project
   a pm:Project ;
   rdfs:label "P-Af-2" ;
-  tbd:hasReferenceList acme-finance:a2b38a9b-f115-4865-af3a-8ea3c86e0bec .
-
-acme-finance:a2b38a9b-f115-4865-af3a-8ea3c86e0bec
-  a tbd:ReferencesList ;
-  tbd:referencedTree solidtrees:Task .
+  pm:hasTask
+    acme-finance:e44e3ddc-a383-4a98-ad59-a3153eea5aaf\#task .
