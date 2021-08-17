@@ -1,14 +1,10 @@
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX solidtrees: <https://solidshapes.example/trees/>
 PREFIX pm: <https://vocab.example/project-management/>
-PREFIX tbd: <https://tbd.example/>
 PREFIX alice-pro: <https://pro.alice.example/>
 
 alice-pro:ccbd77ae-f769-4e07-b41f-5136501e13e7\#project
   a pm:Project ;
   rdfs:label "P-Ap-1" ;
-  tbd:hasReferenceList alice-pro:5db9103b-392c-41a4-b823-100c213e24ff .
-
-alice-pro:5db9103b-392c-41a4-b823-100c213e24ff
-  a tbd:ReferencesList ;
-  tbd:referencedTree solidtrees:Task .
+  pm:hasTask
+    alice-pro:576520a6-af5a-4cf9-8b40-8b1512b59c73\#task ,
+    alice-pro:106a82aa-6911-4a7e-a49b-383cbaa9da66\#task .

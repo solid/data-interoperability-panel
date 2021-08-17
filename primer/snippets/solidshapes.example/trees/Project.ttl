@@ -1,6 +1,5 @@
 PREFIX uuid: <urn:uuid>
 PREFIX shapetree: <http://www.w3.org/ns/shapetree#>
-PREFIX pm: <https://vocab.example/project-management/>
 PREFIX solidshapes: <https://solidshapes.example/shapes/>
 PREFIX solidtrees: <https://solidshapes.example/trees/>
 
@@ -12,4 +11,5 @@ solidtrees:Project
 
 uuid:54b5e4f6-c6b5-4c9a-b885-cbf69d08370d
   shapetree:hasShapeTree solidtrees:Task ;
-  shapetree:viaPredicate pm:hasTask .
+  shapetree:viaShapePath
+    "@<https://solidshapes.example/shapes/Project>~<https://vocab.example/project-management/hasTask>" .

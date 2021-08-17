@@ -1,0 +1,23 @@
+flowchart LR
+
+  AcmeFinanceRegistry(["🗄️ Data Registry (Professional)"])
+  AcmeFinanceProjects["📁 Projects 🌿"]
+  AcmeFinanceTasks["📁 Tasks 🌿"]
+  PAf1("📄 P-Af-1")
+  PAf2("📄 P-Af-2")
+  TAf1("📄 T-Af-1")
+  TAf2("📄 T-Af-2")
+  TAf3("📄 T-Af-3")
+
+  subgraph finance.acme.example
+    AcmeFinanceRegistry -- :hasDataRegistration --> AcmeFinanceProjects
+    AcmeFinanceProjects -- ldp:contains --> PAf1
+    AcmeFinanceProjects -- ldp:contains --> PAf2
+    AcmeFinanceRegistry -- :hasDataRegistration --> AcmeFinanceTasks
+    AcmeFinanceTasks -- ldp:contains ---> TAf1
+    AcmeFinanceTasks -- ldp:contains ---> TAf2
+    AcmeFinanceTasks -- ldp:contains ---> TAf3
+    PAf1 -- pm:hasTask --> TAf1
+    PAf1 -- pm:hasTask --> TAf2
+    PAf2 -- pm:hasTask --> TAf3
+  end

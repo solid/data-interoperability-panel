@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 4f053d00e, updated Tue Aug 10 14:13:32 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/primer/" rel="canonical">
-  <meta content="e6532c77a991a454608c0380ab4201d13893e251" name="document-revision">
+  <meta content="b04c14c3d22cd9c4176619970e33cf76c3ca33ef" name="document-revision">
 <style>
 
   .sequence-diagram, .flowchart-diagram {
@@ -675,7 +675,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </figure>
    <p class="issue" id="issue-81cb35ef"><a class="self-link" href="#issue-81cb35ef"></a> Explain visual language</p>
    <h2 class="heading settled" data-level="2" id="data"><span class="secno">2. </span><span class="content">Data</span><a class="self-link" href="#data"></a></h2>
-   <p>All turtle and shapetree code snippets in this primer will assume following prefixes.</p>
+   <p>All Turtle and ShExC code snippets in this primer will assume following prefixes.</p>
    <figure>
 <pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>xsd:</c-> <c- g>&lt;http://www.w3.org/2001/XMLSchema#></c->
 <c- k>PREFIX</c-> <c- nn>rdf:</c-> <c- g>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#></c->
@@ -691,7 +691,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 <c- k>PREFIX</c-> <c- nn>solidshapes:</c-> <c- g>&lt;https://solidshapes.example/shapes/></c->
 <c- k>PREFIX</c-> <c- nn>solidtrees:</c-> <c- g>&lt;https://solidshapes.example/trees/></c->
 <c- k>PREFIX</c-> <c- nn>pm:</c-> <c- g>&lt;https://vocab.example/project-management/></c->
-<c- k>PREFIX</c-> <c- nn>tbd:</c-> <c- g>&lt;https://tbd.example/></c->
 
 <c- c># ACME</c->
 <c- k>PREFIX</c-> <c- nn>acme:</c-> <c- g>&lt;https://acme.example/></c->
@@ -709,35 +708,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </pre>
     <figcaption>common prefixes for turtle</figcaption>
    </figure>
-   <p>All ShExC code snippets will asssume</p>
-   <figure>
-<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>xsd</c-><c- p>:</c-> <c- nl>&lt;http://www.w3.org/2001/XMLSchema#></c->
-<c- k>PREFIX</c-> <c- nn>rdfs</c-><c- p>:</c-> <c- nl>&lt;http://www.w3.org/2000/01/rdf-schema#></c->
-<c- k>PREFIX</c-> <c- nn>solidshapes</c-><c- p>:</c-> <c- nl>&lt;https://solidshapes.example/shapes/></c->
-<c- k>PREFIX</c-> <c- nn>tbd</c-><c- p>:</c-> <c- nl>&lt;https://tbd.example/></c->
-<c- k>PREFIX</c-> <c- nn>pm</c-><c- p>:</c-> <c- nl>&lt;https://vocab.example/project-management/></c->
-</pre>
-    <figcaption>common prefixes for ShExC</figcaption>
-   </figure>
    <h3 class="heading settled" data-level="2.1" id="solidshapesexample"><span class="secno">2.1. </span><span class="content">solidshapes.example</span><a class="self-link" href="#solidshapesexample"></a></h3>
    <h4 class="heading settled" data-level="2.1.1" id="shapes"><span class="secno">2.1.1. </span><span class="content">Shapes</span><a class="self-link" href="#shapes"></a></h4>
-   <div class="issue no-marker" id="issue-d41d8cd9"><a class="self-link" href="#issue-d41d8cd9"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a></div>
    <figure>
 <pre class="include-code highlight"><c- nn>solidshapes</c-><c- p>:</c-><c- f>ProjectShape</c-> <c- p>{</c->
   <c- k>a</c-> <c- p>[</c-> <c- nn>pm</c-><c- p>:</c-><c- f>Project</c-> <c- p>]</c-> <c- p>;</c->
   <c- nn>rdfs</c-><c- p>:</c-><c- f>label</c-> <c- nn>xsd</c-><c- p>:</c-><c- f>string</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>hasReferencesList</c-> <c- o>@</c-><c- nl>&lt;#TaskReferencesList></c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>hasReferencesList</c-> <c- o>@</c-><c- nl>&lt;#MilestoneReferencesList></c->
-<c- p>}</c->
-
-<c- nl>&lt;#TaskReferencesList></c-> <c- p>{</c->
-  <c- k>a</c-> <c- p>[</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
-<c- p>}</c->
-
-<c- nl>&lt;#MilestoneReferencesList></c-> <c- p>{</c->
-  <c- k>a</c-> <c- p>[</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>]</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Milestone</c-> <c- p>.</c->
+  <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- k>IRI</c-> <c- o>*</c->
 <c- p>}</c->
 </pre>
     <figcaption>Project shape (ShEx)</figcaption>
@@ -751,7 +728,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <figcaption>Task shape (ShEx)</figcaption>
    </figure>
    <h4 class="heading settled" data-level="2.1.2" id="shape-trees"><span class="secno">2.1.2. </span><span class="content">Shape Trees</span><a class="self-link" href="#shape-trees"></a></h4>
-   <div class="issue no-marker" id="issue-d41d8cd9①"><a class="self-link" href="#issue-d41d8cd9①"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a></div>
    <figure>
 <pre class="include-code highlight"><c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c->
   <c- b>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
@@ -761,7 +737,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 
 <c- nn>uuid</c-><c- p>:</c-><c- f>54b5e4f6-c6b5-4c9a-b885-cbf69d08370d</c->
   <c- nn>shapetree</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>viaPredicate</c-> <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- p>.</c->
+  <c- nn>shapetree</c-><c- p>:</c-><c- f>viaShapePath</c->
+    <c- s>"@&lt;https://solidshapes.example/shapes/Project>~&lt;https://vocab.example/project-management/hasTask>"</c-> <c- p>.</c->
 </pre>
     <figcaption>Project shape tree</figcaption>
    </figure>
@@ -781,6 +758,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <figcaption>ACME’s WebID Document</figcaption>
    </figure>
    <h3 class="heading settled" data-level="2.3" id="rndacmeexample"><span class="secno">2.3. </span><span class="content">rnd.acme.example</span><a class="self-link" href="#rndacmeexample"></a></h3>
+   <p><img class="flowchart-diagram" src="diagrams/rnd.acme.example.flow.mmd.png"></p>
    <h4 class="heading settled" data-level="2.3.1" id="data-registrations"><span class="secno">2.3.1. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations"></a></h4>
    <figure>
 <pre class="include-code highlight"><c- nn>acme-rnd</c-><c- p>:</c-><c- f>6e3b9ac3-254f-41cc-adbe-3f3293fd0475</c->
@@ -813,58 +791,25 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <figcaption>ACME’s data registration for RnD tasks</figcaption>
    </figure>
    <h4 class="heading settled" data-level="2.3.2" id="data-instances"><span class="secno">2.3.2. </span><span class="content">Data Instances</span><a class="self-link" href="#data-instances"></a></h4>
-   <div class="issue no-marker" id="issue-d41d8cd9②"><a class="self-link" href="#issue-d41d8cd9②"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a></div>
    <figure>
 <pre class="include-code highlight"><c- nn>acme-rnd</c-><c- p>:</c-><c- f>02c8217e-9933-4681-9fe3-f9d207a77a91\#project</c->
   <c- b>a</c-> <c- nn>pm</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>rdfs</c-><c- p>:</c-><c- f>label</c-> <c- s>"P-Ar-1"</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>hasReferenceList</c-> <c- nn>acme-rnd</c-><c- p>:</c-><c- f>47981f00-75d9-406b-8bbc-5342b050e1e1</c-> <c- p>.</c->
-
-<c- nn>acme-rnd</c-><c- p>:</c-><c- f>47981f00-75d9-406b-8bbc-5342b050e1e1</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
-</pre>
-    <figcaption>ACME’s<strong>RnD</strong> project 1</figcaption>
-   </figure>
-   <figure>
-<pre class="include-code highlight"><c- nn>acme-rnd</c-><c- p>:</c-><c- f>47981f00-75d9-406b-8bbc-5342b050e1e1</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencesOf</c-> <c- nn>acme-rnd</c-><c- p>:</c-><c- f>02c8217e-9933-4681-9fe3-f9d207a77a91\#project</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencePredicate</c-> <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- p>.</c->
-
-<c- nn>acme-rnd</c-><c- p>:</c-><c- f>02c8217e-9933-4681-9fe3-f9d207a77a91\#project</c->
   <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c->
     <c- nn>acme-rnd</c-><c- p>:</c-><c- f>a51a89f5-0d4d-4213-9a9e-ea2dbadc56ea\#task</c-> <c- p>,</c->
     <c- nn>acme-rnd</c-><c- p>:</c-><c- f>b51fb352-a098-4681-81aa-b655b9434932\#task</c-> <c- p>.</c->
 </pre>
-    <figcaption>ACME’s<strong>RnD</strong> project 1 reference list for tasks</figcaption>
+    <figcaption>ACME’s<strong>RnD</strong> project 1</figcaption>
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>acme-rnd</c-><c- p>:</c-><c- f>18e75c28-3649-4c24-9e58-530df3813ca3\#project</c->
   <c- b>a</c-> <c- nn>pm</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>rdfs</c-><c- p>:</c-><c- f>label</c-> <c- s>"P-Ar-2"</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>hasReferenceList</c-> <c- nn>acme-rnd</c-><c- p>:</c-><c- f>77a5861c-2898-4134-b9a2-8c7f0fed65ac</c-> <c- p>.</c->
-
-<c- nn>acme-rnd</c-><c- p>:</c-><c- f>77a5861c-2898-4134-b9a2-8c7f0fed65ac</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
-</pre>
-    <figcaption>ACME’s<strong>RnD</strong> project 2</figcaption>
-   </figure>
-   <figure>
-<pre class="include-code highlight"><c- nn>acme-rnd</c-><c- p>:</c-><c- f>77a5861c-2898-4134-b9a2-8c7f0fed65ac</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencesOf</c-> <c- nn>acme-rnd</c-><c- p>:</c-><c- f>18e75c28-3649-4c24-9e58-530df3813ca3\#project</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencePredicate</c-> <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- p>.</c->
-
-<c- nn>acme-rnd</c-><c- p>:</c-><c- f>18e75c28-3649-4c24-9e58-530df3813ca3\#project</c->
   <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c->
     <c- nn>acme-rnd</c-><c- p>:</c-><c- f>d1a7b2ff-a021-40f1-8c16-ab56407a0740\#task</c-> <c- p>,</c->
     <c- nn>acme-rnd</c-><c- p>:</c-><c- f>58814556-9955-482f-9d1f-0a89677f9881\#task</c-> <c- p>.</c->
 </pre>
-    <figcaption>ACME’s <strong>RnD</strong> project 2 reference list for tasks</figcaption>
+    <figcaption>ACME’s<strong>RnD</strong> project 2</figcaption>
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>acme-rnd</c-><c- p>:</c-><c- f>a51a89f5-0d4d-4213-9a9e-ea2dbadc56ea\#task</c->
@@ -895,6 +840,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <figcaption>Alice’s <strong>RnD</strong> task 4</figcaption>
    </figure>
    <h3 class="heading settled" data-level="2.4" id="financeacmeexample"><span class="secno">2.4. </span><span class="content">finance.acme.example</span><a class="self-link" href="#financeacmeexample"></a></h3>
+   <p><img class="flowchart-diagram" src="diagrams/finance.acme.example.flow.mmd.png"></p>
    <h4 class="heading settled" data-level="2.4.1" id="data-registrations①"><span class="secno">2.4.1. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations①"></a></h4>
    <figure>
 <pre class="include-code highlight"><c- nn>acme-finance</c-><c- p>:</c-><c- f>882eea27-b968-44e7-b8f5-87b234089057</c->
@@ -926,57 +872,24 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <figcaption>ACME’s data registration for Finance tasks</figcaption>
    </figure>
    <h4 class="heading settled" data-level="2.4.2" id="data-instances①"><span class="secno">2.4.2. </span><span class="content">Data Instances</span><a class="self-link" href="#data-instances①"></a></h4>
-   <div class="issue no-marker" id="issue-d41d8cd9③"><a class="self-link" href="#issue-d41d8cd9③"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a></div>
    <figure>
 <pre class="include-code highlight"><c- nn>acme-finance</c-><c- p>:</c-><c- f>e7a5a287-9481-417e-91bf-40ea738fa737\#project</c->
   <c- b>a</c-> <c- nn>pm</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>rdfs</c-><c- p>:</c-><c- f>label</c-> <c- s>"P-Af-1"</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>hasReferenceList</c-> <c- nn>acme-finance</c-><c- p>:</c-><c- f>86582c5c-d8ce-4b21-82af-a33ba32b81f8</c-> <c- p>.</c->
-
-<c- nn>acme-finance</c-><c- p>:</c-><c- f>86582c5c-d8ce-4b21-82af-a33ba32b81f8</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
-</pre>
-    <figcaption>ACME’s<strong>Finance</strong> project 1</figcaption>
-   </figure>
-   <figure>
-<pre class="include-code highlight"><c- nn>acme-finance</c-><c- p>:</c-><c- f>86582c5c-d8ce-4b21-82af-a33ba32b81f8</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencesOf</c-> <c- nn>acme-finance</c-><c- p>:</c-><c- f>e7a5a287-9481-417e-91bf-40ea738fa737\#project</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencePredicate</c-> <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- p>.</c->
-
-<c- nn>acme-finance</c-><c- p>:</c-><c- f>e7a5a287-9481-417e-91bf-40ea738fa737\#project</c->
   <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c->
     <c- nn>acme-finance</c-><c- p>:</c-><c- f>ea7a7621-b2fd-41b1-8992-c85d624f6bcc\#task</c-> <c- p>,</c->
     <c- nn>acme-finance</c-><c- p>:</c-><c- f>ab6fd32b-ce6f-4c1e-baf3-0e42f1aae7e5\#task</c-> <c- p>.</c->
 </pre>
-    <figcaption>ACME’s<strong>Finance</strong> project 1 reference list for tasks</figcaption>
+    <figcaption>ACME’s<strong>Finance</strong> project 1</figcaption>
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>acme-finance</c-><c- p>:</c-><c- f>c2883a4d-cece-43c2-9568-5f0aa1ac64be\#project</c->
   <c- b>a</c-> <c- nn>pm</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>rdfs</c-><c- p>:</c-><c- f>label</c-> <c- s>"P-Af-2"</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>hasReferenceList</c-> <c- nn>acme-finance</c-><c- p>:</c-><c- f>a2b38a9b-f115-4865-af3a-8ea3c86e0bec</c-> <c- p>.</c->
-
-<c- nn>acme-finance</c-><c- p>:</c-><c- f>a2b38a9b-f115-4865-af3a-8ea3c86e0bec</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
-</pre>
-    <figcaption>ACME’s<strong>Finance</strong> project 2</figcaption>
-   </figure>
-   <figure>
-<pre class="include-code highlight"><c- nn>acme-finance</c-><c- p>:</c-><c- f>a2b38a9b-f115-4865-af3a-8ea3c86e0bec</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencesOf</c-> <c- nn>acme-finance</c-><c- p>:</c-><c- f>c2883a4d-cece-43c2-9568-5f0aa1ac64be\#project</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencePredicate</c-> <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- p>.</c->
-
-<c- nn>acme-finance</c-><c- p>:</c-><c- f>c2883a4d-cece-43c2-9568-5f0aa1ac64be\#project</c->
   <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c->
     <c- nn>acme-finance</c-><c- p>:</c-><c- f>e44e3ddc-a383-4a98-ad59-a3153eea5aaf\#task</c-> <c- p>.</c->
 </pre>
-    <figcaption>ACME’s <strong>Finance</strong> project 2 reference list for tasks</figcaption>
+    <figcaption>ACME’s<strong>Finance</strong> project 2</figcaption>
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>acme-finance</c-><c- p>:</c-><c- f>ea7a7621-b2fd-41b1-8992-c85d624f6bcc\#task</c->
@@ -1100,6 +1013,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <figcaption>Omni’s WebID Document</figcaption>
    </figure>
    <h3 class="heading settled" data-level="2.7" id="naomniexample"><span class="secno">2.7. </span><span class="content">na.omni.example</span><a class="self-link" href="#naomniexample"></a></h3>
+   <p><img class="flowchart-diagram" src="diagrams/na.omni.example.flow.mmd.png"></p>
    <h4 class="heading settled" data-level="2.7.1" id="data-registrations②"><span class="secno">2.7.1. </span><span class="content">Data Registrations</span><a class="self-link" href="#data-registrations②"></a></h4>
    <figure>
 <pre class="include-code highlight"><c- nn>omni-na</c-><c- p>:</c-><c- f>823e7976-13cc-4641-be0f-a4a78c2d7140</c->
@@ -1129,32 +1043,15 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <figcaption>Omni’s data registration for NA tasks</figcaption>
    </figure>
    <h4 class="heading settled" data-level="2.7.2" id="data-instances②"><span class="secno">2.7.2. </span><span class="content">Data Instances</span><a class="self-link" href="#data-instances②"></a></h4>
-   <div class="issue no-marker" id="issue-d41d8cd9④"><a class="self-link" href="#issue-d41d8cd9④"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a></div>
    <figure>
 <pre class="include-code highlight"><c- nn>omni-na</c-><c- p>:</c-><c- f>30da889a-d65f-461d-ae52-50e19c77ed79\#project</c->
   <c- b>a</c-> <c- nn>pm</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>rdfs</c-><c- p>:</c-><c- f>label</c-> <c- s>"P-On-1"</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>hasReferenceList</c-> <c- nn>omni-na</c-><c- p>:</c-><c- f>f6eb4906-91ca-4b96-aba0-7d6d40a4b6a3</c-> <c- p>.</c->
-
-<c- nn>omni-na</c-><c- p>:</c-><c- f>f6eb4906-91ca-4b96-aba0-7d6d40a4b6a3</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
-</pre>
-    <figcaption>Omni’s<strong>NA</strong> project 1</figcaption>
-   </figure>
-   <figure>
-<pre class="include-code highlight"><c- nn>omni-na</c-><c- p>:</c-><c- f>f6eb4906-91ca-4b96-aba0-7d6d40a4b6a3</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencesOf</c-> <c- nn>omni-na</c-><c- p>:</c-><c- f>30da889a-d65f-461d-ae52-50e19c77ed79\#project</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencePredicate</c-> <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- p>.</c->
-
-<c- nn>omni-na</c-><c- p>:</c-><c- f>30da889a-d65f-461d-ae52-50e19c77ed79\#project</c->
   <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c->
     <c- nn>omni-na</c-><c- p>:</c-><c- f>79a1cc9e-e498-4a66-a2f8-9957a64e9488\#task</c-> <c- p>,</c->
     <c- nn>omni-na</c-><c- p>:</c-><c- f>d2748fbd-565a-4a52-8709-b07a39f1fd4a\#task</c-> <c- p>.</c->
 </pre>
-    <figcaption>Omni’s<strong>NA</strong> project 1 reference list for tasks</figcaption>
+    <figcaption>Omni’s<strong>NA</strong> project 1</figcaption>
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>omni-na</c-><c- p>:</c-><c- f>79a1cc9e-e498-4a66-a2f8-9957a64e9488\#task</c->
@@ -1234,8 +1131,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>\#id</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Agent</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantRegistrySet</c-> <c- nn>alice</c-><c- p>:</c-><c- f>40c34ba8-5d85-47e5-af40-abc3e7fecdec</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasRemoteDataRegistrySet</c-> <c- nn>alice</c-><c- p>:</c-><c- f>ba4da3ec-dea4-41b2-be02-e4bf7a9477df</c-> <c- p>.</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>authorizationAgent</c-> <c- g>&lt;https://auth.alice.example/></c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s WebID document</figcaption>
    </figure>
@@ -1283,57 +1179,24 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <figcaption>Alice’s data registration for <strong>pro</strong> tasks</figcaption>
    </figure>
    <h4 class="heading settled" data-level="2.10.3" id="data-instances③"><span class="secno">2.10.3. </span><span class="content">Data Instances</span><a class="self-link" href="#data-instances③"></a></h4>
-   <div class="issue no-marker" id="issue-d41d8cd9⑤"><a class="self-link" href="#issue-d41d8cd9⑤"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a></div>
    <figure>
 <pre class="include-code highlight"><c- nn>alice-pro</c-><c- p>:</c-><c- f>ccbd77ae-f769-4e07-b41f-5136501e13e7\#project</c->
   <c- b>a</c-> <c- nn>pm</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>rdfs</c-><c- p>:</c-><c- f>label</c-> <c- s>"P-Ap-1"</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>hasReferenceList</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>5db9103b-392c-41a4-b823-100c213e24ff</c-> <c- p>.</c->
-
-<c- nn>alice-pro</c-><c- p>:</c-><c- f>5db9103b-392c-41a4-b823-100c213e24ff</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
-</pre>
-    <figcaption>Alice’s <strong>pro</strong> project 1</figcaption>
-   </figure>
-   <figure>
-<pre class="include-code highlight"><c- nn>alice-pro</c-><c- p>:</c-><c- f>5db9103b-392c-41a4-b823-100c213e24ff</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencesOf</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>ccbd77ae-f769-4e07-b41f-5136501e13e7\#project</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencePredicate</c-> <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- p>.</c->
-
-<c- nn>alice-pro</c-><c- p>:</c-><c- f>ccbd77ae-f769-4e07-b41f-5136501e13e7\#project</c->
   <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c->
     <c- nn>alice-pro</c-><c- p>:</c-><c- f>576520a6-af5a-4cf9-8b40-8b1512b59c73\#task</c-> <c- p>,</c->
     <c- nn>alice-pro</c-><c- p>:</c-><c- f>106a82aa-6911-4a7e-a49b-383cbaa9da66\#task</c-> <c- p>.</c->
 </pre>
-    <figcaption>Alice’s <strong>pro</strong> project 1 reference list for tasks</figcaption>
+    <figcaption>Alice’s <strong>pro</strong> project 1</figcaption>
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>alice-pro</c-><c- p>:</c-><c- f>7a130c38-668a-4775-821a-08b38f2306fb\#project</c->
   <c- b>a</c-> <c- nn>pm</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>rdfs</c-><c- p>:</c-><c- f>label</c-> <c- s>"P-Ap-2"</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>hasReferenceList</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>aa97cee2-e698-4972-8f1c-0acf909f1377</c-> <c- p>.</c->
-
-<c- nn>alice-pro</c-><c- p>:</c-><c- f>aa97cee2-e698-4972-8f1c-0acf909f1377</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
-</pre>
-    <figcaption>Alice’s <strong>pro</strong> project 2</figcaption>
-   </figure>
-   <figure>
-<pre class="include-code highlight"><c- nn>alice-pro</c-><c- p>:</c-><c- f>aa97cee2-e698-4972-8f1c-0acf909f1377</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencesOf</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>7a130c38-668a-4775-821a-08b38f2306fb\#project</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencePredicate</c-> <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- p>.</c->
-
-<c- nn>alice-pro</c-><c- p>:</c-><c- f>7a130c38-668a-4775-821a-08b38f2306fb\#project</c->
   <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c->
     <c- nn>alice-pro</c-><c- p>:</c-><c- f>4d713903-d114-4890-a87c-eaed50c33e5e\#task</c-> <c- p>.</c->
 </pre>
-    <figcaption>Alice’s <strong>pro</strong> project 2 reference list for tasks</figcaption>
+    <figcaption>Alice’s <strong>pro</strong> project 2</figcaption>
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>alice-pro</c-><c- p>:</c-><c- f>576520a6-af5a-4cf9-8b40-8b1512b59c73\#task</c->
@@ -1405,32 +1268,15 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <figcaption>Alice’s data registration for <strong>home</strong> tasks</figcaption>
    </figure>
    <h4 class="heading settled" data-level="2.11.3" id="data-instances④"><span class="secno">2.11.3. </span><span class="content">Data Instances</span><a class="self-link" href="#data-instances④"></a></h4>
-   <div class="issue no-marker" id="issue-d41d8cd9⑥"><a class="self-link" href="#issue-d41d8cd9⑥"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a></div>
    <figure>
 <pre class="include-code highlight"><c- nn>alice-home</c-><c- p>:</c-><c- f>0fd3daa3-dd6b-4484-826b-9ebaef099241\#project</c->
   <c- b>a</c-> <c- nn>pm</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
   <c- nn>rdfs</c-><c- p>:</c-><c- f>label</c-> <c- s>"P-Ah-1"</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>hasReferenceList</c-> <c- nn>alice-home</c-><c- p>:</c-><c- f>11f5ee6e-8ccf-4a70-96a8-f5174aaf9a27</c-> <c- p>.</c->
-
-<c- nn>alice-home</c-><c- p>:</c-><c- f>11f5ee6e-8ccf-4a70-96a8-f5174aaf9a27</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
-</pre>
-    <figcaption>Alice’s <strong>home</strong> project 1</figcaption>
-   </figure>
-   <figure>
-<pre class="include-code highlight"><c- nn>alice-home</c-><c- p>:</c-><c- f>11f5ee6e-8ccf-4a70-96a8-f5174aaf9a27</c->
-  <c- b>a</c-> <c- nn>tbd</c-><c- p>:</c-><c- f>ReferencesList</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencesOf</c-> <c- nn>alice-home</c-><c- p>:</c-><c- f>0fd3daa3-dd6b-4484-826b-9ebaef099241\#project</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencedTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-  <c- nn>tbd</c-><c- p>:</c-><c- f>referencePredicate</c-> <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c-> <c- p>.</c->
-
-<c- nn>alice-home</c-><c- p>:</c-><c- f>0fd3daa3-dd6b-4484-826b-9ebaef099241\#project</c->
   <c- nn>pm</c-><c- p>:</c-><c- f>hasTask</c->
     <c- nn>alice-home</c-><c- p>:</c-><c- f>f950bae5-247c-49b2-a537-b12cda8d5758\#task</c-> <c- p>,</c->
     <c- nn>alice-home</c-><c- p>:</c-><c- f>46fea403-8605-473b-a9a1-a86f50fb1633\#task</c-> <c- p>.</c->
 </pre>
-    <figcaption>Alice’s <strong>home</strong> project 1 reference list for tasks</figcaption>
+    <figcaption>Alice’s <strong>home</strong> project 1</figcaption>
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>alice-home</c-><c- p>:</c-><c- f>f950bae5-247c-49b2-a537-b12cda8d5758\#task</c->
@@ -2313,25 +2159,29 @@ It it typically hosted on a Web site geared towards hosting standards. <span cla
     <c- nn>st</c-><c- p>:</c-><c- f>shape</c-> <c- nn>fhirshapes</c-><c- p>:</c-><c- f>CarePlan</c-> <c- p>;</c->
 </pre>
     <li data-md>
-     <p>The Shape Tree <code>fhirshapetree:CarePlan</code> references <code>fhirshapeTree:Location</code> with the Shape Path <code>@&lt;AppointmentLocation>~fhir:link<code>:</code></code></p>
-     <code><code> <pre class="include-code highlight">    <c- nn>shapetree</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>Location</c-> <c- p>;</c->
+     <p>The Shape Tree <code>fhirshapetree:CarePlan</code> references <code>fhirshapeTree:Location</code> with the Shape Path <code>@&lt;AppointmentLocation>~fhir:link</code>:</p>
+<pre class="include-code highlight">    <c- nn>shapetree</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>Location</c-> <c- p>;</c->
     <c- nn>shapetree</c-><c- p>:</c-><c- f>shapePathLocator</c-> <c- s>"@&lt;AppointmentLocation>~fhir:link"</c->
   <c- p>]</c-> <c- p>.</c->
-</pre></code></code>
+</pre>
     <li data-md>
-     <p><code><code>When evaluated on the FHIR Care Plan schema, this Shape Path identifies this <code>fhir:link</code> triple constraint in the schema:</code></code></p>
-     <code><code> <pre class="include-code highlight"><c- nl>&lt;AppointmentLocation></c-> <c- p>{</c->
+     <p>When evaluated on the FHIR Care Plan schema, this Shape Path identifies this <code>fhir:link</code> triple constraint in the schema:</p>
+<pre class="include-code highlight"><c- nl>&lt;AppointmentLocation></c-> <c- p>{</c->
   <c- nn>fhir</c-><c- p>:</c-><c- f>link</c-> <c- k>IRI</c->
 <c- p>}</c->
-</pre></code></code>
+</pre>
     <li data-md>
-     <p><code><code>When validating the node <code>A-HypoglycemiaManagement-F</code> against the shape <code>fhirshapes:CarePlan</code>, the <code>fhir:link</code> triple in</code></code></p>
-     <code><code> <pre class="include-code highlight">        <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableReference.reference</c-> <c- p>[</c->
+     <p>When validating the node <code>A-HypoglycemiaManagement-F</code> against the shape <code>fhirshapes:CarePlan</code>, the <code>fhir:link</code> triple in</p>
+<pre class="include-code highlight">        <c- nn>fhir</c-><c- p>:</c-><c- f>CodeableReference.reference</c-> <c- p>[</c->
           <c- nn>fhir</c-><c- p>:</c-><c- f>link</c-> <c- nl>&lt;../A-Location-F/A-HomeAddress-F></c-><c- p>;</c->
         <c- p>]</c->
-</pre><p>matches the <code>fhir:link</code> triple constraint identified by the Shape Path.</p> </code></code>
+</pre>
+     <p>matches the <code>fhir:link</code> triple constraint identified by the Shape Path.</p>
    </ol>
-   <code><code> <h5 class="heading settled" data-level="2.13.2.5" id="clinical-data-registration"><span class="secno">2.13.2.5. </span><span class="content">Clinical data registration</span><a class="self-link" href="#clinical-data-registration"></a></h5> <p>The CarePlan data registration would reference the <code>/data/A-CarePlan-F/</code> container which includes <code>A-HypoglycemiaManagement-F</code> and <code>A-Wellness-F</code> mentioned above:</p> <figure> <pre class="include-code highlight"><c- k>BASE</c-> <c- g>&lt;https://bob.example/></c->
+   <h5 class="heading settled" data-level="2.13.2.5" id="clinical-data-registration"><span class="secno">2.13.2.5. </span><span class="content">Clinical data registration</span><a class="self-link" href="#clinical-data-registration"></a></h5>
+   <p>The CarePlan data registration would reference the <code>/data/A-CarePlan-F/</code> container which includes <code>A-HypoglycemiaManagement-F</code> and <code>A-Wellness-F</code> mentioned above:</p>
+   <figure>
+<pre class="include-code highlight"><c- k>BASE</c-> <c- g>&lt;https://bob.example/></c->
 
 <c- g>&lt;/system/registrations/A-fhir-CarePlan-DataRegistration-F></c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
@@ -2342,7 +2192,11 @@ It it typically hosted on a Web site geared towards hosting standards. <span cla
   <c- nn>ldp</c-><c- p>:</c-><c- f>contains</c->
       <c- g>&lt;/data/A-CarePlan-F/A-Wellness-F></c-> <c- p>,</c->
       <c- g>&lt;/data/A-CarePlan-F/A-HypoglycemiaManagement-F></c-> <c- p>.</c->
-</pre> <figcaption>data registration for FHIR Care Plan</figcaption> </figure> <figure> <pre class="include-code highlight"><c- k>BASE</c-> <c- g>&lt;https://bob.example/></c->
+</pre>
+    <figcaption>data registration for FHIR Care Plan</figcaption>
+   </figure>
+   <figure>
+<pre class="include-code highlight"><c- k>BASE</c-> <c- g>&lt;https://bob.example/></c->
 
 <c- g>&lt;/system/registrations/A-fhir-Location-DataRegistration-F></c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c->
@@ -2352,7 +2206,13 @@ It it typically hosted on a Web site geared towards hosting standards. <span cla
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>Location</c-> <c- p>;</c->
   <c- nn>ldp</c-><c- p>:</c-><c- f>contains</c->
       <c- g>&lt;/data/A-Location-F/A-HomeAddress-F></c-> <c- p>.</c->
-</pre> <figcaption>data registration for FHIR Location</figcaption> </figure> <h3 class="heading settled" data-level="2.14" id="performchartexample"><span class="secno">2.14. </span><span class="content">performchart.example</span><a class="self-link" href="#performchartexample"></a></h3> <p class="issue" id="issue-1b5d4828③"><a class="self-link" href="#issue-1b5d4828③"></a> Snippet below needs to be updated</p> <figure> <pre class="include-code highlight"><c- nn>performchart</c-><c- p>:</c-><c- f>\#app</c->
+</pre>
+    <figcaption>data registration for FHIR Location</figcaption>
+   </figure>
+   <h3 class="heading settled" data-level="2.14" id="performchartexample"><span class="secno">2.14. </span><span class="content">performchart.example</span><a class="self-link" href="#performchartexample"></a></h3>
+   <p class="issue" id="issue-1b5d4828③"><a class="self-link" href="#issue-1b5d4828③"></a> Snippet below needs to be updated</p>
+   <figure>
+<pre class="include-code highlight"><c- nn>performchart</c-><c- p>:</c-><c- f>\#app</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Application</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>applicationName</c-> <c- s>"PerformChart"</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>applicationDescription</c->
@@ -2377,34 +2237,58 @@ It it typically hosted on a Web site geared towards hosting standards. <span cla
     <c- nn>interop</c-><c- p>:</c-><c- f>recursivelyAuthorize</c-> <c- l>false</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessRequired</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-> <c- p>.</c->
-</pre> <figcaption>PerformChart’s application profile document</figcaption> </figure> <h3 class="heading settled" data-level="2.15" id="sequence-diagrams"><span class="secno">2.15. </span><span class="content">Sequence diagrams</span><a class="self-link" href="#sequence-diagrams"></a></h3> <h4 class="heading settled" data-level="2.15.1" id="combined-oidc-provider-and-authorization-agent"><span class="secno">2.15.1. </span><span class="content">Combined OIDC Provider and Authorization Agent</span><a class="self-link" href="#combined-oidc-provider-and-authorization-agent"></a></h4> <h5 class="heading settled" data-level="2.15.1.1" id="authorization-agent-stores-registrations-and-grants"><span class="secno">2.15.1.1. </span><span class="content">Authorization Agent stores Registrations and Grants</span><a class="self-link" href="#authorization-agent-stores-registrations-and-grants"></a></h5> <p><img class="sequence-diagram" src="diagrams/idp-aa-combined.seq.mmd.svg"></p> <h5 class="heading settled" data-level="2.15.1.2" id="authorization-agent-gets-registrations-and-grants-from-storage"><span class="secno">2.15.1.2. </span><span class="content">Authorization Agent gets Registrations and Grants from Storage</span><a class="self-link" href="#authorization-agent-gets-registrations-and-grants-from-storage"></a></h5> <p><img class="sequence-diagram" src="diagrams/idp-aa-combined-external-storage.seq.mmd.svg"></p> </code></code>
+</pre>
+    <figcaption>PerformChart’s application profile document</figcaption>
+   </figure>
+   <h3 class="heading settled" data-level="2.15" id="sequence-diagrams"><span class="secno">2.15. </span><span class="content">Sequence diagrams</span><a class="self-link" href="#sequence-diagrams"></a></h3>
+   <h4 class="heading settled" data-level="2.15.1" id="combined-oidc-provider-and-authorization-agent"><span class="secno">2.15.1. </span><span class="content">Combined OIDC Provider and Authorization Agent</span><a class="self-link" href="#combined-oidc-provider-and-authorization-agent"></a></h4>
+   <h5 class="heading settled" data-level="2.15.1.1" id="authorization-agent-stores-registrations-and-grants"><span class="secno">2.15.1.1. </span><span class="content">Authorization Agent stores Registrations and Grants</span><a class="self-link" href="#authorization-agent-stores-registrations-and-grants"></a></h5>
+   <p><img class="sequence-diagram" src="diagrams/idp-aa-combined.seq.mmd.svg"></p>
+   <h5 class="heading settled" data-level="2.15.1.2" id="authorization-agent-gets-registrations-and-grants-from-storage"><span class="secno">2.15.1.2. </span><span class="content">Authorization Agent gets Registrations and Grants from Storage</span><a class="self-link" href="#authorization-agent-gets-registrations-and-grants-from-storage"></a></h5>
+   <p><img class="sequence-diagram" src="diagrams/idp-aa-combined-external-storage.seq.mmd.svg"></p>
   </main>
-  <code><code> <div data-fill-with="conformance"> <h2 class="no-ref no-num heading settled" id="w3c-conformance"><span class="content">Conformance</span><a class="self-link" href="#w3c-conformance"></a></h2> <h3 class="no-ref no-num heading settled" id="w3c-conventions"><span class="content">Document conventions</span><a class="self-link" href="#w3c-conventions"></a></h3> <p>Conformance requirements are expressed
+  <div data-fill-with="conformance">
+   <h2 class="no-ref no-num heading settled" id="w3c-conformance"><span class="content">Conformance</span><a class="self-link" href="#w3c-conformance"></a></h2>
+   <h3 class="no-ref no-num heading settled" id="w3c-conventions"><span class="content">Document conventions</span><a class="self-link" href="#w3c-conventions"></a></h3>
+   <p>Conformance requirements are expressed
     with a combination of descriptive assertions
     and RFC 2119 terminology.
     The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL”
     in the normative parts of this document
     are to be interpreted as described in RFC 2119.
     However, for readability,
-    these words do not appear in all uppercase letters in this specification. </p><p>All of the text of this specification is normative
-    except sections explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a> </p><p>Examples in this specification are introduced with the words “for example”
+    these words do not appear in all uppercase letters in this specification. </p>
+   <p>All of the text of this specification is normative
+    except sections explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a> </p>
+   <p>Examples in this specification are introduced with the words “for example”
     or are set apart from the normative text
     with <code>class="example"</code>,
-    like this: </p><div class="example" id="w3c-example"><a class="self-link" href="#w3c-example"></a> <p>This is an example of an informative example. </p></div> <p>Informative notes begin with the word “Note”
+    like this: </p>
+   <div class="example" id="w3c-example">
+    <a class="self-link" href="#w3c-example"></a> 
+    <p>This is an example of an informative example. </p>
+   </div>
+   <p>Informative notes begin with the word “Note”
     and are set apart from the normative text
     with <code>class="note"</code>,
-    like this: </p><p class="note" role="note">Note, this is an informative note. </p><h3 class="no-ref no-num heading settled" id="w3c-conformant-algorithms"><span class="content">Conformant Algorithms</span><a class="self-link" href="#w3c-conformant-algorithms"></a></h3> <p>Requirements phrased in the imperative as part of algorithms
+    like this: </p>
+   <p class="note" role="note">Note, this is an informative note. </p>
+   <h3 class="no-ref no-num heading settled" id="w3c-conformant-algorithms"><span class="content">Conformant Algorithms</span><a class="self-link" href="#w3c-conformant-algorithms"></a></h3>
+   <p>Requirements phrased in the imperative as part of algorithms
     (such as "strip any leading space characters"
     or "return false and abort these steps")
     are to be interpreted with the meaning of the key word
     ("must", "should", "may", etc)
-    used in introducing the algorithm. </p><p>Conformance requirements phrased as algorithms or specific steps
+    used in introducing the algorithm. </p>
+   <p>Conformance requirements phrased as algorithms or specific steps
     can be implemented in any manner,
     so long as the end result is equivalent.
     In particular, the algorithms defined in this specification
     are intended to be easy to understand
     and are not intended to be performant.
-    Implementers are encouraged to optimize. </p></div> <script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script> </code></code>
+    Implementers are encouraged to optimize. </p>
+  </div>
+<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
@@ -2415,14 +2299,7 @@ It it typically hosted on a Web site geared towards hosting standards. <span cla
   <div style="counter-reset:issue">
    <div class="issue"> Write introduction<a href="#issue-e5197cdd"> ↵ </a></div>
    <div class="issue"> Explain visual language<a href="#issue-81cb35ef"> ↵ </a></div>
-   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9"> ↵ </a></div>
-   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9①"> ↵ </a></div>
-   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9②"> ↵ </a></div>
-   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9③"> ↵ </a></div>
-   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9④"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828"> ↵ </a></div>
-   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9⑤"> ↵ </a></div>
-   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/131" style="text-transform:none">solid/data-interoperability-panel/131</a><a href="https://github.com/solid/data-interoperability-panel/issues/131">Define usage of Shape Path for Data Grant with InheritInstances scope</a><a href="#issue-d41d8cd9⑥"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828①"> ↵ </a></div>
    <div class="issue"> Snippet below needs to be updated<a href="#issue-1b5d4828②"> ↵ </a></div>
    <div class="issue">if accepted, move to notation section<a href="#issue-80498731"> ↵ </a></div>
