@@ -1,0 +1,26 @@
+flowchart LR
+
+  AcmeRndRegistry(["🗄️ Data Registry (Professional)"])
+  AcmeRndProjects["📁 Projects 🌿"]
+  AcmeRndTasks["📁 Tasks 🌿"]
+  PAr1("📄 P-Ar-1")
+  PAr2("📄 P-Ar-2")
+  TAr1("📄 T-Ar-1")
+  TAr2("📄 T-Ar-2")
+  TAr3("📄 T-Ar-3")
+  TAr4("📄 T-Ar-4")
+
+  subgraph rnd.acme.example
+    AcmeRndRegistry -- :hasDataRegistration --> AcmeRndProjects
+    AcmeRndProjects -- ldp:contains --> PAr1
+    AcmeRndProjects -- ldp:contains --> PAr2
+    AcmeRndRegistry -- :hasDataRegistration --> AcmeRndTasks
+    AcmeRndTasks -- ldp:contains ---> TAr1
+    AcmeRndTasks -- ldp:contains ---> TAr2
+    AcmeRndTasks -- ldp:contains ---> TAr3
+    AcmeRndTasks -- ldp:contains ---> TAr4
+    PAr1 -- pm:hasTask --> TAr1
+    PAr1 -- pm:hasTask --> TAr2
+    PAr2 -- pm:hasTask --> TAr3
+    PAr2 -- pm:hasTask --> TAr4
+  end

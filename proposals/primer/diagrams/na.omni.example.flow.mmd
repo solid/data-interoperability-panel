@@ -1,0 +1,18 @@
+flowchart LR
+
+  OmniNaRegistry(["🗄️ Data Registry (Home)"])
+  OmniNaProjects["📁 Projects 🌿"]
+  OmniNaTasks["📁 Tasks 🌿"]
+  POn1("📄 P-On-1")
+  TOn1("📄 T-On-1")
+  TOn2("📄 T-On-2")
+
+  subgraph na.omni.example
+    OmniNaRegistry -- :hasDataRegistration --> OmniNaProjects
+    OmniNaProjects -- ldp:contains --> POn1
+    OmniNaRegistry -- :hasDataRegistration --> OmniNaTasks
+    OmniNaTasks -- ldp:contains ---> TOn1
+    OmniNaTasks -- ldp:contains ---> TOn2
+    POn1 -- pm:hasTask --> TOn1
+    POn1 -- pm:hasTask --> TOn2
+  end

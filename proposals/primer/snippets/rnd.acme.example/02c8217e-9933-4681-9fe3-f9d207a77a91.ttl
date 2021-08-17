@@ -1,14 +1,10 @@
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX solidtrees: <https://solidshapes.example/trees/>
 PREFIX pm: <https://vocab.example/project-management/>
-PREFIX tbd: <https://tbd.example/>
 PREFIX acme-rnd: <https://rnd.acme.example/>
 
 acme-rnd:02c8217e-9933-4681-9fe3-f9d207a77a91\#project
   a pm:Project ;
   rdfs:label "P-Ar-1" ;
-  tbd:hasReferenceList acme-rnd:47981f00-75d9-406b-8bbc-5342b050e1e1 .
-
-acme-rnd:47981f00-75d9-406b-8bbc-5342b050e1e1
-  a tbd:ReferencesList ;
-  tbd:referencedTree solidtrees:Task .
+  pm:hasTask
+    acme-rnd:a51a89f5-0d4d-4213-9a9e-ea2dbadc56ea\#task ,
+    acme-rnd:b51fb352-a098-4681-81aa-b655b9434932\#task .

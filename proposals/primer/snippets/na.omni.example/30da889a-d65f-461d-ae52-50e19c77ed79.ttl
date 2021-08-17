@@ -1,14 +1,10 @@
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX solidtrees: <https://solidshapes.example/trees/>
 PREFIX pm: <https://vocab.example/project-management/>
-PREFIX tbd: <https://tbd.example/>
 PREFIX omni-na: <https://na.omni.example/>
 
 omni-na:30da889a-d65f-461d-ae52-50e19c77ed79\#project
   a pm:Project ;
   rdfs:label "P-On-1" ;
-  tbd:hasReferenceList omni-na:f6eb4906-91ca-4b96-aba0-7d6d40a4b6a3 .
-
-omni-na:f6eb4906-91ca-4b96-aba0-7d6d40a4b6a3
-  a tbd:ReferencesList ;
-  tbd:referencedTree solidtrees:Task .
+  pm:hasTask
+    omni-na:79a1cc9e-e498-4a66-a2f8-9957a64e9488\#task ,
+    omni-na:d2748fbd-565a-4a52-8709-b07a39f1fd4a\#task .

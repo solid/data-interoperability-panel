@@ -1,13 +1,11 @@
 const fs = require('fs')
-const path = require('path')
+const filePath = require('path')
 
-SNIPPETS_PATH = 'proposals/primer/snippets'
-// TODO (elf-pavlik) adjust to handle bob.example
-IGNORE_HOSTS = [ 'solidshapes.example', 'bob.example' ]
+const SNIPPETS_PATH = 'proposals/primer/snippets'
 
 // delete existing dist if exists
 if (fs.existsSync('dist')) {
-  fs.rmdirSync('dist',{ recursive: true })
+  fs.rmSync('dist',{ recursive: true })
 }
 
 // create dist directory
@@ -16,27 +14,34 @@ fs.mkdirSync('dist')
 // prepare json
 
 // create full URL based on host and filename
-function pathToUrl(host, fileName) {
-  fileName = path.basename(fileName, '.ttl')
-  let url = `https://${host}/`
+function pathToUrl(host, path, fileName) {
+  fileName = filePath.basename(fileName, filePath.extname(fileName))
+  let url = `https://${host}`
+  if (path !== '') {
+    url += path
+  }
   if (host !== fileName ) {
-    url += fileName
+    url += '/' + fileName
   }
   return url
 }
 
 // read content of each file for given host
-function processHost(host) {
-  const data = {}
-  for (const file of fs.readdirSync(path.join(SNIPPETS_PATH, host))) {
-   data[pathToUrl(host, file)] = fs.readFileSync(path.join(SNIPPETS_PATH, host, file), 'utf-8')
+function processHost(host, path = '') {
+  const hostData = {}
+  for (const entry of fs.readdirSync(filePath.join(SNIPPETS_PATH, host, path), { withFileTypes: true })) {
+   if (entry.isDirectory()) {
+    processHost(host, path + '/' + entry.name)
+   } else {
+     hostData[pathToUrl(host, path, entry.name)] = fs.readFileSync(filePath.join(SNIPPETS_PATH, host, path, entry.name), 'utf-8')
+   }
   }
-  return data
+  return hostData
 }
 
 // merge all the hosts
 const data = fs.readdirSync(SNIPPETS_PATH).filter(name => {
-  return name.match('.example') && !IGNORE_HOSTS.includes(name)
+  return name.match('.example')
 }).reduce((acc, host) => {
   return Object.assign(acc,(processHost(host)))
 }, {})
