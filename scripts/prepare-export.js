@@ -20,31 +20,34 @@ function pathToUrl(host, path, fileName) {
   if (path !== '') {
     url += path
   }
-  if (host !== fileName ) {
+  if (host == fileName ) {
+    url += '/'
+  } else {
     url += '/' + fileName
   }
   return url
 }
 
 // read content of each file for given host
-function processHost(host, path = '') {
-  const hostData = {}
+function processHost(acc, host, path = '') {
   for (const entry of fs.readdirSync(filePath.join(SNIPPETS_PATH, host, path), { withFileTypes: true })) {
    if (entry.isDirectory()) {
-    processHost(host, path + '/' + entry.name)
+     processHost(acc, host, path + '/' + entry.name)
    } else {
-     hostData[pathToUrl(host, path, entry.name)] = fs.readFileSync(filePath.join(SNIPPETS_PATH, host, path, entry.name), 'utf-8')
+     acc[pathToUrl(host, path, entry.name)] = fs.readFileSync(filePath.join(SNIPPETS_PATH, host, path, entry.name), 'utf-8')
    }
   }
-  return hostData
 }
 
 // merge all the hosts
-const data = fs.readdirSync(SNIPPETS_PATH).filter(name => {
+const data = {}
+const hosts = fs.readdirSync(SNIPPETS_PATH).filter(name => {
   return name.match('.example')
-}).reduce((acc, host) => {
-  return Object.assign(acc,(processHost(host)))
-}, {})
+})
+
+for (const host of hosts) {
+  processHost(data, host)
+}
 
 // write json
 fs.writeFileSync('dist/index.json', JSON.stringify(data))
