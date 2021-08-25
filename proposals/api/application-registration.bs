@@ -1,0 +1,86 @@
+Application Registration {#appreg}
+=====================
+
+The following operations pertain to
+[Application Registration](https://solid.github.io/data-interoperability-panel/specification/#appreg)
+in the [[SAI|Solid Application Interoperability Specification]].
+
+## Load Application Registration ## {#appreg-loadappreg}
+
+This operation allows an [=Application=] find and load a
+corresponding [=Application Registration=] for a given [=Agent=].
+
+Failure to discover an [=Application Registration=] means that the
+[=Application=] is not registered.
+
+Per the [[SAI#appreg-permissions]], a given [=Application=] will only
+have access to its own [=Application Registration=]. Since [=Applications=]
+do not have access to the list of [=Applications=]
+in an [=Agent's=] [=Application Registries=], they must perform a direct lookup
+in the addressable space of each [=Application Registry=]
+in the [=Application Registry Set=] to find a corresponding
+[=Application Registration=].
+
+Note: This specification is designed to support compartmentalization
+of data between [=Applications=]. Server-side support may vary.
+See [[SAI#security-appauthz]].
+
+### Inputs ### {#loadappreg-inputs}
+
+* Let `AGENT` be the [=Agent=]
+* Let `APP` be an [=Application=] in use by `AGENT`
+
+### Outputs ### {#loadappreg-outputs}
+
+* An [=Application Registration=]
+
+### Operation Details ### {#loadappreg-details}
+
+1. `AGENT` provides their [=identity=] to `APP`
+1. `APP` dereferences the [=identity=] of `AGENT`
+    get `AGENT`'s [=identity profile document=].
+1. Let `ARSET` be the [=Application Registry Set=] linked via
+    `AGENT hasApplicationRegistrySet`.
+    1. Because `ARSET` is a non-public document, `AGENT` and `APP`
+        will be required to furnish a DPoP proof and
+        access token to the Solid Server, obtained via the
+        Solid-OIDC protocol.
+1. For each [=Application Registry=] `AREGISTRY` in `ARSET`
+    1. Let `IDSHA256` be the SHA-256 hash of `APP`'s [=identity=]
+    1. Let `STATUS` be the `HTTP` status code returned from a
+        `GET` or `HEAD` of `https://AREGISTRY/IDSHA256`
+    1. Return `AREGISTRY` if `STATUS` is `200 OK`
+1. Return FALSE
+
+## Register Application ## {#appreg-registerapp}
+
+This operation creates a new [=Application Registration=], and
+`MUST` be called from an [[SAI#authz-apprequest]] workflow.
+
+### Inputs ### {#registerapp-inputs}
+
+* Let `AGENT` be the [=Agent=]
+* Let `APP` be an [=Application=] in use by `AGENT`
+* Let `REGISTRY` be the target [=Application Registry=]
+
+### Outputs ### {#registerapp-outputs}
+
+* An [=Application Registration=]
+
+### Operation Details ### {#registerapp-details}
+
+1. Let `EXISTING` be an [=Application Registration=] returned from
+    [[#appreg-loadappreg]] with inputs: `AGENT`, `APP`
+1. Return `EXISTING` if `EXISTING` is not empty
+1. Let `REG` be a newly initialized [=Application Registration=]
+1. Let `REG registeredBy` be `AGENT`
+1. Let `REG registeredWith` be the [=identity=] of the [=Application=]
+    executing the operation
+1. Let `REG registeredAt` be the current date and time
+1. Let `REG updatedAt` be the current date and time
+1. Let `REG registeredApplication` be the [=identity=] of `APP`
+1. Let `IDSHA256` be the SHA-256 hash of `APP`'s [=identity=]
+1. Add `REG` to the `REGISTRY` container, using `IDSHA256` as the resource name.
+1. Assign permissions for `REG` per the [[SAI#appreg-permissions]]
+1. Link `REG` to `REGISTRY` via `REGISTRY hasRegistration`
+1. Return `REG`

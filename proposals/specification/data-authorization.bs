@@ -96,8 +96,8 @@ workflow.
 <div class="opdetails">
 
 1. Let `GRANT` be an existing [=Access Grant=] for `SUBJECT` returned by 
-    [[#grants-loadgrant]]
-    1. If `GRANT` is missing, create one via [[#grants-initializegrant]]         
+    [[SAI-API#grants-loadgrant]]
+    1. If `GRANT` is missing, create one via [[SAI-API#grants-initializegrant]]         
 1. Present information about the [=Application=] `APP` if the 
     [=Access Grant Subject=] is for an [=Application=]:
     1. Application Name - `APP applicationName`
@@ -112,7 +112,7 @@ workflow.
     2. Agent Identity - `AGENT` URI
 1. Call [[#present-needgroup]] for each [=Access Need Group=] linked
     via `GRANT hasAccessNeedGroup`.    
-1. Present an option to authorize the grant by calling [[#grants-recordgrant]],
+1. Present an option to authorize the grant by calling [[SAI-API#grants-recordgrant]],
     or cancel.
 
 </div>
@@ -171,7 +171,7 @@ workflow.
     1. Group Description - `GDEC skos:definition`
     1. Grantee Type - `GROUP authenticatesAs`
     1. Necessity - `GROUP accessNecessity`
-1. Allow `GROUP` to be disabled via [[#deny-access-need-group]] if group 
+1. Allow `GROUP` to be disabled via [[SAI-API#deny-access-need-group]] if group 
     necessity is optional
 1. For each [=Access Need=] `NEED` linked via `GROUP hasAccessNeed`
     1. Call [[#present-need]]
@@ -252,23 +252,23 @@ workflow.
 1. Let `DG` be the [=Data Grant=] linked via `NEED hasDataGrant`
 1. Manage the scope of data to be granted `DG scopeOfGrant`:
     1. **No Access** - `interop:NoAccess` (if necessity is optional)
-        1. Enable via [[#deny-data-grant]]  
+        1. Enable via [[SAI-API#deny-data-grant]]  
     1. **All Current and Future** - `interop:AllInstances`
-        1. Enable via [[#select-all-data-instances]]
+        1. Enable via [[SAI-API#select-all-data-instances]]
     1. **Only Selected Instances** - `interop:SelectedInstances`
         1. Present existing [=Data Instances=] corresponding to
             `DG registeredShapeTree`, identifying any existing selections
             linked via `DG hasDataInstance`
         1. Allow one or more to be chosen
-        1. Enable via [[#select-data-instance]], providing each selected [=Data Instance=]
+        1. Enable via [[SAI-API#select-data-instance]], providing each selected [=Data Instance=]
 1. For each [=Referenced Access Need=] `REFNEED` linked via `NEED hasReferencedAccessNeed`
     1. Let `REFDG` be the [=Referenced Data Grant=] linked via `NEED hasReferencedDataGrant`
     1. Call [[#present-need-details]] to explain the [=Referenced Access Need=]
         1. Manage the scope of data to be granted `REFDG scopeOfGrant`:
             1. **No Access** - `interop:NoAccess` (if necessity is optional)
-                1. Enable via [[#deny-referenced-data-grant]]  
+                1. Enable via [[SAI-API#deny-referenced-data-grant]]  
             1. **All Current and Future** - `interop:AllInstances`
-                1. Enable via [[#select-all-referenced-data-instances]]
+                1. Enable via [[SAI-API#select-all-referenced-data-instances]]
             1. **Only Inherited Instances** - `interop:InheritInstances` (if `DG scopeOfGrant` is `interop:SelectedInstances`)
                 1. Present [=Data Instances=] of `REFNEED registeredShapeTree`
                     linked to all [=Data Instances=] for `DG` via
@@ -278,7 +278,7 @@ workflow.
                     `REFDG registeredShapeTree`, identifying any existing 
                     selections linked via `REFDG hasDataInstance`
                 1. Allow one or more to be chosen
-                1. Enable via [[#select-referenced-data-instance]], providing 
+                1. Enable via [[SAI-API#select-referenced-data-instance]], providing 
                     each selected [=Data Instance=].
 
 Note: Access to data in the [=Remote Data Registry=] is similarly managed per
@@ -291,43 +291,43 @@ presented as follows:
 1. Let `RDG` be the [=Remote Data Grant=] linked via `NEED hasRemoteDataGrant`
 1. Manage the scope of data to be granted `RDG scopeOfGrant`:
     1. **No Access** - `interop:NoAccess` (if necessity is optional)
-        1. Enable via [[#deny-remote-data-grant]]  
+        1. Enable via [[SAI-API#deny-remote-data-grant]]  
     1. **All Remote Data** - `interop:AllRemote`
-        1. Enable via [[#select-all-remote]]
+        1. Enable via [[SAI-API#select-all-remote]]
     1. **All Remote From Agent** - `interop:AllRemoteFromAgent`
         1. Present existing [=Remote Agent Data Registrations=] corresponding
             to `NEED registeredShapeTree`, identifying any existing selections
             linked via `RDG hasRemoteDataFromAgent`
         1. Allow one or more to be chosen 
-        1. Enable via [[#select-all-remote-fromagent]]
+        1. Enable via [[SAI-API#select-all-remote-fromagent]]
     1. **Only Selected Remote Data** - `interop:SelectedRemote`
         1. Present existing [=Data Grants=] and/or [=Referenced Data Grants=], 
             corresponding to `NEED registeredShapeTree` and optionally organized by
             [=Remote Agent Data Registrations=], identifying any existing selections
             linked via `RDG hasDataGrant` and/or `RDG:hasReferencedDataGrant`
         1. Allow one or more to be chosen
-        1. Enable via [[#select-remote-agent-data-grants]], providing the selected 
+        1. Enable via [[SAI-API#select-remote-agent-data-grants]], providing the selected 
             [=Data Grants=] and/or [=Referenced Data Grants=].
 1. For each [=Referenced Access Need=] `REFNEED` linked via `NEED hasReferencedAccessNeed`
     1. Let `REFRDG` be the [=Referenced Remote Data Grant=] linked via `NEED hasReferencedRemoteDataGrant`
     1. Manage the scope of data to be granted `REFRDG scopeOfGrant`:
         1. **No Access** - `interop:NoAccess` (if necessity is optional)
-            1. Enable via [[#deny-referenced-remote-data-grant]]  
+            1. Enable via [[SAI-API#deny-referenced-remote-data-grant]]  
         1. **All Remote Data** - `interop:AllRemote`
-            1. Enable via [[#select-all-referenced-remote]]
+            1. Enable via [[SAI-API#select-all-referenced-remote]]
         1. **All Remote From Agent** - `interop:AllRemoteFromAgent`
             1. Present existing [=Remote Agent Data Registrations=] corresponding
                 to `NEED registeredShapeTree`, identifying any existing selections
                 linked via `REFRDG hasRemoteDataFromAgent`
             1. Allow one or more to be chosen 
-            1. Enable via [[#select-referenced-remote-fromagent]]
+            1. Enable via [[SAI-API#select-referenced-remote-fromagent]]
         1. **Only Selected Remote Data** - `interop:SelectedRemote`
             1. Present existing [=Data Grants=] and/or [=Referenced Data Grants=], 
                 corresponding to `NEED registeredShapeTree` and optionally organized by
                 [=Remote Agent Data Registrations=], identifying any existing selections
                 linked via `REFRDG hasDataGrant` and/or `REFRDG hasReferencedDataGrant`
             1. Allow one or more to be chosen
-            1. Enable via [[#select-referenced-remote-agent-data-grants]], providing the selected 
+            1. Enable via [[SAI-API#select-referenced-remote-agent-data-grants]], providing the selected 
                 [=Data Grants=] and/or [=Referenced Data Grants=].
         
 
@@ -426,11 +426,11 @@ presented as follows:
 1. Manage the scope of the trusted grant `TG scopeOfGrant`:
     1. Next if `TNEED trustedWithType` is `interop:Agent`
     1. **All Registries** - where `rdf:type` of [=Registry=] is `TNEED trustedWithType`
-        1. Enable via [[#select-trusted-registry-set]]
+        1. Enable via [[SAI-API#select-trusted-registry-set]]
     1. **Specific TYPE Registries**
         1. Present existing [=Registries=] where `rdf:type` is `TNEED trustedWithType`
         1. Allow one or more [=Registries=] to be chosen
-        1. Enable via [[#select-trusted-registry]], providing each selected [=Registrys=]
+        1. Enable via [[SAI-API#select-trusted-registry]], providing each selected [=Registrys=]
 
 ### Application Requests Access ### {#authz-apprequest}
 
@@ -455,9 +455,9 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
 1. `APP` redirects `CONTROLLER` to `AUTHZ` via the [[#redirect-to-application-service]]
     operation.
     1. Let `APPREG` be an [=Application Registration=] returned by
-        [[#appreg-loadappreg]] with inputs: `CONTROLLER`, `APP`
+        [[SAI-API#appreg-loadappreg]] with inputs: `CONTROLLER`, `APP`
     1. If `APPREG` is empty let `APPREG` be the [=Application Registration=]
-        returned by [[#appreg-registerapp]] with inputs: `AGENT`, `APP`,
+        returned by [[SAI-API#appreg-registerapp]] with inputs: `AGENT`, `APP`,
         `REGISTRY`.
     1. `AUTHZ` looks in `APP`'s [=application profile document=] for
         [=Access Need Groups=] with an `interop:accessScenario` of
@@ -467,12 +467,12 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
     1. `CONTROLLER` decides whether to grant `APP` the access requested.
     1. `CONTROLLER` authorizes the requested [=Access Need Groups=]
         and [=Access Needs=]:
-        1. The [[#grants-recordgrant]] operation is invoked
+        1. The [[SAI-API#grants-recordgrant]] operation is invoked
             1. An [=Access Grant=] is stored in `CONTROLLER`'s
                 [=Access Grant Registry=].
-            1. [[#apply-permissions]] is called to apply permissions based
+            1. [[SAI-API#apply-permissions]] is called to apply permissions based
                 on the [=Access Grant=].
-            1. [[#provide-access-receipt]] is called to store the
+            1. [[SAI-API#provide-access-receipt]] is called to store the
                 [=Access Receipt=]. The Application has set
                 `interop:receivesAccessReceipt` to
                 `ReceiptInRegistration`, so the [=Access Receipt=] is
@@ -519,12 +519,12 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
     1. `CONTROLLER` determines whether they wish to grant the access requested.
     1. Assuming `CONTROLLER` authorizes a minimum of the
         required [=Access Need Groups=] and [=Access Needs=],
-        the [[#grants-recordgrant]] operation is invoked.
-    1. [[#grants-recordgrant]] stores an [=Access Grant=] in `CONTROLLER`'s
+        the [[SAI-API#grants-recordgrant]] operation is invoked.
+    1. [[SAI-API#grants-recordgrant]] stores an [=Access Grant=] in `CONTROLLER`'s
         [=Access Grant Registry=].
-        1. [[#apply-permissions]] is called to apply permissions based on the
+        1. [[SAI-API#apply-permissions]] is called to apply permissions based on the
             [=Access Grant=].
-        1. [[#provide-access-receipt]] is called to deliver the [=Access Receipt=].
+        1. [[SAI-API#provide-access-receipt]] is called to deliver the [=Access Receipt=].
             1. `CAUTHZ` dereferences `REQUESTER`'s [=identity=] to get
                 `REQUESTER`'s [=identity profile document=].
             1. `REQUESTER` has set `interop:receivesAccessReceipt` to
@@ -537,10 +537,10 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
         `RAUTHZ` user interface, and presenting the [=Access Receipt=]
         to `REQUESTER`.        
     1. `REQUESTER` accepts the [=Access Receipt=], and `RAUTHZ`
-        invokes the [[#record-access-receipt]] operation.
-        1. [[#record-access-receipt]] is called to store the [=Access Receipt=]
+        invokes the [[SAI-API#record-access-receipt]] operation.
+        1. [[SAI-API#record-access-receipt]] is called to store the [=Access Receipt=]
             in `REQUESTER`'s [=Access Receipt Registry=].
-        1. [[#update-remote-data]] is called to update `REQUESTER`'s
+        1. [[SAI-API#update-remote-data]] is called to update `REQUESTER`'s
             [=Remote Data Registry=] to reflect what is in the
             [=Access Receipt=].
 
@@ -576,12 +576,12 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
         workflow, which presents them to `CONTROLLER`.
     1. `CONTROLLER` authorizes the data to share with `RECEIVER` based on
         the provided [=Access Need Groups=].
-        1. The [[#grants-recordgrant]] operation is invoked
+        1. The [[SAI-API#grants-recordgrant]] operation is invoked
             1. An [=Access Grant=] is stored in `CONTROLLER`'s
                 [=Access Grant Registry=].
-            1. [[#apply-permissions]] is called to apply permissions based
+            1. [[SAI-API#apply-permissions]] is called to apply permissions based
                 on the [=Access Grant=].
-            1. [[#provide-access-receipt]] is called to store the
+            1. [[SAI-API#provide-access-receipt]] is called to store the
                 [=Access Receipt=]. `RECEIVER` has set
                 `interop:receivesAccessReceipt` to
                 `ReceiptInMessage`, so the [=Access Receipt=] is posted
@@ -594,10 +594,10 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
     1. `RECEIVER` clicks the link in the notification, opening the
         `RAUTHZ` user interface to review the [=Access Receipt=].
     1. `RECEIVER` accepts the [=Access Receipt=], and `RAUTHZ`
-        invokes the [[#record-access-receipt]] operation.
-        1. [[#record-access-receipt]] is called to store the [=Access Receipt=]
+        invokes the [[SAI-API#record-access-receipt]] operation.
+        1. [[SAI-API#record-access-receipt]] is called to store the [=Access Receipt=]
             in `RECEIVER`'s [=Access Receipt Registry=].
-        1. [[#update-remote-data]] is called to update `RECEIVER`'s
+        1. [[SAI-API#update-remote-data]] is called to update `RECEIVER`'s
             [=Remote Data Registry=] to reflect what is in the
             [=Access Receipt=].
 
@@ -642,10 +642,10 @@ Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
         workflow, which presents them to `CONTROLLER`.
     1. `CONTROLLER` authorizes the data to share with `INVITEE` based on
         the provided [=Access Need Groups=].
-        1. The [[#grants-recordinvitation]] operation is invoked
+        1. The [[SAI-API#grants-recordinvitation]] operation is invoked
             1. An [=Access Invitation=] is stored in `CONTROLLER`'s
                 [=Access Grant Registry=].
-            1. [[#grants-deliverinvitation]] is called to create an
+            1. [[SAI-API#grants-deliverinvitation]] is called to create an
                 invitation entry for each [=Access Invitation Channel=] in
                 the [=Access Invitation=] with `CISERVICE`
             1. For each [=Access Invitation Channel=] in the
@@ -654,29 +654,29 @@ Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
                     medium associated with the [=Access Invitation Channel=]
                     type
     1. `CAUTHZ` redirects `CONTROLLER` back to `CAPP` via the
-        [[#return-from-application-service]] operation.
+        [[SAI-API#return-from-application-service]] operation.
 1. `INVITEE` receives a notification associated with one of the
     [=Access Invitation Channels=].
     1. `INVITEE` clicks a link in the notification to register an
         identity and pod with `PROVIDER`.
     1. `INVITEE` clicks a link in the notification bringing them to the
         `CISERVICE` user interface to validate the invitation by
-        invoking [[#grants-validateinvitation]].
+        invoking [[SAI-API#grants-validateinvitation]].
         1. If validation is successful, but there are other
             [=Access Invitation Channels=] left to validate, the `INVITEE` will
             be prompted to validate them. Continue until failure or
             validation of all [=Access Invitation Channels=] are succesful.
         1. `CISERVICE` initializes a new [=Access Grant=] via
-            [[#grants-initializegrant]], using the contents of
+            [[SAI-API#grants-initializegrant]], using the contents of
             the [=Access Invitation=], and the new registered
             [=identity=] for `INVITEE`.
-        1. `CISERVICE` calls [[#grants-recordgrant]] using the
+        1. `CISERVICE` calls [[SAI-API#grants-recordgrant]] using the
             [=Access Grant=] initialized from the [=Access Invitation=]
             1. An [=Access Grant=] is stored in `CONTROLLER`'s
                 [=Access Grant Registry=].
-            1. [[#apply-permissions]] is called to apply permissions
+            1. [[SAI-API#apply-permissions]] is called to apply permissions
                 based on the [=Access Grant=].
-            1. [[#provide-access-receipt]] is called to store the
+            1. [[SAI-API#provide-access-receipt]] is called to store the
                 [=Access Receipt=]. `INVITEE` has set
                 `interop:receivesAccessReceipt` to
                 `ReceiptInMessage`, so the [=Access Receipt=] is posted
