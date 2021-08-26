@@ -96,11 +96,14 @@ assigned to each [=Registry Set=], depending on the sensitivity of the
     interop:hasAccessGrantRegistrySet &lt;https://alice.pod.example/profile/grant#set&gt; ;
     interop:hasAccessReceiptRegistrySet &lt;https://alice.pod.example/profile/receipt#set&gt; ;
     interop:hasRemoteDataRegistrySet &lt;https://alice.pod.example/profile/remote#set&gt; ;
+    ######## Authorization Agent ########
+    interop:hasAuthorizationAgent &lt;https://auth.alice.example&gt; ;
     ######## Inboxes ########
     interop:hasInbox &lt;https://alice.pod.example/inbox/general&gt; ;
     interop:hasAccessInbox &lt;https://alice.pod.example/inbox/access&gt; ;
     ######## Options ########
     interop:receivesAccessReceipt interop:ReceiptInMessage .
+
   </pre>
 </figure>
 
@@ -152,6 +155,11 @@ of software with an [=identity=] that can be strongly authenticated.
       <td>[=Remote Data Registry Set=] for the [=Agent=]</td>
     </tr>
     <tr>
+      <td>hasAuthorizationAgent</td>
+      <td>[Application](#classApplication)</td>
+      <td>The software used by the Agent to manage access to their data</td>
+    </tr>
+    <tr>
       <td>hasInbox</td>
       <td>ldp:inbox</td>
       <td>A general inbox for messages sent to the [=Agent=]</td>
@@ -183,6 +191,7 @@ The [AgentShape](#shexAgent) is used to validate an instance of the
   interop:hasAccessGrantRegistrySet IRI ;
   interop:hasAccessReceiptRegistrySet IRI ;
   interop:hasRemoteDataRegistrySet IRI ;
+  interop:hasAuthorizationAgent IRI ;
   interop:hasInbox IRI ;
   interop:hasAccessInbox IRI ;
   interop:receivesAccessReceipt [ interop:ReceiptInMessage interop:ReceiptInRegistration ]
@@ -332,7 +341,6 @@ The permission model for the resources detailed in
         <td>-</td>
         <td>-</td>
       </tr>
-
       <tr>
         <td>`-- application`</td>
         <td>Control</td>
