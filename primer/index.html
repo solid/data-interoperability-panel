@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 4f053d00e, updated Tue Aug 10 14:13:32 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/primer/" rel="canonical">
-  <meta content="863939732580c59c231a163eb5f566d00fd845c4" name="document-revision">
+  <meta content="836b4b4baa65c827f231faf532a5a4e745a42242" name="document-revision">
 <style>
 
   .sequence-diagram, .flowchart-diagram {
@@ -685,7 +685,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 <c- k>PREFIX</c-> <c- nn>solid:</c-> <c- g>&lt;http://www.w3.org/ns/solid/terms#></c->
 <c- k>PREFIX</c-> <c- nn>acl:</c-> <c- g>&lt;http://www.w3.org/ns/auth/acl#></c->
 <c- k>PREFIX</c-> <c- nn>interop:</c-> <c- g>&lt;http://www.w3.org/ns/solid/interop#></c->
-<c- k>PREFIX</c-> <c- nn>shapetree:</c-> <c- g>&lt;http://www.w3.org/ns/shapetrees#></c->
+<c- k>PREFIX</c-> <c- nn>shapetrees:</c-> <c- g>&lt;http://www.w3.org/ns/shapetrees#></c->
 
 <c- c># Fictional</c->
 <c- k>PREFIX</c-> <c- nn>solidshapes:</c-> <c- g>&lt;https://solidshapes.example/shapes/></c->
@@ -730,23 +730,23 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h4 class="heading settled" data-level="2.1.2" id="shape-trees"><span class="secno">2.1.2. </span><span class="content">Shape Trees</span><a class="self-link" href="#shape-trees"></a></h4>
    <figure>
 <pre class="include-code highlight"><c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c->
-  <c- b>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>validatedBy</c-> <c- nn>solidshapes</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>references</c-> <c- nn>uuid</c-><c- p>:</c-><c- f>54b5e4f6-c6b5-4c9a-b885-cbf69d08370d</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>validatedBy</c-> <c- nn>solidshapes</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>references</c-> <c- nn>uuid</c-><c- p>:</c-><c- f>54b5e4f6-c6b5-4c9a-b885-cbf69d08370d</c-> <c- p>.</c->
 
 <c- nn>uuid</c-><c- p>:</c-><c- f>54b5e4f6-c6b5-4c9a-b885-cbf69d08370d</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>viaShapePath</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>viaShapePath</c->
     <c- s>"@&lt;https://solidshapes.example/shapes/Project>~&lt;https://vocab.example/project-management/hasTask>"</c-> <c- p>.</c->
 </pre>
     <figcaption>Project shape tree</figcaption>
    </figure>
    <figure>
 <pre class="include-code highlight"><c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c->
-  <c- b>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>validatedBy</c-> <c- nn>solidshapes</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
+  <c- b>a</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>validatedBy</c-> <c- nn>solidshapes</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
 </pre>
     <figcaption>Task shape tree</figcaption>
    </figure>
@@ -1131,7 +1131,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <figure>
 <pre class="include-code highlight"><c- nn>alice</c-><c- p>:</c-><c- f>\#id</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Agent</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>authorizationAgent</c-> <c- g>&lt;https://auth.alice.example/></c-> <c- p>.</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAuthorizationAgent</c-> <c- g>&lt;https://auth.alice.example/></c-> <c- p>.</c->
 </pre>
     <figcaption>Alice’s WebID document</figcaption>
    </figure>
@@ -2090,23 +2090,23 @@ we would need to start a path from a defined shape, e.g., <code class="ShapePath
 It it typically hosted on a Web site geared towards hosting standards. <span class="issue" id="issue-3383df8c"><a class="self-link" href="#issue-3383df8c"></a>I’m trying to set expectations about what’s in the POD and what’s out there on teh interwebs.</span></p>
    <figure>
 <pre class="include-code highlight"><c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>CarePlanContainer</c->
-  <c- k>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>contains</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>CarePlan</c-> <c- p>.</c->
+  <c- k>a</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>ShapeTreeContainer</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>contains</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>CarePlan</c-> <c- p>.</c->
 
 <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>CarePlan</c->
-  <c- k>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>validatedBy</c-> <c- nn>fhirshapes</c-><c- p>:</c-><c- f>CarePlan</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>references</c-> <c- p>[</c->
-    <c- nn>shapetree</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>Location</c-> <c- p>;</c->
-    <c- nn>shapetree</c-><c- p>:</c-><c- f>shapePathLocator</c-> <c- s>"@&lt;AppointmentLocation>~fhir:link"</c->
+  <c- k>a</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>validatedBy</c-> <c- nn>fhirshapes</c-><c- p>:</c-><c- f>CarePlan</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>references</c-> <c- p>[</c->
+    <c- nn>shapetrees</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>Location</c-> <c- p>;</c->
+    <c- nn>shapetrees</c-><c- p>:</c-><c- f>shapePathLocator</c-> <c- s>"@&lt;AppointmentLocation>~fhir:link"</c->
   <c- p>]</c-> <c- p>.</c->
 
 <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>Location</c->
-  <c- k>a</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetree</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>shapetree</c-><c- p>:</c-><c- f>validatedBy</c-> <c- nn>fhirshapes</c-><c- p>:</c-><c- f>Location</c-> <c- p>.</c->
+  <c- k>a</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>validatedBy</c-> <c- nn>fhirshapes</c-><c- p>:</c-><c- f>Location</c-> <c- p>.</c->
 </pre>
     <figcaption>simplified Care Plan Shape Tree</figcaption>
    </figure>
@@ -2160,8 +2160,8 @@ It it typically hosted on a Web site geared towards hosting standards. <span cla
 </pre>
     <li data-md>
      <p>The Shape Tree <code>fhirshapetree:CarePlan</code> references <code>fhirshapeTree:Location</code> with the Shape Path <code>@&lt;AppointmentLocation>~fhir:link</code>:</p>
-<pre class="include-code highlight">    <c- nn>shapetree</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>Location</c-> <c- p>;</c->
-    <c- nn>shapetree</c-><c- p>:</c-><c- f>shapePathLocator</c-> <c- s>"@&lt;AppointmentLocation>~fhir:link"</c->
+<pre class="include-code highlight">    <c- nn>shapetrees</c-><c- p>:</c-><c- f>hasShapeTree</c-> <c- nn>fhirshapeTree</c-><c- p>:</c-><c- f>Location</c-> <c- p>;</c->
+    <c- nn>shapetrees</c-><c- p>:</c-><c- f>shapePathLocator</c-> <c- s>"@&lt;AppointmentLocation>~fhir:link"</c->
   <c- p>]</c-> <c- p>.</c->
 </pre>
     <li data-md>
