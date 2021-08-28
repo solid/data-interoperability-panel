@@ -30,18 +30,12 @@ by linking to [=Access Need Groups=] via the
 [interop:hasAccessNeedGroup](#classAccessNeedGroup) property.
 
 <figure>
-  <figcaption>[=Application=] at https://app.example/profile/id#app</figcaption>
-  <pre highlight="turtle">
-  <#app>
-    a interop:Application ;
-    interop:applicationName "Example Application" ;
-    interop:applicationDescription "This is a description of the Example Application" ;
-    interop:applicationAuthor &lt;https://app.example/org/id#agent&gt; ;
-    interop:applicationAuthorName "Example Organization" ;
-    interop:applicationThumbnail &lt;https://app.example/profile/thumb.svg&gt; ;
-    interop:hasAccessNeedGroup &lt;#exampleAccessNeedGroup&gt; ;
-    interop:receivesAccessReceipt interop:ReceiptInRegistration .
-  </pre>
+  <figcaption>[=Application=] at https://app.example/id#app</figcaption>  
+  <pre class=include-code>
+  path: snippets/acmeproject.example/acmeproject.example.ttl
+  highlight: turtle
+  show: 8-17
+  </pre> 
 </figure>
 
 ### Application ### {#datamodel-application}
@@ -50,16 +44,15 @@ An <dfn>Application</dfn> is a piece of software that an [=Agent=] uses to
 access, manipulate, and manage the data in their control, as well as the data
 they've been granted access to.
 
+[Class Definition](interop.ttl#Application) -
+[Shape Definition](interop.shex#ApplicationShape) -
+[Shape Tree Definition](interop.tree#ApplicationTree)
+
 <table class="classinfo data" align="left" id="classApplication">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3 text-align=left>
-        [Application](interop.ttl#Application)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -108,33 +101,6 @@ they've been granted access to.
   </tbody>
 </table>
 
-The [ApplicationShape](#shexApplication) is used to validate an instance of the
-[Application](#classApplication) class.
-
-<pre highlight="turtle" id="shexApplication">
-<#ApplicationShape> {
-  a [ interop:Application ] ;
-  interop:applicationName xsd:string ;
-  interop:applicationDescription xsd:string ;
-  interop:applicationAuthor IRI ;
-  interop:applicationAuthorName xsd:string ;
-  interop:applicationThumbanil IRI? ;
-  interop:hasAccessNeedGroup IRI* ;
-  interop:receivesAccessReceipt [ interop:ReceiptInMessage interop:ReceiptInRegistration ]
-}
-</pre>
-
-The [ApplicationTree](interop.tree#ApplicationTree)
-is assigned to a resource to ensure it will validate against the
-[ApplicationShape](#shexApplication).
-
-<pre highlight="turtle" id="treeApplication">
-<#ApplicationTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#ApplicationShape&gt; .
-</pre>
-
 ## Resource Hierarchy ## {#app-hierarchy}
 
 <table class="data tree" align="left">
@@ -160,8 +126,8 @@ is assigned to a resource to ensure it will validate against the
     <tr>
       <td>`-- id#app`</td>
       <td>[Application](#classApplication)</td>
-      <td>[ApplicationShape](#shexApplication)</td>
-      <td>[ApplicationTree](#treeApplication)</td>
+      <td>[ApplicationShape](interop.shex#ApplicationShape)</td>
+      <td>[ApplicationTree](interop.tree#ApplicationTree)</td>
     </tr>
     <tr>
       <td>`-- thumb.svg`</td>

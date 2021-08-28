@@ -1,0 +1,10 @@
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX alice: <https://alice.example/>
+PREFIX alice-work: <https://work.alice.example/>
+PREFIX alice-personal: <https://personal.alice.example/>
+
+alice:grant-registry-set
+  a interop:AccessGrantRegistrySet;
+  interop:hasRegistry
+    alice-personal:grants\/ ,
+    alice-work:grants\/ .

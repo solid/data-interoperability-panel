@@ -1,0 +1,9 @@
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX acmeproject: <https://acmeproject.example/>
+PREFIX alice: <https://alice.example/>
+PREFIX bob: <https://bob.example/>
+
+<> a interop:AccessRequest ;
+  interop:fromAgent alice:\#id ;
+  interop:toAgent bob:\#id ;
+  interop:hasAccessNeedGroup acmeproject:\#need-group-pm .

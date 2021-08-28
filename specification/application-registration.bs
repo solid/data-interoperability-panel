@@ -31,11 +31,6 @@ for a detailed explanation of how Application Registrations should be processed.
 
 ### Summary ### {#appreg-datamodel-summary}
 
-<figure>
-  <img src="diagrams/appreg-model.svg" width=100%/>
-  <figcaption>Data model for application registration</figcaption>
-</figure>
-
 An [=Agent=] links to [=Application Registry Sets=] via the
 [interop:hasApplicationRegistrySet](interop.ttl#hasApplicationRegistrySet)
 property.
@@ -47,75 +42,20 @@ Each [=Application=] an [=Agent=] registers has an [=Application Registration=].
 An [=Application Registry=] links to any number of [=Application Registrations=]
 via the [interop:hasRegistration](interop.ttl#hasRegistration) property.
 
-<figure id="fig-appreg-agent">
-  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me
-  linking to an [=Application Registry Set=]</figcaption>
-  <pre highlight="turtle">
-  <#me>
-    a interop:Agent;
-    interop:hasApplicationRegistrySet &lt;https://alice.pod.example/profile/application#set&gt; .
-  </pre>
-  </figure>
-</figure>
-
-<figure id ="fig-appreg-registry-set">
-   <figcaption>An [=Application Registry Set=] at
-   https://alice.pod.example/profile/application#set linking to two different
-  [=Application Registries=]</figcaption>
-  <pre highlight="turtle">
-  <#set>
-    a interop:ApplicationRegistrySet;
-    interop:hasRegistry &lt;https://alice.pod.example/applications/#registry&gt; ,
-                    &lt;https://alice.otherpod.example/applications/#registry&gt; .
-  </pre>
-</figure>
-
-<figure id="fig-appreg-registry">
-  <figcaption>An [=Application Registry=] at https://alice.pod.example/applications/#registry
-  linking to several [=Application Registrations=]</figcaption>
-  <pre highlight="turtle">
-  <#registry>
-    a interop:ApplicationRegistry ;
-    interop:hasRegistration 
-      &lt;705563552198b6fb3efc40717872aa2ec35d669c1095cc5d665f499ec5d7e23a/#registration&gt; ,
-      &lt;ede6aa50cb9e5fc564fdb4f0dc661685825ee3178355214086be27f9830e2a42/#registration&gt; ,
-      &lt;150dca42b3d5661ba10a28e0aff36f212e27b0f7463fe1ef3bf1b5a45b640673/#registration&gt; ,
-      &lt;b3564e72a3877c9cfa9e4bc4d9e47e9b7c536ae9927407c8dd00ec3b0069f536/#registration&gt; .
-  </pre>
-</figure>
-
-<figure id="fig-appreg-registration">
-  <figcaption>An [=Application Registration=] at
-  https://alice.pod.example/applications/705563552198b6fb3efc40717872aa2ec35d669c1095cc5d665f499ec5d7e23a/#registration
-  </figcaption>
-  <pre highlight="turtle">
-  <#registration>
-    a interop:ApplicationRegistration ;
-    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-    interop:registeredWith &lt;https://trusted.example/id#agent&gt; ;
-    interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
-    interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
-    interop:registeredApplication &lt;https://app.example/profile/id#agent&gt; ;
-    interop:hasAccessReceipt &lt;./04ca5ba7-0166-4312-ae96-09b9f3a25ba0#receipt&gt; .
-  </pre>
-</figure>
-
 ### Application Registry Set ### {#datamodel-application-registry-set}
 
 An <dfn>Application Registry Set</dfn> is a [=Registry Set=] specifically
 made up of [=Application Registries=].
+
+[Class Definition](interop.ttl#ApplicationRegistrySet) -
+[Shape Definition](interop.shex#ApplicationRegistrySetShape) -
+[Shape Tree Definition](interop.tree#ApplicationRegistrySetTree)
 
 <table class="classinfo data" align="left" id="classApplicationRegistrySet">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3 text-align=left>
-        [ApplicationRegistrySet](interop.ttl#ApplicationRegistrySet)
-        a rdfs:subClassOf [RegistrySet](interop.ttl#RegistrySet)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -131,43 +71,31 @@ made up of [=Application Registries=].
   </tbody>
 </table>
 
-The [ApplicationRegistrySetShape](#shexApplicationRegistrySet) is used to validate
-an instance of the [ApplicationRegistrySet](#classApplicationRegistrySet) class.
-
-<pre highlight="turtle" id="shexApplicationRegistrySet">
-<#ApplicationRegistrySetShape> {
-  a [ interop:ApplicationRegistrySet ] ;
-  interop:hasRegistry IRI+
-}
-</pre>
-
-The [ApplicationRegistrySetTree](interop.tree#ApplicationRegistrySetTree)
-is assigned to a resource to ensure it will validate against the
-[ApplicationRegistrySetShape](#shexApplicationRegistrySet).
-
-<pre highlight="turtle" id="treeApplicationRegistrySet">
-<#ApplicationRegistrySetTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#ApplicationRegistrySetShape&gt; .
-</pre>
+<figure>
+  <figcaption>An [=Application Registry Set=] at
+  https://alice.example/application-registry-set linking to two different [=Application Registries=]</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/application-registry-set.ttl
+  highlight: turtle
+  show: 6-10
+  </pre>
+</figure>
 
 ### Application Registry ### {#datamodel-application-registry}
 
 An <dfn>Application Registry</dfn> is a collection of
 [=Application Registrations=] stored in a specific location in a [=pod=].
 
+[Class Definition](interop.ttl#ApplicationRegistry) -
+[Shape Definition](interop.shex#ApplicationRegistryShape) -
+[Shape Tree Definition](interop.tree#ApplicationRegistryTree)
+
+
 <table class="classinfo data" align="left" id="classApplicationRegistry">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [ApplicationRegistry](interop.ttl#ApplicationRegistry)
-        a rdfs:subClassOf [[#datamodel-agent|Registry]]
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -183,30 +111,15 @@ An <dfn>Application Registry</dfn> is a collection of
   </tbody>
 </table>
 
-The [ApplicationRegistryShape](#shexApplicationRegistry) is used to validate an
-instance of the [ApplicationRegistry](#classApplicationRegistry) class.
-
-<pre highlight="turtle" id="shexApplicationRegistry">
-<#ApplicationRegistryShape> {
-  a [ interop:ApplicationRegistry ] ;
-  interop:hasRegistration IRI*
-}
-</pre>
-
-The [ApplicationRegistryTree](interop.tree#ApplicationRegistryTree) is assigned
-to a container resource to ensure that it will validate against the
-[ApplicationRegistryShape](#shexApplicationRegistry), and contain only
-conformant instances of the
-[ApplicationRegistrationTree](#treeApplicationRegistration).
-
-<pre highlight="turtle" id="treeApplicationRegistry">
-<#ApplicationRegistryTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy &lt;interops#ApplicationRegistryShape&gt; ;
-  st:contains <#ApplicationRegistrationTree> ,
-              st:AllowNone .
-</pre>
+<figure>
+  <figcaption>An [=Application Registry=] at https://alice.example/applications/
+  linking to several [=Application Registrations=]</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/application-registry.ttl
+  highlight: turtle
+  show: 5-11
+  </pre>
+</figure>
 
 ### Application Registration ### {#datamodel-application-registration}
 
@@ -215,17 +128,15 @@ with a place to maintain metadata, state, preferences, and
 other application-specific data associated with a given [=Application=] they
 have elected to use.
 
+[Class Definition](interop.ttl#ApplicationRegistration) -
+[Shape Definition](interop.shex#ApplicationRegistrationShape) -
+[Shape Tree Definition](interop.tree#ApplicationRegistrationTree)
+
 <table class="classinfo data" align="left" id="classApplicationRegistration">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [ApplicationRegistration](interop.ttl#ApplicationRegistration)
-        a rdfs:subClassOf [[#datamodel-agent|Registration]]
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -267,39 +178,16 @@ have elected to use.
   </tbody>
 </table>
 
-The [ApplicationRegistrationShape](#shexApplicationRegistration) is used
-to validate an instance of the
-[ApplicationRegistration](#classApplicationRegistration)
-class.
-
-<pre highlight="turtle" id="shexApplicationRegistration">
-<#ApplicationRegistrationShape> {
-  a [ interop:ApplicationRegistration ] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI ;
-  interop:registeredAt xsd:dateTime ;
-  interop:updatedAt xsd:dateTime ;
-  interop:registeredApplication IRI ;
-  interop:hasAccessReceipt IRI?
-}
-</pre>
-
-The [ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)
-is assigned to a resource via the
-[ApplicationRegistryTree](#treeApplicationRegistry),
-to ensure that the [=Application Registration=] will validate against the
-[ApplicationRegistrationShape](#shexApplicationRegistration). It can
-include any resources, but ensures that if an [=Access Receipt=] is
-added, it is validated against [AccessReceiptTree](#treeAccessReceipt).
-
-<pre highlight="turtle" id="treeApplicationRegistration">
-<#ApplicationRegistrationTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy &lt;interops#ApplicationRegistrationShape&gt; ;
-  st:contains <#AccessReceiptTree> ,
-                st:AllowAll .
-</pre>
+<figure>
+  <figcaption>An [=Application Registration=] at
+  https://alice.pod.example/applications/705563552198b6fb3efc40717872aa2ec35d669c1095cc5d665f499ec5d7e23a/
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/705563552198b6fb3efc40717872aa2ec35d669c1095cc5d665f499ec5d7e23a.ttl
+  highlight: turtle
+  show: 8-15
+  </pre>
+</figure>
 
 ## Resource Hierarchy ## {#appreg-hierarchy}
 
@@ -321,31 +209,31 @@ added, it is validated against [AccessReceiptTree](#treeAccessReceipt).
       <td>`/profile/`</td>
       <td>-</td>
       <td>-</td>
-      <td>[ProfileTree](#treeAgent)</td>
+      <td>[ProfileTree](interop.tree#AgentTree)</td>
     </tr>
     <tr>
       <td>`-- application#set`</td>
       <td>[ApplicationRegistrySet](#classApplicationRegistrySet)</td>
-      <td>[ApplicationRegistrySetShape](#shexApplicationRegistrySet)</td>
-      <td>[ApplicationRegistrySetTree](#treeApplicationRegistrySet)</td>
+      <td>[ApplicationRegistrySetShape](interop.shex#ApplicationRegistrySetShape)</td>
+      <td>[ApplicationRegistrySetTree](interop.tree#ApplicationRegistrySetTree)</td>
     </tr>
     <tr>
       <td>`/applications/#registry`</td>
       <td>[ApplicationRegistry](#classApplicationRegistry)</td>
-      <td>[ApplicationRegistryShape](#shexApplicationRegistry)</td>
-      <td>[ApplicationRegistryTree](#treeApplicationRegistry)</td>
+      <td>[ApplicationRegistryShape](interop.shex#ApplicationRegistryShape)</td>
+      <td>[ApplicationRegistryTree](interop.tree#ApplicationRegistryTree)</td>
     </tr>
     <tr>
       <td>`-- 70556355...c5d7e23a/#registration`</td>
       <td>[ApplicationRegistration](#classApplicationRegistration)</td>
-      <td>[ApplicationRegistrationShape](#shexApplicationRegistration)</td>
-      <td>[ApplicationRegistrationTree](#treeApplicationRegistration)</td>
+      <td>[ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)</td>
+      <td>[ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)</td>
     </tr>
     <tr>
       <td>`---- 04ca5ba7...f3a25ba0#receipt`</td>
       <td>[AccessReceipt](#classAccessReceipt)</td>
-      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
-      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+      <td>[AccessReceiptShape](interop.shex#AccessReceiptShape)</td>
+      <td>[AccessReceiptTree](interop.tree#AccessReceiptTree)</td>
     </tr>
     <tr>
       <td>`---- ex-cache-1122`</td>
@@ -356,14 +244,14 @@ added, it is validated against [AccessReceiptTree](#treeAccessReceipt).
     <tr>
       <td>`-- ede6aa50...830e2a42/#registration`</td>
       <td>[ApplicationRegistration](#classApplicationRegistration)</td>
-      <td>[ApplicationRegistrationShape](#shexApplicationRegistration)</td>
-      <td>[ApplicationRegistrationTree](#treeApplicationRegistration)</td>
+      <td>[ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)</td>
+      <td>[ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)</td>
     </tr>
     <tr>
       <td>`---- 2af133d6...78e343ba#receipt`</td>
       <td>[AccessReceipt](#classAccessReceipt)</td>
-      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
-      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+      <td>[AccessReceiptShape](interop.shex#AccessReceiptShape)</td>
+      <td>[AccessReceiptTree](interop.tree#AccessReceiptTree)</td>
     </tr>
     <tr>
       <td>`---- ex-internal-idx`</td>
@@ -374,20 +262,20 @@ added, it is validated against [AccessReceiptTree](#treeAccessReceipt).
     <tr>
       <td>`-- 150dca42...5b640673/#registration`</td>
       <td>[ApplicationRegistration](#classApplicationRegistration)</td>
-      <td>[ApplicationRegistrationShape](#shexApplicationRegistration)</td>
-      <td>[ApplicationRegistrationTree](#treeApplicationRegistration)</td>
+      <td>[ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)</td>
+      <td>[ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)</td>
     </tr>
     <tr>
       <td>`---- 14f8bfb9...e42f7084#receipt`</td>
       <td>[AccessReceipt](#classAccessReceipt)</td>
-      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
-      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+      <td>[AccessReceiptShape](interop.shex#AccessReceiptShape)</td>
+      <td>[AccessReceiptTree](interop.tree#AccessReceiptTree)</td>
     </tr>
     <tr>
       <td>`-- b3564e72...0069f536/#registration`</td>
       <td>[ApplicationRegistration](#classApplicationRegistration)</td>
-      <td>[ApplicationRegistrationShape](#shexApplicationRegistration)</td>
-      <td>[ApplicationRegistrationTree](#treeApplicationRegistration)</td>
+      <td>[ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)</td>
+      <td>[ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)</td>
     </tr>
   </tbody>
 </table>
