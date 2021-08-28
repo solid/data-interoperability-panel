@@ -1,0 +1,379 @@
+Remote Data Registration {#remote}
+=====================
+
+The following operations pertain to
+[Remote Data](https://solid.github.io/data-interoperability-panel/specification/#remote)
+in the [[SAI|Solid Application Interoperability Specification]].
+
+* [[#load-remote-data]] - Lookup a [=Remote Data Registration=] by [=shape tree=]
+* [[#create-remote-data]] - Create a new [=Remote Data Registration=]
+* [[#update-remote-data]] - Updates a [=Remote Data Registry=] based on the contents 
+    of an [=Access Receipt=]
+* [[#load-remote-agent-data]] - Lookup a [=Remote Agent Data Registration=] by URI
+    of the shared [=Data Registration=]
+* [[#create-remote-agent-data]] - Create a new [=Remote Agent Data Registration=]
+* [[#update-remote-agent-data]] - Update a specific [=Remote Agent Data Registration=]
+
+##  Load Remote Data Registration ##  {#load-remote-data}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      Lookup a [=Remote Data Registration=] for a given [=shape tree=]
+      `TREE` in a [=Remote Data Registry=] `REGISTRY`      
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`TREE`</td>
+      <td>The [=shape tree=] for the [=Remote Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>The [=Remote Data Registry=] to search for a 
+      [=Remote Data Registration=]</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Remote Data Registration=]</td>
+      <td>Corresponding to `TREE` in `REGISTRY`</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. For each [=Remote Data Registration=] `RDR` in `REGISTRY` linked via
+    `REGISTRY hasRemoteDataRegistration`
+    1. return `RDR` if `RDR registeredShapeTree` == `TREE`
+
+</div>
+
+##  Create Remote Data Registration ##  {#create-remote-data}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      Create a [=Remote Data Registration=] for a given [=shape tree=]
+      `TREE` in a [=Remote Data Registry=] `REGISTRY`      
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`TREE`</td>
+      <td>The [=shape tree=] for the [=Remote Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>The [=Remote Data Registry=] for the 
+      [=Remote Data Registration=]</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Remote Data Registration=]</td>
+      <td>Corresponding to `TREE` in `REGISTRY`</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `EXISTING` be a [=Remote Data Registration=] returned by 
+    [[#load-remote-data]] with inputs: `TREE`,`REGISTRY`
+    1. Error if `EXISTING`
+1. Let `RDR` be an empty [=Remote Data Registration=]
+1. Let `RDR registeredBy` be the current [=Agent=]
+1. Let `RDR registeredWith` be the current [=Application=]
+1. Let `RDR registeredAt` be the current timestamp
+1. Let `RDR updatedAt` be the current timestamp
+1. Let `RDR registeredShapeTree` be `TREE`
+1. PUT `RDR` into `REGISTRY` container
+1. Link `RDR` to `REGISTRY` via `REGISTRY hasRemoteDataRegistration`
+1. Return `RDR`
+
+</div>
+
+##  Update Remote Data ##  {#update-remote-data}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      
+      This operation updates a [=Remote Data Registry=] `REGISTRY` based on
+      an input [=Access Receipt=] `RECEIPT`.
+      
+      It iterates over each [=Data Grant=] linked via `RECEIPT hasDataGrant`,
+      including following any [=Referenced Data Grants=].
+      
+      All [=Data Grants=] and [=Referenced Data Grants=] are added to
+      a hash map `DRHASH`. The key is the shared [=Data Registration=] associated
+      with each [=Data Grant=] or [=Referenced Data Grant=] via 
+      `hasDataRegistration`. 
+      
+      The end result is the keys of `DRHASH` are a unique
+      set of [=Data Registrations=] associated with `RECEIPT`, and each key
+      has an array of related [=Data Grants=] and [=Referenced Data Grants=] 
+      as its value. 
+      
+      Each [=Data Registration=] and the array of grants that affect it
+      are then passed to [[#update-remote-agent-data]].
+      
+      <figure id="fig-remote-drhash">
+        <img src="diagrams/apply-data-permissions-drhash.svg" width=100%/>
+      </figure>      
+      
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`RECEIPT`</td>
+      <td>An [=Access Receipt=] representing data shared with an [=Agent=]</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>A [=Remote Data Registry=] for the [=Agent=]</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Access Receipt=]</td>
+      <td>Updated with remote data associations</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `DRHASH` be an empty hash map where a [=Data Registration=] is key and 
+    the value is an array of [=Data Grants=] and/or [=Referenced Data Grants=].
+1. For each [=Data Grant=] `DG` linked via `RECEIPT hasDataGrant`
+    1. Let `DRKEY` be `DG hasDataRegistration` added or found in `DRHASH`
+    1. Add `DG` to the value array for `DRKEY` if missing
+    1. For each [=Referenced Data Grant=] `REFDG` linked via `DG hasReferencedDataGrant`
+        1. Let `REFDRKEY` be `REFDG hasDataRegistration` added or found in `DRHASH`        
+        1. Add `REFDG` to the array for `REFDRKEY` if missing
+1. For each [=Data Registration=] `DR` in `DRHASH`
+    1. Call [[#update-remote-agent-data]] with inputs: 
+        `DR`, `DRHASH[DR]`, `RECEIPT` 
+1. Return `RECEIPT`
+
+</div>
+
+##  Load Remote Agent Data Registration ##  {#load-remote-agent-data}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      Lookup a [=Remote Agent Data Registration=] `RADREG` in a given
+      [=Remote Data Registry=] based on the URI of a 
+      shared [=Data Registration=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`DATAREG`</td>
+      <td>A shared [=Data Registration=] to lookup</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>A [=Remote Data Registry=] to search</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Remote Agent Data Registration=]</td>
+      <td>Corresponding to `DATAREG` in `REGISTRY`</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. For each [=Remote Data Registration=] `RDR` in `REGISTRY` linked
+    via `REGISTRY hasRemoteDataRegistration`
+    1. If `RDR registeredShapeTree` == `DATAREG registeredShapeTree`
+      1. For each [=Remote Agent Data Registration=] `RADR` linked
+          via `RDR hasRemoteAgentDataRegistration`
+          1. return `RADR` if `RADR hasDataRegistration` == `DATAREG`
+
+</div>
+
+##  Create Remote Agent Data Registration ##  {#create-remote-agent-data}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      Creates a [=Remote Agent Data Registration=] in a [=Remote Data Registry=] 
+      based on a shared [=Data Registration=] in an [=Access Receipt=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`DR`</td>
+      <td>The shared [=Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>`RECEIPT`</td>
+      <td>The [=Access Receipt=] that `DR` is shared through</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>A [=Remote Data Registry=] for the [=Agent=]</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Remote Agent Data Registration=]</td>
+      <td>Created upon success</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+
+1. Let `RDR` be a [=Remote Data Registration=] returned by 
+    [[#load-remote-data]] with inputs: `DR registeredShapeTree`, `REGISTRY`
+    1. If `RDR` is missing, let `RDR` be a [=Remote Data Registration=]
+        returned by [[#create-remote-data]] with inputs: 
+        `DR registeredShapeTree`, `REGISTRY`
+1. Let `RADR` be an empty [=Remote Agent Data Registration=]
+1. Let `RADR registeredBy` be the current [=Agent=]
+1. Let `RADR registeredWith` be the current [=Application=]
+1. Let `RADR registeredAt` be the current timestamp
+1. Let `RADR updatedAt` be the current timestamp
+1. Let `RADR hasDataRegistration` be `DR`
+1. Let `RADR registeredShapeTree` be `DR registeredShapeTree`
+1. Let `RADR fromAgent` be `RECEIPT fromAgent`
+1. Let `RADR hasAccessReceipt` be `RECEIPT`
+1. PUT `RADR` into the `RDR` container
+1. Link `RADR` to `RDR` via `RDR hasRemoteAgentDataRegistration`
+1. Return `RADR`
+
+</div>
+
+##  Update Remote Agent Data Registration ##  {#update-remote-agent-data}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      Update an existing [=Remote Agent Data Registration=]  
+      with a set of [=Data Grants=] and/or [=Referenced Data Grants=].
+      Create the [=Remote Agent Data Registration=] if it doesn't exist.
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`DR`</td>
+      <td>The shared [=Data Registration=]</td>
+    </tr>
+    <tr>
+      <td>`DATAGRANTS`</td>
+      <td>An array of [=Data Grants=] and [=Referenced Data Grants=]
+      associated with `DR` in `RECEIPT`</td>
+    </tr>
+    <tr>
+      <td>`RECEIPT`</td>
+      <td>[=Access Receipt=] associated with `DR` and `DATAGRANTS`</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Remote Agent Data Registration=]</td>
+      <td>Updated based on the input `DATAGRANTS`</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `RADR` be a [=Remote Agent Data Registration=] returned from
+    calling [[#load-remote-agent-data]] with inputs: `DR`, `REGISTRY`
+1. If `RADR` is missing
+    1. Call [[#create-remote-agent-data]] with inputs: `RECEIPT`, `REGISTRY`
+1. For each `DATAGRANT` in `DATAGRANTS`
+    1. PUT `DATAGRANT` into `RADR` container if it does not already exist
+    1. PATCH `DATAGRANT` in `RADR` container if it already exists 
+1. Return `RADR`
+
+</div> 
