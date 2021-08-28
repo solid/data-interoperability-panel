@@ -23,30 +23,15 @@ for a detailed explanation of how Remote Data Registrations should be processed.
 A <dfn>Remote Data Registry Set</dfn> is a [=Registry Set=] specifically
 made up of [=Remote Data Registries=].
 
-<figure id ="fig-remote-registry-set">
-   <figcaption>A [=Remote Data Registry Set=] at
-   https://bob.pod.example/profile/remote#set linking to two different
-  [=Remote Data Registries=]</figcaption>
-  <pre highlight="turtle">
-  <#set>
-    a interop:RemoteDataRegistrySet;
-    interop:hasRegistry 
-      &lt;https://alice.pod.example/remote/#registry&gt; ,
-      &lt;https://alice.otherpod.example/remote/#registry&gt; .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#RemoteDataRegistrySet) -
+[Shape Definition](interop.shex#RemoteDataRegistrySetShape) -
+[Shape Tree Definition](interop.tree#RemoteDataRegistrySetTree)
 
 <table class="classinfo data" align="left" id="classRemoteDataRegistrySet">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3 text-align=left>
-        [RemoteDataRegistrySet](interop.ttl#RemoteDataRegistrySet)
-        a rdfs:subClassOf [[#datamodel-agent|RegistrySet]]
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -62,59 +47,30 @@ made up of [=Remote Data Registries=].
   </tbody>
 </table>
 
-The [RemoteDataRegistrySetShape](#shexRemoteDataRegistrySet) is used to
-validate an instance of the
-[RemoteDataRegistrySet](#classRemoteDataRegistrySet) class.
-
-<pre highlight="turtle" id="shexRemoteDataRegistrySet">
-<#RemoteDataRegistrySetShape> {
-  a [ interop:RemoteDataRegistrySet ] ;
-  interop:hasRegistry IRI+
-}
-</pre>
-
-The [RemoteDataRegistrySetTree](interop.tree#RemoteDataRegistrySetTree)
-is assigned to a resource to ensure it will validate against the
-[RemoteDataRegistrySetShape](#shexRemoteDataRegistrySet).
-
-<pre highlight="turtle" id="treeRemoteDataRegistrySet">
-<#RemoteDataRegistrySetTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#RemoteDataRegistrySetShape&gt; .
-</pre>
+<figure>
+  <figcaption>A [=Remote Data Registry Set=] at
+  https://alice.example/remote-registry-set</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/remote-registry-set.ttl
+  highlight: turtle
+  show: 6-10
+  </pre>
+</figure>
 
 ### Remote Data Registry ### {#datamodel-remote-data-registry}
 
 A <dfn>Remote Data Registry</dfn> is a collection of
 [=Remote Data Registrations=] stored in a specific location in a [=pod=].
 
-<figure id="fig-remote-registry">
-  <figcaption>An [=Remote Data Registry=] at
-  https://alice.pod.example/remote/#registry
-  linking to several [=Remote Data Registrations=]
-  </figcaption>
-  <pre highlight="turtle">
-  <#registry>
-    a interop:RemoteDataRegistry ;
-    interop:hasRemoteDataRegistration
-      &lt;9e80126d-178f-4a03-851b-c731194a3b0d/#registration&gt; ,
-      &lt;833ab294-9f29-4059-b76f-00efc251f2dd/#registration&gt; ,
-      &lt;656a8fd0-7cac-46a3-8b84-06f227822656/#registration&gt; .      
-  </pre>
-</figure>
+[Class Definition](interop.ttl#RemoteDataRegistry) -
+[Shape Definition](interop.shex#RemoteDataRegistryShape) -
+[Shape Tree Definition](interop.tree#RemoteDataRegistryTree)
 
 <table class="classinfo data" align="left" id="classRemoteDataRegistry">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [RemoteDataRegistry](interop.ttl#RemoteDataRegistry)
-        a rdfs:subClassOf [Registry](interop.ttl#Registry)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -130,31 +86,15 @@ A <dfn>Remote Data Registry</dfn> is a collection of
   </tbody>
 </table>
 
-The [RemoteDataRegistryShape](#shexRemoteDataRegistry) is used to
-validate an instance of the
-[RemoteDataRegistry](#classRemoteDataRegistry) class.
-
-<pre highlight="turtle" id="shexRemoteDataRegistry">
-<#RemoteDataRegistryShape> {
-  a [ interop:RemoteDataRegistry ] ;
-  interop:hasRemoteDataRegistration IRI* 
-}
-</pre>
-
-The [RemoteDataRegistryTree](interop.tree#RemoteDataRegistryTree)
-is assigned to a container resource to ensure that it will validate against the
-[RemoteDataRegistryShape](#shexRemoteDataRegistry), and contain only
-conformant instances of the
-[RemoteDataRegistrationTree](#treeRemoteDataRegistration).
-
-<pre highlight="turtle" id="treeRemoteDataRegistry">
-<#RemoteDataRegistryTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy &lt;interops#RemoteDataRegistryShape&gt; ;
-  st:contains <#RemoteDataRegistrationTree> ,
-              st:AllowNone .
-</pre>
+<figure id="fig-remote-registry">
+  <figcaption>An [=Remote Data Registry=] at
+  https://alice.pod.example/remote/</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/remote-registry.ttl
+  highlight: turtle
+  show: 4-9
+  </pre>
+</figure>
 
 ### Remote Data Registration ### {#datamodel-remote-data-registration}
 
@@ -165,36 +105,15 @@ with a [=Remote Agent Data Registration=].
 Each [=Remote Agent Data Registration=] creates a useful authorization 
 boundary for remote data from a given [=Agent=].
 
-<figure id="fig-remote-data-registration">
-  <figcaption>A [=Remote Data Registration=] for a given [=shape tree=] at
-  https://alice.pod.example/remote/9e80126d-178f-4a03-851b-c731194a3b0d/#set
-  linking to several [=Remote Agent Data Registrations=]
-  </figcaption>
-  <pre highlight="turtle">
-  <#registration>
-    a interop:RemoteDataRegistration ;
-    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-    interop:registeredWith &lt;https://trusted.example/id#agent&gt; ;
-    interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:registeredShapeTree project:ProjectTree ;
-    interop:hasRemoteAgentDataRegistration
-      &lt;f0ebbd29-3a5a-4770-af29-cdb7693066b4/#registration&gt; ,
-      &lt;bedcc388-f303-4059-8645-2e93bf61e9f3/#registration&gt; .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#RemoteDataRegistration) -
+[Shape Definition](interop.shex#RemoteDataRegistrationShape) -
+[Shape Tree Definition](interop.tree#RemoteDataRegistrationTree)
 
 <table class="classinfo data" align="left" id="classRemoteDataRegistration">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [RemoteDataRegistration](interop.ttl#RemoteDataRegistration)
-        a rdfs:subClassOf [Registration](interop.ttl#Registration)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -236,36 +155,15 @@ boundary for remote data from a given [=Agent=].
   </tbody>
 </table>
 
-The [RemoteDataRegistrationShape](#shexRemoteDataRegistration) is used to
-validate an instance of the
-[RemoteDataRegistration](#classRemoteDataRegistration) class.
-
-<pre highlight="turtle" id="shexRemoteDataRegistration">
-<#RemoteDataRegistrationShape> {
-  a [ interop:RemoteDataRegistration ] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI ;
-  interop:registeredAt xsd:dateTime ;
-  interop:updatedAt xsd:dateTime ;  
-  interop:registeredShapeTree IRI 
-  interop:hasRemoteAgentDataRegistration IRI* ;
-}
-</pre>
-
-The [RemoteDataRegistrationTree](interop.tree#RemoteDataRegistrationTree)
-is assigned to a container resource to ensure that it will validate against the
-[RemoteDataRegistrationShape](#shexRemoteDataRegistration), and contain 
-only conformant instances of the
-[RemoteAgentDataRegistrationTree](#treeRemoteAgentDataRegistration).
-
-<pre highlight="turtle" id="treeRemoteDataRegistration">
-<#RemoteDataRegistrationTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy &lt;interops#RemoteDataRegistrationShape&gt; ;
-  st:contains <#RemoteAgentDataRegistrationTree> ,
-              st:AllowNone .
-</pre>
+<figure>
+  <figcaption>A [=Remote Data Registration=] for a given [=shape tree=] at
+  https://alice.example/remote/9e80126d-178f-4a03-851b-c731194a3b0d/</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/9e80126d-178f-4a03-851b-c731194a3b0d.ttl
+  highlight: turtle
+  show: 9-18
+  </pre>
+</figure>
 
 ### Remote Agent Data Registration ### {#datamodel-remote-agent-data-registration}
 
@@ -291,40 +189,15 @@ A [=Remote Agent Data Registration=] is created when an [=Agent=] receives an
     [=Data Grants=], and/or stored [=Referenced Data Grants=] MUST be updated, 
     and removed altogether if that access is removed.
 
-<figure id="fig-remote-agent-data-registration">
-  <figcaption>A [=Remote Agent Data Registration=] at
-  https://alice.pod.example/remote/9e80126d-178f-4a03-851b-c731194a3b0d/f0ebbd29-3a5a-4770-af29-cdb7693066b4/#registration
-  </figcaption>
-  <pre highlight="turtle">
-  <#registration>
-    a interop:RemoteAgentDataRegistration ;
-    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-    interop:registeredWith &lt;https://trusted.example/id#agent&gt; ;
-    interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:registeredShapeTree project:ProjectTree ;
-    interop:hasDataRegistration 
-      &lt;https://bob.pod.example/data/project-tree/#registration&gt; ;    
-    interop:fromAgent
-      &lt;https://bob.pod.example/profile/id#me&gt; ;
-    interop:hasAccessReceipt
-      &lt;https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#receipt&gt; ;
-    interop:satisfiesDataGrant
-      &lt;cd04e76b-d64d-4cea-aacf-fb248a295002#instance&gt; .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#RemoteAgentDataRegistration) -
+[Shape Definition](interop.shex#RemoteAgentDataRegistrationShape) -
+[Shape Tree Definition](interop.tree#RemoteAgentDataRegistrationTree)
 
 <table class="classinfo data" align="left" id="classRemoteAgentDataRegistration">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [RemoteAgentDataRegistration](interop.ttl#RemoteAgentDataRegistration)
-        a rdfs:subClassOf [Registration](interop.ttl#Registration)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -386,40 +259,15 @@ A [=Remote Agent Data Registration=] is created when an [=Agent=] receives an
   </tbody>
 </table>
 
-The [RemoteAgentDataRegistrationShape](#shexRemoteAgentDataRegistration) 
-is used to validate an instance of the
-[RemoteAgentDataRegistration](#classRemoteAgentDataRegistration) class.
-
-<pre highlight="turtle" id="shexRemoteAgentDataRegistration">
-<#RemoteAgentDataRegistration> {
-  a [interop:RemoteAgentDataRegistration] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI ;
-  interop:registeredAt xsd:dateTime ;
-  interop:updatedAt xsd:dateTime ;
-  interop:hasDataRegistration IRI ;         
-  interop:fromAgent IRI ;                   
-  interop:registeredShapeTree IRI ;         
-  interop:hasAccessReceipt IRI* ;           
-  interop:satisfiesDataGrant IRI+           
-}
-</pre>
-
-The [RemoteAgentDataRegistrationTree](interop.tree#RemoteAgentDataRegistrationTree)
-is assigned to a resource via the
-[RemoteDataRegistrationTree](#treeRemoteDataRegistration), and ensures
-that the assigned resource will validate against the
-[RemoteAgentDataRegistrationShape](#shexRemoteAgentDataRegistration).
-
-<pre highlight="turtle" id="treeRemoteAgentDataRegistration">
-<#RemoteAgentDataRegistrationTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy &lt;interops#RemoteAgentDataRegistrationShape&gt; ;
-  st:contains &lt;#DataGrantTree&gt; ,
-              &lt;#ReferencedDataGrantTree&gt; ,
-              st:AllowNone .
-</pre>
+<figure>
+  <figcaption>A [=Remote Agent Data Registration=] at
+  https://alice.example/remote/9e80126d-178f-4a03-851b-c731194a3b0d/f0ebbd29-3a5a-4770-af29-cdb7693066b4/</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/f0ebbd29-3a5a-4770-af29-cdb7693066b4.ttl
+  highlight: turtle
+  show: 10-24
+  </pre>
+</figure>
 
 ## Resource Hierarchy ## {#remote-hierarchy}
 
@@ -441,97 +289,97 @@ that the assigned resource will validate against the
       <td>`/profile/`</td>
       <td>-</td>
       <td>-</td>
-      <td>[ProfileTree](#treeAgent)</td>
+      <td>[ProfileTree](interop.tree#ProfileTree)</td>
     </tr>
     <tr>
-      <td>`-- remote#set`</td>
+      <td>`-- remote-registry-set`</td>
       <td>[RemoteDataRegistrySet](#classRemoteDataRegistrySet)</td>
-      <td>[RemoteDataRegistrySetShape](#shexRemoteDataRegistrySet)</td>
-      <td>[RemoteDataRegistrySetTree](#treeRemoteDataRegistrySet)</td>
+      <td>[RemoteDataRegistrySetShape](interop.shex#RemoteDataRegistrySet)</td>
+      <td>[RemoteDataRegistrySetTree](interop.tree#RemoteDataRegistrySet)</td>
     </tr>
     <tr>
-      <td>`/remote/#registry`</td>
+      <td>`/remote/`</td>
       <td>[RemoteDataRegistry](#classRemoteDataRegistry)</td>
-      <td>[RemoteDataRegistryShape](#shexRemoteDataRegistry)</td>
-      <td>[RemoteDataRegistryTree](#treeRemoteDataRegistry)</td>
+      <td>[RemoteDataRegistryShape](interop.shex#RemoteDataRegistry)</td>
+      <td>[RemoteDataRegistryTree](interop.tree#RemoteDataRegistry)</td>
     </tr>
     <tr>
-      <td>`-- 9e80126d...0d/#reg...`</td>
+      <td>`-- 9e80126d...0d/`</td>
       <td>[RemoteDataRegistration](#classRemoteDataRegistration)</td>
-      <td>[RemoteDataRegistrationShape](#shexRemoteDataRegistration)</td>
-      <td>[RemoteDataRegistrationTree](#treeRemoteDataRegistration)</td>
+      <td>[RemoteDataRegistrationShape](interop.shex#RemoteDataRegistration)</td>
+      <td>[RemoteDataRegistrationTree](interop.tree#RemoteDataRegistration)</td>
     </tr>
     <tr>
-      <td>`---- f0ebbd29...b4/#reg...`</td>
+      <td>`---- f0ebbd29...b4/`</td>
       <td>[RemoteAgentDataRegistration](#classRemoteAgentDataRegistration)</td>
-      <td>[RemoteAgentDataReg...](#shexRemoteAgentDataRegistration)</td>
-      <td>[RemoteAgentDataReg...](#treeRemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](interop.shex#RemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](interop.tree#RemoteAgentDataRegistration)</td>
     </tr>
     <tr>
-      <td>`------ cd04e76b...02#dg`</td>
+      <td>`------ cd04e76b...02`</td>
       <td>[DataGrant](#classDataGrant)</td>
-      <td>[DataGrantShape](#shexDataGrant)</td>
-      <td>[DataGrantTree](#treeDataGrant)</td>
+      <td>[DataGrantShape](interop.shex#DataGrantShape)</td>
+      <td>[DataGrantTree](interop.tree#DataGrantTree)</td>
     </tr>
     <tr>
-      <td>`------ 9506b58f...eb#rdg`</td>
+      <td>`------ 9506b58f...eb`</td>
       <td>[ReferencedDataGrant](#classReferencedDataGrant)</td>
-      <td>[ReferencedDataGrantShape](#shexReferencedDataGrant)</td>
-      <td>[ReferencedDataGrantTree](#treeReferencedDataGrant)</td>
+      <td>[ReferencedDataGrantShape](interop.shex#ReferencedDataGrantShape)</td>
+      <td>[ReferencedDataGrantTree](interop.tree#ReferencedDataGrantTree)</td>
     </tr>
     <tr>
-      <td>`---- bedcc388...f3/#reg...`</td>
+      <td>`---- bedcc388...f3/`</td>
       <td>[RemoteAgentDataRegistration](#classRemoteAgentDataRegistration)</td>
-      <td>[RemoteAgentDataReg...](#shexRemoteAgentDataRegistration)</td>
-      <td>[RemoteAgentDataReg...](#treeRemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](interop.shex#RemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](interop.tree#RemoteAgentDataRegistration)</td>
     </tr>
     <tr>
-      <td>`------ fe111165a...01#dg`</td>
+      <td>`------ fe111165a...01`</td>
       <td>[DataGrant](#classDataGrant)</td>
-      <td>[DataGrantShape](#shexDataGrant)</td>
-      <td>[DataGrantTree](#treeDataGrant)</td>
+      <td>[DataGrantShape](interop.shex#DataGrantShape)</td>
+      <td>[DataGrantTree](interop.tree#DataGrantTree)</td>
     </tr>    
     <tr>
-      <td>`-- 833ab294...dd/#reg...`</td>
+      <td>`-- 833ab294...dd/`</td>
       <td>[RemoteDataRegistration](#classRemoteDataRegistration)</td>
-      <td>[RemoteDataRegistrationShape](#shexRemoteDataRegistration)</td>
-      <td>[RemoteDataRegistrationTree](#treeRemoteDataRegistration)</td>
+      <td>[RemoteDataRegistrationShape](interop.shex#RemoteDataRegistration)</td>
+      <td>[RemoteDataRegistrationTree](interop.tree#RemoteDataRegistration)</td>
     </tr>
     <tr>
-      <td>`---- 265dff0c...12/#reg...`</td>
+      <td>`---- 265dff0c...12/`</td>
       <td>[RemoteAgentDataRegistration](#classRemoteAgentDataRegistration)</td>
-      <td>[RemoteAgentDataReg...](#shexRemoteAgentDataRegistration)</td>
-      <td>[RemoteAgentDataReg...](#treeRemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](interop.shex#RemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](interop.tree#RemoteAgentDataRegistration)</td>
     </tr>
     <tr>
-      <td>`------ 62262350...4a#rdg`</td>
+      <td>`------ 62262350...4a`</td>
       <td>[ReferencedDataGrant](#classReferencedDataGrant)</td>
-      <td>[ReferencedDataGrantShape](#shexReferencedDataGrant)</td>
-      <td>[ReferencedDataGrantTree](#treeReferencedDataGrant)</td>
+      <td>[ReferencedDataGrantShape](interop.shex#ReferencedDataGrantShape)</td>
+      <td>[ReferencedDataGrantTree](interop.tree#ReferencedDataGrantTree)</td>
     </tr>
     <tr>
-      <td>`-- 656a8fd0...56/#reg...`</td>
+      <td>`-- 656a8fd0...56/`</td>
       <td>[RemoteDataRegistration](#classRemoteDataRegistration)</td>
-      <td>[RemoteDataReg...](#shexRemoteDataRegistration)</td>
-      <td>[RemoteDataReg...](#treeRemoteDataRegistration)</td>
+      <td>[RemoteDataReg...](interop.shex#RemoteDataRegistration)</td>
+      <td>[RemoteDataReg...](interop.tree#RemoteDataRegistration)</td>
     </tr>
     <tr>
-      <td>`---- f68e95eb...15/#reg...`</td>
+      <td>`---- f68e95eb...15/`</td>
       <td>[RemoteAgentDataRegistration](#classRemoteAgentDataRegistration)</td>
-      <td>[RemoteAgentDataReg...](#shexRemoteAgentDataRegistration)</td>
-      <td>[RemoteAgentDataReg...](#treeRemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](interop.shex#RemoteAgentDataRegistration)</td>
+      <td>[RemoteAgentDataReg...](interop.tree#RemoteAgentDataRegistration)</td>
     </tr>
     <tr>
-      <td>`------ a2752e58...b6#dg`</td>
+      <td>`------ a2752e58...b6`</td>
       <td>[DataGrant](#classDataGrant)</td>
-      <td>[DataGrantShape](#shexDataGrant)</td>
-      <td>[DataGrantTree](#treeDataGrant)</td>
+      <td>[DataGrantShape](interop.shex#DataGrantShape)</td>
+      <td>[DataGrantTree](interop.tree#DataGrantTree)</td>
     </tr>
     <tr>
-      <td>`------ d1133f58...60#dg`</td>
+      <td>`------ d1133f58...60`</td>
       <td>[DataGrant](#classDataGrant)</td>
-      <td>[DataGrantShape](#shexDataGrant)</td>
-      <td>[DataGrantTree](#treeDataGrant)</td>
+      <td>[DataGrantShape](interop.shex#DataGrantShape)</td>
+      <td>[DataGrantTree](interop.tree#DataGrantTree)</td>
     </tr>
   </tbody>
 </table>

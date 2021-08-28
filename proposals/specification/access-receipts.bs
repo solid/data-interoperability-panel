@@ -30,30 +30,15 @@ for a detailed explanation of how Access Receipts should be processed.
 An <dfn>Access Receipt Registry Set</dfn> is a [=Registry Set=] specifically
 made up of [=Access Receipt Registries=].
 
-<figure id ="fig-receipt-registry-set">
-   <figcaption>An [=Access Receipt Registry Set=] at
-   https://bob.pod.example/profile/receipt#set linking to two different
-  [=Access Receipt Registries=]</figcaption>
-  <pre highlight="turtle">
-  <#set>
-    a interop:AccessReceiptRegistrySet;
-    interop:hasRegistry 
-      &lt;https://bob.pod.example/receipts/#registry&gt; ,
-      &lt;https://bob.otherpod.example/receipts/#registry&gt; .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#AccessReceiptRegistrySet) -
+[Shape Definition](interop.shex#AccessReceiptRegistrySetShape) -
+[Shape Tree Definition](interop.tree#AccessReceiptRegistrySetTree)
 
 <table class="classinfo data" align="left" id="classAccessReceiptRegistrySet">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3 text-align=left>
-        [AccessReceiptRegistrySet](interop.ttl#AccessReceiptRegistrySet)
-        a rdfs:subClassOf [RegistrySet](interop.ttl#RegistrySet)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -69,59 +54,30 @@ made up of [=Access Receipt Registries=].
   </tbody>
 </table>
 
-The [AccessReceiptRegistrySetShape](#shexAccessReceiptRegistrySet) is used to
-validate an instance of the
-[AccessReceiptRegistrySet](#classAccessReceiptRegistrySet) class.
-
-<pre highlight="turtle" id="shexAccessReceiptRegistrySet">
-<#AccessReceiptRegistrySetShape> {
-  a [ interop:AccessReceiptRegistrySet ] ;
-  interop:hasRegistry IRI+
-}
-</pre>
-
-The [AccessReceiptRegistrySetTree](interop.tree#AccessReceiptRegistrySetTree)
-is assigned to a resource to ensure it will validate against the
-[AccessReceiptRegistrySetShape](#shexAccessReceiptRegistrySet).
-
-<pre highlight="turtle" id="treeAccessReceiptRegistrySet">
-<#AccessReceiptRegistrySetTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#AccessReceiptRegistrySetShape&gt; .
-</pre>
+<figure>
+  <figcaption>An [=Access Receipt Registry Set=] at
+  https://alice.example/receipt-registry-set linking to two different [=Access Receipt Registries=]</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/receipt-registry-set.ttl
+  highlight: turtle
+  show: 6-10
+  </pre>
+</figure>
 
 ### Access Receipt Registry ### {#datamodel-access-receipt-registry}
 
 An <dfn>Access Receipt Registry</dfn> is a collection of
 [=Access Receipts=] stored in a specific location in a [=pod=].
 
-<figure id="fig-receipt-registry">
-  <figcaption>An [=Access Receipt Registry=] at
-  https://bob.pod.example/receipts/#registry
-  linking to several registered [=Access Receipts=]
-  </figcaption>
-  <pre highlight="turtle">
-  <#registry>
-    a interop:AccessReceiptRegistry ;
-    interop:hasRegistration 
-      &lt;fa6d6553-0308-4abd-bce6-888df653695a#receipt&gt; ,
-      &lt;d49eae8c-e138-4153-86ed-63832deadc6b#receipt&gt; ,
-      &lt;506a0cee-1dc9-4720-a768-294aa0284502#receipt&gt; .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#AccessReceiptRegistry) -
+[Shape Definition](interop.shex#AccessReceiptRegistryShape) -
+[Shape Tree Definition](interop.tree#AccessReceiptRegistryTree)
 
 <table class="classinfo data" align="left" id="classAccessReceiptRegistry">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [AccessReceiptRegistry](interop.ttl#AccessReceiptRegistry)
-        a rdfs:subClassOf [Registry](interop.ttl#Registry)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -137,30 +93,14 @@ An <dfn>Access Receipt Registry</dfn> is a collection of
   </tbody>
 </table>
 
-The [AccessReceiptRegistryShape](#shexAccessReceiptRegistry) is used to
-validate an instance of the
-[AccessReceiptRegistry](#classAccessReceiptRegistry) class.
-
-<pre highlight="turtle" id="shexAccessReceiptRegistry">
-<#AccessReceiptRegistryShape> {
-  a [ interop:AccessReceiptRegistry ] ;
-  interop:hasRegistration IRI*
-}
-</pre>
-
-The [AccessReceiptRegistryTree](interop.tree#AccessReceiptRegistryTree)
-is assigned to a container resource to ensure that it will validate against the
-[AccessReceiptRegistryShape](#shexAccessReceiptRegistry), and contain only
-conformant instances of the [AccessReceiptTree](#treeAccessReceipt).
-
-<pre highlight="turtle" id="treeAccessReceiptRegistry">
-<#AccessReceiptRegistryTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy &lt;interops#AccessReceiptRegistryShape&gt; ;
-  st:contains <#AccessReceiptTree> ,
-              st:AllowNone .
-</pre>
+<figure>
+  <figcaption>An [=Access Receipt Registry=] at https://alice.example/receipts/</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/receipt-registry.ttl
+  highlight: turtle
+  show: 4-9
+  </pre>
+</figure>
 
 ### Access Receipt ### {#datamodel-access-receipt}
 
@@ -175,37 +115,15 @@ formulate the [=Access Grant=], as well as any [=Data Grants=],
 [=Remote Data Grants=], or [=Trusted Grants=] that detail the scope
 of access granted.
 
-<figure id="fig-access-receipt">
-  <figcaption>An [=Access Receipt=] at
-  https://bob.pod.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a#receipt
-  </figcaption>
-  <pre highlight="turtle">
-  <#receipt>
-    a interop:AccessReceipt ;
-    interop:registeredBy https://bob.pod.example/profile/id#me ;
-    interop:registeredWith https://trusted.example/id#agent ;
-    interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:providedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:fromAgent https://alice.pod.example/profile/id#me ;
-    interop:viaAgent https://alice.pod.example/profile/id#me ;
-    interop:hasAccessGrantSubject <#grant-subject> ;
-    interop:hasAccessNeedGroup <#need-group-pm> ;
-    interop:hasDataGrant <#data-grant-project> .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#AccessReceipt) -
+[Shape Definition](interop.shex#AccessReceiptShape) -
+[Shape Tree Definition](interop.tree#AccessReceiptTree)
 
 <table class="classinfo data" align="left" id="classAccessReceipt">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [AccessReceipt](interop.ttl#AccessReceipt)
-        a rdfs:subClassOf [AccessGrant](interop.ttl#AccessGrant)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -278,38 +196,14 @@ of access granted.
   </tbody>
 </table>
 
-The [AccessReceiptShape](#shexAccessReceipt) is used to validate an instance
-of the [AccessReceipt](#classAccessReceipt) class.
-
-<pre highlight="turtle" id="shexAccessReceipt">
-<#AccessReceiptShape> {
-  a [interop:AccessReceipt] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI? ;
-  interop:registeredAt xsd:dateTime ;
-  interop:updatedAt xsd:dateTime ;
-  interop:providedAt xsd:dateTime ;
-  interop:fromAgent IRI ;             # Agent who sent the receipt
-  interop:viaAgent IRI ;             # Trusted agent on behalf of fromAgent
-  interop:hasAccessGrantSubject @&lt;#:AccessGrantSubject&gt; ;  # Subject / recipient
-  interop:hasAccessNeedGroup @&lt;#:AccessNeedGroupShape&gt;+ ;
-  ( interop:hasDataGrant @&lt;#:DataGrantShape&gt;+ |
-  interop:hasTrustedGrant @&lt;#:TrustedGrantShape&gt;+ | 
-  interop:hasRemoteDataGrant @&lt;#:RemoteDataGrantShape&gt;+ ) ;
-}
-</pre>
-
-The [AccessReceiptTree](interop.tree#AccessReceiptTree) is assigned to a
-resource via the [AccessGrantRegistryTree](#treeAccessGrantRegistry), and ensures
-that the assigned resource will validate against the
-[AccessReceiptShape](#shexAccessReceipt).
-
-<pre highlight="turtle" id="treeAccessReceipt">
-<#AccessReceiptTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#AccessReceiptShape&gt; .
-</pre>
+<figure>
+  <figcaption>An [=Access Receipt=] at https://alice.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/fa6d6553-0308-4abd-bce6-888df653695a.ttl
+  highlight: turtle
+  show: 9-20
+  </pre>
+</figure>
 
 ## Resource Hierarchy ## {#receipts-hierarchy}
 
@@ -331,37 +225,37 @@ that the assigned resource will validate against the
       <td>`/profile/`</td>
       <td>-</td>
       <td>-</td>
-      <td>[ProfileTree](#treeAgent)</td>
+      <td>[ProfileTree](interop.tree#ProfileTree)</td>
     </tr>
     <tr>
-      <td>`-- receipt#set`</td>
+      <td>`-- receipt-registry-set`</td>
       <td>[AccessReceiptRegistrySet](#classAccessReceiptRegistrySet)</td>
-      <td>[AccessReceiptRegistrySetShape](#shexAccessReceiptRegistrySet)</td>
-      <td>[AccessReceiptRegistrySetTree](#treeAccessReceiptRegistrySet)</td>
+      <td>[AccessReceiptRegistrySetShape](interop.shex#AccessReceiptRegistrySetShape)</td>
+      <td>[AccessReceiptRegistrySetTree](interop.tree#AccessReceiptRegistrySetTree)</td>
     </tr>
     <tr>
-      <td>`/receipts/#registry`</td>
+      <td>`/receipts/`</td>
       <td>[AccessReceiptRegistry](#classAccessReceiptRegistry)</td>
-      <td>[AccessReceiptRegistryShape](#shexAccessReceiptRegistry)</td>
-      <td>[AccessReceiptRegistryTree](#treeAccessReceiptRegistry)</td>
+      <td>[AccessReceiptRegistryShape](interop.shex#AccessReceiptRegistryShape)</td>
+      <td>[AccessReceiptRegistryTree](interop.tree#AccessReceiptRegistryTree)</td>
     </tr>
     <tr>
-      <td>`-- fa6d6553...5a#receipt`</td>
+      <td>`-- fa6d6553...5a`</td>
       <td>[AccessReceipt](#classAccessReceipt)</td>
-      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
-      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+      <td>[AccessReceiptShape](interop.shex#AccessReceiptShape)</td>
+      <td>[AccessReceiptTree](interop.tree#AccessReceiptTree)</td>
     </tr>
     <tr>
-      <td>`-- d49eae8c...6b#receipt`</td>
+      <td>`-- d49eae8c...6b`</td>
       <td>[AccessReceipt](#classAccessReceipt)</td>
-      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
-      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+      <td>[AccessReceiptShape](interop.shex#AccessReceiptShape)</td>
+      <td>[AccessReceiptTree](interop.tree#AccessReceiptTree)</td>
     </tr>
     <tr>
-      <td>`-- 506a0cee...02#receipt`</td>
+      <td>`-- 506a0cee...02`</td>
       <td>[AccessReceipt](#classAccessReceipt)</td>
-      <td>[AccessReceiptShape](#shexAccessReceipt)</td>
-      <td>[AccessReceiptTree](#treeAccessReceipt)</td>
+      <td>[AccessReceiptShape](interop.shex#AccessReceiptShape)</td>
+      <td>[AccessReceiptTree](interop.tree#AccessReceiptTree)</td>
     </tr>
   </tbody>
 </table>

@@ -86,25 +86,11 @@ assigned to each [=Registry Set=], depending on the sensitivity of the
 [interop:hasRegistry](interop.ttl#hasRegistry) property.
 
 <figure>
-  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me</figcaption>
-  <pre highlight="turtle">
-  <#me>
-    a interop:Agent;
-    ######## Registry Sets ########
-    interop:hasApplicationRegistrySet &lt;https://alice.pod.example/profile/application#set&gt; ;
-    interop:hasDataRegistrySet &lt;https://alice.pod.example/profile/data#set&gt; ;
-    interop:hasAccessGrantRegistrySet &lt;https://alice.pod.example/profile/grant#set&gt; ;
-    interop:hasAccessReceiptRegistrySet &lt;https://alice.pod.example/profile/receipt#set&gt; ;
-    interop:hasRemoteDataRegistrySet &lt;https://alice.pod.example/profile/remote#set&gt; ;
-    ######## Authorization Agent ########
-    interop:hasAuthorizationAgent &lt;https://auth.alice.example&gt; ;
-    ######## Inboxes ########
-    interop:hasInbox &lt;https://alice.pod.example/inbox/general&gt; ;
-    interop:hasAccessInbox &lt;https://alice.pod.example/inbox/access&gt; ;
-    ######## Options ########
-    interop:receivesAccessReceipt interop:ReceiptInMessage .
-
-  </pre>
+  <figcaption>[=Agent=] at https://alice.example/#id</figcaption>  
+  <pre class=include-code>
+  path: snippets/alice.example/alice.example.ttl
+  highlight: turtle
+  </pre> 
 </figure>
 
 ### Agent ### {#datamodel-agent}
@@ -112,16 +98,15 @@ assigned to each [=Registry Set=], depending on the sensitivity of the
 An <dfn>Agent</dfn> is a distinct individual, group, organization, or piece
 of software with an [=identity=] that can be strongly authenticated.
 
+[Class Definition](interop.ttl#Agent) -
+[Shape Definition](interop.shex#AgentShape) -
+[Shape Tree Definition](interop.tree#AgentTree)
+
 <table class="classinfo data" align="left" id="classAgent">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3 text-align=left>
-        [Agent](interop.ttl#Agent)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -180,35 +165,6 @@ of software with an [=identity=] that can be strongly authenticated.
   </tbody>
 </table>
 
-The [AgentShape](#shexAgent) is used to validate an instance of the
-[Agent](#classAgent) class.
-
-<pre highlight="turtle" id="shexAgent">
-<#AgentShape> {
-  a [ interop:Agent ] ;
-  interop:hasApplicationRegistrySet IRI ;
-  interop:hasDataRegistrySet IRI ;
-  interop:hasAccessGrantRegistrySet IRI ;
-  interop:hasAccessReceiptRegistrySet IRI ;
-  interop:hasRemoteDataRegistrySet IRI ;
-  interop:hasAuthorizationAgent IRI ;
-  interop:hasInbox IRI ;
-  interop:hasAccessInbox IRI ;
-  interop:receivesAccessReceipt [ interop:ReceiptInMessage interop:ReceiptInRegistration ]
-}
-</pre>
-
-The [AgentTree](interop.tree#AgentTree)
-is assigned to a resource to ensure it will validate against the
-[AgentShape](#shexAgent).
-
-<pre highlight="turtle" id="treeAgent">
-<#AgentTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#AgentShape&gt; .
-</pre>
-
 ## Resource Hierarchy ## {#agents-hierarchy}
 
 <table class="data tree" align="left">
@@ -229,49 +185,49 @@ is assigned to a resource to ensure it will validate against the
       <td>`/profile/`</td>
       <td>-</td>
       <td>-</td>
-      <td>[ProfileTree](#treeAgent)</td>
+      <td>[ProfileTree](interop.tree#AgentTree)</td>
     </tr>
     <tr>
       <td>`-- id#me`</td>
       <td>[Agent](#classAgent)</td>
-      <td>[AgentShape](#shexAgent)</td>
-      <td>[AgentTree](#treeAgent)</td>
+      <td>[AgentShape](interop.shex#AgentShape)</td>
+      <td>[AgentTree](interop.tree#AgentTree)</td>
     </tr>
     <tr>
       <td>`-- application#set`</td>
       <td>[ApplicationRegistrySet](#classApplicationRegistrySet)</td>
-      <td>[ApplicationRegistrySetShape](#shexApplicationRegistrySet)</td>
-      <td>[ApplicationRegistrySetTree](#treeApplicationRegistrySet)</td>
+      <td>[ApplicationRegistrySetShape](interop.shex#ApplicationRegistrySetShape)</td>
+      <td>[ApplicationRegistrySetTree](interop.tree#ApplicationRegistrySetTree)</td>
     </tr>
     <tr>
       <td>`-- data#set`</td>
       <td>[DataRegistrySet](#classDataRegistrySet)</td>
-      <td>[DataRegistrySetShape](#shexDataRegistrySet)</td>
-      <td>[DataRegistrySetTree](#treeDataRegistrySet)</td>
+      <td>[DataRegistrySetShape](interop.shex#DataRegistrySetShape)</td>
+      <td>[DataRegistrySetTree](interop.tree#DataRegistrySetTree)</td>
     </tr>
     <tr>
       <td>`-- grant#set`</td>
       <td>[AccessGrantRegistrySet](#classAccessGrantRegistrySet)</td>
-      <td>[AccessGrantRegistrySetShape](#shexAccessGrantRegistrySet)</td>
-      <td>[AccessGrantRegistrySetTree](#treeAccessGrantRegistrySet)</td>
+      <td>[AccessGrantRegistrySetShape](interop.shex#AccessGrantRegistrySetShape)</td>
+      <td>[AccessGrantRegistrySetTree](interop.tree#AccessGrantRegistrySetTree)</td>
     </tr>
     <tr>
       <td>`-- receipt#set`</td>
       <td>[AccessReceiptRegistrySet](#classAccessReceiptRegistrySet)</td>
-      <td>[AccessReceiptRegistrySetShape](#shexAccessReceiptRegistrySet)</td>
-      <td>[AccessReceiptRegistrySetTree](#treeAccessReceiptRegistrySet)</td>
+      <td>[AccessReceiptRegistrySetShape](interop.shex#AccessReceiptRegistrySetShape)</td>
+      <td>[AccessReceiptRegistrySetTree](interop.tree#AccessReceiptRegistrySetTree)</td>
     </tr>
     <tr>
       <td>`-- remote#set`</td>
       <td>[RemoteDataRegistrySet](#classRemoteDataRegistrySet)</td>
-      <td>[RemoteDataRegistrySetShape](#shexRemoteDataRegistrySet)</td>
-      <td>[RemoteDataRegistrySetTree](#treeRemoteDataRegistrySet)</td>
+      <td>[RemoteDataRegistrySetShape](interop.shex#RemoteDataRegistrySetShape)</td>
+      <td>[RemoteDataRegistrySetTree](interop.tree#RemoteDataRegistrySetTree)</td>
     </tr>
     <tr>
       <td>`/inbox/access`</td>
       <td><a href="https://www.w3.org/ns/ldp#inbox" class="vocab">ldp:inbox</a></td>
       <td>-</td>
-      <td>[AccessInboxTree](interop.tree#treeAccessInbox)</td>
+      <td>[AccessInboxTree](interop.tree#AccessInboxTree)</td>
     </tr>
     <tr>
       <td>`/inbox/general`</td>
