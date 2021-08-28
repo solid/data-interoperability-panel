@@ -1,0 +1,18 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX alice: <https://alice.example/>
+PREFIX alice-remote: <https://alice.example/remote/>
+PREFIX authz-agent: <https://trusted.example/>
+PREFIX authz-agent: <https://trusted.example/>
+PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
+
+alice-remote:9e80126d-178f-4a03-851b-c731194a3b0d\/
+  a interop:RemoteDataRegistration ;
+  interop:registeredBy alice:\#id ;
+  interop:registeredWith authz-agent:\#id ;
+  interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+  interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+  interop:registeredShapeTree pm-shapetrees:ProjectTree ;
+  interop:hasRemoteAgentDataRegistration
+    <f0ebbd29-3a5a-4770-af29-cdb7693066b4/> ,
+    <bedcc388-f303-4059-8645-2e93bf61e9f3/> .

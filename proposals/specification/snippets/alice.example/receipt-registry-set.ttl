@@ -1,0 +1,10 @@
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX alice: <https://alice.example/>
+PREFIX alice-work: <https://work.alice.example/>
+PREFIX alice-personal: <https://personal.alice.example/>
+
+alice:receipt-registry-set
+  a interop:AccessReceiptRegistrySet;
+  interop:hasRegistry
+    alice-personal:receipts\/ ,
+    alice-work:receipts\/ .

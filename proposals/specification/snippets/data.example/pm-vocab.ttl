@@ -1,0 +1,80 @@
+PREFIX : <#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+<>
+  dcterms:issued "2020-08-27"^^xsd:date ;
+  dcterms:modified "2021-08-27"^^xsd:date ;
+  rdfs:label "Example project management vocabulary"@en .
+
+:Project
+  a rdfs:Class ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Project"@en .
+
+:Milestone
+  a rdfs:Class ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Milestone"@en .
+
+:Task
+  a rdfs:Class ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Task"@en .
+
+:Release
+  a rdfs:Class ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Release"@en .
+
+:id
+  a rdf:Property ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "ID"@en .
+
+:name
+  a rdf:Property ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Name"@en .
+
+:description
+  a rdf:Property ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Description"@en .
+
+:target
+  a rdf:Property ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Target"@en .
+
+:inProject
+  a rdf:Property ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "In project"@en .
+
+:severity
+  a rdf:Property ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Severity"@en .
+
+:created_at
+  a rdf:Property ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Created at"@en .
+
+:hasMilestone
+  a rdf:Property ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Has milestone"@en .
+
+:hasTask
+  a rdf:Property ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Has task"@en .
+
+:hasIssue
+  a rdf:Property ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Has issue"@en .

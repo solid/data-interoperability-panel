@@ -1,0 +1,38 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xml: <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX shx: <http://www.w3.org/ns/shex#>
+PREFIX pm: <http://data.example/ns/pm#>
+
+<#ProjectShape> {
+  pm:id xsd:integer ;
+  pm:name xsd:string ;
+  pm:created_at xsd:dateTime ;
+  pm:hasMilestone IRI*
+}
+
+<#MilestoneShape> {
+  pm:id xsd:integer ;
+  pm:name xsd:string ;
+  pm:created_at xsd:dateTime ;
+  pm:target xsd:dateTime ;
+  pm:inProject IRI ;
+  pm:hasTask IRI* ;
+  pm:hasIssue IRI*
+}
+
+<#TaskShape> {
+  pm:id xsd:integer ;
+  pm:name xsd:string ;
+  pm:description xsd:string ;
+  pm:created_at xsd:dateTime ;
+}
+
+<#IssueShape> {
+  pm:id xsd:integer ;
+  pm:name xsd:string ;
+  pm:severity xsd:string;
+  pm:description xsd:string ;
+  pm:created_at xsd:dateTime
+}

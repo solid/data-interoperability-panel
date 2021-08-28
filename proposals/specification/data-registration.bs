@@ -19,11 +19,6 @@ for a detailed explanation of how Data Registrations should be processed.
 
 ### Summary ### {#datareg-datamodel-summary}
 
-<figure id="fig-datareg-model">
-  <img src="diagrams/datareg-model.svg" width=100%/>
-  <figcaption>Data model for data registration</figcaption>
-</figure>
-
 An [=Agent=] links to a [=Data Registry Set=] via the
 [interop:hasDataRegistrySet](interop.ttl#hasDataRegistrySet)
 property.
@@ -41,76 +36,20 @@ via the
 <a href="https://www.w3.org/ns/ldp#contains" class="vocab">ldp:contains</a>
 property.
 
-<figure id="fig-datareg-agent">
-  <figcaption>[=Agent=] at https://alice.pod.example/profile/id#me
-  linking to a [=Data Registry Set=]</figcaption>
-  <pre highlight="turtle">
-  <#me>
-    a interop:Agent;
-    interop:hasDataRegistrySet &lt;https://alice.pod.example/profile/data#set&gt; .
-  </pre>
-  </figure>
-</figure>
-
-<figure id ="fig-datareg-registry-set">
-   <figcaption>A [=Data Registry Set=] at
-   https://alice.pod.example/profile/data#set linking to two different
-  [=Data Registries=]</figcaption>
-  <pre highlight="turtle">
-  <#set>
-    a interop:DataRegistrySet;
-    interop:hasRegistry &lt;https://alice.pod.example/data/#registry&gt; ,
-                    &lt;https://alice.otherpod.example/data/#registry&gt; .
-  </pre>
-</figure>
-
-<figure id="fig-datareg-registry">
-  <figcaption>A [=Data Registry=] at https://alice.pod.example/data/#registry
-  linking to several [=Data Registrations=]</figcaption>
-  <pre highlight="turtle">
-  <#registry>
-    a interop:DataRegistry ;
-    interop:hasRegistration &lt;8501f084-deb9-4775-8a35-2040df435d21/#registration&gt; ,
-                        &lt;df4ab227-2f15-455d-8ca2-fad10fb9f9bc/#registration&gt; ,
-                        &lt;d0954df2-e7c3-40b4-9eeb-65df92d9167e/#registration&gt; ,
-                        &lt;87da9aa5-3f6c-4bc2-a5d4-adb7efcaee5d/#registration&gt; ,
-                        &lt;bc3d8522-7f00-4d90-a01b-54ec01591640/#registration&gt; ,
-                        &lt;3a3ee852-ff49-46ea-b7a8-65cec55879a4/#registration&gt; .
-  </pre>
-</figure>
-
-<figure id="fig-datareg-registration">
-  <figcaption>A [=Data Registration=] at
-  https://alice.pod.example/data/8501f084-deb9-4775-8a35-2040df435d21/#registration
-  </figcaption>
-  <pre highlight="turtle">
-  <#registration>
-    a interop:DataRegistration ;
-    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-    interop:registeredWith &lt;https://app.example/id#agent&gt; ;
-    interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
-    interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
-    interop:registeredShapeTree note:notebookTree ;
-    interop:registeredType note:notebook .
-  </pre>
-</figure>
-
 ### Data Registry Set ### {#datamodel-data-registry-set}
 
 A <dfn>Data Registry Set</dfn> is a [=Registry Set=] specifically
 made up of [=Data Registries=].
+
+[Class Definition](interop.ttl#DataRegistrySet) -
+[Shape Definition](interop.shex#DataRegistrySetShape) -
+[Shape Tree Definition](interop.tree#DataRegistrySetTree)
 
 <table class="classinfo data" align="left" id="classDataRegistrySet">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3 text-align=left>
-        [DataRegistrySet](interop.ttl#DataRegistrySet)
-        a rdfs:subClassOf <a href="interop.ttl#RegistrySet" class="vocab">RegistrySet</a>
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -126,26 +65,15 @@ made up of [=Data Registries=].
   </tbody>
 </table>
 
-The [DataRegistrySetShape](#shexDataRegistrySet) is used to validate
-an instance of the [DataRegistrySet](#classDataRegistrySet) class.
-
-<pre highlight="turtle" id="shexDataRegistrySet">
-<#DataRegistrySetShape> {
-  a [ interop:DataRegistrySet ] ;
-  interop:hasRegistry IRI+
-}
-</pre>
-
-The [DataRegistrySetTree](interop.tree#DataRegistrySetTree)
-is assigned to a resource to ensure it will validate against the
-[DataRegistrySetShape](#shexDataRegistrySet).
-
-<pre highlight="turtle" id="treeDataRegistrySet">
-<#DataRegistrySetTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#DataRegistrySetShape&gt; .
-</pre>
+<figure>
+  <figcaption>A [=Data Registry Set=] at https://alice.pod.example/profile/data#set linking to two different
+  [=Data Registries=]</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/data-registry-set.ttl
+  highlight: turtle
+  show: 6-10
+  </pre>
+</figure>
 
 ### Data Registry ### {#datamodel-data-registry}
 
@@ -156,6 +84,10 @@ A [=Data Registry=] can be used for basic discovery, but it is not
 designed nor intended to be an efficient means to query or index data.
 However, it is *intended* to be used as reliable source data for different
 query engines or indexing schemes.
+
+[Class Definition](interop.ttl#DataRegistry) -
+[Shape Definition](interop.shex#DataRegistryShape) -
+[Shape Tree Definition](interop.tree#DataRegistryTree)
 
 <table class="classinfo data" align="left" id="classDataRegistry">
   <colgroup></colgroup>
@@ -183,30 +115,14 @@ query engines or indexing schemes.
   </tbody>
 </table>
 
-The [DataRegistryShape](#shexDataRegistry) is used to validate an
-instance of the [DataRegistry](#classDataRegistry) class.
-
-<pre highlight="turtle" id="shexDataRegistry">
-<#DataRegistryShape> {
-  a [ interop:DataRegistry ] ;
-  interop:hasRegistration IRI*
-}
-</pre>
-
-The [DataRegistryTree](interop.tree#DataRegistryTree) is assigned
-to a container resource to ensure that it will validate against the
-[DataRegistryShape](#shexDataRegistry), and contain only
-conformant instances of the
-[DataRegistrationTree](#treeDataRegistration).
-
-<pre highlight="turtle" id="treeDataRegistry">
-<#DataRegistryTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy &lt;interops#DataRegistryShape&gt; ;
-  st:contains <#DataRegistrationTree> ,
-              st:AllowNone .
-</pre>
+<figure>
+  <figcaption>A [=Data Registry=] at https://work.alice.example/data/ linking to several [=Data Registrations=]</figcaption>
+  <pre class=include-code>
+  path: snippets/work.alice.example/data-registry.ttl
+  highlight: turtle
+  show: 5-13
+  </pre>
+</figure>
 
 ### Data Registration ### {#datamodel-data-registration}
 
@@ -218,6 +134,10 @@ given [=shape tree=], indicated by the
 A <dfn>Data Instance</dfn> is a unique, stored instance of a
 particular type of data, conforming to the [=shape tree=] for
 the instance's [=Data Registration=].
+
+[Class Definition](interop.ttl#DataRegistration) -
+[Shape Definition](interop.shex#DataRegistrationShape) -
+[Shape Tree Definition](interop.tree#DataRegistrationTree)
 
 <table class="classinfo data" align="left" id="classDataRegistration">
   <colgroup></colgroup>
@@ -262,43 +182,17 @@ the instance's [=Data Registration=].
       <td><a href="https://w3.org/ns/st/terms" class="vocab">st:ShapeTree</a></td>
       <td>The [=Shape Tree=] that was registered</td>
     </tr>
-    <tr>
-      <td>registeredType</td>
-      <td><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" class="vocab">rdf:type</a></td>
-      <td>Type of data registered</td>
-    </tr>
   </tbody>
 </table>
 
-The [DataRegistrationShape](#shexDataRegistration) is used
-to validate an instance of the
-[DataRegistration](#classDataRegistration)
-class.
-
-<pre highlight="turtle" id="shexDataRegistration">
-<#DataRegistrationShape> {
-  a [ interop:DataRegistration ] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI ;
-  interop:registeredAt xsd:dateTime ;
-  interop:updatedAt xsd:dateTime ;
-  interop:registeredShapeTree IRI ;
-  interop:registeredType IRI*
-}
-</pre>
-
-The [DataRegistrationTree](interop.tree#DataRegistrationTree)
-is assigned to a resource via the
-[DataRegistryTree](#treeDataRegistry),
-to ensure that the [=Data Registration=] will validate against the
-[DataRegistrationShape](#shexDataRegistration).
-
-<pre highlight="turtle" id="treeDataRegistration">
-<#DataRegistrationTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy &lt;interops#DataRegistrationShape&gt; .
-</pre>
+<figure>
+  <figcaption>A [=Data Registration=] at https://work.alice.example/data/8501f084-deb9-4775-8a35-2040df435d21/</figcaption>
+  <pre class=include-code>
+  path: snippets/work.alice.example/8501f084-deb9-4775-8a35-2040df435d21.ttl
+  highlight: turtle
+  show: 8-14
+  </pre>
+</figure>
 
 ## Resource Hierarchy ## {#datareg-hierarchy}
 
@@ -320,100 +214,100 @@ to ensure that the [=Data Registration=] will validate against the
       <td>`/profile/`</td>
       <td>-</td>
       <td>-</td>
-      <td>[ProfileTree](#treeAgent)</td>
+      <td>[ProfileTree](interop.tree#Agent)</td>
     </tr>
     <tr>
-      <td>`-- data#set`</td>
+      <td>`-- data-registry-set`</td>
       <td>[DataRegistrySet](#classDataRegistrySet)</td>
-      <td>[DataRegistrySetShape](#shexDataRegistrySet)</td>
-      <td>[DataRegistrySetTree](#treeDataRegistrySet)</td>
+      <td>[DataRegistrySetShape](interop.shex#DataRegistrySet)</td>
+      <td>[DataRegistrySetTree](interop.tree#DataRegistrySet)</td>
     </tr>
     <tr>
-      <td>`/data/#registry`</td>
+      <td>`/data/`</td>
       <td>[DataRegistry](#classDataRegistry)</td>
-      <td>[DataRegistryShape](#shexDataRegistry)</td>
-      <td>[DataRegistryTree](#treeDataRegistry)</td>
+      <td>[DataRegistryShape](interop.shex#DataRegistry)</td>
+      <td>[DataRegistryTree](interop.tree#DataRegistry)</td>
     </tr>
     <tr>
-      <td>`-- 8501f084...2040df43/#registration`</td>
+      <td>`-- 8501f084...2040df43/`</td>
       <td>[DataRegistration](#classDataRegistration)</td>
-      <td>[DataRegistrationShape](#shexDataRegistration)</td>
-      <td>[DataRegistrationTree](#treeDataRegistration),
-          [FooContainingTree](#treeFooContaining)</td>
+      <td>[DataRegistrationShape](interop.shex#DataRegistration)</td>
+      <td>[DataRegistrationTree](interop.tree#DataRegistration),
+          [ProjectRegistrationTree](snippets/data.example/pm-shapetrees.tree#ProjectRegistrationTree)</td>
     </tr>
     <tr>
-      <td>`---- 16e1eae9...ca3805c4/#foo`</td>
-      <td>[FooInstance](#classFoo)</td>
-      <td>[FooShape](#shexFoo)</td>
-      <td>[FooTree](#treeFoo)</td>
+      <td>`---- 16e1eae9...ca3805c4/`</td>
+      <td>[Project](snippets/data.example/pm-vocab.ttl#Project)</td>
+      <td>[ProjectShape](snippets/data.example/pm-shapes.shex#ProjectShape)</td>
+      <td>[ProjectTree](snippets/data.example/pm-shapetrees.tree#ProjectTree)</td>
     </tr>
     <tr>
-      <td>`---- 886785d2...5ac36b7b/#foo`</td>
-      <td>[FooInstance](#classFoo)</td>
-      <td>[FooShape](#shexFoo)</td>
-      <td>[FooTree](#treeFoo)</td>
+      <td>`---- 886785d2...5ac36b7b/`</td>
+      <td>[Project](snippets/data.example/pm-vocab.ttl#Project)</td>
+      <td>[ProjectShape](snippets/data.example/pm-shapes.shex#ProjectShape)</td>
+      <td>[ProjectTree](snippets/data.example/pm-shapetrees.tree#ProjectTree)</td>
     </tr>
     <tr>
-      <td>`---- dae5015c...7ca7a198/#foo`</td>
-      <td>[FooInstance](#classFoo)</td>
-      <td>[FooShape](#shexFoo)</td>
-      <td>[FooTree](#treeFoo)</td>
+      <td>`---- dae5015c...7ca7a198/`</td>
+      <td>[Project](snippets/data.example/pm-vocab.ttl#Project)</td>
+      <td>[ProjectShape](snippets/data.example/pm-shapes.shex#ProjectShape)</td>
+      <td>[ProjectTree](snippets/data.example/pm-shapetrees.tree#ProjectTree)</td>
     </tr>
     <tr>
-      <td>`-- df4ab227...fad10fb9/#registration`</td>
+      <td>`-- df4ab227...fad10fb9/`</td>
       <td>[DataRegistration](#classDataRegistration)</td>
-      <td>[DataRegistrationShape](#shexDataRegistration)</td>
-      <td>[DataRegistrationTree](#treeDataRegistration),
-          [BarContainingTree](#treeFooContaining)</td>
+      <td>[DataRegistrationShape](interop.shex#DataRegistration)</td>
+      <td>[DataRegistrationTree](interop.tree#DataRegistration),
+          [TaskRegistrationTree](snippets/data.example/pm-shapetrees.tree#TaskRegistrationTree)</td>
     </tr>
     <tr>
-      <td>`---- 9b60a354...cb9da85c/#bar`</td>
-      <td>[BarInstance](#classFoo)</td>
-      <td>[BarShape](#shexFoo)</td>
-      <td>[BarTree](#treeFoo)</td>
+      <td>`---- 9b60a354...cb9da85c/`</td>
+      <td>[Task](snippets/data.example/pm-vocab.ttl#Task)</td>
+      <td>[TaskShape](snippets/data.example/pm-shapes.shex#TaskShape)</td>
+      <td>[TaskTree](snippets/data.example/pm-shapetrees.tree#TaskTree)</td>
     </tr>
     <tr>
-      <td>`---- 6e545b74...b15cbdce/#bar`</td>
-      <td>[BarInstance](#classFoo)</td>
-      <td>[BarShape](#shexFoo)</td>
-      <td>[BarTree](#treeFoo)</td>
+      <td>`---- 6e545b74...b15cbdce/`</td>
+      <td>[Task](snippets/data.example/pm-vocab.ttl#Task)</td>
+      <td>[TaskShape](snippets/data.example/pm-shapes.shex#TaskShape)</td>
+      <td>[TaskTree](snippets/data.example/pm-shapetrees.tree#TaskTree)</td>
     </tr>
     <tr>
-      <td>`---- d33e01c8...ac9e3cc6/#bar`</td>
-      <td>[BarInstance](#classFoo)</td>
-      <td>[BarShape](#shexFoo)</td>
-      <td>[BarTree](#treeFoo)</td>
+      <td>`---- d33e01c8...ac9e3cc6/`</td>
+      <td>[Task](snippets/data.example/pm-vocab.ttl#Task)</td>
+      <td>[TaskShape](snippets/data.example/pm-shapes.shex#TaskShape)</td>
+      <td>[TaskTree](snippets/data.example/pm-shapetrees.tree#TaskTree)</td>
     </tr>
     <tr>
-      <td>`---- 927108fa...14985cb9/#bar`</td>
-      <td>[BarInstance](#classFoo)</td>
-      <td>[BarShape](#shexFoo)</td>
-      <td>[BarTree](#treeFoo)</td>
+      <td>`---- 927108fa...14985cb9/`</td>
+      <td>[Task](snippets/data.example/pm-vocab.ttl#Task)</td>
+      <td>[TaskShape](snippets/data.example/pm-shapes.shex#TaskShape)</td>
+      <td>[TaskTree](snippets/data.example/pm-shapetrees.tree#TaskTree)</td>
     </tr>
     <tr>
-      <td>`---- 180dda0b...c4f8c4dc/#bar`</td>
-      <td>[BarInstance](#classFoo)</td>
-      <td>[BarShape](#shexFoo)</td>
-      <td>[BarTree](#treeFoo)</td>
+      <td>`---- 180dda0b...c4f8c4dc/`</td>
+      <td>[Task](snippets/data.example/pm-vocab.ttl#Task)</td>
+      <td>[TaskShape](snippets/data.example/pm-shapes.shex#TaskShape)</td>
+      <td>[TaskTree](snippets/data.example/pm-shapetrees.tree#TaskTree)</td>
     </tr>
     <tr>
-      <td>`-- 3c9c9cff...fc7f916b/#registration`</td>
+      <td>`-- 3c9c9cff...fc7f916b/`</td>
       <td>[DataRegistration](#classDataRegistration)</td>
-      <td>[DataRegistrationShape](#shexDataRegistration)</td>
-      <td>[DataRegistrationTree](#treeDataRegistration),
-          [BazContainingTree](#treeFooContaining)</td>
+      <td>[DataRegistrationShape](interop.shex#DataRegistration)</td>
+      <td>[DataRegistrationTree](interop.tree#DataRegistration),
+          [MilestoneRegistrationTree](snippets/data.example/pm-shapetrees.tree#MilestoneRegistrationTree)</td>
     </tr>
     <tr>
-      <td>`---- 4376595a...f8d2547c/#baz`</td>
-      <td>[BazInstance](#classFoo)</td>
-      <td>[BazShape](#shexFoo)</td>
-      <td>[BazTree](#treeFoo)</td>
+      <td>`---- 4376595a...f8d2547c/`</td>
+      <td>[Milestone](snippets/data.example/pm-vocab.ttl#Milestone)</td>
+      <td>[MilestoneShape](snippets/data.example/pm-shapes.shex#MilestoneShape)</td>
+      <td>[MilestoneTree](snippets/data.example/pm-shapetrees.tree#MilestoneTree)</td>
     </tr>
     <tr>
-      <td>`---- 14c9fc6a...7f6de3ca/#baz`</td>
-      <td>[BazInstance](#classFoo)</td>
-      <td>[BazShape](#shexFoo)</td>
-      <td>[BazTree](#treeFoo)</td>
+      <td>`---- 14c9fc6a...7f6de3ca/`</td>
+      <td>[Milestone](snippets/data.example/pm-vocab.ttl#Milestone)</td>
+      <td>[MilestoneShape](snippets/data.example/pm-shapes.shex#MilestoneShape)</td>
+      <td>[MilestoneTree](snippets/data.example/pm-shapetrees.tree#MilestoneTree)</td>
     </tr>
   </tbody>
 </table>
@@ -444,17 +338,12 @@ that it only contains [=Data Instances=] of the registered
 [interop:registeredShapeTree](#classDataRegistration).
 
 In the [figure below](#fig-datareg-intersecting), the
-combination of a [DataRegistrationTree](#treeDataRegistration)
-and [FooContainingTree](#treeFooContaining) on the
+combination of a [DataRegistrationTree](interop.tree#DataRegistration)
+and [ProjectRegistrationTree](snippets/data.example/pm-shapetrees.tree#ProjectRegistrationTree) on the
 same [=Data Registration=] can be observed. Furthermore, an example of
 a contained [=Data Instance=] is provided, which conforms
-to [FooTree](#treeFoo) per the directive in
-[FooContainingTree](#treeFooContaining).
-
-<div id="treeFooContaining"></div>
-<div id="treeFoo"></div>
-<div id="shexFoo"></div>
-<div id="classFoo"></div>
+to [ProjectTree](snippets/data.example/pm-shapetrees.tree#ProjectTree) per the directive in
+[ProjectRegistrationTree](snippets/data.example/pm-shapetrees.tree#ProjectRegistrationTree).
 
 <figure id="fig-datareg-intersecting">
   <figcaption>Intersecting [=shape trees=] for a [=Data Registration=]
@@ -466,64 +355,56 @@ to [FooTree](#treeFoo) per the directive in
     <tbody>
       <tr>
         <td colspan=2>
-        `-- 8501f084-deb9-4775-8a35-2040df435d21/#registration`
+        `-- 8501f084-deb9-4775-8a35-2040df435d21/`
         </td>
       </tr>
       <tr>
         <td>
           Contents of the [=Data Registration=]
-          <pre highlight="turtle">
-          <#registration>
-            a interop:DataRegistration ;
-            interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-            interop:registeredWith &lt;https://app.example/id#agent&gt; ;
-            interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
-            interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
-            interop:registeredShapeTree foo:fooTree ;
-            interop:registeredType foo:fooThing .
+          <pre class=include-code>
+            path: snippets/work.alice.example/8501f084-deb9-4775-8a35-2040df435d21.ttl
+            highlight: turtle
+            show: 8-14
           </pre>
         </td>
         <td>
           Ensure the container resource for the [=Data Registration=]
-          conforms to `interops#DataRegistrationShape`.
-          <pre highlight="turtle">
-            <#DataRegistrationTree>
-              a st:ShapeTree;
-              st:expectsType st:ShapeTreeContainer ;
-              st:validatedBy &lt;interops#DataRegistrationShape&gt; .
+          conforms to `interops#DataRegistrationShape`. 
+          <pre class=include-code>
+            path: interop.tree
+            highlight: turtle
+            show: 100-103
           </pre>
           And also ensure the [=Data Registration=] only
-          contains resources that conform to `<#FooTree>`.
-          <pre highlight="turtle">
-            <#FooContainingTree>
-              a st:ShapeTree;
-              st:expectsType st:ShapeTreeContainer ;
-              st:contains <#FooTree> .
+          contains resources that conform to `pm:ProjectTree`.
+          <pre class=include-code>
+            path: snippets/data.example/pm-shapetrees.tree
+            highlight: turtle
+            show: 4-7
           </pre>
         </td>
       </tr>
       <tr>
         <td colspan=2>
-        `------ 16e1eae9-20a5-489d-8380-8c07ca3805c4#foo`
+        `------ 16e1eae9-20a5-489d-8380-8c07ca3805c4`
         </td>
       </tr>
       <tr>
         <td>
           Contents of the [=Data Instance=]
-          <pre highlight="turtle">
-          <#foo>
-            a foo:fooThing ;
-            foo:isExample "of an instance" .
+          <pre class=include-code>
+            path: snippets/work.alice.example/16e1eae9-20a5-489d-8380-8c07ca3805c4.ttl
+            highlight: turtle
+            show: 8-12
           </pre>
         </td>
         <td>
           Ensure the resource for the [=Data Instance=]
-          conforms to `<#FooTree>`.
-          <pre highlight="turtle">
-            <#FooTree>
-              a st:ShapeTree;
-              st:expectsType st:ShapeTreeResource ;
-              st:validatedBy &lt;foo#FooShape&gt; .
+          conforms to `pm:ProjectTree`.
+          <pre class=include-code>
+            path: snippets/data.example/pm-shapetrees.tree
+            highlight: turtle
+            show: 9-13
           </pre>
         </td>
       </tr>

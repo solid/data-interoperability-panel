@@ -1,0 +1,87 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX alice: <https://alice.example/>
+PREFIX alice-grants: <https://alice.example/grants/>
+PREFIX authz-agent: <https://trusted.example/>
+PREFIX acmeproject: <https://acmeproject.example/>
+PREFIX pm: <https://vocab.example/pm/>
+PREFIX pm-shex: <http://data.example/shex/pm#>
+PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
+
+alice-grants:08c5ae76-6c83-46f8-8e1d-eb14219e7f5f\/
+  a interop:AccessInvitation ;
+  interop:registeredBy alice:\#id ;
+  interop:registeredWith authz-agent:\#id ;
+  interop:registeredAt "2020-09-13T19:32:52Z"^^xsd:dateTime ;
+  interop:updatedAt "2020-09-13T19:32:52Z"^^xsd:dateTime ;
+  interop:expiresAt "2020-09-20T19:32:52Z"^^xsd:dateTime ;
+  interop:hasAccessNeedGroup <#need-group-pm> ;
+  interop:hasDataGrant <#data-grant-project> ;
+  interop:hasAccessInvitationChannel <#phone-channel> , <#email-channel> .
+
+<#phone-channel>
+  a interop:PhoneInvitationChannel ;
+  interop:channelTarget "(555) 555-1212" ;
+  interop:channelCode "654345" ;
+  interop:isValidated false ;
+  interop:remainingAttempts 3 .
+
+<#email-channel>
+  a interop:EmailInvitationChannel ;
+  interop:channelTarget "bob@example.com" ;
+  interop:channelCode "434567" ;
+  interop:isValidated true ;
+  interop:remainingAttempts 3 .
+
+<#data-grant-project>
+  a interop:DataGrant ;
+  interop:hasAccessGrant <#grant> ;
+  interop:satisfiesAccessNeed <#need-project> ;
+  interop:registeredShapeTree pm-shapetrees:ProjectTree ;
+  interop:hasDataRegistration data:project-tree-reg ;
+  interop:accessMode acl:read, acl:write, acl:Control ;
+  # Scope grants access to all instances in the project
+  # data registration, now and in the future, with no conditions
+  interop:scopeOfGrant interop:AllInstances ;
+  interop:hasReferencedDataGrant
+    <#data-grant-issue> ,
+    <#data-grant-task> ,
+    <#data-grant-milestone> ,
+    <#data-grant-release> .
+
+
+<#data-grant-issue>
+  a interop:ReferencedDataGrant ;
+  interop:hasDataGrant <#data-grant-project> ;
+  interop:satisfiesAccessNeed <#need-issue> ;
+  interop:registeredShapeTree pm-shapetrees:IssueTree ;
+  interop:hasDataRegistration data:issue-tree-reg ;
+  interop:accessMode acl:read, acl:write, acl:Control ;
+  interop:scopeOfGrant interop:AllInstances .
+
+<#data-grant-task>
+  a interop:ReferencedDataGrant ;
+  interop:hasDataGrant <#data-grant-project> ;
+  interop:satisfiesAccessNeed <#need-task> ;
+  interop:registeredShapeTree pm-shapetrees:TaskTree ;
+  interop:hasDataRegistration data:task-tree-reg ;
+  interop:accessMode acl:read, acl:write, acl:Control ;
+  interop:scopeOfGrant interop:AllInstances .
+
+<#data-grant-milestone>
+  a interop:ReferencedDataGrant ;
+  interop:hasDataGrant <#data-grant-project> ;
+  interop:satisfiesAccessNeed <#need-milestone> ;
+  interop:registeredShapeTree pm-shapetrees:MilestoneTree ;
+  interop:hasDataRegistration data:milestone-tree-reg ;
+  interop:accessMode acl:read, acl:write, acl:Control ;
+  interop:scopeOfGrant interop:AllInstances .
+
+<#data-grant-release>
+  a interop:ReferencedDataGrant ;
+  interop:hasDataGrant <#data-grant-release> ;
+  interop:satisfiesAccessNeed <#need-release> ;
+  interop:registeredShapeTree pm-shapetrees:ReleaseTree ;
+  interop:hasDataRegistration data:release-tree-reg ;
+  interop:accessMode acl:read, acl:write, acl:Control ;
+  interop:scopeOfGrant interop:AllInstances .

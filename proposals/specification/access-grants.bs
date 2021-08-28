@@ -28,11 +28,6 @@ for a detailed explanation of how Access Grants should be processed.
 
 ### Summary ### {#grants-datamodel-summary}
 
-<figure id="fig-grants-model">
-  <img src="diagrams/grants-model.svg" width=100%/>
-  <figcaption>Data model for the Access Grant Registry</figcaption>
-</figure>
-
 An [=Agent=] links to [=Access Grant Registry Sets=]
 via the [interop:hasAccessGrantRegistrySet](interop.ttl#hasAccessGrantRegistrySet) property.
 
@@ -48,29 +43,15 @@ and [=Access Invitations=] via the
 An <dfn>Access Grant Registry Set</dfn> is a [=Registry Set=] specifically
 made up of [=Access Grant Registries=].
 
-<figure id ="fig-grants-registry-set">
-   <figcaption>An [=Access Grant Registry Set=] at
-   https://alice.pod.example/profile/grant#set linking to two different
-  [=Access Grant Registries=]</figcaption>
-  <pre highlight="turtle">
-  <#set>
-    a interop:AccessGrantRegistrySet;
-    interop:hasRegistry &lt;https://alice.pod.example/grants/#registry&gt; ,
-                    &lt;https://alice.otherpod.example/grants/#registry&gt; .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#AccessGrantRegistrySet) -
+[Shape Definition](interop.shex#AccessGrantRegistrySetShape) -
+[Shape Tree Definition](interop.tree#AccessGrantRegistrySetTree)
 
 <table class="classinfo data" align="left" id="classAccessGrantRegistrySet">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3 text-align=left>
-        [AccessGrantRegistrySet](interop.ttl#AccessGrantRegistrySet)
-        a rdfs:subClassOf [RegistrySet](interop.ttl#RegistrySet)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -86,58 +67,30 @@ made up of [=Access Grant Registries=].
   </tbody>
 </table>
 
-The [AccessGrantRegistrySetShape](#shexAccessGrantRegistrySet) is used to validate
-an instance of the [AccessGrantRegistrySet](#classAccessGrantRegistrySet) class.
-
-<pre highlight="turtle" id="shexAccessGrantRegistrySet">
-<#AccessGrantRegistrySetShape> {
-  a [ interop:AccessGrantRegistrySet ] ;
-  interop:hasRegistry IRI+
-}
-</pre>
-
-The [AccessGrantRegistrySetTree](interop.tree#AccessGrantRegistrySetTree)
-is assigned to a resource to ensure it will validate against the
-[AccessGrantRegistrySetShape](#shexAccessGrantRegistrySet).
-
-<pre highlight="turtle" id="treeAccessGrantRegistrySet">
-<#AccessGrantRegistrySetTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#AccessGrantRegistrySetShape&gt; .
-</pre>
+<figure>
+  <figcaption>An [=Access Grant Registry Set=] at
+  https://alice.example/grant-registry-set linking to two different [=Access Grant Registries=]</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/grant-registry-set.ttl
+  highlight: turtle
+  show: 6-10
+  </pre>
+</figure>
 
 ### Access Grant Registry ### {#datamodel-access-registry}
 
 An <dfn>Access Grant Registry</dfn> is a collection of
 [=Access Grants=] stored in a specific location in a [=pod=].
 
-<figure id="fig-grants-registry">
-  <figcaption>An [=Access Grant Registry=] at https://alice.pod.example/grants/#registry
-  linking to several registered [=Access Grants=] or
-  [=Access Invitations=]</figcaption>
-  <pre highlight="turtle">
-  <#registry>
-    a interop:AccessGrantRegistry ;
-    interop:hasRegistration
-      &lt;ab3d0023-3860-4358-ae33-8d3af1097b9d#grant&gt; ,
-      &lt;ad7b935f-ced9-4ce6-835f-5c6abc046228#grant&gt; ,
-      &lt;5ed73c65-ce77-4c8a-8f7e-9715b90307e6#grant&gt; ,
-      &lt;2d575cba-3f6c-4c58-bccd-0e6266ba56cf#invitation&gt; .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#AccessGrantRegistry) -
+[Shape Definition](interop.shex#AccessGrantRegistryShape) -
+[Shape Tree Definition](interop.tree#AccessGrantRegistryTree)
 
 <table class="classinfo data" align="left" id="classAccessGrantRegistry">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [AccessGrantRegistry](interop.ttl#AccessGrantRegistry)
-        a rdfs:subClassOf [[#datamodel-agent|Registry]]
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -153,31 +106,16 @@ An <dfn>Access Grant Registry</dfn> is a collection of
   </tbody>
 </table>
 
-The [AccessGrantRegistryShape](#shexAccessGrantRegistry) is used to validate an
-instance of the [AccessGrantRegistry](#classAccessGrantRegistry) class.
-
-<pre highlight="turtle" id="shexAccessGrantRegistry">
-<#AccessGrantRegistryShape> {
-  a [ interop:AccessGrantRegistry ] ;
-  interop:hasRegistration IRI*
-}
-</pre>
-
-The [AccessGrantRegistryTree](interop.tree#AccessGrantRegistryTree) is assigned
-to a container resource to ensure that it will validate against the
-[AccessGrantRegistryShape](#shexAccessGrantRegistry), and contain only
-conformant instances of the [AccessGrantTree](#treeAccessGrant) and
-[AccessInvitationTree](#treeAccessInvitation).
-
-<pre highlight="turtle" id="treeAccessGrantRegistry">
-<#AccessGrantRegistryTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeContainer ;
-  st:validatedBy &lt;interops#AccessGrantRegistryShape&gt; ;
-  st:contains <#AccessGrantTree> ,
-              <#AccessInvitationTree> ,
-              st:AllowNone .
-</pre>
+<figure>
+  <figcaption>An [=Access Grant Registry=] at https://alice.example/grants/
+  linking to several registered [=Access Grants=] or
+  [=Access Invitations=].</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/grant-registry.ttl
+  highlight: turtle
+  show: 5-11
+  </pre>
+</figure>
 
 ### Access Grant ### {#datamodel-access-grant}
 
@@ -194,35 +132,15 @@ Access may be granted to data in [=Remote Data Registries=] through
 Elevated access to [=registries=], [=registry sets=], or the [=identity=]
 of the [=Agent=] may be granted through [=Trusted Grants=].
 
-<figure id="fig-grants-grant">
-  <figcaption>An [=Access Grant=] at
-  https://alice.pod.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d#grant
-  </figcaption>
-  <pre highlight="turtle">
-  <#grant>
-    a interop:AccessGrant ;
-    interop:registeredBy &lt;https://alice.pod.example/profile/id#me&gt; ;
-    interop:registeredWith &lt;https://trusted.example/id#agent&gt; ;
-    interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
-    interop:hasAccessGrantSubject &lt;#grant-subject&gt; ;
-    interop:hasAccessNeedGroup &lt;#need-group-pm&gt; ;
-    interop:hasDataGrant &lt;#data-grant-project&gt; ;
-    interop:hasRemoteDataGrant &lt;#remote-data-grant-project&gt; .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#AccessGrant) -
+[Shape Definition](interop.shex#AccessGrantShape) -
+[Shape Tree Definition](interop.tree#AccessGrantTree)
 
 <table class="classinfo data" align="left" id="classAccessGrant">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [AccessGrant](interop.ttl#AccessGrant)
-        a rdfs:subClassOf [Registration](interop.ttl#Registration)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -278,35 +196,15 @@ of the [=Agent=] may be granted through [=Trusted Grants=].
   </tbody>
 </table>
 
-The [AccessGrantShape](#shexAccessGrant) is used to validate an instance
-of the [AccessGrant](#classAccessGrant) class.
-
-<pre highlight="turtle" id="shexAccessGrant">
-<#AccessGrantShape> {
-  a [ interop:AccessGrant ] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI? ;
-  interop:registeredAt xsd:dateTime ;
-  interop:updatedAt xsd:dateTime ;
-  interop:hasAccessGrantSubject @<#:AccessGrantSubject> ;
-  interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+ ;
-  ( interop:hasDataGrant @<#:DataGrantShape>+ |
-  interop:hasTrustedGrant @<#:TrustedGrantShape>+ |
-  interop:hasRemoteDataGrant @<#:RemoteDataGrantShape>+ ) ;
-}
-</pre>
-
-The [AccessGrantTree](interop.tree#AccessGrantTree) is assigned to a
-resource via the [AccessGrantRegistryTree](#treeAccessGrantRegistry), and ensure
-that the assigned resource will validate against the
-[AccessGrantShape](#shexAccessGrant).
-
-<pre highlight="turtle" id="treeAccessGrant">
-<#AccessGrantTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#AccessGrantShape&gt; .
-</pre>
+<figure>
+  <figcaption>An [=Access Grant=] at
+  https://alice.pod.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/ab3d0023-3860-4358-ae33-8d3af1097b9d.ttl
+  highlight: turtle
+  show: 11-19
+  </pre>
+</figure>
 
 ### Access Grant Subject ### {#datamodel-access-grant-subject}
 
@@ -314,26 +212,14 @@ An <dfn>Access Grant Subject</dfn> represents a unique combination of
 who and what is being granted access. For example, it allows a single [=Agent=]
 to be specified, or a given [=Agent=] using a given [=Application=].
 
-<figure id="fig-grants-subject">
-  <figcaption>An [=Access Grant Subject=] at
-  https://alice.pod.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d#grant-subject
-  </figcaption>
-  <pre highlight="turtle">
-  <#grant-subject>
-      a interop:AccessGrantSubject ;
-      interop:accessByAgent &lt;https://alice.pod.example/profile/id#me&gt; ;
-      interop:accessByApplication &lt;https://acmeproject.example/profile/id#application&gt; .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#AccessGrantSubject) -
+[Shape Definition](interop.shex#AccessGrantSubjectShape)
 
 <table class="classinfo data" align="left" id="classAccessGrantSubject">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>[AccessGrantSubject](interop.ttl#AccessGrant)</th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -354,16 +240,15 @@ to be specified, or a given [=Agent=] using a given [=Application=].
   </tbody>
 </table>
 
-The [AccessGrantSubjectShape](#shexAccessGrantSubject) is used to validate
-an instance of the [AccessGrantSubject](#classAccessGrantSubject) class.
-
-<pre highlight="turtle" id="shexAccessGrantSubject">
-<#AccessGrantSubjectShape> {
-  a [ interop:AccessGrantSubject ] ;
-  interop:accessGrantSubjectAgent IRI? ;
-  interop:accessGrantSubjectApplication IRI?
-}
-</pre>
+<figure>
+  <figcaption>The [=Access Grant Subject=] of the [=Access Grant=] at
+  https://alice.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/ab3d0023-3860-4358-ae33-8d3af1097b9d.ttl
+  highlight: turtle
+  show: 21-24
+  </pre>
+</figure>
 
 ### Data Grant ### {#datamodel-data-grant}
 
@@ -408,39 +293,15 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
 * [=Access Need=] and [=Data Grant=] must have the same `interop:accessModes`
 * [=Access Need=] and [=Data Grant=] must have the same `interop:registeredShapeTree`
 
-<figure id="fig-grants-data-grant">
-  <figcaption>An [=Data Grant=] at
-  https://alice.pod.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d#data-grant-project
-  </figcaption>
-  <pre highlight="turtle">
-  <#data-grant-project>
-      a interop:DataGrant ;
-      interop:hasAccessGrant <#grant> ;
-      interop:satisfiesAccessNeed <#need-project> ;
-      interop:registeredShapeTree pm:ProjectTree ;
-      interop:hasDataRegistration data:project-tree-reg ;
-      interop:accessMode acl:read, acl:write, acl:Control ;
-      # Scope grants access to all instances in the project
-      # data registration, now and in the future, with no conditions
-      interop:scopeOfGrant interop:AllInstances ;
-      interop:hasReferencedDataGrant
-          <#data-grant-issue> ,
-          <#data-grant-task> ,
-          <#data-grant-release> ,
-          <#data-grant-document> .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#DataGrant) -
+[Shape Definition](interop.shex#DataGrantShape) -
+[Shape Tree Definition](interop.tree#DataGrantTree)
 
 <table class="classinfo data" align="left" id="classDataGrant">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [DataGrant](interop.ttl#DataGrant)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -506,34 +367,15 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
   </tbody>
 </table>
 
-The [DataGrantShape](#shexDataGrant) is used to
-validate an instance of the [DataGrant](#classDataGrant)
-class.
-
-<pre highlight="turtle" id="shexDataGrant">
-<#DataGrantShape> {
-  a [ interop:DataGrant ] ;
-  interop:hasAccessGrant @<#:AccessGrantShape> ;
-  interop:satisfiesAccessNeed @<#:AccessNeedShape> ;
-  interop:registeredShapeTree IRI ;
-  interop:hasDataRegistration IRI ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:scopeOfGrant @<#:DataGrantScopes> ;
-  interop:hasDataInstance IRI* ;
-  interop:hasReferencedDataGrant @<#:ReferencedDataGrantShape>
-}
-</pre>
-
-The [DataGrantTree] ensures
-that the assigned resource will validate against the
-[DataGrantShape](#shexDataGrant).
-
-<pre highlight="turtle" id="treeDataGrant">
-<#DataGrantTree>
-  a st:ShapeTree ;
-  st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops:DataGrantShape&gt; .
-</pre>
+<figure>
+  <figcaption>A [=Data Grant=] in the [=Access Grant=] at
+  https://alice.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/ab3d0023-3860-4358-ae33-8d3af1097b9d.ttl
+  highlight: turtle
+  show: 26-40
+  </pre>
+</figure>
 
 ### Referenced Data Grant ### {#datamodel-referenced-data-grant}
 
@@ -593,32 +435,15 @@ When recording a [=Referenced Data Grant=] via [[SAI-API#grants-recordgrant]]:
 * [=Referenced Access Need=] and [=Referenced Data Grant=] must have the same `interop:accessModes`
 * [=Referenced Access Need=] and [=Referenced Data Grant=] must have the same `interop:registeredShapeTree`
 
-<figure id="fig-grants-referenced-data-grant">
-  <figcaption>An [=Referenced Data Grant=] at
-  https://alice.pod.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d#data-grant-issue
-  </figcaption>
-  <pre highlight="turtle">
-  <#data-grant-issue>
-    a interop:ReferencedDataGrant ;
-    interop:hasDataGrant <#data-grant-project> ;
-    interop:satisfiesAccessNeed <#need-issue> ;
-    interop:registeredShapeTree pm:IssueTree ;
-    interop:hasDataRegistration data:issue-tree-reg ;
-    interop:accessMode acl:read, acl:write, acl:Control ;
-    interop:scopeOfGrant interop:AllInstances .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#ReferencedDataGrant) -
+[Shape Definition](interop.shex#ReferencedDataGrantShape) -
+[Shape Tree Definition](interop.tree#ReferencedDataGrantTree)
 
 <table class="classinfo data" align="left" id="classReferencedDataGrant">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [ReferencedDataGrant](interop.ttl#ReferencedDataGrant)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -682,33 +507,15 @@ When recording a [=Referenced Data Grant=] via [[SAI-API#grants-recordgrant]]:
   </tbody>
 </table>
 
-The [ReferencedDataGrantShape](#shexReferencedDataGrant) is used to
-validate an instance of the [ReferencedDataGrant](#classReferencedDataGrant)
-class.
-
-<pre highlight="turtle" id="shexReferencedDataGrant">
-<#ReferencedDataGrantShape> {
-  a [ interop:ReferencedDataGrant ] ;
-  interop:hasDataGrant @<#:DataGrantShape> ;
-  interop:satisfiesAccessNeed @<#:AccessNeedShape> ;
-  interop:registeredShapeTree IRI ;
-  interop:hasDataRegistration IRI ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:scopeOfGrant @<#:DataGrantScopes> ;
-  interop:hasDataInstance IRI*
-}
-</pre>
-
-The [ReferencedDataGrantTree] ensures
-that the assigned resource will validate against the
-[ReferencedDataGrantShape](#shexReferencedDataGrant).
-
-<pre highlight="turtle" id="treeReferencedDataGrant">
-<#ReferencedDataGrantTree>
-  a st:ShapeTree ;
-  st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops:ReferencedDataGrantShape&gt; .
-</pre>
+<figure>
+  <figcaption>A [=Referenced Data Grant=] in the [=Access Grant=] at
+  https://alice.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/ab3d0023-3860-4358-ae33-8d3af1097b9d.ttl
+  highlight: turtle
+  show: 43-50
+  </pre>
+</figure>
 
 ### Remote Data Grant ### {#datamodel-remote-data-grant}
 
@@ -775,16 +582,14 @@ When recording a [=Remote Data Grant=] via [[SAI-API#grants-recordgrant]]:
 * [=Access Need=] and [=Remote Data Grant=] must have the same `interop:accessModes`
 * [=Access Need=] and [=Remote Data Grant=] must have the same `interop:registeredShapeTree`
 
+[Class Definition](interop.ttl#RemoteDataGrant) -
+[Shape Definition](interop.shex#RemoteDataGrantShape)
+
 <table class="classinfo data" align="left" id="classRemoteDataGrant">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [RemoteDataGrant](interop.ttl#RemoteDataGrant)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -864,25 +669,6 @@ When recording a [=Remote Data Grant=] via [[SAI-API#grants-recordgrant]]:
   </tbody>
 </table>
 
-The [RemoteDataGrantShape](#shexRemoteDataGrant) is used to validate an
-instance of the [RemoteDataGrant](#classRemoteDataGrant) class.
-
-<pre highlight="turtle" id="shexRemoteDataGrant">
-<#RemoteDataGrantShape> {
-  a [ interop:RemoteDataGrant ] ;
-  interop:hasAccessGrant @<#:AccessGrantShape> ;
-  interop:satisfiesAccessNeed @<#:AccessNeedShape>+ ;
-  interop:registeredShapeTree IRI ;
-  interop:hasRemoteDataRegistration IRI ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:scopeOfGrant @<#:RemoteDataGrantScopes>+ ;
-  interop:hasRemoteDataFromAgent IRI* ;
-  interop:hasDataGrant IRI* ;
-  interop:hasReferencedDataGrant IRI* ;
-  interop:hasReferencedRemoteDataGrant @<#:ReferencedRemoteDataGrantShape>
-}
-</pre>
-
 ### Referenced Remote Data Grant ### {#datamodel-referenced-remote-data-grant}
 
 A <dfn>Referenced Remote Data Grant</dfn> is linked from a [=Remote Data Grant=],
@@ -949,16 +735,14 @@ When recording a [=Referenced Remote Data Grant=] via [[SAI-API#grants-recordgra
 * [=Referenced Access Need=] and [=Referenced Remote Data Grant=] must have the same
     `interop:registeredShapeTree`
 
+[Class Definition](interop.ttl#ReferencedRemoteDataGrant) -
+[Shape Definition](interop.shex#ReferencedRemoteDataGrantShape)
+
 <table class="classinfo data" align="left" id="classReferencedRemoteDataGrant">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [ReferencedRemoteDataGrant](interop.ttl#ReferencedRemoteDataGrant)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -1032,25 +816,6 @@ When recording a [=Referenced Remote Data Grant=] via [[SAI-API#grants-recordgra
   </tbody>
 </table>
 
-The [ReferencedRemoteDataGrantShape](#shexReferencedRemoteDataGrant) is used
-to validate an instance of the
-[ReferencedRemoteDataGrant](#classRemoteDataGrant) class.
-
-<pre highlight="turtle" id="shexReferencedRemoteDataGrant">
-<#ReferencedRemoteDataGrantShape> {
-  a [ interop:ReferencedRemoteDataGrant ] ;
-  interop:hasRemoteDataGrant @<#:RemoteDataGrantShape> ;
-  interop:satisfiesAccessNeed @<#:AccessNeedShape>+ ;
-  interop:registeredShapeTree IRI ;
-  interop:hasRemoteDataRegistration IRI ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:scopeOfGrant @<#:RemoteDataGrantScopes>+ ;
-  interop:hasRemoteDataFromAgent IRI* ;
-  interop:hasDataGrant IRI* ;
-  interop:hasReferencedDataGrant IRI*
-}
-</pre>
-
 ### Trusted Grant ### {#datamodel-trusted-grant}
 
 A <dfn>Trusted Grant</dfn> records a decision made by a
@@ -1081,16 +846,14 @@ valid for a [=Trusted Grant=]:
     it indicates that no access is granted to the [=Registry Set=] resource,
     nor to the [=Registries=] linked from that [=Registry Set=].
 
+[Class Definition](interop.ttl#TrustedGrant) -
+[Shape Definition](interop.shex#TrustedGrantShape)
+
 <table class="classinfo data" align="left" id="classTrustedGrant">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [TrustedGrant](interop.ttl#TrustedGrant)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -1151,22 +914,6 @@ valid for a [=Trusted Grant=]:
   </tbody>
 </table>
 
-The [TrustedGrantShape](#shexTrustedGrant) is used to
-validate an instance of the [TrustedGrant](#classTrustedGrant)
-class.
-
-<pre highlight="turtle" id="shexTrustedGrant">
-<#TrustedGrantShape> {
-  a [ interop:TrustedGrant ] ;
-  interop:hasAccessGrant @<#:AccessGrantShape> ;
-  interop:satisfiesTrustedNeed @<#:TrustedNeedShape>+ ;
-  interop:trustedWith IRI ;
-  interop:trustedWithType @<#:TrustedWithTypes> ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:scopeOfGrant @<#:TrustedGrantScopes>+
-}
-</pre>
-
 ### Access Invitation ### {#datamodel-access-invitation}
 
 An <dfn>Access Invitation</dfn> is a subclass of [=Access Grant=] used when
@@ -1187,37 +934,15 @@ be delivered and validated. The mechanism is designed so that multiple
 channels may be validated before an invitation is confirmed and
 converted to an [=Access Grant=].
 
-<figure id="fig-grants-invitation">
-  <figcaption>An [=Access Invitation=] at
-  https://alice.pod.example/grants/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f#invitation
-  </figcaption>
-  <pre highlight="turtle">
-  <#invitation>
-    a interop:AccessInvitation ;
-    interop:registeredBy https://alice.pod.example/profile/id#me ;
-    interop:registeredWith https://trusted.example/id#agent ;
-    interop:registeredAt "2020-09-13T19:32:52Z"^^xsd:dateTime ;
-    interop:updatedAt "2020-09-13T19:32:52Z"^^xsd:dateTime ;
-    interop:expiresAt "2020-09-20T19:32:52Z"^^xsd:dateTime ;
-    interop:hasAccessNeedGroup &lt;#need-group-pm&gt; ;
-    interop:hasDataGrant &lt;#data-grant-project&gt; ;
-    interop:hasAccessInvitationChannel
-      &lt;#phone-channel&gt; ,
-      &lt;#email-channel&gt; .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#AccessInvitation) -
+[Shape Definition](interop.shex#AccessInvitationShape) -
+[Shape Tree Definition](interop.tree#AccessInvitationTree)
 
 <table class="classinfo data" align="left" id="classAccessInvitation">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [AccessInvitation](interop.ttl#AccessInvitation)
-        a rdfs:subClassOf [AccessGrant](#classAccessGrant)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -1281,71 +1006,29 @@ converted to an [=Access Grant=].
   </tbody>
 </table>
 
-The [AccessInvitationShape](#shexAccessInvitation) is used to validate an
-instance of the [AccessInvitation](#classAccessInvitation) class.
-
-<pre highlight="turtle" id="shexAccessInvitation">
-<#AccessInvitationShape> {
-  a [ interop:AccessInvitation ] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI? ;
-  interop:registeredAt xsd:dateTime ;
-  interop:updatedAt xsd:dateTime ;
-  interop:expiresAt xsd:dateTime? ;
-  interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+ ;
-  ( interop:hasDataGrant @<#:DataGrantShape>+ |
-  interop:hasTrustedGrant @<#:TrustedGrantShape>+ |
-  interop:hasRemoteDataGrant @<#:RemoteDataGrantShape>+ ) ;
-  interop:hasAccessInvitationChannel @<#:AccessInvitationChannelShape>+
-}
-</pre>
-
-The [AccessInvitationTree](interop.tree#AccessInvitationTree) is assigned
-to a resource via the [AccessGrantRegistryTree](#treeAccessGrantRegistry), and ensures
-that the assigned resource will validate against the
-[AccessInvitationShape](#shexAccessInvitation).
-
-<pre highlight="turtle" id="treeAccessInvitation">
-<#AccessInvitationTree>
-  a st:ShapeTree;
-  st:expectsType st:ShapeTreeResource ;
-  st:validatedBy &lt;interops#AccessInvitationShape&gt; .
-</pre>
+<figure>
+  <figcaption>An [=Access Invitation=] at
+  https://alice.example/grants/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f.ttl
+  highlight: turtle
+  show: 11-20
+  </pre>
+</figure>
 
 ### Access Invitation Channel ### {#datamodel-access-invitation-channel}
 
 An <dfn>Access Invitation Channel</dfn> represents a mechanism through
 which an [=Access Invitation=] can be delivered and validated.
 
-<figure id="fig-grants-invitation-channel">
-  <figcaption>Example [=Access Invitation Channels=]</figcaption>
-  <pre highlight="turtle">
-  <#phone-channel>
-    a interop:PhoneInvitationChannel ;
-    interop:channelTarget "(555) 555-1212" ;
-    interop:channelCode "654345" ;
-    interop:isValidated false ;
-    interop:remainingAttempts 3 .
-
-  <#email-channel>
-    a interop:EmailInvitationChannel ;
-    interop:channelTarget "bob@example.com" ;
-    interop:channelCode "434567" ;
-    interop:isValidated true ;
-    interop:remainingAttempts 3 .
-  </pre>
-</figure>
+[Class Definition](interop.ttl#AccessInvitationChannel) -
+[Shape Definition](interop.shex#AccessInvitationChannelShape)
 
 <table class="classinfo data" align="left" id="classAccessInvitationChannel">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [AccessInvitationChannel](interop.ttl#AccessInvitationChannel)
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -1386,27 +1069,15 @@ which an [=Access Invitation=] can be delivered and validated.
   </tbody>
 </table>
 
-The [AccessInvitationChannelShape](#shexAccessInvitationChannel) is used to
-validate an instance of the
-[AccessInvitationChannel](#classAccessInvitation) class.
-
-<pre highlight="turtle" id="shexAccessInvitationChannel">
-<#AccessInvitationChannelShape> {
-   a @<#ChannelTypes> ;
-   interop:channelTarget xsd:string ;
-   interop:channelCode xsd:string ;
-   interop:isValidated xsd:boolean ;
-   interop:remainingAttempts xsd:integer
-}
-
-<#ChannelTypes> [
-  :PhoneInvitationChannel   # Telephone
-  :EmailInvitationChannel   # E-mail
-  :SMSInvitationChannel     # SMS (Simple Messaging Service)
-  :OfflineInvitationChannel # Other communication, e.g. verbal, shared note
-  :LDNInvitationChannel     # Linked Data Notification
-]
-</pre>
+<figure>
+  <figcaption>[=Access Invitation Channels=] in the [=Access Invitation=] at
+  https://alice.example/grants/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f.ttl
+  highlight: turtle
+  show: 22-34
+  </pre>
+</figure>
 
 ## Resource Hierarchy ## {#grants-hierarchy}
 
@@ -1428,49 +1099,49 @@ validate an instance of the
       <td>`/profile/`</td>
       <td>-</td>
       <td>-</td>
-      <td>[ProfileTree](#treeAgent)</td>
+      <td>[ProfileTree](interop.tree#ProfileTree)</td>
     </tr>
     <tr>
-      <td>`-- grant#set`</td>
+      <td>`-- grant-registry-set`</td>
       <td>[AccessGrantRegistrySet](#classAccessGrantRegistrySet)</td>
-      <td>[AccessGrantRegistrySetShape](#shexAccessGrantRegistrySet)</td>
-      <td>[AccessGrantRegistrySetTree](#treeAccessGrantRegistrySet)</td>
+      <td>[AccessGrantRegistrySetShape](interop.shex#AccessGrantRegistrySetShape)</td>
+      <td>[AccessGrantRegistrySetTree](interop.tree#AccessGrantRegistrySetTree)</td>
     </tr>
     <tr>
-      <td>`/grants/#registry`</td>
+      <td>`/grants/`</td>
       <td>[AccessGrantRegistry](#classAccessGrantRegistry)</td>
-      <td>[AccessGrantRegistryShape](#shexAccessGrantRegistry)</td>
-      <td>[AccessGrantRegistryTree](#treeAccessGrantRegistry)</td>
+      <td>[AccessGrantRegistryShape](interop.shex#AccessGrantRegistryShape)</td>
+      <td>[AccessGrantRegistryTree](interop.tree#AccessGrantRegistryTree)</td>
     </tr>
     <tr>
-      <td>`-- c482f931...630e5ab0#grant`</td>
+      <td>`-- c482f931...630e5ab0`</td>
       <td>[AccessGrant](#classAccessGrant)</td>
-      <td>[AccessGrantShape](#shexAccessGrant)</td>
-      <td>[AccessGrantTree](#treeAccessGrant)</td>
+      <td>[AccessGrantShape](interop.shex#AccessGrantShape)</td>
+      <td>[AccessGrantTree](interop.tree#AccessGrantTree)</td>
     </tr>
     <tr>
-      <td>`-- e0983a7e...88c387ea#grant`</td>
+      <td>`-- e0983a7e...88c387ea`</td>
       <td>[AccessGrant](#classAccessGrant)</td>
-      <td>[AccessGrantShape](#shexAccessGrant)</td>
-      <td>[AccessGrantTree](#treeAccessGrant)</td>
+      <td>[AccessGrantShape](interop.shex#AccessGrantShape)</td>
+      <td>[AccessGrantTree](interop.tree#AccessGrantTree)</td>
     </tr>
     <tr>
-      <td>`-- eddf13d6...7f4962c5#grant`</td>
+      <td>`-- eddf13d6...7f4962c5`</td>
       <td>[AccessGrant](#classAccessGrant)</td>
-      <td>[AccessGrantShape](#shexAccessGrant)</td>
-      <td>[AccessGrantTree](#treeAccessGrant)</td>
+      <td>[AccessGrantShape](interop.shex#AccessGrantShape)</td>
+      <td>[AccessGrantTree](interop.tree#AccessGrantTree)</td>
     </tr>
     <tr>
-      <td>`-- a990c1b9...c041eb74#grant`</td>
+      <td>`-- a990c1b9...c041eb74`</td>
       <td>[AccessGrant](#classAccessGrant)</td>
-      <td>[AccessGrantShape](#shexAccessGrant)</td>
-      <td>[AccessGrantTree](#treeAccessGrant)</td>
+      <td>[AccessGrantShape](interop.shex#AccessGrantShape)</td>
+      <td>[AccessGrantTree](interop.tree#AccessGrantTree)</td>
     </tr>
     <tr>
-      <td>`-- 265ef957...6689aee7#grant`</td>
+      <td>`-- 265ef957...6689aee7`</td>
       <td>[AccessGrant](#classAccessGrant)</td>
-      <td>[AccessGrantShape](#shexAccessGrant)</td>
-      <td>[AccessGrantTree](#treeAccessGrant)</td>
+      <td>[AccessGrantShape](interop.shex#AccessGrantShape)</td>
+      <td>[AccessGrantTree](interop.tree#AccessGrantTree)</td>
     </tr>
   </tbody>
 </table>

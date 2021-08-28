@@ -1,0 +1,14 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX alice: <https://alice.example/>
+PREFIX alice-work-data: <https://work.alice.example/data/>
+PREFIX authz-agent: <https://trusted.example/>
+PREFIX pm-shapetree: <http://data.example/shapetree/pm#>
+
+alice-work-data:8501f084-deb9-4775-8a35-2040df435d21\/
+  a interop:DataRegistration ;
+  interop:registeredBy alice:\#id ;
+  interop:registeredWith authz-agent:\#id ;
+  interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
+  interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
+  interop:registeredShapeTree pm-shapetree:ProjectTree .
