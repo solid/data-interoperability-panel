@@ -18,6 +18,7 @@ Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth unde
 
 * **Specification** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/specification) - [Rendered](https://solid.github.io/data-interoperability-panel/specification/)
 * **Primer** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/primer) - [Rendered](https://solid.github.io/data-interoperability-panel/primer/)
+* **Operations and API** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/api) - [Rendered](https://solid.github.io/data-interoperability-panel/api/)
 * **Resources**
   * [Application Interoperability Walkthrough - Part 1](https://solid-interop-public.s3.amazonaws.com/application-interoperability-walkthrough-part-1.mp4) (VIDEO)
   * [Application Interoperability Walkthrough - Part 2](https://solid-interop-public.s3.amazonaws.com/application-interoperability-walkthrough-part-2.mp4) (VIDEO)
