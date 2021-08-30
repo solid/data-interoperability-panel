@@ -1,8 +1,6 @@
 Remote Data Registration {#remote}
 =====================
 
-## Overview ## {#remote-overview}
-
 Remote Data Registration lets [=Agents=] keep track of data that other
 [=Agents=] have shared with them. 
 
@@ -16,48 +14,7 @@ Note: See
 [Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#remote)
 for a detailed explanation of how Remote Data Registrations should be processed.
 
-## Data Model ## {#remote-datamodel}
-
-### Remote Data Registry Set ### {#datamodel-remote-registry-set}
-
-A <dfn>Remote Data Registry Set</dfn> is a [=Registry Set=] specifically
-made up of [=Remote Data Registries=].
-
-[Class Definition](interop.ttl#RemoteDataRegistrySet) -
-[Shape Definition](interop.shex#RemoteDataRegistrySetShape) -
-[Shape Tree Definition](interop.tree#RemoteDataRegistrySetTree)
-
-<table class="classinfo data" align="left" id="classRemoteDataRegistrySet">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>hasRegistry</td>
-      <td>Registry</td>
-      <td>Link to associated [=Remote Data Registries=]</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-  <figcaption>A [=Remote Data Registry Set=] at
-  https://alice.example/remote-registry-set</figcaption>
-  <pre class=include-code>
-  path: snippets/alice.example/remote-registry-set.ttl
-  highlight: turtle
-  show: 6-10
-  </pre>
-</figure>
-
-### Remote Data Registry ### {#datamodel-remote-data-registry}
+## Remote Data Registry ## {#datamodel-remote-data-registry}
 
 A <dfn>Remote Data Registry</dfn> is a collection of
 [=Remote Data Registrations=] stored in a specific location in a [=pod=].
@@ -96,7 +53,7 @@ A <dfn>Remote Data Registry</dfn> is a collection of
   </pre>
 </figure>
 
-### Remote Data Registration ### {#datamodel-remote-data-registration}
+## Remote Data Registration ## {#datamodel-remote-data-registration}
 
 A <dfn>Remote Data Registration</dfn> represents data shared by other
 [=Agents=] corresponding to a given [=shape tree=], each of which is associated 
@@ -165,7 +122,7 @@ boundary for remote data from a given [=Agent=].
   </pre>
 </figure>
 
-### Remote Agent Data Registration ### {#datamodel-remote-agent-data-registration}
+## Remote Agent Data Registration ## {#datamodel-remote-agent-data-registration}
 
 An [=Agent=] maintains a <dfn>Remote Agent Data Registration</dfn> to represent
 access to a [=Data Registration=] that another [=Agent=] has shared with them. It
@@ -286,18 +243,6 @@ A [=Remote Agent Data Registration=] is created when an [=Agent=] receives an
   </thead>
   <tbody>
     <tr>
-      <td>`/profile/`</td>
-      <td>-</td>
-      <td>-</td>
-      <td>[ProfileTree](interop.tree#ProfileTree)</td>
-    </tr>
-    <tr>
-      <td>`-- remote-registry-set`</td>
-      <td>[RemoteDataRegistrySet](#classRemoteDataRegistrySet)</td>
-      <td>[RemoteDataRegistrySetShape](interop.shex#RemoteDataRegistrySet)</td>
-      <td>[RemoteDataRegistrySetTree](interop.tree#RemoteDataRegistrySet)</td>
-    </tr>
-    <tr>
       <td>`/remote/`</td>
       <td>[RemoteDataRegistry](#classRemoteDataRegistry)</td>
       <td>[RemoteDataRegistryShape](interop.shex#RemoteDataRegistry)</td>
@@ -384,12 +329,8 @@ A [=Remote Agent Data Registration=] is created when an [=Agent=] receives an
   </tbody>
 </table>
 
-The [=Remote Data Registry Set=] and the [=Remote Data Registry=]
-<em class="rfc2119">MAY</em> or <em class="rfc2119">MAY NOT</em>
-be on the same [=pod=].
-
-[=Remote Data Registry Set=] and [=Remote Data Registry=] resources
-<em class="rfc2119">MAY</em> use any resource or subject names.
+The [=Remote Data Registry=] resource
+<em class="rfc2119">MAY</em> use any resource or subject name.
 
 [=Remote Data Registrations=], [=Remote Agent Data Registrations=], 
 [=Data Grants=], and [=Referenced Data Grants=] <em class="rfc2119">MUST</em> 

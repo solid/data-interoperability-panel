@@ -1,8 +1,6 @@
 Data Registration {#datareg}
 =====================
 
-## Overview ## {#datareg-overview}
-
 Data Registration lets [=Agents=] store and manage the data they control.
 Data of various types is organized and stored in a uniform way to aid
 validation, authorization, discovery, and more.
@@ -15,67 +13,7 @@ Note: See
 [Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#datareg)
 for a detailed explanation of how Data Registrations should be processed.
 
-## Data Model ## {#datareg-datamodel}
-
-### Summary ### {#datareg-datamodel-summary}
-
-An [=Agent=] links to a [=Data Registry Set=] via the
-[interop:hasDataRegistrySet](interop.ttl#hasDataRegistrySet)
-property.
-
-A [=Data Registry Set=] links to any number of [=Data Registries=]
-via the [interop:hasRegistry](interop.ttl#hasRegistry) property.
-
-A [=Data Registry=] links to any number of
-[=Data Registrations=] via the
-[interop:hasRegistration](interop.ttl#hasRegistration) property.
-
-There is a [=Data Registration=] for each unique type of stored data. Each
-[=Data Registration=] contains and links to any number of [=Data Instances=]
-via the
-<a href="https://www.w3.org/ns/ldp#contains" class="vocab">ldp:contains</a>
-property.
-
-### Data Registry Set ### {#datamodel-data-registry-set}
-
-A <dfn>Data Registry Set</dfn> is a [=Registry Set=] specifically
-made up of [=Data Registries=].
-
-[Class Definition](interop.ttl#DataRegistrySet) -
-[Shape Definition](interop.shex#DataRegistrySetShape) -
-[Shape Tree Definition](interop.tree#DataRegistrySetTree)
-
-<table class="classinfo data" align="left" id="classDataRegistrySet">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>hasRegistry</td>
-      <td>[Registry](interop.ttl#Registry)</td>
-      <td>Link to associated [=Data Registries=]</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-  <figcaption>A [=Data Registry Set=] at https://alice.pod.example/profile/data#set linking to two different
-  [=Data Registries=]</figcaption>
-  <pre class=include-code>
-  path: snippets/alice.example/data-registry-set.ttl
-  highlight: turtle
-  show: 6-10
-  </pre>
-</figure>
-
-### Data Registry ### {#datamodel-data-registry}
+## Data Registry ## {#datamodel-data-registry}
 
 A <dfn>Data Registry</dfn> is a collection of [=Data Registrations=], each
 representing a unique type of data associated with a given [=shape tree=].
@@ -84,6 +22,8 @@ A [=Data Registry=] can be used for basic discovery, but it is not
 designed nor intended to be an efficient means to query or index data.
 However, it is *intended* to be used as reliable source data for different
 query engines or indexing schemes.
+
+A [=Data Registry=] is linked to an [=Agent=] via their [=Registry Set=].
 
 [Class Definition](interop.ttl#DataRegistry) -
 [Shape Definition](interop.shex#DataRegistryShape) -
@@ -94,12 +34,6 @@ query engines or indexing schemes.
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [DataRegistry](interop.ttl#DataRegistry)
-        a rdfs:subClassOf <a href="interop.ttl#Registry" class="vocab">Registry</a>
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -124,7 +58,7 @@ query engines or indexing schemes.
   </pre>
 </figure>
 
-### Data Registration ### {#datamodel-data-registration}
+## Data Registration ## {#datamodel-data-registration}
 
 A <dfn>Data Registration</dfn> provides the [=Agent=] with a place to store
 [=Data Instances=] of a particular type, conforming to a
@@ -135,6 +69,10 @@ A <dfn>Data Instance</dfn> is a unique, stored instance of a
 particular type of data, conforming to the [=shape tree=] for
 the instance's [=Data Registration=].
 
+Each [=Data Instance=] is linked via the
+<a href="https://www.w3.org/ns/ldp#contains" class="vocab">ldp:contains</a>
+property.
+
 [Class Definition](interop.ttl#DataRegistration) -
 [Shape Definition](interop.shex#DataRegistrationShape) -
 [Shape Tree Definition](interop.tree#DataRegistrationTree)
@@ -144,12 +82,6 @@ the instance's [=Data Registration=].
   <colgroup></colgroup>
   <colgroup></colgroup>
   <thead>
-    <tr>
-      <th colspan=3>
-        [DataRegistration](interop.ttl#DataRegistration)
-        a rdfs:subClassOf <a href="interop.ttl#Registration" class="vocab">Registration</a>
-      </th>
-    </tr>
     <tr>
       <th>Property</th>
       <th>Range</th>
@@ -210,18 +142,6 @@ the instance's [=Data Registration=].
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>`/profile/`</td>
-      <td>-</td>
-      <td>-</td>
-      <td>[ProfileTree](interop.tree#Agent)</td>
-    </tr>
-    <tr>
-      <td>`-- data-registry-set`</td>
-      <td>[DataRegistrySet](#classDataRegistrySet)</td>
-      <td>[DataRegistrySetShape](interop.shex#DataRegistrySet)</td>
-      <td>[DataRegistrySetTree](interop.tree#DataRegistrySet)</td>
-    </tr>
     <tr>
       <td>`/data/`</td>
       <td>[DataRegistry](#classDataRegistry)</td>
@@ -312,13 +232,8 @@ the instance's [=Data Registration=].
   </tbody>
 </table>
 
-The [=Data Registry Set=] and the [=Data Registry=]
-<em class="rfc2119">MAY</em> or <em class="rfc2119">MAY NOT</em>
-be on the same [=pod=].
-
-[=Data Registry Set=] and [=Data Registry=] resources
-<em class="rfc2119">MAY</em> use any
-resource or subject names.
+The [=Data Registry=] resource <em class="rfc2119">MAY</em> use any
+resource or subject name.
 
 [=Data Registrations=] and [=Data Instances=]
 <em class="rfc2119">MUST</em> use
@@ -459,24 +374,6 @@ sending [=Access Receipts=] to the [=Agents=] who were granted access.
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>`/profile/`</td>
-        <td>-</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td>`-- data`</td>
-        <td>[=Data Registry Set=]</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
       <tr>
         <td>`/data/`</td>
         <td>[=Data Registry=]</td>
