@@ -240,7 +240,8 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
     belongs to an [=Access Need Group=] linked to the same [=Access Grant=].
 * The [=Access Need=] must link back to the [=Data Grant=]
     via `interop:hasDataGrant`.
-* [=Access Need=] and [=Data Grant=] must have the same `interop:accessModes`
+* [=Access Need=] and [=Data Grant=] must have the same `interop:accessMode`s 
+    and `interop:creatorAccessMode`s
 * [=Access Need=] and [=Data Grant=] must have the same `interop:registeredShapeTree`
 
 [Class Definition](interop.ttl#DataGrant) -
@@ -287,6 +288,12 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
       <td>Modes of access granted to the target data at hasRegistration</td>
     </tr>
     <tr>
+      <td>creatorAccessMode</td>
+      <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
+      <td>Granted modes of access for the creator of a Data Instance. Only valid when `accessMode` includes
+      `acl:Write` or `acl:Append`</td>
+    </tr>
+    <tr>
       <td>scopeOfGrant</td>
       <td> interop:AllInstances, interop:SelectedInstances,
       interop:NoAccess</td>
@@ -323,7 +330,7 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
   <pre class=include-code>
   path: snippets/alice.example/ab3d0023-3860-4358-ae33-8d3af1097b9d.ttl
   highlight: turtle
-  show: 26-40
+  show: 26-41
   </pre>
 </figure>
 
@@ -463,7 +470,7 @@ When recording a [=Referenced Data Grant=] via [[SAI-API#grants-recordgrant]]:
   <pre class=include-code>
   path: snippets/alice.example/ab3d0023-3860-4358-ae33-8d3af1097b9d.ttl
   highlight: turtle
-  show: 43-50
+  show: 44-52
   </pre>
 </figure>
 

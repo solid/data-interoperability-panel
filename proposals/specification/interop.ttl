@@ -725,7 +725,14 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "A requested acl:mode of access for an AccessNeed"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:range [ owl:oneOf ( acl:Read acl:Write acl:Control acl:Append ) ] ;
-  rdfs:label "Requested Access Mode"@en .
+  rdfs:label "Access Mode"@en .
+
+:creatorAccessMode
+  a rdf:Property ;
+  rdfs:comment "A requested acl:mode of access for the creator of a resource"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range [ owl:oneOf ( acl:Read acl:Write acl:Control acl:Append ) ] ;
+  rdfs:label "Creator Access Mode"@en .
 
 :hasAccessNeedGroupDecorator
   a rdf:Property ;
