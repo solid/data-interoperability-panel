@@ -1,8 +1,6 @@
 Access Grants {#grants}
 =====================
 
-## Overview ## {#grants-overview}
-
 [=Access Grants=] represent an [=Agent's=] decision to grant access to
 some portion of the data in their control to another [=Agent=]. They provide
 the context needed to effectively manage permissions on a given [=Agent's=]
@@ -24,63 +22,15 @@ Note: See
 [Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#grants)
 for a detailed explanation of how Access Grants should be processed.
 
-## Data Model ## {#grants-datamodel}
-
-### Summary ### {#grants-datamodel-summary}
-
-An [=Agent=] links to [=Access Grant Registry Sets=]
-via the [interop:hasAccessGrantRegistrySet](interop.ttl#hasAccessGrantRegistrySet) property.
-
-An [=Access Grant Registry Set=] links to any number of [=Access Grant Registries=]
-via the [interop:hasRegistry](interop.ttl#hasRegistry) property.
-
-An [=Access Grant Registry=] links to any number of registered [=Access Grants=]
-and [=Access Invitations=] via the
-[interop:hasRegistration](interop.ttl#hasRegistration) property.
-
-### Access Grant Registry Set ### {#datamodel-access-registry-set}
-
-An <dfn>Access Grant Registry Set</dfn> is a [=Registry Set=] specifically
-made up of [=Access Grant Registries=].
-
-[Class Definition](interop.ttl#AccessGrantRegistrySet) -
-[Shape Definition](interop.shex#AccessGrantRegistrySetShape) -
-[Shape Tree Definition](interop.tree#AccessGrantRegistrySetTree)
-
-<table class="classinfo data" align="left" id="classAccessGrantRegistrySet">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>hasRegistry</td>
-      <td>[Registry](interop.ttl#Registry)</td>
-      <td>Link to associated [=Access Grant Registries=]</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-  <figcaption>An [=Access Grant Registry Set=] at
-  https://alice.example/grant-registry-set linking to two different [=Access Grant Registries=]</figcaption>
-  <pre class=include-code>
-  path: snippets/alice.example/grant-registry-set.ttl
-  highlight: turtle
-  show: 6-10
-  </pre>
-</figure>
-
-### Access Grant Registry ### {#datamodel-access-registry}
+## Access Grant Registry ## {#datamodel-access-registry}
 
 An <dfn>Access Grant Registry</dfn> is a collection of
 [=Access Grants=] stored in a specific location in a [=pod=].
+
+The [=Access Grant Registry=] is linked to an [=Agent=] via their [=Registry Set=].
+
+An [=Access Grant Registry=] links to any number of registered [=Access Grants=]
+and [=Access Invitations=].
 
 [Class Definition](interop.ttl#AccessGrantRegistry) -
 [Shape Definition](interop.shex#AccessGrantRegistryShape) -
@@ -117,7 +67,7 @@ An <dfn>Access Grant Registry</dfn> is a collection of
   </pre>
 </figure>
 
-### Access Grant ### {#datamodel-access-grant}
+## Access Grant ## {#datamodel-access-grant}
 
 Each <dfn>Access Grant</dfn> represents access granted to an
 [=Access Grant Subject=], based on access criteria detailed in one or more
@@ -129,8 +79,8 @@ Access may be granted to data in
 Access may be granted to data in [=Remote Data Registries=] through
 [=Remote Data Grants=].
 
-Elevated access to [=registries=], [=registry sets=], or the [=identity=]
-of the [=Agent=] may be granted through [=Trusted Grants=].
+Elevated access to [=Registries=], as well as the [=Identity Profile Document=]
+or [=Registry Set=] of the [=Agent=] may be granted through [=Trusted Grants=].
 
 [Class Definition](interop.ttl#AccessGrant) -
 [Shape Definition](interop.shex#AccessGrantShape) -
@@ -206,7 +156,7 @@ of the [=Agent=] may be granted through [=Trusted Grants=].
   </pre>
 </figure>
 
-### Access Grant Subject ### {#datamodel-access-grant-subject}
+## Access Grant Subject ## {#datamodel-access-grant-subject}
 
 An <dfn>Access Grant Subject</dfn> represents a unique combination of
 who and what is being granted access. For example, it allows a single [=Agent=]
@@ -250,7 +200,7 @@ to be specified, or a given [=Agent=] using a given [=Application=].
   </pre>
 </figure>
 
-### Data Grant ### {#datamodel-data-grant}
+## Data Grant ## {#datamodel-data-grant}
 
 A <dfn>Data Grant</dfn> records a decision made by an
 [=Agent=] to assign permissions for an [=Access Grant Subject=] to a
@@ -377,7 +327,7 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
   </pre>
 </figure>
 
-### Referenced Data Grant ### {#datamodel-referenced-data-grant}
+## Referenced Data Grant ## {#datamodel-referenced-data-grant}
 
 Issue(solid/data-interoperability-panel#124):
 
@@ -517,7 +467,7 @@ When recording a [=Referenced Data Grant=] via [[SAI-API#grants-recordgrant]]:
   </pre>
 </figure>
 
-### Remote Data Grant ### {#datamodel-remote-data-grant}
+## Remote Data Grant ## {#datamodel-remote-data-grant}
 
 A <dfn>Remote Data Grant</dfn> records an authorization decision made by
 an [=Agent=] for an [=Access Grant Subject=] on a
@@ -669,7 +619,7 @@ When recording a [=Remote Data Grant=] via [[SAI-API#grants-recordgrant]]:
   </tbody>
 </table>
 
-### Referenced Remote Data Grant ### {#datamodel-referenced-remote-data-grant}
+## Referenced Remote Data Grant ## {#datamodel-referenced-remote-data-grant}
 
 A <dfn>Referenced Remote Data Grant</dfn> is linked from a [=Remote Data Grant=],
 and records an authorization decision made by an [=Agent=] for an
@@ -816,12 +766,12 @@ When recording a [=Referenced Remote Data Grant=] via [[SAI-API#grants-recordgra
   </tbody>
 </table>
 
-### Trusted Grant ### {#datamodel-trusted-grant}
+## Trusted Grant ## {#datamodel-trusted-grant}
 
 A <dfn>Trusted Grant</dfn> records a decision made by a
-given [=Agent=] to trust another with elevated access to [=Registries=],
-[=Registry Sets=], or the [=Identity=]
-of the [=Agent=] themselves, based on a [=Trusted Need=] that was
+given [=Agent=] to trust another with elevated access to any [=Registries=],
+[=Registry Set=], or [=Identity Profile Document=]
+for the [=Agent=], based on a [=Trusted Need=] that was
 presented to them.
 
 A <dfn>Trusted Agent</dfn> is an [=Agent=] that been granted elevated
@@ -838,13 +788,13 @@ valid for a [=Trusted Grant=]:
 * <b>`interop:TrustedAccess`</b> - Applies to trusted resource linked
     via `interop:trustedWith`. Permissions will
     be set for the [=Access Grant Subject=] on the trusted resource. If
-    `trustedWithType` is a type of [=Registry Set=], the permissions
+    `trustedWithType` is for the [=Registry Set=], the permissions
     will be applied to the [=Registry Set=] resource, as well as all of
-    the [=Registries=] linked from that [=Registry Set=].
+    the [=Registries=] linked from it.
 * <b>`interop:NoAccess`</b> - Indicates that no access is granted
-    to `trustedWith`. If `trustedWith` is a [=Registry Set=],
+    to `trustedWith`. If `trustedWith` is for the [=Registry Set=],
     it indicates that no access is granted to the [=Registry Set=] resource,
-    nor to the [=Registries=] linked from that [=Registry Set=].
+    nor to the [=Registries=] linked from it.
 
 [Class Definition](interop.ttl#TrustedGrant) -
 [Shape Definition](interop.shex#TrustedGrantShape)
@@ -877,8 +827,8 @@ valid for a [=Trusted Grant=]:
       <td>Identifies the primary trusted resource of the [=Trusted Grant=]
         <ul>
           <li>[=Agent=] - Access to the profile document of the [=Agent=]</li>
-          <li>[=Registry Set=] - Access to the specified [=Registry Set=],
-          as well as all [=Registries=] linked to it</li>
+          <li>[=Registry Set=] - Access to the specified [=Registry Set=]
+          and all of the [=Registries=] linked to it</li>
           <li>[=Registry=] - Access to the specified [=Registry=],
           as well as all [=Registrations=] linked to it</li>
         </ul>
@@ -888,11 +838,7 @@ valid for a [=Trusted Grant=]:
       <td>trustedWithType</td>
       <td><ul>
         <li>`interop:Agent`</li>
-        <li>`interop:ApplicationRegistrySet`</li>
-        <li>`interop:DataRegistrySet`</li>
-        <li>`interop:AccessGrantRegistrySet`</li>
-        <li>`interop:AccessReceiptRegistrySet`</li>
-        <li>`interop:RemoteDataRegistrySet`</li>
+        <li>`interop:RegistrySet`</li>
         <li>`interop:ApplicationRegistry`</li>
         <li>`interop:DataRegistry`</li>
         <li>`interop:AccessGrantRegistry`</li>
@@ -914,7 +860,7 @@ valid for a [=Trusted Grant=]:
   </tbody>
 </table>
 
-### Access Invitation ### {#datamodel-access-invitation}
+## Access Invitation ## {#datamodel-access-invitation}
 
 An <dfn>Access Invitation</dfn> is a subclass of [=Access Grant=] used when
 an [=Agent=] wishes to grant access to another [=Agent=] whose
@@ -1016,7 +962,7 @@ converted to an [=Access Grant=].
   </pre>
 </figure>
 
-### Access Invitation Channel ### {#datamodel-access-invitation-channel}
+## Access Invitation Channel ## {#datamodel-access-invitation-channel}
 
 An <dfn>Access Invitation Channel</dfn> represents a mechanism through
 which an [=Access Invitation=] can be delivered and validated.
@@ -1096,18 +1042,6 @@ which an [=Access Invitation=] can be delivered and validated.
   </thead>
   <tbody>
     <tr>
-      <td>`/profile/`</td>
-      <td>-</td>
-      <td>-</td>
-      <td>[ProfileTree](interop.tree#ProfileTree)</td>
-    </tr>
-    <tr>
-      <td>`-- grant-registry-set`</td>
-      <td>[AccessGrantRegistrySet](#classAccessGrantRegistrySet)</td>
-      <td>[AccessGrantRegistrySetShape](interop.shex#AccessGrantRegistrySetShape)</td>
-      <td>[AccessGrantRegistrySetTree](interop.tree#AccessGrantRegistrySetTree)</td>
-    </tr>
-    <tr>
       <td>`/grants/`</td>
       <td>[AccessGrantRegistry](#classAccessGrantRegistry)</td>
       <td>[AccessGrantRegistryShape](interop.shex#AccessGrantRegistryShape)</td>
@@ -1146,11 +1080,7 @@ which an [=Access Invitation=] can be delivered and validated.
   </tbody>
 </table>
 
-The [=Access Grant Registry Set=] and the [=Access Grant Registry=] MAY or MAY NOT
-be on the same [=pod=].
-
-[=Access Grant Registry Set=] and [=Access Grant Registry=] resources MAY use any
-resource or subject names.
+The [=Access Grant Registry=] resources MAY use any resource or subject name.
 
 [=Access Grants=] MUST use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt)
 for resource names.

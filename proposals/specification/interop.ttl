@@ -48,34 +48,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :RegistrySet ;
   rdfs:label "Has registry set"@en .
 
-:hasApplicationRegistrySet
-  rdfs:subPropertyOf :hasRegistrySet ;
-  rdfs:comment "Links an agent to their application registry set"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range :ApplicationRegistrySet ;
-  rdfs:label "Has application registry set"@en .
-
-:hasDataRegistrySet
-  rdfs:subPropertyOf :hasRegistrySet ;
-  rdfs:comment "Links an agent to their data registry set"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range :DataRegistrySet ;
-  rdfs:label "Has data registry set"@en .
-
-:hasAccessGrantRegistrySet
-  rdfs:subPropertyOf :hasRegistrySet ;
-  rdfs:comment "Links an agent to their access grant registry set"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range :AccessGrantRegistrySet ;
-  rdfs:label "Has access grant registry set"@en .
-
-:hasAccessReceiptRegistrySet
-  rdfs:subPropertyOf :hasRegistrySet ;
-  rdfs:comment "Links an agent to their access receipt registry set"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range :AccessReceiptRegistrySet ;
-  rdfs:label "Has access receipt registry set"@en .
-
 :hasAuthorizationAgent
   rdfs:comment "Links an agent to their authorization agent"@en ;
   rdfs:isDefinedBy <> ;
@@ -156,12 +128,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 #############################################################################
 # Application Registration
 #############################################################################
-:ApplicationRegistrySet
-  rdfs:subClassOf :RegistrySet ;
-  rdfs:comment "A collection of Application Registry instances"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Application Registry"@en .
-
 :ApplicationRegistry
   rdfs:subClassOf :Registry ;
   rdfs:comment "A collection of Application Registration instances"@en ;
@@ -185,12 +151,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 #############################################################################
 # Data Registration
 #############################################################################
-:DataRegistrySet
-  rdfs:subClassOf :RegistrySet ;
-  rdfs:comment "A collection of Data Registry instances"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Data Registry"@en .
-
 :DataRegistry
   rdfs:subClassOf :Registry ;
   rdfs:comment "A collection of Data Registration instances"@en ;
@@ -226,12 +186,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 #############################################################################
 # Access Grants
 #############################################################################
-:AccessGrantRegistrySet
-  rdfs:subClassOf :RegistrySet ;
-  rdfs:comment "A collection of Access Grant Registry instances"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Access Grant Registry Set"@en .
-
 :AccessGrantRegistry
   rdfs:subClassOf :Registry ;
   rdfs:comment "A collection of Access Grant instances"@en ;
@@ -528,12 +482,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 #############################################################################
 # Access Receipts
 #############################################################################
-:AccessReceiptRegistrySet
-  rdfs:subClassOf :RegistrySet ;
-  rdfs:comment "A collection of Access Receipt Registry instances"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Access Receipt Registry Set"@en .
-
 :AccessReceiptRegistry
   rdfs:subClassOf :Registry ;
   rdfs:comment "A collection of Access Receipt instances"@en ;
@@ -589,12 +537,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 #############################################################################
 # Remote Data Registration
 #############################################################################
-:RemoteDataRegistrySet
-  rdfs:subClassOf :RegistrySet ;
-  rdfs:comment "A collection of Remote Data Registry instances"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Remote Data Registry Set"@en .
-
 :RemoteDataRegistry
   rdfs:subClassOf :Registry ;
   rdfs:comment "A collection of Remote Data Registrations and Remote Data Instances"@en ;

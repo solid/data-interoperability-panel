@@ -3,18 +3,6 @@ PREFIX interops: <https://shapes.pub/drafts/ns/solid/interop#>
 
 # Agent
 ##############################################################################
-<#ProfileTree>
-  a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:contains <#AgentTree> ,
-              <#ApplicationRegistrySetTree> ,
-              <#DataRegistrySetTree> ,
-              <#AccessGrantRegistrySetTree> ,
-              <#AccessReceiptRegistrySetTree> ,
-              <#RemoteDataRegistrySetTree> ,
-              st:ResourceTree ,
-              st:ContainerTree ,
-              st:NonRDFResourceTree .
 
 <#AgentTree>
   a st:ShapeTree ;
@@ -27,30 +15,10 @@ PREFIX interops: <https://shapes.pub/drafts/ns/solid/interop#>
   st:contains <#AccessReceiptTree> ,
               <#AccessRequestTree> .
 
-<#ApplicationRegistrySetTree>
+<#RegistrySetTree>
   a st:ShapeTree ;
   st:expectsType st:Resource ;
-  st:shape interops:ApplicationRegistrySetShape .
-
-<#DataRegistrySetTree>
-  a st:ShapeTree ;
-  st:expectsType st:Resource ;
-  st:shape interops:DataRegistrySetShape .
-
-<#AccessGrantRegistrySetTree>
-  a st:ShapeTree ;
-  st:expectsType st:Resource ;
-  st:shape interops:AccessGrantRegistrySetShape .
-
-<#AccessReceiptRegistrySetTree>
-  a st:ShapeTree ;
-  st:expectsType st:Resource ;
-  st:shape interops:AccessReceiptRegistrySetShape .
-
-<#RemoteDataRegistrySetTree>
-  a st:ShapeTree ;
-  st:expectsType st:Resource ;
-  st:shape interops:RemoteDataRegistrySetShape .
+  st:shape interops:RegistrySetShape .
 
 # Application Registry
 ##############################################################################

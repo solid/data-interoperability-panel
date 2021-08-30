@@ -1,8 +1,6 @@
 Application Registration {#appreg}
 =====================
 
-## Overview ## {#appreg-overview}
-
 Application Registration lets [=Agents=] register and track the
 [=Applications=] they’ve decided to use. It provides a dedicated place to
 store internal data specific to the function of a given [=Application=].
@@ -27,69 +25,18 @@ Note: See
 [Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#appreg)
 for a detailed explanation of how Application Registrations should be processed.
 
-## Data Model ## {#appreg-datamodel}
+## Application Registry ## {#datamodel-application-registry}
 
-### Summary ### {#appreg-datamodel-summary}
+An <dfn>Application Registry</dfn> is a collection of [=Application Registrations=].
 
-An [=Agent=] links to [=Application Registry Sets=] via the
-[interop:hasApplicationRegistrySet](interop.ttl#hasApplicationRegistrySet)
-property.
+The [=Application Registry=] is linked to an [=Agent=] via their [=Registry Set=].
 
-An [=Application Registry Set=] links to any number of [=Application Registries=]
-via the [interop:hasRegistry](interop.ttl#hasRegistry) property.
-
-Each [=Application=] an [=Agent=] registers has an [=Application Registration=]. 
-An [=Application Registry=] links to any number of [=Application Registrations=]
-via the [interop:hasRegistration](interop.ttl#hasRegistration) property.
-
-### Application Registry Set ### {#datamodel-application-registry-set}
-
-An <dfn>Application Registry Set</dfn> is a [=Registry Set=] specifically
-made up of [=Application Registries=].
-
-[Class Definition](interop.ttl#ApplicationRegistrySet) -
-[Shape Definition](interop.shex#ApplicationRegistrySetShape) -
-[Shape Tree Definition](interop.tree#ApplicationRegistrySetTree)
-
-<table class="classinfo data" align="left" id="classApplicationRegistrySet">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>hasRegistry</td>
-      <td>[Registry](interop.ttl#Registry)</td>
-      <td>Link to associated [=Application Registries=]</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-  <figcaption>An [=Application Registry Set=] at
-  https://alice.example/application-registry-set linking to two different [=Application Registries=]</figcaption>
-  <pre class=include-code>
-  path: snippets/alice.example/application-registry-set.ttl
-  highlight: turtle
-  show: 6-10
-  </pre>
-</figure>
-
-### Application Registry ### {#datamodel-application-registry}
-
-An <dfn>Application Registry</dfn> is a collection of
-[=Application Registrations=] stored in a specific location in a [=pod=].
+Each [=Application=] an [=Agent=] registers has an [=Application Registration=].
+An [=Application Registry=] links to any number of [=Application Registrations=].
 
 [Class Definition](interop.ttl#ApplicationRegistry) -
 [Shape Definition](interop.shex#ApplicationRegistryShape) -
 [Shape Tree Definition](interop.tree#ApplicationRegistryTree)
-
 
 <table class="classinfo data" align="left" id="classApplicationRegistry">
   <colgroup></colgroup>
@@ -121,7 +68,7 @@ An <dfn>Application Registry</dfn> is a collection of
   </pre>
 </figure>
 
-### Application Registration ### {#datamodel-application-registration}
+## Application Registration ## {#datamodel-application-registration}
 
 An <dfn>Application Registration</dfn> provides the [=Agent=]
 with a place to maintain metadata, state, preferences, and
@@ -206,31 +153,19 @@ have elected to use.
   </thead>
   <tbody>
     <tr>
-      <td>`/profile/`</td>
-      <td>-</td>
-      <td>-</td>
-      <td>[ProfileTree](interop.tree#AgentTree)</td>
-    </tr>
-    <tr>
-      <td>`-- application#set`</td>
-      <td>[ApplicationRegistrySet](#classApplicationRegistrySet)</td>
-      <td>[ApplicationRegistrySetShape](interop.shex#ApplicationRegistrySetShape)</td>
-      <td>[ApplicationRegistrySetTree](interop.tree#ApplicationRegistrySetTree)</td>
-    </tr>
-    <tr>
-      <td>`/applications/#registry`</td>
+      <td>`/applications/`</td>
       <td>[ApplicationRegistry](#classApplicationRegistry)</td>
       <td>[ApplicationRegistryShape](interop.shex#ApplicationRegistryShape)</td>
       <td>[ApplicationRegistryTree](interop.tree#ApplicationRegistryTree)</td>
     </tr>
     <tr>
-      <td>`-- 70556355...c5d7e23a/#registration`</td>
+      <td>`-- 70556355...c5d7e23a/`</td>
       <td>[ApplicationRegistration](#classApplicationRegistration)</td>
       <td>[ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)</td>
       <td>[ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)</td>
     </tr>
     <tr>
-      <td>`---- 04ca5ba7...f3a25ba0#receipt`</td>
+      <td>`---- 04ca5ba7...f3a25ba0`</td>
       <td>[AccessReceipt](#classAccessReceipt)</td>
       <td>[AccessReceiptShape](interop.shex#AccessReceiptShape)</td>
       <td>[AccessReceiptTree](interop.tree#AccessReceiptTree)</td>
@@ -242,13 +177,13 @@ have elected to use.
       <td>-</td>
     </tr>
     <tr>
-      <td>`-- ede6aa50...830e2a42/#registration`</td>
+      <td>`-- ede6aa50...830e2a42/`</td>
       <td>[ApplicationRegistration](#classApplicationRegistration)</td>
       <td>[ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)</td>
       <td>[ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)</td>
     </tr>
     <tr>
-      <td>`---- 2af133d6...78e343ba#receipt`</td>
+      <td>`---- 2af133d6...78e343ba`</td>
       <td>[AccessReceipt](#classAccessReceipt)</td>
       <td>[AccessReceiptShape](interop.shex#AccessReceiptShape)</td>
       <td>[AccessReceiptTree](interop.tree#AccessReceiptTree)</td>
@@ -260,19 +195,19 @@ have elected to use.
       <td>-</td>
     </tr>
     <tr>
-      <td>`-- 150dca42...5b640673/#registration`</td>
+      <td>`-- 150dca42...5b640673/`</td>
       <td>[ApplicationRegistration](#classApplicationRegistration)</td>
       <td>[ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)</td>
       <td>[ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)</td>
     </tr>
     <tr>
-      <td>`---- 14f8bfb9...e42f7084#receipt`</td>
+      <td>`---- 14f8bfb9...e42f7084`</td>
       <td>[AccessReceipt](#classAccessReceipt)</td>
       <td>[AccessReceiptShape](interop.shex#AccessReceiptShape)</td>
       <td>[AccessReceiptTree](interop.tree#AccessReceiptTree)</td>
     </tr>
     <tr>
-      <td>`-- b3564e72...0069f536/#registration`</td>
+      <td>`-- b3564e72...0069f536/`</td>
       <td>[ApplicationRegistration](#classApplicationRegistration)</td>
       <td>[ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)</td>
       <td>[ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)</td>
@@ -280,11 +215,7 @@ have elected to use.
   </tbody>
 </table>
 
-The [=Application Registry Set=] and the [=Application Registry=] MAY or MAY NOT
-be on the same [=pod=].
-
-[=Application Registry Set=] and [=Application Registry=] resources MAY use any
-resource or subject names.
+The [=Application Registry=] MAY use any  resource or subject name.
 
 The resource name for an [=Application Registration=] container
 MUST be a SHA-256 hash encoding of the [=identity=] for the
@@ -305,9 +236,6 @@ resource (`ex-cache-1122`) and an internal index (`ex-internal-idx`).
 
 ## Permission Model ## {#appreg-permissions}
 
-The permission model for the resources detailed in
-[[#appreg-hierarchy]] are illustrated in the table below.
-
 <b>Notable items:</b>
 
 * There is no public access to any data in an [=Application Registry=]
@@ -323,7 +251,6 @@ Note: Append+ indicates that Read/Write is granted
 to the subsequently created resource.
 
 <figure>
-<figcaption>Permission model for [=Application Registry=] resources.</figcaption>
   <table class="data permissions" align="left">
     <col>
     <col>
@@ -351,24 +278,6 @@ to the subsequently created resource.
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>`/profile/`</td>
-        <td>-</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td>`-- application`</td>
-        <td>[=Application Registry Set=]</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
       <tr>
         <td>`/applications/`</td>
         <td>[=Application Registry=]</td>

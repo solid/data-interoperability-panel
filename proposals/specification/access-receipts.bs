@@ -1,8 +1,6 @@
 Access Receipts {#receipts}
 =====================
 
-## Overview ## {#receipts-overview}
-
 When an [=Agent=] grants access to another [=Agent=] or [=Application=],
 an [=Access Receipt=] is provided to the grantee that communicates what 
 they have been given access to, and why.
@@ -23,48 +21,7 @@ Note: See
 [Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#receipts)
 for a detailed explanation of how Access Receipts should be processed.
 
-## Data Model ## {#receipts-datamodel}
-
-### Access Receipt Registry Set ### {#datamodel-receipt-registry-set}
-
-An <dfn>Access Receipt Registry Set</dfn> is a [=Registry Set=] specifically
-made up of [=Access Receipt Registries=].
-
-[Class Definition](interop.ttl#AccessReceiptRegistrySet) -
-[Shape Definition](interop.shex#AccessReceiptRegistrySetShape) -
-[Shape Tree Definition](interop.tree#AccessReceiptRegistrySetTree)
-
-<table class="classinfo data" align="left" id="classAccessReceiptRegistrySet">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>hasRegistry</td>
-      <td>[Registry](interop.ttl#Registry)</td>
-      <td>Link to associated [=Access Receipt Registries=]</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-  <figcaption>An [=Access Receipt Registry Set=] at
-  https://alice.example/receipt-registry-set linking to two different [=Access Receipt Registries=]</figcaption>
-  <pre class=include-code>
-  path: snippets/alice.example/receipt-registry-set.ttl
-  highlight: turtle
-  show: 6-10
-  </pre>
-</figure>
-
-### Access Receipt Registry ### {#datamodel-access-receipt-registry}
+## Access Receipt Registry ## {#datamodel-access-receipt-registry}
 
 An <dfn>Access Receipt Registry</dfn> is a collection of
 [=Access Receipts=] stored in a specific location in a [=pod=].
@@ -102,7 +59,7 @@ An <dfn>Access Receipt Registry</dfn> is a collection of
   </pre>
 </figure>
 
-### Access Receipt ### {#datamodel-access-receipt}
+## Access Receipt ## {#datamodel-access-receipt}
 
 An [=Agent=] provides an <dfn>Access Receipt</dfn> to another [=Agent=] or
 [=Application=] after granting them access to some scope of data as the
@@ -222,18 +179,6 @@ of access granted.
   </thead>
   <tbody>
     <tr>
-      <td>`/profile/`</td>
-      <td>-</td>
-      <td>-</td>
-      <td>[ProfileTree](interop.tree#ProfileTree)</td>
-    </tr>
-    <tr>
-      <td>`-- receipt-registry-set`</td>
-      <td>[AccessReceiptRegistrySet](#classAccessReceiptRegistrySet)</td>
-      <td>[AccessReceiptRegistrySetShape](interop.shex#AccessReceiptRegistrySetShape)</td>
-      <td>[AccessReceiptRegistrySetTree](interop.tree#AccessReceiptRegistrySetTree)</td>
-    </tr>
-    <tr>
       <td>`/receipts/`</td>
       <td>[AccessReceiptRegistry](#classAccessReceiptRegistry)</td>
       <td>[AccessReceiptRegistryShape](interop.shex#AccessReceiptRegistryShape)</td>
@@ -260,12 +205,8 @@ of access granted.
   </tbody>
 </table>
 
-The [=Access Receipt Registry Set=] and the [=Access Receipt Registry=]
-<em class="rfc2119">MAY</em> or <em class="rfc2119">MAY NOT</em>
-be on the same [=pod=].
-
-[=Access Receipt Registry Set=] and [=Access Receipt Registry=] resources
-<em class="rfc2119">MAY</em> use any resource or subject names.
+The [=Access Receipt Registry=] resource
+<em class="rfc2119">MAY</em> use any resource or subject name.
 
 [=Access Receipts=] <em class="rfc2119">MUST</em>
 use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
