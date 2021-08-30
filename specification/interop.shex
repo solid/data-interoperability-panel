@@ -4,21 +4,21 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Agent
 <#AgentShape> {
   a [ interop:Agent ] ;
-  interop:hasApplicationRegistrySet IRI ;
-  interop:hasDataRegistrySet IRI ;
-  interop:hasAccessGrantRegistrySet IRI ;
-  interop:hasAccessReceiptRegistrySet IRI ;
-  interop:hasRemoteDataRegistrySet IRI ;
+  interop:hasRegistrySet IRI ;
   interop:hasAuthorizationAgent IRI ;
   interop:hasInbox IRI ;
   interop:hasAccessInbox IRI ;
   interop:receivesAccessReceipt [ interop:ReceiptInMessage interop:ReceiptInRegistration ]
 }
 
-# Application Registry Set
-<#ApplicationRegistrySetShape> {
-  a [ interop:ApplicationRegistrySet ] ;
-  interop:hasRegistry IRI+
+# Registry Set
+<#RegistrySetShape> {
+  a [ interop:RegistrySet ] ;
+  interop:hasApplicationRegistry IRI ;
+  interop:hasAccessGrantRegistry IRI ;
+  interop:hasAccessReceiptRegistry IRI ;
+  interop:hasRemoteDataRegistry IRI ;
+  interop:hasDataRegistry IRI*
 }
 
 # Application Registry
@@ -36,12 +36,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:updatedAt xsd:dateTime ;
   interop:registeredApplication IRI ;
   interop:hasAccessReceipt IRI?
-}
-
-# Data Registry Set
-<#DataRegistrySetShape> {
-  a [ interop:DataRegistrySet ] ;
-  interop:hasRegistry IRI+
 }
 
 # Data Registry
@@ -196,12 +190,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:fromAgent IRI ;             # Agent who sent the receipt
   interop:toAgent IRI ;               # Recipient of the receipt
   interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+
-}
-
-# Access Grant Registry Set
-<#AccessGrantRegistrySetShape> {
-  a [ interop:AccessGrantRegistrySet ] ;
-  interop:hasRegistry IRI+
 }
 
 # Access Grant Registry
@@ -388,11 +376,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Trusted Grant Target Types
 <#TrustedWithGrantTypes> [
   interop:Agent
-  interop:ApplicationRegistrySet
-  interop:DataRegistrySet
-  interop:AccessGrantRegistrySet
-  interop:AccessReceiptRegistrySet
-  interop:RemoteDataRegistrySet
+  interop:RegistrySet
   interop:ApplicationRegistry
   interop:DataRegistry
   interop:AccessGrantRegistry
@@ -405,12 +389,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:NoAccess
   interop:TrustedAccess
 ]
-
-# Access Receipt Registry Set
-<#AccessReceiptRegistrySetShape> {
-  a [ interop:AccessReceiptRegistrySet ] ;
-  interop:hasRegistry IRI+
-}
 
 # Access Receipt Registry
 <#AccessReceiptRegistryShape> {
@@ -433,12 +411,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   ( interop:hasDataGrant @<#:DataGrantShape>+ |
   interop:hasTrustedGrant @<#:TrustedGrantShape>+ |
   interop:hasRemoteDataGrant @<#:RemoteDataGrantShape>+ ) ;
-}
-
-# Remote Data Registry Set
-<#RemoteDataRegistrySetShape> {
-  a [ interop:RemoteDataRegistrySet ] ;
-  interop:hasRegistry IRI+
 }
 
 # Remote Data Registry

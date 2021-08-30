@@ -1,8 +1,6 @@
 Access Needs {#needs}
 =====================
 
-## Overview ## {#needs-overview}
-
 [=Agents=] or [=Applications=] in the [=ecosystem=] often require access to
 data controlled by some other [=Agent=]. Consequently, a common way to explain
 and communicate data needs between these parties is required.
@@ -18,7 +16,8 @@ Each [=Access Need Group=] is associated with up to three types of needs:
     a [=Data Registry=] or [=Remote Data Registry=], 
     identified by the [=shape tree=] type. 
 * [=Trusted Needs=] represent a need for elevated access to entire [=Registries=],
-    [=Registry Sets=], or the [=Identity Profile Document=] for the [=Agent=]
+    as well as the [=Identity Profile Document=] or [=Registry Set=] for 
+    the [=Agent=].
 
 [=Access Need Groups=] are essential to an [=Agent's=] decision-making
 when determining whether to grant access, as illustrated in the 
@@ -29,9 +28,7 @@ Note: See
 [Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#needs)
 for a detailed explanation of how Access Needs should be processed.
 
-## Data Model ## {#needs-datamodel}
-
-### Access Need Group ### {#needs-access-need-group}
+## Access Need Group ## {#needs-access-need-group}
 
 An <dfn>Access Need Group</dfn> is a collection of [=Access Needs=]
 and/or [=Trusted Needs=] that a given [=Agent=] and/or [=Application=] 
@@ -106,7 +103,7 @@ language-specific content mappings.
   </pre> 
 </figure>
 
-### Access Need ### {#needs-access-need}
+## Access Need ## {#needs-access-need}
 
 An <dfn>Access Need</dfn> represents the requirement of one specific type
 of data represented by a [=shape tree=], as part of an [=Access Need Group=].
@@ -236,7 +233,7 @@ indicates the necessity of the [=Access Need=]; *required* or
   </pre> 
 </figure>
 
-### Referenced Access Need ### {#needs-referenced-access-need}
+## Referenced Access Need ## {#needs-referenced-access-need}
 
 A <dfn>Referenced Access Need</dfn> is linked directly to an [=Access Need=],
 and represents an access request for data represented by a [=shape tree=] that
@@ -335,11 +332,11 @@ is `st:referenced` by the [=shape tree=] of the linked [=Access Need=].
   </pre> 
 </figure>
 
-### Trusted Need ### {#needs-trusted}
+## Trusted Need ## {#needs-trusted}
 
 A <dfn>Trusted Need</dfn> represents the request for elevated access
 to various types of top-level resources, including 
-the [=Identity Profile Document=], [=Registry Sets=], or specific 
+the [=Identity Profile Document=], [=Registry Set=], or specific 
 [=Registries=].
 
 Each [=Trusted Need=] has a single `interop:trustedWithType`, which identifies
@@ -376,7 +373,7 @@ indicates the necessity of the [=Access Need=]; *required* or
     </tr>
     <tr>
       <td>trustedWithType</td>
-      <td>  `interop:Agent`, `interop:ApplicationRegistry`
+      <td>  `interop:Agent`, `interop:RegistrySet`, `interop:ApplicationRegistry`
         `interop:DataRegistry`, `interop:AccessGrantRegistry`,
         `interop:AccessReceiptRegistry`, `interop:RemoteDataRegistry`
       </td>
@@ -402,7 +399,7 @@ indicates the necessity of the [=Access Need=]; *required* or
   </tbody>
 </table>
 
-### Access Request ### {#needs-access-request}
+## Access Request ## {#needs-access-request}
 
 An <dfn>Access Request</dfn> is used to send [=Access Need Groups=] from
 one [=Agent=] to another.
@@ -449,7 +446,7 @@ one [=Agent=] to another.
   </pre> 
 </figure>
 
-### Access Decorator Index ### {#needs-access-decorator-index}
+## Access Decorator Index ## {#needs-access-decorator-index}
 
 An <dfn>Access Decorator Index</dfn> is a listing of one or more
 [=Access Decorator Series=].
@@ -492,7 +489,7 @@ An <dfn>Access Decorator Index</dfn> is a listing of one or more
   </pre> 
 </figure>
 
-#### Access Decorator Series #### {#needs-access-decorator-series}
+### Access Decorator Series ### {#needs-access-decorator-series}
 
 An <dfn>Access Decorator Series</dfn> has one or
 more [=Access Decorator Versions=] in a given language.
@@ -534,7 +531,7 @@ more [=Access Decorator Versions=] in a given language.
   </pre> 
 </figure>
 
-#### Access Decorator Version #### {#needs-access-decorator-version}
+### Access Decorator Version ### {#needs-access-decorator-version}
 
 An <dfn>Access Decorator Version</dfn> is a versioned instance of
 a given [=Access Decorator Resource=].
@@ -581,7 +578,7 @@ a given [=Access Decorator Resource=].
   </pre> 
 </figure>
 
-### Access Decorator Resource ### {#needs-access-decorator-resource}
+## Access Decorator Resource ## {#needs-access-decorator-resource}
 
 An <dfn>Access Decorator Resource</dfn> is a document that contains
 [=Access Need Group Decorators=] and [=Access Need Decorators=] in a
@@ -610,7 +607,7 @@ given language.
   </tbody>
 </table>
 
-#### Access Need Group Decorator #### {#needs-access-need-group-decorator}
+### Access Need Group Decorator ### {#needs-access-need-group-decorator}
 
 An <dfn>Access Need Group Decorator</dfn> provides a subject name and
 more in depth description that explains why a given [=Access Need Group=]
@@ -650,7 +647,7 @@ is being requested of an [=Agent=].
   </tbody>
 </table>
 
-#### Access Need Decorator #### {#needs-access-need-decorator}
+### Access Need Decorator ### {#needs-access-need-decorator}
 
 An <dfn>Access Need Decorator</dfn> provides a specific
 explanation of why that data type is being requested.
