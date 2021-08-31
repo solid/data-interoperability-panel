@@ -240,8 +240,6 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
     belongs to an [=Access Need Group=] linked to the same [=Access Grant=].
 * The [=Access Need=] must link back to the [=Data Grant=]
     via `interop:hasDataGrant`.
-* [=Access Need=] and [=Data Grant=] must have the same `interop:accessMode`s 
-    and `interop:creatorAccessMode`s
 * [=Access Need=] and [=Data Grant=] must have the same `interop:registeredShapeTree`
 
 [Class Definition](interop.ttl#DataGrant) -
@@ -290,8 +288,10 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
     <tr>
       <td>creatorAccessMode</td>
       <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
-      <td>Granted modes of access for the creator of a Data Instance. Only valid when `accessMode` includes
-      `acl:Write` or `acl:Append`</td>
+      <td>Additional access mode assigned to the creator of a
+        data instance. Adds to the set of modes linked via 
+        `interop:accessMode`. Only valid when `accessMode` includes
+         `acl:Write` or `acl:Append`</td>
     </tr>
     <tr>
       <td>scopeOfGrant</td>

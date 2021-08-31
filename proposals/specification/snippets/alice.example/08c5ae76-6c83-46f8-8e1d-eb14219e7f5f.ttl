@@ -2,11 +2,13 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX alice: <https://alice.example/>
 PREFIX alice-grants: <https://alice.example/grants/>
+PREFIX alice-work: <https://work.alice.com/>
 PREFIX authz-agent: <https://trusted.example/>
 PREFIX acmeproject: <https://acmeproject.example/>
 PREFIX pm: <https://vocab.example/pm/>
 PREFIX pm-shex: <http://data.example/shex/pm#>
 PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 
 alice-grants:08c5ae76-6c83-46f8-8e1d-eb14219e7f5f\/
   a interop:AccessInvitation ;
@@ -38,9 +40,9 @@ alice-grants:08c5ae76-6c83-46f8-8e1d-eb14219e7f5f\/
   interop:hasAccessGrant <#grant> ;
   interop:satisfiesAccessNeed <#need-project> ;
   interop:registeredShapeTree pm-shapetrees:ProjectTree ;
-  interop:hasDataRegistration data:project-tree-reg ;
-  interop:accessMode acl:read, acl:write, acl:Control ;
-  interop:creatorAccessMode acl:read, acl:write, acl:Control ;
+  interop:hasDataRegistration alice-work:data\/project-data-registration ;
+  interop:accessMode acl:Read, acl:Write ;
+  interop:creatorAccessMode acl:Control ;
   # Scope grants access to all instances in the project
   # data registration, now and in the future, with no conditions
   interop:scopeOfGrant interop:AllInstances ;
@@ -56,9 +58,9 @@ alice-grants:08c5ae76-6c83-46f8-8e1d-eb14219e7f5f\/
   interop:hasDataGrant <#data-grant-project> ;
   interop:satisfiesAccessNeed <#need-issue> ;
   interop:registeredShapeTree pm-shapetrees:IssueTree ;
-  interop:hasDataRegistration data:issue-tree-reg ;
-  interop:accessMode acl:read, acl:write, acl:Control ;
-  interop:creatorAccessMode acl:read, acl:write, acl:Control ;
+  interop:hasDataRegistration alice-work:data\/issue-data-registration ;
+  interop:accessMode acl:Read, acl:Write ;
+  interop:creatorAccessMode acl:Control ;
   interop:scopeOfGrant interop:AllInstances .
 
 <#data-grant-task>
@@ -66,9 +68,9 @@ alice-grants:08c5ae76-6c83-46f8-8e1d-eb14219e7f5f\/
   interop:hasDataGrant <#data-grant-project> ;
   interop:satisfiesAccessNeed <#need-task> ;
   interop:registeredShapeTree pm-shapetrees:TaskTree ;
-  interop:hasDataRegistration data:task-tree-reg ;
-  interop:accessMode acl:read, acl:write, acl:Control ;
-  interop:creatorAccessMode acl:read, acl:write, acl:Control ;
+  interop:hasDataRegistration alice-work:data\/task-data-registration ;
+  interop:accessMode acl:Read, acl:Write ;
+  interop:creatorAccessMode acl:Control ;
   interop:scopeOfGrant interop:AllInstances .
 
 <#data-grant-milestone>
@@ -76,9 +78,9 @@ alice-grants:08c5ae76-6c83-46f8-8e1d-eb14219e7f5f\/
   interop:hasDataGrant <#data-grant-project> ;
   interop:satisfiesAccessNeed <#need-milestone> ;
   interop:registeredShapeTree pm-shapetrees:MilestoneTree ;
-  interop:hasDataRegistration data:milestone-tree-reg ;
-  interop:accessMode acl:read, acl:write, acl:Control ;
-  interop:creatorAccessMode acl:read, acl:write, acl:Control ;
+  interop:hasDataRegistration alice-work:data\/milestone-data-registration ;
+  interop:accessMode acl:Read, acl:Write ;
+  interop:creatorAccessMode acl:Control ;
   interop:scopeOfGrant interop:AllInstances .
 
 <#data-grant-release>
@@ -86,7 +88,7 @@ alice-grants:08c5ae76-6c83-46f8-8e1d-eb14219e7f5f\/
   interop:hasDataGrant <#data-grant-release> ;
   interop:satisfiesAccessNeed <#need-release> ;
   interop:registeredShapeTree pm-shapetrees:ReleaseTree ;
-  interop:hasDataRegistration data:release-tree-reg ;
-  interop:accessMode acl:read, acl:write, acl:Control ;
-  interop:creatorAccessMode acl:read, acl:write, acl:Control ;
+  interop:hasDataRegistration alice-work:data\/release-data-registration ;
+  interop:accessMode acl:Read, acl:Write ;
+  interop:creatorAccessMode acl:Control ;
   interop:scopeOfGrant interop:AllInstances .

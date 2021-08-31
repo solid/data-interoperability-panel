@@ -30,8 +30,8 @@ acmeproject:\#id
   interop:registeredShapeTree pm-shapetrees:ProjectTree ;
   interop:hasAccessNeedDecorator acmeproject:index\#projectDecorator ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write, acl:Control ;
-  interop:creatorAccessMode acl:read, acl:write, acl:Control ;
+  interop:accessMode acl:read, acl:write ;
+  interop:creatorAccessMode acl:Control ;
   interop:hasReferencedAccessNeed
       <#need-issue>, <#need-task>, <#need-release>, <#need-milestone> .
 
@@ -41,8 +41,8 @@ acmeproject:\#id
   interop:hasAccessNeedDecorator acmeproject:index\#issueDecorator ;
   interop:registeredShapeTree pm-shapetrees:IssueTree ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write, acl:Control ;
-  interop:creatorAccessMode acl:read, acl:write, acl:Control .
+  interop:accessMode acl:read, acl:write ;
+  interop:creatorAccessMode acl:Control .
 
 <#need-task>
   a interop:ReferencedAccessNeed ;
@@ -50,8 +50,8 @@ acmeproject:\#id
   interop:hasAccessNeedDecorator acmeproject:index\#taskDecorator ;
   interop:registeredShapeTree pm-shapetrees:TaskTree ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write, acl:Control ;
-  interop:creatorAccessMode acl:read, acl:write, acl:Control .
+  interop:accessMode acl:read, acl:write ;
+  interop:creatorAccessMode acl:Control .
 
 <#need-release>
   a interop:ReferencedAccessNeed ;
@@ -59,8 +59,8 @@ acmeproject:\#id
   interop:hasAccessNeedDecorator acmeproject:index\#releaseDecorator ;
   interop:registeredShapeTree pm-shapetrees:ReleaseTree ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write, acl:Control ;
-  interop:creatorAccessMode acl:read, acl:write, acl:Control .
+  interop:accessMode acl:read, acl:write ;
+  interop:creatorAccessMode acl:Control .
 
 <#need-milestone>
   a interop:ReferencedAccessNeed ;
@@ -68,4 +68,5 @@ acmeproject:\#id
   interop:hasAccessNeedDecorator acmeproject:index\#milestoneDecorator ;
   interop:registeredShapeTree pm-shapetrees:MilestoneTree ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write, acl:Control .
+  interop:accessMode acl:read, acl:write ;
+  interop:creatorAccessMode acl:Control .
