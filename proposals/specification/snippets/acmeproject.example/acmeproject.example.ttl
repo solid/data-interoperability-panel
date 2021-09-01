@@ -3,7 +3,7 @@ PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 PREFIX solidtrees: <https://shapetrees.example/solid/>
 PREFIX acmeproject: <https://acmeproject.example/>
 PREFIX acme: <https://acme.example/>
-PREFIX pm-shapetrees: <https://vocab.example/pm/>
+PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
 
 acmeproject:\#id
   a interop:Application ;
@@ -21,47 +21,52 @@ acmeproject:\#id
   interop:accessNecessity interop:accessRequired ;
   interop:accessScenario interop:PersonalAccess ;
   interop:authenticatesAs interop:Pilot ;
-  interop:hasAccessDecoratorIndex pm:index ;
+  interop:hasAccessDecoratorIndex acmeproject:index ;
   interop:hasAccessNeed <#need-project> .
 
 <#need-project>
   a interop:AccessNeed ;
   interop:inAccessNeedGroup <#need-group-pm> ;
-  interop:registeredShapeTree pm:ProjectTree ;
-  interop:hasAccessNeedDecorator pm:index\#projectDecorator ;
+  interop:registeredShapeTree pm-shapetrees:ProjectTree ;
+  interop:hasAccessNeedDecorator acmeproject:index\#projectDecorator ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write, acl:Control ;
+  interop:accessMode acl:read, acl:write ;
+  interop:creatorAccessMode acl:Control ;
   interop:hasReferencedAccessNeed
       <#need-issue>, <#need-task>, <#need-release>, <#need-milestone> .
 
 <#need-issue>
   a interop:ReferencedAccessNeed ;
   interop:hasAccessNeed <#need-project> ;
-  interop:hasAccessNeedDecorator pm:index\#issueDecorator ;
-  interop:registeredShapeTree pm:IssueTree ;
+  interop:hasAccessNeedDecorator acmeproject:index\#issueDecorator ;
+  interop:registeredShapeTree pm-shapetrees:IssueTree ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write, acl:Control .
+  interop:accessMode acl:read, acl:write ;
+  interop:creatorAccessMode acl:Control .
 
 <#need-task>
   a interop:ReferencedAccessNeed ;
   interop:hasAccessNeed <#need-project> ;
-  interop:hasAccessNeedDecorator pm:index\#taskDecorator ;
-  interop:registeredShapeTree pm:TaskTree ;
+  interop:hasAccessNeedDecorator acmeproject:index\#taskDecorator ;
+  interop:registeredShapeTree pm-shapetrees:TaskTree ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write, acl:Control .
+  interop:accessMode acl:read, acl:write ;
+  interop:creatorAccessMode acl:Control .
 
 <#need-release>
   a interop:ReferencedAccessNeed ;
   interop:hasAccessNeed <#need-project> ;
-  interop:hasAccessNeedDecorator pm:index\#releaseDecorator ;
-  interop:registeredShapeTree pm:ReleaseTree ;
+  interop:hasAccessNeedDecorator acmeproject:index\#releaseDecorator ;
+  interop:registeredShapeTree pm-shapetrees:ReleaseTree ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write, acl:Control .
+  interop:accessMode acl:read, acl:write ;
+  interop:creatorAccessMode acl:Control .
 
 <#need-milestone>
   a interop:ReferencedAccessNeed ;
   interop:hasAccessNeed <#need-project> ;
-  interop:hasAccessNeedDecorator pm:index\#milestoneDecorator ;
-  interop:registeredShapeTree pm:MilestoneTree ;
+  interop:hasAccessNeedDecorator acmeproject:index\#milestoneDecorator ;
+  interop:registeredShapeTree pm-shapetrees:MilestoneTree ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write, acl:Control .
+  interop:accessMode acl:read, acl:write ;
+  interop:creatorAccessMode acl:Control .
