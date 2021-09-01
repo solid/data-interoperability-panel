@@ -30,7 +30,7 @@ jobs:
           bikeshed update
 
       - name: generate html
-        run: for index in proposals/*/index.bs; do bikeshed spec $index; done
+        run: for bsfile in proposals/*/*.bs; do bikeshed spec $bsfile; done
 
       - name: generate svg
         run: for diagram in proposals/*/diagrams/*.seq.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
