@@ -20,32 +20,38 @@ PREFIX interops: <https://shapes.pub/drafts/ns/solid/interop#>
   st:expectsType st:Resource ;
   st:shape interops:RegistrySetShape .
 
-# Application Registry
+# Agent Registry
 ##############################################################################
 # Ensure the registry container graph contains a valid
-# ApplicationRegistry instance, and the resource inside of
-# it are valid ApplicationRegistration instances.
+# AgentRegistry instance, and the resource inside of
+# it are valid AgentRegistration instances.
 ##############################################################################
-<#ApplicationRegistryTree>
+<#AgentRegistryTree>
   a st:ShapeTree ;
   st:expectsType st:Container ;
-  st:shape interops:ApplicationRegistryShape ;
-  st:contains <#ApplicationRegistrationTree> .
+  st:shape interops:AgentRegistryShape ;
+  st:contains <#ApplicationRegistrationTree> ,
+              <#SocialAgentRegistrationTree> .
 
 # Application Registration
 ##############################################################################
 # Ensure the registration container graph contains a valid
-# ApplicationRegistration instance. Applications have freedom to store
-# whatever data internal to their operation that they like within
+# ApplicationRegistration instance.
 ##############################################################################
 <#ApplicationRegistrationTree>
   a st:ShapeTree ;
   st:expectsType st:Container ;
-  st:shape <interops:ApplicationRegistrationShape> ;
-  st:contains <#AccessReceiptTree> ,
-              st:ResourceTree ,
-              st:ContainerTree ,
-              st:NonRDFResourceTree .
+  st:shape <interops:ApplicationRegistrationShape> .
+
+# Social Agent Registration
+##############################################################################
+# Ensure the registration container graph contains a valid
+# SocialAgentRegistration instance.
+##############################################################################
+<#SocialAgentRegistrationTree>
+  a st:ShapeTree ;
+  st:expectsType st:Container ;
+  st:shape <interops:SocialAgentRegistrationShape> .
 
 # Data Registry
 ##############################################################################
@@ -178,13 +184,6 @@ PREFIX interops: <https://shapes.pub/drafts/ns/solid/interop#>
 
 # Application
 ##############################################################################
-<#ApplicationProfileTree>
-  a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:contains <#ApplicationTree> ,
-              st:ResourceTree ,
-              st:ContainerTree ,
-              st:NonRDFResourceTree .
 
 <#ApplicationTree>
   a st:ShapeTree ;

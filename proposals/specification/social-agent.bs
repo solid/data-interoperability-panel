@@ -1,0 +1,217 @@
+Social Agents {#social-agents}
+=====================
+
+A <dfn>Social Agent</dfn> is a strongly identifiable individual, group, or
+organization that can own or be responsible for data, and provide consent to the
+access of that data by other [=Agents=].
+
+Most of a [=Social Agent's=] information is stored in [=Registries=].
+
+A <dfn>Registry</dfn> is a place where a [=Social Agent=] can store and find
+different types of data, often for particular purposes. Each type
+of [=Registry=] serves a specific purpose or function.
+
+A [=Social Agent=] stores a list of its [=Registries=] in a [=Registry Set=],
+which must be a separate resource from the [=identity profile document=]
+that the [=Social Agent=] graph resides in so that it can be given more
+restrictive (i.e. non-public) permissions.
+
+[Class Definition](interop.ttl#SocialAgent) -
+[Shape Definition](interop.shex#SocialAgentShape) -
+[Shape Tree Definition](interop.tree#SocialAgentTree)
+
+<table class="classinfo data" align="left" id="classSocialAgent">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistrySet</td>
+      <td>[RegistrySet](#classRegistrySet)</td>
+      <td>[=Registry Set=] for the [=Social Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasAuthorizationAgent</td>
+      <td>[Application](#classApplication)</td>
+      <td>The software used by the Agent to manage access to their data</td>
+    </tr>
+    <tr>
+      <td>hasInbox</td>
+      <td>ldp:inbox</td>
+      <td>A general inbox for messages sent to the [=Social Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessInbox</td>
+      <td>ldp:inbox</td>
+      <td>An inbox for access related messages sent to the [=Social Agent=]</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>[=Social Agent=] at https://alice.example/#id</figcaption>  
+  <pre class=include-code>
+  path: snippets/alice.example/alice.example.ttl
+  highlight: turtle
+  </pre> 
+</figure>
+
+## Registry Set ## {#datamodel-registry-set}
+
+A <dfn>Registry Set</dfn> links to all of the [=Registries=] owned
+by a given [=Social Agent=]. A non-public document, it is accessed by or
+on behalf of the [=Social Agent=] or their [=Trusted Agents=] via trusted
+[=Applications=].
+
+[Class Definition](interop.ttl#RegistrySet) -
+[Shape Definition](interop.shex#RegistrySetShape) -
+[Shape Tree Definition](interop.tree#RegistrySetTree)
+
+<table class="classinfo data" align="left" id="classRegistrySet">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasAgentRegistry</td>
+      <td>[AgentRegistry](#classAgentRegistry)</td>
+      <td>[=Agent Registry=] for the [=Social Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessGrantRegistry</td>
+      <td>[AccessGrantRegistry](#classAccessGrantRegistry)</td>
+      <td>[=Access Grant Registry=] for the [=Social Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessReceiptRegistry</td>
+      <td>[AccessReceiptRegistry](#classAccessReceiptRegistry)</td>
+      <td>[=Access Receipt Registry=] for the [=Social Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasRemoteDataRegistry</td>
+      <td>[RemoteDataRegistry](#classRemoteDataRegistry)</td>
+      <td>[=Remote Data Registry=] for the [=Social Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasDataRegistry</td>
+      <td>[DataRegistry](#classDataRegistry)</td>
+      <td>[=Data Registry=] for the [=Social Agent=]</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>[=Social Agent=] at https://alice.example/#id</figcaption>  
+  <pre class=include-code>
+  path: snippets/alice.example/registries.ttl
+  highlight: turtle
+  </pre> 
+</figure>
+
+## Resource Hierarchy ## {#agents-hierarchy}
+
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Class</th>
+      <th>Shape</th>
+      <th>Shape Tree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`/#me`</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[AgentShape](interop.shex#AgentShape)</td>
+      <td>[AgentTree](interop.tree#AgentTree)</td>
+    </tr>
+    <tr>
+      <td>`/registries`</td>
+      <td>[RegistrySet](interop.ttl#RegistrySet)</td>
+      <td>[RegistrySetShape](interop.shex#RegistrySetShape)</td>
+      <td>[RegistrySetTree](interop.tree#RegistrySetTree)</td>
+    </tr>
+    <tr>
+      <td>`/inbox/access`</td>
+      <td><a href="https://www.w3.org/ns/ldp#inbox" class="vocab">ldp:inbox</a></td>
+      <td>-</td>
+      <td>[AccessInboxTree](interop.tree#AccessInboxTree)</td>
+    </tr>
+    <tr>
+      <td>`/inbox/general`</td>
+      <td><a href="https://www.w3.org/ns/ldp#inbox" class="vocab">ldp:inbox</a></td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+
+[=Social Agent=] resources <em class="rfc2119">MAY</em> use any resource or
+subject names. The names used herein have been selected for comprehension
+and readability.
+
+## Permission Model ## {#agents-permissions}
+
+<figure>
+  <table class="data permissions" align="left">
+    <col>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup span=2></colgroup>
+    <thead>
+      <tr>
+        <th></th>
+        <th scope="colgroup">Agent</th>
+        <th scope="colgroup">Public</th>
+        <th scope="colgroup">Trusted Agents</th>
+        <th scope="colgroup">Other Agents Granted Access</th>
+      </tr>
+      <tr>
+        <th scope="col">Resource</th>
+        <th scope="col">Access</th>
+        <th scope="col">Access</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`/`</td>
+        <td>Control</td>
+        <td>Read</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`/registries`</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>

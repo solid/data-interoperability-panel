@@ -1,30 +1,17 @@
 Applications {#app}
 =====================
 
-[=Applications=] are pieces of software that [=Agents=] use to
-access, manipulate, and manage the data in their control, and the data
-they've been granted access to.
+An <dfn>Application</dfn> is a software-based [=Agent=] that a 
+[=Social Agent=] uses to access, manipulate, and manage the data in 
+their control, as well as the data they’ve been granted access to.
 
-An [=Application=] is denoted by an [=identity=]. De-referencing that
-[=identity=] leads to an instance of an [=Application=] profile graph, 
-stored in an [=application profile document=], which contains useful 
-information about that [=Application=].
-
-The information in the [=Application=] profile graph is used during 
-[[#appreg]] and [[#authz]] to help [=Agents=] determine whether they 
-want to use the [=Application=], what kind of data it needs access to, and 
-whether they're willing to give it that access.
+The information in the [=identity profile document=] of an [=Application=] 
+is used during [[#authz]] to help [=Social Agents=] determine whether 
+they want to use that [=Application=]. It lets them know what kind of 
+data the [=Application=] needs access to and why. This lets the 
+[=Social Agent=] make an informed choice.
 
 The [=Application=] profile is designed to be publicly accessible.
-
-## Application ## {#datamodel-application}
-
-An <dfn>Application</dfn> is a piece of software that an [=Agent=] uses to
-access, manipulate, and manage the data in their control, as well as the data
-they've been granted access to.
-
-An [=Application=] provides summary detail about itself, and its
-author, via properties in the [Application](#classApplication) class.
 
 An [=Application=] identifies the types of data it requires access to
 by linking to [=Access Need Groups=].
@@ -57,13 +44,8 @@ by linking to [=Access Need Groups=].
     </tr>
     <tr>
       <td>applicationAuthor</td>
-      <td>[Agent](#classAgent)</td>
-      <td>[=Agent=] that authored the [=Application=]</td>
-    </tr>
-    <tr>
-      <td>applicationAuthorName</td>
-      <td>xsd:string</td>
-      <td>Name of the Author</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that authored the [=Application=]</td>
     </tr>
     <tr>
       <td>applicationThumbnail</td>
@@ -76,22 +58,15 @@ by linking to [=Access Need Groups=].
       <td>[=Access Need Group=] representing types of data the
       [=Application=] needs to operate</td>
     </tr>
-    <tr>
-      <td>receivesAccessReceipt</td>
-      <td>interop:ReceiptInMessage,
-      interop:ReceiptInRegistration</td>
-      <td>Identifies whether [=Access Receipts=] should be sent directly
-      to the [=Application=] or provided in the [=Application Registration=]</td>      
-    </tr>
   </tbody>
 </table>
 
 <figure>
   <figcaption>[=Application=] at https://app.example/id#app</figcaption>  
   <pre class=include-code>
-  path: snippets/acmeproject.example/acmeproject.example.ttl
+  path: snippets/projectron.example/projectron.example.ttl
   highlight: turtle
-  show: 8-17
+  show: 9-15
   </pre> 
 </figure>
 

@@ -1,9 +1,10 @@
-Data Registration {#datareg}
+Data Registration {#dr}
 =====================
 
-Data Registration lets [=Agents=] store and manage the data they control.
-Data of various types is organized and stored in a uniform way to aid
-validation, authorization, discovery, and more.
+Data Registration lets [=Social Agents=] store and manage the 
+data they control. Data of various types is organized and stored in a 
+uniform way to aid validation, authorization, 
+discovery, and more.
 
 Complex hierarchies that hinder interoperability are avoided
 by storing data in a relatively flat hierarchy. This creates natural
@@ -13,17 +14,17 @@ Note: See
 [Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#datareg)
 for a detailed explanation of how Data Registrations should be processed.
 
-## Data Registry ## {#datamodel-data-registry}
+## Data Registry ## {#data-registry}
 
 A <dfn>Data Registry</dfn> is a collection of [=Data Registrations=], each
-representing a unique type of data associated with a given [=shape tree=].
+of which represents a unique type of data, identified by a [=shape tree=].
 
 A [=Data Registry=] can be used for basic discovery, but it is not
 designed nor intended to be an efficient means to query or index data.
 However, it is *intended* to be used as reliable source data for different
 query engines or indexing schemes.
 
-A [=Data Registry=] is linked to an [=Agent=] via their [=Registry Set=].
+A [=Data Registry=] is linked to a [=Social Agent=] via their [=Registry Set=].
 
 [Class Definition](interop.ttl#DataRegistry) -
 [Shape Definition](interop.shex#DataRegistryShape) -
@@ -50,7 +51,8 @@ A [=Data Registry=] is linked to an [=Agent=] via their [=Registry Set=].
 </table>
 
 <figure>
-  <figcaption>A [=Data Registry=] at https://work.alice.example/data/ linking to several [=Data Registrations=]</figcaption>
+  <figcaption>A [=Data Registry=] at https://work.alice.example/data/ 
+  linking to several [=Data Registrations=]</figcaption>
   <pre class=include-code>
   path: snippets/work.alice.example/data-registry.ttl
   highlight: turtle
@@ -58,18 +60,18 @@ A [=Data Registry=] is linked to an [=Agent=] via their [=Registry Set=].
   </pre>
 </figure>
 
-## Data Registration ## {#datamodel-data-registration}
+## Data Registration ## {#data-registration}
 
-A <dfn>Data Registration</dfn> provides the [=Agent=] with a place to store
-[=Data Instances=] of a particular type, conforming to a
-given [=shape tree=], indicated by the
+A <dfn>Data Registration</dfn> provides the [=Social Agent=] 
+with a place to store [=Data Instances=] that conform to the
+registered [=shape tree=] of that registration, indicated by the
 [interop:registeredShapeTree](#classDataRegistration) property.
 
-A <dfn>Data Instance</dfn> is a unique, stored instance of a
-particular type of data, conforming to the [=shape tree=] for
-the instance's [=Data Registration=].
+A <dfn>Data Instance</dfn> is a unique, stored instance of data
+that conforms to the [=shape tree=] for the instance's 
+[=Data Registration=].
 
-Each [=Data Instance=] is linked via the
+Each [=Data Instance=] is linked to the [=Data Registration=] via the
 <a href="https://www.w3.org/ns/ldp#contains" class="vocab">ldp:contains</a>
 property.
 
@@ -91,8 +93,8 @@ property.
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>[Agent](#classAgent)</td>
-      <td>[=Agent=] that registered the [=Data Registration=]</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that registered the [=Data Registration=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
@@ -126,7 +128,7 @@ property.
   </pre>
 </figure>
 
-## Resource Hierarchy ## {#datareg-hierarchy}
+## Resource Hierarchy ## {#dr-hierarchy}
 
 <table class="data tree" align="left">
   <col>
@@ -235,10 +237,8 @@ property.
 The [=Data Registry=] resource <em class="rfc2119">MAY</em> use any
 resource or subject name.
 
-[=Data Registrations=] and [=Data Instances=]
-<em class="rfc2119">MUST</em> use
-\[UUIDs](https://www.ietf.org/rfc/rfc4122.txt)
-for resource names.
+The resource names for [=Data Registrations=] and [=Data Instances=]
+<em class="rfc2119">MUST</em> be unique and randomly generated.
 
 A [=Data Registration=] container <em class="rfc2119">MUST</em>
 contain conformant instances of the [=shape tree=] associated with the
@@ -327,22 +327,22 @@ to [ProjectTree](snippets/data.example/pm-shapetrees.tree#ProjectTree) per the d
   </table>
 </figure>
 
-## Permission Model ## {#datareg-permissions}
+## Permission Model ## {#dr-permissions}
 
 Almost all of the collaborative use cases between [=Agents=]
 in the [=ecosystem=] are based on data furnished through the
 [=Data Registry=].
 
-Only the [=Agent=] or [=Trusted Agents=] have the ability to manage
-contents and permissions across [=Data Registries=], including
-the creation and modification of [=Data Registrations=]. The
+Only a [=Social Agent=] or their [=Trusted Agents=] have the ability 
+to manage contents and permissions across [=Data Registries=], 
+including the creation and modification of [=Data Registrations=]. The
 [table below](#permDataRegistry) illustrates this using the
-[[#datareg-hierarchy|resource hierarchy]] from the previous section.
-*Other Agents* are granted varying levels of access by the [=Agent=] or their 
-[=Trusted Agents=].
+[[#dr-hierarchy|resource hierarchy]] from the previous section.
+*Other Agents* are granted varying levels of access by the [=Social Agent=] 
+or their [=Trusted Agents=].
 
 Note: [[#authz]] provides patterns for managing [=Access Grants=] and 
-sending [=Access Receipts=] to the [=Agents=] who were granted access.
+sending [=Access Receipts=] to the [=Agents=] that were granted access.
 
 <figure id="permDataRegistry">
 <figcaption>Permission model for [=Data Registry=] resources.
@@ -358,7 +358,7 @@ sending [=Access Receipts=] to the [=Agents=] who were granted access.
       <tr>
         <th></th>
         <th></th>
-        <th scope="colgroup">Agent</th>
+        <th scope="colgroup">Owner</th>
         <th scope="colgroup">Public</th>
         <th scope="colgroup">Trusted Agents</th>
         <th scope="colgroup">Other Agents</th>
@@ -504,25 +504,26 @@ sending [=Access Receipts=] to the [=Agents=] who were granted access.
   </table>
 </figure>
 
-A signficant amount
-of flexibility is needed in granting other Agents access to 
+A significant amount of 
+flexibility is needed in granting other Agents access to 
 data in the registry. It is also important to avoid 
-the creation of permission swamps that are unwieldy for [=Agents=] to manage.
+the creation of permission swamps that are unwieldy for [=Social Agents=] 
+to manage.
 
 Organizing data by [=shape tree=] creates natural permission boundaries,
 making authorization more intuitive and manageable.
 
 Access is granted to a certain type of data by granting access
-to the [[#datareg-all|entire Data Registration]], or to
-[[#datareg-specific|specific Data Instances]] within it.
+to the [[#dr-all|entire Data Registration]], or to
+[[#dr-specific|specific Data Instances]] within it.
 
 Note: [[!WAC]] doesn't have any mechanism to extend or modify
 inherited permissions. Access Control Policies (ACP) is recommended
 for optimal results.
 
-### Access to a Data Registration ### {#datareg-all}
+### Access to a Data Registration ### {#dr-all}
 
-Access granted at the [=Data Registration=] level
+Access granted at the [=Data Registration=] 
 applies to all [=Data Instances=] within it.
 
 The [=access modes=] listed in the table below can be combined as needed.
@@ -571,7 +572,7 @@ The [=access modes=] listed in the table below can be combined as needed.
   </table>
 </figure>
 
-### Access to Specific Data Instances ### {#datareg-specific}
+### Access to Specific Data Instances ### {#dr-specific}
 
 Access granted at the [=Data Instance=] level apply only to
 that instance, and the resources within it.
