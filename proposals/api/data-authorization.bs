@@ -17,7 +17,7 @@ patterns enabled by the [[SAI|Solid Application Interoperability Specification]]
     <tr>
       <td colspan=2>
       This workflow details how an [=Access Grant=] is 
-      presented to a given [=Agent=] for data in their control, 
+      presented to a given [=Social Agent=] for data in their control, 
       based on the [=Access Need Groups=] associated.
 
       Each [=Access Grant=] is associated with a specific 
@@ -50,7 +50,7 @@ patterns enabled by the [[SAI|Solid Application Interoperability Specification]]
   <tbody>
     <tr>
       <td>`SUBJECT`</td>
-      <td>This may be a tuple of [=Agent=] and [=Application=] in the 
+      <td>This may be a tuple of [=Social Agent=] and [=Application=] in the 
       case of a [=weakly identifiable application=], or [=Application=] 
       and [=Application=] in the case
       of a [=strongly identifiable application=]</td>
@@ -87,7 +87,7 @@ workflow.
     1. Application Author Identity - `APP applicationAuthor`
     1. Application Thumbnail - `APP applicationThumbnail`
     1. Application Summary - `APP applicationDescription`
-1. Present information about the [=Agent=] `AGENT` if the
+1. Present information about the [=Social Agent=] `AGENT` if the
     [=Access Grant Subject=] is not an [=Application=]
     1. Agent Name `AGENT fullName`
     2. Agent Identity - `AGENT` URI
@@ -415,15 +415,15 @@ presented as follows:
 
 ##  Application Requests Access ##  {#authz-apprequest}
 
-Let `CONTROLLER` be an [=Agent=] that wants to give an
+Let `CONTROLLER` be a [=Social Agent=] that wants to give an
     [=Application=] `APP` access to data in their control.
 
 Let `APP` be the [=Application=] that `CONTROLLER` wishes to use, and must
     grant access to. `APP` may be an [=Application=] that is piloted by the
-    [=Agent=], or it may be an autonomous service that operates independently.
+    [=Social Agent=], or it may be an autonomous service that operates independently.
     The following workflow applies to both cases.
 
-Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
+Let `AUTHZ` be an [=Application=] trusted by the [=Social Agent=] for
     authorization and access control.
 
 1. `CONTROLLER` decides they'd like to use `APP`
@@ -434,9 +434,9 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
     [=Trusted Agent=] of `CONTROLLER` for data authorization
 1. `APP` redirects `CONTROLLER` to `AUTHZ`
     1. Let `APPREG` be an [=Application Registration=] returned by
-        [[#appreg-loadappreg]] with inputs: `CONTROLLER`, `APP`
+        #appreg-loadappreg with inputs: `CONTROLLER`, `APP`
     1. If `APPREG` is empty let `APPREG` be the [=Application Registration=]
-        returned by [[#appreg-registerapp]] with inputs: `AGENT`, `APP`,
+        returned by #appreg-registerapp with inputs: `AGENT`, `APP`,
         `REGISTRY`.
     1. `AUTHZ` looks in `APP`'s [=application profile document=] for
         [=Access Need Groups=] with an `interop:accessScenario` of
@@ -461,14 +461,14 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Agent=] for
 ##  Another Agent Requests Access ##  {#authz-agentrequest}
 
 Let `REQUESTER` be an [=Agent=] requesting data from another
-    [=Agent=] `CONTROLLER` with a known [=identity=].
+    [=Social Agent=] `CONTROLLER` with a known [=identity=].
 
 Let `REQAPP` be an [=Application=] piloted by `REQUESTER`
 
 Let `RAUTHZ` be an [=Application=] trusted by `REQUESTER` for
     authorization and access control.
 
-Let `CONTROLLER` be an [=Agent=] in control of data that
+Let `CONTROLLER` be a [=Social Agent=] in control of data that
     `REQUESTER` would like to access.
 
 Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
@@ -524,7 +524,7 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
 
 ##  Controller Shares Access ##  {#authz-controllershare}
 
-Let `CONTROLLER` be an [=Agent=] in control of data that
+Let `CONTROLLER` be a [=Social Agent=] in control of data that
     they would like to authorize `RECEIVER` to access.
 
 Let `CAPP` be an [=Application=] piloted by `CONTROLLER`
@@ -533,7 +533,7 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
     authorization and access control.
 
 Let `RECEIVER` be an [=Agent=] receiving access to data from another
-    [=Agent=] `CONTROLLER`.
+    [=Social Agent=] `CONTROLLER`.
 
 Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
     authorization and access control.
@@ -581,7 +581,7 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
 Controlling Agent initiates sharing their data with an Agent that doesn't
 have an identity or a pod.
 
-Let `CONTROLLER` be an [=Agent=] in control of data that
+Let `CONTROLLER` be a [=Social Agent=] in control of data that
     they would like to authorize `INVITEE` to access.
 
 Let `CAPP` be an [=Application=] piloted by `CONTROLLER`

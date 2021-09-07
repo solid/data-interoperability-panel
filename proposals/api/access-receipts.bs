@@ -111,8 +111,8 @@ in the [[SAI|Solid Application Interoperability Specification]].
 1. Let `RECEIPT` be an empty [=Access Receipt=]
 1. Let `SUBJECT` be the [=Access Grant Subject=] linked via
     `GRANT hasAccessGrantSubject`
-1. Let `GRANTOR` be the current [=Agent=]
-1. Let `OWNER` be the [=Agent=] owner of the storage access is being granted from 
+1. Let `GRANTOR` be the current [=Social Agent=]
+1. Let `OWNER` be the [=Social Agent=] owner of the storage access is being granted from 
 1. Let `APP` be `SUBJECT accessByApplication`
 1. Let `RECEIPT fromAgent` be `OWNER`
 1. Let `RECEIPT viaAgent` be `GRANTOR`
@@ -126,9 +126,9 @@ in the [[SAI|Solid Application Interoperability Specification]].
     linked via `GRANT hasTrustedGrant`
 1. Let `RECEIPT hasRemoteDataGrant` be all [=Remote Data Grants=]
     linked via `GRANT hasRemoteDataGrant`
-1. Let `APPREG` be result of [[#appreg-loadappreg]] with
+1. Let `APPREG` be result of #appreg-loadappreg with
     inputs: `OWNER`, `APP`
-    1. Call [[#appreg-registerapp]] if `APPREG` is empty
+    1. Call #appreg-registerapp if `APPREG` is empty
 1. Post `RECEIPT` to `APPREG` container
 1. Let `CURRENT` be `APPREG hasAccessReceipt`
 1. Remove `CURRENT` if it exists
@@ -170,7 +170,7 @@ in the [[SAI|Solid Application Interoperability Specification]].
   <tbody>
     <tr>
       <td>[=Access Receipt=]</td>
-      <td>for `GRANT` posted to the grantee [=Agent's=] access inbox</td>
+      <td>for `GRANT` posted to the grantee [=Social Agent's=] access inbox</td>
     </tr>
   </tbody>
 </table>
@@ -181,8 +181,8 @@ in the [[SAI|Solid Application Interoperability Specification]].
 1. Let `SUBJECT` be the [=Access Grant Subject=] linked via
     `GRANT hasAccessGrantSubject`
 1. Let `GRANTEE` be `SUBJECT accessByAgent`
-1. Let `GRANTOR` be the current [=Agent=]
-1. Let `OWNER` be the [=Agent=] owner of the storage access is being granted from 
+1. Let `GRANTOR` be the current [=Social Agent=]
+1. Let `OWNER` be the [=Social Agent=] owner of the storage access is being granted from 
 1. Let `RECEIPT fromAgent` be `OWNER`
 1. Let `RECEIPT viaAgent` be `GRANTOR`
 1. Let `RECEIPT providedAt` be the current time
@@ -285,7 +285,7 @@ in the [[SAI|Solid Application Interoperability Specification]].
   <tbody>    
     <tr>
       <td>`AGENT`</td>
-      <td>[=Agent=] owner of the shared data</td>
+      <td>[=Social Agent=] owner of the shared data</td>
     </tr>
     <tr>
       <td>`REGISTRY`</td>

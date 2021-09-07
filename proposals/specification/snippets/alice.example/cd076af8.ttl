@@ -1,15 +1,16 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX alice: <https://alice.example/>
-PREFIX alice-applications: <https://alice.example/>
+PREFIX bob: <https://bob.example/>
 PREFIX authz-agent: <https://trusted.example/>
-PREFIX projectron: <https://projectron.example/>
+PREFIX alice-agents: <https://alice.example/agents/>
 
-alice-applications:705563552198b6fb3efc40717872aa2ec35d669c1095cc5d665f499ec5d7e23a\/
-  a interop:ApplicationRegistration ;
+alice-agents:cd076af8\/
+  a interop:SocialAgentRegistration ;
   interop:registeredBy alice:\#id ;
   interop:registeredWith authz-agent:\#id ;
   interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
   interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
-  interop:registeredApplication projectron:\#id ;
-  interop:hasAccessReceipt <./04ca5ba7-0166-4312-ae96-09b9f3a25ba0#receipt> .
+  interop:registeredAgent bob:\#id .
