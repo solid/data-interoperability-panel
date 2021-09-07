@@ -1,27 +1,28 @@
 Access Receipts {#receipts}
 =====================
 
-When an [=Agent=] grants access to another [=Agent=] or [=Application=],
-an [=Access Receipt=] is provided to the grantee that communicates what 
-they have been given access to, and why.
+When a [=Social Agent=] grants access to another [=Social Agent=] or 
+[=Application=], an [=Access Receipt=] is provided to the grantee that 
+communicates what they have been given access to, and why.
 
-[=Access Receipts=] are sent to an [=Agent's=] Access Inbox. When the 
-grantee is an [=Application=], the [=Agent=] will store the 
+[=Access Receipts=] are sent to a [=Social Agent's=] Access Inbox. When the 
+grantee is an [=Application=], the [=Social Agent=] will store the 
 [=Access Receipt=] in an [=Application Registration=] in their 
-[=Application Registry=].
+[=Agent Registry=].
 
-[=Access Receipts=] received by an [=Agent=] are used to populate and maintain 
-their [=Remote Data Registry=]. This allows the [=Agent=] and their 
-[=Applications=] to lookup and access data that been shared with them.
+[=Access Receipts=] received by a [=Social Agent=] are used to populate 
+and maintain their [=Remote Data Registry=]. This allows the 
+[=Social Agent=] and their [=Applications=] to lookup and access data 
+that been shared with them.
 
-When an [=Agent=] receives an [=Access Receipt=], it is stored in their
+When a [=Social Agent=] receives an [=Access Receipt=], it is stored in their
 [=Access Receipt Registry=].
 
 Note: See
 [Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#receipts)
 for a detailed explanation of how Access Receipts should be processed.
 
-## Access Receipt Registry ## {#datamodel-access-receipt-registry}
+## Access Receipt Registry ## {#access-receipt-registry}
 
 An <dfn>Access Receipt Registry</dfn> is a collection of
 [=Access Receipts=] stored in a specific location in a [=pod=].
@@ -61,8 +62,8 @@ An <dfn>Access Receipt Registry</dfn> is a collection of
 
 ## Access Receipt ## {#datamodel-access-receipt}
 
-An [=Agent=] provides an <dfn>Access Receipt</dfn> to another [=Agent=] or
-[=Application=] after granting them access to some scope of data as the
+A [=Social Agent=] provides an <dfn>Access Receipt</dfn> to another 
+[=Agent=] after granting them access to some scope of data as the
 [=Access Grant Subject=] of an [=Access Grant=].
 
 [=Access Receipts=] extend the [=Access Grant=] class with additional
@@ -90,8 +91,8 @@ of access granted.
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>[Agent](#classAgent)</td>
-      <td>[=Agent=] that registered the [=Access Receipt=]</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=SocialAgent=] that registered the [=Access Receipt=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
@@ -114,16 +115,16 @@ of access granted.
       <td>Date and time the [=Access Receipt=] was provided</td>
     </tr>
     <tr>
-      <td>fromAgent</td>
-      <td>[Agent](#classAgent)</td>
-      <td>[=Agent=] whose data is being shared through the [=Access Receipt=]</td>
+      <td>fromSocialAgent</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] whose data is being shared through the [=Access Receipt=]</td>
     </tr>
     <tr>
-      <td>viaAgent</td>
-      <td>[Agent](#classAgent)</td>
-      <td>[=Agent=] who granted access and delivered the [=Access Receipt=].
-      This can be different than `fromAgent` when access is being managed
-      by a [=Trusted Agent=] of `fromAgent`.</td>
+      <td>viaSocialAgent</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] who granted access and delivered the [=Access Receipt=].
+      This can be different than `fromSocialAgent` when access is being managed
+      by a [=Trusted Agent=] of `fromSocialAgent`.</td>
     </tr>
     <tr>
       <td>hasAccessGrantSubject</td>
@@ -208,5 +209,5 @@ of access granted.
 The [=Access Receipt Registry=] resource
 <em class="rfc2119">MAY</em> use any resource or subject name.
 
-[=Access Receipts=] <em class="rfc2119">MUST</em>
-use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt) for resource names.
+The resource names for [=Access Receipts=]
+<em class="rfc2119">SHOULD</em> be unpredictable.

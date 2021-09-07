@@ -1,33 +1,33 @@
 Access Grants {#grants}
 =====================
 
-[=Access Grants=] represent an [=Agent's=] decision to grant access to
+[=Access Grants=] represent a [=Social Agent's=] decision to grant access to
 some portion of the data in their control to another [=Agent=]. They provide
-the context needed to effectively manage permissions on a given [=Agent's=]
-data through a compatible access control system.
+the context needed to effectively manage permissions on a given 
+[=Social Agent's=] data through a compatible access control system.
 
 There are two types of [=Access Grants=]:
 
-* [=Trusted Grants=] are made when a given [=Agent=] trusts another [=Agent=]
+* [=Trusted Grants=] are made when a given [=Social Agent=] trusts another [=Agent=]
     with expanded, administrative-level privilege to the data in their control.
-* [=Data Grants=] are made when a given [=Agent=] wishes to share access
+* [=Data Grants=] are made when a given [=Social Agent=] wishes to share access
     to certain types or specific instances of data in their control.
 
-[=Access Grants=] are recorded in an Agent's [=Access Grant Registry=].
+[=Access Grants=] are recorded in a [=Social Agent's=] [=Access Grant Registry=].
 
-[=Access Invitations=] represent [=Access Grants=] made to [=Agents=] with
-unknown or yet-to-be established [=identities=].
+[=Access Invitations=] represent [=Access Grants=] made to [=Social Agents=] 
+with unknown or yet-to-be established [=identities=].
 
 Note: See 
 [Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#grants)
 for a detailed explanation of how Access Grants should be processed.
 
-## Access Grant Registry ## {#datamodel-access-registry}
+## Access Grant Registry ## {#access-grant-registry}
 
 An <dfn>Access Grant Registry</dfn> is a collection of
 [=Access Grants=] stored in a specific location in a [=pod=].
 
-The [=Access Grant Registry=] is linked to an [=Agent=] via their [=Registry Set=].
+The [=Access Grant Registry=] is linked to a [=Social Agent=] via their [=Registry Set=].
 
 An [=Access Grant Registry=] links to any number of registered [=Access Grants=]
 and [=Access Invitations=].
@@ -67,7 +67,7 @@ and [=Access Invitations=].
   </pre>
 </figure>
 
-## Access Grant ## {#datamodel-access-grant}
+## Access Grant ## {#access-grant}
 
 Each <dfn>Access Grant</dfn> represents access granted to an
 [=Access Grant Subject=], based on access criteria detailed in one or more
@@ -80,7 +80,8 @@ Access may be granted to data in [=Remote Data Registries=] through
 [=Remote Data Grants=].
 
 Elevated access to [=Registries=], as well as the [=Identity Profile Document=]
-or [=Registry Set=] of the [=Agent=] may be granted through [=Trusted Grants=].
+or [=Registry Set=] of the [=Social Agent=] may be granted through 
+[=Trusted Grants=].
 
 [Class Definition](interop.ttl#AccessGrant) -
 [Shape Definition](interop.shex#AccessGrantShape) -
@@ -100,8 +101,8 @@ or [=Registry Set=] of the [=Agent=] may be granted through [=Trusted Grants=].
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>[Agent](#classAgent)</td>
-      <td>[=Agent=] that registered the [=Access Grant=]</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that registered the [=Access Grant=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
@@ -156,11 +157,12 @@ or [=Registry Set=] of the [=Agent=] may be granted through [=Trusted Grants=].
   </pre>
 </figure>
 
-## Access Grant Subject ## {#datamodel-access-grant-subject}
+## Access Grant Subject ## {#access-grant-subject}
 
 An <dfn>Access Grant Subject</dfn> represents a unique combination of
-who and what is being granted access. For example, it allows a single [=Agent=]
-to be specified, or a given [=Agent=] using a given [=Application=].
+who and what is being granted access. For example, it allows a single 
+[=Social Agent=] or [=Application=] to be specified, or a given 
+[=Social Agent=] using a given [=Application=].
 
 [Class Definition](interop.ttl#AccessGrantSubject) -
 [Shape Definition](interop.shex#AccessGrantSubjectShape)
@@ -178,9 +180,9 @@ to be specified, or a given [=Agent=] using a given [=Application=].
   </thead>
   <tbody>
     <tr>
-      <td>accessByAgent</td>
-      <td>[Agent](#classAgent)</td>
-      <td>[=Agent=] being granted access</td>
+      <td>accessBySocialAgent</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] being granted access</td>
     </tr>
     <tr>
       <td>accessByApplication</td>
@@ -200,10 +202,10 @@ to be specified, or a given [=Agent=] using a given [=Application=].
   </pre>
 </figure>
 
-## Data Grant ## {#datamodel-data-grant}
+## Data Grant ## {#data-grant}
 
-A <dfn>Data Grant</dfn> records a decision made by an
-[=Agent=] to assign permissions for an [=Access Grant Subject=] to a
+A <dfn>Data Grant</dfn> records a decision made by a
+[=Social Agent=] to assign permissions for an [=Access Grant Subject=] to a
 [=Data Registration=], in response to a given [=Access Need=] that was
 presented to them.
 
@@ -304,7 +306,7 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
               [=Data Registration=]</li>
           <li>interop:SelectedInstances - Scope includes
               access only to those [=Data Instances=] specifically
-              selected by the [=Agent=]</li>
+              selected by the [=Social Agent=]</li>
           <li>interop:NoAccess - No access is granted</li>
         </ul>
       </td>
@@ -339,7 +341,7 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
 Issue(solid/data-interoperability-panel#124):
 
 A <dfn>Referenced Data Grant</dfn> is linked from a [=Data Grant=], and
-records a decision made by an [=Agent=] to assign permissions for an
+records a decision made by a [=Social Agent=] to assign permissions for an
 [=Access Grant Subject=] to a [=Data Registration=], based on a
 [=Referenced Access Need=] that was presented to them. It stipulates that the
 [=shape tree=] of the [=Referenced Data Grant=] is effectively a "child"
@@ -447,7 +449,7 @@ When recording a [=Referenced Data Grant=] via [[SAI-API#grants-recordgrant]]:
               [=Data Registration=]</li>
           <li>interop:SelectedInstances - Scope includes
               access only to those [=Data Instances=] specifically
-              selected by the [=Agent=]</li>
+              selected by the [=Social Agent=]</li>
           <li>interop:InheritInstances - Scope includes
               access to [=Data Instances=] inherited by
               instances selected in the parent [=Data Grant=]
@@ -477,11 +479,11 @@ When recording a [=Referenced Data Grant=] via [[SAI-API#grants-recordgrant]]:
 ## Remote Data Grant ## {#datamodel-remote-data-grant}
 
 A <dfn>Remote Data Grant</dfn> records an authorization decision made by
-an [=Agent=] for an [=Access Grant Subject=] on a
+a [=Social Agent=] for an [=Access Grant Subject=] on a
 [=Remote Data Registration=], in response to a given [=Access Need=] that
 was presented to them. This has the net effect of allowing the
 [=Access Grant Subject=] to see data that has been shared by
-other [=Agents=].
+other [=Social Agents=].
 
 A [=Remote Data Grant=] may have one or more [=Referenced Remote Data Grants=],
 when the [=shape tree=] associated via `interop:registeredShapeTree` has one or
@@ -588,7 +590,7 @@ When recording a [=Remote Data Grant=] via [[SAI-API#grants-recordgrant]]:
           <li>interop:AllRemote - All remote data for a given
           [=Remote Data Registration=]</li>
           <li>interop:AllRemoteFromAgent - All remote data from a given
-          [=Agent=] for a given [=Remote Data Registration=]</li>
+          [=Social Agent=] for a given [=Remote Data Registration=]</li>
           <li>interop:SelectedRemote - Only selected access</li>
           <li>interop:NoAccess - No access</li>
         </ul>
@@ -629,7 +631,7 @@ When recording a [=Remote Data Grant=] via [[SAI-API#grants-recordgrant]]:
 ## Referenced Remote Data Grant ## {#datamodel-referenced-remote-data-grant}
 
 A <dfn>Referenced Remote Data Grant</dfn> is linked from a [=Remote Data Grant=],
-and records an authorization decision made by an [=Agent=] for an
+and records an authorization decision made by a [=Social Agent=] for an
 [=Access Grant Subject=] on a [=Remote Data Registration=],
 based on a [=Referenced Access Need=] that was presented to them. It stipulates
 that the [=shape tree=] of the [=Referenced Remote Data Grant=] is effectively
@@ -742,7 +744,7 @@ When recording a [=Referenced Remote Data Grant=] via [[SAI-API#grants-recordgra
           <li>interop:AllRemote - All remote data for a given
           [=Remote Data Registration=]</li>
           <li>interop:AllRemoteFromAgent - All remote data from a given
-          [=Agent=] for a given [=Remote Data Registration=]</li>
+          [=Social Agent=] for a given [=Remote Data Registration=]</li>
           <li>interop:SelectedRemote - Only selected access</li>
           <li>interop:NoAccess - No access</li>
         </ul>
@@ -776,9 +778,9 @@ When recording a [=Referenced Remote Data Grant=] via [[SAI-API#grants-recordgra
 ## Trusted Grant ## {#datamodel-trusted-grant}
 
 A <dfn>Trusted Grant</dfn> records a decision made by a
-given [=Agent=] to trust another with elevated access to any [=Registries=],
-[=Registry Set=], or [=Identity Profile Document=]
-for the [=Agent=], based on a [=Trusted Need=] that was
+given [=Social Agent=] to trust another with elevated access to any 
+[=Registries=], [=Registry Set=], or [=Identity Profile Document=]
+for the [=Social Agent=], based on a [=Trusted Need=] that was
 presented to them.
 
 A <dfn>Trusted Agent</dfn> is an [=Agent=] that been granted elevated
@@ -830,10 +832,10 @@ valid for a [=Trusted Grant=]:
     </tr>
     <tr>
       <td>trustedWith</td>
-      <td>[=Agent=], [=Registry Set=], [=Registry=]</td>
+      <td>[=Social Agent=], [=Registry Set=], [=Registry=]</td>
       <td>Identifies the primary trusted resource of the [=Trusted Grant=]
         <ul>
-          <li>[=Agent=] - Access to the profile document of the [=Agent=]</li>
+          <li>[=Social Agent=] - Access to the profile document of the [=Social Agent=]</li>
           <li>[=Registry Set=] - Access to the specified [=Registry Set=]
           and all of the [=Registries=] linked to it</li>
           <li>[=Registry=] - Access to the specified [=Registry=],
@@ -844,9 +846,9 @@ valid for a [=Trusted Grant=]:
     <tr>
       <td>trustedWithType</td>
       <td><ul>
-        <li>`interop:Agent`</li>
+        <li>`interop:SocialAgent`</li>
         <li>`interop:RegistrySet`</li>
-        <li>`interop:ApplicationRegistry`</li>
+        <li>`interop:AgentRegistry`</li>
         <li>`interop:DataRegistry`</li>
         <li>`interop:AccessGrantRegistry`</li>
         <li>`interop:AccessReceiptRegistry`</li>
@@ -870,7 +872,7 @@ valid for a [=Trusted Grant=]:
 ## Access Invitation ## {#datamodel-access-invitation}
 
 An <dfn>Access Invitation</dfn> is a subclass of [=Access Grant=] used when
-an [=Agent=] wishes to grant access to another [=Agent=] whose
+a [=Social Agent=] wishes to grant access to another [=Social Agent=] whose
 decentralized [=identity=] is unknown to them, or may not exist yet, so they
 must be first invited through another channel (such as phone or email).
 
@@ -905,8 +907,8 @@ converted to an [=Access Grant=].
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>[Agent](#classAgent)</td>
-      <td>[=Agent=] that registered the [=Access Invitation=]</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that registered the [=Access Invitation=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
@@ -1089,5 +1091,5 @@ which an [=Access Invitation=] can be delivered and validated.
 
 The [=Access Grant Registry=] resources MAY use any resource or subject name.
 
-[=Access Grants=] MUST use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt)
-for resource names.
+The resource names for [=Access Grants=] <em class="rfc2119">SHOULD</em> 
+be unpredictable.

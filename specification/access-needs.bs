@@ -1,14 +1,15 @@
 Access Needs {#needs}
 =====================
 
-[=Agents=] or [=Applications=] in the [=ecosystem=] often require access to
-data controlled by some other [=Agent=]. Consequently, a common way to explain
+[=Social Agents=] and [=Applications=] in the [=ecosystem=] often 
+require access to data controlled by some other [=Social Agent=]. 
+Consequently, a common way to explain
 and communicate data needs between these parties is required.
 
-A given [=Agent=] or [=Application=] expresses their access needs by
-providing one or more [=Access Need Groups=] to the [=Agent=] controlling
-the data they require access to. The channels through which these may be
-communicated are detailed in [[SAI-API#authz-workflows]].
+A given [=Social Agent=] or [=Application=] expresses their access needs by
+providing one or more [=Access Need Groups=] to the [=Social Agent=] 
+controlling the data they require access to. The channels through which 
+these may be communicated are detailed in [[SAI-API#authz-workflows]].
 
 Each [=Access Need Group=] is associated with up to three types of needs:
 
@@ -17,9 +18,9 @@ Each [=Access Need Group=] is associated with up to three types of needs:
     identified by the [=shape tree=] type. 
 * [=Trusted Needs=] represent a need for elevated access to entire [=Registries=],
     as well as the [=Identity Profile Document=] or [=Registry Set=] for 
-    the [=Agent=].
+    the [=Social Agent=].
 
-[=Access Need Groups=] are essential to an [=Agent's=] decision-making
+[=Access Need Groups=] are essential to a [=Social Agent's=] decision-making
 when determining whether to grant access, as illustrated in the 
 [[SAI-API#present-grant]] workflow. They are stored as part of the [=Access Grant=] 
 in the [=Access Grant Registry=].
@@ -31,8 +32,8 @@ for a detailed explanation of how Access Needs should be processed.
 ## Access Need Group ## {#needs-access-need-group}
 
 An <dfn>Access Need Group</dfn> is a collection of [=Access Needs=]
-and/or [=Trusted Needs=] that a given [=Agent=] and/or [=Application=] 
-uses to communicate an access request to other [=Agents=].
+and/or [=Trusted Needs=] that a given [=Social Agent=] and/or [=Application=] 
+uses to communicate an access request to other [=Social Agents=].
 
 An [=Access Need Group=] links to an [=Access Decorator Index=] of
 different [=Access Decorator Series=] that explain the [=Access Need Group=]
@@ -78,8 +79,8 @@ language-specific content mappings.
     </tr>
     <tr>
       <td>authenticatesAs</td>
-      <td>[=Agent=] or `interop:Pilot`</td>
-      <td>[=Agent=] or [=Agent=] piloting an [=Application=]</td>
+      <td>`interop:SocialAgent` or `interop:Application`</td>
+      <td>Access will be granted to the [=Social Agent=] or [=Application=]</td>
     </tr>
     <tr>
       <td>hasAccessNeed</td>
@@ -97,7 +98,7 @@ language-specific content mappings.
 <figure>
   <figcaption>An example [=Access Need Group=]</figcaption>  
   <pre class=include-code>
-  path: snippets/acmeproject.example/acmeproject.example.ttl
+  path: snippets/projectron.example/projectron.example.ttl
   highlight: turtle
   show: 19-25
   </pre> 
@@ -162,7 +163,7 @@ specified.
       <td>hasAccessNeedDecorator</td>
       <td>[AccessNeedDecorator](#classAccessNeedDecorator)</td>
       <td>Decorator that explains the reason for the access need in the
-      preferred language of the [=Agent=]</td>
+      preferred language of the [=Social Agent=]</td>
     </tr>
     <tr>
       <td>registeredShapeTree</td>
@@ -174,7 +175,7 @@ specified.
       <td>`st:ShapeTreeDecorator`</td>
       <td>Decorator associated with the [=shape tree=] that describes the
       name of the shape-tree and what data it represents in the preferred
-      language of the [=Agent=]</td>
+      language of the [=Social Agent=]</td>
     </tr>
     <tr>
       <td>hasDataInstance</td>
@@ -239,7 +240,7 @@ specified.
 <figure>
   <figcaption>An example [=Access Need=]</figcaption>  
   <pre class=include-code>
-  path: snippets/acmeproject.example/acmeproject.example.ttl
+  path: snippets/projectron.example/projectron.example.ttl
   highlight: turtle
   show: 27-36
   </pre> 
@@ -275,7 +276,7 @@ is `st:referenced` by the [=shape tree=] of the linked [=Access Need=].
       <td>hasAccessNeedDecorator</td>
       <td>[AccessNeedDecorator](#classAccessNeedDecorator)</td>
       <td>Decorator that explains the reason for the access need in the
-      preferred language of the [=Agent=]</td>
+      preferred language of the [=Social Agent=]</td>
     </tr>
     <tr>
       <td>registeredShapeTree</td>
@@ -287,7 +288,7 @@ is `st:referenced` by the [=shape tree=] of the linked [=Access Need=].
       <td>`st:ShapeTreeDecorator`</td>
       <td>Decorator associated with the [=shape tree=] that describes the
       name of the shape-tree and what data it represents in the preferred
-      language of the [=Agent=]</td>
+      language of the [=Social Agent=]</td>
     </tr>
     <tr>
       <td>hasDataInstance</td>
@@ -338,7 +339,7 @@ is `st:referenced` by the [=shape tree=] of the linked [=Access Need=].
 <figure>
   <figcaption>An example [=Referenced Access Need=]</figcaption>  
   <pre class=include-code>
-  path: snippets/acmeproject.example/acmeproject.example.ttl
+  path: snippets/projectron.example/projectron.example.ttl
   highlight: turtle
   show: 38-45
   </pre> 
@@ -385,7 +386,7 @@ indicates the necessity of the [=Access Need=]; *required* or
     </tr>
     <tr>
       <td>trustedWithType</td>
-      <td>  `interop:Agent`, `interop:RegistrySet`, `interop:ApplicationRegistry`
+      <td>  `interop:Agent`, `interop:RegistrySet`, `interop:AgentRegistry`
         `interop:DataRegistry`, `interop:AccessGrantRegistry`,
         `interop:AccessReceiptRegistry`, `interop:RemoteDataRegistry`
       </td>
@@ -432,14 +433,14 @@ one [=Agent=] to another.
   </thead>
   <tbody>
     <tr>
-      <td>fromAgent</td>
-      <td>[Agent](#classAgent)</td>
-      <td>The [=Agent=] who sent the [=Access Request=]</td>
+      <td>fromSocialAgent</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>The [=Social Agent=] who sent the [=Access Request=]</td>
     </tr>
     <tr>
-      <td>toAgent</td>
-      <td>[Agent](#classAgent)</td>
-      <td>The [=Agent=] the [=Access Request=] is meant for</td>
+      <td>toSocialAgent</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>The [=Social Agent=] the [=Access Request=] is meant for</td>
     </tr>
     <tr>
       <td>hasAccessNeedGroup</td>
@@ -495,7 +496,7 @@ An <dfn>Access Decorator Index</dfn> is a listing of one or more
   <figcaption>[=Access Decorator Index=] document linked by the
   project management access need group</figcaption>  
   <pre class=include-code>
-  path: snippets/acmeproject.example/acmeproject-decorator-index.ttl
+  path: snippets/projectron.example/projectron-decorator-index.ttl
   highlight: turtle
   show: 4-7
   </pre> 
@@ -537,7 +538,7 @@ more [=Access Decorator Versions=] in a given language.
 <figure>
   <figcaption>[=Access Decorator Series=] containing english decorator versions</figcaption>  
   <pre class=include-code>
-  path: snippets/acmeproject.example/acmeproject-decorator-index.ttl
+  path: snippets/projectron.example/projectron-decorator-index.ttl
   highlight: turtle
   show: 9-12
   </pre> 
@@ -584,7 +585,7 @@ a given [=Access Decorator Resource=].
 <figure>
   <figcaption>[=Access Decorator Versions=] for english</figcaption>  
   <pre class=include-code>
-  path: snippets/acmeproject.example/acmeproject-decorator-index.ttl
+  path: snippets/projectron.example/projectron-decorator-index.ttl
   highlight: turtle
   show: 14-24
   </pre> 
@@ -622,8 +623,8 @@ given language.
 ### Access Need Group Decorator ### {#needs-access-need-group-decorator}
 
 An <dfn>Access Need Group Decorator</dfn> provides a subject name and
-more in depth description that explains why a given [=Access Need Group=]
-is being requested of an [=Agent=].
+a more in-depth description that explains why a given [=Access Need Group=]
+is being requested of a [=Social Agent=].
 
 [Class Definition](interop.ttl#AccessNeedGroupDecorator) -
 [Shape Definition](interop.shex#AccessNeedGroupDecoratorShape)

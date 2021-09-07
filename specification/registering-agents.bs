@@ -1,0 +1,341 @@
+Registering Agents {#ar}
+=====================
+
+[=Social Agents=] manage the other [=Social Agents=] and [=Applications=] they interact with
+by registering these [=Agents=] in their [=Agent Registry=].
+
+Note: See
+[Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#agentreg)
+for a detailed explanation of how Agent Registrations should be processed.
+
+## Agent Registry ## {#ar-registry}
+
+An <dfn>Agent Registry</dfn> is a collection of <dfn>Agent Registrations</dfn>.
+
+Each [=Application=] a [=Social Agent=] interacts with has an [=Application Registration=].
+
+Each [=Social Agent=] a [=Social Agent=] interacts with has a [=Social Agent Registration=].
+
+The [=Agent Registry=] is linked to a [=Social Agent=] via their [=Registry Set=].
+
+
+[Class Definition](interop.ttl#AgentRegistry) -
+[Shape Definition](interop.shex#AgentRegistryShape) -
+[Shape Tree Definition](interop.tree#AgentRegistryTree)
+
+<table class="classinfo data" align="left" id="classAgentRegistry">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>[SocialAgentRegistration](#classSocialAgentRegistration),
+        [ApplicationRegistration](#classApplicationRegistration)</td>
+      <td>Link to an associated [=Agent Registration=], specifically to 
+        sub-classes `interop:SocialAgentRegistration` and 
+        `interop:ApplicationRegistration`</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>An [=Agent Registry=] at https://alice.example/agents/</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/agents.ttl
+  highlight: turtle
+  show: 7-15
+  </pre>
+</figure>
+
+## Social Agent Registration ## {#social-agent-registration}
+
+A <dfn>Social Agent Registration</dfn> provides the [=Social Agent=]
+with a place to track and manage other [=Social Agents=] they
+interact with.
+
+[Class Definition](interop.ttl#SocialAgentRegistration) -
+[Shape Definition](interop.shex#SocialAgentRegistrationShape) -
+[Shape Tree Definition](interop.tree#SocialAgentRegistrationTree)
+
+<table class="classinfo data" align="left" id="classSocialAgentRegistration">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that registered the [=Social Agent Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>[Application](#classApplication)</td>
+      <td>[=Application=] used to create the [=Social Agent Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Social Agent Registration=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Social Agent Registration=] was updated</td>
+    </tr>
+    <tr>
+      <td>registeredAgent</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>The [=Social Agent=] that was registered</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>A [=Social Agent Registration=] at
+  https://alice.pod.example/agents/cd076af8/
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/cd076af8.ttl
+  highlight: turtle
+  show: 10-16
+  </pre>
+</figure>
+
+## Application Registration ## {#application-registration}
+
+An <dfn>Application Registration</dfn> provides the [=Social Agent=]
+with a place to maintain metadata, state, preferences, and
+other application-specific data associated with a given [=Application=] they
+have elected to use.
+
+[Class Definition](interop.ttl#ApplicationRegistration) -
+[Shape Definition](interop.shex#ApplicationRegistrationShape) -
+[Shape Tree Definition](interop.tree#ApplicationRegistrationTree)
+
+<table class="classinfo data" align="left" id="classApplicationRegistration">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that registered the [=Application Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>[Application](#classApplication)</td>
+      <td>[=Application=] used to create the [=Application Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Application Registration=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Application Registration=] was updated</td>
+    </tr>
+    <tr>
+      <td>registeredAgent</td>
+      <td>[Application](#classApplication)</td>
+      <td>The [=Application=] that was registered</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>An [=Application Registration=] at
+  https://alice.pod.example/agents/2f2f3628/</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/2f2f3628.ttl
+  highlight: turtle
+  show: 10-16
+  </pre>
+</figure>
+
+## Resource Hierarchy ## {#ar-hierarchy}
+
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Class</th>
+      <th>Shape</th>
+      <th>Shape Tree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`/agents/`</td>
+      <td>[AgentRegistry](#classAgentRegistry)</td>
+      <td>[AgentRegistryShape](interop.shex#AgentRegistryShape)</td>
+      <td>[AgentRegistryTree](interop.tree#AgentRegistryTree)</td>
+    </tr>
+    <tr>
+      <td>`-- cd076af8/`</td>
+      <td>[ApplicationRegistration](#classApplicationRegistration)</td>
+      <td>[ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)</td>
+      <td>[ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)</td>
+    </tr>
+    <tr>
+      <td>`-- 2f2f3628/`</td>
+      <td>[SocialAgentRegistration](#classSocialAgentRegistration)</td>
+      <td>[SocialAgentRegistrationShape](interop.shex#SocialAgentRegistrationShape)</td>
+      <td>[SocialAgentRegistrationTree](interop.tree#SocialAgentRegistrationTree)</td>
+    </tr>
+    <tr>
+      <td>`-- 4860a11e/`</td>
+      <td>[SocialAgentRegistration](#classSocialAgentRegistration)</td>
+      <td>[SocialAgentRegistrationShape](interop.shex#SocialAgentRegistrationShape)</td>
+      <td>[SocialAgentRegistrationTree](interop.tree#SocialAgentRegistrationTree)</td>
+    </tr>
+    <tr>
+      <td>`-- 8c90cbe3/`</td>
+      <td>[SocialAgentRegistration](#classSocialAgentRegistration)</td>
+      <td>[SocialAgentRegistrationShape](interop.shex#SocialAgentRegistrationShape)</td>
+      <td>[SocialAgentRegistrationTree](interop.tree#SocialAgentRegistrationTree)</td>
+    </tr>
+    <tr>
+      <td>`-- f6ea42f0/`</td>
+      <td>[ApplicationRegistration](#classApplicationRegistration)</td>
+      <td>[ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)</td>
+      <td>[ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)</td>
+    </tr>
+    <tr>
+      <td>`-- bc5e0e7d/`</td>
+      <td>[ApplicationRegistration](#classApplicationRegistration)</td>
+      <td>[ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)</td>
+      <td>[ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)</td>
+    </tr>
+  </tbody>
+</table>
+
+The [=Agent Registry=] MAY use any  resource or subject name.
+
+The resource name for an [=Agent Registration=]
+<em class="rfc2119">SHOULD</em> be unpredictable.
+
+## Permission Model ## {#ar-permissions}
+  
+<figure>
+  <table class="data permissions" align="left">
+    <col>
+    <col>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup></colgroup>
+    <colgroup span=2></colgroup>
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th scope="colgroup">Owner</th>
+        <th scope="colgroup">Public</th>
+        <th scope="colgroup">Trusted Agents</th>
+        <th scope="colgroup">Other Agents</th>
+      </tr>
+      <tr>
+        <th scope="col">Resource</th>
+        <th scope="col"></th>
+        <th scope="col">Access</th>
+        <th scope="col">Access</th>
+        <th scope="col">Access</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`/agents/`</td>
+        <td>[=Agent Registry=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>`-- cd076af8/`</td>
+        <td>[=Application Registration=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>Registered [=Application=]</td>
+        <td>Read</td>
+      </tr>
+      <tr>
+        <td>`-- 2f2f3628/`</td>
+        <td>[=Social Agent Registration=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>Registered [=Social Agent=]</td>
+        <td>Read</td>
+      </tr>
+      <tr>
+        <td>`-- 4860a11e/`</td>
+        <td>[=Social Agent Registration=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>Registered [=Social Agent=]</td>
+        <td>Read</td>
+      </tr>
+      <tr>
+        <td>`-- 8c90cbe3/`</td>
+        <td>[=Social Agent Registration=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>Registered [=Social Agent=]</td>
+        <td>Read</td>
+      </tr>
+      <tr>
+        <td>`-- f6ea42f0/`</td>
+        <td>[=Application Registration=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>Registered [=Application=]</td>
+        <td>Read</td>
+      </tr>
+      <tr>
+        <td>`-- bc5e0e7d/`</td>
+        <td>[=Application Registration=]</td>
+        <td>Control</td>
+        <td>-</td>
+        <td>Control</td>
+        <td>Registered [=Application=]</td>
+        <td>Read</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>

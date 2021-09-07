@@ -1,10 +1,10 @@
 Remote Data Registration {#remote}
 =====================
 
-Remote Data Registration lets [=Agents=] keep track of data that other
-[=Agents=] have shared with them. 
+Remote Data Registration lets [=Social Agents=] keep track of data that other
+[=Social Agents=] have shared with them. 
 
-When an [=Agent=] shares data with another [=Agent=], they record that
+When a [=Social Agent=] shares data with another [=Social Agent=], they record that
 decision with an [=Access Grant=], and send an [=Access Receipt=] to the
 grantee. The [=Access Receipt=] is used to update the grantee's 
 [=Remote Data Registry=] with pointers to that remote data that was
@@ -56,11 +56,11 @@ A <dfn>Remote Data Registry</dfn> is a collection of
 ## Remote Data Registration ## {#datamodel-remote-data-registration}
 
 A <dfn>Remote Data Registration</dfn> represents data shared by other
-[=Agents=] corresponding to a given [=shape tree=], each of which is associated 
+[=Social Agents=] corresponding to a given [=shape tree=], each of which is associated 
 with a [=Remote Agent Data Registration=].
 
 Each [=Remote Agent Data Registration=] creates a useful authorization 
-boundary for remote data from a given [=Agent=].
+boundary for remote data from a given [=Social Agent=].
 
 [Class Definition](interop.ttl#RemoteDataRegistration) -
 [Shape Definition](interop.shex#RemoteDataRegistrationShape) -
@@ -80,8 +80,8 @@ boundary for remote data from a given [=Agent=].
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>[Agent](#classAgent)</td>
-      <td>[=Agent=] that registered the [=Remote Data Registration=]</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that registered the [=Remote Data Registration=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
@@ -124,13 +124,13 @@ boundary for remote data from a given [=Agent=].
 
 ## Remote Agent Data Registration ## {#datamodel-remote-agent-data-registration}
 
-An [=Agent=] maintains a <dfn>Remote Agent Data Registration</dfn> to represent
-access to a [=Data Registration=] that another [=Agent=] has shared with them. It
+A [=Social Agent=] maintains a <dfn>Remote Agent Data Registration</dfn> to represent
+access to a [=Data Registration=] that another [=Social Agent=] has shared with them. It
 may represent access to the entire [=Data Registration=], or only to a
 select group of [=Data Instances=] within.
 
-A [=Remote Agent Data Registration=] is created when an [=Agent=] receives an
-[=Access Receipt=] from another [=Agent=] that includes access to a given
+A [=Remote Agent Data Registration=] is created when a [=Social Agent=] receives an
+[=Access Receipt=] from another [=Social Agent=] that includes access to a given
 [=Data Registration=].
 
 * A [=Remote Agent Data Registration=] MUST be associated with at least
@@ -164,8 +164,8 @@ A [=Remote Agent Data Registration=] is created when an [=Agent=] receives an
   <tbody>
     <tr>
       <td>registeredBy</td>
-      <td>[Agent](#classAgent)</td>
-      <td>[=Agent=] that registered the [=Remote Agent Data Registration=]</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that registered the [=Remote Agent Data Registration=]</td>
     </tr>
     <tr>
       <td>registeredWith</td>
@@ -194,8 +194,8 @@ A [=Remote Agent Data Registration=] is created when an [=Agent=] receives an
     </tr>
     <tr>
       <td>fromAgent</td>
-      <td>[Agent](#classAgent)</td>
-      <td>Link to the [=Agent=] who the shared [=Data Registration=] belongs to</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>Link to the [=Social Agent=] who the shared [=Data Registration=] belongs to</td>
     </tr>
     <tr>
       <td>hasAccessReceipt</td>
@@ -207,7 +207,7 @@ A [=Remote Agent Data Registration=] is created when an [=Agent=] receives an
       <td>[DataGrant](#classDataGrant), 
           [ReferencedDataGrant](#classReferencedDataGrant)</td>
       <td>Link to [=Data Grants=] or [=Referenced Data Grants=] that
-      detail the scope of access shared from `fromAgent` for 
+      detail the scope of access shared from `fromSocialAgent` for 
       the shared [=Data Registration=]. These are contained in the
       linked [=Access Receipt=], but each is added as a resource
       into the [=Remote Agent Data Registration=] container, for
@@ -332,10 +332,10 @@ A [=Remote Agent Data Registration=] is created when an [=Agent=] receives an
 The [=Remote Data Registry=] resource
 <em class="rfc2119">MAY</em> use any resource or subject name.
 
-[=Remote Data Registrations=], [=Remote Agent Data Registrations=], 
-[=Data Grants=], and [=Referenced Data Grants=] <em class="rfc2119">MUST</em> 
-use \[UUIDs](https://www.ietf.org/rfc/rfc4122.txt)
-for resource names.
+The resource names for [=Remote Data Registrations=], 
+[=Remote Agent Data Registrations=], [=Data Grants=], and 
+[=Referenced Data Grants=] <em class="rfc2119">SHOULD</em> 
+be unpredictable.
 
 [=Remote Agent Data Registrations=] are organized under 
 [=Remote Data Registrations=] by `interop:registeredShapeTree` to
@@ -344,5 +344,5 @@ provide rational boundaries for authorization.
 [=Data Grants=] and [=Referenced Data Grants=] are extracted from the
 associated [=Access Receipt=] are stored individually under 
 the relevant [=Remote Agent Data Registration=], and linked to it via 
-`interop:satisfiesDataGrant`. This allows the [=Agent=] to limit
+`interop:satisfiesDataGrant`. This allows the [=Social Agent=] to limit
 remote data access by grant for a given [=Remote Agent Data Registration=].

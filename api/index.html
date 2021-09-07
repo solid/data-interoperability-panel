@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 4f053d00e, updated Tue Aug 10 14:13:32 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/api/" rel="canonical">
-  <meta content="0cd8714f0ac95cc9db98d0fe91cb2cdf89b09306" name="document-revision">
+  <meta content="1f58b4dc4ee36e4b978fed61c6055ee5fc31885d" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -456,7 +456,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability Operations and API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-01">1 September 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-07">7 September 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -489,10 +489,9 @@ dfn > a.self-link::before      { content: "#"; }
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
     <li>
-     <a href="#appreg"><span class="secno">1</span> <span class="content">Application Registration</span></a>
+     <a href="#ar"><span class="secno">1</span> <span class="content">Registering Agents</span></a>
      <ol class="toc">
-      <li><a href="#appreg-loadappreg"><span class="secno">1.1</span> <span class="content">Load Application Registration</span></a>
-      <li><a href="#appreg-registerapp"><span class="secno">1.2</span> <span class="content">Register Application</span></a>
+      <li><a href="#ar-lookup"><span class="secno">1.1</span> <span class="content">Lookup Agent Registration</span></a>
      </ol>
     <li>
      <a href="#datareg"><span class="secno">2</span> <span class="content">Data Registration</span></a>
@@ -599,102 +598,46 @@ dfn > a.self-link::before      { content: "#"; }
    </ol>
   </nav>
   <main>
-   <h2 class="heading settled" data-level="1" id="appreg"><span class="secno">1. </span><span class="content">Application Registration</span><a class="self-link" href="#appreg"></a></h2>
-   <p>The following operations pertain to <a href="https://solid.github.io/data-interoperability-panel/specification/#appreg">Application Registration</a> in the <a data-link-type="biblio" href="#biblio-sai">Solid Application Interoperability Specification</a>.</p>
-   <h3 class="heading settled" data-level="1.1" id="appreg-loadappreg"><span class="secno">1.1. </span><span class="content">Load Application Registration</span><a class="self-link" href="#appreg-loadappreg"></a></h3>
-   <p>This operation allows an <a data-link-type="dfn">Application</a> find and load a
-corresponding <a data-link-type="dfn">Application Registration</a> for a given <a data-link-type="dfn">Agent</a>.</p>
-   <p>Failure to discover an <a data-link-type="dfn">Application Registration</a> means that the <a data-link-type="dfn">Application</a> is not registered.</p>
-   <p>Per the <a href="https://solid.github.io/data-interoperability-panel/specification/#appreg-permissions">Solid Application Interoperability § appreg-permissions</a>, a given <a data-link-type="dfn">Application</a> will only
-have access to its own <a data-link-type="dfn">Application Registration</a>. Since <a data-link-type="dfn">Applications</a> do not have access to the list of <a data-link-type="dfn">Applications</a> in an <a data-link-type="dfn">Agent’s</a> <a data-link-type="dfn">Application Registries</a>, they must perform a direct lookup
-in the addressable space of each <a data-link-type="dfn">Application Registry</a> in the <a data-link-type="dfn">Application Registry Set</a> to find a corresponding <a data-link-type="dfn">Application Registration</a>.</p>
-   <p class="note" role="note"><span>Note:</span> This specification is designed to support compartmentalization
-of data between <a data-link-type="dfn">Applications</a>. Server-side support may vary.
-See <a href="https://solid.github.io/data-interoperability-panel/specification/#security-appauthz">Solid Application Interoperability § security-appauthz</a>.</p>
-   <h4 class="heading settled" data-level="1.1.1" id="loadappreg-inputs"><span class="secno">1.1.1. </span><span class="content">Inputs</span><a class="self-link" href="#loadappreg-inputs"></a></h4>
-   <ul>
-    <li data-md>
-     <p>Let <code>AGENT</code> be the <a data-link-type="dfn">Agent</a></p>
-    <li data-md>
-     <p>Let <code>APP</code> be an <a data-link-type="dfn">Application</a> in use by <code>AGENT</code></p>
-   </ul>
-   <h4 class="heading settled" data-level="1.1.2" id="loadappreg-outputs"><span class="secno">1.1.2. </span><span class="content">Outputs</span><a class="self-link" href="#loadappreg-outputs"></a></h4>
-   <ul>
-    <li data-md>
-     <p>An <a data-link-type="dfn">Application Registration</a></p>
-   </ul>
-   <h4 class="heading settled" data-level="1.1.3" id="loadappreg-details"><span class="secno">1.1.3. </span><span class="content">Operation Details</span><a class="self-link" href="#loadappreg-details"></a></h4>
-   <ol>
-    <li data-md>
-     <p><code>AGENT</code> provides their <a data-link-type="dfn">identity</a> to <code>APP</code></p>
-    <li data-md>
-     <p><code>APP</code> dereferences the <a data-link-type="dfn">identity</a> of <code>AGENT</code> get <code>AGENT</code>'s <a data-link-type="dfn">identity profile document</a>.</p>
-    <li data-md>
-     <p>Let <code>ARSET</code> be the <a data-link-type="dfn">Application Registry Set</a> linked via <code>AGENT hasApplicationRegistrySet</code>.</p>
-     <ol>
-      <li data-md>
-       <p>Because <code>ARSET</code> is a non-public document, <code>AGENT</code> and <code>APP</code> will be required to furnish a DPoP proof and
-access token to the Solid Server, obtained via the
-Solid-OIDC protocol.</p>
-     </ol>
-    <li data-md>
-     <p>For each <a data-link-type="dfn">Application Registry</a> <code>AREGISTRY</code> in <code>ARSET</code></p>
-     <ol>
-      <li data-md>
-       <p>Let <code>IDSHA256</code> be the SHA-256 hash of <code>APP</code>'s <a data-link-type="dfn">identity</a></p>
-      <li data-md>
-       <p>Let <code>STATUS</code> be the <code>HTTP</code> status code returned from a <code>GET</code> or <code>HEAD</code> of <code>https://AREGISTRY/IDSHA256</code></p>
-      <li data-md>
-       <p>Return <code>AREGISTRY</code> if <code>STATUS</code> is <code>200 OK</code></p>
-     </ol>
-    <li data-md>
-     <p>Return FALSE</p>
-   </ol>
-   <h3 class="heading settled" data-level="1.2" id="appreg-registerapp"><span class="secno">1.2. </span><span class="content">Register Application</span><a class="self-link" href="#appreg-registerapp"></a></h3>
-   <p>This operation creates a new <a data-link-type="dfn">Application Registration</a>, and <code>MUST</code> be called from an <a href="https://solid.github.io/data-interoperability-panel/specification/#authz-apprequest">Solid Application Interoperability § authz-apprequest</a> workflow.</p>
-   <h4 class="heading settled" data-level="1.2.1" id="registerapp-inputs"><span class="secno">1.2.1. </span><span class="content">Inputs</span><a class="self-link" href="#registerapp-inputs"></a></h4>
-   <ul>
-    <li data-md>
-     <p>Let <code>AGENT</code> be the <a data-link-type="dfn">Agent</a></p>
-    <li data-md>
-     <p>Let <code>APP</code> be an <a data-link-type="dfn">Application</a> in use by <code>AGENT</code></p>
-    <li data-md>
-     <p>Let <code>REGISTRY</code> be the target <a data-link-type="dfn">Application Registry</a></p>
-   </ul>
-   <h4 class="heading settled" data-level="1.2.2" id="registerapp-outputs"><span class="secno">1.2.2. </span><span class="content">Outputs</span><a class="self-link" href="#registerapp-outputs"></a></h4>
-   <ul>
-    <li data-md>
-     <p>An <a data-link-type="dfn">Application Registration</a></p>
-   </ul>
-   <h4 class="heading settled" data-level="1.2.3" id="registerapp-details"><span class="secno">1.2.3. </span><span class="content">Operation Details</span><a class="self-link" href="#registerapp-details"></a></h4>
-   <ol>
-    <li data-md>
-     <p>Let <code>EXISTING</code> be an <a data-link-type="dfn">Application Registration</a> returned from <a href="#appreg-loadappreg">§ 1.1 Load Application Registration</a> with inputs: <code>AGENT</code>, <code>APP</code></p>
-    <li data-md>
-     <p>Return <code>EXISTING</code> if <code>EXISTING</code> is not empty</p>
-    <li data-md>
-     <p>Let <code>REG</code> be a newly initialized <a data-link-type="dfn">Application Registration</a></p>
-    <li data-md>
-     <p>Let <code>REG registeredBy</code> be <code>AGENT</code></p>
-    <li data-md>
-     <p>Let <code>REG registeredWith</code> be the <a data-link-type="dfn">identity</a> of the <a data-link-type="dfn">Application</a> executing the operation</p>
-    <li data-md>
-     <p>Let <code>REG registeredAt</code> be the current date and time</p>
-    <li data-md>
-     <p>Let <code>REG updatedAt</code> be the current date and time</p>
-    <li data-md>
-     <p>Let <code>REG registeredApplication</code> be the <a data-link-type="dfn">identity</a> of <code>APP</code></p>
-    <li data-md>
-     <p>Let <code>IDSHA256</code> be the SHA-256 hash of <code>APP</code>'s <a data-link-type="dfn">identity</a></p>
-    <li data-md>
-     <p>Add <code>REG</code> to the <code>REGISTRY</code> container, using <code>IDSHA256</code> as the resource name.</p>
-    <li data-md>
-     <p>Assign permissions for <code>REG</code> per the <a href="https://solid.github.io/data-interoperability-panel/specification/#appreg-permissions">Solid Application Interoperability § appreg-permissions</a></p>
-    <li data-md>
-     <p>Link <code>REG</code> to <code>REGISTRY</code> via <code>REGISTRY hasRegistration</code></p>
-    <li data-md>
-     <p>Return <code>REG</code></p>
-   </ol>
+   <h2 class="heading settled" data-level="1" id="ar"><span class="secno">1. </span><span class="content">Registering Agents</span><a class="self-link" href="#ar"></a></h2>
+   <p>The following operations pertain to <a href="https://solid.github.io/data-interoperability-panel/specification/#ar">Registering Agents</a> in the <a data-link-type="biblio" href="#biblio-sai">Solid Application Interoperability Specification</a>.</p>
+   <h3 class="heading settled" data-level="1.1" id="ar-lookup"><span class="secno">1.1. </span><span class="content">Lookup Agent Registration</span><a class="self-link" href="#ar-lookup"></a></h3>
+   <table align="left" class="data operation">
+    <colgroup>
+    <colgroup>
+    <thead>
+     <tr>
+      <th colspan="2">Description
+    <tbody>
+     <tr>
+      <td colspan="2"> This operation returns an <a data-link-type="dfn">Agent Registration</a> to an <a data-link-type="dfn">Agent</a> with appropriate credentials to receive it. 
+    <thead>
+     <tr>
+      <th colspan="2">Inputs
+    <tbody>
+     <tr>
+      <td><code>ID</code>
+      <td>URI <a data-link-type="dfn">identity</a> of a given <a data-link-type="dfn">Social Agent</a>
+    <thead>
+     <tr>
+      <th colspan="2">Outputs
+    <tbody>
+     <tr>
+      <td><a data-link-type="dfn">Agent Registration</a>
+      <td><code>AR</code> Matching the input <code>ID</code>
+   </table>
+   <div class="opdetails">
+    <ol>
+     <li data-md>
+      <p>Let <code>AA</code> be the IRI object value of <code>interop:hasAuthorizationAgent</code> in
+the graph returned by a <code>HEAD</code> or <code>GET</code> on <code>ID</code></p>
+     <li data-md>
+      <p>Send a <code>HEAD</code> or <code>GET</code> request to <code>AA</code>, authenticated as <code>ID</code></p>
+     <li data-md>
+      <p>Let <code>AR</code> be the IRI value of <code>anchor</code> in the <code>HTTP Link</code> header of the HTTP Response
+with relation type <code>http://www.w3.org/ns/solid/interop#registeredAgent</code>, and 
+authenticated <a data-link-type="dfn">Social Agent’s</a> WebID as the link target.</p>
+    </ol>
+   </div>
    <h2 class="heading settled" data-level="2" id="datareg"><span class="secno">2. </span><span class="content">Data Registration</span><a class="self-link" href="#datareg"></a></h2>
    <p>The following operations pertain to <a href="https://solid.github.io/data-interoperability-panel/specification/#datareg">Data Registration</a> in the <a data-link-type="biblio" href="#biblio-sai">Solid Application Interoperability Specification</a>.</p>
    <p>Registering data in a <a data-link-type="dfn">Data Registry</a> is primarily concerned with the
@@ -807,7 +750,7 @@ inputs: <code>TREE</code>, <code>REGISTRY</code></p>
      <li data-md>
       <p>Let <code>REG</code> be a newly initialized <a data-link-type="dfn">Data Registration</a></p>
      <li data-md>
-      <p>Let <code>REG registeredBy</code> be the current <a data-link-type="dfn">Agent</a></p>
+      <p>Let <code>REG registeredBy</code> be the current <a data-link-type="dfn">Social Agent</a></p>
      <li data-md>
       <p>Let <code>REG registeredWith</code> be the <a data-link-type="dfn">identity</a> of the <a data-link-type="dfn">Application</a> executing the operation</p>
      <li data-md>
@@ -983,7 +926,7 @@ of the <code>RESOURCES</code> hierarchy</p>
      <tr>
       <td colspan="2">
         This workflow details how an <a data-link-type="dfn">Access Grant</a> is 
-      presented to a given <a data-link-type="dfn">Agent</a> for data in their control, 
+      presented to a given <a data-link-type="dfn">Social Agent</a> for data in their control, 
       based on the <a data-link-type="dfn">Access Need Groups</a> associated. 
        <p>Each <a data-link-type="dfn">Access Grant</a> is associated with a specific <a data-link-type="dfn">Access Grant Subject</a>, and one or more <a data-link-type="dfn">Access Need Groups</a>. 
       The <a data-link-type="dfn">Access Grant Subject</a> may be another <a data-link-type="dfn">Agent</a>, an <a data-link-type="dfn">Agent</a> using an <a data-link-type="dfn">Application</a>, or an <a data-link-type="dfn">Application</a> operating as an <a data-link-type="dfn">Agent</a>.</p>
@@ -1011,7 +954,7 @@ of the <code>RESOURCES</code> hierarchy</p>
     <tbody>
      <tr>
       <td><code>SUBJECT</code>
-      <td>This may be a tuple of <a data-link-type="dfn">Agent</a> and <a data-link-type="dfn">Application</a> in the 
+      <td>This may be a tuple of <a data-link-type="dfn">Social Agent</a> and <a data-link-type="dfn">Application</a> in the 
       case of a <a data-link-type="dfn">weakly identifiable application</a>, or <a data-link-type="dfn">Application</a> and <a data-link-type="dfn">Application</a> in the case
       of a <a data-link-type="dfn">strongly identifiable application</a>
      <tr>
@@ -1052,7 +995,7 @@ workflow.</p>
         <p>Application Summary - <code>APP applicationDescription</code></p>
       </ol>
      <li data-md>
-      <p>Present information about the <a data-link-type="dfn">Agent</a> <code>AGENT</code> if the <a data-link-type="dfn">Access Grant Subject</a> is not an <a data-link-type="dfn">Application</a></p>
+      <p>Present information about the <a data-link-type="dfn">Social Agent</a> <code>AGENT</code> if the <a data-link-type="dfn">Access Grant Subject</a> is not an <a data-link-type="dfn">Application</a></p>
       <ol>
        <li data-md>
         <p>Agent Name <code>AGENT fullName</code></p>
@@ -1458,11 +1401,11 @@ linked via <code>REFRDG hasDataGrant</code> and/or <code>REFRDG hasReferencedDat
      </ol>
    </ol>
    <h3 class="heading settled" data-level="3.2" id="authz-apprequest"><span class="secno">3.2. </span><span class="content">Application Requests Access</span><a class="self-link" href="#authz-apprequest"></a></h3>
-   <p>Let <code>CONTROLLER</code> be an <a data-link-type="dfn">Agent</a> that wants to give an <a data-link-type="dfn">Application</a> <code>APP</code> access to data in their control.</p>
+   <p>Let <code>CONTROLLER</code> be a <a data-link-type="dfn">Social Agent</a> that wants to give an <a data-link-type="dfn">Application</a> <code>APP</code> access to data in their control.</p>
    <p>Let <code>APP</code> be the <a data-link-type="dfn">Application</a> that <code>CONTROLLER</code> wishes to use, and must
-    grant access to. <code>APP</code> may be an <a data-link-type="dfn">Application</a> that is piloted by the <a data-link-type="dfn">Agent</a>, or it may be an autonomous service that operates independently.
+    grant access to. <code>APP</code> may be an <a data-link-type="dfn">Application</a> that is piloted by the <a data-link-type="dfn">Social Agent</a>, or it may be an autonomous service that operates independently.
     The following workflow applies to both cases.</p>
-   <p>Let <code>AUTHZ</code> be an <a data-link-type="dfn">Application</a> trusted by the <a data-link-type="dfn">Agent</a> for
+   <p>Let <code>AUTHZ</code> be an <a data-link-type="dfn">Application</a> trusted by the <a data-link-type="dfn">Social Agent</a> for
     authorization and access control.</p>
    <ol>
     <li data-md>
@@ -1478,9 +1421,10 @@ get <code>CONTROLLER</code>'s <a data-link-type="dfn">identity profile document<
      <p><code>APP</code> redirects <code>CONTROLLER</code> to <code>AUTHZ</code></p>
      <ol>
       <li data-md>
-       <p>Let <code>APPREG</code> be an <a data-link-type="dfn">Application Registration</a> returned by <a href="#appreg-loadappreg">§ 1.1 Load Application Registration</a> with inputs: <code>CONTROLLER</code>, <code>APP</code></p>
+       <p>Let <code>APPREG</code> be an <a data-link-type="dfn">Application Registration</a> returned by
+#appreg-loadappreg with inputs: <code>CONTROLLER</code>, <code>APP</code></p>
       <li data-md>
-       <p>If <code>APPREG</code> is empty let <code>APPREG</code> be the <a data-link-type="dfn">Application Registration</a> returned by <a href="#appreg-registerapp">§ 1.2 Register Application</a> with inputs: <code>AGENT</code>, <code>APP</code>, <code>REGISTRY</code>.</p>
+       <p>If <code>APPREG</code> is empty let <code>APPREG</code> be the <a data-link-type="dfn">Application Registration</a> returned by #appreg-registerapp with inputs: <code>AGENT</code>, <code>APP</code>, <code>REGISTRY</code>.</p>
       <li data-md>
        <p><code>AUTHZ</code> looks in <code>APP</code>'s <a data-link-type="dfn">application profile document</a> for <a data-link-type="dfn">Access Need Groups</a> with an <code>interop:accessScenario</code> of <code>interop:PersonalAccess</code></p>
       <li data-md>
@@ -1508,11 +1452,11 @@ stored in the <a data-link-type="dfn">Application Registration</a> for <code>APP
      </ol>
    </ol>
    <h3 class="heading settled" data-level="3.3" id="authz-agentrequest"><span class="secno">3.3. </span><span class="content">Another Agent Requests Access</span><a class="self-link" href="#authz-agentrequest"></a></h3>
-   <p>Let <code>REQUESTER</code> be an <a data-link-type="dfn">Agent</a> requesting data from another <a data-link-type="dfn">Agent</a> <code>CONTROLLER</code> with a known <a data-link-type="dfn">identity</a>.</p>
+   <p>Let <code>REQUESTER</code> be an <a data-link-type="dfn">Agent</a> requesting data from another <a data-link-type="dfn">Social Agent</a> <code>CONTROLLER</code> with a known <a data-link-type="dfn">identity</a>.</p>
    <p>Let <code>REQAPP</code> be an <a data-link-type="dfn">Application</a> piloted by <code>REQUESTER</code></p>
    <p>Let <code>RAUTHZ</code> be an <a data-link-type="dfn">Application</a> trusted by <code>REQUESTER</code> for
     authorization and access control.</p>
-   <p>Let <code>CONTROLLER</code> be an <a data-link-type="dfn">Agent</a> in control of data that <code>REQUESTER</code> would like to access.</p>
+   <p>Let <code>CONTROLLER</code> be a <a data-link-type="dfn">Social Agent</a> in control of data that <code>REQUESTER</code> would like to access.</p>
    <p>Let <code>CAUTHZ</code> be an <a data-link-type="dfn">Application</a> trusted by <code>CONTROLLER</code> for
     authorization and access control.</p>
    <ol>
@@ -1575,12 +1519,12 @@ to the access inbox identified via <code>hasAccessInbox</code> in <code>REQUESTE
      </ol>
    </ol>
    <h3 class="heading settled" data-level="3.4" id="authz-controllershare"><span class="secno">3.4. </span><span class="content">Controller Shares Access</span><a class="self-link" href="#authz-controllershare"></a></h3>
-   <p>Let <code>CONTROLLER</code> be an <a data-link-type="dfn">Agent</a> in control of data that
+   <p>Let <code>CONTROLLER</code> be a <a data-link-type="dfn">Social Agent</a> in control of data that
     they would like to authorize <code>RECEIVER</code> to access.</p>
    <p>Let <code>CAPP</code> be an <a data-link-type="dfn">Application</a> piloted by <code>CONTROLLER</code></p>
    <p>Let <code>CAUTHZ</code> be an <a data-link-type="dfn">Application</a> trusted by <code>CONTROLLER</code> for
     authorization and access control.</p>
-   <p>Let <code>RECEIVER</code> be an <a data-link-type="dfn">Agent</a> receiving access to data from another <a data-link-type="dfn">Agent</a> <code>CONTROLLER</code>.</p>
+   <p>Let <code>RECEIVER</code> be an <a data-link-type="dfn">Agent</a> receiving access to data from another <a data-link-type="dfn">Social Agent</a> <code>CONTROLLER</code>.</p>
    <p>Let <code>RAUTHZ</code> be an <a data-link-type="dfn">Application</a> trusted by <code>RECEIVER</code> for
     authorization and access control.</p>
    <ol>
@@ -1638,7 +1582,7 @@ to the access inbox identified via <code>hasAccessInbox</code> in <code>RECEIVER
    <h3 class="heading settled" data-level="3.5" id="authz-controllerinvite"><span class="secno">3.5. </span><span class="content">Controller Shares Access with Invited Agent</span><a class="self-link" href="#authz-controllerinvite"></a></h3>
    <p>Controlling Agent initiates sharing their data with an Agent that doesn’t
 have an identity or a pod.</p>
-   <p>Let <code>CONTROLLER</code> be an <a data-link-type="dfn">Agent</a> in control of data that
+   <p>Let <code>CONTROLLER</code> be a <a data-link-type="dfn">Social Agent</a> in control of data that
     they would like to authorize <code>INVITEE</code> to access.</p>
    <p>Let <code>CAPP</code> be an <a data-link-type="dfn">Application</a> piloted by <code>CONTROLLER</code></p>
    <p>Let <code>CAUTHZ</code> be an <a data-link-type="dfn">Application</a> trusted by <code>CONTROLLER</code> for
@@ -1753,14 +1697,14 @@ one channel to another.</p>
       <td>An <a data-link-type="dfn">Access Decorator Index</a>
      <tr>
       <td><code>LANG</code>
-      <td>The <a data-link-type="dfn">Agent’s</a> preferred language
+      <td>The <a data-link-type="dfn">Social Agent’s</a> preferred language
     <thead>
      <tr>
       <th colspan="2">Outputs
     <tbody>
      <tr>
       <td><a data-link-type="dfn">Access Decorator Resource</a>
-      <td>Looked up in the <a data-link-type="dfn">Access Decorator Index</a>, based on the <a data-link-type="dfn">Agent’s</a> preferred language
+      <td>Looked up in the <a data-link-type="dfn">Access Decorator Index</a>, based on the <a data-link-type="dfn">Social Agent’s</a> preferred language
    </table>
    <div class="opdetails">
     <ol>
@@ -1816,7 +1760,7 @@ of 404 if <code>DECR</code> is unassigned.</p>
       <td>An <a data-link-type="dfn">Access Need Group</a>
      <tr>
       <td><code>LANG</code>
-      <td>The <a data-link-type="dfn">Agent’s</a> preferred language
+      <td>The <a data-link-type="dfn">Social Agent’s</a> preferred language
     <thead>
      <tr>
       <th colspan="2">Outputs
@@ -1864,7 +1808,7 @@ of 404 if <code>USEGDEC</code> is unassigned</p>
       <td>An <a data-link-type="dfn">Access Need</a>
      <tr>
       <td><code>LANG</code>
-      <td>The <a data-link-type="dfn">Agent’s</a> preferred language
+      <td>The <a data-link-type="dfn">Social Agent’s</a> preferred language
     <thead>
      <tr>
       <th colspan="2">Outputs
@@ -1979,7 +1923,7 @@ for a given <a data-link-type="dfn">Access Grant Subject</a></p>
       <td><a data-link-type="dfn">Access Need Groups</a> to associate with the <a data-link-type="dfn">Access Grant</a>
      <tr>
       <td><code>LANG</code>
-      <td>The <a data-link-type="dfn">Agent’s</a> preferred language
+      <td>The <a data-link-type="dfn">Social Agent’s</a> preferred language
     <thead>
      <tr>
       <th colspan="2">Outputs
@@ -2047,7 +1991,7 @@ for a given <a data-link-type="dfn">Access Grant Subject</a></p>
       <td><a data-link-type="dfn">Access Need Groups</a> to associate with the <a data-link-type="dfn">Access Invitation</a>
      <tr>
       <td><code>LANG</code>
-      <td>The <a data-link-type="dfn">Agent’s</a> preferred language
+      <td>The <a data-link-type="dfn">Social Agent’s</a> preferred language
     <thead>
      <tr>
       <th colspan="2">Outputs
@@ -3983,9 +3927,9 @@ inputs: <code>GRANT</code></p>
      <li data-md>
       <p>Let <code>SUBJECT</code> be the <a data-link-type="dfn">Access Grant Subject</a> linked via <code>GRANT hasAccessGrantSubject</code></p>
      <li data-md>
-      <p>Let <code>GRANTOR</code> be the current <a data-link-type="dfn">Agent</a></p>
+      <p>Let <code>GRANTOR</code> be the current <a data-link-type="dfn">Social Agent</a></p>
      <li data-md>
-      <p>Let <code>OWNER</code> be the <a data-link-type="dfn">Agent</a> owner of the storage access is being granted from</p>
+      <p>Let <code>OWNER</code> be the <a data-link-type="dfn">Social Agent</a> owner of the storage access is being granted from</p>
      <li data-md>
       <p>Let <code>APP</code> be <code>SUBJECT accessByApplication</code></p>
      <li data-md>
@@ -4005,11 +3949,11 @@ inputs: <code>GRANT</code></p>
      <li data-md>
       <p>Let <code>RECEIPT hasRemoteDataGrant</code> be all <a data-link-type="dfn">Remote Data Grants</a> linked via <code>GRANT hasRemoteDataGrant</code></p>
      <li data-md>
-      <p>Let <code>APPREG</code> be result of <a href="#appreg-loadappreg">§ 1.1 Load Application Registration</a> with
+      <p>Let <code>APPREG</code> be result of #appreg-loadappreg with
 inputs: <code>OWNER</code>, <code>APP</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#appreg-registerapp">§ 1.2 Register Application</a> if <code>APPREG</code> is empty</p>
+        <p>Call #appreg-registerapp if <code>APPREG</code> is empty</p>
       </ol>
      <li data-md>
       <p>Post <code>RECEIPT</code> to <code>APPREG</code> container</p>
@@ -4047,7 +3991,7 @@ inputs: <code>OWNER</code>, <code>APP</code></p>
     <tbody>
      <tr>
       <td><a data-link-type="dfn">Access Receipt</a>
-      <td>for <code>GRANT</code> posted to the grantee <a data-link-type="dfn">Agent’s</a> access inbox
+      <td>for <code>GRANT</code> posted to the grantee <a data-link-type="dfn">Social Agent’s</a> access inbox
    </table>
    <div class="opdetails">
     <ol>
@@ -4058,9 +4002,9 @@ inputs: <code>OWNER</code>, <code>APP</code></p>
      <li data-md>
       <p>Let <code>GRANTEE</code> be <code>SUBJECT accessByAgent</code></p>
      <li data-md>
-      <p>Let <code>GRANTOR</code> be the current <a data-link-type="dfn">Agent</a></p>
+      <p>Let <code>GRANTOR</code> be the current <a data-link-type="dfn">Social Agent</a></p>
      <li data-md>
-      <p>Let <code>OWNER</code> be the <a data-link-type="dfn">Agent</a> owner of the storage access is being granted from</p>
+      <p>Let <code>OWNER</code> be the <a data-link-type="dfn">Social Agent</a> owner of the storage access is being granted from</p>
      <li data-md>
       <p>Let <code>RECEIPT fromAgent</code> be <code>OWNER</code></p>
      <li data-md>
@@ -4156,7 +4100,7 @@ inputs: <code>RECEIPT fromAgent</code>, <code>REGISTRY</code></p>
     <tbody>
      <tr>
       <td><code>AGENT</code>
-      <td><a data-link-type="dfn">Agent</a> owner of the shared data
+      <td><a data-link-type="dfn">Social Agent</a> owner of the shared data
      <tr>
       <td><code>REGISTRY</code>
       <td><a data-link-type="dfn">Access Receipt Registry</a> to lookup
@@ -4273,7 +4217,7 @@ of the shared <a data-link-type="dfn">Data Registration</a></p>
      <li data-md>
       <p>Let <code>RDR</code> be an empty <a data-link-type="dfn">Remote Data Registration</a></p>
      <li data-md>
-      <p>Let <code>RDR registeredBy</code> be the current <a data-link-type="dfn">Agent</a></p>
+      <p>Let <code>RDR registeredBy</code> be the current <a data-link-type="dfn">Social Agent</a></p>
      <li data-md>
       <p>Let <code>RDR registeredWith</code> be the current <a data-link-type="dfn">Application</a></p>
      <li data-md>
@@ -4322,7 +4266,7 @@ of the shared <a data-link-type="dfn">Data Registration</a></p>
       <td>An <a data-link-type="dfn">Access Receipt</a> representing data shared with an <a data-link-type="dfn">Agent</a>
      <tr>
       <td><code>REGISTRY</code>
-      <td>A <a data-link-type="dfn">Remote Data Registry</a> for the <a data-link-type="dfn">Agent</a>
+      <td>A <a data-link-type="dfn">Remote Data Registry</a> for the <a data-link-type="dfn">Social Agent</a>
     <thead>
      <tr>
       <th colspan="2">Outputs
@@ -4431,7 +4375,7 @@ via <code>REGISTRY hasRemoteDataRegistration</code></p>
       <td>The <a data-link-type="dfn">Access Receipt</a> that <code>DR</code> is shared through
      <tr>
       <td><code>REGISTRY</code>
-      <td>A <a data-link-type="dfn">Remote Data Registry</a> for the <a data-link-type="dfn">Agent</a>
+      <td>A <a data-link-type="dfn">Remote Data Registry</a> for the <a data-link-type="dfn">Social Agent</a>
     <thead>
      <tr>
       <th colspan="2">Outputs
@@ -4451,7 +4395,7 @@ via <code>REGISTRY hasRemoteDataRegistration</code></p>
      <li data-md>
       <p>Let <code>RADR</code> be an empty <a data-link-type="dfn">Remote Agent Data Registration</a></p>
      <li data-md>
-      <p>Let <code>RADR registeredBy</code> be the current <a data-link-type="dfn">Agent</a></p>
+      <p>Let <code>RADR registeredBy</code> be the current <a data-link-type="dfn">Social Agent</a></p>
      <li data-md>
       <p>Let <code>RADR registeredWith</code> be the current <a data-link-type="dfn">Application</a></p>
      <li data-md>
