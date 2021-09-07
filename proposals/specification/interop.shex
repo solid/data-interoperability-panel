@@ -76,18 +76,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Access Need Group
 <#AccessNeedGroupShape> {
   a [ interop:AccessNeedGroup ] ;
-  # Pointer to decorator index used for group and individual need decorators
   interop:hasAccessDecoratorIndex IRI
-  # Plain language explanation of what the access is needed for
   interop:hasAccessNeedGroupDecorator IRI? ;
-  # Is authorizing this access required for the desired functionality
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
-  # Does this access need group represent access needed for personal
-  # use by a controller, or to share access with someone else
   interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
-  # Will this access be for a piloted application or a specific agent
   interop:authenticatesAs [ interop:Agent interop:Pilot ] ;
-  # Access needs for data, or trusted access to manage registries
   ( interop:hasAccessNeed IRI+ | interop:hasTrustedNeed IRI+ )
 }
 
@@ -100,6 +93,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasAccessNeedDecorator IRI? ;
   interop:hasDataInstance IRI* ;
   interop:accessMode @<#:AccessModes>+ ;
+  interop:creatorAccessMode @<#:AccessModes>* ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
   interop:supportedBy IRI* ;  # ?
   interop:supports IRI?       # ?
@@ -262,23 +256,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 #  Data Grant
 <#DataGrantShape> {
   a [ interop:DataGrant ] ;
-  # AccessGrant the DataGrant belongs to
   interop:hasAccessGrant @<#:AccessGrantShape> ;
-  # AccessNeed that the DataGrant satisfies
   interop:satisfiesAccessNeed @<#:AccessNeedShape> ;
-  # Type of data (via shape tree) to grant access to
   interop:registeredShapeTree IRI ;
-  # Data Registration for shape tree that access will be granted to
   interop:hasDataRegistration IRI ;
-  # Access modes that have been granted to the DataRegistration
   interop:accessMode @<#:AccessModes>+ ;
-  # What scope of access the DataGrant applies to
+  interop:creatorAccessMode @<#:AccessModes>* ;
   interop:scopeOfGrant @<#:DataGrantScopes> ;
-  # Link to individual DataInstances if scope is SelectedInstances
   interop:hasDataInstance IRI* ;
-  # If the shape tree has virtual references to other shape trees
-  # that should be included in the authorization for
-  # optional inheritance
   interop:hasReferencedDataGrant @<#:ReferencedDataGrantShape>
 }
 
