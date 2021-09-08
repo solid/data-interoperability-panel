@@ -1,12 +1,13 @@
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX alice-auth: <https://auth.alice.example/>
+PREFIX acme-auth: <https://auth.acme.example/>
 
-alice-auth:170c12ac-7d4f-47fe-b36d-7a9944c429d9
-  a interop:ApplicationRegistration ;
+alice-auth:5dc3c14e-7830-475f-b8e3-4748d6c0bccb
+  a interop:SocialAgentRegistration ;
     interop:registeredBy <https://alice.example/#id> ;
     interop:registeredWith <https://jarvis.alice.example/#agent> ;
     interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
     interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
-    interop:registeredApplication <https://performchart.example/#app> ;
-    interop:hasAccessGrant alice-auth:7b513402-d2a2-455f-a6d1-4a54ef90cb78 .
+    interop:registeredAgent <https://acme.example/#corp> ;
+    interop:reciprocalRegistration acme-auth:2437895a-3a68-4048-8965-889b7e93936c .

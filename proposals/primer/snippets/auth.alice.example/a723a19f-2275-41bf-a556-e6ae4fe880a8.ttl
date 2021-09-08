@@ -1,0 +1,18 @@
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX alice-auth: <https://auth.alice.example/>
+PREFIX alice-home: <https://home.alice.example/>
+
+alice-auth:a723a19f-2275-41bf-a556-e6ae4fe880a8
+  a interop:DataGrant ;
+    interop:dataOwner <https://alice.example/#id> ;
+    interop:registeredShapeTree solidtrees:Task ;
+    interop:hasDataRegistration alice-home:92f43be4-d12c-4ca3-9bd6-c18e83167b2f ;
+    interop:accessMode acl:Read ;
+    interop:scopeOfGrant interop:Inherit ;
+    interop:inheritsFromGrant
+      alice-auth:7b2bc4ff-b4b8-47b8-96f6-06695f4c5126 .
+
+alice-home:92f43be4-d12c-4ca3-9bd6-c18e83167b2f
+  interop:iriPrefix "https://home.alice.example/" .

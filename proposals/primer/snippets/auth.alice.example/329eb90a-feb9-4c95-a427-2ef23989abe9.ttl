@@ -6,12 +6,14 @@ PREFIX omni-auth: <https://auth.omni.example/>
 
 alice-auth:329eb90a-feb9-4c95-a427-2ef23989abe9
   a interop:DataConsent ;
-    interop:registeredShapeTree solidtrees:Project ;
-    interop:accessMode acl:Read, acl:Write ;
-    interop:onDataOwnedBy <https://omni.example/#corp> ;
-    interop:scopeOfConsent interop:SelectedRemote ;
-    interop:selectedDataGrant
-      omni-auth:a7f7d66d-13ba-4ba6-8908-3ea9c2703fce .
+  interop:registeredBy <https://alice.example/#id> ;
+  interop:registeredWith <https://jarvis.alice.example/#agent> ;
+  interop:registeredShapeTree solidtrees:Project ;
+  interop:accessMode acl:Read, acl:Write ;
+  interop:dataOwner <https://omni.example/#corp> ;
+  interop:scopeOfConsent interop:SelectedFromRegistry ;
+  interop:selectedDataGrant
+    omni-auth:a7f7d66d-13ba-4ba6-8908-3ea9c2703fce .
 alice-auth:fe442ef3-5200-4b06-b4bc-fc0b495603a9
-    interop:inheritsFromConsent
-      alice-auth:329eb90a-feb9-4c95-a427-2ef23989abe9 .
+  interop:inheritsFromConsent
+    alice-auth:329eb90a-feb9-4c95-a427-2ef23989abe9 .
