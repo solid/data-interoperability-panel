@@ -147,41 +147,6 @@ PREFIX interops: <https://shapes.pub/drafts/ns/solid/interop#>
   st:expectsType st:Resource ;
   st:shape interops:AccessReceiptShape .
 
-# Remote Data Registry
-##############################################################################
-# Ensure the registry container graph contains a valid
-# RemoteDataRegistry instance, and the resources inside of
-# it are valid RemoteDataRegistration instances.
-##############################################################################
-<#RemoteDataRegistryTree>
-  a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:shape interops:RemoteDataRegistryShape ;
-  st:contains <#RemoteDataRegistrationTree> .
-
-# Remote Data Registration
-##############################################################################
-# Ensure the remote data registration container graph contains a valid
-# RemoteDataRegistration instance, and the resources inside of
-# it are valid RemoteAgentDataRegistration instances.
-##############################################################################
-<#RemoteDataRegistrationTree>
-  a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:shape interops:RemoteDataRegistrationShape ;
-  st:contains <#RemoteAgentDataRegistrationTree> .
-
-# Remote Agent Data Registration
-##############################################################################
-# Ensure the receipt resource graph contains a valid RemoteAgentDataRegistration
-##############################################################################
-<#RemoteAgentDataRegistrationTree>
-  a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:shape <interops:RemoteAgentDataRegistrationShape> ;
-  st:contains <#DataGrantTree> ,
-              <#ReferencedDataGrantTree> .
-
 # Application
 ##############################################################################
 

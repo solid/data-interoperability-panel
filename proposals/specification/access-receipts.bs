@@ -10,8 +10,9 @@ grantee is an [=Application=], the [=Social Agent=] will store the
 [=Access Receipt=] in an [=Application Registration=] in their 
 [=Agent Registry=].
 
-[=Access Receipts=] received by a [=Social Agent=] are used to populate 
-and maintain their [=Remote Data Registry=]. This allows the 
+[=Access Receipts=] received by a [=Social Agent=] are used to 
+populate data shared from other [=Social Agents=] in the
+[=Agent Registry=]. This allows the 
 [=Social Agent=] and their [=Applications=] to lookup and access data 
 that been shared with them.
 
@@ -69,8 +70,8 @@ A [=Social Agent=] provides an <dfn>Access Receipt</dfn> to another
 [=Access Receipts=] extend the [=Access Grant=] class with additional
 properties that provide context to the recipient. Otherwise, they
 retain the same structure, linked to any [=Access Need Groups=] used to
-formulate the [=Access Grant=], as well as any [=Data Grants=], 
-[=Remote Data Grants=], or [=Trusted Grants=] that detail the scope
+formulate the [=Access Grant=], as well as any [=Data Grants=] 
+or [=Trusted Grants=] that detail the scope
 of access granted.
 
 [Class Definition](interop.ttl#AccessReceipt) -
@@ -145,11 +146,6 @@ of access granted.
       <td>hasTrustedGrant</td>
       <td>[TrustedGrant](#classTrustedGrant)</td>
       <td>Links to a [=Trusted Grant=] associated with the [=Access Receipt=].</td>
-    </tr>
-    <tr>
-      <td>hasRemoteDataGrant</td>
-      <td>[RemoteDataGrant](#classRemoteDataGrant)</td>
-      <td>Links to a [=Remote Data Grant=] associated with the [=Access Receipt=].</td>
     </tr>
   </tbody>
 </table>
