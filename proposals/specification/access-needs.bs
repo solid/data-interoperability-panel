@@ -14,8 +14,7 @@ these may be communicated are detailed in [[SAI-API#authz-workflows]].
 Each [=Access Need Group=] is associated with up to three types of needs:
 
 * [=Access Needs=] represent a need to access a particular type of data in 
-    a [=Data Registry=] or [=Remote Data Registry=], 
-    identified by the [=shape tree=] type. 
+    a [=Data Registry=] identified by the [=shape tree=] type. 
 * [=Trusted Needs=] represent a need for elevated access to entire [=Registries=],
     as well as the [=Identity Profile Document=] or [=Registry Set=] for 
     the [=Social Agent=].
@@ -110,7 +109,7 @@ An <dfn>Access Need</dfn> represents the requirement of one specific type
 of data represented by a [=shape tree=], as part of an [=Access Need Group=].
 
 Each [=Access Need=] represents a request to access, create, or manage
-all or a subset of data in [=Data Registries=] and/or [=Remote Data Registries=].
+all or a subset of data in [=Data Registries=].
 
 In a [=Data Registry=], they can also request access to specific 
 [=Data Instances=] associated with a [=Data Registration=] for a given 
@@ -228,12 +227,6 @@ specified.
       <td>[=Data Grant=] associated with the [=Access Need=],
       established when the [=Access Grant=] is created</td>
     </tr>
-    <tr>
-      <td>hasRemoteDataGrant</td>
-      <td>[RemoteDataGrant](#classRemoteDataGrant)</td>
-      <td>[=Remote Data Grant=] associated with the [=Access Need=],
-      established when the [=Access Grant=] is created</td>
-    </tr>    
   </tbody>
 </table>
 
@@ -326,13 +319,6 @@ is `st:referenced` by the [=shape tree=] of the linked [=Access Need=].
       [=Referenced Access Need=], established when the [=Access Grant=] 
       is created</td>
     </tr>
-    <tr>
-      <td>hasReferencedRemoteDataGrant</td>
-      <td>[ReferencedRemoteDataGrant](#)</td>
-      <td>[=Referenced Remote Data Grant=] associated with the 
-      [=Referenced Access Need=], established when the [=Access Grant=] 
-      is created</td>
-    </tr>    
   </tbody>
 </table>
 
@@ -388,7 +374,7 @@ indicates the necessity of the [=Access Need=]; *required* or
       <td>trustedWithType</td>
       <td>  `interop:Agent`, `interop:RegistrySet`, `interop:AgentRegistry`
         `interop:DataRegistry`, `interop:AccessGrantRegistry`,
-        `interop:AccessReceiptRegistry`, `interop:RemoteDataRegistry`
+        `interop:AccessReceiptRegistry`
       </td>
       <td>Resource types that can be requested through a [=Trusted Need=]</td>
     </tr>

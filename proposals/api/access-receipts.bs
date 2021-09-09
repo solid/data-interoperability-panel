@@ -124,8 +124,6 @@ in the [[SAI|Solid Application Interoperability Specification]].
     linked via `GRANT hasDataGrant`
 1. Let `RECEIPT hasTrustedGrant` be all [=Trusted Grants=]
     linked via `GRANT hasTrustedGrant`
-1. Let `RECEIPT hasRemoteDataGrant` be all [=Remote Data Grants=]
-    linked via `GRANT hasRemoteDataGrant`
 1. Let `APPREG` be result of #appreg-loadappreg with
     inputs: `OWNER`, `APP`
     1. Call #appreg-registerapp if `APPREG` is empty
@@ -193,8 +191,6 @@ in the [[SAI|Solid Application Interoperability Specification]].
     linked via `GRANT hasDataGrant`
 1. Let `RECEIPT hasTrustedGrant` be all [=Trusted Grants=]
     linked via `GRANT hasTrustedGrant`
-1. Let `RECEIPT hasRemoteDataGrant` be all [=Remote Data Grants=]
-    linked via `GRANT hasRemoteDataGrant`
 1. Post `RECEIPT` to `GRANTEE hasAccessInbox`
 1. Return `RECEIPT`
 
@@ -214,9 +210,7 @@ in the [[SAI|Solid Application Interoperability Specification]].
       <td colspan=2>
 
       This operation stores a new [=Access Receipt=] in
-      an [=Access Grant Registry=], which in turn will update 
-      [=Remote Data Registries=]
-      to reflect the access granted in the [=Access Receipt=].
+      an [=Access Grant Registry=]
       
       </td>
     </tr>
@@ -240,8 +234,7 @@ in the [[SAI|Solid Application Interoperability Specification]].
   <tbody>
     <tr>
       <td>[=Access Receipt=]</td>
-      <td>Stored in `REGISTRY` with corresponding entries in the
-      [=Remote Data Registry=]</td>
+      <td>Stored in `REGISTRY`</td>
     </tr>
   </tbody>
 </table>
@@ -255,7 +248,7 @@ in the [[SAI|Solid Application Interoperability Specification]].
     1. Link `RECEIPT` to `REGISTRY` via `REGISTRY hasRegistration`
 1. If `CURRENT` is not empty
     1. Update `CURRENT` with `RECEIPT`
-1. Call [[SAI#update-remote-data]] with inputs: `RECEIPT`.
+1. Update the Agent Registry with inputs: `RECEIPT`.
 1. Return `RECEIPT`
 
 </div>

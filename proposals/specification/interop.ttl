@@ -94,13 +94,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :AccessReceiptRegistry ;
   rdfs:label "Has Access Receipt Registry"@en .
 
-:hasRemoteDataRegistry
-  rdfs:subPropertyOf :hasRegistry ;
-  rdfs:comment "Links to an Remote Data Registry in a registry set"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range :RemoteDataRegistry ;
-  rdfs:label "Has Remote Data registry"@en .
-
 :hasDataRegistry
   rdfs:subPropertyOf :hasRegistry ;
   rdfs:comment "Links to an Data Registry in a registry set"@en ;
@@ -426,13 +419,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Scope of Grant"@en .
 
-:hasRemoteDataGrant
-  a rdf:Property ;
-  rdfs:comment "Links to a Remote Data Grant"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range :RemoteDataGrant ;
-  rdfs:label "Has Remote Data Grant"@en .
-
 # IRIs for various grant scopes
 #############################################################################
 :AllInstances
@@ -465,29 +451,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Selected Remote"@en .
 
-# RemoteDataGrant Class
-#############################################################################
-:RemoteDataGrant
-  a rdfs:Class ;
-  rdfs:comment "Access granted to data in a remote data registry for a given shape tree"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Remote Data Grant"@en .
-
-:hasRemoteDataRegistrationGrant
-  a rdf:Property ;
-  rdfs:comment "Links to a Remote Data Registration Grant"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range :RemoteDataRegistrationGrant ;
-  rdfs:label "Has Remote Data Registration Grant"@en .
-
-# RemoteDataRegistrationGrant Class
-#############################################################################
-:RemoteDataRegistrationGrant
-  a rdfs:Class ;
-  rdfs:comment "Access granted to a remote data registration in a remote data registry"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Remote Data Registration Grant"@en .
-
 # TrustedGrant Class
 #############################################################################
 :TrustedGrant
@@ -514,8 +477,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
                            :AgentRegistry
                            :DataRegistry
                            :AccessGrantRegistry
-                           :AccessReceiptRegistry
-                           :RemoteDataRegistry ) ] ;
+                           :AccessReceiptRegistry ) ] ;
   rdfs:label "Trusted With Type"@en .
 
 :satisfiesTrustedNeed
@@ -580,40 +542,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "Receive access receipt in direct message"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Receipt In Message"@en .
-
-#############################################################################
-# Remote Data Registration
-#############################################################################
-:RemoteDataRegistry
-  rdfs:subClassOf :Registry ;
-  rdfs:comment "A collection of Remote Data Registrations and Remote Data Instances"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Remote Data Registry"@en .
-
-:RemoteDataRegistration
-  rdfs:subClassOf :Registration ;
-  rdfs:comment "An individual member of a Remote Data Registry corresponding to a given shape tree"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Remote Data Registration"@en .
-
-:RemoteAgentDataRegistration
-  a rdfs:Class ;
-  rdfs:comment "Representing a data registration shared by another Social Agent"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Remote Agent Data Registration"@en .
-
-:satisfiesDataGrant
-  a rdf:Property ;
-  rdfs:comment "Links to DataGrant or ReferencedDataGrant the RADR satisfies"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range [ owl:oneOf ( :DataGrant :ReferencedDataGrant ) ] ;
-  rdfs:label "Satisfies Data Grant"@en .
-
-:hasRemoteDataRegistration
-  a rdf:Property ;
-  rdfs:comment "Links to remote data registration of the registered shape tree"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Has Remote Data Registration"@en .
 
 #############################################################################
 # Application
