@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 4f053d00e, updated Tue Aug 10 14:13:32 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/api/" rel="canonical">
-  <meta content="2490a48914705b12ba4df1f340046ec3c1208c26" name="document-revision">
+  <meta content="350e48e9ce7f614def637e3cb55f3e6da79c838c" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -456,7 +456,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability Operations and API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-07">7 September 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-09">9 September 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -525,43 +525,32 @@ dfn > a.self-link::before      { content: "#"; }
       <li><a href="#grants-initializegrant"><span class="secno">5.1</span> <span class="content">Initialize Grant</span></a>
       <li><a href="#grants-initializeinvitation"><span class="secno">5.2</span> <span class="content">Initialize Invitation</span></a>
       <li><a href="#grants-initializedatagrant"><span class="secno">5.3</span> <span class="content">Initialize Data Grant</span></a>
-      <li><a href="#grants-initializeremotegrant"><span class="secno">5.4</span> <span class="content">Initialize Remote Data Grant</span></a>
-      <li><a href="#grants-initializetrustedgrant"><span class="secno">5.5</span> <span class="content">Initialize Trusted Grant</span></a>
-      <li><a href="#grants-loadgrant"><span class="secno">5.6</span> <span class="content">Load Grant</span></a>
-      <li><a href="#grants-loadinvitation"><span class="secno">5.7</span> <span class="content">Load Invitation</span></a>
-      <li><a href="#grants-recordgrant"><span class="secno">5.8</span> <span class="content">Record Grant</span></a>
-      <li><a href="#grants-recordinvitation"><span class="secno">5.9</span> <span class="content">Record Invitation</span></a>
-      <li><a href="#grants-deliverinvitation"><span class="secno">5.10</span> <span class="content">Deliver Invitation</span></a>
-      <li><a href="#grants-validateinvitation"><span class="secno">5.11</span> <span class="content">Validate Invitation</span></a>
-      <li><a href="#apply-permissions"><span class="secno">5.12</span> <span class="content">Apply Permissions</span></a>
-      <li><a href="#apply-data-permissions"><span class="secno">5.13</span> <span class="content">Apply Data Permissions</span></a>
-      <li><a href="#apply-data-registration-permissions"><span class="secno">5.14</span> <span class="content">Apply Data Registration Permissions</span></a>
-      <li><a href="#get-shape-tree-reference"><span class="secno">5.15</span> <span class="content">Get Shape Tree Reference</span></a>
-      <li><a href="#apply-remote-data-permissions"><span class="secno">5.16</span> <span class="content">Apply Remote Data Permissions</span></a>
-      <li><a href="#apply-remote-data-registration-permissions"><span class="secno">5.17</span> <span class="content">Apply Remote Data Registration Permissions</span></a>
-      <li><a href="#apply-trusted-permissions"><span class="secno">5.18</span> <span class="content">Apply Trusted Permissions</span></a>
-      <li><a href="#apply-resource-permissions"><span class="secno">5.19</span> <span class="content">Apply Resource Permissions</span></a>
-      <li><a href="#apply-conditional-permissions"><span class="secno">5.20</span> <span class="content">Apply Conditional Resource Permissions</span></a>
-      <li><a href="#remove-resource-permissions"><span class="secno">5.21</span> <span class="content">Remove Resource Permissions</span></a>
-      <li><a href="#deny-access-need-group"><span class="secno">5.22</span> <span class="content">Deny Access Need Group</span></a>
-      <li><a href="#deny-data-grant"><span class="secno">5.23</span> <span class="content">Deny Data Grant</span></a>
-      <li><a href="#deny-referenced-data-grant"><span class="secno">5.24</span> <span class="content">Deny Referenced Data Grant</span></a>
-      <li><a href="#select-all-data-instances"><span class="secno">5.25</span> <span class="content">Select All Data Instances</span></a>
-      <li><a href="#select-all-referenced-data-instances"><span class="secno">5.26</span> <span class="content">Select All Referenced Data Instances</span></a>
-      <li><a href="#select-data-instance"><span class="secno">5.27</span> <span class="content">Select Specific Data Instance</span></a>
-      <li><a href="#select-inherited-referenced-data-instance"><span class="secno">5.28</span> <span class="content">Select Inherited Referenced Data Instance</span></a>
-      <li><a href="#select-referenced-data-instance"><span class="secno">5.29</span> <span class="content">Select Specific Referenced Data Instance</span></a>
-      <li><a href="#select-all-remote"><span class="secno">5.30</span> <span class="content">Select All Remote Instances</span></a>
-      <li><a href="#select-all-referenced-remote"><span class="secno">5.31</span> <span class="content">Select All Referenced Remote Instances</span></a>
-      <li><a href="#select-all-remote-fromagent"><span class="secno">5.32</span> <span class="content">Select All Remote From Agent</span></a>
-      <li><a href="#select-referenced-remote-fromagent"><span class="secno">5.33</span> <span class="content">Select All Referenced Remote From Agent</span></a>
-      <li><a href="#select-remote-agent-data-grants"><span class="secno">5.34</span> <span class="content">Select Specific Remote Agent Data Grants</span></a>
-      <li><a href="#select-referenced-remote-agent-data-grants"><span class="secno">5.35</span> <span class="content">Select Specific Referenced Remote Agent Data Instances</span></a>
-      <li><a href="#deny-remote-data-grant"><span class="secno">5.36</span> <span class="content">Deny Remote Data Grant</span></a>
-      <li><a href="#deny-referenced-remote-data-grant"><span class="secno">5.37</span> <span class="content">Deny Referenced Remote Data Grant</span></a>
-      <li><a href="#select-trusted-registry-set"><span class="secno">5.38</span> <span class="content">Select Trusted Registry Set</span></a>
-      <li><a href="#select-trusted-registry"><span class="secno">5.39</span> <span class="content">Select Specific Trusted Registry</span></a>
-      <li><a href="#deny-trusted-grant"><span class="secno">5.40</span> <span class="content">Deny Trusted Grant</span></a>
+      <li><a href="#grants-initializetrustedgrant"><span class="secno">5.4</span> <span class="content">Initialize Trusted Grant</span></a>
+      <li><a href="#grants-loadgrant"><span class="secno">5.5</span> <span class="content">Load Grant</span></a>
+      <li><a href="#grants-loadinvitation"><span class="secno">5.6</span> <span class="content">Load Invitation</span></a>
+      <li><a href="#grants-recordgrant"><span class="secno">5.7</span> <span class="content">Record Grant</span></a>
+      <li><a href="#grants-recordinvitation"><span class="secno">5.8</span> <span class="content">Record Invitation</span></a>
+      <li><a href="#grants-deliverinvitation"><span class="secno">5.9</span> <span class="content">Deliver Invitation</span></a>
+      <li><a href="#grants-validateinvitation"><span class="secno">5.10</span> <span class="content">Validate Invitation</span></a>
+      <li><a href="#apply-permissions"><span class="secno">5.11</span> <span class="content">Apply Permissions</span></a>
+      <li><a href="#apply-data-permissions"><span class="secno">5.12</span> <span class="content">Apply Data Permissions</span></a>
+      <li><a href="#apply-data-registration-permissions"><span class="secno">5.13</span> <span class="content">Apply Data Registration Permissions</span></a>
+      <li><a href="#get-shape-tree-reference"><span class="secno">5.14</span> <span class="content">Get Shape Tree Reference</span></a>
+      <li><a href="#apply-trusted-permissions"><span class="secno">5.15</span> <span class="content">Apply Trusted Permissions</span></a>
+      <li><a href="#apply-resource-permissions"><span class="secno">5.16</span> <span class="content">Apply Resource Permissions</span></a>
+      <li><a href="#apply-conditional-permissions"><span class="secno">5.17</span> <span class="content">Apply Conditional Resource Permissions</span></a>
+      <li><a href="#remove-resource-permissions"><span class="secno">5.18</span> <span class="content">Remove Resource Permissions</span></a>
+      <li><a href="#deny-access-need-group"><span class="secno">5.19</span> <span class="content">Deny Access Need Group</span></a>
+      <li><a href="#deny-data-grant"><span class="secno">5.20</span> <span class="content">Deny Data Grant</span></a>
+      <li><a href="#deny-referenced-data-grant"><span class="secno">5.21</span> <span class="content">Deny Referenced Data Grant</span></a>
+      <li><a href="#select-all-data-instances"><span class="secno">5.22</span> <span class="content">Select All Data Instances</span></a>
+      <li><a href="#select-all-referenced-data-instances"><span class="secno">5.23</span> <span class="content">Select All Referenced Data Instances</span></a>
+      <li><a href="#select-data-instance"><span class="secno">5.24</span> <span class="content">Select Specific Data Instance</span></a>
+      <li><a href="#select-inherited-referenced-data-instance"><span class="secno">5.25</span> <span class="content">Select Inherited Referenced Data Instance</span></a>
+      <li><a href="#select-referenced-data-instance"><span class="secno">5.26</span> <span class="content">Select Specific Referenced Data Instance</span></a>
+      <li><a href="#select-trusted-registry-set"><span class="secno">5.27</span> <span class="content">Select Trusted Registry Set</span></a>
+      <li><a href="#select-trusted-registry"><span class="secno">5.28</span> <span class="content">Select Specific Trusted Registry</span></a>
+      <li><a href="#deny-trusted-grant"><span class="secno">5.29</span> <span class="content">Deny Trusted Grant</span></a>
      </ol>
     <li>
      <a href="#receipts"><span class="secno">6</span> <span class="content">Access Receipts</span></a>
@@ -571,16 +560,6 @@ dfn > a.self-link::before      { content: "#"; }
       <li><a href="#provide-receipt-in-message"><span class="secno">6.3</span> <span class="content">Provide Receipt in Message</span></a>
       <li><a href="#record-access-receipt"><span class="secno">6.4</span> <span class="content">Record Access Receipt</span></a>
       <li><a href="#load-access-receipt"><span class="secno">6.5</span> <span class="content">Load Access Receipt</span></a>
-     </ol>
-    <li>
-     <a href="#remote"><span class="secno">7</span> <span class="content">Remote Data Registration</span></a>
-     <ol class="toc">
-      <li><a href="#load-remote-data"><span class="secno">7.1</span> <span class="content">Load Remote Data Registration</span></a>
-      <li><a href="#create-remote-data"><span class="secno">7.2</span> <span class="content">Create Remote Data Registration</span></a>
-      <li><a href="#update-remote-data"><span class="secno">7.3</span> <span class="content">Update Remote Data</span></a>
-      <li><a href="#load-remote-agent-data"><span class="secno">7.4</span> <span class="content">Load Remote Agent Data Registration</span></a>
-      <li><a href="#create-remote-agent-data"><span class="secno">7.5</span> <span class="content">Create Remote Agent Data Registration</span></a>
-      <li><a href="#update-remote-agent-data"><span class="secno">7.6</span> <span class="content">Update Remote Agent Data Registration</span></a>
      </ol>
     <li>
      <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
@@ -973,7 +952,7 @@ workflow.</p>
    <div class="opdetails">
     <ol>
      <li data-md>
-      <p>Let <code>GRANT</code> be an existing <a data-link-type="dfn">Access Grant</a> for <code>SUBJECT</code> returned by <a href="#grants-loadgrant">§ 5.6 Load Grant</a></p>
+      <p>Let <code>GRANT</code> be an existing <a data-link-type="dfn">Access Grant</a> for <code>SUBJECT</code> returned by <a href="#grants-loadgrant">§ 5.5 Load Grant</a></p>
       <ol>
        <li data-md>
         <p>If <code>GRANT</code> is missing, create one via <a href="#grants-initializegrant">§ 5.1 Initialize Grant</a></p>
@@ -1006,7 +985,7 @@ workflow.</p>
       <p>Call <a href="#present-needgroup">§ 3.1.1 Presenting an Access Need Group</a> for each <a data-link-type="dfn">Access Need Group</a> linked
 via <code>GRANT hasAccessNeedGroup</code>.</p>
      <li data-md>
-      <p>Present an option to authorize the grant by calling <a href="#grants-recordgrant">§ 5.8 Record Grant</a>,
+      <p>Present an option to authorize the grant by calling <a href="#grants-recordgrant">§ 5.7 Record Grant</a>,
 or cancel.</p>
     </ol>
    </div>
@@ -1056,7 +1035,7 @@ or cancel.</p>
         <p>Necessity - <code>GROUP accessNecessity</code></p>
       </ol>
      <li data-md>
-      <p>Allow <code>GROUP</code> to be disabled via <a href="#deny-access-need-group">§ 5.22 Deny Access Need Group</a> if group
+      <p>Allow <code>GROUP</code> to be disabled via <a href="#deny-access-need-group">§ 5.19 Deny Access Need Group</a> if group
 necessity is optional</p>
      <li data-md>
       <p>For each <a data-link-type="dfn">Access Need</a> <code>NEED</code> linked via <code>GROUP hasAccessNeed</code></p>
@@ -1091,7 +1070,7 @@ necessity is optional</p>
       specific instances of the <a data-link-type="dfn">Access Need</a> and narrow the <a data-link-type="dfn">Referenced Access Need</a> instances to only those related.
       Manual selection with no inheritance can also be done 
       instead.</p>
-       <p>Access to which data has been shared with the controller in their <a data-link-type="dfn">Remote Data Registry</a> is also requested through <a data-link-type="dfn">Access Needs</a>.
+       <p>Access to which data has been shared with the controller from other <a data-link-type="dfn">Social Agents</a> is also requested through <a data-link-type="dfn">Access Needs</a>.
       In most cases, controllers won’t need to do fine-grained instance
       selection of remote data, but should be allowed the ability if
       they desire.</p>
@@ -1128,13 +1107,13 @@ necessity is optional</p>
         <p><strong>No Access</strong> - <code>interop:NoAccess</code> (if necessity is optional)</p>
         <ol>
          <li data-md>
-          <p>Enable via <a href="#deny-data-grant">§ 5.23 Deny Data Grant</a></p>
+          <p>Enable via <a href="#deny-data-grant">§ 5.20 Deny Data Grant</a></p>
         </ol>
        <li data-md>
         <p><strong>All Current and Future</strong> - <code>interop:AllInstances</code></p>
         <ol>
          <li data-md>
-          <p>Enable via <a href="#select-all-data-instances">§ 5.25 Select All Data Instances</a></p>
+          <p>Enable via <a href="#select-all-data-instances">§ 5.22 Select All Data Instances</a></p>
         </ol>
        <li data-md>
         <p><strong>Only Selected Instances</strong> - <code>interop:SelectedInstances</code></p>
@@ -1145,7 +1124,7 @@ linked via <code>DG hasDataInstance</code></p>
          <li data-md>
           <p>Allow one or more to be chosen</p>
          <li data-md>
-          <p>Enable via <a href="#select-data-instance">§ 5.27 Select Specific Data Instance</a>, providing each selected <a data-link-type="dfn">Data Instance</a></p>
+          <p>Enable via <a href="#select-data-instance">§ 5.24 Select Specific Data Instance</a>, providing each selected <a data-link-type="dfn">Data Instance</a></p>
         </ol>
       </ol>
      <li data-md>
@@ -1163,13 +1142,13 @@ linked via <code>DG hasDataInstance</code></p>
             <p><strong>No Access</strong> - <code>interop:NoAccess</code> (if necessity is optional)</p>
             <ol>
              <li data-md>
-              <p>Enable via <a href="#deny-referenced-data-grant">§ 5.24 Deny Referenced Data Grant</a></p>
+              <p>Enable via <a href="#deny-referenced-data-grant">§ 5.21 Deny Referenced Data Grant</a></p>
             </ol>
            <li data-md>
             <p><strong>All Current and Future</strong> - <code>interop:AllInstances</code></p>
             <ol>
              <li data-md>
-              <p>Enable via <a href="#select-all-referenced-data-instances">§ 5.26 Select All Referenced Data Instances</a></p>
+              <p>Enable via <a href="#select-all-referenced-data-instances">§ 5.23 Select All Referenced Data Instances</a></p>
             </ol>
            <li data-md>
             <p><strong>Only Inherited Instances</strong> - <code>interop:InheritInstances</code> (if <code>DG scopeOfGrant</code> is <code>interop:SelectedInstances</code>)</p>
@@ -1186,104 +1165,65 @@ selections linked via <code>REFDG hasDataInstance</code></p>
              <li data-md>
               <p>Allow one or more to be chosen</p>
              <li data-md>
-              <p>Enable via <a href="#select-referenced-data-instance">§ 5.29 Select Specific Referenced Data Instance</a>, providing
+              <p>Enable via <a href="#select-referenced-data-instance">§ 5.26 Select Specific Referenced Data Instance</a>, providing
 each selected <a data-link-type="dfn">Data Instance</a>.</p>
             </ol>
           </ol>
         </ol>
       </ol>
     </ol>
-    <p class="note" role="note"><span>Note:</span> Access to data in the <a data-link-type="dfn">Remote Data Registry</a> is similarly managed per <a data-link-type="dfn">Access Need</a>. User interfaces may opt to present
+    <p class="note" role="note"><span>Note:</span> Access to data shared by other <a data-link-type="dfn">Social Agents</a> is similarly managed per <a data-link-type="dfn">Access Need</a>. User interfaces may opt to present
 simpler options, and mix the selection in with local data,
 like in the <a href="#fig-present-inherited">figure</a> above. However, for the
 comprehension and completeness, options for remote data access are 
 presented as follows:</p>
+    <p class="issue" id="issue-7e591e60"><a class="self-link" href="#issue-7e591e60"></a> Update this operation after refactoring of <a data-link-type="dfn">Delegated Data Grants</a></p>
     <ol>
      <li data-md>
-      <p>Let <code>RDG</code> be the <a data-link-type="dfn">Remote Data Grant</a> linked via <code>NEED hasRemoteDataGrant</code></p>
+      <p>Let <code>DDG</code> be the <a data-link-type="dfn">Delegated Data Grants</a> linked via <code>NEED hasDataGrant</code></p>
      <li data-md>
-      <p>Manage the scope of data to be granted <code>RDG scopeOfGrant</code>:</p>
+      <p>Manage the scope of data to be granted <code>DDG scopeOfGrant</code>:</p>
       <ol>
        <li data-md>
         <p><strong>No Access</strong> - <code>interop:NoAccess</code> (if necessity is optional)</p>
-        <ol>
-         <li data-md>
-          <p>Enable via <a href="#deny-remote-data-grant">§ 5.36 Deny Remote Data Grant</a></p>
-        </ol>
        <li data-md>
         <p><strong>All Remote Data</strong> - <code>interop:AllRemote</code></p>
-        <ol>
-         <li data-md>
-          <p>Enable via <a href="#select-all-remote">§ 5.30 Select All Remote Instances</a></p>
-        </ol>
        <li data-md>
         <p><strong>All Remote From Agent</strong> - <code>interop:AllRemoteFromAgent</code></p>
         <ol>
          <li data-md>
-          <p>Present existing <a data-link-type="dfn">Remote Agent Data Registrations</a> corresponding
-to <code>NEED registeredShapeTree</code>, identifying any existing selections
-linked via <code>RDG hasRemoteDataFromAgent</code></p>
-         <li data-md>
           <p>Allow one or more to be chosen</p>
-         <li data-md>
-          <p>Enable via <a href="#select-all-remote-fromagent">§ 5.32 Select All Remote From Agent</a></p>
         </ol>
        <li data-md>
         <p><strong>Only Selected Remote Data</strong> - <code>interop:SelectedRemote</code></p>
         <ol>
          <li data-md>
-          <p>Present existing <a data-link-type="dfn">Data Grants</a> and/or <a data-link-type="dfn">Referenced Data Grants</a>,
-corresponding to <code>NEED registeredShapeTree</code> and optionally organized by <a data-link-type="dfn">Remote Agent Data Registrations</a>, identifying any existing selections
-linked via <code>RDG hasDataGrant</code> and/or <code>RDG:hasReferencedDataGrant</code></p>
-         <li data-md>
           <p>Allow one or more to be chosen</p>
-         <li data-md>
-          <p>Enable via <a href="#select-remote-agent-data-grants">§ 5.34 Select Specific Remote Agent Data Grants</a>, providing the selected <a data-link-type="dfn">Data Grants</a> and/or <a data-link-type="dfn">Referenced Data Grants</a>.</p>
         </ol>
       </ol>
      <li data-md>
-      <p>For each <a data-link-type="dfn">Referenced Access Need</a> <code>REFNEED</code> linked via <code>NEED hasReferencedAccessNeed</code></p>
+      <p>For each inherited <a data-link-type="dfn">Delegated Data Grant</a> <code>INDDG</code> linked via <code>INDDG inheritsFromGrant</code> with a value of <code>DDG</code></p>
       <ol>
        <li data-md>
-        <p>Let <code>REFRDG</code> be the <a data-link-type="dfn">Referenced Remote Data Grant</a> linked via <code>NEED hasReferencedRemoteDataGrant</code></p>
-       <li data-md>
-        <p>Manage the scope of data to be granted <code>REFRDG scopeOfGrant</code>:</p>
+        <p>Manage the scope of data to be granted <code>INDDG scopeOfGrant</code>:</p>
         <ol>
          <li data-md>
           <p><strong>No Access</strong> - <code>interop:NoAccess</code> (if necessity is optional)</p>
-          <ol>
-           <li data-md>
-            <p>Enable via <a href="#deny-referenced-remote-data-grant">§ 5.37 Deny Referenced Remote Data Grant</a></p>
-          </ol>
          <li data-md>
           <p><strong>All Remote Data</strong> - <code>interop:AllRemote</code></p>
-          <ol>
-           <li data-md>
-            <p>Enable via <a href="#select-all-referenced-remote">§ 5.31 Select All Referenced Remote Instances</a></p>
-          </ol>
          <li data-md>
           <p><strong>All Remote From Agent</strong> - <code>interop:AllRemoteFromAgent</code></p>
           <ol>
            <li data-md>
-            <p>Present existing <a data-link-type="dfn">Remote Agent Data Registrations</a> corresponding
-to <code>NEED registeredShapeTree</code>, identifying any existing selections
-linked via <code>REFRDG hasRemoteDataFromAgent</code></p>
-           <li data-md>
-            <p>Allow one or more to be chosen</p>
-           <li data-md>
-            <p>Enable via <a href="#select-referenced-remote-fromagent">§ 5.33 Select All Referenced Remote From Agent</a></p>
+            <p>Allow one or more Agents to be chosen</p>
           </ol>
          <li data-md>
           <p><strong>Only Selected Remote Data</strong> - <code>interop:SelectedRemote</code></p>
           <ol>
            <li data-md>
-            <p>Present existing <a data-link-type="dfn">Data Grants</a> and/or <a data-link-type="dfn">Referenced Data Grants</a>,
-corresponding to <code>NEED registeredShapeTree</code> and optionally organized by <a data-link-type="dfn">Remote Agent Data Registrations</a>, identifying any existing selections
-linked via <code>REFRDG hasDataGrant</code> and/or <code>REFRDG hasReferencedDataGrant</code></p>
+            <p>Present existing <a data-link-type="dfn">Data Grants</a> and/or <a data-link-type="dfn">Delegated Data Grants</a></p>
            <li data-md>
             <p>Allow one or more to be chosen</p>
-           <li data-md>
-            <p>Enable via <a href="#select-referenced-remote-agent-data-grants">§ 5.35 Select Specific Referenced Remote Agent Data Instances</a>, providing the selected <a data-link-type="dfn">Data Grants</a> and/or <a data-link-type="dfn">Referenced Data Grants</a>.</p>
           </ol>
         </ol>
       </ol>
@@ -1386,7 +1326,7 @@ linked via <code>REFRDG hasDataGrant</code> and/or <code>REFRDG hasReferencedDat
        <p><strong>All Registries</strong> - where <code>rdf:type</code> of <a data-link-type="dfn">Registry</a> is <code>TNEED trustedWithType</code></p>
        <ol>
         <li data-md>
-         <p>Enable via <a href="#select-trusted-registry-set">§ 5.38 Select Trusted Registry Set</a></p>
+         <p>Enable via <a href="#select-trusted-registry-set">§ 5.27 Select Trusted Registry Set</a></p>
        </ol>
       <li data-md>
        <p><strong>Specific TYPE Registries</strong></p>
@@ -1396,7 +1336,7 @@ linked via <code>REFRDG hasDataGrant</code> and/or <code>REFRDG hasReferencedDat
         <li data-md>
          <p>Allow one or more <a data-link-type="dfn">Registries</a> to be chosen</p>
         <li data-md>
-         <p>Enable via <a href="#select-trusted-registry">§ 5.39 Select Specific Trusted Registry</a>, providing each selected <a data-link-type="dfn">Registrys</a></p>
+         <p>Enable via <a href="#select-trusted-registry">§ 5.28 Select Specific Trusted Registry</a>, providing each selected <a data-link-type="dfn">Registrys</a></p>
        </ol>
      </ol>
    </ol>
@@ -1435,12 +1375,12 @@ get <code>CONTROLLER</code>'s <a data-link-type="dfn">identity profile document<
        <p><code>CONTROLLER</code> authorizes the requested <a data-link-type="dfn">Access Need Groups</a> and <a data-link-type="dfn">Access Needs</a>:</p>
        <ol>
         <li data-md>
-         <p>The <a href="#grants-recordgrant">§ 5.8 Record Grant</a> operation is invoked</p>
+         <p>The <a href="#grants-recordgrant">§ 5.7 Record Grant</a> operation is invoked</p>
          <ol>
           <li data-md>
            <p>An <a data-link-type="dfn">Access Grant</a> is stored in <code>CONTROLLER</code>'s <a data-link-type="dfn">Access Grant Registry</a>.</p>
           <li data-md>
-           <p><a href="#apply-permissions">§ 5.12 Apply Permissions</a> is called to apply permissions based
+           <p><a href="#apply-permissions">§ 5.11 Apply Permissions</a> is called to apply permissions based
 on the <a data-link-type="dfn">Access Grant</a>.</p>
           <li data-md>
            <p><a href="#provide-access-receipt">§ 6.1 Provide Access Receipt</a> is called to store the <a data-link-type="dfn">Access Receipt</a>. The Application has set <code>interop:receivesAccessReceipt</code> to <code>ReceiptInRegistration</code>, so the <a data-link-type="dfn">Access Receipt</a> is
@@ -1486,12 +1426,12 @@ the <a data-link-type="dfn">Access Request</a>.</p>
       <li data-md>
        <p>Assuming <code>CONTROLLER</code> authorizes a minimum of the
 required <a data-link-type="dfn">Access Need Groups</a> and <a data-link-type="dfn">Access Needs</a>,
-the <a href="#grants-recordgrant">§ 5.8 Record Grant</a> operation is invoked.</p>
+the <a href="#grants-recordgrant">§ 5.7 Record Grant</a> operation is invoked.</p>
       <li data-md>
-       <p><a href="#grants-recordgrant">§ 5.8 Record Grant</a> stores an <a data-link-type="dfn">Access Grant</a> in <code>CONTROLLER</code>'s <a data-link-type="dfn">Access Grant Registry</a>.</p>
+       <p><a href="#grants-recordgrant">§ 5.7 Record Grant</a> stores an <a data-link-type="dfn">Access Grant</a> in <code>CONTROLLER</code>'s <a data-link-type="dfn">Access Grant Registry</a>.</p>
        <ol>
         <li data-md>
-         <p><a href="#apply-permissions">§ 5.12 Apply Permissions</a> is called to apply permissions based on the <a data-link-type="dfn">Access Grant</a>.</p>
+         <p><a href="#apply-permissions">§ 5.11 Apply Permissions</a> is called to apply permissions based on the <a data-link-type="dfn">Access Grant</a>.</p>
         <li data-md>
          <p><a href="#provide-access-receipt">§ 6.1 Provide Access Receipt</a> is called to deliver the <a data-link-type="dfn">Access Receipt</a>.</p>
          <ol>
@@ -1514,7 +1454,8 @@ to the access inbox identified via <code>hasAccessInbox</code> in <code>REQUESTE
         <li data-md>
          <p><a href="#record-access-receipt">§ 6.4 Record Access Receipt</a> is called to store the <a data-link-type="dfn">Access Receipt</a> in <code>REQUESTER</code>'s <a data-link-type="dfn">Access Receipt Registry</a>.</p>
         <li data-md>
-         <p><a href="#update-remote-data">§ 7.3 Update Remote Data</a> is called to update <code>REQUESTER</code>'s <a data-link-type="dfn">Remote Data Registry</a> to reflect what is in the <a data-link-type="dfn">Access Receipt</a>.</p>
+         <p>Update the <code>REQUESTER</code>'s <a data-link-type="dfn">Agent Registy</a> to reflect
+what is in the <a data-link-type="dfn">Access Receipt</a>.</p>
        </ol>
      </ol>
    </ol>
@@ -1549,12 +1490,12 @@ workflow, which presents them to <code>CONTROLLER</code>.</p>
 the provided <a data-link-type="dfn">Access Need Groups</a>.</p>
        <ol>
         <li data-md>
-         <p>The <a href="#grants-recordgrant">§ 5.8 Record Grant</a> operation is invoked</p>
+         <p>The <a href="#grants-recordgrant">§ 5.7 Record Grant</a> operation is invoked</p>
          <ol>
           <li data-md>
            <p>An <a data-link-type="dfn">Access Grant</a> is stored in <code>CONTROLLER</code>'s <a data-link-type="dfn">Access Grant Registry</a>.</p>
           <li data-md>
-           <p><a href="#apply-permissions">§ 5.12 Apply Permissions</a> is called to apply permissions based
+           <p><a href="#apply-permissions">§ 5.11 Apply Permissions</a> is called to apply permissions based
 on the <a data-link-type="dfn">Access Grant</a>.</p>
           <li data-md>
            <p><a href="#provide-access-receipt">§ 6.1 Provide Access Receipt</a> is called to store the <a data-link-type="dfn">Access Receipt</a>. <code>RECEIVER</code> has set <code>interop:receivesAccessReceipt</code> to <code>ReceiptInMessage</code>, so the <a data-link-type="dfn">Access Receipt</a> is posted
@@ -1575,7 +1516,8 @@ to the access inbox identified via <code>hasAccessInbox</code> in <code>RECEIVER
         <li data-md>
          <p><a href="#record-access-receipt">§ 6.4 Record Access Receipt</a> is called to store the <a data-link-type="dfn">Access Receipt</a> in <code>RECEIVER</code>'s <a data-link-type="dfn">Access Receipt Registry</a>.</p>
         <li data-md>
-         <p><a href="#update-remote-data">§ 7.3 Update Remote Data</a> is called to update <code>RECEIVER</code>'s <a data-link-type="dfn">Remote Data Registry</a> to reflect what is in the <a data-link-type="dfn">Access Receipt</a>.</p>
+         <p>Update the <code>RECEIVER</code>'s <a data-link-type="dfn">Agent Registry</a> to reflect what
+is in the <a data-link-type="dfn">Access Receipt</a>.</p>
        </ol>
      </ol>
    </ol>
@@ -1615,12 +1557,12 @@ workflow, which presents them to <code>CONTROLLER</code>.</p>
 the provided <a data-link-type="dfn">Access Need Groups</a>.</p>
        <ol>
         <li data-md>
-         <p>The <a href="#grants-recordinvitation">§ 5.9 Record Invitation</a> operation is invoked</p>
+         <p>The <a href="#grants-recordinvitation">§ 5.8 Record Invitation</a> operation is invoked</p>
          <ol>
           <li data-md>
            <p>An <a data-link-type="dfn">Access Invitation</a> is stored in <code>CONTROLLER</code>'s <a data-link-type="dfn">Access Grant Registry</a>.</p>
           <li data-md>
-           <p><a href="#grants-deliverinvitation">§ 5.10 Deliver Invitation</a> is called to create an
+           <p><a href="#grants-deliverinvitation">§ 5.9 Deliver Invitation</a> is called to create an
 invitation entry for each <a data-link-type="dfn">Access Invitation Channel</a> in
 the <a data-link-type="dfn">Access Invitation</a> with <code>CISERVICE</code></p>
           <li data-md>
@@ -1643,7 +1585,7 @@ medium associated with the <a data-link-type="dfn">Access Invitation Channel</a>
 identity and pod with <code>PROVIDER</code>.</p>
       <li data-md>
        <p><code>INVITEE</code> clicks a link in the notification bringing them to the <code>CISERVICE</code> user interface to validate the invitation by
-invoking <a href="#grants-validateinvitation">§ 5.11 Validate Invitation</a>.</p>
+invoking <a href="#grants-validateinvitation">§ 5.10 Validate Invitation</a>.</p>
        <ol>
         <li data-md>
          <p>If validation is successful, but there are other <a data-link-type="dfn">Access Invitation Channels</a> left to validate, the <code>INVITEE</code> will
@@ -1653,12 +1595,12 @@ validation of all <a data-link-type="dfn">Access Invitation Channels</a> are suc
          <p><code>CISERVICE</code> initializes a new <a data-link-type="dfn">Access Grant</a> via <a href="#grants-initializegrant">§ 5.1 Initialize Grant</a>, using the contents of
 the <a data-link-type="dfn">Access Invitation</a>, and the new registered <a data-link-type="dfn">identity</a> for <code>INVITEE</code>.</p>
         <li data-md>
-         <p><code>CISERVICE</code> calls <a href="#grants-recordgrant">§ 5.8 Record Grant</a> using the <a data-link-type="dfn">Access Grant</a> initialized from the <a data-link-type="dfn">Access Invitation</a></p>
+         <p><code>CISERVICE</code> calls <a href="#grants-recordgrant">§ 5.7 Record Grant</a> using the <a data-link-type="dfn">Access Grant</a> initialized from the <a data-link-type="dfn">Access Invitation</a></p>
          <ol>
           <li data-md>
            <p>An <a data-link-type="dfn">Access Grant</a> is stored in <code>CONTROLLER</code>'s <a data-link-type="dfn">Access Grant Registry</a>.</p>
           <li data-md>
-           <p><a href="#apply-permissions">§ 5.12 Apply Permissions</a> is called to apply permissions
+           <p><a href="#apply-permissions">§ 5.11 Apply Permissions</a> is called to apply permissions
 based on the <a data-link-type="dfn">Access Grant</a>.</p>
           <li data-md>
            <p><a href="#provide-access-receipt">§ 6.1 Provide Access Receipt</a> is called to store the <a data-link-type="dfn">Access Receipt</a>. <code>INVITEE</code> has set <code>interop:receivesAccessReceipt</code> to <code>ReceiptInMessage</code>, so the <a data-link-type="dfn">Access Receipt</a> is posted
@@ -1843,58 +1785,50 @@ of 404 if <code>USENDEC</code> is unassigned</p>
    <p>Load or initialize the two main grant types: <a data-link-type="dfn">Access Grant</a>, <a data-link-type="dfn">Access Invitation</a></p>
    <ul>
     <li data-md>
-     <p><a href="#grants-loadgrant">§ 5.6 Load Grant</a> - Load an existing <a data-link-type="dfn">Access Grant</a> from an <a data-link-type="dfn">Access Grant Registry</a></p>
+     <p><a href="#grants-loadgrant">§ 5.5 Load Grant</a> - Load an existing <a data-link-type="dfn">Access Grant</a> from an <a data-link-type="dfn">Access Grant Registry</a></p>
     <li data-md>
-     <p><a href="#grants-loadinvitation">§ 5.7 Load Invitation</a> - Load an existing <a data-link-type="dfn">Access Invitation</a> from an <a data-link-type="dfn">Access Grant Registry</a></p>
+     <p><a href="#grants-loadinvitation">§ 5.6 Load Invitation</a> - Load an existing <a data-link-type="dfn">Access Invitation</a> from an <a data-link-type="dfn">Access Grant Registry</a></p>
     <li data-md>
      <p><a href="#grants-initializegrant">§ 5.1 Initialize Grant</a> - Initializes a new <a data-link-type="dfn">Access Grant</a> for a given <a data-link-type="dfn">Access Grant Subject</a> with one or more <a data-link-type="dfn">Access Need Groups</a></p>
     <li data-md>
      <p><a href="#grants-initializeinvitation">§ 5.2 Initialize Invitation</a> - Initializes a new <a data-link-type="dfn">Access Invitation</a> for one or more <a data-link-type="dfn">Access Invitation Channels</a> with one or more <a data-link-type="dfn">Access Need Groups</a></p>
    </ul>
    <p>Each <a data-link-type="dfn">Access Grant</a> or <a data-link-type="dfn">Access Invitation</a> will have some combination
-of <a data-link-type="dfn">Data Grants</a>, <a data-link-type="dfn">Remote Data Grants</a>, and/or <a data-link-type="dfn">Trusted Grants</a>:</p>
+of <a data-link-type="dfn">Data Grants</a>, and/or <a data-link-type="dfn">Trusted Grants</a>:</p>
    <ul>
     <li data-md>
      <p><a href="#grants-initializedatagrant">§ 5.3 Initialize Data Grant</a> - Initialize a <a data-link-type="dfn">Data Grant</a> as part
 of <a data-link-type="dfn">Access Grant</a> initialization</p>
     <li data-md>
-     <p><a href="#grants-initializeremotegrant">§ 5.4 Initialize Remote Data Grant</a> - Initialize a <a data-link-type="dfn">Remote Data Grant</a> as
-part of <a data-link-type="dfn">Access Grant</a> initialization</p>
-    <li data-md>
-     <p><a href="#grants-initializetrustedgrant">§ 5.5 Initialize Trusted Grant</a> - Initialize a <a data-link-type="dfn">Trusted Grant</a> as part
+     <p><a href="#grants-initializetrustedgrant">§ 5.4 Initialize Trusted Grant</a> - Initialize a <a data-link-type="dfn">Trusted Grant</a> as part
 of <a data-link-type="dfn">Access Grant</a> initialization</p>
    </ul>
    <p>Record <a data-link-type="dfn">Access Grants</a> and <a data-link-type="dfn">Access Invitations</a>:</p>
    <ul>
     <li data-md>
-     <p><a href="#grants-recordgrant">§ 5.8 Record Grant</a> - Store a new or updated <a data-link-type="dfn">Access Grant</a> in an <a data-link-type="dfn">Access Grant Registry</a></p>
+     <p><a href="#grants-recordgrant">§ 5.7 Record Grant</a> - Store a new or updated <a data-link-type="dfn">Access Grant</a> in an <a data-link-type="dfn">Access Grant Registry</a></p>
     <li data-md>
-     <p><a href="#grants-recordinvitation">§ 5.9 Record Invitation</a> - Store a new or updated <a data-link-type="dfn">Access Invitation</a> in an <a data-link-type="dfn">Access Grant Registry</a></p>
+     <p><a href="#grants-recordinvitation">§ 5.8 Record Invitation</a> - Store a new or updated <a data-link-type="dfn">Access Invitation</a> in an <a data-link-type="dfn">Access Grant Registry</a></p>
    </ul>
    <p>Apply permissions based on the composition of an <a data-link-type="dfn">Access Grant</a>:</p>
    <ul>
     <li data-md>
-     <p><a href="#apply-permissions">§ 5.12 Apply Permissions</a> - Apply permissions for an input <a data-link-type="dfn">Access Grant</a></p>
+     <p><a href="#apply-permissions">§ 5.11 Apply Permissions</a> - Apply permissions for an input <a data-link-type="dfn">Access Grant</a></p>
      <ul>
       <li data-md>
-       <p><a href="#apply-data-permissions">§ 5.13 Apply Data Permissions</a> - Apply permissions for <a data-link-type="dfn">Data Grants</a></p>
+       <p><a href="#apply-data-permissions">§ 5.12 Apply Data Permissions</a> - Apply permissions for <a data-link-type="dfn">Data Grants</a></p>
       <li data-md>
-       <p><a href="#apply-data-registration-permissions">§ 5.14 Apply Data Registration Permissions</a> - Apply permissions for a <a data-link-type="dfn">Data Registration</a></p>
+       <p><a href="#apply-data-registration-permissions">§ 5.13 Apply Data Registration Permissions</a> - Apply permissions for a <a data-link-type="dfn">Data Registration</a></p>
       <li data-md>
-       <p><a href="#apply-remote-data-permissions">§ 5.16 Apply Remote Data Permissions</a> - Apply permissions for <a data-link-type="dfn">Remote Data Grants</a></p>
+       <p><a href="#apply-trusted-permissions">§ 5.15 Apply Trusted Permissions</a> - Apply permissions for <a data-link-type="dfn">Trusted Grants</a></p>
       <li data-md>
-       <p><a href="#apply-remote-data-registration-permissions">§ 5.17 Apply Remote Data Registration Permissions</a> - Apply permissions for a
-given <a data-link-type="dfn">Remote Data Registration</a></p>
-      <li data-md>
-       <p><a href="#apply-trusted-permissions">§ 5.18 Apply Trusted Permissions</a> - Apply permissions for <a data-link-type="dfn">Trusted Grants</a></p>
-      <li data-md>
-       <p><a href="#apply-resource-permissions">§ 5.19 Apply Resource Permissions</a> - Apply permissions on a given resource for
+       <p><a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> - Apply permissions on a given resource for
 a given <a data-link-type="dfn">Access Grant Subject</a></p>
       <li data-md>
-       <p><a href="#apply-conditional-permissions">§ 5.20 Apply Conditional Resource Permissions</a> - Apply permissions on a given resource
+       <p><a href="#apply-conditional-permissions">§ 5.17 Apply Conditional Resource Permissions</a> - Apply permissions on a given resource
 for a given <a data-link-type="dfn">Access Grant Subject</a>, condiioned upon a graph relationship</p>
       <li data-md>
-       <p><a href="#remove-resource-permissions">§ 5.21 Remove Resource Permissions</a> - Remove permissions on a given resource
+       <p><a href="#remove-resource-permissions">§ 5.18 Remove Resource Permissions</a> - Remove permissions on a given resource
 for a given <a data-link-type="dfn">Access Grant Subject</a></p>
      </ul>
    </ul>
@@ -1909,7 +1843,7 @@ for a given <a data-link-type="dfn">Access Grant Subject</a></p>
      <tr>
       <td colspan="2"> Initialize an <a data-link-type="dfn">Access Grant</a> by processing
         the input <a data-link-type="dfn">Access Need Groups</a> and
-        then initializing <a data-link-type="dfn">Data Grants</a>, <a data-link-type="dfn">Remote Data Grants</a>,
+        then initializing <a data-link-type="dfn">Data Grants</a>,
         and/or <a data-link-type="dfn">Trusted Grants</a> with no access (yet). 
     <thead>
      <tr>
@@ -1952,14 +1886,12 @@ for a given <a data-link-type="dfn">Access Grant Subject</a></p>
         <ol>
          <li data-md>
           <p>Call <a href="#grants-initializedatagrant">§ 5.3 Initialize Data Grant</a> with inputs: <code>NEED</code></p>
-         <li data-md>
-          <p>Call <a href="#grants-initializeremotegrant">§ 5.4 Initialize Remote Data Grant</a> with inputs: <code>NEED</code></p>
         </ol>
        <li data-md>
         <p>For each <a data-link-type="dfn">Trusted Need</a> <code>TNEED</code> in <code>GROUP</code></p>
         <ol>
          <li data-md>
-          <p>Call <a href="#grants-initializetrustedgrant">§ 5.5 Initialize Trusted Grant</a> with inputs: <code>TNEED</code></p>
+          <p>Call <a href="#grants-initializetrustedgrant">§ 5.4 Initialize Trusted Grant</a> with inputs: <code>TNEED</code></p>
         </ol>
       </ol>
      <li data-md>
@@ -1977,7 +1909,7 @@ for a given <a data-link-type="dfn">Access Grant Subject</a></p>
      <tr>
       <td colspan="2"> Initialize an <a data-link-type="dfn">Access Invitation</a> by processing
         the input <a data-link-type="dfn">Access Need Groups</a> and
-        then initializing <a data-link-type="dfn">Data Grants</a>, <a data-link-type="dfn">Remote Data Grants</a>,
+        then initializing <a data-link-type="dfn">Data Grants</a>, 
         or <a data-link-type="dfn">Trusted Grants</a> with no access (yet). 
     <thead>
      <tr>
@@ -2024,14 +1956,12 @@ for a given <a data-link-type="dfn">Access Grant Subject</a></p>
         <ol>
          <li data-md>
           <p>Call <a href="#grants-initializedatagrant">§ 5.3 Initialize Data Grant</a> with inputs: <code>NEED</code>, <code>GRANT</code></p>
-         <li data-md>
-          <p>Call <a href="#grants-initializeremotegrant">§ 5.4 Initialize Remote Data Grant</a> with inputs: <code>NEED</code>, <code>GRANT</code></p>
         </ol>
        <li data-md>
         <p>For each <a data-link-type="dfn">Trusted Need</a> <code>TNEED</code> in <code>GROUP</code></p>
         <ol>
          <li data-md>
-          <p>Call <a href="#grants-initializetrustedgrant">§ 5.5 Initialize Trusted Grant</a> with inputs: <code>TNEED</code>, <code>GRANT</code></p>
+          <p>Call <a href="#grants-initializetrustedgrant">§ 5.4 Initialize Trusted Grant</a> with inputs: <code>TNEED</code>, <code>GRANT</code></p>
         </ol>
       </ol>
      <li data-md>
@@ -2111,78 +2041,7 @@ via <code>NEED hasReferencedAccessNeed</code></p>
       <p>Return <code>DG</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.4" id="grants-initializeremotegrant"><span class="secno">5.4. </span><span class="content">Initialize Remote Data Grant</span><a class="self-link" href="#grants-initializeremotegrant"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2">
-        Initialize a <a data-link-type="dfn">Remote Data Grant</a> and link it to the provided <a data-link-type="dfn">Access Need</a> <code>NEED</code>. 
-       <p>Initialize <a data-link-type="dfn">Referenced Remote Data Grants</a> if the <a data-link-type="dfn">Access Need</a> <code>NEED</code> has any <a data-link-type="dfn">Referenced Access Needs</a>.</p>
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>NEED</code>
-      <td>An <a data-link-type="dfn">Access Need</a>
-     <tr>
-      <td><code>GRANT</code>
-      <td><a data-link-type="dfn">Access Grant</a> that the <a data-link-type="dfn">Remote Data Grant</a> will be linked to
-    <thead>
-     <tr>
-      <th colspan="2">Outputs
-    <tbody>
-     <tr>
-      <td><a data-link-type="dfn">Remote Data Grant</a>
-      <td>Initialized <a data-link-type="dfn">Remote Data Grant</a> corresponding to <code>NEED</code>
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>RDG</code> be a newly initialized <a data-link-type="dfn">Remote Data Grant</a></p>
-     <li data-md>
-      <p>Let <code>RDG hasAccessGrant</code> be <code>GRANT</code></p>
-     <li data-md>
-      <p>Let <code>RDG satisfiesAccessNeed</code> be <code>NEED</code></p>
-     <li data-md>
-      <p>Let <code>RDG registeredShapeTree</code> be <code>NEED registeredShapeTree</code></p>
-     <li data-md>
-      <p>Let <code>RDG accessmode</code>s be <code>NEED accessmode</code>s</p>
-     <li data-md>
-      <p>Let <code>RDG scopeOfGrant</code> be <code>interop:NoAccess</code></p>
-     <li data-md>
-      <p>Let <code>NEED hasRemoteDataGrant</code> be <code>RDG</code></p>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Referenced Access Need</a> <code>REFNEED</code> linked
-via <code>NEED hasReferencedAccessNeed</code></p>
-      <ol>
-       <li data-md>
-        <p>Let <code>REFRDG</code> be a newly initialized <a data-link-type="dfn">Referenced Remote Data Grant</a></p>
-       <li data-md>
-        <p>Let <code>REFRDG hasRemoteDataGrant</code> be <code>RDG</code></p>
-       <li data-md>
-        <p>Let <code>REFRDG satisfiesAccessNeed</code> be <code>REFNEED</code></p>
-       <li data-md>
-        <p>Let <code>REFRDG registeredShapeTree</code> be <code>REFNEED registeredShapeTree</code></p>
-       <li data-md>
-        <p>Let <code>REFRDG hasRegistration</code> be a <a data-link-type="dfn">Data Registration</a> <code>DR</code> where <code>DR registeredShapeTree</code> == <code>REFRDG registeredShapeTree</code></p>
-       <li data-md>
-        <p>Let <code>REFRDG accessMode</code>s be <code>REFNEED accessMode</code>s</p>
-       <li data-md>
-        <p>Let <code>REFRDG scopeOfGrant</code> be <code>interop:NoAccess</code></p>
-       <li data-md>
-        <p>Link <code>REFRDG</code> to <code>RDG</code> via <code>RDG hasReferencedRemoteDataGrant</code></p>
-      </ol>
-     <li data-md>
-      <p>Return <code>RDG</code></p>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.5" id="grants-initializetrustedgrant"><span class="secno">5.5. </span><span class="content">Initialize Trusted Grant</span><a class="self-link" href="#grants-initializetrustedgrant"></a></h3>
+   <h3 class="heading settled" data-level="5.4" id="grants-initializetrustedgrant"><span class="secno">5.4. </span><span class="content">Initialize Trusted Grant</span><a class="self-link" href="#grants-initializetrustedgrant"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2232,7 +2091,7 @@ via <code>NEED hasReferencedAccessNeed</code></p>
       <p>Return <code>TG</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.6" id="grants-loadgrant"><span class="secno">5.6. </span><span class="content">Load Grant</span><a class="self-link" href="#grants-loadgrant"></a></h3>
+   <h3 class="heading settled" data-level="5.5" id="grants-loadgrant"><span class="secno">5.5. </span><span class="content">Load Grant</span><a class="self-link" href="#grants-loadgrant"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2270,7 +2129,7 @@ via <code>NEED hasReferencedAccessNeed</code></p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.7" id="grants-loadinvitation"><span class="secno">5.7. </span><span class="content">Load Invitation</span><a class="self-link" href="#grants-loadinvitation"></a></h3>
+   <h3 class="heading settled" data-level="5.6" id="grants-loadinvitation"><span class="secno">5.6. </span><span class="content">Load Invitation</span><a class="self-link" href="#grants-loadinvitation"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2324,7 +2183,7 @@ via <code>NEED hasReferencedAccessNeed</code></p>
       <p>Return <code>INVITATIONS</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.8" id="grants-recordgrant"><span class="secno">5.8. </span><span class="content">Record Grant</span><a class="self-link" href="#grants-recordgrant"></a></h3>
+   <h3 class="heading settled" data-level="5.7" id="grants-recordgrant"><span class="secno">5.7. </span><span class="content">Record Grant</span><a class="self-link" href="#grants-recordgrant"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2363,7 +2222,7 @@ the assigned <a href="interop.tree#AccessGrantTree">interopt:AccessGrantTree</a>
       <p>Link <code>GRANT</code> to the <code>REGISTRY</code> via <code>REGISTRY hasRegistration</code> if
     it has not already been added</p>
      <li data-md>
-      <p>Call <a href="#apply-permissions">§ 5.12 Apply Permissions</a> with inputs: <code>GRANT</code></p>
+      <p>Call <a href="#apply-permissions">§ 5.11 Apply Permissions</a> with inputs: <code>GRANT</code></p>
      <li data-md>
       <p>Call <a href="https://solid.github.io/data-interoperability-panel/specification/#provide-access-receipt">Solid Application Interoperability § provide-access-receipt</a> with inputs: <code>GRANT</code></p>
      <li data-md>
@@ -2373,7 +2232,7 @@ the assigned <a href="interop.tree#AccessGrantTree">interopt:AccessGrantTree</a>
    <p class="issue" id="issue-4a203aca"><a class="self-link" href="#issue-4a203aca"></a> Need to properly factor in multi-pod scenarios. Must identify the
 proper access registry to store things in based on the data registration, which
 means pods will also need to be registered.</p>
-   <h3 class="heading settled" data-level="5.9" id="grants-recordinvitation"><span class="secno">5.9. </span><span class="content">Record Invitation</span><a class="self-link" href="#grants-recordinvitation"></a></h3>
+   <h3 class="heading settled" data-level="5.8" id="grants-recordinvitation"><span class="secno">5.8. </span><span class="content">Record Invitation</span><a class="self-link" href="#grants-recordinvitation"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2411,16 +2270,16 @@ the assigned <a href="interop.tree#AccessInvitationTree">interopt:AccessInvitati
       <p>Link <code>INVITATION</code> to the <code>REGISTRY</code> via <code>ACCESS hasRegistration</code> if
     it has not already been added</p>
      <li data-md>
-      <p>Call <a href="#grants-deliverinvitation">§ 5.10 Deliver Invitation</a> with inputs: <code>INVITATION</code></p>
+      <p>Call <a href="#grants-deliverinvitation">§ 5.9 Deliver Invitation</a> with inputs: <code>INVITATION</code></p>
      <li data-md>
       <p>Return <code>INVITATION</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.10" id="grants-deliverinvitation"><span class="secno">5.10. </span><span class="content">Deliver Invitation</span><a class="self-link" href="#grants-deliverinvitation"></a></h3>
+   <h3 class="heading settled" data-level="5.9" id="grants-deliverinvitation"><span class="secno">5.9. </span><span class="content">Deliver Invitation</span><a class="self-link" href="#grants-deliverinvitation"></a></h3>
    <p class="issue" id="issue-2800f864"><a class="self-link" href="#issue-2800f864"></a> Write standard operation for invitation delivery</p>
-   <h3 class="heading settled" data-level="5.11" id="grants-validateinvitation"><span class="secno">5.11. </span><span class="content">Validate Invitation</span><a class="self-link" href="#grants-validateinvitation"></a></h3>
+   <h3 class="heading settled" data-level="5.10" id="grants-validateinvitation"><span class="secno">5.10. </span><span class="content">Validate Invitation</span><a class="self-link" href="#grants-validateinvitation"></a></h3>
    <p class="issue" id="issue-00444ef2"><a class="self-link" href="#issue-00444ef2"></a> Write standard operation for validating an invitation</p>
-   <h3 class="heading settled" data-level="5.12" id="apply-permissions"><span class="secno">5.12. </span><span class="content">Apply Permissions</span><a class="self-link" href="#apply-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.11" id="apply-permissions"><span class="secno">5.11. </span><span class="content">Apply Permissions</span><a class="self-link" href="#apply-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2430,7 +2289,7 @@ the assigned <a href="interop.tree#AccessInvitationTree">interopt:AccessInvitati
     <tbody>
      <tr>
       <td colspan="2"> This operation takes a validated <a data-link-type="dfn">Access Grant</a> <code>GRANT</code> associated with a given <a data-link-type="dfn">Access Grant Subject</a> and
-      applies the permissions accordingly based on the <a data-link-type="dfn">Data Grants</a>, <a data-link-type="dfn">Remote Data Grants</a>, and/or <a data-link-type="dfn">Trusted Grants</a> associated with the <a data-link-type="dfn">Access Grant</a>. It applies to both new and updated <a data-link-type="dfn">Access Grants</a>. 
+      applies the permissions accordingly based on the <a data-link-type="dfn">Data Grants</a> and/or <a data-link-type="dfn">Trusted Grants</a> associated with the <a data-link-type="dfn">Access Grant</a>. It applies to both new and updated <a data-link-type="dfn">Access Grants</a>. 
     <thead>
      <tr>
       <th colspan="2">Inputs
@@ -2449,16 +2308,14 @@ the assigned <a href="interop.tree#AccessInvitationTree">interopt:AccessInvitati
    <div class="opdetails">
     <ol>
      <li data-md>
-      <p>Call <a href="#apply-data-permissions">§ 5.13 Apply Data Permissions</a> with inputs: <code>GRANT</code></p>
+      <p>Call <a href="#apply-data-permissions">§ 5.12 Apply Data Permissions</a> with inputs: <code>GRANT</code></p>
      <li data-md>
-      <p>Call <a href="#apply-remote-data-permissions">§ 5.16 Apply Remote Data Permissions</a> with inputs: <code>GRANT</code></p>
-     <li data-md>
-      <p>Call <a href="#apply-trusted-permissions">§ 5.18 Apply Trusted Permissions</a> with inputs: <code>GRANT</code></p>
+      <p>Call <a href="#apply-trusted-permissions">§ 5.15 Apply Trusted Permissions</a> with inputs: <code>GRANT</code></p>
      <li data-md>
       <p>Return <code>GRANT</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.13" id="apply-data-permissions"><span class="secno">5.13. </span><span class="content">Apply Data Permissions</span><a class="self-link" href="#apply-data-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.12" id="apply-data-permissions"><span class="secno">5.12. </span><span class="content">Apply Data Permissions</span><a class="self-link" href="#apply-data-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2478,7 +2335,7 @@ the assigned <a href="interop.tree#AccessInvitationTree">interopt:AccessInvitati
       set of <a data-link-type="dfn">Data Registrations</a> affected by <code>GRANT</code>, and each key
       has an array of related <a data-link-type="dfn">Data Grants</a> and <a data-link-type="dfn">Referenced Data Grants</a> as its value.</p>
        <p>Each <a data-link-type="dfn">Data Registration</a> and the array of grants that affect it
-      are then passed to <a href="#apply-data-registration-permissions">§ 5.14 Apply Data Registration Permissions</a>.</p>
+      are then passed to <a href="#apply-data-registration-permissions">§ 5.13 Apply Data Registration Permissions</a>.</p>
        <figure id="fig-drhash"> <img src="diagrams/apply-data-permissions-drhash.svg" width="100%/"> </figure>
     <thead>
      <tr>
@@ -2520,13 +2377,13 @@ the value is an array of <a data-link-type="dfn">Data Grants</a> and/or <a data-
       <p>For each <a data-link-type="dfn">Data Registration</a> <code>DR</code> in <code>DRHASH</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#apply-data-registration-permissions">§ 5.14 Apply Data Registration Permissions</a> with inputs: <code>DR</code>, <code>DRHASH[DR]</code>, <code>GRANT</code></p>
+        <p>Call <a href="#apply-data-registration-permissions">§ 5.13 Apply Data Registration Permissions</a> with inputs: <code>DR</code>, <code>DRHASH[DR]</code>, <code>GRANT</code></p>
       </ol>
      <li data-md>
       <p>Return <code>GRANT</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.14" id="apply-data-registration-permissions"><span class="secno">5.14. </span><span class="content">Apply Data Registration Permissions</span><a class="self-link" href="#apply-data-registration-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.13" id="apply-data-registration-permissions"><span class="secno">5.13. </span><span class="content">Apply Data Registration Permissions</span><a class="self-link" href="#apply-data-registration-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2582,12 +2439,12 @@ the value is an array of <a data-link-type="dfn">Data Grants</a> and/or <a data-
      <li data-md>
       <p>Let <code>SUBJECT</code> be the <a data-link-type="dfn">Access Grant Subject</a> linked via <code>GRANT hasAccessGrantSubject</code></p>
      <li data-md>
-      <p>Call <a href="#remove-resource-permissions">§ 5.21 Remove Resource Permissions</a> with inputs: <code>DR</code>, <code>SUBJECT</code></p>
+      <p>Call <a href="#remove-resource-permissions">§ 5.18 Remove Resource Permissions</a> with inputs: <code>DR</code>, <code>SUBJECT</code></p>
      <li data-md>
       <p>For each <a data-link-type="dfn">Data Instance</a> <code>DI</code> linked via <code>DR ldp:hasMember</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#remove-resource-permissions">§ 5.21 Remove Resource Permissions</a> with inputs: <code>DI</code>, <code>SUBJECT</code></p>
+        <p>Call <a href="#remove-resource-permissions">§ 5.18 Remove Resource Permissions</a> with inputs: <code>DI</code>, <code>SUBJECT</code></p>
       </ol>
      <li data-md>
       <p>Let <code>SCOPEHASH</code> be a hash map with keys: <code>interop:AllInstances</code>, <code>interop:SelectedInstances</code>, <code>interop:InheritInstances</code>, <code>interop:NoAccess</code></p>
@@ -2644,7 +2501,7 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
       <p>If <code>SCOPEHASH[interop:AllInstances]</code> is not empty</p>
       <ol>
        <li data-md>
-        <p>Call <a href="#apply-resource-permissions">§ 5.19 Apply Resource Permissions</a> with inputs: <code>DR</code>, <code>SUBJECT</code>, <code>MODES</code></p>
+        <p>Call <a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> with inputs: <code>DR</code>, <code>SUBJECT</code>, <code>MODES</code></p>
       </ol>
      <li data-md>
       <p>If <code>SCOPEHASH[interop:InheritInstances]</code> is not empty</p>
@@ -2653,11 +2510,11 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
         <p>For each <a data-link-type="dfn">Data Instance</a> <code>DI</code> in <code>SCOPEHASH[interop:InheritInstances]</code></p>
        <li data-md>
         <p>Let <code>REF</code> be the <a data-link-type="dfn">Shape Tree Reference</a> from
-  calling <a href="#get-shape-tree-reference">§ 5.15 Get Shape Tree Reference</a> with inputs: <code>DR registeredShapeTree</code>, <code>DI registeredShapeTree</code></p>
+  calling <a href="#get-shape-tree-reference">§ 5.14 Get Shape Tree Reference</a> with inputs: <code>DR registeredShapeTree</code>, <code>DI registeredShapeTree</code></p>
        <li data-md>
         <p>Let <code>PRED</code> be the rdf:Property extracted from <code>REF traverseViaShapePath</code></p>
        <li data-md>
-        <p>Call <a href="#apply-conditional-permissions">§ 5.20 Apply Conditional Resource Permissions</a> with inputs: <code>DR</code>, <code>SUBJECT</code>, <code>MODES</code>, <code>DI</code>, <code>PRED</code>, <code>NULL</code></p>
+        <p>Call <a href="#apply-conditional-permissions">§ 5.17 Apply Conditional Resource Permissions</a> with inputs: <code>DR</code>, <code>SUBJECT</code>, <code>MODES</code>, <code>DI</code>, <code>PRED</code>, <code>NULL</code></p>
       </ol>
      <li data-md>
       <p>If <code>SCOPEHASH[interop:SelectedInstances]</code> is not empty</p>
@@ -2666,12 +2523,12 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
         <p>For each <a data-link-type="dfn">Data Instance</a> <code>DI</code> in <code>SCOPEHASH[interop:SelectedInstances]</code></p>
         <ol>
          <li data-md>
-          <p>Call <a href="#apply-resource-permissions">§ 5.19 Apply Resource Permissions</a> with inputs: <code>SCOPEHASH[interop:SelectedInstances][DI]</code>, <code>SUBJECT</code>, <code>MODES</code></p>
+          <p>Call <a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> with inputs: <code>SCOPEHASH[interop:SelectedInstances][DI]</code>, <code>SUBJECT</code>, <code>MODES</code></p>
         </ol>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.15" id="get-shape-tree-reference"><span class="secno">5.15. </span><span class="content">Get Shape Tree Reference</span><a class="self-link" href="#get-shape-tree-reference"></a></h3>
+   <h3 class="heading settled" data-level="5.14" id="get-shape-tree-reference"><span class="secno">5.14. </span><span class="content">Get Shape Tree Reference</span><a class="self-link" href="#get-shape-tree-reference"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2712,224 +2569,7 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
       <p>Error because no <a data-link-type="dfn">Shape Tree Reference</a> was found for <code>REFERENCED</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.16" id="apply-remote-data-permissions"><span class="secno">5.16. </span><span class="content">Apply Remote Data Permissions</span><a class="self-link" href="#apply-remote-data-permissions"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2">
-        This operation applies remote data permissions for a new or updated <a data-link-type="dfn">Access Grant</a>. 
-       <p>It iterates over each <a data-link-type="dfn">Remote Data Grant</a> linked via <code>GRANT hasRemoteDataGrant</code>,
-      including following any <a data-link-type="dfn">Referenced Remote Data Grants</a>.</p>
-       <p>All <a data-link-type="dfn">Remote Data Grants</a> and <a data-link-type="dfn">Referenced Remote Data Grants</a> are added to
-      a hash map <code>RDRHASH</code>. The key is the <a data-link-type="dfn">Remote Data Registration</a> associated
-      with each <a data-link-type="dfn">Remote Data Grant</a> or <a data-link-type="dfn">Referenced Remote Data Grant</a> via <code>hasRemoteDataRegistration</code>.</p>
-       <p>The end result is the keys of <code>RDRHASH</code> are a unique
-      set of <a data-link-type="dfn">Remote Data Registrations</a> affected by <code>GRANT</code>, and each key
-      has an array of related <a data-link-type="dfn">Remote Data Grants</a> and <a data-link-type="dfn">Referenced Remote Data Grants</a> as its value.</p>
-       <p>Each <a data-link-type="dfn">Remote Data Registration</a> and the array of grants that affect it
-      are then passed to <a href="#apply-remote-data-registration-permissions">§ 5.17 Apply Remote Data Registration Permissions</a>.</p>
-       <figure id="fig-remote-data-rdrhash"> <img src="diagrams/apply-remote-data-permissions-rdrhash.svg" width="100%/"> </figure>
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>GRANT</code>
-      <td><a data-link-type="dfn">Access Grant</a> to apply permissions for
-    <thead>
-     <tr>
-      <th colspan="2">Outputs
-    <tbody>
-     <tr>
-      <td><a data-link-type="dfn">Access Grant</a>
-      <td>That has had the relevant permissions applied
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>RDRHASH</code> be an empty hash map where a <a data-link-type="dfn">Remote Data Registration</a> is key and
-the value is an array of <a data-link-type="dfn">Remote Data Grants</a> and/or <a data-link-type="dfn">Referenced Remote Data Grants</a>.</p>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Remote Data Grant</a> <code>RDG</code> linked via <code>GRANT hasRemoteDataGrant</code></p>
-      <ol>
-       <li data-md>
-        <p>Let <code>RDRKEY</code> be <code>RDG hasRemoteDataRegistration</code> added or found in <code>RDRHASH</code></p>
-       <li data-md>
-        <p>Add <code>RDG</code> to the value array for <code>RDRKEY</code> if missing</p>
-       <li data-md>
-        <p>For each <a data-link-type="dfn">Referenced Remote Data Grant</a> <code>REFRDG</code> linked via <code>RDG hasReferencedRemoteDataGrant</code></p>
-        <ol>
-         <li data-md>
-          <p>Let <code>REFRDRKEY</code> be <code>REFRDG hasRemoteDataRegistration</code> added
-or found in <code>RDRHASH</code></p>
-         <li data-md>
-          <p>Add <code>REFRDG</code> to the array for <code>REFRDRKEY</code> if missing</p>
-        </ol>
-      </ol>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Remote Data Registration</a> <code>RDR</code> in <code>RDRHASH</code></p>
-      <ol>
-       <li data-md>
-        <p>Call <a href="#apply-remote-data-registration-permissions">§ 5.17 Apply Remote Data Registration Permissions</a> with inputs: <code>RDR</code>, <code>RDRHASH[RDR]</code>, <code>GRANT</code></p>
-      </ol>
-     <li data-md>
-      <p>Return <code>GRANT</code></p>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.17" id="apply-remote-data-registration-permissions"><span class="secno">5.17. </span><span class="content">Apply Remote Data Registration Permissions</span><a class="self-link" href="#apply-remote-data-registration-permissions"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2">
-       <p>This operation applies permissions for a given <a data-link-type="dfn">Remote Data Registration</a>,
-      based on the <a data-link-type="dfn">Remote Data Grants</a> that have been assigned to it
-      from the input <a data-link-type="dfn">Access Grant</a>.</p>
-       <p>Before assigning permissions, any existing permissions for the <a data-link-type="dfn">Access Grant Subject</a> are cleared. This operation does a full
-      scan for simplicity, but optimization is recommended.</p>
-       <p>All of the grants are iterated, and organized into a hash map
-      with data-specific <code>interop:scopeOfGrant</code> values as keys. Each <a data-link-type="dfn">Data Grant</a> or <a data-link-type="dfn">Referenced Data Grant</a> with that scope will
-      update the associated value.</p>
-       <ul>
-        <li data-md>
-         <p><code>interop:AllRemote</code> - An array of <code>interop:accessMode</code> values</p>
-        <li data-md>
-         <p><code>interop:AllRemoteFromAgent</code> - A hash map with <a data-link-type="dfn">Remote Agent Data Registration</a> as key and an array of <code>interop:accessMode</code> values</p>
-        <li data-md>
-         <p><code>interop:SelectedRemote</code> - A hash map with <a data-link-type="dfn">Data Grant</a> or <a data-link-type="dfn">Referenced Data Grant</a> as key and an array of <code>interop:accessMode</code> values</p>
-        <li data-md>
-         <p><code>interop:NoAccess</code> - Boolean <code>true</code> or <code>false</code></p>
-       </ul>
-       <figure id="fig-remote-data-scopehash"> <img src="diagrams/apply-remote-data-permissions-scopehash.svg" width="100%/"> </figure>
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>RDR</code>
-      <td>A <a data-link-type="dfn">Remote Data Registration</a>
-     <tr>
-      <td><code>REMOTEGRANTS</code>
-      <td>An array of <a data-link-type="dfn">Remote Data Grants</a> and <a data-link-type="dfn">Referenced Remote Data Grants</a> associated with the <a data-link-type="dfn">Data Registration</a> in <code>GRANT</code>
-     <tr>
-      <td><code>GRANT</code>
-      <td><a data-link-type="dfn">Access Grant</a> that permissions are being applied for
-    <thead>
-     <tr>
-      <th colspan="2">Outputs
-    <tbody>
-     <tr>
-      <td><a data-link-type="dfn">Remote Data Registration</a>
-      <td>That has had the relevant permissions applied
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>SUBJECT</code> be the <a data-link-type="dfn">Access Grant Subject</a> linked via <code>GRANT hasAccessGrantSubject</code></p>
-     <li data-md>
-      <p>Call <a href="#remove-resource-permissions">§ 5.21 Remove Resource Permissions</a> with inputs: <code>RDR</code>, <code>SUBJECT</code></p>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Remote Agent Data Registration</a> <code>RADR</code> linked via <code>RDR hasRemoteAgentDataRegistration</code></p>
-      <ol>
-       <li data-md>
-        <p>Call <a href="#remove-resource-permissions">§ 5.21 Remove Resource Permissions</a> with inputs: <code>RADR</code>, <code>SUBJECT</code></p>
-       <li data-md>
-        <p>For each <a data-link-type="dfn">Data Grant</a> or <a data-link-type="dfn">Referenced Data Grant</a> <code>DATAGRANT</code> linked
-via <code>RADR satisfiesDataGrant</code></p>
-        <ol>
-         <li data-md>
-          <p>Call <a href="#remove-resource-permissions">§ 5.21 Remove Resource Permissions</a> with inputs: <code>DATAGRANT</code>, <code>SUBJECT</code></p>
-        </ol>
-      </ol>
-     <li data-md>
-      <p>Let <code>SCOPEHASH</code> be a hash map with keys: <code>interop:AllRemote</code>, <code>interop:AllRemoteFromAgent</code>, <code>interop:SelectedRemote</code>, <code>interop:NoAccess</code></p>
-     <li data-md>
-      <p>Let <code>SCOPEHASH[interop:AllRemoteFromAgent]</code> be an empty hash map where <a data-link-type="dfn">Remote Agent Data Registrations</a> are keys with an array of <code>interop:AccessMode</code>s as values</p>
-     <li data-md>
-      <p>Let <code>SCOPEHASH[interop:SelectedRemote]</code> be an empty hash map where
-selected <a data-link-type="dfn">Data Grants</a> or <a data-link-type="dfn">Referenced Data Grants</a> are keys with an array of <code>interop:AccessMode</code>s as values</p>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Remote Data Grant</a> or <a data-link-type="dfn">Referenced Remote Data Grant</a> <code>REMOTEGRANT</code> in <code>REMOTEGRANTS</code></p>
-      <ol>
-       <li data-md>
-        <p>If <code>REMOTEGRANT scopeOfGrant</code> is <code>interop:AllRemote</code></p>
-        <ol>
-         <li data-md>
-          <p>Let <code>SCOPEHASH[interop:AllRemote]</code> value be a union of current <code>interop:accessMode</code>s and <code>REMOTEGRANT accessMode</code>s</p>
-        </ol>
-       <li data-md>
-        <p>If <code>REMOTEGRANT scopeOfGrant</code> is <code>interop:NoAccess</code></p>
-        <ol>
-         <li data-md>
-          <p>Let <code>SCOPEHASH[interop:NoAccess]</code> value be <code>true</code></p>
-        </ol>
-       <li data-md>
-        <p>If <code>REMOTEGRANT scopeOfGrant</code> is <code>interop:AllRemoteFromAgent</code></p>
-        <ol>
-         <li data-md>
-          <p>For each <a data-link-type="dfn">Remote Agent Data Registration</a> <code>RADR</code> linked via <code>REMOTEGRANT hasRemoteAgentDataRegistration</code></p>
-          <ol>
-           <li data-md>
-            <p>Let <code>RADRKEY</code> be <a data-link-type="dfn">Remote Agent Data Registration</a> <code>RADR</code> added or
-found in <code>SCOPEHASH[interop:AllRemoteFromAgent][RADR]</code></p>
-           <li data-md>
-            <p>Let <code>SCOPEHASH[interop:AllRemoteFromAgent][RADR]</code> value be
-a union of current <code>interop:accessMode</code>s and <code>REMOTEGRANT accessMode</code>s</p>
-          </ol>
-        </ol>
-       <li data-md>
-        <p>If <code>REMOTEGRANT scopeOfGrant</code> is <code>interop:SelectedRemote</code></p>
-        <ol>
-         <li data-md>
-          <p>For each <a data-link-type="dfn">Data Grant</a> or <a data-link-type="dfn">Referenced Data Grant</a> <code>DATAGRANT</code> linked via <code>REMOTEGRANT hasDataGrant</code> or <code>REMOTEGRANT hasReferencedDataGrant</code></p>
-          <ol>
-           <li data-md>
-            <p>Let <code>GRANTKEY</code> be <code>DATAGRANT</code> added or
-found in <code>SCOPEHASH[interop:SelectedRemote][DATAGRANT]</code></p>
-           <li data-md>
-            <p>Let <code>SCOPEHASH[interop:SelectedRemote][DATAGRANT]</code> value be
-a union of current <code>interop:accessMode</code>s and <code>REMOTEGRANT accessMode</code>s</p>
-          </ol>
-        </ol>
-      </ol>
-     <li data-md>
-      <p>If <code>SCOPEHASH[interop:AllRemote]</code> is not empty</p>
-      <ol>
-       <li data-md>
-        <p>Call <a href="#apply-resource-permissions">§ 5.19 Apply Resource Permissions</a> with inputs: <code>RDR</code>, <code>SUBJECT</code>, <code>MODES</code></p>
-      </ol>
-     <li data-md>
-      <p>If <code>SCOPEHASH[interop:AllRemoteFromAgent]</code> is not empty</p>
-      <ol>
-       <li data-md>
-        <p>For each <a data-link-type="dfn">Remote Agent Data Registration</a> <code>RADR</code> in <code>SCOPEHASH[interop:AllRemoteFromAgent]</code></p>
-        <ol>
-         <li data-md>
-          <p>Call <a href="#apply-resource-permissions">§ 5.19 Apply Resource Permissions</a> with inputs: <code>SCOPEHASH[interop:AllRemoteFromAgent][RADR]</code>, <code>SUBJECT</code>, <code>MODES</code></p>
-        </ol>
-      </ol>
-     <li data-md>
-      <p>If <code>SCOPEHASH[interop:SelectedRemote]</code> is not empty</p>
-      <ol>
-       <li data-md>
-        <p>For each <a data-link-type="dfn">Data Grant</a> or <a data-link-type="dfn">Referenced Data Grant</a> <code>DATAGRANT</code> in <code>SCOPEHASH[interop:SelectedRemote]</code></p>
-        <ol>
-         <li data-md>
-          <p>Call <a href="#apply-resource-permissions">§ 5.19 Apply Resource Permissions</a> with inputs: <code>SCOPEHASH[interop:SelectedRemote][DATAGRANT]</code>, <code>SUBJECT</code>, <code>MODES</code></p>
-        </ol>
-      </ol>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.18" id="apply-trusted-permissions"><span class="secno">5.18. </span><span class="content">Apply Trusted Permissions</span><a class="self-link" href="#apply-trusted-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.15" id="apply-trusted-permissions"><span class="secno">5.15. </span><span class="content">Apply Trusted Permissions</span><a class="self-link" href="#apply-trusted-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2973,7 +2613,7 @@ a union of current <code>interop:accessMode</code>s and <code>REMOTEGRANT access
          <li data-md>
           <p>Let <code>PROFILE</code> be <code>TGRANT trustedWith</code></p>
          <li data-md>
-          <p>Call <a href="#apply-resource-permissions">§ 5.19 Apply Resource Permissions</a> with inputs: <code>PROFILE</code>, <code>SUBJECT</code>, <code>MODES</code></p>
+          <p>Call <a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> with inputs: <code>PROFILE</code>, <code>SUBJECT</code>, <code>MODES</code></p>
         </ol>
        <li data-md>
         <p>If <code>TGRANT trustedWithType</code> is <code>interop:RegistrySet</code></p>
@@ -2983,12 +2623,12 @@ a union of current <code>interop:accessMode</code>s and <code>REMOTEGRANT access
          <li data-md>
           <p>Let <code>REGISTRIES</code> be the <a data-link-type="dfn">Registries</a> linked via <code>SET hasRegistry</code></p>
          <li data-md>
-          <p>Call <a href="#apply-resource-permissions">§ 5.19 Apply Resource Permissions</a> with inputs: <code>SET</code>, <code>SUBJECT</code>, <code>MODES</code></p>
+          <p>Call <a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> with inputs: <code>SET</code>, <code>SUBJECT</code>, <code>MODES</code></p>
          <li data-md>
           <p>For each <a data-link-type="dfn">Registry</a> <code>REGISTRY</code> in <code>REGISTRIES</code></p>
           <ol>
            <li data-md>
-            <p>Call <a href="#apply-resource-permissions">§ 5.19 Apply Resource Permissions</a> with inputs: <code>REGISTRY</code>, <code>SUBJECT</code>, <code>MODES</code></p>
+            <p>Call <a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> with inputs: <code>REGISTRY</code>, <code>SUBJECT</code>, <code>MODES</code></p>
           </ol>
         </ol>
        <li data-md>
@@ -2997,12 +2637,12 @@ a union of current <code>interop:accessMode</code>s and <code>REMOTEGRANT access
          <li data-md>
           <p>Let <code>REGISTRY</code> be <code>TGRANT trustedWith</code></p>
          <li data-md>
-          <p>Call <a href="#apply-resource-permissions">§ 5.19 Apply Resource Permissions</a> with inputs: <code>REGISTRY</code>, <code>SUBJECT</code>, <code>MODES</code></p>
+          <p>Call <a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> with inputs: <code>REGISTRY</code>, <code>SUBJECT</code>, <code>MODES</code></p>
         </ol>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.19" id="apply-resource-permissions"><span class="secno">5.19. </span><span class="content">Apply Resource Permissions</span><a class="self-link" href="#apply-resource-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.16" id="apply-resource-permissions"><span class="secno">5.16. </span><span class="content">Apply Resource Permissions</span><a class="self-link" href="#apply-resource-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3038,7 +2678,7 @@ a union of current <code>interop:accessMode</code>s and <code>REMOTEGRANT access
    <div class="opdetails">
     <ol>
      <li data-md>
-      <p>Call <a href="#remove-resource-permissions">§ 5.21 Remove Resource Permissions</a> with inputs: <code>RESOURCE</code>, <code>SUBJECT</code></p>
+      <p>Call <a href="#remove-resource-permissions">§ 5.18 Remove Resource Permissions</a> with inputs: <code>RESOURCE</code>, <code>SUBJECT</code></p>
      <li data-md>
       <p>Add a new <a data-link-type="dfn">Authorization Statement</a> <code>NEWSTATEMENT</code> to <code>ACL</code></p>
      <li data-md>
@@ -3053,7 +2693,7 @@ a union of current <code>interop:accessMode</code>s and <code>REMOTEGRANT access
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.20" id="apply-conditional-permissions"><span class="secno">5.20. </span><span class="content">Apply Conditional Resource Permissions</span><a class="self-link" href="#apply-conditional-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.17" id="apply-conditional-permissions"><span class="secno">5.17. </span><span class="content">Apply Conditional Resource Permissions</span><a class="self-link" href="#apply-conditional-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3105,7 +2745,7 @@ the subject identifier could? vary</p>
    <div class="opdetails">
     <ol>
      <li data-md>
-      <p>Call <a href="#remove-resource-permissions">§ 5.21 Remove Resource Permissions</a> with inputs: <code>RESOURCE</code>, <code>SUBJECT</code></p>
+      <p>Call <a href="#remove-resource-permissions">§ 5.18 Remove Resource Permissions</a> with inputs: <code>RESOURCE</code>, <code>SUBJECT</code></p>
      <li data-md>
       <p>Add a new <a data-link-type="dfn">Authorization Statement</a> <code>NEWSTATEMENT</code> to <code>ACL</code></p>
      <li data-md>
@@ -3124,7 +2764,7 @@ subject: <code>CONDSUB</code>, predicate: <code>CONDPRED</code>, object: <code>C
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.21" id="remove-resource-permissions"><span class="secno">5.21. </span><span class="content">Remove Resource Permissions</span><a class="self-link" href="#remove-resource-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.18" id="remove-resource-permissions"><span class="secno">5.18. </span><span class="content">Remove Resource Permissions</span><a class="self-link" href="#remove-resource-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3169,7 +2809,7 @@ associated with <code>SUBJECT</code>.</p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.22" id="deny-access-need-group"><span class="secno">5.22. </span><span class="content">Deny Access Need Group</span><a class="self-link" href="#deny-access-need-group"></a></h3>
+   <h3 class="heading settled" data-level="5.19" id="deny-access-need-group"><span class="secno">5.19. </span><span class="content">Deny Access Need Group</span><a class="self-link" href="#deny-access-need-group"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3197,19 +2837,17 @@ associated with <code>SUBJECT</code>.</p>
       <p>For each <a data-link-type="dfn">Access Need</a> <code>NEED</code> in <code>GROUP</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#deny-data-grant">§ 5.23 Deny Data Grant</a> with inputs: <code>NEED hasDataGrant</code>, <code>GRANT</code></p>
-       <li data-md>
-        <p>Call <a href="#deny-remote-data-grant">§ 5.36 Deny Remote Data Grant</a> with inputs: <code>NEED hasRemoteDataGrant</code>, <code>GRANT</code></p>
+        <p>Call <a href="#deny-data-grant">§ 5.20 Deny Data Grant</a> with inputs: <code>NEED hasDataGrant</code>, <code>GRANT</code></p>
       </ol>
      <li data-md>
       <p>For each <a data-link-type="dfn">Trusted Need</a> <code>TNEED</code> in <code>GROUP</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#deny-trusted-grant">§ 5.40 Deny Trusted Grant</a> with inputs: <code>NEED hasTrustedGrant</code>, <code>GRANT</code></p>
+        <p>Call <a href="#deny-trusted-grant">§ 5.29 Deny Trusted Grant</a> with inputs: <code>NEED hasTrustedGrant</code>, <code>GRANT</code></p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.23" id="deny-data-grant"><span class="secno">5.23. </span><span class="content">Deny Data Grant</span><a class="self-link" href="#deny-data-grant"></a></h3>
+   <h3 class="heading settled" data-level="5.20" id="deny-data-grant"><span class="secno">5.20. </span><span class="content">Deny Data Grant</span><a class="self-link" href="#deny-data-grant"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3238,11 +2876,11 @@ associated with <code>SUBJECT</code>.</p>
       <p>For each <a data-link-type="dfn">Referenced Data Grant</a> <code>REFDG</code> linked via <code>DG hasReferencedDataGrant</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#deny-referenced-data-grant">§ 5.24 Deny Referenced Data Grant</a> with inputs: <code>REFDG</code>, <code>DG</code></p>
+        <p>Call <a href="#deny-referenced-data-grant">§ 5.21 Deny Referenced Data Grant</a> with inputs: <code>REFDG</code>, <code>DG</code></p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.24" id="deny-referenced-data-grant"><span class="secno">5.24. </span><span class="content">Deny Referenced Data Grant</span><a class="self-link" href="#deny-referenced-data-grant"></a></h3>
+   <h3 class="heading settled" data-level="5.21" id="deny-referenced-data-grant"><span class="secno">5.21. </span><span class="content">Deny Referenced Data Grant</span><a class="self-link" href="#deny-referenced-data-grant"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3269,7 +2907,7 @@ associated with <code>SUBJECT</code>.</p>
       <p>Let <code>REFDG scopeOfGrant</code> be <code>interop:NoAccess</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.25" id="select-all-data-instances"><span class="secno">5.25. </span><span class="content">Select All Data Instances</span><a class="self-link" href="#select-all-data-instances"></a></h3>
+   <h3 class="heading settled" data-level="5.22" id="select-all-data-instances"><span class="secno">5.22. </span><span class="content">Select All Data Instances</span><a class="self-link" href="#select-all-data-instances"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3300,11 +2938,11 @@ associated with <code>SUBJECT</code>.</p>
       <p>For each <a data-link-type="dfn">Referenced Data Grant</a> <code>REFDG</code> linked via <code>DG hasReferencedDataGrant</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#select-all-referenced-data-instances">§ 5.26 Select All Referenced Data Instances</a> with inputs: <code>REFDG</code></p>
+        <p>Call <a href="#select-all-referenced-data-instances">§ 5.23 Select All Referenced Data Instances</a> with inputs: <code>REFDG</code></p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.26" id="select-all-referenced-data-instances"><span class="secno">5.26. </span><span class="content">Select All Referenced Data Instances</span><a class="self-link" href="#select-all-referenced-data-instances"></a></h3>
+   <h3 class="heading settled" data-level="5.23" id="select-all-referenced-data-instances"><span class="secno">5.23. </span><span class="content">Select All Referenced Data Instances</span><a class="self-link" href="#select-all-referenced-data-instances"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3330,7 +2968,7 @@ associated with <code>SUBJECT</code>.</p>
       <p>Remove all links for <code>REFDG hasDataInstance</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.27" id="select-data-instance"><span class="secno">5.27. </span><span class="content">Select Specific Data Instance</span><a class="self-link" href="#select-data-instance"></a></h3>
+   <h3 class="heading settled" data-level="5.24" id="select-data-instance"><span class="secno">5.24. </span><span class="content">Select Specific Data Instance</span><a class="self-link" href="#select-data-instance"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3365,11 +3003,11 @@ associated with <code>SUBJECT</code>.</p>
       <p>For each <a data-link-type="dfn">Referenced Data Grant</a> <code>REFDG</code> linked via <code>DG hasReferencedDataGrant</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#select-inherited-referenced-data-instance">§ 5.28 Select Inherited Referenced Data Instance</a> with inputs: <code>REFDG</code>, <code>DG</code></p>
+        <p>Call <a href="#select-inherited-referenced-data-instance">§ 5.25 Select Inherited Referenced Data Instance</a> with inputs: <code>REFDG</code>, <code>DG</code></p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.28" id="select-inherited-referenced-data-instance"><span class="secno">5.28. </span><span class="content">Select Inherited Referenced Data Instance</span><a class="self-link" href="#select-inherited-referenced-data-instance"></a></h3>
+   <h3 class="heading settled" data-level="5.25" id="select-inherited-referenced-data-instance"><span class="secno">5.25. </span><span class="content">Select Inherited Referenced Data Instance</span><a class="self-link" href="#select-inherited-referenced-data-instance"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3398,7 +3036,7 @@ associated with <code>SUBJECT</code>.</p>
       <p>Remove all links via <code>REFDG hasDataInstance</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.29" id="select-referenced-data-instance"><span class="secno">5.29. </span><span class="content">Select Specific Referenced Data Instance</span><a class="self-link" href="#select-referenced-data-instance"></a></h3>
+   <h3 class="heading settled" data-level="5.26" id="select-referenced-data-instance"><span class="secno">5.26. </span><span class="content">Select Specific Referenced Data Instance</span><a class="self-link" href="#select-referenced-data-instance"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3431,304 +3069,7 @@ associated with <code>SUBJECT</code>.</p>
     </ol>
    </div>
    <p></p>
-   <h3 class="heading settled" data-level="5.30" id="select-all-remote"><span class="secno">5.30. </span><span class="content">Select All Remote Instances</span><a class="self-link" href="#select-all-remote"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> Used to select all received <a data-link-type="dfn">Data Grants</a> and <a data-link-type="dfn">Referenced Data Grants</a> across all <a data-link-type="dfn">Remote Agent Data Registrations</a> for a given <a data-link-type="dfn">Remote Data Grant</a>. 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>RDG</code>
-      <td>The <a data-link-type="dfn">Remote Data Grant</a>
-     <tr>
-      <td><code>GRANT</code>
-      <td>The <a data-link-type="dfn">Access Grant</a> that <code>RDG</code> is associated with
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>RDG scopeOfGrant</code> be <code>interop:AllRemote</code></p>
-     <li data-md>
-      <p>Remove all links for <code>RDG hasRemoteDataFromAgent</code></p>
-     <li data-md>
-      <p>Remove all links for <code>RDG hasDataGrant</code></p>
-     <li data-md>
-      <p>Remove all links for <code>RDG hasReferencedDataGrant</code></p>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Referenced Remote Data Grant</a> <code>REFRDG</code> linked via <code>RDG hasReferencedRemoteDataGrant</code></p>
-      <ol>
-       <li data-md>
-        <p>Call <a href="#select-all-referenced-remote">§ 5.31 Select All Referenced Remote Instances</a> with inputs: <code>REFRDG</code>, <code>RDG</code></p>
-      </ol>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.31" id="select-all-referenced-remote"><span class="secno">5.31. </span><span class="content">Select All Referenced Remote Instances</span><a class="self-link" href="#select-all-referenced-remote"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> Used to select all received <a data-link-type="dfn">Data Grants</a> and <a data-link-type="dfn">Referenced Data Grants</a> across all <a data-link-type="dfn">Remote Agent Data Registrations</a> for a given <a data-link-type="dfn">Referenced Remote Data Grant</a>. 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>REFRDG</code>
-      <td>The <a data-link-type="dfn">Referenced Remote Data Grant</a>
-     <tr>
-      <td><code>RDG</code>
-      <td>The <a data-link-type="dfn">Remote Data Grant</a> that <code>REFRDG</code> is associated with
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>REFRDG scopeOfGrant</code> be <code>interop:AllRemote</code></p>
-     <li data-md>
-      <p>Remove all links for <code>REFDG hasRemoteDataFromAgent</code></p>
-     <li data-md>
-      <p>Remove all links for <code>REFDG hasDataGrant</code></p>
-     <li data-md>
-      <p>Remove all links for <code>REFDG hasReferencedDataGrant</code></p>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.32" id="select-all-remote-fromagent"><span class="secno">5.32. </span><span class="content">Select All Remote From Agent</span><a class="self-link" href="#select-all-remote-fromagent"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> Used to select all received <a data-link-type="dfn">Data Grants</a> and <a data-link-type="dfn">Referenced Data Grants</a> associated with a given <a data-link-type="dfn">Remote Agent Data Registration</a> as part of
-      a specific <a data-link-type="dfn">Remote Data Grant</a>. 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>RADR</code>
-      <td>The selected <a data-link-type="dfn">Remote Agent Data Registration</a>
-     <tr>
-      <td><code>RDG</code>
-      <td>The <a data-link-type="dfn">Remote Data Grant</a>
-     <tr>
-      <td><code>GRANT</code>
-      <td>The <a data-link-type="dfn">Access Grant</a> that <code>RDG</code> is associated with
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>RDG scopeOfGrant</code> be <code>interop:AllRemoteFromAgent</code></p>
-     <li data-md>
-      <p>Remove all links for <code>RDG hasDataGrant</code></p>
-     <li data-md>
-      <p>Remove all links for <code>RDG hasReferencedDataGrant</code></p>
-     <li data-md>
-      <p>Let <code>RDG hasRemoteDataFromAgent</code> be linked to one unique instance of <code>RADR</code></p>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Referenced Remote Data Grant</a> <code>REFRDG</code> linked via <code>RDG hasReferencedRemoteDataGrant</code></p>
-      <ol>
-       <li data-md>
-        <p>Call <a href="#select-referenced-remote-fromagent">§ 5.33 Select All Referenced Remote From Agent</a> with inputs: <code>RADR</code>, <code>REFRDG</code></p>
-      </ol>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.33" id="select-referenced-remote-fromagent"><span class="secno">5.33. </span><span class="content">Select All Referenced Remote From Agent</span><a class="self-link" href="#select-referenced-remote-fromagent"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> Used to select all received <a data-link-type="dfn">Data Grants</a> and <a data-link-type="dfn">Referenced Data Grants</a> associated with a given <a data-link-type="dfn">Remote Agent Data Registration</a> as part of
-      a specific <a data-link-type="dfn">Referenced Remote Data Grant</a>. 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>RADR</code>
-      <td>The selected <a data-link-type="dfn">Remote Agent Data Registration</a>
-     <tr>
-      <td><code>REFRDG</code>
-      <td>The <a data-link-type="dfn">Referenced Remote Data Grant</a>
-     <tr>
-      <td><code>RDG</code>
-      <td>The <a data-link-type="dfn">Remote Data Grant</a> that <code>REFRDG</code> is associated with
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>REFRDG scopeOfGrant</code> be <code>interop:AllRemoteFromAgent</code></p>
-     <li data-md>
-      <p>Remove all links for <code>REFRDG hasDataGrant</code></p>
-     <li data-md>
-      <p>Remove all links for <code>REFRDG hasReferencedDataGrant</code></p>
-     <li data-md>
-      <p>Let <code>REFRDG hasRemoteDataFromAgent</code> be linked to one unique instance of <code>RADR</code></p>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.34" id="select-remote-agent-data-grants"><span class="secno">5.34. </span><span class="content">Select Specific Remote Agent Data Grants</span><a class="self-link" href="#select-remote-agent-data-grants"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> Used to select specific <a data-link-type="dfn">Data Grants</a> and <a data-link-type="dfn">Referenced Data Grants</a> associated with a given <a data-link-type="dfn">Remote Agent Data Registration</a> as part of
-      a specific <a data-link-type="dfn">Remote Data Grant</a>.
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>DATAGRANT</code>
-      <td>A <a data-link-type="dfn">Data Grant</a> or <a data-link-type="dfn">Referenced Data Grant</a> selected for access
-     <tr>
-      <td><code>RDG</code>
-      <td>The <a data-link-type="dfn">Remote Data Grant</a> that <code>DATAGRANT</code> is associated with
-     <tr>
-      <td><code>GRANT</code>
-      <td>The <a data-link-type="dfn">Access Grant</a> that <code>RDG</code> is associated with
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>RDG scopeOfGrant</code> be <code>interop:SelectedRemote</code></p>
-     <li data-md>
-      <p>Remove all links for <code>RDG hasRemoteDataFromAgent</code></p>
-     <li data-md>
-      <p>If <code>DATAGRANT</code> is a <a data-link-type="dfn">Data Grant</a></p>
-     <li data-md>
-      <p>Let <code>RDG hasDataGrant</code> be linked to <code>DATAGRANT</code></p>
-     <li data-md>
-      <p>If <code>DATAGRANT</code> is a <a data-link-type="dfn">Referenced Data Grant</a></p>
-     <li data-md>
-      <p>Let <code>RDG hasReferencedDataGrant</code> be linked to <code>DATAGRANT</code></p>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.35" id="select-referenced-remote-agent-data-grants"><span class="secno">5.35. </span><span class="content">Select Specific Referenced Remote Agent Data Instances</span><a class="self-link" href="#select-referenced-remote-agent-data-grants"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> Used to select specific <a data-link-type="dfn">Data Grants</a> and <a data-link-type="dfn">Referenced Data Grants</a> associated with a given <a data-link-type="dfn">Remote Agent Data Registration</a> as part of a
-      specific <a data-link-type="dfn">Referenced Remote Data Grant</a>.
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>DATAGRANT</code>
-      <td>A <a data-link-type="dfn">Data Grant</a> or <a data-link-type="dfn">Referenced Data Grant</a> selected for access
-     <tr>
-      <td><code>REFRDG</code>
-      <td>The <a data-link-type="dfn">Referenced Remote Data Grant</a> that <code>DATAGRANT</code> is associated with
-     <tr>
-      <td><code>RDG</code>
-      <td>The <a data-link-type="dfn">Remote Data Grant</a> that <code>REFRDG</code> is associated with
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>REFRDG scopeOfGrant</code> be <code>interop:SelectedRemote</code></p>
-     <li data-md>
-      <p>Remove all links for <code>REFRDG hasRemoteDataFromAgent</code></p>
-     <li data-md>
-      <p>If <code>DATAGRANT</code> is a <a data-link-type="dfn">Data Grant</a></p>
-     <li data-md>
-      <p>Let <code>REFRDG hasDataGrant</code> be linked to <code>DATAGRANT</code></p>
-     <li data-md>
-      <p>If <code>DATAGRANT</code> is a <a data-link-type="dfn">Referenced Data Grant</a></p>
-     <li data-md>
-      <p>Let <code>REFRDG hasReferencedDataGrant</code> be linked to <code>DATAGRANT</code></p>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.36" id="deny-remote-data-grant"><span class="secno">5.36. </span><span class="content">Deny Remote Data Grant</span><a class="self-link" href="#deny-remote-data-grant"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> This operation is used when a given <a data-link-type="dfn">Remote Data Grant</a> with
-      optional necessity has been denied. 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>RDG</code>
-      <td>A <a data-link-type="dfn">Remote Data Grant</a>
-     <tr>
-      <td><code>GRANT</code>
-      <td>An <a data-link-type="dfn">Access Grant</a>
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>RDG scopeOfGrant</code> be <code>interop:NoAccess</code></p>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Referenced Remote Data Grant</a> <code>REFRDG</code> linked via <code>RDG hasReferencedRemoteDataGrant</code></p>
-      <ol>
-       <li data-md>
-        <p>Call <a href="#deny-referenced-remote-data-grant">§ 5.37 Deny Referenced Remote Data Grant</a> with inputs: <code>REFRDG</code>, <code>GRANT</code></p>
-      </ol>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.37" id="deny-referenced-remote-data-grant"><span class="secno">5.37. </span><span class="content">Deny Referenced Remote Data Grant</span><a class="self-link" href="#deny-referenced-remote-data-grant"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> This operation is used when a given <a data-link-type="dfn">Referenced Remote Data Grant</a> with
-      optional necessity has been denied. 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>REFRDG</code>
-      <td>A <a data-link-type="dfn">Referenced Access Need</a>
-     <tr>
-      <td><code>GRANT</code>
-      <td>An <a data-link-type="dfn">Access Grant</a>
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>REFRDG scopeOfGrant</code> be <code>interop:NoAccess</code></p>
-    </ol>
-   </div>
-   <p></p>
-   <h3 class="heading settled" data-level="5.38" id="select-trusted-registry-set"><span class="secno">5.38. </span><span class="content">Select Trusted Registry Set</span><a class="self-link" href="#select-trusted-registry-set"></a></h3>
+   <h3 class="heading settled" data-level="5.27" id="select-trusted-registry-set"><span class="secno">5.27. </span><span class="content">Select Trusted Registry Set</span><a class="self-link" href="#select-trusted-registry-set"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3763,7 +3104,7 @@ associated with <code>SUBJECT</code>.</p>
       <p>Let <code>TG trustedWithType</code> be <code>SET rdf:type</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.39" id="select-trusted-registry"><span class="secno">5.39. </span><span class="content">Select Specific Trusted Registry</span><a class="self-link" href="#select-trusted-registry"></a></h3>
+   <h3 class="heading settled" data-level="5.28" id="select-trusted-registry"><span class="secno">5.28. </span><span class="content">Select Specific Trusted Registry</span><a class="self-link" href="#select-trusted-registry"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3798,7 +3139,7 @@ associated with <code>SUBJECT</code>.</p>
       <p>Let <code>TG trustedWithType</code> be <code>SET rdf:type</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.40" id="deny-trusted-grant"><span class="secno">5.40. </span><span class="content">Deny Trusted Grant</span><a class="self-link" href="#deny-trusted-grant"></a></h3>
+   <h3 class="heading settled" data-level="5.29" id="deny-trusted-grant"><span class="secno">5.29. </span><span class="content">Deny Trusted Grant</span><a class="self-link" href="#deny-trusted-grant"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3947,8 +3288,6 @@ inputs: <code>GRANT</code></p>
      <li data-md>
       <p>Let <code>RECEIPT hasTrustedGrant</code> be all <a data-link-type="dfn">Trusted Grants</a> linked via <code>GRANT hasTrustedGrant</code></p>
      <li data-md>
-      <p>Let <code>RECEIPT hasRemoteDataGrant</code> be all <a data-link-type="dfn">Remote Data Grants</a> linked via <code>GRANT hasRemoteDataGrant</code></p>
-     <li data-md>
       <p>Let <code>APPREG</code> be result of #appreg-loadappreg with
 inputs: <code>OWNER</code>, <code>APP</code></p>
       <ol>
@@ -4020,8 +3359,6 @@ inputs: <code>OWNER</code>, <code>APP</code></p>
      <li data-md>
       <p>Let <code>RECEIPT hasTrustedGrant</code> be all <a data-link-type="dfn">Trusted Grants</a> linked via <code>GRANT hasTrustedGrant</code></p>
      <li data-md>
-      <p>Let <code>RECEIPT hasRemoteDataGrant</code> be all <a data-link-type="dfn">Remote Data Grants</a> linked via <code>GRANT hasRemoteDataGrant</code></p>
-     <li data-md>
       <p>Post <code>RECEIPT</code> to <code>GRANTEE hasAccessInbox</code></p>
      <li data-md>
       <p>Return <code>RECEIPT</code></p>
@@ -4038,7 +3375,7 @@ inputs: <code>OWNER</code>, <code>APP</code></p>
      <tr>
       <td colspan="2">
        <p>This operation stores a new <a data-link-type="dfn">Access Receipt</a> in
-      an <a data-link-type="dfn">Access Grant Registry</a>, which in turn will update <a data-link-type="dfn">Remote Data Registries</a> to reflect the access granted in the <a data-link-type="dfn">Access Receipt</a>.</p>
+      an <a data-link-type="dfn">Access Grant Registry</a></p>
     <thead>
      <tr>
       <th colspan="2">Inputs
@@ -4055,7 +3392,7 @@ inputs: <code>OWNER</code>, <code>APP</code></p>
     <tbody>
      <tr>
       <td><a data-link-type="dfn">Access Receipt</a>
-      <td>Stored in <code>REGISTRY</code> with corresponding entries in the <a data-link-type="dfn">Remote Data Registry</a>
+      <td>Stored in <code>REGISTRY</code>
    </table>
    <div class="opdetails">
     <ol>
@@ -4077,7 +3414,7 @@ inputs: <code>RECEIPT fromAgent</code>, <code>REGISTRY</code></p>
         <p>Update <code>CURRENT</code> with <code>RECEIPT</code></p>
       </ol>
      <li data-md>
-      <p>Call <a href="https://solid.github.io/data-interoperability-panel/specification/#update-remote-data">Solid Application Interoperability § update-remote-data</a> with inputs: <code>RECEIPT</code>.</p>
+      <p>Update the Agent Registry with inputs: <code>RECEIPT</code>.</p>
      <li data-md>
       <p>Return <code>RECEIPT</code></p>
     </ol>
@@ -4120,357 +3457,6 @@ inputs: <code>RECEIPT fromAgent</code>, <code>REGISTRY</code></p>
        <li data-md>
         <p>return <code>RECEIPT</code> if <code>RECEIPT fromAgent</code> == <code>AGENT</code></p>
       </ol>
-    </ol>
-   </div>
-   <h2 class="heading settled" data-level="7" id="remote"><span class="secno">7. </span><span class="content">Remote Data Registration</span><a class="self-link" href="#remote"></a></h2>
-   <p>The following operations pertain to <a href="https://solid.github.io/data-interoperability-panel/specification/#remote">Remote Data</a> in the <a data-link-type="biblio" href="#biblio-sai">Solid Application Interoperability Specification</a>.</p>
-   <ul>
-    <li data-md>
-     <p><a href="#load-remote-data">§ 7.1 Load Remote Data Registration</a> - Lookup a <a data-link-type="dfn">Remote Data Registration</a> by <a data-link-type="dfn">shape tree</a></p>
-    <li data-md>
-     <p><a href="#create-remote-data">§ 7.2 Create Remote Data Registration</a> - Create a new <a data-link-type="dfn">Remote Data Registration</a></p>
-    <li data-md>
-     <p><a href="#update-remote-data">§ 7.3 Update Remote Data</a> - Updates a <a data-link-type="dfn">Remote Data Registry</a> based on the contents
-of an <a data-link-type="dfn">Access Receipt</a></p>
-    <li data-md>
-     <p><a href="#load-remote-agent-data">§ 7.4 Load Remote Agent Data Registration</a> - Lookup a <a data-link-type="dfn">Remote Agent Data Registration</a> by URI
-of the shared <a data-link-type="dfn">Data Registration</a></p>
-    <li data-md>
-     <p><a href="#create-remote-agent-data">§ 7.5 Create Remote Agent Data Registration</a> - Create a new <a data-link-type="dfn">Remote Agent Data Registration</a></p>
-    <li data-md>
-     <p><a href="#update-remote-agent-data">§ 7.6 Update Remote Agent Data Registration</a> - Update a specific <a data-link-type="dfn">Remote Agent Data Registration</a></p>
-   </ul>
-   <h3 class="heading settled" data-level="7.1" id="load-remote-data"><span class="secno">7.1. </span><span class="content">Load Remote Data Registration</span><a class="self-link" href="#load-remote-data"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> Lookup a <a data-link-type="dfn">Remote Data Registration</a> for a given <a data-link-type="dfn">shape tree</a> <code>TREE</code> in a <a data-link-type="dfn">Remote Data Registry</a> <code>REGISTRY</code> 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>TREE</code>
-      <td>The <a data-link-type="dfn">shape tree</a> for the <a data-link-type="dfn">Remote Data Registration</a>
-     <tr>
-      <td><code>REGISTRY</code>
-      <td>The <a data-link-type="dfn">Remote Data Registry</a> to search for a <a data-link-type="dfn">Remote Data Registration</a>
-    <thead>
-     <tr>
-      <th colspan="2">Outputs
-    <tbody>
-     <tr>
-      <td><a data-link-type="dfn">Remote Data Registration</a>
-      <td>Corresponding to <code>TREE</code> in <code>REGISTRY</code>
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Remote Data Registration</a> <code>RDR</code> in <code>REGISTRY</code> linked via <code>REGISTRY hasRemoteDataRegistration</code></p>
-      <ol>
-       <li data-md>
-        <p>return <code>RDR</code> if <code>RDR registeredShapeTree</code> == <code>TREE</code></p>
-      </ol>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="7.2" id="create-remote-data"><span class="secno">7.2. </span><span class="content">Create Remote Data Registration</span><a class="self-link" href="#create-remote-data"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> Create a <a data-link-type="dfn">Remote Data Registration</a> for a given <a data-link-type="dfn">shape tree</a> <code>TREE</code> in a <a data-link-type="dfn">Remote Data Registry</a> <code>REGISTRY</code> 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>TREE</code>
-      <td>The <a data-link-type="dfn">shape tree</a> for the <a data-link-type="dfn">Remote Data Registration</a>
-     <tr>
-      <td><code>REGISTRY</code>
-      <td>The <a data-link-type="dfn">Remote Data Registry</a> for the <a data-link-type="dfn">Remote Data Registration</a>
-    <thead>
-     <tr>
-      <th colspan="2">Outputs
-    <tbody>
-     <tr>
-      <td><a data-link-type="dfn">Remote Data Registration</a>
-      <td>Corresponding to <code>TREE</code> in <code>REGISTRY</code>
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>EXISTING</code> be a <a data-link-type="dfn">Remote Data Registration</a> returned by <a href="#load-remote-data">§ 7.1 Load Remote Data Registration</a> with inputs: <code>TREE</code>,<code>REGISTRY</code></p>
-      <ol>
-       <li data-md>
-        <p>Error if <code>EXISTING</code></p>
-      </ol>
-     <li data-md>
-      <p>Let <code>RDR</code> be an empty <a data-link-type="dfn">Remote Data Registration</a></p>
-     <li data-md>
-      <p>Let <code>RDR registeredBy</code> be the current <a data-link-type="dfn">Social Agent</a></p>
-     <li data-md>
-      <p>Let <code>RDR registeredWith</code> be the current <a data-link-type="dfn">Application</a></p>
-     <li data-md>
-      <p>Let <code>RDR registeredAt</code> be the current timestamp</p>
-     <li data-md>
-      <p>Let <code>RDR updatedAt</code> be the current timestamp</p>
-     <li data-md>
-      <p>Let <code>RDR registeredShapeTree</code> be <code>TREE</code></p>
-     <li data-md>
-      <p>PUT <code>RDR</code> into <code>REGISTRY</code> container</p>
-     <li data-md>
-      <p>Link <code>RDR</code> to <code>REGISTRY</code> via <code>REGISTRY hasRemoteDataRegistration</code></p>
-     <li data-md>
-      <p>Return <code>RDR</code></p>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="7.3" id="update-remote-data"><span class="secno">7.3. </span><span class="content">Update Remote Data</span><a class="self-link" href="#update-remote-data"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2">
-       <p>This operation updates a <a data-link-type="dfn">Remote Data Registry</a> <code>REGISTRY</code> based on
-      an input <a data-link-type="dfn">Access Receipt</a> <code>RECEIPT</code>.</p>
-       <p>It iterates over each <a data-link-type="dfn">Data Grant</a> linked via <code>RECEIPT hasDataGrant</code>,
-      including following any <a data-link-type="dfn">Referenced Data Grants</a>.</p>
-       <p>All <a data-link-type="dfn">Data Grants</a> and <a data-link-type="dfn">Referenced Data Grants</a> are added to
-      a hash map <code>DRHASH</code>. The key is the shared <a data-link-type="dfn">Data Registration</a> associated
-      with each <a data-link-type="dfn">Data Grant</a> or <a data-link-type="dfn">Referenced Data Grant</a> via <code>hasDataRegistration</code>.</p>
-       <p>The end result is the keys of <code>DRHASH</code> are a unique
-      set of <a data-link-type="dfn">Data Registrations</a> associated with <code>RECEIPT</code>, and each key
-      has an array of related <a data-link-type="dfn">Data Grants</a> and <a data-link-type="dfn">Referenced Data Grants</a> as its value.</p>
-       <p>Each <a data-link-type="dfn">Data Registration</a> and the array of grants that affect it
-      are then passed to <a href="#update-remote-agent-data">§ 7.6 Update Remote Agent Data Registration</a>.</p>
-       <figure id="fig-remote-drhash"> <img src="diagrams/apply-data-permissions-drhash.svg" width="100%/"> </figure>
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>RECEIPT</code>
-      <td>An <a data-link-type="dfn">Access Receipt</a> representing data shared with an <a data-link-type="dfn">Agent</a>
-     <tr>
-      <td><code>REGISTRY</code>
-      <td>A <a data-link-type="dfn">Remote Data Registry</a> for the <a data-link-type="dfn">Social Agent</a>
-    <thead>
-     <tr>
-      <th colspan="2">Outputs
-    <tbody>
-     <tr>
-      <td><a data-link-type="dfn">Access Receipt</a>
-      <td>Updated with remote data associations
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>DRHASH</code> be an empty hash map where a <a data-link-type="dfn">Data Registration</a> is key and
-the value is an array of <a data-link-type="dfn">Data Grants</a> and/or <a data-link-type="dfn">Referenced Data Grants</a>.</p>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Data Grant</a> <code>DG</code> linked via <code>RECEIPT hasDataGrant</code></p>
-      <ol>
-       <li data-md>
-        <p>Let <code>DRKEY</code> be <code>DG hasDataRegistration</code> added or found in <code>DRHASH</code></p>
-       <li data-md>
-        <p>Add <code>DG</code> to the value array for <code>DRKEY</code> if missing</p>
-       <li data-md>
-        <p>For each <a data-link-type="dfn">Referenced Data Grant</a> <code>REFDG</code> linked via <code>DG hasReferencedDataGrant</code></p>
-        <ol>
-         <li data-md>
-          <p>Let <code>REFDRKEY</code> be <code>REFDG hasDataRegistration</code> added or found in <code>DRHASH</code></p>
-         <li data-md>
-          <p>Add <code>REFDG</code> to the array for <code>REFDRKEY</code> if missing</p>
-        </ol>
-      </ol>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Data Registration</a> <code>DR</code> in <code>DRHASH</code></p>
-      <ol>
-       <li data-md>
-        <p>Call <a href="#update-remote-agent-data">§ 7.6 Update Remote Agent Data Registration</a> with inputs: <code>DR</code>, <code>DRHASH[DR]</code>, <code>RECEIPT</code></p>
-      </ol>
-     <li data-md>
-      <p>Return <code>RECEIPT</code></p>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="7.4" id="load-remote-agent-data"><span class="secno">7.4. </span><span class="content">Load Remote Agent Data Registration</span><a class="self-link" href="#load-remote-agent-data"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> Lookup a <a data-link-type="dfn">Remote Agent Data Registration</a> <code>RADREG</code> in a given <a data-link-type="dfn">Remote Data Registry</a> based on the URI of a 
-      shared <a data-link-type="dfn">Data Registration</a>. 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>DATAREG</code>
-      <td>A shared <a data-link-type="dfn">Data Registration</a> to lookup
-     <tr>
-      <td><code>REGISTRY</code>
-      <td>A <a data-link-type="dfn">Remote Data Registry</a> to search
-    <thead>
-     <tr>
-      <th colspan="2">Outputs
-    <tbody>
-     <tr>
-      <td><a data-link-type="dfn">Remote Agent Data Registration</a>
-      <td>Corresponding to <code>DATAREG</code> in <code>REGISTRY</code>
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Remote Data Registration</a> <code>RDR</code> in <code>REGISTRY</code> linked
-via <code>REGISTRY hasRemoteDataRegistration</code></p>
-      <ol>
-       <li data-md>
-        <p>If <code>RDR registeredShapeTree</code> == <code>DATAREG registeredShapeTree</code></p>
-       <li data-md>
-        <p>For each <a data-link-type="dfn">Remote Agent Data Registration</a> <code>RADR</code> linked
-  via <code>RDR hasRemoteAgentDataRegistration</code></p>
-        <ol>
-         <li data-md>
-          <p>return <code>RADR</code> if <code>RADR hasDataRegistration</code> == <code>DATAREG</code></p>
-        </ol>
-      </ol>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="7.5" id="create-remote-agent-data"><span class="secno">7.5. </span><span class="content">Create Remote Agent Data Registration</span><a class="self-link" href="#create-remote-agent-data"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> Creates a <a data-link-type="dfn">Remote Agent Data Registration</a> in a <a data-link-type="dfn">Remote Data Registry</a> based on a shared <a data-link-type="dfn">Data Registration</a> in an <a data-link-type="dfn">Access Receipt</a>. 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>DR</code>
-      <td>The shared <a data-link-type="dfn">Data Registration</a>
-     <tr>
-      <td><code>RECEIPT</code>
-      <td>The <a data-link-type="dfn">Access Receipt</a> that <code>DR</code> is shared through
-     <tr>
-      <td><code>REGISTRY</code>
-      <td>A <a data-link-type="dfn">Remote Data Registry</a> for the <a data-link-type="dfn">Social Agent</a>
-    <thead>
-     <tr>
-      <th colspan="2">Outputs
-    <tbody>
-     <tr>
-      <td><a data-link-type="dfn">Remote Agent Data Registration</a>
-      <td>Created upon success
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>RDR</code> be a <a data-link-type="dfn">Remote Data Registration</a> returned by <a href="#load-remote-data">§ 7.1 Load Remote Data Registration</a> with inputs: <code>DR registeredShapeTree</code>, <code>REGISTRY</code></p>
-      <ol>
-       <li data-md>
-        <p>If <code>RDR</code> is missing, let <code>RDR</code> be a <a data-link-type="dfn">Remote Data Registration</a> returned by <a href="#create-remote-data">§ 7.2 Create Remote Data Registration</a> with inputs: <code>DR registeredShapeTree</code>, <code>REGISTRY</code></p>
-      </ol>
-     <li data-md>
-      <p>Let <code>RADR</code> be an empty <a data-link-type="dfn">Remote Agent Data Registration</a></p>
-     <li data-md>
-      <p>Let <code>RADR registeredBy</code> be the current <a data-link-type="dfn">Social Agent</a></p>
-     <li data-md>
-      <p>Let <code>RADR registeredWith</code> be the current <a data-link-type="dfn">Application</a></p>
-     <li data-md>
-      <p>Let <code>RADR registeredAt</code> be the current timestamp</p>
-     <li data-md>
-      <p>Let <code>RADR updatedAt</code> be the current timestamp</p>
-     <li data-md>
-      <p>Let <code>RADR hasDataRegistration</code> be <code>DR</code></p>
-     <li data-md>
-      <p>Let <code>RADR registeredShapeTree</code> be <code>DR registeredShapeTree</code></p>
-     <li data-md>
-      <p>Let <code>RADR fromAgent</code> be <code>RECEIPT fromAgent</code></p>
-     <li data-md>
-      <p>Let <code>RADR hasAccessReceipt</code> be <code>RECEIPT</code></p>
-     <li data-md>
-      <p>PUT <code>RADR</code> into the <code>RDR</code> container</p>
-     <li data-md>
-      <p>Link <code>RADR</code> to <code>RDR</code> via <code>RDR hasRemoteAgentDataRegistration</code></p>
-     <li data-md>
-      <p>Return <code>RADR</code></p>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="7.6" id="update-remote-agent-data"><span class="secno">7.6. </span><span class="content">Update Remote Agent Data Registration</span><a class="self-link" href="#update-remote-agent-data"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> Update an existing <a data-link-type="dfn">Remote Agent Data Registration</a> with a set of <a data-link-type="dfn">Data Grants</a> and/or <a data-link-type="dfn">Referenced Data Grants</a>.
-      Create the <a data-link-type="dfn">Remote Agent Data Registration</a> if it doesn’t exist. 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>DR</code>
-      <td>The shared <a data-link-type="dfn">Data Registration</a>
-     <tr>
-      <td><code>DATAGRANTS</code>
-      <td>An array of <a data-link-type="dfn">Data Grants</a> and <a data-link-type="dfn">Referenced Data Grants</a> associated with <code>DR</code> in <code>RECEIPT</code>
-     <tr>
-      <td><code>RECEIPT</code>
-      <td><a data-link-type="dfn">Access Receipt</a> associated with <code>DR</code> and <code>DATAGRANTS</code>
-    <thead>
-     <tr>
-      <th colspan="2">Outputs
-    <tbody>
-     <tr>
-      <td><a data-link-type="dfn">Remote Agent Data Registration</a>
-      <td>Updated based on the input <code>DATAGRANTS</code>
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>RADR</code> be a <a data-link-type="dfn">Remote Agent Data Registration</a> returned from
-calling <a href="#load-remote-agent-data">§ 7.4 Load Remote Agent Data Registration</a> with inputs: <code>DR</code>, <code>REGISTRY</code></p>
-     <li data-md>
-      <p>If <code>RADR</code> is missing</p>
-      <ol>
-       <li data-md>
-        <p>Call <a href="#create-remote-agent-data">§ 7.5 Create Remote Agent Data Registration</a> with inputs: <code>RECEIPT</code>, <code>REGISTRY</code></p>
-      </ol>
-     <li data-md>
-      <p>For each <code>DATAGRANT</code> in <code>DATAGRANTS</code></p>
-      <ol>
-       <li data-md>
-        <p>PUT <code>DATAGRANT</code> into <code>RADR</code> container if it does not already exist</p>
-       <li data-md>
-        <p>PATCH <code>DATAGRANT</code> in <code>RADR</code> container if it already exists</p>
-      </ol>
-     <li data-md>
-      <p>Return <code>RADR</code></p>
     </ol>
    </div>
   </main>
@@ -4531,6 +3517,7 @@ calling <a href="#load-remote-agent-data">§ 7.4 Load Remote Agent Data Regist
   <div style="counter-reset:issue">
    <div class="issue"> Cleanup of related data may need to be specified<a href="#issue-1c6aa834"> ↵ </a></div>
    <div class="issue"> Cleanup of related data may need to be specified<a href="#issue-1c6aa834①"> ↵ </a></div>
+   <div class="issue"> Update this operation after refactoring of <a data-link-type="dfn">Delegated Data Grants</a><a href="#issue-7e591e60"> ↵ </a></div>
    <div class="issue"> Should we assume that CISERVICE is able to manage grants, or should
 it need to redirect through the authorization agent? Perhaps the recommendation
 should be that they are combined? Bad separation of concerns?<a href="#issue-d5f0eb31"> ↵ </a></div>

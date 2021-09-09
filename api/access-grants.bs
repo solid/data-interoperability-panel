@@ -19,12 +19,10 @@ Load or initialize the two main grant types: [=Access Grant=], [=Access Invitati
     [=Access Need Groups=]
 
 Each [=Access Grant=] or [=Access Invitation=] will have some combination
-of [=Data Grants=], [=Remote Data Grants=], and/or [=Trusted Grants=]:
+of [=Data Grants=], and/or [=Trusted Grants=]:
 
 * [[#grants-initializedatagrant]] - Initialize a [=Data Grant=] as part
     of [=Access Grant=] initialization
-* [[#grants-initializeremotegrant]] - Initialize a [=Remote Data Grant=] as
-    part of [=Access Grant=] initialization
 * [[#grants-initializetrustedgrant]] - Initialize a [=Trusted Grant=] as part
     of [=Access Grant=] initialization
 
@@ -41,9 +39,6 @@ Apply permissions based on the composition of an [=Access Grant=]:
     * [[#apply-data-permissions]] - Apply permissions for [=Data Grants=]
     * [[#apply-data-registration-permissions]] - Apply permissions for a
         [=Data Registration=]
-    * [[#apply-remote-data-permissions]] - Apply permissions for [=Remote Data Grants=]
-    * [[#apply-remote-data-registration-permissions]] - Apply permissions for a
-        given [=Remote Data Registration=]
     * [[#apply-trusted-permissions]] - Apply permissions for [=Trusted Grants=]
     * [[#apply-resource-permissions]] - Apply permissions on a given resource for
         a given [=Access Grant Subject=]
@@ -65,7 +60,7 @@ Apply permissions based on the composition of an [=Access Grant=]:
       <td colspan=2>
         Initialize an [=Access Grant=] by processing
         the input [=Access Need Groups=] and
-        then initializing [=Data Grants=], [=Remote Data Grants=],
+        then initializing [=Data Grants=],
         and/or [=Trusted Grants=] with no access (yet).
       </td>
     </tr>
@@ -107,7 +102,6 @@ Apply permissions based on the composition of an [=Access Grant=]:
 1. For each [=Access Need Group=] `GROUP` linked via `GRANT hasAccessNeedGroup`
     1. For each [=Access Need=] `NEED` in `GROUP`
         1. Call [[#grants-initializedatagrant]] with inputs: `NEED`
-        1. Call [[#grants-initializeremotegrant]] with inputs: `NEED`
     1. For each [=Trusted Need=] `TNEED` in `GROUP`
         1. Call [[#grants-initializetrustedgrant]] with inputs: `TNEED`
 1. Return `GRANT`
@@ -127,7 +121,7 @@ Apply permissions based on the composition of an [=Access Grant=]:
       <td colspan=2>
         Initialize an [=Access Invitation=] by processing
         the input [=Access Need Groups=] and
-        then initializing [=Data Grants=], [=Remote Data Grants=],
+        then initializing [=Data Grants=], 
         or [=Trusted Grants=] with no access (yet).
       </td>
     </tr>
@@ -170,7 +164,6 @@ Apply permissions based on the composition of an [=Access Grant=]:
 1. For each [=Access Need Group=] `GROUP` linked via `INVITE hasAccessNeedGroup`
     1. For each [=Access Need=] `NEED` in `GROUP`
         1. Call [[#grants-initializedatagrant]] with inputs: `NEED`, `GRANT`
-        1. Call [[#grants-initializeremotegrant]] with inputs: `NEED`, `GRANT`
     1. For each [=Trusted Need=] `TNEED` in `GROUP`
         1. Call [[#grants-initializetrustedgrant]] with inputs: `TNEED`, `GRANT`
 1. Return `INVITE`
@@ -243,73 +236,6 @@ Apply permissions based on the composition of an [=Access Grant=]:
     1. Let `REFDG scopeOfGrant` be `interop:NoAccess`
     1. Link `REFDG` to `DG` via `DG hasReferencedDataGrant`
 1. Return `DG`
-
-</div>
-
-## Initialize Remote Data Grant ## {#grants-initializeremotegrant}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-        Initialize a [=Remote Data Grant=] and link it to the provided
-        [=Access Need=] `NEED`.
-
-        Initialize [=Referenced Remote Data Grants=] if the [=Access Need=] `NEED`
-        has any [=Referenced Access Needs=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`NEED`</td>
-      <td>An [=Access Need=]</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>[=Access Grant=] that the [=Remote Data Grant=] will be linked to</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>[=Remote Data Grant=]</td>
-      <td>Initialized [=Remote Data Grant=] corresponding to `NEED`</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `RDG` be a newly initialized [=Remote Data Grant=]
-1. Let `RDG hasAccessGrant` be `GRANT`
-1. Let `RDG satisfiesAccessNeed` be `NEED`
-1. Let `RDG registeredShapeTree` be `NEED registeredShapeTree`
-1. Let `RDG accessmode`s be `NEED accessmode`s
-1. Let `RDG scopeOfGrant` be `interop:NoAccess`
-1. Let `NEED hasRemoteDataGrant` be `RDG`
-1. For each [=Referenced Access Need=] `REFNEED` linked
-    via `NEED hasReferencedAccessNeed`
-    1. Let `REFRDG` be a newly initialized [=Referenced Remote Data Grant=]
-    1. Let `REFRDG hasRemoteDataGrant` be `RDG`
-    1. Let `REFRDG satisfiesAccessNeed` be `REFNEED`
-    1. Let `REFRDG registeredShapeTree` be `REFNEED registeredShapeTree`
-    1. Let `REFRDG hasRegistration` be a [=Data Registration=] `DR`
-        where `DR registeredShapeTree` == `REFRDG registeredShapeTree`
-    1. Let `REFRDG accessMode`s be `REFNEED accessMode`s
-    1. Let `REFRDG scopeOfGrant` be `interop:NoAccess`
-    1. Link `REFRDG` to `RDG` via `RDG hasReferencedRemoteDataGrant`
-1. Return `RDG`
 
 </div>
 
@@ -602,8 +528,8 @@ Issue: Write standard operation for validating an invitation
       <td colspan=2>
       This operation takes a validated [=Access Grant=] `GRANT`
       associated with a given [=Access Grant Subject=] and
-      applies the permissions accordingly based on the [=Data Grants=],
-      [=Remote Data Grants=], and/or [=Trusted Grants=] associated with the
+      applies the permissions accordingly based on the [=Data Grants=]
+      and/or [=Trusted Grants=] associated with the
       [=Access Grant=]. It applies to both new and updated [=Access Grants=].
       </td>
     </tr>
@@ -631,7 +557,6 @@ Issue: Write standard operation for validating an invitation
 <div class="opdetails">
 
 1. Call [[#apply-data-permissions]] with inputs: `GRANT`
-1. Call [[#apply-remote-data-permissions]] with inputs: `GRANT`
 1. Call [[#apply-trusted-permissions]] with inputs: `GRANT`
 1. Return `GRANT`
 
@@ -876,207 +801,6 @@ Issue: Write standard operation for validating an invitation
 1. For each [=Shape Tree Reference=] `REF` linked via `REFERENCEDBY st:references`
     1. Return `REF` if `REF hasShapeTree` is `REFERENCED`
 1. Error because no [=Shape Tree Reference=] was found for `REFERENCED`
-
-</div>
-
-## Apply Remote Data Permissions ## {#apply-remote-data-permissions}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation applies remote data permissions for a new or updated
-      [=Access Grant=].
-
-      It iterates over each [=Remote Data Grant=] linked via `GRANT hasRemoteDataGrant`,
-      including following any [=Referenced Remote Data Grants=].
-
-      All [=Remote Data Grants=] and [=Referenced Remote Data Grants=] are added to
-      a hash map `RDRHASH`. The key is the [=Remote Data Registration=] associated
-      with each [=Remote Data Grant=] or [=Referenced Remote Data Grant=] via
-      `hasRemoteDataRegistration`.
-
-      The end result is the keys of `RDRHASH` are a unique
-      set of [=Remote Data Registrations=] affected by `GRANT`, and each key
-      has an array of related [=Remote Data Grants=] and
-      [=Referenced Remote Data Grants=] as its value.
-
-      Each [=Remote Data Registration=] and the array of grants that affect it
-      are then passed to [[#apply-remote-data-registration-permissions]].
-
-      <figure id="fig-remote-data-rdrhash">
-        <img src="diagrams/apply-remote-data-permissions-rdrhash.svg" width=100%/>
-      </figure>
-
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`GRANT`</td>
-      <td>[=Access Grant=] to apply permissions for</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>[=Access Grant=]</td>
-      <td>That has had the relevant permissions applied</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `RDRHASH` be an empty hash map where a [=Remote Data Registration=] is key and
-    the value is an array of [=Remote Data Grants=] and/or
-    [=Referenced Remote Data Grants=].
-1. For each [=Remote Data Grant=] `RDG` linked via `GRANT hasRemoteDataGrant`
-    1. Let `RDRKEY` be `RDG hasRemoteDataRegistration` added or found in `RDRHASH`
-    1. Add `RDG` to the value array for `RDRKEY` if missing
-    1. For each [=Referenced Remote Data Grant=] `REFRDG`
-        linked via `RDG hasReferencedRemoteDataGrant`
-        1. Let `REFRDRKEY` be `REFRDG hasRemoteDataRegistration` added
-            or found in `RDRHASH`
-        1. Add `REFRDG` to the array for `REFRDRKEY` if missing
-1. For each [=Remote Data Registration=] `RDR` in `RDRHASH`
-    1. Call [[#apply-remote-data-registration-permissions]] with inputs:
-        `RDR`, `RDRHASH[RDR]`, `GRANT`
-1. Return `GRANT`
-
-</div>
-
-## Apply Remote Data Registration Permissions ## {#apply-remote-data-registration-permissions}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-
-      This operation applies permissions for a given [=Remote Data Registration=],
-      based on the [=Remote Data Grants=] that have been assigned to it
-      from the input [=Access Grant=].
-
-      Before assigning permissions, any existing permissions for the
-      [=Access Grant Subject=] are cleared. This operation does a full
-      scan for simplicity, but optimization is recommended.
-
-      All of the grants are iterated, and organized into a hash map
-      with data-specific `interop:scopeOfGrant` values as keys. Each
-      [=Data Grant=] or [=Referenced Data Grant=] with that scope will
-      update the associated value.
-
-      * `interop:AllRemote` - An array of `interop:accessMode` values
-      * `interop:AllRemoteFromAgent` - A hash map with
-          [=Remote Agent Data Registration=] as key and an array of
-          `interop:accessMode` values
-      * `interop:SelectedRemote` - A hash map with [=Data Grant=] or
-          [=Referenced Data Grant=] as key and an array of
-          `interop:accessMode` values
-      * `interop:NoAccess` - Boolean `true` or `false`
-
-      <figure id="fig-remote-data-scopehash">
-        <img src="diagrams/apply-remote-data-permissions-scopehash.svg" width=100%/>
-      </figure>
-
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`RDR`</td>
-      <td>A [=Remote Data Registration=]</td>
-    </tr>
-    <tr>
-      <td>`REMOTEGRANTS`</td>
-      <td>An array of [=Remote Data Grants=] and [=Referenced Remote Data Grants=]
-      associated with the [=Data Registration=] in `GRANT`</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>[=Access Grant=] that permissions are being applied for</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>[=Remote Data Registration=]</td>
-      <td>That has had the relevant permissions applied</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `SUBJECT` be the [=Access Grant Subject=] linked via `GRANT hasAccessGrantSubject`
-1. Call [[#remove-resource-permissions]] with inputs: `RDR`, `SUBJECT`
-1. For each [=Remote Agent Data Registration=] `RADR` linked via `RDR hasRemoteAgentDataRegistration`
-    1. Call [[#remove-resource-permissions]] with inputs: `RADR`, `SUBJECT`
-    1. For each [=Data Grant=] or [=Referenced Data Grant=] `DATAGRANT` linked
-        via `RADR satisfiesDataGrant`
-        1. Call [[#remove-resource-permissions]] with inputs: `DATAGRANT`, `SUBJECT`
-
-1. Let `SCOPEHASH` be a hash map with keys:
-    `interop:AllRemote`, `interop:AllRemoteFromAgent`,
-    `interop:SelectedRemote`, `interop:NoAccess`
-1. Let `SCOPEHASH[interop:AllRemoteFromAgent]` be an empty hash map where
-    [=Remote Agent Data Registrations=] are keys with an array of
-    `interop:AccessMode`s as values
-1. Let `SCOPEHASH[interop:SelectedRemote]` be an empty hash map where
-    selected [=Data Grants=] or [=Referenced Data Grants=] are keys with an array of
-    `interop:AccessMode`s as values
-1. For each [=Remote Data Grant=] or [=Referenced Remote Data Grant=] `REMOTEGRANT` in `REMOTEGRANTS`
-    1. If `REMOTEGRANT scopeOfGrant` is `interop:AllRemote`
-        1. Let `SCOPEHASH[interop:AllRemote]` value be a union of current
-            `interop:accessMode`s and `REMOTEGRANT accessMode`s
-    1. If `REMOTEGRANT scopeOfGrant` is `interop:NoAccess`
-        1. Let `SCOPEHASH[interop:NoAccess]` value be `true`
-    1. If `REMOTEGRANT scopeOfGrant` is `interop:AllRemoteFromAgent`
-        1. For each [=Remote Agent Data Registration=] `RADR`
-            linked via `REMOTEGRANT hasRemoteAgentDataRegistration`
-            1. Let `RADRKEY` be [=Remote Agent Data Registration=] `RADR` added or
-                found in `SCOPEHASH[interop:AllRemoteFromAgent][RADR]`
-            1. Let `SCOPEHASH[interop:AllRemoteFromAgent][RADR]` value be
-                a union of current `interop:accessMode`s and `REMOTEGRANT accessMode`s
-    1. If `REMOTEGRANT scopeOfGrant` is `interop:SelectedRemote`
-        1. For each [=Data Grant=] or [=Referenced Data Grant=] `DATAGRANT`
-            linked via `REMOTEGRANT hasDataGrant` or `REMOTEGRANT hasReferencedDataGrant`
-            1. Let `GRANTKEY` be `DATAGRANT` added or
-                found in `SCOPEHASH[interop:SelectedRemote][DATAGRANT]`
-            1. Let `SCOPEHASH[interop:SelectedRemote][DATAGRANT]` value be
-                a union of current `interop:accessMode`s and `REMOTEGRANT accessMode`s
-
-1. If `SCOPEHASH[interop:AllRemote]` is not empty
-    1. Call [[#apply-resource-permissions]]  with inputs: `RDR`, `SUBJECT`, `MODES`
-1. If `SCOPEHASH[interop:AllRemoteFromAgent]` is not empty
-    1. For each [=Remote Agent Data Registration=] `RADR` in `SCOPEHASH[interop:AllRemoteFromAgent]`
-        1. Call [[#apply-resource-permissions]]  with inputs:
-            `SCOPEHASH[interop:AllRemoteFromAgent][RADR]`, `SUBJECT`, `MODES`
-1. If `SCOPEHASH[interop:SelectedRemote]` is not empty
-    1. For each [=Data Grant=] or [=Referenced Data Grant=] `DATAGRANT` in
-        `SCOPEHASH[interop:SelectedRemote]`
-        1. Call [[#apply-resource-permissions]]  with inputs:
-            `SCOPEHASH[interop:SelectedRemote][DATAGRANT]`, `SUBJECT`, `MODES`
 
 </div>
 
@@ -1367,7 +1091,6 @@ the subject identifier could? vary
 
 1. For each [=Access Need=] `NEED` in `GROUP`
     1. Call [[#deny-data-grant]] with inputs: `NEED hasDataGrant`, `GRANT`
-    1. Call [[#deny-remote-data-grant]] with inputs: `NEED hasRemoteDataGrant`, `GRANT`
 
 1. For each [=Trusted Need=] `TNEED` in `GROUP`
     1. Call [[#deny-trusted-grant]] with inputs: `NEED hasTrustedGrant`, `GRANT`
@@ -1640,353 +1363,6 @@ the subject identifier could? vary
 
 1. Let `REFDG scopeOfGrant` be `interop:SelectedInstances`
 1. Let `REFDG hasDataInstance` be linked to one unique instance of `DI`
-
-</div>
-
-<!-- Remote Data Operations -->
-
-## Select All Remote Instances ## {#select-all-remote}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      Used to select all received [=Data Grants=] and [=Referenced Data Grants=]
-      across all [=Remote Agent Data Registrations=] for a given
-      [=Remote Data Grant=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`RDG`</td>
-      <td>The [=Remote Data Grant=]</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>The [=Access Grant=] that `RDG` is associated with</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `RDG scopeOfGrant` be `interop:AllRemote`
-1. Remove all links for `RDG hasRemoteDataFromAgent`
-1. Remove all links for `RDG hasDataGrant`
-1. Remove all links for `RDG hasReferencedDataGrant`
-1. For each [=Referenced Remote Data Grant=] `REFRDG` linked via `RDG hasReferencedRemoteDataGrant`
-    1. Call [[#select-all-referenced-remote]] with inputs: `REFRDG`, `RDG`
-
-</div>
-
-## Select All Referenced Remote Instances ## {#select-all-referenced-remote}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      Used to select all received [=Data Grants=] and [=Referenced Data Grants=]
-      across all [=Remote Agent Data Registrations=] for a given
-      [=Referenced Remote Data Grant=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`REFRDG`</td>
-      <td>The [=Referenced Remote Data Grant=]</td>
-    </tr>
-    <tr>
-      <td>`RDG`</td>
-      <td>The [=Remote Data Grant=] that `REFRDG` is associated with</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `REFRDG scopeOfGrant` be `interop:AllRemote`
-1. Remove all links for `REFDG hasRemoteDataFromAgent`
-1. Remove all links for `REFDG hasDataGrant`
-1. Remove all links for `REFDG hasReferencedDataGrant`
-
-</div>
-
-## Select All Remote From Agent ## {#select-all-remote-fromagent}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      Used to select all received [=Data Grants=] and [=Referenced Data Grants=]
-      associated with a given [=Remote Agent Data Registration=] as part of
-      a specific [=Remote Data Grant=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`RADR`</td>
-      <td>The selected [=Remote Agent Data Registration=]</td>
-    </tr>
-    <tr>
-      <td>`RDG`</td>
-      <td>The [=Remote Data Grant=]</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>The [=Access Grant=] that `RDG` is associated with</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `RDG scopeOfGrant` be `interop:AllRemoteFromAgent`
-1. Remove all links for `RDG hasDataGrant`
-1. Remove all links for `RDG hasReferencedDataGrant`
-1. Let `RDG hasRemoteDataFromAgent` be linked to one unique instance of `RADR`
-1. For each [=Referenced Remote Data Grant=] `REFRDG` linked via `RDG hasReferencedRemoteDataGrant`
-    1. Call [[#select-referenced-remote-fromagent]] with inputs: `RADR`, `REFRDG`
-
-</div>
-
-## Select All Referenced Remote From Agent ## {#select-referenced-remote-fromagent}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      Used to select all received [=Data Grants=] and [=Referenced Data Grants=]
-      associated with a given [=Remote Agent Data Registration=] as part of
-      a specific [=Referenced Remote Data Grant=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`RADR`</td>
-      <td>The selected [=Remote Agent Data Registration=]</td>
-    </tr>
-    <tr>
-      <td>`REFRDG`</td>
-      <td>The [=Referenced Remote Data Grant=]</td>
-    </tr>
-    <tr>
-      <td>`RDG`</td>
-      <td>The [=Remote Data Grant=] that `REFRDG` is associated with</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `REFRDG scopeOfGrant` be `interop:AllRemoteFromAgent`
-1. Remove all links for `REFRDG hasDataGrant`
-1. Remove all links for `REFRDG hasReferencedDataGrant`
-1. Let `REFRDG hasRemoteDataFromAgent` be linked to one unique instance of `RADR`
-
-</div>
-
-## Select Specific Remote Agent Data Grants ## {#select-remote-agent-data-grants}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      Used to select specific [=Data Grants=] and [=Referenced Data Grants=]
-      associated with a given [=Remote Agent Data Registration=] as part of
-      a specific [=Remote Data Grant=].</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`DATAGRANT`</td>
-      <td>A [=Data Grant=] or [=Referenced Data Grant=] selected for access</td>
-    </tr>
-    <tr>
-      <td>`RDG`</td>
-      <td>The [=Remote Data Grant=] that `DATAGRANT` is associated with</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>The [=Access Grant=] that `RDG` is associated with</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `RDG scopeOfGrant` be `interop:SelectedRemote`
-1. Remove all links for `RDG hasRemoteDataFromAgent`
-1. If `DATAGRANT` is a [=Data Grant=]
-  1. Let `RDG hasDataGrant` be linked to `DATAGRANT`
-1. If `DATAGRANT` is a [=Referenced Data Grant=]
-  1. Let `RDG hasReferencedDataGrant` be linked to `DATAGRANT`
-
-</div>
-
-## Select Specific Referenced Remote Agent Data Instances ## {#select-referenced-remote-agent-data-grants}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      Used to select specific [=Data Grants=] and [=Referenced Data Grants=]
-      associated with a given [=Remote Agent Data Registration=] as part of a
-      specific [=Referenced Remote Data Grant=].</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`DATAGRANT`</td>
-      <td>A [=Data Grant=] or [=Referenced Data Grant=] selected for access</td>
-    </tr>
-    <tr>
-      <td>`REFRDG`</td>
-      <td>The [=Referenced Remote Data Grant=] that `DATAGRANT` is associated with</td>
-    </tr>
-    <tr>
-      <td>`RDG`</td>
-      <td>The [=Remote Data Grant=] that `REFRDG` is associated with</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `REFRDG scopeOfGrant` be `interop:SelectedRemote`
-1. Remove all links for `REFRDG hasRemoteDataFromAgent`
-1. If `DATAGRANT` is a [=Data Grant=]
-  1. Let `REFRDG hasDataGrant` be linked to `DATAGRANT`
-1. If `DATAGRANT` is a [=Referenced Data Grant=]
-  1. Let `REFRDG hasReferencedDataGrant` be linked to `DATAGRANT`
-
-</div>
-
-## Deny Remote Data Grant ## {#deny-remote-data-grant}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation is used when a given [=Remote Data Grant=] with
-      optional necessity has been denied.
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`RDG`</td>
-      <td>A [=Remote Data Grant=]</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>An [=Access Grant=]</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `RDG scopeOfGrant` be `interop:NoAccess`
-1. For each [=Referenced Remote Data Grant=] `REFRDG`
-    linked via `RDG hasReferencedRemoteDataGrant`
-    1. Call [[#deny-referenced-remote-data-grant]] with inputs: `REFRDG`, `GRANT`
-
-</div>
-
-## Deny Referenced Remote Data Grant ## {#deny-referenced-remote-data-grant}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation is used when a given [=Referenced Remote Data Grant=] with
-      optional necessity has been denied.
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`REFRDG`</td>
-      <td>A [=Referenced Access Need=]</td>
-    </tr>
-    <tr>
-      <td>`GRANT`</td>
-      <td>An [=Access Grant=]</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `REFRDG scopeOfGrant` be `interop:NoAccess`
 
 </div>
 

@@ -191,8 +191,8 @@ workflow.
       Manual selection with no inheritance can also be done 
       instead.
       
-      Access to which data has been shared with the controller in their 
-      [=Remote Data Registry=] is also requested through [=Access Needs=].
+      Access to which data has been shared with the controller from other
+      [=Social Agents=] is also requested through [=Access Needs=].
       In most cases, controllers won't need to do fine-grained instance
       selection of remote data, but should be allowed the ability if
       they desire.        
@@ -262,55 +262,32 @@ workflow.
                 1. Enable via [[#select-referenced-data-instance]], providing 
                     each selected [=Data Instance=].
 
-Note: Access to data in the [=Remote Data Registry=] is similarly managed per
-[=Access Need=]. User interfaces may opt to present
+Note: Access to data shared by other [=Social Agents=] 
+is similarly managed per [=Access Need=]. User interfaces may opt to present
 simpler options, and mix the selection in with local data,
 like in the [figure](#fig-present-inherited) above. However, for the
 comprehension and completeness, options for remote data access are 
 presented as follows:
 
-1. Let `RDG` be the [=Remote Data Grant=] linked via `NEED hasRemoteDataGrant`
-1. Manage the scope of data to be granted `RDG scopeOfGrant`:
+Issue: Update this operation after refactoring of [=Delegated Data Grants=]
+
+1. Let `DDG` be the [=Delegated Data Grants=] linked via `NEED hasDataGrant`
+1. Manage the scope of data to be granted `DDG scopeOfGrant`:
     1. **No Access** - `interop:NoAccess` (if necessity is optional)
-        1. Enable via [[#deny-remote-data-grant]]  
     1. **All Remote Data** - `interop:AllRemote`
-        1. Enable via [[#select-all-remote]]
     1. **All Remote From Agent** - `interop:AllRemoteFromAgent`
-        1. Present existing [=Remote Agent Data Registrations=] corresponding
-            to `NEED registeredShapeTree`, identifying any existing selections
-            linked via `RDG hasRemoteDataFromAgent`
-        1. Allow one or more to be chosen 
-        1. Enable via [[#select-all-remote-fromagent]]
-    1. **Only Selected Remote Data** - `interop:SelectedRemote`
-        1. Present existing [=Data Grants=] and/or [=Referenced Data Grants=], 
-            corresponding to `NEED registeredShapeTree` and optionally organized by
-            [=Remote Agent Data Registrations=], identifying any existing selections
-            linked via `RDG hasDataGrant` and/or `RDG:hasReferencedDataGrant`
         1. Allow one or more to be chosen
-        1. Enable via [[#select-remote-agent-data-grants]], providing the selected 
-            [=Data Grants=] and/or [=Referenced Data Grants=].
-1. For each [=Referenced Access Need=] `REFNEED` linked via `NEED hasReferencedAccessNeed`
-    1. Let `REFRDG` be the [=Referenced Remote Data Grant=] linked via `NEED hasReferencedRemoteDataGrant`
-    1. Manage the scope of data to be granted `REFRDG scopeOfGrant`:
+    1. **Only Selected Remote Data** - `interop:SelectedRemote`
+        1. Allow one or more to be chosen
+1. For each inherited [=Delegated Data Grant=] `INDDG` linked via `INDDG inheritsFromGrant` with a value of `DDG`
+    1. Manage the scope of data to be granted `INDDG scopeOfGrant`:
         1. **No Access** - `interop:NoAccess` (if necessity is optional)
-            1. Enable via [[#deny-referenced-remote-data-grant]]  
         1. **All Remote Data** - `interop:AllRemote`
-            1. Enable via [[#select-all-referenced-remote]]
         1. **All Remote From Agent** - `interop:AllRemoteFromAgent`
-            1. Present existing [=Remote Agent Data Registrations=] corresponding
-                to `NEED registeredShapeTree`, identifying any existing selections
-                linked via `REFRDG hasRemoteDataFromAgent`
-            1. Allow one or more to be chosen 
-            1. Enable via [[#select-referenced-remote-fromagent]]
+            1. Allow one or more Agents to be chosen
         1. **Only Selected Remote Data** - `interop:SelectedRemote`
-            1. Present existing [=Data Grants=] and/or [=Referenced Data Grants=], 
-                corresponding to `NEED registeredShapeTree` and optionally organized by
-                [=Remote Agent Data Registrations=], identifying any existing selections
-                linked via `REFRDG hasDataGrant` and/or `REFRDG hasReferencedDataGrant`
+            1. Present existing [=Data Grants=] and/or [=Delegated Data Grants=] 
             1. Allow one or more to be chosen
-            1. Enable via [[#select-referenced-remote-agent-data-grants]], providing the selected 
-                [=Data Grants=] and/or [=Referenced Data Grants=].
-        
 
 </div>
 
@@ -518,9 +495,8 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
         invokes the [[#record-access-receipt]] operation.
         1. [[#record-access-receipt]] is called to store the [=Access Receipt=]
             in `REQUESTER`'s [=Access Receipt Registry=].
-        1. [[#update-remote-data]] is called to update `REQUESTER`'s
-            [=Remote Data Registry=] to reflect what is in the
-            [=Access Receipt=].
+        1. Update the `REQUESTER`'s [=Agent Registy=] to reflect
+            what is in the [=Access Receipt=].
 
 ##  Controller Shares Access ##  {#authz-controllershare}
 
@@ -572,9 +548,8 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
         invokes the [[#record-access-receipt]] operation.
         1. [[#record-access-receipt]] is called to store the [=Access Receipt=]
             in `RECEIVER`'s [=Access Receipt Registry=].
-        1. [[#update-remote-data]] is called to update `RECEIVER`'s
-            [=Remote Data Registry=] to reflect what is in the
-            [=Access Receipt=].
+        1. Update the `RECEIVER`'s [=Agent Registry=] to reflect what 
+            is in the [=Access Receipt=].
 
 ##  Controller Shares Access with Invited Agent ##  {#authz-controllerinvite}
 
