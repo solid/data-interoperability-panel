@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 4f053d00e, updated Tue Aug 10 14:13:32 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="350e48e9ce7f614def637e3cb55f3e6da79c838c" name="document-revision">
+  <meta content="74a4026ca9077cee4b4ba8306c5c08c020ff6cc9" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -499,7 +499,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <dd><a class="u-url" href="https://solid.github.io/data-interoperability-panel/specification/">https://solid.github.io/data-interoperability-panel/specification/</a>
      <dt>Issue Tracking:
      <dd><a href="https://github.com/solid/data-interoperability-panel/issues/">GitHub</a>
-     <dd><a href="#issues-index">Inline In Spec</a>
      <dt class="editor">Editors:
      <dd class="editor p-author h-card vcard"><span class="p-name fn">Justin Bingham</span>
      <dd class="editor p-author h-card vcard"><span class="p-name fn">Eric Prud'hommeaux</span>
@@ -562,11 +561,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <ol class="toc">
       <li><a href="#needs-access-need-group"><span class="secno">8.1</span> <span class="content">Access Need Group</span></a>
       <li><a href="#needs-access-need"><span class="secno">8.2</span> <span class="content">Access Need</span></a>
-      <li><a href="#needs-referenced-access-need"><span class="secno">8.3</span> <span class="content">Referenced Access Need</span></a>
-      <li><a href="#needs-trusted"><span class="secno">8.4</span> <span class="content">Trusted Need</span></a>
-      <li><a href="#needs-access-request"><span class="secno">8.5</span> <span class="content">Access Request</span></a>
-      <li><a href="#needs-access-decorator-index"><span class="secno">8.6</span> <span class="content">Access Decorator Index</span></a>
-      <li><a href="#needs-access-decorator-resource"><span class="secno">8.7</span> <span class="content">Access Decorator Resource</span></a>
+      <li><a href="#needs-trusted"><span class="secno">8.3</span> <span class="content">Trusted Need</span></a>
+      <li><a href="#needs-access-request"><span class="secno">8.4</span> <span class="content">Access Request</span></a>
+      <li><a href="#needs-access-decorator-index"><span class="secno">8.5</span> <span class="content">Access Decorator Index</span></a>
+      <li><a href="#needs-access-decorator-resource"><span class="secno">8.6</span> <span class="content">Access Decorator Resource</span></a>
      </ol>
     <li>
      <a href="#grants"><span class="secno">9</span> <span class="content">Access Grants</span></a>
@@ -575,11 +573,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <li><a href="#access-grant"><span class="secno">9.2</span> <span class="content">Access Grant</span></a>
       <li><a href="#access-grant-subject"><span class="secno">9.3</span> <span class="content">Access Grant Subject</span></a>
       <li><a href="#data-grant"><span class="secno">9.4</span> <span class="content">Data Grant</span></a>
-      <li><a href="#datamodel-referenced-data-grant"><span class="secno">9.5</span> <span class="content">Referenced Data Grant</span></a>
-      <li><a href="#datamodel-trusted-grant"><span class="secno">9.6</span> <span class="content">Trusted Grant</span></a>
-      <li><a href="#datamodel-access-invitation"><span class="secno">9.7</span> <span class="content">Access Invitation</span></a>
-      <li><a href="#datamodel-access-invitation-channel"><span class="secno">9.8</span> <span class="content">Access Invitation Channel</span></a>
-      <li><a href="#grants-hierarchy"><span class="secno">9.9</span> <span class="content">Resource Hierarchy</span></a>
+      <li><a href="#datamodel-trusted-grant"><span class="secno">9.5</span> <span class="content">Trusted Grant</span></a>
+      <li><a href="#datamodel-access-invitation"><span class="secno">9.6</span> <span class="content">Access Invitation</span></a>
+      <li><a href="#datamodel-access-invitation-channel"><span class="secno">9.7</span> <span class="content">Access Invitation Channel</span></a>
+      <li><a href="#grants-hierarchy"><span class="secno">9.8</span> <span class="content">Resource Hierarchy</span></a>
      </ol>
     <li>
      <a href="#receipts"><span class="secno">10</span> <span class="content">Access Receipts</span></a>
@@ -612,7 +609,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
       <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
      </ol>
-    <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
    </ol>
   </nav>
   <main>
@@ -1818,14 +1814,14 @@ all or a subset of data in <a data-link-type="dfn" href="#data-registry①" id="
    <p><a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①④">Shape trees</a> provide both physical and virtual hierarchies.
 It is often the case that a <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①⑤">shape tree</a> which virtually references 
 other <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①⑥">shape trees</a> will be assigned to an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑥">Access Need</a>. The 
-referenced <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①⑦">shape trees</a> can then be assigned to <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need">Referenced Access Needs</a> that the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑦">Access Need</a> links to.</p>
+referenced <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①⑦">shape trees</a> can then be assigned to <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑦">Access Needs</a> that inherit from the referencing <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑧">Access Need</a>.</p>
    <p>Specific <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance③⑥">Data Instances</a> may be requested by explicitly
-associating them with the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑧">Access Need</a> via <a href="#classAccessNeed">hasDataInstance</a>.</p>
-   <p>Each <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑨">Access Need</a> has one or more <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mode②">access modes</a>, and a property that
-indicates the necessity of the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⓪">Access Need</a>; <em>required</em> or <em>optional</em>. For example, an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①①">Access Need</a> for read access to <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①⑧">shape tree</a> <code>N</code> can be identified as a required item in the <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group①①">Access Need Group</a>. In cases where <code>acl:Write</code> or <code>acl:Append</code> permit
+associating them with the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑨">Access Need</a> via <a href="#classAccessNeed">hasDataInstance</a>.</p>
+   <p>Each <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⓪">Access Need</a> has one or more <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mode②">access modes</a>, and a property that
+indicates the necessity of the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①①">Access Need</a>; <em>required</em> or <em>optional</em>. For example, an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①②">Access Need</a> for read access to <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①⑧">shape tree</a> <code>N</code> can be identified as a required item in the <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group①①">Access Need Group</a>. In cases where <code>acl:Write</code> or <code>acl:Append</code> permit
 the ability to create new <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance③⑦">Data Instances</a>, the <a href="interop.ttl#creatorAccessMode">interop:creatorAccessMode</a> allows the resultant modes for the creator of the resource to be
 specified.</p>
-   <p><a data-link-type="dfn" href="#access-need" id="ref-for-access-need①②">Access Needs</a> are described using language-specific <a data-link-type="dfn" href="#access-need-decorator" id="ref-for-access-need-decorator">Access Need Decorators</a>.</p>
+   <p><a data-link-type="dfn" href="#access-need" id="ref-for-access-need①③">Access Needs</a> are described using language-specific <a data-link-type="dfn" href="#access-need-decorator" id="ref-for-access-need-decorator">Access Need Decorators</a>.</p>
    <p><a href="interop.ttl#AccessNeed">Class Definition</a> - <a href="interop.shex#AccessNeedGroup">Shape Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessNeed">
     <colgroup>
@@ -1840,7 +1836,7 @@ specified.</p>
      <tr>
       <td>inAccessNeedGroup
       <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
-      <td><a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group①②">Access Need Group</a> that the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①③">Access Need</a> is part of
+      <td><a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group①②">Access Need Group</a> that the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①④">Access Need</a> is part of
      <tr>
       <td>hasAccessNeedDecorator
       <td><a href="#classAccessNeedDecorator">AccessNeedDecorator</a>
@@ -1849,7 +1845,7 @@ specified.</p>
      <tr>
       <td>registeredShapeTree
       <td><code>st:ShapeTree</code>
-      <td>The <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①⑨">shape tree</a> requested by the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①④">Access Need</a>
+      <td>The <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①⑨">shape tree</a> requested by the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑤">Access Need</a>
      <tr>
       <td>hasShapeTreeDecorator
       <td><code>st:ShapeTreeDecorator</code>
@@ -1863,7 +1859,7 @@ specified.</p>
      <tr>
       <td>accessMode
       <td><code>acl:Read, acl:Write, acl:Control, acl:Append</code>
-      <td>Requested modes of access for the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑤">Access Need</a>
+      <td>Requested modes of access for the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑥">Access Need</a>
      <tr>
       <td>creatorAccessMode
       <td><code>acl:Read, acl:Write, acl:Control, acl:Append</code>
@@ -1876,115 +1872,47 @@ specified.</p>
      <tr>
       <td>supportedBy
       <td><a href="#classAccessNeed">AccessNeed</a>
-      <td>An <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑥">Access Need</a> whose <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②②">shape tree</a> <code>st:supports</code> the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②③">shape tree</a> of this <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑦">Access Need</a>
+      <td>An <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑦">Access Need</a> whose <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②②">shape tree</a> <code>st:supports</code> the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②③">shape tree</a> of this <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑧">Access Need</a>
      <tr>
       <td>supports
       <td><a href="#classAccessNeed">AccessNeed</a>
-      <td>An <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑧">Access Need</a> that the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②④">shape tree</a> of this <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑨">Access Need</a> <code>st:supports</code>
+      <td>An <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑨">Access Need</a> that the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②④">shape tree</a> of this <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⓪">Access Need</a> <code>st:supports</code>
      <tr>
-      <td>hasReferencedAccessNeed
-      <td><a href="#classReferencedAccessNeed">ReferencedAccessNeed</a>
-      <td><a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need①">Referenced Access Need</a> linked to <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⓪">Access Need</a>, whose <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②⑤">shape tree</a> <code>st:references</code> the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②⑥">shape tree</a> associated
-      with the <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need②">Referenced Access Need</a>. 
-     <tr>
-      <td>hasDataGrant
-      <td><a href="#classDataGrant">DataGrant</a>
-      <td><a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①">Data Grant</a> associated with the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②①">Access Need</a>,
-      established when the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①③">Access Grant</a> is created
+      <td>inheritsFromNeed
+      <td><a href="#classAccessNeed">AccessNeed</a>
+      <td>Links to another <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②①">Access Need</a> whose registeredShapeTree
+      references the shape tree associated with the current <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②②">Access Need</a>.
    </table>
    <figure>
-    <figcaption>An example <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②②">Access Need</a></figcaption>
-<pre class="include-code highlight">  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
+    <figcaption><a data-link-type="dfn" href="#access-need" id="ref-for-access-need②③">Access Needs</a> for Projects and Issues</figcaption>
+<pre class="include-code highlight"><c- g>&lt;#need-project></c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeed</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedDecorator</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>index\#projectDecorator</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>write</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Control</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedAccessNeed</c->
-      <c- g>&lt;#need-issue></c-><c- p>,</c-> <c- g>&lt;#need-task></c-><c- p>,</c-> <c- g>&lt;#need-release></c-><c- p>,</c-> <c- g>&lt;#need-milestone></c-> <c- p>.</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Control</c-> <c- p>.</c->
 
 <c- g>&lt;#need-issue></c->
-</pre>
-   </figure>
-   <h3 class="heading settled" data-level="8.3" id="needs-referenced-access-need"><span class="secno">8.3. </span><span class="content">Referenced Access Need</span><a class="self-link" href="#needs-referenced-access-need"></a></h3>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="referenced-access-need">Referenced Access Need</dfn> is linked directly to an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②③">Access Need</a>,
-and represents an access request for data represented by a <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②⑦">shape tree</a> that
-is <code>st:referenced</code> by the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②⑧">shape tree</a> of the linked <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②④">Access Need</a>.</p>
-   <p><a href="interop.ttl#ReferencedAccessNeed">Class Definition</a> - <a href="interop.shex#ReferencedAccessNeedShape">Shape Definition</a></p>
-   <table align="left" class="classinfo data" id="classReferencedAccessNeed">
-    <colgroup>
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th>Property
-      <th>Range
-      <th>Description
-    <tbody>
-     <tr>
-      <td>hasAccessNeed
-      <td><a href="#classAccessNeed">AccessNeed</a>
-      <td><a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑤">Access Need</a> that the <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need③">Referenced Access Need</a> is linked to
-     <tr>
-      <td>hasAccessNeedDecorator
-      <td><a href="#classAccessNeedDecorator">AccessNeedDecorator</a>
-      <td>Decorator that explains the reason for the access need in the
-      preferred language of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥③">Social Agent</a>
-     <tr>
-      <td>registeredShapeTree
-      <td><code>st:ShapeTree</code>
-      <td>The <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②⑨">shape tree</a> requested by the <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need④">Referenced Access Need</a>
-     <tr>
-      <td>hasShapeTreeDecorator
-      <td><code>st:ShapeTreeDecorator</code>
-      <td>Decorator associated with the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree③⓪">shape tree</a> that describes the
-      name of the shape-tree and what data it represents in the preferred
-      language of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥④">Social Agent</a>
-     <tr>
-      <td>hasDataInstance
-      <td>-
-      <td>Request specific <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⓪">Data Instance</a> of the registered <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree③①">shape tree</a>. Requires advance knowledge of the <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④①">Data Instance</a>
-     <tr>
-      <td>accessMode
-      <td><code>acl:Read, acl:Write, acl:Control, acl:Append</code>
-      <td>Requested modes of access for the <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need⑤">Referenced Access Need</a>
-     <tr>
-      <td>accessNecessity
-      <td><code>interop:AccessRequired</code>, <code>interop:AccessOptional</code>
-      <td>Necessity of the access to the requesting party
-     <tr>
-      <td>supportedBy
-      <td><a href="#classAccessNeed">AccessNeed</a>
-      <td>An <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑥">Access Need</a> whose <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree③②">shape tree</a> <code>st:supports</code> the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree③③">shape tree</a> of this <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need⑥">Referenced Access Need</a>
-     <tr>
-      <td>supports
-      <td><a href="#classAccessNeed">AccessNeed</a>
-      <td>An <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑦">Access Need</a> that the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree③④">shape tree</a> of this <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need⑦">Referenced Access Need</a> <code>st:supports</code>
-     <tr>
-      <td>hasReferencedDataGrant
-      <td><a href="#">ReferencedDataGrant</a>
-      <td><a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant">Referenced Data Grant</a> associated with the <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need⑧">Referenced Access Need</a>, established when the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①④">Access Grant</a> is created
-   </table>
-   <figure>
-    <figcaption>An example <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need⑨">Referenced Access Need</a></figcaption>
-<pre class="include-code highlight">  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeed</c-> <c- g>&lt;#need-project></c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeed</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedDecorator</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>index\#issueDecorator</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>IssueTree</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>write</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Control</c-> <c- p>.</c->
-
-<c- g>&lt;#need-task></c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Control</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromNeed</c-> <c- g>&lt;#need-project></c-> <c- p>.</c->
 </pre>
    </figure>
-   <h3 class="heading settled" data-level="8.4" id="needs-trusted"><span class="secno">8.4. </span><span class="content">Trusted Need</span><a class="self-link" href="#needs-trusted"></a></h3>
+   <h3 class="heading settled" data-level="8.3" id="needs-trusted"><span class="secno">8.3. </span><span class="content">Trusted Need</span><a class="self-link" href="#needs-trusted"></a></h3>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="trusted-need">Trusted Need</dfn> represents the request for elevated access
 to various types of top-level resources, including 
 the <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document⑤">Identity Profile Document</a>, <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑤">Registry Set</a>, or specific <a data-link-type="dfn" href="#registry" id="ref-for-registry⑤">Registries</a>.</p>
    <p>Each <a data-link-type="dfn" href="#trusted-need" id="ref-for-trusted-need④">Trusted Need</a> has a single <code>interop:trustedWithType</code>, which identifies
 the type of trusted resource that is being requested.</p>
    <p>Each <a data-link-type="dfn" href="#trusted-need" id="ref-for-trusted-need⑤">Trusted Need</a> has one or more <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mode③">access modes</a>, and a property that
-indicates the necessity of the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑧">Access Need</a>; <em>required</em> or <em>optional</em>. For example, an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑨">Access Need</a> for read access to <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree③⑤">shape tree</a> <code>N</code> can be identified as a required item in the <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group①③">Access Need Group</a>.</p>
+indicates the necessity of the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②④">Access Need</a>; <em>required</em> or <em>optional</em>. For example, an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑤">Access Need</a> for read access to <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②⑤">shape tree</a> <code>N</code> can be identified as a required item in the <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group①③">Access Need Group</a>.</p>
    <p><a data-link-type="dfn" href="#trusted-need" id="ref-for-trusted-need⑥">Trusted Needs</a> are described using language-specific <a data-link-type="dfn" href="#access-need-decorator" id="ref-for-access-need-decorator①">Access Need Decorators</a>.</p>
    <p><a href="interop.ttl#TrustedNeed">Class Definition</a> - <a href="interop.shex#TrustedNeedShape">Shape Definition</a></p>
    <table align="left" class="classinfo data" id="classTrustedNeed">
@@ -2016,9 +1944,9 @@ indicates the necessity of the <a data-link-type="dfn" href="#access-need" id="r
      <tr>
       <td>hasTrustedGrant
       <td><a href="#classTrustedGrant">TrustedGrant</a>
-      <td><a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant">Trusted Grant</a> associated with the <a data-link-type="dfn" href="#trusted-need" id="ref-for-trusted-need①⓪">Trusted Need</a>, established when the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑤">Access Grant</a> is created
+      <td><a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant">Trusted Grant</a> associated with the <a data-link-type="dfn" href="#trusted-need" id="ref-for-trusted-need①⓪">Trusted Need</a>, established when the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①③">Access Grant</a> is created
    </table>
-   <h3 class="heading settled" data-level="8.5" id="needs-access-request"><span class="secno">8.5. </span><span class="content">Access Request</span><a class="self-link" href="#needs-access-request"></a></h3>
+   <h3 class="heading settled" data-level="8.4" id="needs-access-request"><span class="secno">8.4. </span><span class="content">Access Request</span><a class="self-link" href="#needs-access-request"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-request">Access Request</dfn> is used to send <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group①⑤">Access Need Groups</a> from
 one <a data-link-type="dfn" href="#agents①" id="ref-for-agents①①⑨">Agent</a> to another.</p>
    <p><a href="interop.ttl#AccessRequest">Class Definition</a> - <a href="interop.shex#AccessRequestShape">Shape Definition</a></p>
@@ -2035,11 +1963,11 @@ one <a data-link-type="dfn" href="#agents①" id="ref-for-agents①①⑨">Agent
      <tr>
       <td>fromSocialAgent
       <td><a href="#classSocialAgent">SocialAgent</a>
-      <td>The <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⑤">Social Agent</a> who sent the <a data-link-type="dfn" href="#access-request" id="ref-for-access-request">Access Request</a>
+      <td>The <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥③">Social Agent</a> who sent the <a data-link-type="dfn" href="#access-request" id="ref-for-access-request">Access Request</a>
      <tr>
       <td>toSocialAgent
       <td><a href="#classSocialAgent">SocialAgent</a>
-      <td>The <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⑥">Social Agent</a> the <a data-link-type="dfn" href="#access-request" id="ref-for-access-request①">Access Request</a> is meant for
+      <td>The <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥④">Social Agent</a> the <a data-link-type="dfn" href="#access-request" id="ref-for-access-request①">Access Request</a> is meant for
      <tr>
       <td>hasAccessNeedGroup
       <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
@@ -2053,7 +1981,7 @@ one <a data-link-type="dfn" href="#agents①" id="ref-for-agents①①⑨">Agent
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#need-group-pm</c-> <c- p>.</c->
 </pre>
    </figure>
-   <h3 class="heading settled" data-level="8.6" id="needs-access-decorator-index"><span class="secno">8.6. </span><span class="content">Access Decorator Index</span><a class="self-link" href="#needs-access-decorator-index"></a></h3>
+   <h3 class="heading settled" data-level="8.5" id="needs-access-decorator-index"><span class="secno">8.5. </span><span class="content">Access Decorator Index</span><a class="self-link" href="#needs-access-decorator-index"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-decorator-index">Access Decorator Index</dfn> is a listing of one or more <a data-link-type="dfn" href="#access-decorator-series" id="ref-for-access-decorator-series②">Access Decorator Series</a>.</p>
    <p><a href="interop.ttl#AccessDecoratorIndex">Class Definition</a> - <a href="interop.shex#AccessDecoratorIndexShape">Shape Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessDecoratorIndex">
@@ -2084,7 +2012,7 @@ one <a data-link-type="dfn" href="#agents①" id="ref-for-agents①①⑨">Agent
   <c- nn>interop</c-><c- p>:</c-><c- f>hasSeries</c-> <c- g>&lt;#series-en></c-> <c- p>.</c->
 </pre>
    </figure>
-   <h4 class="heading settled" data-level="8.6.1" id="needs-access-decorator-series"><span class="secno">8.6.1. </span><span class="content">Access Decorator Series</span><a class="self-link" href="#needs-access-decorator-series"></a></h4>
+   <h4 class="heading settled" data-level="8.5.1" id="needs-access-decorator-series"><span class="secno">8.5.1. </span><span class="content">Access Decorator Series</span><a class="self-link" href="#needs-access-decorator-series"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-decorator-series">Access Decorator Series</dfn> has one or
 more <a data-link-type="dfn" href="#access-decorator-version" id="ref-for-access-decorator-version">Access Decorator Versions</a> in a given language.</p>
    <p><a href="interop.ttl#AccessDecoratorSeries">Class Definition</a> - <a href="interop.shex#AccessDecoratorSeriesShape">Shape Definition</a></p>
@@ -2115,7 +2043,7 @@ more <a data-link-type="dfn" href="#access-decorator-version" id="ref-for-access
   <c- nn>interop</c-><c- p>:</c-><c- f>hasVersion</c-> <c- g>&lt;#en-v10></c-><c- p>,</c-> <c- g>&lt;#en-v11></c-> <c- p>.</c->
 </pre>
    </figure>
-   <h4 class="heading settled" data-level="8.6.2" id="needs-access-decorator-version"><span class="secno">8.6.2. </span><span class="content">Access Decorator Version</span><a class="self-link" href="#needs-access-decorator-version"></a></h4>
+   <h4 class="heading settled" data-level="8.5.2" id="needs-access-decorator-version"><span class="secno">8.5.2. </span><span class="content">Access Decorator Version</span><a class="self-link" href="#needs-access-decorator-version"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-decorator-version">Access Decorator Version</dfn> is a versioned instance of
 a given <a data-link-type="dfn" href="#access-decorator-resource" id="ref-for-access-decorator-resource②">Access Decorator Resource</a>.</p>
    <p><a href="interop.ttl#AccessDecoratorVersion">Class Definition</a> - <a href="interop.shex#AccessDecoratorVersionShape">Shape Definition</a></p>
@@ -2157,7 +2085,7 @@ a given <a data-link-type="dfn" href="#access-decorator-resource" id="ref-for-ac
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessDecoratorResource</c-> <c- g>&lt;pm-decorator-en-1.1></c-> <c- p>.</c->
 </pre>
    </figure>
-   <h3 class="heading settled" data-level="8.7" id="needs-access-decorator-resource"><span class="secno">8.7. </span><span class="content">Access Decorator Resource</span><a class="self-link" href="#needs-access-decorator-resource"></a></h3>
+   <h3 class="heading settled" data-level="8.6" id="needs-access-decorator-resource"><span class="secno">8.6. </span><span class="content">Access Decorator Resource</span><a class="self-link" href="#needs-access-decorator-resource"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-decorator-resource">Access Decorator Resource</dfn> is a document that contains <a data-link-type="dfn" href="#access-need-group-decorator" id="ref-for-access-need-group-decorator①">Access Need Group Decorators</a> and <a data-link-type="dfn" href="#access-need-decorator" id="ref-for-access-need-decorator②">Access Need Decorators</a> in a
 given language.</p>
    <p><a href="interop.ttl#AccessDecoratorResource">Class Definition</a> - <a href="interop.shex#AccessDecoratorResourceShape">Shape Definition</a></p>
@@ -2176,9 +2104,9 @@ given language.</p>
       <td>-
       <td>-
    </table>
-   <h4 class="heading settled" data-level="8.7.1" id="needs-access-need-group-decorator"><span class="secno">8.7.1. </span><span class="content">Access Need Group Decorator</span><a class="self-link" href="#needs-access-need-group-decorator"></a></h4>
+   <h4 class="heading settled" data-level="8.6.1" id="needs-access-need-group-decorator"><span class="secno">8.6.1. </span><span class="content">Access Need Group Decorator</span><a class="self-link" href="#needs-access-need-group-decorator"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-need-group-decorator">Access Need Group Decorator</dfn> provides a subject name and
-a more in-depth description that explains why a given <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group①⑦">Access Need Group</a> is being requested of a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⑦">Social Agent</a>.</p>
+a more in-depth description that explains why a given <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group①⑦">Access Need Group</a> is being requested of a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⑤">Social Agent</a>.</p>
    <p><a href="interop.ttl#AccessNeedGroupDecorator">Class Definition</a> - <a href="interop.shex#AccessNeedGroupDecoratorShape">Shape Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessNeedGroupDecorator">
     <colgroup>
@@ -2204,7 +2132,7 @@ a more in-depth description that explains why a given <a data-link-type="dfn" hr
       <td>Description of why the <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group②⓪">Access Need Group</a> requires the
       access it is requesting.
    </table>
-   <h4 class="heading settled" data-level="8.7.2" id="needs-access-need-decorator"><span class="secno">8.7.2. </span><span class="content">Access Need Decorator</span><a class="self-link" href="#needs-access-need-decorator"></a></h4>
+   <h4 class="heading settled" data-level="8.6.2" id="needs-access-need-decorator"><span class="secno">8.6.2. </span><span class="content">Access Need Decorator</span><a class="self-link" href="#needs-access-need-decorator"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-need-decorator">Access Need Decorator</dfn> provides a specific
 explanation of why that data type is being requested.</p>
    <p><a href="interop.ttl#AccessNeedDecorator">Class Definition</a> - <a href="interop.shex#AccessNeedDecoratorShape">Shape Definition</a></p>
@@ -2225,7 +2153,7 @@ explanation of why that data type is being requested.</p>
      <tr>
       <td>registeredShapeTree
       <td><code>st:ShapeTree</code>
-      <td><a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree③⑥">Shape tree</a> associated with the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need③⓪">Access Need</a> the decorator
+      <td><a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②⑥">Shape tree</a> associated with the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑥">Access Need</a> the decorator
       should apply to
      <tr>
       <td>skos:prefLabel
@@ -2233,24 +2161,24 @@ explanation of why that data type is being requested.</p>
       <td>Specific explanation of why that data type is being requested
    </table>
    <h2 class="heading settled" data-level="9" id="grants"><span class="secno">9. </span><span class="content">Access Grants</span><a class="self-link" href="#grants"></a></h2>
-   <p><a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑥">Access Grants</a> represent a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⑧">Social Agent’s</a> decision to grant access to
+   <p><a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①④">Access Grants</a> represent a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⑥">Social Agent’s</a> decision to grant access to
 some portion of the data in their control to another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②⓪">Agent</a>. They provide
-the context needed to effectively manage permissions on a given <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⑨">Social Agent’s</a> data through a compatible access control system.</p>
-   <p>There are two types of <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑦">Access Grants</a>:</p>
+the context needed to effectively manage permissions on a given <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⑦">Social Agent’s</a> data through a compatible access control system.</p>
+   <p>There are two types of <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑤">Access Grants</a>:</p>
    <ul>
     <li data-md>
-     <p><a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant①">Trusted Grants</a> are made when a given <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⓪">Social Agent</a> trusts another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②①">Agent</a> with expanded, administrative-level privilege to the data in their control.</p>
+     <p><a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant①">Trusted Grants</a> are made when a given <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⑧">Social Agent</a> trusts another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②①">Agent</a> with expanded, administrative-level privilege to the data in their control.</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①">Data Grants</a> are made when a given <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦①">Social Agent</a> wishes to share access
+     <p><a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①">Data Grants</a> are made when a given <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⑨">Social Agent</a> wishes to share access
 to certain types or specific instances of data in their control.</p>
    </ul>
-   <p><a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑧">Access Grants</a> are recorded in a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦②">Social Agent’s</a> <a data-link-type="dfn" href="#access-grant-registry①" id="ref-for-access-grant-registry①②">Access Grant Registry</a>.</p>
-   <p><a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation">Access Invitations</a> represent <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑨">Access Grants</a> made to <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦③">Social Agents</a> with unknown or yet-to-be established <a data-link-type="dfn" href="#identity" id="ref-for-identity③">identities</a>.</p>
+   <p><a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑥">Access Grants</a> are recorded in a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⓪">Social Agent’s</a> <a data-link-type="dfn" href="#access-grant-registry①" id="ref-for-access-grant-registry①②">Access Grant Registry</a>.</p>
+   <p><a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation">Access Invitations</a> represent <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑦">Access Grants</a> made to <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦①">Social Agents</a> with unknown or yet-to-be established <a data-link-type="dfn" href="#identity" id="ref-for-identity③">identities</a>.</p>
    <p class="note" role="note"><span>Note:</span> See <a href="https://solid.github.io/data-interoperability-panel/api/#grants">Solid Application Interoperability Operations and API</a> for a detailed explanation of how Access Grants should be processed.</p>
    <h3 class="heading settled" data-level="9.1" id="access-grant-registry"><span class="secno">9.1. </span><span class="content">Access Grant Registry</span><a class="self-link" href="#access-grant-registry"></a></h3>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-grant-registry①">Access Grant Registry</dfn> is a collection of <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⓪">Access Grants</a> stored in a specific location in a <a data-link-type="dfn" href="#pod" id="ref-for-pod">pod</a>.</p>
-   <p>The <a data-link-type="dfn" href="#access-grant-registry①" id="ref-for-access-grant-registry①③">Access Grant Registry</a> is linked to a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦④">Social Agent</a> via their <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑥">Registry Set</a>.</p>
-   <p>An <a data-link-type="dfn" href="#access-grant-registry①" id="ref-for-access-grant-registry①④">Access Grant Registry</a> links to any number of registered <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①①">Access Grants</a> and <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation①">Access Invitations</a>.</p>
+   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-grant-registry①">Access Grant Registry</dfn> is a collection of <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑧">Access Grants</a> stored in a specific location in a <a data-link-type="dfn" href="#pod" id="ref-for-pod">pod</a>.</p>
+   <p>The <a data-link-type="dfn" href="#access-grant-registry①" id="ref-for-access-grant-registry①③">Access Grant Registry</a> is linked to a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦②">Social Agent</a> via their <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑥">Registry Set</a>.</p>
+   <p>An <a data-link-type="dfn" href="#access-grant-registry①" id="ref-for-access-grant-registry①④">Access Grant Registry</a> links to any number of registered <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑨">Access Grants</a> and <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation①">Access Invitations</a>.</p>
    <p><a href="interop.ttl#AccessGrantRegistry">Class Definition</a> - <a href="interop.shex#AccessGrantRegistryShape">Shape Definition</a> - <a href="interop.tree#AccessGrantRegistryTree">Shape Tree Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessGrantRegistry">
     <colgroup>
@@ -2265,11 +2193,11 @@ to certain types or specific instances of data in their control.</p>
      <tr>
       <td>hasRegistration
       <td><a href="interop.ttl#Registration">Registration</a>
-      <td>Link to associated <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①②">Access Grants</a>
+      <td>Link to associated <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⓪">Access Grants</a>
    </table>
    <figure>
     <figcaption>An <a data-link-type="dfn" href="#access-grant-registry①" id="ref-for-access-grant-registry①⑤">Access Grant Registry</a> at https://alice.example/grants/
-  linking to several registered <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①③">Access Grants</a> or <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation②">Access Invitations</a>.</figcaption>
+  linking to several registered <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①①">Access Grants</a> or <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation②">Access Invitations</a>.</figcaption>
 <pre class="include-code highlight">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantRegistry</c-><c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c->
     <c- nn>alice-grants</c-><c- p>:</c-><c- f>ab3d0023-3860-4358-ae33-8d3af1097b9d</c-> <c- p>,</c->
@@ -2280,8 +2208,8 @@ to certain types or specific instances of data in their control.</p>
    </figure>
    <h3 class="heading settled" data-level="9.2" id="access-grant"><span class="secno">9.2. </span><span class="content">Access Grant</span><a class="self-link" href="#access-grant"></a></h3>
    <p>Each <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-grant①">Access Grant</dfn> represents access granted to an <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①">Access Grant Subject</a>, based on access criteria detailed in one or more <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group②②">Access Need Groups</a>.</p>
-   <p>Access may be granted to data in <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①①②">Data Registries</a> through <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②">Data Grants</a>.</p>
-   <p>Elevated access to <a data-link-type="dfn" href="#registry" id="ref-for-registry⑥">Registries</a>, as well as the <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document⑥">Identity Profile Document</a> or <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑦">Registry Set</a> of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑤">Social Agent</a> may be granted through <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant②">Trusted Grants</a>.</p>
+   <p>Access may be granted to data in <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①①②">Data Registries</a> through <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①">Data Grants</a>.</p>
+   <p>Elevated access to <a data-link-type="dfn" href="#registry" id="ref-for-registry⑥">Registries</a>, as well as the <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document⑥">Identity Profile Document</a> or <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑦">Registry Set</a> of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦③">Social Agent</a> may be granted through <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant②">Trusted Grants</a>.</p>
    <p><a href="interop.ttl#AccessGrant">Class Definition</a> - <a href="interop.shex#AccessGrantShape">Shape Definition</a> - <a href="interop.tree#AccessGrantTree">Shape Tree Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessGrant">
     <colgroup>
@@ -2296,19 +2224,19 @@ to certain types or specific instances of data in their control.</p>
      <tr>
       <td>registeredBy
       <td><a href="#classSocialAgent">SocialAgent</a>
-      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑥">Social Agent</a> that registered the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①④">Access Grant</a>
+      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦④">Social Agent</a> that registered the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①②">Access Grant</a>
      <tr>
       <td>registeredWith
       <td><a href="#classApplication">Application</a>
-      <td><a data-link-type="dfn" href="#application" id="ref-for-application③⓪">Application</a> used to create the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑤">Access Grant</a>
+      <td><a data-link-type="dfn" href="#application" id="ref-for-application③⓪">Application</a> used to create the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①③">Access Grant</a>
      <tr>
       <td>registeredAt
       <td>xsd:dateTime
-      <td>Date and time the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑥">Access Grant</a> was created
+      <td>Date and time the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①④">Access Grant</a> was created
      <tr>
       <td>updatedAt
       <td>xsd:dateTime
-      <td>Date and time the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑦">Access Grant</a> was updated
+      <td>Date and time the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑤">Access Grant</a> was updated
      <tr>
       <td>hasAccessGrantSubject
       <td><a href="#classAccessGrantSubject">AccessGrantSubject</a>
@@ -2320,29 +2248,34 @@ to certain types or specific instances of data in their control.</p>
      <tr>
       <td>hasDataGrant
       <td><a href="#classDataGrant">DataGrant</a>
-      <td>Links to a <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①③">Data Grant</a> associated with the Access Grant.
+      <td>Links to a <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②">Data Grant</a> associated with the Access Grant.
      <tr>
       <td>hasTrustedGrant
       <td><a href="#classTrustedGrant">TrustedGrant</a>
       <td>Links to a <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant③">Trusted Grant</a> associated with the Access Grant.
    </table>
    <figure>
-    <figcaption>An <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑧">Access Grant</a> at
+    <figcaption>An <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑥">Access Grant</a> at
   https://alice.pod.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d</figcaption>
-<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>acl:</c-> <c- g>&lt;http://www.w3.org/ns/auth/acl#></c->
-
-<c- nn>alice-grants</c-><c- p>:</c-><c- f>ab3d0023-3860-4358-ae33-8d3af1097b9d\/</c->
+<pre class="include-code highlight"><c- nn>alice-grants</c-><c- p>:</c-><c- f>ab3d0023-3860-4358-ae33-8d3af1097b9d\/</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrant</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- nn>authz-agent</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-04-04T20:15:47.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-04-04T21:11:33.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-> <c- g>&lt;#grant-subject></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
+    <c- g>&lt;#data-grant-project></c-> <c- p>,</c->
+    <c- g>&lt;#data-grant-issue></c-> <c- p>,</c->
+    <c- g>&lt;#data-grant-task></c-> <c- p>,</c->
+    <c- g>&lt;#data-grant-milestone></c-> <c- p>,</c->
+    <c- g>&lt;#data-grant-release></c-> <c- p>.</c->
 </pre>
    </figure>
    <h3 class="heading settled" data-level="9.3" id="access-grant-subject"><span class="secno">9.3. </span><span class="content">Access Grant Subject</span><a class="self-link" href="#access-grant-subject"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-grant-subject①">Access Grant Subject</dfn> represents a unique combination of
-who and what is being granted access. For example, it allows a single <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑦">Social Agent</a> or <a data-link-type="dfn" href="#application" id="ref-for-application③①">Application</a> to be specified, or a given <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑧">Social Agent</a> using a given <a data-link-type="dfn" href="#application" id="ref-for-application③②">Application</a>.</p>
+who and what is being granted access. For example, it allows a single <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑤">Social Agent</a> or <a data-link-type="dfn" href="#application" id="ref-for-application③①">Application</a> to be specified, or a given <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑥">Social Agent</a> using a given <a data-link-type="dfn" href="#application" id="ref-for-application③②">Application</a>.</p>
    <p><a href="interop.ttl#AccessGrantSubject">Class Definition</a> - <a href="interop.shex#AccessGrantSubjectShape">Shape Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessGrantSubject">
     <colgroup>
@@ -2357,25 +2290,25 @@ who and what is being granted access. For example, it allows a single <a data-li
      <tr>
       <td>accessBySocialAgent
       <td><a href="#classSocialAgent">SocialAgent</a>
-      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑨">Social Agent</a> being granted access
+      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑦">Social Agent</a> being granted access
      <tr>
       <td>accessByApplication
       <td><a href="#classApplication">Application</a>
       <td><a data-link-type="dfn" href="#application" id="ref-for-application③③">Application</a> being granted access
    </table>
    <figure>
-    <figcaption>The <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①②">Access Grant Subject</a> of the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑨">Access Grant</a> at
+    <figcaption>The <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①②">Access Grant Subject</a> of the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑦">Access Grant</a> at
   https://alice.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d</figcaption>
-<pre class="include-code highlight">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>.</c->
-
-<c- nn>alice-grants</c-><c- p>:</c-><c- f>705563552198b6fb3efc40717872aa2ec35d669c1095cc5d665f499ec5d7e23a\/\#grant-subject</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c->
+<pre class="include-code highlight">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
+    <c- g>&lt;#data-grant-project></c-> <c- p>,</c->
+    <c- g>&lt;#data-grant-issue></c-> <c- p>,</c->
+    <c- g>&lt;#data-grant-task></c-> <c- p>,</c->
 </pre>
    </figure>
    <h3 class="heading settled" data-level="9.4" id="data-grant"><span class="secno">9.4. </span><span class="content">Data Grant</span><a class="self-link" href="#data-grant"></a></h3>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="data-grant①">Data Grant</dfn> records a decision made by a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⓪">Social Agent</a> to assign permissions for an <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①③">Access Grant Subject</a> to a <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③①">Data Registration</a>, in response to a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need③①">Access Need</a> that was
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="data-grant①">Data Grant</dfn> records a decision made by a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑧">Social Agent</a> to assign permissions for an <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①③">Access Grant Subject</a> to a <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③①">Data Registration</a>, in response to a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑦">Access Need</a> that was
 presented to them.</p>
-   <p>A <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①④">Data Grant</a> may have one or more <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant①">Referenced Data Grants</a>, when the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree③⑦">shape tree</a> associated via <code>interop:registeredShapeTree</code> has one or
+   <p>A <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①③">Data Grant</a> may inherit from another <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①④">Data Grant</a>, when the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②⑦">shape tree</a> associated via <code>interop:registeredShapeTree</code> has one or
 more <a data-link-type="dfn" href="#shape-tree-reference" id="ref-for-shape-tree-reference">Shape Tree References</a>.</p>
    <p>Each <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①⑤">Data Grant</a> has an assigned scope (<code>interop:scopeOfGrant</code>), which
 determines how permissions are assigned. The following types are
@@ -2385,43 +2318,54 @@ valid for a <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant
      <p><b><code>interop:AllInstances</code></b></p>
      <ul>
       <li data-md>
-       <p>Applies to all <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④②">Data Instances</a> belonging to
+       <p>Applies to all <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⓪">Data Instances</a> belonging to
 the associated <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③②">Data Registration</a>.</p>
       <li data-md>
        <p>Permissions will be set for the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①④">Access Grant Subject</a> on the <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③③">Data Registration</a> container,
-and will be inherited by all member <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④③">Data Instances</a>.</p>
+and will be inherited by all member <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④①">Data Instances</a>.</p>
      </ul>
     <li data-md>
      <p><b><code>interop:SelectedInstances</code></b></p>
      <ul>
       <li data-md>
-       <p>Applies only to selected <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④④">Data Instances</a> belonging to the associated <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③④">Data Registration</a>, which are linked
+       <p>Applies only to selected <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④②">Data Instances</a> belonging to the associated <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③④">Data Registration</a>, which are linked
 to the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①⑦">Data Grant</a> via <code>interop:hasDataInstance</code>.</p>
       <li data-md>
        <p>Permissions will be set for the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①⑤">Access Grant Subject</a> on
-each <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⑤">Data Instance</a>.</p>
+each <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④③">Data Instance</a>.</p>
      </ul>
+    <li data-md>
+     <p><b><code>interop:InheritInstances</code></b></p>
+    <li data-md>
+     <p>When the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①⑧">Data Grant</a> linked via <code>interop:inheritsFromGrant</code> has a scope of <code>interop:AllInstances</code>, or a scope
+ of <code>interop:SelectedInstances</code> with one
+ or more <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④④">Data Instances</a> selected, any inheriting <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①⑨">Data Grants</a> have the opportunity to narrow their own access scope to only include
+ "child" <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⑤">Data Instances</a> linked to the "parent" <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⑥">Data Instances</a>.</p>
+    <li data-md>
+     <p>The link must follow the <a data-link-type="dfn" href="#shape-tree-reference" id="ref-for-shape-tree-reference①">Shape Tree Reference</a> between
+the parent <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①⓪">Data Grant</a> shape tree and the inheriting <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①①">Data Grant</a> shape tree.</p>
+    <li data-md>
+     <p>Permissions are set conditionally for the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①⑥">Access Grant Subject</a>,
+and have the benefit of applying to current and future <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⑦">Data Instances</a> associated with a parent <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⑧">Data Instance</a>.</p>
     <li data-md>
      <p><b><code>interop:NoAccess</code></b></p>
      <ul>
       <li data-md>
-       <p>Indicates that no access is granted to the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①⑥">Access Grant Subject</a>.</p>
+       <p>Indicates that no access is granted to the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①⑦">Access Grant Subject</a>.</p>
       <li data-md>
-       <p>Applies to the entire <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③⑤">Data Registration</a> when there are no <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⑥">Data Instances</a> linked via <code>interop:hasDataInstance</code>.</p>
+       <p>Applies to the entire <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③⑤">Data Registration</a> when there are no <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⑨">Data Instances</a> linked via <code>interop:hasDataInstance</code>.</p>
       <li data-md>
-       <p>When there are <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⑦">Data Instances</a> linked via <code>interop:hasDataInstance</code>,
+       <p>When there are <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤⓪">Data Instances</a> linked via <code>interop:hasDataInstance</code>,
 this scope only applies to them.</p>
      </ul>
    </ul>
-   <p>When recording a <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①⑧">Data Grant</a> via <a href="https://solid.github.io/data-interoperability-panel/api/#grants-recordgrant">Solid Application Interoperability Operations and API § grants-recordgrant</a>:</p>
+   <p>When recording a <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①②">Data Grant</a> via <a href="https://solid.github.io/data-interoperability-panel/api/#grants-recordgrant">Solid Application Interoperability Operations and API § grants-recordgrant</a>:</p>
    <ul>
     <li data-md>
-     <p>There must be an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need③②">Access Need</a> linked via <code>interop:satisfiesAccessNeed</code> that
-belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group②④">Access Need Group</a> linked to the same <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②⓪">Access Grant</a>.</p>
+     <p>There must be an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑧">Access Need</a> linked via <code>interop:satisfiesAccessNeed</code> that
+belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group②④">Access Need Group</a> linked to the same <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑧">Access Grant</a>.</p>
     <li data-md>
-     <p>The <a data-link-type="dfn" href="#access-need" id="ref-for-access-need③③">Access Need</a> must link back to the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①⑨">Data Grant</a> via <code>interop:hasDataGrant</code>.</p>
-    <li data-md>
-     <p><a data-link-type="dfn" href="#access-need" id="ref-for-access-need③④">Access Need</a> and <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①⓪">Data Grant</a> must have the same <code>interop:registeredShapeTree</code></p>
+     <p><a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑨">Access Need</a> and <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①③">Data Grant</a> must have the same <code>interop:registeredShapeTree</code></p>
    </ul>
    <p><a href="interop.ttl#DataGrant">Class Definition</a> - <a href="interop.shex#DataGrantShape">Shape Definition</a> - <a href="interop.tree#DataGrantTree">Shape Tree Definition</a></p>
    <table align="left" class="classinfo data" id="classDataGrant">
@@ -2435,22 +2379,18 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
       <th>Description
     <tbody>
      <tr>
-      <td>hasAccessGrant
-      <td><a href="#classAccessGrant">AccessGrant</a>
-      <td><a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②①">Access Grant</a> that the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①①">Data Grant</a> belongs to
-     <tr>
-      <td>satisfiesAccessNeed
-      <td><a href="#classAccessNeed">AccessNeed</a>
-      <td>Links to the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need③⑤">Access Need</a> satisfied by the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①②">Data Grant</a>
+      <td>dataOwner
+      <td><a href="#classSocialAgent">SocialAgent</a>
+      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑨">Social Agent</a> that owns the data being granted
      <tr>
       <td>registeredShapeTree
       <td>st:ShapeTree
-      <td><a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③⑥">Data Registration</a> for the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree③⑧">shape tree</a> that access
+      <td><a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③⑥">Data Registration</a> for the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②⑧">shape tree</a> that access
       will be granted to
      <tr>
       <td>hasDataRegistration
       <td><a href="#classDataRegistration">DataRegistration</a>
-      <td><a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③⑦">Data Registration</a> for registeredShapeTree that the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①③">Data Grant</a> applies to
+      <td><a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③⑦">Data Registration</a> for registeredShapeTree that the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①④">Data Grant</a> applies to
      <tr>
       <td>accessMode
       <td>acl:Read, acl:Write, acl:Control, acl:Append
@@ -2465,34 +2405,34 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
       <td> interop:AllInstances, interop:SelectedInstances,
       interop:NoAccess
       <td>
-       Identifies the access scope of the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①④">Data Grant</a> 
+       Identifies the access scope of the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①⑤">Data Grant</a> 
        <ul>
         <li>interop:AllInstances - Scope includes
-              access to all <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⑧">Data Instances</a> of the associated <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③⑧">Data Registration</a>
+              access to all <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤①">Data Instances</a> of the associated <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③⑧">Data Registration</a>
         <li>interop:SelectedInstances - Scope includes
-              access only to those <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⑨">Data Instances</a> specifically
-              selected by the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧①">Social Agent</a>
+              access only to those <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤②">Data Instances</a> specifically
+              selected by the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⓪">Social Agent</a>
         <li>interop:NoAccess - No access is granted
        </ul>
      <tr>
       <td>hasDataInstance
       <td>Instance of registeredShapeTree
-      <td>Links to a <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤⓪">Data Instance</a> of registeredShapeTree.
+      <td>Links to a <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤③">Data Instance</a> of registeredShapeTree.
      <tr>
-      <td>hasReferencedDataGrant
-      <td><a href="#classReferencedDataGrant">ReferencedDataGrant</a>
-      <td>Links to a <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant②">Referenced Data Grant</a> when registeredShapeTree
-      has references to other shape trees that should be included
-      in authorization.
+      <td>inheritsFromGrant
+      <td><a href="#classDataGrant">DataGrant</a>
+      <td>Links to another <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①⑥">Data Grant</a> whose registeredShapeTree
+      references the shape tree associated with the current <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①⑦">Data Grant</a>.
+     <tr>
+      <td>satisfiesAccessNeed
+      <td><a href="#classAccessNeed">AccessNeed</a>
+      <td>Links to the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need③⓪">Access Need</a> satisfied by the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①⑧">Data Grant</a>
    </table>
    <figure>
-    <figcaption>A <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①⑤">Data Grant</a> in the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②②">Access Grant</a> at
-  https://alice.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d</figcaption>
-<pre class="include-code highlight">  <c- nn>interop</c-><c- p>:</c-><c- f>accessByApplication</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#id</c-> <c- p>.</c->
-
-<c- g>&lt;#data-grant-project></c->
+    <figcaption><a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①⑨">Data Grants</a> for Projects and Issues</figcaption>
+<pre class="include-code highlight"><c- g>&lt;#data-grant-project></c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrant</c-> <c- g>&lt;#grant></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- g>&lt;#need-project></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-work</c-><c- p>:</c-><c- f>data\/project-data-registration</c-> <c- p>;</c->
@@ -2500,152 +2440,24 @@ belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-acce
   <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Control</c-> <c- p>;</c->
   <c- c># Scope grants access to all instances in the project</c->
   <c- c># data registration, now and in the future, with no conditions</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasReferencedDataGrant</c->
-    <c- g>&lt;#data-grant-issue></c-> <c- p>,</c->
-    <c- g>&lt;#data-grant-task></c-> <c- p>,</c->
-</pre>
-   </figure>
-   <h3 class="heading settled" data-level="9.5" id="datamodel-referenced-data-grant"><span class="secno">9.5. </span><span class="content">Referenced Data Grant</span><a class="self-link" href="#datamodel-referenced-data-grant"></a></h3>
-   <div class="issue no-marker" id="issue-d41d8cd9"><a class="self-link" href="#issue-d41d8cd9"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/124" style="text-transform:none">solid/data-interoperability-panel/124</a><a href="https://github.com/solid/data-interoperability-panel/issues/124">Optimize referenced data grants and referenced access needs</a></div>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="referenced-data-grant">Referenced Data Grant</dfn> is linked from a <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①⑥">Data Grant</a>, and
-records a decision made by a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧②">Social Agent</a> to assign permissions for an <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①⑦">Access Grant Subject</a> to a <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③⑨">Data Registration</a>, based on a <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need①⓪">Referenced Access Need</a> that was presented to them. It stipulates that the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree③⑨">shape tree</a> of the <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant③">Referenced Data Grant</a> is effectively a "child"
-of the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree④⓪">shape tree</a> associated with the parent <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①⑦">Data Grant</a> that
-references it.</p>
-   <p>Like <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①⑧">Data Grants</a>, each <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant④">Referenced Data Grant</a> has an assigned
-scope (<code>interop:scopeOfGrant</code>), which
-determines how permissions are assigned. The following types are
-valid for a <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant⑤">Referenced Data Grant</a>:</p>
-   <ul>
-    <li data-md>
-     <p><b><code>interop:AllInstances</code></b></p>
-     <ul>
-      <li data-md>
-       <p>Applies to all <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤①">Data Instances</a> belonging to
-the associated <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①④⓪">Data Registration</a>.</p>
-      <li data-md>
-       <p>Permissions will be set for
-the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①⑧">Access Grant Subject</a> on the <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①④①">Data Registration</a> container,
-and will be inherited by all member <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤②">Data Instances</a>.</p>
-     </ul>
-    <li data-md>
-     <p><b><code>interop:InheritInstances</code></b></p>
-     <ul>
-      <li data-md>
-       <p>When the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①⑨">Data Grant</a> linked via <code>interop:hasDataGrant</code> has a scope of <code>interop:SelectedInstances</code>, and one
-or more <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤③">Data Instances</a> are selected, any <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant⑥">Referenced Data Grants</a> have the opportunity to narrow their own access scope to only include
-"child" <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤④">Data Instances</a> linked to the selected "parent" <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤⑤">Data Instances</a>.</p>
-      <li data-md>
-       <p>The link must follow the <a data-link-type="dfn" href="#shape-tree-reference" id="ref-for-shape-tree-reference①">Shape Tree Reference</a> between
-the parent <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⓪">Data Grant</a> shape tree and the <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant⑦">Referenced Data Grant</a> shape tree.</p>
-      <li data-md>
-       <p>Permissions are set conditionally for the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①⑨">Access Grant Subject</a>,
-and have the benefit of applying to current and future <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤⑥">Data Instances</a> associated with a parent <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤⑦">Data Instance</a>.</p>
-     </ul>
-    <li data-md>
-     <p><b><code>interop:SelectedInstances</code></b></p>
-     <ul>
-      <li data-md>
-       <p>Applies only to selected <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤⑧">Data Instances</a> belonging to the associated <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①④②">Data Registration</a>, which are linked
-to the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②①">Data Grant</a> via <code>interop:hasDataInstance</code>.</p>
-      <li data-md>
-       <p>Permissions will be set for the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①①⓪">Access Grant Subject</a> on
-each <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑤⑨">Data Instance</a>.</p>
-     </ul>
-    <li data-md>
-     <p><b><code>interop:NoAccess</code></b></p>
-     <ul>
-      <li data-md>
-       <p>Indicates that no access is granted to the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①①①">Access Grant Subject</a>.</p>
-      <li data-md>
-       <p>Applies to the entire <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①④③">Data Registration</a> when
-there are no <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑥⓪">Data Instances</a> linked via <code>interop:hasDataInstance</code>.</p>
-      <li data-md>
-       <p>When there are <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑥①">Data Instances</a> linked via <code>interop:hasDataInstance</code>,
-this scope only applies to them.</p>
-     </ul>
-   </ul>
-   <p>When recording a <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant⑧">Referenced Data Grant</a> via <a href="https://solid.github.io/data-interoperability-panel/api/#grants-recordgrant">Solid Application Interoperability Operations and API § grants-recordgrant</a>:</p>
-   <ul>
-    <li data-md>
-     <p>There must be a <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need①①">Referenced Access Need</a> linked via <code>interop:satisfiesAccessNeed</code> that
-belongs to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group②⑤">Access Need Group</a> linked to the same <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②③">Access Grant</a>.</p>
-    <li data-md>
-     <p>The <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need①②">Referenced Access Need</a> must link back to the <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant⑨">Referenced Data Grant</a> via <code>interop:hasReferencedDataGrant</code>.</p>
-    <li data-md>
-     <p><a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need①③">Referenced Access Need</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant①⓪">Referenced Data Grant</a> must have the same <code>interop:accessModes</code></p>
-    <li data-md>
-     <p><a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need①④">Referenced Access Need</a> and <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant①①">Referenced Data Grant</a> must have the same <code>interop:registeredShapeTree</code></p>
-   </ul>
-   <p><a href="interop.ttl#ReferencedDataGrant">Class Definition</a> - <a href="interop.shex#ReferencedDataGrantShape">Shape Definition</a> - <a href="interop.tree#ReferencedDataGrantTree">Shape Tree Definition</a></p>
-   <table align="left" class="classinfo data" id="classReferencedDataGrant">
-    <colgroup>
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th>Property
-      <th>Range
-      <th>Description
-    <tbody>
-     <tr>
-      <td>hasDataGrant
-      <td><a href="#classDataGrant">DataGrant</a>
-      <td><a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②②">Data Grant</a> that the <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant①②">Referenced Data Grant</a> belongs to
-     <tr>
-      <td>satisfiesAccessNeed
-      <td><a href="#classReferencedAccessNeed">ReferencedAccessNeed</a>
-      <td>Links to the <a data-link-type="dfn" href="#referenced-access-need" id="ref-for-referenced-access-need①⑤">Referenced Access Need</a> satisfied by the <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant①③">Referenced Data Grant</a>
-     <tr>
-      <td>registeredShapeTree
-      <td>st:ShapeTree
-      <td><a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①④④">Data Registration</a> for the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree④①">shape tree</a> that access
-      will be granted to
-     <tr>
-      <td>hasDataRegistration
-      <td><a href="#classDataRegistration">DataRegistration</a>
-      <td><a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①④⑤">Data Registration</a> for registeredShapeTree that the <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant①④">Referenced Data Grant</a> applies to
-     <tr>
-      <td>accessMode
-      <td>acl:Read, acl:Write, acl:Control, acl:Append
-      <td>Modes of access granted to the target data at hasRegistration
-     <tr>
-      <td>scopeOfGrant
-      <td> interop:AllInstances, interop:SelectedInstances,
-      interop:InheritInstances, interop:NoAccess
-      <td>
-       Identifies the access scope of the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②③">Data Grant</a> 
-       <ul>
-        <li>interop:AllInstances - Scope includes
-              access to all <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑥②">Data Instances</a> of the associated <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①④⑥">Data Registration</a>
-        <li>interop:SelectedInstances - Scope includes
-              access only to those <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑥③">Data Instances</a> specifically
-              selected by the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧③">Social Agent</a>
-        <li>interop:InheritInstances - Scope includes
-              access to <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑥④">Data Instances</a> inherited by
-              instances selected in the parent <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②④">Data Grant</a> 
-        <li>interop:NoAccess - No access is granted
-       </ul>
-     <tr>
-      <td>hasDataInstance
-      <td>Instance of registeredShapeTree
-      <td>Links to a <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑥⑤">Data Instance</a> of registeredShapeTree.
-   </table>
-   <figure>
-    <figcaption>A <a data-link-type="dfn" href="#referenced-data-grant" id="ref-for-referenced-data-grant①⑤">Referenced Data Grant</a> in the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②④">Access Grant</a> at
-  https://alice.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d</figcaption>
-<pre class="include-code highlight"><c- g>&lt;#data-grant-issue></c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ReferencedDataGrant</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>.</c->
+
+
+<c- g>&lt;#data-grant-issue></c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- g>&lt;#need-issue></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>IssueTree</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-work</c-><c- p>:</c-><c- f>data\/issue-data-registration</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Control</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllInstances</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c-> <c- g>&lt;#data-grant-project></c-> <c- p>.</c->
 </pre>
    </figure>
-   <h3 class="heading settled" data-level="9.6" id="datamodel-trusted-grant"><span class="secno">9.6. </span><span class="content">Trusted Grant</span><a class="self-link" href="#datamodel-trusted-grant"></a></h3>
+   <h3 class="heading settled" data-level="9.5" id="datamodel-trusted-grant"><span class="secno">9.5. </span><span class="content">Trusted Grant</span><a class="self-link" href="#datamodel-trusted-grant"></a></h3>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="trusted-grant">Trusted Grant</dfn> records a decision made by a
-given <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧④">Social Agent</a> to trust another with elevated access to any <a data-link-type="dfn" href="#registry" id="ref-for-registry⑦">Registries</a>, <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑧">Registry Set</a>, or <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document⑦">Identity Profile Document</a> for the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑤">Social Agent</a>, based on a <a data-link-type="dfn" href="#trusted-need" id="ref-for-trusted-need①①">Trusted Need</a> that was
+given <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧①">Social Agent</a> to trust another with elevated access to any <a data-link-type="dfn" href="#registry" id="ref-for-registry⑦">Registries</a>, <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑧">Registry Set</a>, or <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document⑦">Identity Profile Document</a> for the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧②">Social Agent</a>, based on a <a data-link-type="dfn" href="#trusted-need" id="ref-for-trusted-need①①">Trusted Need</a> that was
 presented to them.</p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="trusted-agent">Trusted Agent</dfn> is an <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②②">Agent</a> that been granted elevated
 access through a <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant④">Trusted Grant</a>.</p>
@@ -2658,7 +2470,7 @@ valid for a <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-gr
     <li data-md>
      <p><b><code>interop:TrustedAccess</code></b> - Applies to trusted resource linked
 via <code>interop:trustedWith</code>. Permissions will
-be set for the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①①②">Access Grant Subject</a> on the trusted resource. If <code>trustedWithType</code> is for the <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑨">Registry Set</a>, the permissions
+be set for the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①⑧">Access Grant Subject</a> on the trusted resource. If <code>trustedWithType</code> is for the <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑨">Registry Set</a>, the permissions
 will be applied to the <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set①⓪">Registry Set</a> resource, as well as all of
 the <a data-link-type="dfn" href="#registry" id="ref-for-registry⑧">Registries</a> linked from it.</p>
     <li data-md>
@@ -2681,18 +2493,18 @@ nor to the <a data-link-type="dfn" href="#registry" id="ref-for-registry⑨">Reg
      <tr>
       <td>hasAccessGrant
       <td><a href="#classAccessGrant">AccessGrant</a>
-      <td><a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②⑤">Access Grant</a> that the <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant⑧">Trusted Grant</a> belongs to
+      <td><a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑨">Access Grant</a> that the <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant⑧">Trusted Grant</a> belongs to
      <tr>
       <td>satisfiesTrustedNeed
       <td><a href="#classTrustedNeed">TrustedNeed</a>
       <td>Links to the <a data-link-type="dfn" href="#trusted-need" id="ref-for-trusted-need①②">Trusted Need</a> satisfied by the <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant⑨">Trusted Grant</a>
      <tr>
       <td>trustedWith
-      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑥">Social Agent</a>, <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set①③">Registry Set</a>, <a data-link-type="dfn" href="#registry" id="ref-for-registry①⓪">Registry</a>
+      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧③">Social Agent</a>, <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set①③">Registry Set</a>, <a data-link-type="dfn" href="#registry" id="ref-for-registry①⓪">Registry</a>
       <td>
        Identifies the primary trusted resource of the <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant①⓪">Trusted Grant</a> 
        <ul>
-        <li><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑦">Social Agent</a> - Access to the profile document of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑧">Social Agent</a>
+        <li><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧④">Social Agent</a> - Access to the profile document of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑤">Social Agent</a>
         <li><a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set①④">Registry Set</a> - Access to the specified <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set①⑤">Registry Set</a> and all of the <a data-link-type="dfn" href="#registry" id="ref-for-registry①①">Registries</a> linked to it
         <li><a data-link-type="dfn" href="#registry" id="ref-for-registry①②">Registry</a> - Access to the specified <a data-link-type="dfn" href="#registry" id="ref-for-registry①③">Registry</a>,
           as well as all <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-containing-service-worker-registration" id="ref-for-dfn-containing-service-worker-registration">Registrations</a> linked to it
@@ -2718,20 +2530,20 @@ nor to the <a data-link-type="dfn" href="#registry" id="ref-for-registry⑨">Reg
       <td>interop:NoAccess, interop:TrustedAccess
       <td>Current scope of trusted access
    </table>
-   <h3 class="heading settled" data-level="9.7" id="datamodel-access-invitation"><span class="secno">9.7. </span><span class="content">Access Invitation</span><a class="self-link" href="#datamodel-access-invitation"></a></h3>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-invitation">Access Invitation</dfn> is a subclass of <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②⑥">Access Grant</a> used when
-a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑨">Social Agent</a> wishes to grant access to another <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⓪">Social Agent</a> whose
+   <h3 class="heading settled" data-level="9.6" id="datamodel-access-invitation"><span class="secno">9.6. </span><span class="content">Access Invitation</span><a class="self-link" href="#datamodel-access-invitation"></a></h3>
+   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-invitation">Access Invitation</dfn> is a subclass of <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②⓪">Access Grant</a> used when
+a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑥">Social Agent</a> wishes to grant access to another <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑦">Social Agent</a> whose
 decentralized <a data-link-type="dfn" href="#identity" id="ref-for-identity④">identity</a> is unknown to them, or may not exist yet, so they
 must be first invited through another channel (such as phone or email).</p>
-   <p>Like an <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②⑦">Access Grant</a>, an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation③">Access Invitation</a> links to access
-criteria detailed in one or more <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group②⑥">Access Need Groups</a>, with
-associated <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⑤">Data Grants</a> or <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant①①">Trusted Grants</a> indicating the
+   <p>Like an <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②①">Access Grant</a>, an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation③">Access Invitation</a> links to access
+criteria detailed in one or more <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group②⑤">Access Need Groups</a>, with
+associated <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⓪">Data Grants</a> or <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant①①">Trusted Grants</a> indicating the
 intended access to be granted.</p>
-   <p>However, instead of linking to an <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①①③">Access Grant Subject</a>, an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation④">Access Invitation</a> links to one or more <a data-link-type="dfn" href="#access-invitation-channel" id="ref-for-access-invitation-channel">Access Invitation Channels</a>.</p>
+   <p>However, instead of linking to an <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①⑨">Access Grant Subject</a>, an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation④">Access Invitation</a> links to one or more <a data-link-type="dfn" href="#access-invitation-channel" id="ref-for-access-invitation-channel">Access Invitation Channels</a>.</p>
    <p>Each channel represents a mechanism through which the invitation can
 be delivered and validated. The mechanism is designed so that multiple
 channels may be validated before an invitation is confirmed and
-converted to an <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②⑧">Access Grant</a>.</p>
+converted to an <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②②">Access Grant</a>.</p>
    <p><a href="interop.ttl#AccessInvitation">Class Definition</a> - <a href="interop.shex#AccessInvitationShape">Shape Definition</a> - <a href="interop.tree#AccessInvitationTree">Shape Tree Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessInvitation">
     <colgroup>
@@ -2746,7 +2558,7 @@ converted to an <a data-link-type="dfn" href="#access-grant①" id="ref-for-acce
      <tr>
       <td>registeredBy
       <td><a href="#classSocialAgent">SocialAgent</a>
-      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨①">Social Agent</a> that registered the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation⑤">Access Invitation</a>
+      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑧">Social Agent</a> that registered the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation⑤">Access Invitation</a>
      <tr>
       <td>registeredWith
       <td><a href="#classApplication">Application</a>
@@ -2770,12 +2582,12 @@ converted to an <a data-link-type="dfn" href="#access-grant①" id="ref-for-acce
      <tr>
       <td>hasAccessNeedGroup
       <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
-      <td>Links to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group②⑦">Access Need Group</a> associated with
+      <td>Links to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group②⑥">Access Need Group</a> associated with
       the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation①⓪">Access Invitation</a>.
      <tr>
       <td>hasDataGrant
       <td><a href="#classDataGrant">DataGrant</a>
-      <td>Links to a <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⑥">Data Grant</a> associated with the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation①①">Access Invitation</a>.
+      <td>Links to a <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②①">Data Grant</a> associated with the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation①①">Access Invitation</a>.
      <tr>
       <td>hasTrustedGrant
       <td><a href="#classTrustedGrant">TrustedGrant</a>
@@ -2784,9 +2596,7 @@ converted to an <a data-link-type="dfn" href="#access-grant①" id="ref-for-acce
    <figure>
     <figcaption>An <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation①③">Access Invitation</a> at
   https://alice.example/grants/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f</figcaption>
-<pre class="include-code highlight"><c- k>PREFIX</c-> <c- nn>acl:</c-> <c- g>&lt;http://www.w3.org/ns/auth/acl#></c->
-
-<c- nn>alice-grants</c-><c- p>:</c-><c- f>08c5ae76-6c83-46f8-8e1d-eb14219e7f5f\/</c->
+<pre class="include-code highlight"><c- nn>alice-grants</c-><c- p>:</c-><c- f>08c5ae76-6c83-46f8-8e1d-eb14219e7f5f\/</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessInvitation</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- nn>authz-agent</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c->
@@ -2794,9 +2604,16 @@ converted to an <a data-link-type="dfn" href="#access-grant①" id="ref-for-acce
   <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-13T19:32:52Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>expiresAt</c-> <c- s>"2020-09-20T19:32:52Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
+    <c- g>&lt;#data-grant-project></c-> <c- p>,</c->
+    <c- g>&lt;#data-grant-issue></c-> <c- p>,</c->
+    <c- g>&lt;#data-grant-task></c-> <c- p>,</c->
+    <c- g>&lt;#data-grant-milestone></c-> <c- p>,</c->
+    <c- g>&lt;#data-grant-release></c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessInvitationChannel</c-> <c- g>&lt;#phone-channel></c-> <c- p>,</c-> <c- g>&lt;#email-channel></c-> <c- p>.</c->
 </pre>
    </figure>
-   <h3 class="heading settled" data-level="9.8" id="datamodel-access-invitation-channel"><span class="secno">9.8. </span><span class="content">Access Invitation Channel</span><a class="self-link" href="#datamodel-access-invitation-channel"></a></h3>
+   <h3 class="heading settled" data-level="9.7" id="datamodel-access-invitation-channel"><span class="secno">9.7. </span><span class="content">Access Invitation Channel</span><a class="self-link" href="#datamodel-access-invitation-channel"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-invitation-channel">Access Invitation Channel</dfn> represents a mechanism through
 which an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation①④">Access Invitation</a> can be delivered and validated.</p>
    <p><a href="interop.ttl#AccessInvitationChannel">Class Definition</a> - <a href="interop.shex#AccessInvitationChannelShape">Shape Definition</a></p>
@@ -2839,9 +2656,7 @@ which an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-in
    <figure>
     <figcaption><a data-link-type="dfn" href="#access-invitation-channel" id="ref-for-access-invitation-channel②">Access Invitation Channels</a> in the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation①⑤">Access Invitation</a> at
   https://alice.example/grants/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f</figcaption>
-<pre class="include-code highlight">  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessInvitationChannel</c-> <c- g>&lt;#phone-channel></c-> <c- p>,</c-> <c- g>&lt;#email-channel></c-> <c- p>.</c->
-
-<c- g>&lt;#phone-channel></c->
+<pre class="include-code highlight"><c- g>&lt;#phone-channel></c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>PhoneInvitationChannel</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>channelTarget</c-> <c- s>"(555) 555-1212"</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>channelCode</c-> <c- s>"654345"</c-> <c- p>;</c->
@@ -2852,9 +2667,11 @@ which an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-in
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>EmailInvitationChannel</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>channelTarget</c-> <c- s>"bob@example.com"</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>channelCode</c-> <c- s>"434567"</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>isValidated</c-> <c- l>true</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>remainingAttempts</c-> <c- mi>3</c-> <c- p>.</c->
 </pre>
    </figure>
-   <h3 class="heading settled" data-level="9.9" id="grants-hierarchy"><span class="secno">9.9. </span><span class="content">Resource Hierarchy</span><a class="self-link" href="#grants-hierarchy"></a></h3>
+   <h3 class="heading settled" data-level="9.8" id="grants-hierarchy"><span class="secno">9.8. </span><span class="content">Resource Hierarchy</span><a class="self-link" href="#grants-hierarchy"></a></h3>
    <table align="left" class="data tree">
     <colgroup>
      <col>
@@ -2900,16 +2717,16 @@ which an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-in
       <td><a href="interop.tree#AccessGrantTree">AccessGrantTree</a>
    </table>
    <p>The <a data-link-type="dfn" href="#access-grant-registry①" id="ref-for-access-grant-registry①⑥">Access Grant Registry</a> resources MAY use any resource or subject name.</p>
-   <p>The resource names for <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②⑨">Access Grants</a> <em class="rfc2119">SHOULD</em> be unpredictable.</p>
+   <p>The resource names for <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②③">Access Grants</a> <em class="rfc2119">SHOULD</em> be unpredictable.</p>
    <h2 class="heading settled" data-level="10" id="receipts"><span class="secno">10. </span><span class="content">Access Receipts</span><a class="self-link" href="#receipts"></a></h2>
-   <p>When a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨②">Social Agent</a> grants access to another <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨③">Social Agent</a> or <a data-link-type="dfn" href="#application" id="ref-for-application③⑤">Application</a>, an <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt①">Access Receipt</a> is provided to the grantee that 
+   <p>When a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑨">Social Agent</a> grants access to another <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⓪">Social Agent</a> or <a data-link-type="dfn" href="#application" id="ref-for-application③⑤">Application</a>, an <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt①">Access Receipt</a> is provided to the grantee that 
 communicates what they have been given access to, and why.</p>
-   <p><a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt②">Access Receipts</a> are sent to a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨④">Social Agent’s</a> Access Inbox. When the
-grantee is an <a data-link-type="dfn" href="#application" id="ref-for-application③⑥">Application</a>, the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑤">Social Agent</a> will store the <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt③">Access Receipt</a> in an <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①⑨">Application Registration</a> in their <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry⑥">Agent Registry</a>.</p>
-   <p><a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt④">Access Receipts</a> received by a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑥">Social Agent</a> are used to
-populate data shared from other <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑦">Social Agents</a> in the <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry⑦">Agent Registry</a>. This allows the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑧">Social Agent</a> and their <a data-link-type="dfn" href="#application" id="ref-for-application③⑦">Applications</a> to lookup and access data 
+   <p><a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt②">Access Receipts</a> are sent to a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨①">Social Agent’s</a> Access Inbox. When the
+grantee is an <a data-link-type="dfn" href="#application" id="ref-for-application③⑥">Application</a>, the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨②">Social Agent</a> will store the <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt③">Access Receipt</a> in an <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①⑨">Application Registration</a> in their <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry⑥">Agent Registry</a>.</p>
+   <p><a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt④">Access Receipts</a> received by a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨③">Social Agent</a> are used to
+populate data shared from other <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨④">Social Agents</a> in the <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry⑦">Agent Registry</a>. This allows the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑤">Social Agent</a> and their <a data-link-type="dfn" href="#application" id="ref-for-application③⑦">Applications</a> to lookup and access data 
 that been shared with them.</p>
-   <p>When a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑨">Social Agent</a> receives an <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt⑤">Access Receipt</a>, it is stored in their <a data-link-type="dfn" href="#access-receipt-registry①" id="ref-for-access-receipt-registry①①">Access Receipt Registry</a>.</p>
+   <p>When a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑥">Social Agent</a> receives an <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt⑤">Access Receipt</a>, it is stored in their <a data-link-type="dfn" href="#access-receipt-registry①" id="ref-for-access-receipt-registry①①">Access Receipt Registry</a>.</p>
    <p class="note" role="note"><span>Note:</span> See <a href="https://solid.github.io/data-interoperability-panel/api/#receipts">Solid Application Interoperability Operations and API</a> for a detailed explanation of how Access Receipts should be processed.</p>
    <h3 class="heading settled" data-level="10.1" id="access-receipt-registry"><span class="secno">10.1. </span><span class="content">Access Receipt Registry</span><a class="self-link" href="#access-receipt-registry"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-receipt-registry①">Access Receipt Registry</dfn> is a collection of <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt⑥">Access Receipts</a> stored in a specific location in a <a data-link-type="dfn" href="#pod" id="ref-for-pod①">pod</a>.</p>
@@ -2940,11 +2757,11 @@ that been shared with them.</p>
 </pre>
    </figure>
    <h3 class="heading settled" data-level="10.2" id="datamodel-access-receipt"><span class="secno">10.2. </span><span class="content">Access Receipt</span><a class="self-link" href="#datamodel-access-receipt"></a></h3>
-   <p>A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⓪">Social Agent</a> provides an <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-receipt">Access Receipt</dfn> to another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②③">Agent</a> after granting them access to some scope of data as the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①①④">Access Grant Subject</a> of an <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①③⓪">Access Grant</a>.</p>
-   <p><a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt⑧">Access Receipts</a> extend the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①③①">Access Grant</a> class with additional
+   <p>A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑦">Social Agent</a> provides an <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-receipt">Access Receipt</dfn> to another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②③">Agent</a> after granting them access to some scope of data as the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①①⓪">Access Grant Subject</a> of an <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②④">Access Grant</a>.</p>
+   <p><a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt⑧">Access Receipts</a> extend the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②⑤">Access Grant</a> class with additional
 properties that provide context to the recipient. Otherwise, they
-retain the same structure, linked to any <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group②⑧">Access Need Groups</a> used to
-formulate the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①③②">Access Grant</a>, as well as any <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⑦">Data Grants</a> or <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant①③">Trusted Grants</a> that detail the scope
+retain the same structure, linked to any <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group②⑦">Access Need Groups</a> used to
+formulate the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①②⑥">Access Grant</a>, as well as any <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②②">Data Grants</a> or <a data-link-type="dfn" href="#trusted-grant" id="ref-for-trusted-grant①③">Trusted Grants</a> that detail the scope
 of access granted.</p>
    <p><a href="interop.ttl#AccessReceipt">Class Definition</a> - <a href="interop.shex#AccessReceiptShape">Shape Definition</a> - <a href="interop.tree#AccessReceiptTree">Shape Tree Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessReceipt">
@@ -2980,25 +2797,25 @@ of access granted.</p>
      <tr>
       <td>fromSocialAgent
       <td><a href="#classSocialAgent">SocialAgent</a>
-      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪①">Social Agent</a> whose data is being shared through the <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt①④">Access Receipt</a>
+      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑧">Social Agent</a> whose data is being shared through the <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt①④">Access Receipt</a>
      <tr>
       <td>viaSocialAgent
       <td><a href="#classSocialAgent">SocialAgent</a>
-      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪②">Social Agent</a> who granted access and delivered the <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt①⑤">Access Receipt</a>.
+      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑨">Social Agent</a> who granted access and delivered the <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt①⑤">Access Receipt</a>.
       This can be different than <code>fromSocialAgent</code> when access is being managed
       by a <a data-link-type="dfn" href="#trusted-agent" id="ref-for-trusted-agent③">Trusted Agent</a> of <code>fromSocialAgent</code>.
      <tr>
       <td>hasAccessGrantSubject
       <td><a href="#classAccessGrantSubject">AccessGrantSubject</a>
-      <td>Links to the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①①⑤">Access Grant Subject</a> that was granted access.
+      <td>Links to the <a data-link-type="dfn" href="#access-grant-subject①" id="ref-for-access-grant-subject①①①">Access Grant Subject</a> that was granted access.
      <tr>
       <td>hasAccessNeedGroup
       <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
-      <td>Links to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group②⑨">Access Need Group</a> associated with the <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt①⑥">Access Receipt</a>.
+      <td>Links to an <a data-link-type="dfn" href="#access-need-group" id="ref-for-access-need-group②⑧">Access Need Group</a> associated with the <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt①⑥">Access Receipt</a>.
      <tr>
       <td>hasDataGrant
       <td><a href="#classDataGrant">DataGrant</a>
-      <td>Links to a <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⑧">Data Grant</a> associated with the <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt①⑦">Access Receipt</a>.
+      <td>Links to a <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②③">Data Grant</a> associated with the <a data-link-type="dfn" href="#access-receipt" id="ref-for-access-receipt①⑦">Access Receipt</a>.
      <tr>
       <td>hasTrustedGrant
       <td><a href="#classTrustedGrant">TrustedGrant</a>
@@ -3062,12 +2879,12 @@ of access granted.</p>
    <p>For authorization purposes, client <a data-link-type="dfn" href="#application" id="ref-for-application③⑨">Applications</a> in use today fall into
 two buckets:</p>
    <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="strongly-identifiable-applications">Strongly identifiable applications</dfn> can be identified by
-third parties independently from the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪③">Social Agent</a> controlling them.
+third parties independently from the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⓪">Social Agent</a> controlling them.
 Only <a data-link-type="dfn" href="#server-side-application" id="ref-for-server-side-application">server-side applications</a> are
 strongly identifiable. As confidential clients, they can keep secrets
 and can present attestations and third-party credentials
 via DNS / domain certificates.</p>
-   <p>In the case of a <a data-link-type="dfn" href="#strongly-identifiable-applications" id="ref-for-strongly-identifiable-applications">strongly identifiable application</a>, the <a data-link-type="dfn" href="#application" id="ref-for-application④⓪">Application</a> has its own <a data-link-type="dfn" href="#identity" id="ref-for-identity⑤">identity</a>. A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪④">Social Agent</a> can authorize a given <a data-link-type="dfn" href="#application" id="ref-for-application④①">Application</a> to access data based solely on the <a data-link-type="dfn" href="#identity" id="ref-for-identity⑥">identity</a> of that <a data-link-type="dfn" href="#application" id="ref-for-application④②">Application</a>.</p>
+   <p>In the case of a <a data-link-type="dfn" href="#strongly-identifiable-applications" id="ref-for-strongly-identifiable-applications">strongly identifiable application</a>, the <a data-link-type="dfn" href="#application" id="ref-for-application④⓪">Application</a> has its own <a data-link-type="dfn" href="#identity" id="ref-for-identity⑤">identity</a>. A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪①">Social Agent</a> can authorize a given <a data-link-type="dfn" href="#application" id="ref-for-application④①">Application</a> to access data based solely on the <a data-link-type="dfn" href="#identity" id="ref-for-identity⑥">identity</a> of that <a data-link-type="dfn" href="#application" id="ref-for-application④②">Application</a>.</p>
    <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="weakly-identifiable-applications">Weakly identifiable applications</dfn> include in-browser Javascript <a data-link-type="dfn" href="#application" id="ref-for-application④③">Applications</a> and native desktop or mobile <a data-link-type="dfn" href="#application" id="ref-for-application④④">Applications</a>. They are
 considered weakly identifiable because they
 are not able to keep secrets on an instance level. They are often referred to
@@ -3075,12 +2892,12 @@ as public clients. Native apps should be strongly-identifiable in theory
 (since they are able to keep secrets on an instance level), but not in
 practice because the OS manufacturers do not make their trust
 infrastructure available. Weakly identifiable clients are only strongly
-identifiable to the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑤">Social Agent</a> controlling them.</p>
+identifiable to the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪②">Social Agent</a> controlling them.</p>
    <p>In the case of <a data-link-type="dfn" href="#weakly-identifiable-applications" id="ref-for-weakly-identifiable-applications">Weakly identifiable applications</a>, the ability for a Solid
 pod to limit access to data by the <a data-link-type="dfn" href="#application" id="ref-for-application④⑤">Application</a> in use is only as strong as
-the trustworthiness of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑥">Social Agent</a> piloting that <a data-link-type="dfn" href="#application" id="ref-for-application④⑥">Application</a>, along with
+the trustworthiness of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪③">Social Agent</a> piloting that <a data-link-type="dfn" href="#application" id="ref-for-application④⑥">Application</a>, along with
 their ability to avoid using malicious <a data-link-type="dfn" href="#application" id="ref-for-application④⑦">Applications</a>. The <a data-link-type="dfn" href="#identity" id="ref-for-identity⑦">identity</a> of the <a data-link-type="dfn" href="#application" id="ref-for-application④⑧">Application</a> can be manipulated
-by the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑦">Social Agent</a> in control. This means that Alice can strongly control
+by the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪④">Social Agent</a> in control. This means that Alice can strongly control
 the <a data-link-type="dfn" href="#application" id="ref-for-application④⑨">Applications</a> that she uses to access her own data, but has
 limited ability to control the <a data-link-type="dfn" href="#application" id="ref-for-application⑤⓪">Applications</a> that Bob uses to access the data
 she shares with him.</p>
@@ -3141,7 +2958,7 @@ related resources as a single grouping, and apply that to a range of
 operations including access control, data organization, data validation,
 and data migration. <a data-link-type="biblio" href="#biblio-shapetrees">[SHAPETREES]</a></p>
    <p>A <dfn data-dfn-type="dfn" data-noexport id="shape-tree-decorator">Shape Tree Decorator<a class="self-link" href="#shape-tree-decorator"></a></dfn> provides additional human-readable
-description and context for a given <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree④②">shape tree</a>.</p>
+description and context for a given <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②⑨">shape tree</a>.</p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="shape-tree-reference">Shape Tree Reference</dfn> provides the necessary context to
 associate instances of related shape trees via a ShapePath</p>
   </main>
@@ -3190,23 +3007,23 @@ associate instances of related shape trees via a ShapePath</p>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#access-decorator-index">Access Decorator Index</a><span>, in § 8.6</span>
-   <li><a href="#access-decorator-resource">Access Decorator Resource</a><span>, in § 8.7</span>
-   <li><a href="#access-decorator-series">Access Decorator Series</a><span>, in § 8.6.1</span>
-   <li><a href="#access-decorator-version">Access Decorator Version</a><span>, in § 8.6.2</span>
+   <li><a href="#access-decorator-index">Access Decorator Index</a><span>, in § 8.5</span>
+   <li><a href="#access-decorator-resource">Access Decorator Resource</a><span>, in § 8.6</span>
+   <li><a href="#access-decorator-series">Access Decorator Series</a><span>, in § 8.5.1</span>
+   <li><a href="#access-decorator-version">Access Decorator Version</a><span>, in § 8.5.2</span>
    <li><a href="#access-grant①">Access Grant</a><span>, in § 9.2</span>
    <li><a href="#access-grant-registry①">Access Grant Registry</a><span>, in § 9.1</span>
    <li><a href="#access-grant-subject①">Access Grant Subject</a><span>, in § 9.3</span>
-   <li><a href="#access-invitation">Access Invitation</a><span>, in § 9.7</span>
-   <li><a href="#access-invitation-channel">Access Invitation Channel</a><span>, in § 9.8</span>
+   <li><a href="#access-invitation">Access Invitation</a><span>, in § 9.6</span>
+   <li><a href="#access-invitation-channel">Access Invitation Channel</a><span>, in § 9.7</span>
    <li><a href="#access-mode">access mode</a><span>, in § 12</span>
    <li><a href="#access-need">Access Need</a><span>, in § 8.2</span>
-   <li><a href="#access-need-decorator">Access Need Decorator</a><span>, in § 8.7.2</span>
+   <li><a href="#access-need-decorator">Access Need Decorator</a><span>, in § 8.6.2</span>
    <li><a href="#access-need-group">Access Need Group</a><span>, in § 8.1</span>
-   <li><a href="#access-need-group-decorator">Access Need Group Decorator</a><span>, in § 8.7.1</span>
+   <li><a href="#access-need-group-decorator">Access Need Group Decorator</a><span>, in § 8.6.1</span>
    <li><a href="#access-receipt">Access Receipt</a><span>, in § 10.2</span>
    <li><a href="#access-receipt-registry①">Access Receipt Registry</a><span>, in § 10.1</span>
-   <li><a href="#access-request">Access Request</a><span>, in § 8.5</span>
+   <li><a href="#access-request">Access Request</a><span>, in § 8.4</span>
    <li><a href="#acl-resource">acl resource</a><span>, in § 12</span>
    <li><a href="#agent-registrations">Agent Registrations</a><span>, in § 5.1</span>
    <li><a href="#agent-registry">Agent Registry</a><span>, in § 5.1</span>
@@ -3227,8 +3044,6 @@ associate instances of related shape trees via a ShapePath</p>
    <li><a href="#identity">identity</a><span>, in § 12</span>
    <li><a href="#identity-profile-document">identity profile document</a><span>, in § 12</span>
    <li><a href="#pod">pod</a><span>, in § 12</span>
-   <li><a href="#referenced-access-need">Referenced Access Need</a><span>, in § 8.3</span>
-   <li><a href="#referenced-data-grant">Referenced Data Grant</a><span>, in § 9.5</span>
    <li><a href="#registry">Registry</a><span>, in § 3</span>
    <li><a href="#registry-set">Registry Set</a><span>, in § 3.1</span>
    <li><a href="#server-side-application">server-side application</a><span>, in § 12</span>
@@ -3240,9 +3055,9 @@ associate instances of related shape trees via a ShapePath</p>
    <li><a href="#social-agent-registration①">Social Agent Registration</a><span>, in § 5.2</span>
    <li><a href="#solid">Solid</a><span>, in § 12</span>
    <li><a href="#strongly-identifiable-applications">Strongly identifiable applications</a><span>, in § 11.1</span>
-   <li><a href="#trusted-agent">Trusted Agent</a><span>, in § 9.6</span>
-   <li><a href="#trusted-grant">Trusted Grant</a><span>, in § 9.6</span>
-   <li><a href="#trusted-need">Trusted Need</a><span>, in § 8.4</span>
+   <li><a href="#trusted-agent">Trusted Agent</a><span>, in § 9.5</span>
+   <li><a href="#trusted-grant">Trusted Grant</a><span>, in § 9.5</span>
+   <li><a href="#trusted-need">Trusted Need</a><span>, in § 8.3</span>
    <li><a href="#user-piloted-application">user-piloted application</a><span>, in § 12</span>
    <li><a href="#weakly-identifiable-applications">Weakly identifiable applications</a><span>, in § 11.1</span>
    <li><a href="#webid">WebID</a><span>, in § 12</span>
@@ -3250,7 +3065,7 @@ associate instances of related shape trees via a ShapePath</p>
   <aside class="dfn-panel" data-for="term-for-dfn-containing-service-worker-registration">
    <a href="https://w3c.github.io/ServiceWorker/#dfn-containing-service-worker-registration">https://w3c.github.io/ServiceWorker/#dfn-containing-service-worker-registration</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-containing-service-worker-registration">9.6. Trusted Grant</a>
+    <li><a href="#ref-for-dfn-containing-service-worker-registration">9.5. Trusted Grant</a>
    </ul>
   </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
@@ -3288,10 +3103,6 @@ associate instances of related shape trees via a ShapePath</p>
    <dt id="biblio-webid-oidc">[WEBID-OIDC]
    <dd>Dmitri Zagidulin. <a href="https://github.com/solid/webid-oidc-spec"><cite>WebID-OIDC Authentication Specification</cite></a>. URL: <a href="https://github.com/solid/webid-oidc-spec">https://github.com/solid/webid-oidc-spec</a>
   </dl>
-  <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
-  <div style="counter-reset:issue">
-   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/124" style="text-transform:none">solid/data-interoperability-panel/124</a><a href="https://github.com/solid/data-interoperability-panel/issues/124">Optimize referenced data grants and referenced access needs</a><a href="#issue-d41d8cd9"> ↵ </a></div>
-  </div>
   <aside class="dfn-panel" data-for="agents①">
    <b><a href="#agents①">#agents①</a></b><b>Referenced in:</b>
    <ul>
@@ -3302,9 +3113,9 @@ associate instances of related shape trees via a ShapePath</p>
     <li><a href="#ref-for-agents①①⑤">5. Registering Agents</a>
     <li><a href="#ref-for-agents①①⑥">6.4. Permission Model</a> <a href="#ref-for-agents①①⑦">(2)</a>
     <li><a href="#ref-for-agents①①⑧">7. Data Authorization</a>
-    <li><a href="#ref-for-agents①①⑨">8.5. Access Request</a>
+    <li><a href="#ref-for-agents①①⑨">8.4. Access Request</a>
     <li><a href="#ref-for-agents①②⓪">9. Access Grants</a> <a href="#ref-for-agents①②①">(2)</a>
-    <li><a href="#ref-for-agents①②②">9.6. Trusted Grant</a>
+    <li><a href="#ref-for-agents①②②">9.5. Trusted Grant</a>
     <li><a href="#ref-for-agents①②③">10.2. Access Receipt</a>
     <li><a href="#ref-for-agents①②④">12. Definitions</a> <a href="#ref-for-agents①②⑤">(2)</a> <a href="#ref-for-agents①②⑥">(3)</a> <a href="#ref-for-agents①②⑦">(4)</a> <a href="#ref-for-agents①②⑧">(5)</a> <a href="#ref-for-agents①②⑨">(6)</a> <a href="#ref-for-agents①③⓪">(7)</a>
    </ul>
@@ -3331,20 +3142,18 @@ associate instances of related shape trees via a ShapePath</p>
     <li><a href="#ref-for-social-agent⑤②">8. Access Needs</a> <a href="#ref-for-social-agent⑤③">(2)</a> <a href="#ref-for-social-agent⑤④">(3)</a> <a href="#ref-for-social-agent⑤⑤">(4)</a> <a href="#ref-for-social-agent⑤⑥">(5)</a> <a href="#ref-for-social-agent⑤⑦">(6)</a>
     <li><a href="#ref-for-social-agent⑤⑧">8.1. Access Need Group</a> <a href="#ref-for-social-agent⑤⑨">(2)</a> <a href="#ref-for-social-agent⑥⓪">(3)</a>
     <li><a href="#ref-for-social-agent⑥①">8.2. Access Need</a> <a href="#ref-for-social-agent⑥②">(2)</a>
-    <li><a href="#ref-for-social-agent⑥③">8.3. Referenced Access Need</a> <a href="#ref-for-social-agent⑥④">(2)</a>
-    <li><a href="#ref-for-social-agent⑥⑤">8.5. Access Request</a> <a href="#ref-for-social-agent⑥⑥">(2)</a>
-    <li><a href="#ref-for-social-agent⑥⑦">8.7.1. Access Need Group Decorator</a>
-    <li><a href="#ref-for-social-agent⑥⑧">9. Access Grants</a> <a href="#ref-for-social-agent⑥⑨">(2)</a> <a href="#ref-for-social-agent⑦⓪">(3)</a> <a href="#ref-for-social-agent⑦①">(4)</a> <a href="#ref-for-social-agent⑦②">(5)</a> <a href="#ref-for-social-agent⑦③">(6)</a>
-    <li><a href="#ref-for-social-agent⑦④">9.1. Access Grant Registry</a>
-    <li><a href="#ref-for-social-agent⑦⑤">9.2. Access Grant</a> <a href="#ref-for-social-agent⑦⑥">(2)</a>
-    <li><a href="#ref-for-social-agent⑦⑦">9.3. Access Grant Subject</a> <a href="#ref-for-social-agent⑦⑧">(2)</a> <a href="#ref-for-social-agent⑦⑨">(3)</a>
-    <li><a href="#ref-for-social-agent⑧⓪">9.4. Data Grant</a> <a href="#ref-for-social-agent⑧①">(2)</a>
-    <li><a href="#ref-for-social-agent⑧②">9.5. Referenced Data Grant</a> <a href="#ref-for-social-agent⑧③">(2)</a>
-    <li><a href="#ref-for-social-agent⑧④">9.6. Trusted Grant</a> <a href="#ref-for-social-agent⑧⑤">(2)</a> <a href="#ref-for-social-agent⑧⑥">(3)</a> <a href="#ref-for-social-agent⑧⑦">(4)</a> <a href="#ref-for-social-agent⑧⑧">(5)</a>
-    <li><a href="#ref-for-social-agent⑧⑨">9.7. Access Invitation</a> <a href="#ref-for-social-agent⑨⓪">(2)</a> <a href="#ref-for-social-agent⑨①">(3)</a>
-    <li><a href="#ref-for-social-agent⑨②">10. Access Receipts</a> <a href="#ref-for-social-agent⑨③">(2)</a> <a href="#ref-for-social-agent⑨④">(3)</a> <a href="#ref-for-social-agent⑨⑤">(4)</a> <a href="#ref-for-social-agent⑨⑥">(5)</a> <a href="#ref-for-social-agent⑨⑦">(6)</a> <a href="#ref-for-social-agent⑨⑧">(7)</a> <a href="#ref-for-social-agent⑨⑨">(8)</a>
-    <li><a href="#ref-for-social-agent①⓪⓪">10.2. Access Receipt</a> <a href="#ref-for-social-agent①⓪①">(2)</a> <a href="#ref-for-social-agent①⓪②">(3)</a>
-    <li><a href="#ref-for-social-agent①⓪③">11.1. Application Authorization</a> <a href="#ref-for-social-agent①⓪④">(2)</a> <a href="#ref-for-social-agent①⓪⑤">(3)</a> <a href="#ref-for-social-agent①⓪⑥">(4)</a> <a href="#ref-for-social-agent①⓪⑦">(5)</a>
+    <li><a href="#ref-for-social-agent⑥③">8.4. Access Request</a> <a href="#ref-for-social-agent⑥④">(2)</a>
+    <li><a href="#ref-for-social-agent⑥⑤">8.6.1. Access Need Group Decorator</a>
+    <li><a href="#ref-for-social-agent⑥⑥">9. Access Grants</a> <a href="#ref-for-social-agent⑥⑦">(2)</a> <a href="#ref-for-social-agent⑥⑧">(3)</a> <a href="#ref-for-social-agent⑥⑨">(4)</a> <a href="#ref-for-social-agent⑦⓪">(5)</a> <a href="#ref-for-social-agent⑦①">(6)</a>
+    <li><a href="#ref-for-social-agent⑦②">9.1. Access Grant Registry</a>
+    <li><a href="#ref-for-social-agent⑦③">9.2. Access Grant</a> <a href="#ref-for-social-agent⑦④">(2)</a>
+    <li><a href="#ref-for-social-agent⑦⑤">9.3. Access Grant Subject</a> <a href="#ref-for-social-agent⑦⑥">(2)</a> <a href="#ref-for-social-agent⑦⑦">(3)</a>
+    <li><a href="#ref-for-social-agent⑦⑧">9.4. Data Grant</a> <a href="#ref-for-social-agent⑦⑨">(2)</a> <a href="#ref-for-social-agent⑧⓪">(3)</a>
+    <li><a href="#ref-for-social-agent⑧①">9.5. Trusted Grant</a> <a href="#ref-for-social-agent⑧②">(2)</a> <a href="#ref-for-social-agent⑧③">(3)</a> <a href="#ref-for-social-agent⑧④">(4)</a> <a href="#ref-for-social-agent⑧⑤">(5)</a>
+    <li><a href="#ref-for-social-agent⑧⑥">9.6. Access Invitation</a> <a href="#ref-for-social-agent⑧⑦">(2)</a> <a href="#ref-for-social-agent⑧⑧">(3)</a>
+    <li><a href="#ref-for-social-agent⑧⑨">10. Access Receipts</a> <a href="#ref-for-social-agent⑨⓪">(2)</a> <a href="#ref-for-social-agent⑨①">(3)</a> <a href="#ref-for-social-agent⑨②">(4)</a> <a href="#ref-for-social-agent⑨③">(5)</a> <a href="#ref-for-social-agent⑨④">(6)</a> <a href="#ref-for-social-agent⑨⑤">(7)</a> <a href="#ref-for-social-agent⑨⑥">(8)</a>
+    <li><a href="#ref-for-social-agent⑨⑦">10.2. Access Receipt</a> <a href="#ref-for-social-agent⑨⑧">(2)</a> <a href="#ref-for-social-agent⑨⑨">(3)</a>
+    <li><a href="#ref-for-social-agent①⓪⓪">11.1. Application Authorization</a> <a href="#ref-for-social-agent①⓪①">(2)</a> <a href="#ref-for-social-agent①⓪②">(3)</a> <a href="#ref-for-social-agent①⓪③">(4)</a> <a href="#ref-for-social-agent①⓪④">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="registry">
@@ -3353,9 +3162,9 @@ associate instances of related shape trees via a ShapePath</p>
     <li><a href="#ref-for-registry">3. Social Agents</a> <a href="#ref-for-registry①">(2)</a> <a href="#ref-for-registry②">(3)</a>
     <li><a href="#ref-for-registry③">3.1. Registry Set</a>
     <li><a href="#ref-for-registry④">8. Access Needs</a>
-    <li><a href="#ref-for-registry⑤">8.4. Trusted Need</a>
+    <li><a href="#ref-for-registry⑤">8.3. Trusted Need</a>
     <li><a href="#ref-for-registry⑥">9.2. Access Grant</a>
-    <li><a href="#ref-for-registry⑦">9.6. Trusted Grant</a> <a href="#ref-for-registry⑧">(2)</a> <a href="#ref-for-registry⑨">(3)</a> <a href="#ref-for-registry①⓪">(4)</a> <a href="#ref-for-registry①①">(5)</a> <a href="#ref-for-registry①②">(6)</a> <a href="#ref-for-registry①③">(7)</a>
+    <li><a href="#ref-for-registry⑦">9.5. Trusted Grant</a> <a href="#ref-for-registry⑧">(2)</a> <a href="#ref-for-registry⑨">(3)</a> <a href="#ref-for-registry①⓪">(4)</a> <a href="#ref-for-registry①①">(5)</a> <a href="#ref-for-registry①②">(6)</a> <a href="#ref-for-registry①③">(7)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="registry-set">
@@ -3365,10 +3174,10 @@ associate instances of related shape trees via a ShapePath</p>
     <li><a href="#ref-for-registry-set②">5.1. Agent Registry</a>
     <li><a href="#ref-for-registry-set③">6.1. Data Registry</a>
     <li><a href="#ref-for-registry-set④">8. Access Needs</a>
-    <li><a href="#ref-for-registry-set⑤">8.4. Trusted Need</a>
+    <li><a href="#ref-for-registry-set⑤">8.3. Trusted Need</a>
     <li><a href="#ref-for-registry-set⑥">9.1. Access Grant Registry</a>
     <li><a href="#ref-for-registry-set⑦">9.2. Access Grant</a>
-    <li><a href="#ref-for-registry-set⑧">9.6. Trusted Grant</a> <a href="#ref-for-registry-set⑨">(2)</a> <a href="#ref-for-registry-set①⓪">(3)</a> <a href="#ref-for-registry-set①①">(4)</a> <a href="#ref-for-registry-set①②">(5)</a> <a href="#ref-for-registry-set①③">(6)</a> <a href="#ref-for-registry-set①④">(7)</a> <a href="#ref-for-registry-set①⑤">(8)</a>
+    <li><a href="#ref-for-registry-set⑧">9.5. Trusted Grant</a> <a href="#ref-for-registry-set⑨">(2)</a> <a href="#ref-for-registry-set①⓪">(3)</a> <a href="#ref-for-registry-set①①">(4)</a> <a href="#ref-for-registry-set①②">(5)</a> <a href="#ref-for-registry-set①③">(6)</a> <a href="#ref-for-registry-set①④">(7)</a> <a href="#ref-for-registry-set①⑤">(8)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="application">
@@ -3389,7 +3198,7 @@ associate instances of related shape trees via a ShapePath</p>
     <li><a href="#ref-for-application②⑧">8.1. Access Need Group</a> <a href="#ref-for-application②⑨">(2)</a>
     <li><a href="#ref-for-application③⓪">9.2. Access Grant</a>
     <li><a href="#ref-for-application③①">9.3. Access Grant Subject</a> <a href="#ref-for-application③②">(2)</a> <a href="#ref-for-application③③">(3)</a>
-    <li><a href="#ref-for-application③④">9.7. Access Invitation</a>
+    <li><a href="#ref-for-application③④">9.6. Access Invitation</a>
     <li><a href="#ref-for-application③⑤">10. Access Receipts</a> <a href="#ref-for-application③⑥">(2)</a> <a href="#ref-for-application③⑦">(3)</a>
     <li><a href="#ref-for-application③⑧">10.2. Access Receipt</a>
     <li><a href="#ref-for-application③⑨">11.1. Application Authorization</a> <a href="#ref-for-application④⓪">(2)</a> <a href="#ref-for-application④①">(3)</a> <a href="#ref-for-application④②">(4)</a> <a href="#ref-for-application④③">(5)</a> <a href="#ref-for-application④④">(6)</a> <a href="#ref-for-application④⑤">(7)</a> <a href="#ref-for-application④⑥">(8)</a> <a href="#ref-for-application④⑦">(9)</a> <a href="#ref-for-application④⑧">(10)</a> <a href="#ref-for-application④⑨">(11)</a> <a href="#ref-for-application⑤⓪">(12)</a>
@@ -3453,7 +3262,6 @@ associate instances of related shape trees via a ShapePath</p>
     <li><a href="#ref-for-data-registration①②③">6.4.1. Access to a Data Registration</a> <a href="#ref-for-data-registration①②④">(2)</a> <a href="#ref-for-data-registration①②⑤">(3)</a> <a href="#ref-for-data-registration①②⑥">(4)</a> <a href="#ref-for-data-registration①②⑦">(5)</a> <a href="#ref-for-data-registration①②⑧">(6)</a> <a href="#ref-for-data-registration①②⑨">(7)</a>
     <li><a href="#ref-for-data-registration①③⓪">8.2. Access Need</a>
     <li><a href="#ref-for-data-registration①③①">9.4. Data Grant</a> <a href="#ref-for-data-registration①③②">(2)</a> <a href="#ref-for-data-registration①③③">(3)</a> <a href="#ref-for-data-registration①③④">(4)</a> <a href="#ref-for-data-registration①③⑤">(5)</a> <a href="#ref-for-data-registration①③⑥">(6)</a> <a href="#ref-for-data-registration①③⑦">(7)</a> <a href="#ref-for-data-registration①③⑧">(8)</a>
-    <li><a href="#ref-for-data-registration①③⑨">9.5. Referenced Data Grant</a> <a href="#ref-for-data-registration①④⓪">(2)</a> <a href="#ref-for-data-registration①④①">(3)</a> <a href="#ref-for-data-registration①④②">(4)</a> <a href="#ref-for-data-registration①④③">(5)</a> <a href="#ref-for-data-registration①④④">(6)</a> <a href="#ref-for-data-registration①④⑤">(7)</a> <a href="#ref-for-data-registration①④⑥">(8)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="data-instance">
@@ -3465,9 +3273,7 @@ associate instances of related shape trees via a ShapePath</p>
     <li><a href="#ref-for-data-instance①⑦">6.4.1. Access to a Data Registration</a> <a href="#ref-for-data-instance①⑧">(2)</a> <a href="#ref-for-data-instance①⑨">(3)</a> <a href="#ref-for-data-instance②⓪">(4)</a> <a href="#ref-for-data-instance②①">(5)</a> <a href="#ref-for-data-instance②②">(6)</a> <a href="#ref-for-data-instance②③">(7)</a> <a href="#ref-for-data-instance②④">(8)</a> <a href="#ref-for-data-instance②⑤">(9)</a> <a href="#ref-for-data-instance②⑥">(10)</a>
     <li><a href="#ref-for-data-instance②⑦">6.4.2. Access to Specific Data Instances</a> <a href="#ref-for-data-instance②⑧">(2)</a> <a href="#ref-for-data-instance②⑨">(3)</a> <a href="#ref-for-data-instance③⓪">(4)</a> <a href="#ref-for-data-instance③①">(5)</a> <a href="#ref-for-data-instance③②">(6)</a> <a href="#ref-for-data-instance③③">(7)</a> <a href="#ref-for-data-instance③④">(8)</a>
     <li><a href="#ref-for-data-instance③⑤">8.2. Access Need</a> <a href="#ref-for-data-instance③⑥">(2)</a> <a href="#ref-for-data-instance③⑦">(3)</a> <a href="#ref-for-data-instance③⑧">(4)</a> <a href="#ref-for-data-instance③⑨">(5)</a>
-    <li><a href="#ref-for-data-instance④⓪">8.3. Referenced Access Need</a> <a href="#ref-for-data-instance④①">(2)</a>
-    <li><a href="#ref-for-data-instance④②">9.4. Data Grant</a> <a href="#ref-for-data-instance④③">(2)</a> <a href="#ref-for-data-instance④④">(3)</a> <a href="#ref-for-data-instance④⑤">(4)</a> <a href="#ref-for-data-instance④⑥">(5)</a> <a href="#ref-for-data-instance④⑦">(6)</a> <a href="#ref-for-data-instance④⑧">(7)</a> <a href="#ref-for-data-instance④⑨">(8)</a> <a href="#ref-for-data-instance⑤⓪">(9)</a>
-    <li><a href="#ref-for-data-instance⑤①">9.5. Referenced Data Grant</a> <a href="#ref-for-data-instance⑤②">(2)</a> <a href="#ref-for-data-instance⑤③">(3)</a> <a href="#ref-for-data-instance⑤④">(4)</a> <a href="#ref-for-data-instance⑤⑤">(5)</a> <a href="#ref-for-data-instance⑤⑥">(6)</a> <a href="#ref-for-data-instance⑤⑦">(7)</a> <a href="#ref-for-data-instance⑤⑧">(8)</a> <a href="#ref-for-data-instance⑤⑨">(9)</a> <a href="#ref-for-data-instance⑥⓪">(10)</a> <a href="#ref-for-data-instance⑥①">(11)</a> <a href="#ref-for-data-instance⑥②">(12)</a> <a href="#ref-for-data-instance⑥③">(13)</a> <a href="#ref-for-data-instance⑥④">(14)</a> <a href="#ref-for-data-instance⑥⑤">(15)</a>
+    <li><a href="#ref-for-data-instance④⓪">9.4. Data Grant</a> <a href="#ref-for-data-instance④①">(2)</a> <a href="#ref-for-data-instance④②">(3)</a> <a href="#ref-for-data-instance④③">(4)</a> <a href="#ref-for-data-instance④④">(5)</a> <a href="#ref-for-data-instance④⑤">(6)</a> <a href="#ref-for-data-instance④⑥">(7)</a> <a href="#ref-for-data-instance④⑦">(8)</a> <a href="#ref-for-data-instance④⑧">(9)</a> <a href="#ref-for-data-instance④⑨">(10)</a> <a href="#ref-for-data-instance⑤⓪">(11)</a> <a href="#ref-for-data-instance⑤①">(12)</a> <a href="#ref-for-data-instance⑤②">(13)</a> <a href="#ref-for-data-instance⑤③">(14)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-need-group">
@@ -3477,15 +3283,14 @@ associate instances of related shape trees via a ShapePath</p>
     <li><a href="#ref-for-access-need-group②">8. Access Needs</a> <a href="#ref-for-access-need-group③">(2)</a> <a href="#ref-for-access-need-group④">(3)</a>
     <li><a href="#ref-for-access-need-group⑤">8.1. Access Need Group</a> <a href="#ref-for-access-need-group⑥">(2)</a> <a href="#ref-for-access-need-group⑦">(3)</a> <a href="#ref-for-access-need-group⑧">(4)</a> <a href="#ref-for-access-need-group⑨">(5)</a>
     <li><a href="#ref-for-access-need-group①⓪">8.2. Access Need</a> <a href="#ref-for-access-need-group①①">(2)</a> <a href="#ref-for-access-need-group①②">(3)</a>
-    <li><a href="#ref-for-access-need-group①③">8.4. Trusted Need</a> <a href="#ref-for-access-need-group①④">(2)</a>
-    <li><a href="#ref-for-access-need-group①⑤">8.5. Access Request</a> <a href="#ref-for-access-need-group①⑥">(2)</a>
-    <li><a href="#ref-for-access-need-group①⑦">8.7.1. Access Need Group Decorator</a> <a href="#ref-for-access-need-group①⑧">(2)</a> <a href="#ref-for-access-need-group①⑨">(3)</a> <a href="#ref-for-access-need-group②⓪">(4)</a>
-    <li><a href="#ref-for-access-need-group②①">8.7.2. Access Need Decorator</a>
+    <li><a href="#ref-for-access-need-group①③">8.3. Trusted Need</a> <a href="#ref-for-access-need-group①④">(2)</a>
+    <li><a href="#ref-for-access-need-group①⑤">8.4. Access Request</a> <a href="#ref-for-access-need-group①⑥">(2)</a>
+    <li><a href="#ref-for-access-need-group①⑦">8.6.1. Access Need Group Decorator</a> <a href="#ref-for-access-need-group①⑧">(2)</a> <a href="#ref-for-access-need-group①⑨">(3)</a> <a href="#ref-for-access-need-group②⓪">(4)</a>
+    <li><a href="#ref-for-access-need-group②①">8.6.2. Access Need Decorator</a>
     <li><a href="#ref-for-access-need-group②②">9.2. Access Grant</a> <a href="#ref-for-access-need-group②③">(2)</a>
     <li><a href="#ref-for-access-need-group②④">9.4. Data Grant</a>
-    <li><a href="#ref-for-access-need-group②⑤">9.5. Referenced Data Grant</a>
-    <li><a href="#ref-for-access-need-group②⑥">9.7. Access Invitation</a> <a href="#ref-for-access-need-group②⑦">(2)</a>
-    <li><a href="#ref-for-access-need-group②⑧">10.2. Access Receipt</a> <a href="#ref-for-access-need-group②⑨">(2)</a>
+    <li><a href="#ref-for-access-need-group②⑤">9.6. Access Invitation</a> <a href="#ref-for-access-need-group②⑥">(2)</a>
+    <li><a href="#ref-for-access-need-group②⑦">10.2. Access Receipt</a> <a href="#ref-for-access-need-group②⑧">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-need">
@@ -3493,19 +3298,10 @@ associate instances of related shape trees via a ShapePath</p>
    <ul>
     <li><a href="#ref-for-access-need">8. Access Needs</a>
     <li><a href="#ref-for-access-need①">8.1. Access Need Group</a> <a href="#ref-for-access-need②">(2)</a> <a href="#ref-for-access-need③">(3)</a> <a href="#ref-for-access-need④">(4)</a>
-    <li><a href="#ref-for-access-need⑤">8.2. Access Need</a> <a href="#ref-for-access-need⑥">(2)</a> <a href="#ref-for-access-need⑦">(3)</a> <a href="#ref-for-access-need⑧">(4)</a> <a href="#ref-for-access-need⑨">(5)</a> <a href="#ref-for-access-need①⓪">(6)</a> <a href="#ref-for-access-need①①">(7)</a> <a href="#ref-for-access-need①②">(8)</a> <a href="#ref-for-access-need①③">(9)</a> <a href="#ref-for-access-need①④">(10)</a> <a href="#ref-for-access-need①⑤">(11)</a> <a href="#ref-for-access-need①⑥">(12)</a> <a href="#ref-for-access-need①⑦">(13)</a> <a href="#ref-for-access-need①⑧">(14)</a> <a href="#ref-for-access-need①⑨">(15)</a> <a href="#ref-for-access-need②⓪">(16)</a> <a href="#ref-for-access-need②①">(17)</a> <a href="#ref-for-access-need②②">(18)</a>
-    <li><a href="#ref-for-access-need②③">8.3. Referenced Access Need</a> <a href="#ref-for-access-need②④">(2)</a> <a href="#ref-for-access-need②⑤">(3)</a> <a href="#ref-for-access-need②⑥">(4)</a> <a href="#ref-for-access-need②⑦">(5)</a>
-    <li><a href="#ref-for-access-need②⑧">8.4. Trusted Need</a> <a href="#ref-for-access-need②⑨">(2)</a>
-    <li><a href="#ref-for-access-need③⓪">8.7.2. Access Need Decorator</a>
-    <li><a href="#ref-for-access-need③①">9.4. Data Grant</a> <a href="#ref-for-access-need③②">(2)</a> <a href="#ref-for-access-need③③">(3)</a> <a href="#ref-for-access-need③④">(4)</a> <a href="#ref-for-access-need③⑤">(5)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="referenced-access-need">
-   <b><a href="#referenced-access-need">#referenced-access-need</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-referenced-access-need">8.2. Access Need</a> <a href="#ref-for-referenced-access-need①">(2)</a> <a href="#ref-for-referenced-access-need②">(3)</a>
-    <li><a href="#ref-for-referenced-access-need③">8.3. Referenced Access Need</a> <a href="#ref-for-referenced-access-need④">(2)</a> <a href="#ref-for-referenced-access-need⑤">(3)</a> <a href="#ref-for-referenced-access-need⑥">(4)</a> <a href="#ref-for-referenced-access-need⑦">(5)</a> <a href="#ref-for-referenced-access-need⑧">(6)</a> <a href="#ref-for-referenced-access-need⑨">(7)</a>
-    <li><a href="#ref-for-referenced-access-need①⓪">9.5. Referenced Data Grant</a> <a href="#ref-for-referenced-access-need①①">(2)</a> <a href="#ref-for-referenced-access-need①②">(3)</a> <a href="#ref-for-referenced-access-need①③">(4)</a> <a href="#ref-for-referenced-access-need①④">(5)</a> <a href="#ref-for-referenced-access-need①⑤">(6)</a>
+    <li><a href="#ref-for-access-need⑤">8.2. Access Need</a> <a href="#ref-for-access-need⑥">(2)</a> <a href="#ref-for-access-need⑦">(3)</a> <a href="#ref-for-access-need⑧">(4)</a> <a href="#ref-for-access-need⑨">(5)</a> <a href="#ref-for-access-need①⓪">(6)</a> <a href="#ref-for-access-need①①">(7)</a> <a href="#ref-for-access-need①②">(8)</a> <a href="#ref-for-access-need①③">(9)</a> <a href="#ref-for-access-need①④">(10)</a> <a href="#ref-for-access-need①⑤">(11)</a> <a href="#ref-for-access-need①⑥">(12)</a> <a href="#ref-for-access-need①⑦">(13)</a> <a href="#ref-for-access-need①⑧">(14)</a> <a href="#ref-for-access-need①⑨">(15)</a> <a href="#ref-for-access-need②⓪">(16)</a> <a href="#ref-for-access-need②①">(17)</a> <a href="#ref-for-access-need②②">(18)</a> <a href="#ref-for-access-need②③">(19)</a>
+    <li><a href="#ref-for-access-need②④">8.3. Trusted Need</a> <a href="#ref-for-access-need②⑤">(2)</a>
+    <li><a href="#ref-for-access-need②⑥">8.6.2. Access Need Decorator</a>
+    <li><a href="#ref-for-access-need②⑦">9.4. Data Grant</a> <a href="#ref-for-access-need②⑧">(2)</a> <a href="#ref-for-access-need②⑨">(3)</a> <a href="#ref-for-access-need③⓪">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="trusted-need">
@@ -3513,58 +3309,58 @@ associate instances of related shape trees via a ShapePath</p>
    <ul>
     <li><a href="#ref-for-trusted-need">8. Access Needs</a>
     <li><a href="#ref-for-trusted-need①">8.1. Access Need Group</a> <a href="#ref-for-trusted-need②">(2)</a> <a href="#ref-for-trusted-need③">(3)</a>
-    <li><a href="#ref-for-trusted-need④">8.4. Trusted Need</a> <a href="#ref-for-trusted-need⑤">(2)</a> <a href="#ref-for-trusted-need⑥">(3)</a> <a href="#ref-for-trusted-need⑦">(4)</a> <a href="#ref-for-trusted-need⑧">(5)</a> <a href="#ref-for-trusted-need⑨">(6)</a> <a href="#ref-for-trusted-need①⓪">(7)</a>
-    <li><a href="#ref-for-trusted-need①①">9.6. Trusted Grant</a> <a href="#ref-for-trusted-need①②">(2)</a>
+    <li><a href="#ref-for-trusted-need④">8.3. Trusted Need</a> <a href="#ref-for-trusted-need⑤">(2)</a> <a href="#ref-for-trusted-need⑥">(3)</a> <a href="#ref-for-trusted-need⑦">(4)</a> <a href="#ref-for-trusted-need⑧">(5)</a> <a href="#ref-for-trusted-need⑨">(6)</a> <a href="#ref-for-trusted-need①⓪">(7)</a>
+    <li><a href="#ref-for-trusted-need①①">9.5. Trusted Grant</a> <a href="#ref-for-trusted-need①②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-request">
    <b><a href="#access-request">#access-request</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-access-request">8.5. Access Request</a> <a href="#ref-for-access-request①">(2)</a> <a href="#ref-for-access-request②">(3)</a>
+    <li><a href="#ref-for-access-request">8.4. Access Request</a> <a href="#ref-for-access-request①">(2)</a> <a href="#ref-for-access-request②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-decorator-index">
    <b><a href="#access-decorator-index">#access-decorator-index</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-decorator-index">8.1. Access Need Group</a>
-    <li><a href="#ref-for-access-decorator-index①">8.6. Access Decorator Index</a>
+    <li><a href="#ref-for-access-decorator-index①">8.5. Access Decorator Index</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-decorator-series">
    <b><a href="#access-decorator-series">#access-decorator-series</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-decorator-series">8.1. Access Need Group</a> <a href="#ref-for-access-decorator-series①">(2)</a>
-    <li><a href="#ref-for-access-decorator-series②">8.6. Access Decorator Index</a> <a href="#ref-for-access-decorator-series③">(2)</a>
-    <li><a href="#ref-for-access-decorator-series④">8.6.1. Access Decorator Series</a> <a href="#ref-for-access-decorator-series⑤">(2)</a>
+    <li><a href="#ref-for-access-decorator-series②">8.5. Access Decorator Index</a> <a href="#ref-for-access-decorator-series③">(2)</a>
+    <li><a href="#ref-for-access-decorator-series④">8.5.1. Access Decorator Series</a> <a href="#ref-for-access-decorator-series⑤">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-decorator-version">
    <b><a href="#access-decorator-version">#access-decorator-version</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-access-decorator-version">8.6.1. Access Decorator Series</a> <a href="#ref-for-access-decorator-version①">(2)</a>
-    <li><a href="#ref-for-access-decorator-version②">8.6.2. Access Decorator Version</a>
+    <li><a href="#ref-for-access-decorator-version">8.5.1. Access Decorator Series</a> <a href="#ref-for-access-decorator-version①">(2)</a>
+    <li><a href="#ref-for-access-decorator-version②">8.5.2. Access Decorator Version</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-decorator-resource">
    <b><a href="#access-decorator-resource">#access-decorator-resource</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-decorator-resource">8.1. Access Need Group</a> <a href="#ref-for-access-decorator-resource①">(2)</a>
-    <li><a href="#ref-for-access-decorator-resource②">8.6.2. Access Decorator Version</a> <a href="#ref-for-access-decorator-resource③">(2)</a> <a href="#ref-for-access-decorator-resource④">(3)</a> <a href="#ref-for-access-decorator-resource⑤">(4)</a>
+    <li><a href="#ref-for-access-decorator-resource②">8.5.2. Access Decorator Version</a> <a href="#ref-for-access-decorator-resource③">(2)</a> <a href="#ref-for-access-decorator-resource④">(3)</a> <a href="#ref-for-access-decorator-resource⑤">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-need-group-decorator">
    <b><a href="#access-need-group-decorator">#access-need-group-decorator</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-need-group-decorator">8.1. Access Need Group</a>
-    <li><a href="#ref-for-access-need-group-decorator①">8.7. Access Decorator Resource</a>
+    <li><a href="#ref-for-access-need-group-decorator①">8.6. Access Decorator Resource</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-need-decorator">
    <b><a href="#access-need-decorator">#access-need-decorator</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-need-decorator">8.2. Access Need</a>
-    <li><a href="#ref-for-access-need-decorator①">8.4. Trusted Need</a>
-    <li><a href="#ref-for-access-need-decorator②">8.7. Access Decorator Resource</a>
+    <li><a href="#ref-for-access-need-decorator①">8.3. Trusted Need</a>
+    <li><a href="#ref-for-access-need-decorator②">8.6. Access Decorator Resource</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-grant-registry①">
@@ -3574,7 +3370,7 @@ associate instances of related shape trees via a ShapePath</p>
     <li><a href="#ref-for-access-grant-registry①①">8. Access Needs</a>
     <li><a href="#ref-for-access-grant-registry①②">9. Access Grants</a>
     <li><a href="#ref-for-access-grant-registry①③">9.1. Access Grant Registry</a> <a href="#ref-for-access-grant-registry①④">(2)</a> <a href="#ref-for-access-grant-registry①⑤">(3)</a>
-    <li><a href="#ref-for-access-grant-registry①⑥">9.9. Resource Hierarchy</a>
+    <li><a href="#ref-for-access-grant-registry①⑥">9.8. Resource Hierarchy</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-grant①">
@@ -3583,19 +3379,16 @@ associate instances of related shape trees via a ShapePath</p>
     <li><a href="#ref-for-access-grant①">6.4. Permission Model</a>
     <li><a href="#ref-for-access-grant①①">7. Data Authorization</a>
     <li><a href="#ref-for-access-grant①②">8. Access Needs</a>
-    <li><a href="#ref-for-access-grant①③">8.2. Access Need</a>
-    <li><a href="#ref-for-access-grant①④">8.3. Referenced Access Need</a>
-    <li><a href="#ref-for-access-grant①⑤">8.4. Trusted Need</a>
-    <li><a href="#ref-for-access-grant①⑥">9. Access Grants</a> <a href="#ref-for-access-grant①⑦">(2)</a> <a href="#ref-for-access-grant①⑧">(3)</a> <a href="#ref-for-access-grant①⑨">(4)</a>
-    <li><a href="#ref-for-access-grant①①⓪">9.1. Access Grant Registry</a> <a href="#ref-for-access-grant①①①">(2)</a> <a href="#ref-for-access-grant①①②">(3)</a> <a href="#ref-for-access-grant①①③">(4)</a>
-    <li><a href="#ref-for-access-grant①①④">9.2. Access Grant</a> <a href="#ref-for-access-grant①①⑤">(2)</a> <a href="#ref-for-access-grant①①⑥">(3)</a> <a href="#ref-for-access-grant①①⑦">(4)</a> <a href="#ref-for-access-grant①①⑧">(5)</a>
-    <li><a href="#ref-for-access-grant①①⑨">9.3. Access Grant Subject</a>
-    <li><a href="#ref-for-access-grant①②⓪">9.4. Data Grant</a> <a href="#ref-for-access-grant①②①">(2)</a> <a href="#ref-for-access-grant①②②">(3)</a>
-    <li><a href="#ref-for-access-grant①②③">9.5. Referenced Data Grant</a> <a href="#ref-for-access-grant①②④">(2)</a>
-    <li><a href="#ref-for-access-grant①②⑤">9.6. Trusted Grant</a>
-    <li><a href="#ref-for-access-grant①②⑥">9.7. Access Invitation</a> <a href="#ref-for-access-grant①②⑦">(2)</a> <a href="#ref-for-access-grant①②⑧">(3)</a>
-    <li><a href="#ref-for-access-grant①②⑨">9.9. Resource Hierarchy</a>
-    <li><a href="#ref-for-access-grant①③⓪">10.2. Access Receipt</a> <a href="#ref-for-access-grant①③①">(2)</a> <a href="#ref-for-access-grant①③②">(3)</a>
+    <li><a href="#ref-for-access-grant①③">8.3. Trusted Need</a>
+    <li><a href="#ref-for-access-grant①④">9. Access Grants</a> <a href="#ref-for-access-grant①⑤">(2)</a> <a href="#ref-for-access-grant①⑥">(3)</a> <a href="#ref-for-access-grant①⑦">(4)</a>
+    <li><a href="#ref-for-access-grant①⑧">9.1. Access Grant Registry</a> <a href="#ref-for-access-grant①⑨">(2)</a> <a href="#ref-for-access-grant①①⓪">(3)</a> <a href="#ref-for-access-grant①①①">(4)</a>
+    <li><a href="#ref-for-access-grant①①②">9.2. Access Grant</a> <a href="#ref-for-access-grant①①③">(2)</a> <a href="#ref-for-access-grant①①④">(3)</a> <a href="#ref-for-access-grant①①⑤">(4)</a> <a href="#ref-for-access-grant①①⑥">(5)</a>
+    <li><a href="#ref-for-access-grant①①⑦">9.3. Access Grant Subject</a>
+    <li><a href="#ref-for-access-grant①①⑧">9.4. Data Grant</a>
+    <li><a href="#ref-for-access-grant①①⑨">9.5. Trusted Grant</a>
+    <li><a href="#ref-for-access-grant①②⓪">9.6. Access Invitation</a> <a href="#ref-for-access-grant①②①">(2)</a> <a href="#ref-for-access-grant①②②">(3)</a>
+    <li><a href="#ref-for-access-grant①②③">9.8. Resource Hierarchy</a>
+    <li><a href="#ref-for-access-grant①②④">10.2. Access Receipt</a> <a href="#ref-for-access-grant①②⑤">(2)</a> <a href="#ref-for-access-grant①②⑥">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-grant-subject①">
@@ -3603,41 +3396,30 @@ associate instances of related shape trees via a ShapePath</p>
    <ul>
     <li><a href="#ref-for-access-grant-subject①">9.2. Access Grant</a> <a href="#ref-for-access-grant-subject①①">(2)</a>
     <li><a href="#ref-for-access-grant-subject①②">9.3. Access Grant Subject</a>
-    <li><a href="#ref-for-access-grant-subject①③">9.4. Data Grant</a> <a href="#ref-for-access-grant-subject①④">(2)</a> <a href="#ref-for-access-grant-subject①⑤">(3)</a> <a href="#ref-for-access-grant-subject①⑥">(4)</a>
-    <li><a href="#ref-for-access-grant-subject①⑦">9.5. Referenced Data Grant</a> <a href="#ref-for-access-grant-subject①⑧">(2)</a> <a href="#ref-for-access-grant-subject①⑨">(3)</a> <a href="#ref-for-access-grant-subject①①⓪">(4)</a> <a href="#ref-for-access-grant-subject①①①">(5)</a>
-    <li><a href="#ref-for-access-grant-subject①①②">9.6. Trusted Grant</a>
-    <li><a href="#ref-for-access-grant-subject①①③">9.7. Access Invitation</a>
-    <li><a href="#ref-for-access-grant-subject①①④">10.2. Access Receipt</a> <a href="#ref-for-access-grant-subject①①⑤">(2)</a>
+    <li><a href="#ref-for-access-grant-subject①③">9.4. Data Grant</a> <a href="#ref-for-access-grant-subject①④">(2)</a> <a href="#ref-for-access-grant-subject①⑤">(3)</a> <a href="#ref-for-access-grant-subject①⑥">(4)</a> <a href="#ref-for-access-grant-subject①⑦">(5)</a>
+    <li><a href="#ref-for-access-grant-subject①⑧">9.5. Trusted Grant</a>
+    <li><a href="#ref-for-access-grant-subject①⑨">9.6. Access Invitation</a>
+    <li><a href="#ref-for-access-grant-subject①①⓪">10.2. Access Receipt</a> <a href="#ref-for-access-grant-subject①①①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="data-grant①">
    <b><a href="#data-grant①">#data-grant①</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-data-grant①">8.2. Access Need</a>
-    <li><a href="#ref-for-data-grant①①">9. Access Grants</a>
-    <li><a href="#ref-for-data-grant①②">9.2. Access Grant</a> <a href="#ref-for-data-grant①③">(2)</a>
-    <li><a href="#ref-for-data-grant①④">9.4. Data Grant</a> <a href="#ref-for-data-grant①⑤">(2)</a> <a href="#ref-for-data-grant①⑥">(3)</a> <a href="#ref-for-data-grant①⑦">(4)</a> <a href="#ref-for-data-grant①⑧">(5)</a> <a href="#ref-for-data-grant①⑨">(6)</a> <a href="#ref-for-data-grant①①⓪">(7)</a> <a href="#ref-for-data-grant①①①">(8)</a> <a href="#ref-for-data-grant①①②">(9)</a> <a href="#ref-for-data-grant①①③">(10)</a> <a href="#ref-for-data-grant①①④">(11)</a> <a href="#ref-for-data-grant①①⑤">(12)</a>
-    <li><a href="#ref-for-data-grant①①⑥">9.5. Referenced Data Grant</a> <a href="#ref-for-data-grant①①⑦">(2)</a> <a href="#ref-for-data-grant①①⑧">(3)</a> <a href="#ref-for-data-grant①①⑨">(4)</a> <a href="#ref-for-data-grant①②⓪">(5)</a> <a href="#ref-for-data-grant①②①">(6)</a> <a href="#ref-for-data-grant①②②">(7)</a> <a href="#ref-for-data-grant①②③">(8)</a> <a href="#ref-for-data-grant①②④">(9)</a>
-    <li><a href="#ref-for-data-grant①②⑤">9.7. Access Invitation</a> <a href="#ref-for-data-grant①②⑥">(2)</a>
-    <li><a href="#ref-for-data-grant①②⑦">10.2. Access Receipt</a> <a href="#ref-for-data-grant①②⑧">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="referenced-data-grant">
-   <b><a href="#referenced-data-grant">#referenced-data-grant</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-referenced-data-grant">8.3. Referenced Access Need</a>
-    <li><a href="#ref-for-referenced-data-grant①">9.4. Data Grant</a> <a href="#ref-for-referenced-data-grant②">(2)</a>
-    <li><a href="#ref-for-referenced-data-grant③">9.5. Referenced Data Grant</a> <a href="#ref-for-referenced-data-grant④">(2)</a> <a href="#ref-for-referenced-data-grant⑤">(3)</a> <a href="#ref-for-referenced-data-grant⑥">(4)</a> <a href="#ref-for-referenced-data-grant⑦">(5)</a> <a href="#ref-for-referenced-data-grant⑧">(6)</a> <a href="#ref-for-referenced-data-grant⑨">(7)</a> <a href="#ref-for-referenced-data-grant①⓪">(8)</a> <a href="#ref-for-referenced-data-grant①①">(9)</a> <a href="#ref-for-referenced-data-grant①②">(10)</a> <a href="#ref-for-referenced-data-grant①③">(11)</a> <a href="#ref-for-referenced-data-grant①④">(12)</a> <a href="#ref-for-referenced-data-grant①⑤">(13)</a>
+    <li><a href="#ref-for-data-grant①">9. Access Grants</a>
+    <li><a href="#ref-for-data-grant①①">9.2. Access Grant</a> <a href="#ref-for-data-grant①②">(2)</a>
+    <li><a href="#ref-for-data-grant①③">9.4. Data Grant</a> <a href="#ref-for-data-grant①④">(2)</a> <a href="#ref-for-data-grant①⑤">(3)</a> <a href="#ref-for-data-grant①⑥">(4)</a> <a href="#ref-for-data-grant①⑦">(5)</a> <a href="#ref-for-data-grant①⑧">(6)</a> <a href="#ref-for-data-grant①⑨">(7)</a> <a href="#ref-for-data-grant①①⓪">(8)</a> <a href="#ref-for-data-grant①①①">(9)</a> <a href="#ref-for-data-grant①①②">(10)</a> <a href="#ref-for-data-grant①①③">(11)</a> <a href="#ref-for-data-grant①①④">(12)</a> <a href="#ref-for-data-grant①①⑤">(13)</a> <a href="#ref-for-data-grant①①⑥">(14)</a> <a href="#ref-for-data-grant①①⑦">(15)</a> <a href="#ref-for-data-grant①①⑧">(16)</a> <a href="#ref-for-data-grant①①⑨">(17)</a>
+    <li><a href="#ref-for-data-grant①②⓪">9.6. Access Invitation</a> <a href="#ref-for-data-grant①②①">(2)</a>
+    <li><a href="#ref-for-data-grant①②②">10.2. Access Receipt</a> <a href="#ref-for-data-grant①②③">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="trusted-grant">
    <b><a href="#trusted-grant">#trusted-grant</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-trusted-grant">8.4. Trusted Need</a>
+    <li><a href="#ref-for-trusted-grant">8.3. Trusted Need</a>
     <li><a href="#ref-for-trusted-grant①">9. Access Grants</a>
     <li><a href="#ref-for-trusted-grant②">9.2. Access Grant</a> <a href="#ref-for-trusted-grant③">(2)</a>
-    <li><a href="#ref-for-trusted-grant④">9.6. Trusted Grant</a> <a href="#ref-for-trusted-grant⑤">(2)</a> <a href="#ref-for-trusted-grant⑥">(3)</a> <a href="#ref-for-trusted-grant⑦">(4)</a> <a href="#ref-for-trusted-grant⑧">(5)</a> <a href="#ref-for-trusted-grant⑨">(6)</a> <a href="#ref-for-trusted-grant①⓪">(7)</a>
-    <li><a href="#ref-for-trusted-grant①①">9.7. Access Invitation</a> <a href="#ref-for-trusted-grant①②">(2)</a>
+    <li><a href="#ref-for-trusted-grant④">9.5. Trusted Grant</a> <a href="#ref-for-trusted-grant⑤">(2)</a> <a href="#ref-for-trusted-grant⑥">(3)</a> <a href="#ref-for-trusted-grant⑦">(4)</a> <a href="#ref-for-trusted-grant⑧">(5)</a> <a href="#ref-for-trusted-grant⑨">(6)</a> <a href="#ref-for-trusted-grant①⓪">(7)</a>
+    <li><a href="#ref-for-trusted-grant①①">9.6. Access Invitation</a> <a href="#ref-for-trusted-grant①②">(2)</a>
     <li><a href="#ref-for-trusted-grant①③">10.2. Access Receipt</a> <a href="#ref-for-trusted-grant①④">(2)</a>
    </ul>
   </aside>
@@ -3654,15 +3436,15 @@ associate instances of related shape trees via a ShapePath</p>
    <ul>
     <li><a href="#ref-for-access-invitation">9. Access Grants</a>
     <li><a href="#ref-for-access-invitation①">9.1. Access Grant Registry</a> <a href="#ref-for-access-invitation②">(2)</a>
-    <li><a href="#ref-for-access-invitation③">9.7. Access Invitation</a> <a href="#ref-for-access-invitation④">(2)</a> <a href="#ref-for-access-invitation⑤">(3)</a> <a href="#ref-for-access-invitation⑥">(4)</a> <a href="#ref-for-access-invitation⑦">(5)</a> <a href="#ref-for-access-invitation⑧">(6)</a> <a href="#ref-for-access-invitation⑨">(7)</a> <a href="#ref-for-access-invitation①⓪">(8)</a> <a href="#ref-for-access-invitation①①">(9)</a> <a href="#ref-for-access-invitation①②">(10)</a> <a href="#ref-for-access-invitation①③">(11)</a>
-    <li><a href="#ref-for-access-invitation①④">9.8. Access Invitation Channel</a> <a href="#ref-for-access-invitation①⑤">(2)</a>
+    <li><a href="#ref-for-access-invitation③">9.6. Access Invitation</a> <a href="#ref-for-access-invitation④">(2)</a> <a href="#ref-for-access-invitation⑤">(3)</a> <a href="#ref-for-access-invitation⑥">(4)</a> <a href="#ref-for-access-invitation⑦">(5)</a> <a href="#ref-for-access-invitation⑧">(6)</a> <a href="#ref-for-access-invitation⑨">(7)</a> <a href="#ref-for-access-invitation①⓪">(8)</a> <a href="#ref-for-access-invitation①①">(9)</a> <a href="#ref-for-access-invitation①②">(10)</a> <a href="#ref-for-access-invitation①③">(11)</a>
+    <li><a href="#ref-for-access-invitation①④">9.7. Access Invitation Channel</a> <a href="#ref-for-access-invitation①⑤">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-invitation-channel">
    <b><a href="#access-invitation-channel">#access-invitation-channel</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-access-invitation-channel">9.7. Access Invitation</a> <a href="#ref-for-access-invitation-channel①">(2)</a>
-    <li><a href="#ref-for-access-invitation-channel②">9.8. Access Invitation Channel</a>
+    <li><a href="#ref-for-access-invitation-channel">9.6. Access Invitation</a> <a href="#ref-for-access-invitation-channel①">(2)</a>
+    <li><a href="#ref-for-access-invitation-channel②">9.7. Access Invitation Channel</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-receipt-registry①">
@@ -3744,7 +3526,7 @@ associate instances of related shape trees via a ShapePath</p>
    <ul>
     <li><a href="#ref-for-identity">2. Agents</a> <a href="#ref-for-identity①">(2)</a> <a href="#ref-for-identity②">(3)</a>
     <li><a href="#ref-for-identity③">9. Access Grants</a>
-    <li><a href="#ref-for-identity④">9.7. Access Invitation</a>
+    <li><a href="#ref-for-identity④">9.6. Access Invitation</a>
     <li><a href="#ref-for-identity⑤">11.1. Application Authorization</a> <a href="#ref-for-identity⑥">(2)</a> <a href="#ref-for-identity⑦">(3)</a>
     <li><a href="#ref-for-identity⑧">12. Definitions</a> <a href="#ref-for-identity⑨">(2)</a>
    </ul>
@@ -3756,9 +3538,9 @@ associate instances of related shape trees via a ShapePath</p>
     <li><a href="#ref-for-identity-profile-document②">3. Social Agents</a>
     <li><a href="#ref-for-identity-profile-document③">4. Applications</a>
     <li><a href="#ref-for-identity-profile-document④">8. Access Needs</a>
-    <li><a href="#ref-for-identity-profile-document⑤">8.4. Trusted Need</a>
+    <li><a href="#ref-for-identity-profile-document⑤">8.3. Trusted Need</a>
     <li><a href="#ref-for-identity-profile-document⑥">9.2. Access Grant</a>
-    <li><a href="#ref-for-identity-profile-document⑦">9.6. Trusted Grant</a>
+    <li><a href="#ref-for-identity-profile-document⑦">9.5. Trusted Grant</a>
     <li><a href="#ref-for-identity-profile-document⑧">12. Definitions</a> <a href="#ref-for-identity-profile-document⑨">(2)</a> <a href="#ref-for-identity-profile-document①⓪">(3)</a> <a href="#ref-for-identity-profile-document①①">(4)</a>
    </ul>
   </aside>
@@ -3798,7 +3580,7 @@ associate instances of related shape trees via a ShapePath</p>
     <li><a href="#ref-for-access-mode">6.4.1. Access to a Data Registration</a>
     <li><a href="#ref-for-access-mode①">6.4.2. Access to Specific Data Instances</a>
     <li><a href="#ref-for-access-mode②">8.2. Access Need</a>
-    <li><a href="#ref-for-access-mode③">8.4. Trusted Need</a>
+    <li><a href="#ref-for-access-mode③">8.3. Trusted Need</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="authorization-subject">
@@ -3822,20 +3604,17 @@ associate instances of related shape trees via a ShapePath</p>
     <li><a href="#ref-for-shape-tree⑤">6.3. Resource Hierarchy</a> <a href="#ref-for-shape-tree⑥">(2)</a> <a href="#ref-for-shape-tree⑦">(3)</a> <a href="#ref-for-shape-tree⑧">(4)</a> <a href="#ref-for-shape-tree⑨">(5)</a>
     <li><a href="#ref-for-shape-tree①⓪">6.4. Permission Model</a>
     <li><a href="#ref-for-shape-tree①①">8. Access Needs</a>
-    <li><a href="#ref-for-shape-tree①②">8.2. Access Need</a> <a href="#ref-for-shape-tree①③">(2)</a> <a href="#ref-for-shape-tree①④">(3)</a> <a href="#ref-for-shape-tree①⑤">(4)</a> <a href="#ref-for-shape-tree①⑥">(5)</a> <a href="#ref-for-shape-tree①⑦">(6)</a> <a href="#ref-for-shape-tree①⑧">(7)</a> <a href="#ref-for-shape-tree①⑨">(8)</a> <a href="#ref-for-shape-tree②⓪">(9)</a> <a href="#ref-for-shape-tree②①">(10)</a> <a href="#ref-for-shape-tree②②">(11)</a> <a href="#ref-for-shape-tree②③">(12)</a> <a href="#ref-for-shape-tree②④">(13)</a> <a href="#ref-for-shape-tree②⑤">(14)</a> <a href="#ref-for-shape-tree②⑥">(15)</a>
-    <li><a href="#ref-for-shape-tree②⑦">8.3. Referenced Access Need</a> <a href="#ref-for-shape-tree②⑧">(2)</a> <a href="#ref-for-shape-tree②⑨">(3)</a> <a href="#ref-for-shape-tree③⓪">(4)</a> <a href="#ref-for-shape-tree③①">(5)</a> <a href="#ref-for-shape-tree③②">(6)</a> <a href="#ref-for-shape-tree③③">(7)</a> <a href="#ref-for-shape-tree③④">(8)</a>
-    <li><a href="#ref-for-shape-tree③⑤">8.4. Trusted Need</a>
-    <li><a href="#ref-for-shape-tree③⑥">8.7.2. Access Need Decorator</a>
-    <li><a href="#ref-for-shape-tree③⑦">9.4. Data Grant</a> <a href="#ref-for-shape-tree③⑧">(2)</a>
-    <li><a href="#ref-for-shape-tree③⑨">9.5. Referenced Data Grant</a> <a href="#ref-for-shape-tree④⓪">(2)</a> <a href="#ref-for-shape-tree④①">(3)</a>
-    <li><a href="#ref-for-shape-tree④②">12. Definitions</a>
+    <li><a href="#ref-for-shape-tree①②">8.2. Access Need</a> <a href="#ref-for-shape-tree①③">(2)</a> <a href="#ref-for-shape-tree①④">(3)</a> <a href="#ref-for-shape-tree①⑤">(4)</a> <a href="#ref-for-shape-tree①⑥">(5)</a> <a href="#ref-for-shape-tree①⑦">(6)</a> <a href="#ref-for-shape-tree①⑧">(7)</a> <a href="#ref-for-shape-tree①⑨">(8)</a> <a href="#ref-for-shape-tree②⓪">(9)</a> <a href="#ref-for-shape-tree②①">(10)</a> <a href="#ref-for-shape-tree②②">(11)</a> <a href="#ref-for-shape-tree②③">(12)</a> <a href="#ref-for-shape-tree②④">(13)</a>
+    <li><a href="#ref-for-shape-tree②⑤">8.3. Trusted Need</a>
+    <li><a href="#ref-for-shape-tree②⑥">8.6.2. Access Need Decorator</a>
+    <li><a href="#ref-for-shape-tree②⑦">9.4. Data Grant</a> <a href="#ref-for-shape-tree②⑧">(2)</a>
+    <li><a href="#ref-for-shape-tree②⑨">12. Definitions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="shape-tree-reference">
    <b><a href="#shape-tree-reference">#shape-tree-reference</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-shape-tree-reference">9.4. Data Grant</a>
-    <li><a href="#ref-for-shape-tree-reference①">9.5. Referenced Data Grant</a>
+    <li><a href="#ref-for-shape-tree-reference">9.4. Data Grant</a> <a href="#ref-for-shape-tree-reference①">(2)</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */

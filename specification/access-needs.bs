@@ -119,7 +119,7 @@ In a [=Data Registry=], they can also request access to specific
 It is often the case that a [=shape tree=] which virtually references 
 other [=shape trees=] will be assigned to an [=Access Need=]. The 
 referenced [=shape trees=] can then be assigned to 
-[=Referenced Access Needs=] that the [=Access Need=] links to.
+[=Access Needs=] that inherit from the referencing [=Access Need=].
 
 Specific [=Data Instances=] may be requested by explicitly
 associating them with the [=Access Need=] via
@@ -214,120 +214,21 @@ specified.
       [=Access Need=] `st:supports`</td>
     </tr>        
     <tr>
-      <td>hasReferencedAccessNeed</td>
-      <td>[ReferencedAccessNeed](#classReferencedAccessNeed)</td>
-      <td>[=Referenced Access Need=] linked to [=Access Need=], whose
-      [=shape tree=] `st:references` the [=shape tree=] associated
-      with the [=Referenced Access Need=].
-      </td>
-    </tr>
-    <tr>
-      <td>hasDataGrant</td>
-      <td>[DataGrant](#classDataGrant)</td>
-      <td>[=Data Grant=] associated with the [=Access Need=],
-      established when the [=Access Grant=] is created</td>
+      <td>inheritsFromNeed</td>
+      <td>[AccessNeed](#classAccessNeed)</td>
+      <td>Links to another [=Access Need=] whose registeredShapeTree
+      references the shape tree associated with the current
+      [=Access Need=].</td>
     </tr>
   </tbody>
 </table>
 
 <figure>
-  <figcaption>An example [=Access Need=]</figcaption>  
+  <figcaption>[=Access Needs=] for Projects and Issues</figcaption>  
   <pre class=include-code>
   path: snippets/projectron.example/projectron.example.ttl
   highlight: turtle
-  show: 27-36
-  </pre> 
-</figure>
-
-## Referenced Access Need ## {#needs-referenced-access-need}
-
-A <dfn>Referenced Access Need</dfn> is linked directly to an [=Access Need=],
-and represents an access request for data represented by a [=shape tree=] that
-is `st:referenced` by the [=shape tree=] of the linked [=Access Need=].
-
-[Class Definition](interop.ttl#ReferencedAccessNeed) -
-[Shape Definition](interop.shex#ReferencedAccessNeedShape)
-
-<table class="classinfo data" align="left" id="classReferencedAccessNeed">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>hasAccessNeed</td>
-      <td>[AccessNeed](#classAccessNeed)</td>
-      <td>[=Access Need=] that the [=Referenced Access Need=] is linked to</td>
-    </tr>
-    <tr>
-      <td>hasAccessNeedDecorator</td>
-      <td>[AccessNeedDecorator](#classAccessNeedDecorator)</td>
-      <td>Decorator that explains the reason for the access need in the
-      preferred language of the [=Social Agent=]</td>
-    </tr>
-    <tr>
-      <td>registeredShapeTree</td>
-      <td>`st:ShapeTree`</td>
-      <td>The [=shape tree=] requested by the [=Referenced Access Need=]</td>
-    </tr>
-    <tr>
-      <td>hasShapeTreeDecorator</td>
-      <td>`st:ShapeTreeDecorator`</td>
-      <td>Decorator associated with the [=shape tree=] that describes the
-      name of the shape-tree and what data it represents in the preferred
-      language of the [=Social Agent=]</td>
-    </tr>
-    <tr>
-      <td>hasDataInstance</td>
-      <td>-</td>
-      <td>Request specific [=Data Instance=] of the registered
-      [=shape tree=]. Requires advance knowledge of the 
-      [=Data Instance=]</td>
-    </tr>
-    <tr>
-      <td>accessMode</td>
-      <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
-      <td>Requested modes of access for the [=Referenced Access Need=]</td>
-    </tr>
-    <tr>
-      <td>accessNecessity</td>
-      <td>`interop:AccessRequired`, `interop:AccessOptional`</td>
-      <td>Necessity of the access to the requesting party</td>
-    </tr>
-    <tr>
-      <td>supportedBy</td>
-      <td>[AccessNeed](#classAccessNeed)</td>
-      <td>An [=Access Need=] whose [=shape tree=] `st:supports` the
-      [=shape tree=] of this [=Referenced Access Need=]</td>
-    </tr>
-    <tr>
-      <td>supports</td>
-      <td>[AccessNeed](#classAccessNeed)</td>
-      <td>An [=Access Need=] that the [=shape tree=] of this
-      [=Referenced Access Need=] `st:supports`</td>
-    </tr>        
-    <tr>
-      <td>hasReferencedDataGrant</td>
-      <td>[ReferencedDataGrant](#)</td>
-      <td>[=Referenced Data Grant=] associated with the 
-      [=Referenced Access Need=], established when the [=Access Grant=] 
-      is created</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-  <figcaption>An example [=Referenced Access Need=]</figcaption>  
-  <pre class=include-code>
-  path: snippets/projectron.example/projectron.example.ttl
-  highlight: turtle
-  show: 38-45
+  show: 25-42
   </pre> 
 </figure>
 

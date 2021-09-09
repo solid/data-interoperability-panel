@@ -145,7 +145,7 @@ or [=Registry Set=] of the [=Social Agent=] may be granted through
   <pre class=include-code>
   path: snippets/alice.example/ab3d0023-3860-4358-ae33-8d3af1097b9d.ttl
   highlight: turtle
-  show: 11-19
+  show: 13-26
   </pre>
 </figure>
 
@@ -201,7 +201,7 @@ A <dfn>Data Grant</dfn> records a decision made by a
 [=Data Registration=], in response to a given [=Access Need=] that was
 presented to them.
 
-A [=Data Grant=] may have one or more [=Referenced Data Grants=], when the
+A [=Data Grant=] may inherit from another [=Data Grant=], when the
 [=shape tree=] associated via `interop:registeredShapeTree` has one or
 more [=Shape Tree References=].
 
@@ -221,6 +221,19 @@ valid for a [=Data Grant=]:
         to the [=Data Grant=] via `interop:hasDataInstance`.
     * Permissions will be set for the [=Access Grant Subject=] on
         each [=Data Instance=].
+* <b>`interop:InheritInstances`</b>
+  *  When the [=Data Grant=] linked via
+     `interop:inheritsFromGrant` has a scope of `interop:AllInstances`, or a scope
+     of `interop:SelectedInstances` with one
+     or more [=Data Instances=] selected, any inheriting [=Data Grants=]
+     have the opportunity to narrow their own access scope to only include
+     "child" [=Data Instances=] linked to the "parent" [=Data Instances=].
+  * The link must follow the [=Shape Tree Reference=] between
+    the parent [=Data Grant=] shape tree and the inheriting [=Data Grant=]
+    shape tree.
+  * Permissions are set conditionally for the [=Access Grant Subject=],
+    and have the benefit of applying to current and future [=Data Instances=]
+    associated with a parent [=Data Instance=].
 * <b>`interop:NoAccess`</b>
     * Indicates that no access is granted to the [=Access Grant Subject=].
     * Applies to the entire [=Data Registration=] when there are no
@@ -232,8 +245,6 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
 
 * There must be an [=Access Need=] linked via `interop:satisfiesAccessNeed` that
     belongs to an [=Access Need Group=] linked to the same [=Access Grant=].
-* The [=Access Need=] must link back to the [=Data Grant=]
-    via `interop:hasDataGrant`.
 * [=Access Need=] and [=Data Grant=] must have the same `interop:registeredShapeTree`
 
 [Class Definition](interop.ttl#DataGrant) -
@@ -253,14 +264,9 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
   </thead>
   <tbody>
     <tr>
-      <td>hasAccessGrant</td>
-      <td>[AccessGrant](#classAccessGrant)</td>
-      <td>[=Access Grant=] that the [=Data Grant=] belongs to</td>
-    </tr>
-    <tr>
-      <td>satisfiesAccessNeed</td>
-      <td>[AccessNeed](#classAccessNeed)</td>
-      <td>Links to the [=Access Need=] satisfied by the [=Data Grant=]</td>
+      <td>dataOwner</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that owns the data being granted</td>
     </tr>
     <tr>
       <td>registeredShapeTree</td>
@@ -309,162 +315,26 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
       <td>Links to a [=Data Instance=] of registeredShapeTree.</td>
     </tr>
     <tr>
-      <td>hasReferencedDataGrant</td>
-      <td>[ReferencedDataGrant](#classReferencedDataGrant)</td>
-      <td>Links to a [=Referenced Data Grant=] when registeredShapeTree
-      has references to other shape trees that should be included
-      in authorization.</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-  <figcaption>A [=Data Grant=] in the [=Access Grant=] at
-  https://alice.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d</figcaption>
-  <pre class=include-code>
-  path: snippets/alice.example/ab3d0023-3860-4358-ae33-8d3af1097b9d.ttl
-  highlight: turtle
-  show: 26-41
-  </pre>
-</figure>
-
-## Referenced Data Grant ## {#datamodel-referenced-data-grant}
-
-Issue(solid/data-interoperability-panel#124):
-
-A <dfn>Referenced Data Grant</dfn> is linked from a [=Data Grant=], and
-records a decision made by a [=Social Agent=] to assign permissions for an
-[=Access Grant Subject=] to a [=Data Registration=], based on a
-[=Referenced Access Need=] that was presented to them. It stipulates that the
-[=shape tree=] of the [=Referenced Data Grant=] is effectively a "child"
-of the [=shape tree=] associated with the parent [=Data Grant=] that
-references it.
-
-Like [=Data Grants=], each [=Referenced Data Grant=] has an assigned
-scope (`interop:scopeOfGrant`), which
-determines how permissions are assigned. The following types are
-valid for a [=Referenced Data Grant=]:
-
-* <b>`interop:AllInstances`</b>
-    * Applies to all [=Data Instances=] belonging to
-        the associated [=Data Registration=].
-    * Permissions will be set for
-        the [=Access Grant Subject=] on the [=Data Registration=] container,
-        and will be inherited by all member [=Data Instances=].
-* <b>`interop:InheritInstances`</b>
-    *  When the [=Data Grant=] linked via
-        `interop:hasDataGrant` has a scope of `interop:SelectedInstances`, and one
-        or more [=Data Instances=] are selected, any [=Referenced Data Grants=]
-        have the opportunity to narrow their own access scope to only include
-        "child" [=Data Instances=] linked to the selected "parent" [=Data Instances=].
-    * The link must follow the [=Shape Tree Reference=] between
-        the parent [=Data Grant=] shape tree and the [=Referenced Data Grant=]
-        shape tree.
-    * Permissions are set conditionally for the [=Access Grant Subject=],
-        and have the benefit of applying to current and future [=Data Instances=]
-        associated with a parent [=Data Instance=].
-* <b>`interop:SelectedInstances`</b>
-    * Applies only to selected [=Data Instances=]
-        belonging to the associated [=Data Registration=], which are linked
-        to the [=Data Grant=] via `interop:hasDataInstance`.
-    * Permissions will be set for the [=Access Grant Subject=] on
-        each [=Data Instance=].
-* <b>`interop:NoAccess`</b>
-    * Indicates that no access is granted to the [=Access Grant Subject=].
-    * Applies to the entire [=Data Registration=] when
-        there are no [=Data Instances=] linked via `interop:hasDataInstance`.
-    * When there are [=Data Instances=] linked via `interop:hasDataInstance`,
-        this scope only applies to them.
-
-When recording a [=Referenced Data Grant=] via [[SAI-API#grants-recordgrant]]:
-
-* There must be a [=Referenced Access Need=] linked via
-    `interop:satisfiesAccessNeed` that
-    belongs to an [=Access Need Group=] linked to the same [=Access Grant=].
-* The [=Referenced Access Need=] must link back to the [=Referenced Data Grant=]
-    via `interop:hasReferencedDataGrant`.
-* [=Referenced Access Need=] and [=Referenced Data Grant=] must have the same `interop:accessModes`
-* [=Referenced Access Need=] and [=Referenced Data Grant=] must have the same `interop:registeredShapeTree`
-
-[Class Definition](interop.ttl#ReferencedDataGrant) -
-[Shape Definition](interop.shex#ReferencedDataGrantShape) -
-[Shape Tree Definition](interop.tree#ReferencedDataGrantTree)
-
-<table class="classinfo data" align="left" id="classReferencedDataGrant">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>hasDataGrant</td>
+      <td>inheritsFromGrant</td>
       <td>[DataGrant](#classDataGrant)</td>
-      <td>[=Data Grant=] that the [=Referenced Data Grant=] belongs to</td>
+      <td>Links to another [=Data Grant=] whose registeredShapeTree
+      references the shape tree associated with the current
+      [=Data Grant=].</td>
     </tr>
     <tr>
       <td>satisfiesAccessNeed</td>
-      <td>[ReferencedAccessNeed](#classReferencedAccessNeed)</td>
-      <td>Links to the [=Referenced Access Need=] satisfied by the
-      [=Referenced Data Grant=]</td>
-    </tr>
-    <tr>
-      <td>registeredShapeTree</td>
-      <td>st:ShapeTree</td>
-      <td>[=Data Registration=] for the [=shape tree=] that access
-      will be granted to</td>
-    </tr>
-    <tr>
-      <td>hasDataRegistration</td>
-      <td>[DataRegistration](#classDataRegistration)</td>
-      <td>[=Data Registration=] for registeredShapeTree that the
-      [=Referenced Data Grant=] applies to</td>
-    </tr>
-    <tr>
-      <td>accessMode</td>
-      <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
-      <td>Modes of access granted to the target data at hasRegistration</td>
-    </tr>
-    <tr>
-      <td>scopeOfGrant</td>
-      <td> interop:AllInstances, interop:SelectedInstances,
-      interop:InheritInstances, interop:NoAccess</td>
-      <td>Identifies the access scope of the [=Data Grant=]
-        <ul>
-          <li>interop:AllInstances - Scope includes
-              access to all [=Data Instances=] of the associated
-              [=Data Registration=]</li>
-          <li>interop:SelectedInstances - Scope includes
-              access only to those [=Data Instances=] specifically
-              selected by the [=Social Agent=]</li>
-          <li>interop:InheritInstances - Scope includes
-              access to [=Data Instances=] inherited by
-              instances selected in the parent [=Data Grant=]
-          </li>
-          <li>interop:NoAccess - No access is granted</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>hasDataInstance</td>
-      <td>Instance of registeredShapeTree</td>
-      <td>Links to a [=Data Instance=] of registeredShapeTree.</td>
+      <td>[AccessNeed](#classAccessNeed)</td>
+      <td>Links to the [=Access Need=] satisfied by the [=Data Grant=]</td>
     </tr>
   </tbody>
 </table>
 
 <figure>
-  <figcaption>A [=Referenced Data Grant=] in the [=Access Grant=] at
-  https://alice.example/grants/ab3d0023-3860-4358-ae33-8d3af1097b9d</figcaption>
+  <figcaption>[=Data Grants=] for Projects and Issues</figcaption>
   <pre class=include-code>
   path: snippets/alice.example/ab3d0023-3860-4358-ae33-8d3af1097b9d.ttl
   highlight: turtle
-  show: 44-52
+  show: 33-55
   </pre>
 </figure>
 
@@ -654,7 +524,7 @@ converted to an [=Access Grant=].
   <pre class=include-code>
   path: snippets/alice.example/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f.ttl
   highlight: turtle
-  show: 11-20
+  show: 13-27
   </pre>
 </figure>
 
@@ -717,7 +587,7 @@ which an [=Access Invitation=] can be delivered and validated.
   <pre class=include-code>
   path: snippets/alice.example/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f.ttl
   highlight: turtle
-  show: 22-34
+  show: 29-41
   </pre>
 </figure>
 

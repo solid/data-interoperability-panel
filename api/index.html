@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 4f053d00e, updated Tue Aug 10 14:13:32 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/api/" rel="canonical">
-  <meta content="350e48e9ce7f614def637e3cb55f3e6da79c838c" name="document-revision">
+  <meta content="74a4026ca9077cee4b4ba8306c5c08c020ff6cc9" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -542,15 +542,14 @@ dfn > a.self-link::before      { content: "#"; }
       <li><a href="#remove-resource-permissions"><span class="secno">5.18</span> <span class="content">Remove Resource Permissions</span></a>
       <li><a href="#deny-access-need-group"><span class="secno">5.19</span> <span class="content">Deny Access Need Group</span></a>
       <li><a href="#deny-data-grant"><span class="secno">5.20</span> <span class="content">Deny Data Grant</span></a>
-      <li><a href="#deny-referenced-data-grant"><span class="secno">5.21</span> <span class="content">Deny Referenced Data Grant</span></a>
-      <li><a href="#select-all-data-instances"><span class="secno">5.22</span> <span class="content">Select All Data Instances</span></a>
-      <li><a href="#select-all-referenced-data-instances"><span class="secno">5.23</span> <span class="content">Select All Referenced Data Instances</span></a>
-      <li><a href="#select-data-instance"><span class="secno">5.24</span> <span class="content">Select Specific Data Instance</span></a>
-      <li><a href="#select-inherited-referenced-data-instance"><span class="secno">5.25</span> <span class="content">Select Inherited Referenced Data Instance</span></a>
-      <li><a href="#select-referenced-data-instance"><span class="secno">5.26</span> <span class="content">Select Specific Referenced Data Instance</span></a>
-      <li><a href="#select-trusted-registry-set"><span class="secno">5.27</span> <span class="content">Select Trusted Registry Set</span></a>
-      <li><a href="#select-trusted-registry"><span class="secno">5.28</span> <span class="content">Select Specific Trusted Registry</span></a>
-      <li><a href="#deny-trusted-grant"><span class="secno">5.29</span> <span class="content">Deny Trusted Grant</span></a>
+      <li><a href="#select-all-data-instances"><span class="secno">5.21</span> <span class="content">Select All Data Instances</span></a>
+      <li><a href="#select-all-inherited-data-instances"><span class="secno">5.22</span> <span class="content">Select All Inherited Data Instances</span></a>
+      <li><a href="#select-data-instance"><span class="secno">5.23</span> <span class="content">Select Specific Data Instance</span></a>
+      <li><a href="#select-inherited-data-instance"><span class="secno">5.24</span> <span class="content">Select Inherited Data Instance</span></a>
+      <li><a href="#select-inherited-data-instance①"><span class="secno">5.25</span> <span class="content">Select Specific Inherited Data Instance</span></a>
+      <li><a href="#select-trusted-registry-set"><span class="secno">5.26</span> <span class="content">Select Trusted Registry Set</span></a>
+      <li><a href="#select-trusted-registry"><span class="secno">5.27</span> <span class="content">Select Specific Trusted Registry</span></a>
+      <li><a href="#deny-trusted-grant"><span class="secno">5.28</span> <span class="content">Deny Trusted Grant</span></a>
      </ol>
     <li>
      <a href="#receipts"><span class="secno">6</span> <span class="content">Access Receipts</span></a>
@@ -1014,7 +1013,8 @@ or cancel.</p>
       <td>The <a data-link-type="dfn">Access Grant</a> that <code>GROUP</code> is linked to
    </table>
    <figure id="fig-present-needgroup">
-    <figcaption> Depicting an <a data-link-type="dfn">Access Need</a> associated with a given <a data-link-type="dfn">Access Need Group</a>, and several <a data-link-type="dfn">Referenced Access Needs</a> linked to it. The controller
+    <figcaption> Depicting an <a data-link-type="dfn">Access Need</a> associated with a given <a data-link-type="dfn">Access Need Group</a>, and several 
+  inheriting <a data-link-type="dfn">Access Needs</a> linked to it. The controller
   chose to grant access to all instances now and in the future. </figcaption>
      <img src="diagrams/present-needgroup.svg" width="100%/"> 
    </figure>
@@ -1064,10 +1064,11 @@ necessity is optional</p>
         This sub-operation of <a href="#present-needgroup">§ 3.1.1 Presenting an Access Need Group</a> presents an <a data-link-type="dfn">Access Need</a> for an input <a data-link-type="dfn">Access Need Group</a>. 
        <p>Each discrete <a data-link-type="dfn">Access Need</a> is related to a specific type of
       data, identified by a <a data-link-type="dfn">shape tree</a>.</p>
-       <p>Each <a data-link-type="dfn">Access Need</a> directly linked to an <a data-link-type="dfn">Access Need Group</a> may have zero or more <a data-link-type="dfn">Referenced Access Needs</a> associated with it.
-      Each <a data-link-type="dfn">Referenced Access Need</a> is presented under the <a data-link-type="dfn">Access Need</a> it is linked to.</p>
-       <p>The controller can grant access to all data for the <a data-link-type="dfn">Access Need</a> and the <a data-link-type="dfn">Referenced Access Needs</a>, select 
-      specific instances of the <a data-link-type="dfn">Access Need</a> and narrow the <a data-link-type="dfn">Referenced Access Need</a> instances to only those related.
+       <p>Each <a data-link-type="dfn">Access Need</a> directly linked to an <a data-link-type="dfn">Access Need Group</a> may have zero or more inheriting <a data-link-type="dfn">Access Needs</a> associated with it.
+      Each inheriting <a data-link-type="dfn">Access Need</a> is presented under the <a data-link-type="dfn">Access Need</a> it is linked to.</p>
+       <p>The controller can grant access to all data for the <a data-link-type="dfn">Access Need</a> and the inheriting <a data-link-type="dfn">Access Needs</a>, select 
+      specific instances of the <a data-link-type="dfn">Access Need</a> and narrow the 
+      inheriting <a data-link-type="dfn">Access Need</a> instances to only those related.
       Manual selection with no inheritance can also be done 
       instead.</p>
        <p>Access to which data has been shared with the controller from other <a data-link-type="dfn">Social Agents</a> is also requested through <a data-link-type="dfn">Access Needs</a>.
@@ -1090,7 +1091,7 @@ necessity is optional</p>
    </table>
    <figure id="fig-present-inherited">
     <figcaption> Depicting an <a data-link-type="dfn">Access Need</a> with two selected <a data-link-type="dfn">Data Instances</a>,
-  with access to the <a data-link-type="dfn">Referenced Access Needs</a> set based on
+  with access to the inheriting <a data-link-type="dfn">Access Needs</a> set based on
   whether there is a link to the selected instances. </figcaption>
      <img src="diagrams/present-needgroup-inherited.svg" width="100%/"> 
    </figure>
@@ -1113,7 +1114,7 @@ necessity is optional</p>
         <p><strong>All Current and Future</strong> - <code>interop:AllInstances</code></p>
         <ol>
          <li data-md>
-          <p>Enable via <a href="#select-all-data-instances">§ 5.22 Select All Data Instances</a></p>
+          <p>Enable via <a href="#select-all-data-instances">§ 5.21 Select All Data Instances</a></p>
         </ol>
        <li data-md>
         <p><strong>Only Selected Instances</strong> - <code>interop:SelectedInstances</code></p>
@@ -1124,48 +1125,48 @@ linked via <code>DG hasDataInstance</code></p>
          <li data-md>
           <p>Allow one or more to be chosen</p>
          <li data-md>
-          <p>Enable via <a href="#select-data-instance">§ 5.24 Select Specific Data Instance</a>, providing each selected <a data-link-type="dfn">Data Instance</a></p>
+          <p>Enable via <a href="#select-data-instance">§ 5.23 Select Specific Data Instance</a>, providing each selected <a data-link-type="dfn">Data Instance</a></p>
         </ol>
       </ol>
      <li data-md>
-      <p>For each <a data-link-type="dfn">Referenced Access Need</a> <code>REFNEED</code> linked via <code>NEED hasReferencedAccessNeed</code></p>
+      <p>For each inheriting <a data-link-type="dfn">Access Need</a> <code>INEED</code> linked via <code>INEED inheritsFromNeed</code></p>
       <ol>
        <li data-md>
-        <p>Let <code>REFDG</code> be the <a data-link-type="dfn">Referenced Data Grant</a> linked via <code>NEED hasReferencedDataGrant</code></p>
+        <p>Let <code>IDG</code> be the inheriting <a data-link-type="dfn">Data Grant</a> linked via <code>IDG satisfiesAccessNeed</code></p>
        <li data-md>
-        <p>Call <a href="#present-need-details">§ 3.1.2.1 Presenting Data Access Need Details</a> to explain the <a data-link-type="dfn">Referenced Access Need</a></p>
+        <p>Call <a href="#present-need-details">§ 3.1.2.1 Presenting Data Access Need Details</a> to explain the <a data-link-type="dfn">Access Need</a></p>
         <ol>
          <li data-md>
-          <p>Manage the scope of data to be granted <code>REFDG scopeOfGrant</code>:</p>
+          <p>Manage the scope of data to be granted <code>IDG scopeOfGrant</code>:</p>
           <ol>
            <li data-md>
             <p><strong>No Access</strong> - <code>interop:NoAccess</code> (if necessity is optional)</p>
             <ol>
              <li data-md>
-              <p>Enable via <a href="#deny-referenced-data-grant">§ 5.21 Deny Referenced Data Grant</a></p>
+              <p>Enable via <a href="#deny-data-grant">§ 5.20 Deny Data Grant</a></p>
             </ol>
            <li data-md>
             <p><strong>All Current and Future</strong> - <code>interop:AllInstances</code></p>
             <ol>
              <li data-md>
-              <p>Enable via <a href="#select-all-referenced-data-instances">§ 5.23 Select All Referenced Data Instances</a></p>
+              <p>Enable via <a href="#select-all-inherited-data-instances">§ 5.22 Select All Inherited Data Instances</a></p>
             </ol>
            <li data-md>
             <p><strong>Only Inherited Instances</strong> - <code>interop:InheritInstances</code> (if <code>DG scopeOfGrant</code> is <code>interop:SelectedInstances</code>)</p>
             <ol>
              <li data-md>
-              <p>Present <a data-link-type="dfn">Data Instances</a> of <code>REFNEED registeredShapeTree</code> linked to all <a data-link-type="dfn">Data Instances</a> for <code>DG</code> via <code>st:traverseViaShapePath</code> of <code>DG registeredShapeTree</code></p>
+              <p>Present <a data-link-type="dfn">Data Instances</a> of <code>INEED registeredShapeTree</code> linked to all <a data-link-type="dfn">Data Instances</a> for <code>DG</code> via <code>st:traverseViaShapePath</code> of <code>DG registeredShapeTree</code></p>
             </ol>
            <li data-md>
             <p><strong>Only Selected Instances</strong> - <code>interop:SelectedInstances</code></p>
             <ol>
              <li data-md>
-              <p>Present existing <a data-link-type="dfn">Data Instances</a> corresponding to <code>REFDG registeredShapeTree</code>, identifying any existing 
-selections linked via <code>REFDG hasDataInstance</code></p>
+              <p>Present existing <a data-link-type="dfn">Data Instances</a> corresponding to <code>IDG registeredShapeTree</code>, identifying any existing 
+selections linked via <code>IDG hasDataInstance</code></p>
              <li data-md>
               <p>Allow one or more to be chosen</p>
              <li data-md>
-              <p>Enable via <a href="#select-referenced-data-instance">§ 5.26 Select Specific Referenced Data Instance</a>, providing
+              <p>Enable via <a href="#select-inherited-data-instance">§ 5.24 Select Inherited Data Instance</a>, providing
 each selected <a data-link-type="dfn">Data Instance</a>.</p>
             </ol>
           </ol>
@@ -1239,14 +1240,14 @@ presented as follows:</p>
     <tbody>
      <tr>
       <td colspan="2"> This sub-operation of <a href="#present-need">§ 3.1.2 Presenting a Data Access Need</a> is used to present specific
-      details of an <a data-link-type="dfn">Access Need</a> or <a data-link-type="dfn">Referenced Access Need</a>. 
+      details of an <a data-link-type="dfn">Access Need</a>. 
     <thead>
      <tr>
       <th colspan="2">Inputs
     <tbody>
      <tr>
       <td><code>NEED</code>
-      <td>The <a data-link-type="dfn">Access Need</a> or <a data-link-type="dfn">Referenced Access Need</a> to present
+      <td>The <a data-link-type="dfn">Access Need</a> to present
    </table>
    <ol>
     <li data-md>
@@ -1326,7 +1327,7 @@ presented as follows:</p>
        <p><strong>All Registries</strong> - where <code>rdf:type</code> of <a data-link-type="dfn">Registry</a> is <code>TNEED trustedWithType</code></p>
        <ol>
         <li data-md>
-         <p>Enable via <a href="#select-trusted-registry-set">§ 5.27 Select Trusted Registry Set</a></p>
+         <p>Enable via <a href="#select-trusted-registry-set">§ 5.26 Select Trusted Registry Set</a></p>
        </ol>
       <li data-md>
        <p><strong>Specific TYPE Registries</strong></p>
@@ -1336,7 +1337,7 @@ presented as follows:</p>
         <li data-md>
          <p>Allow one or more <a data-link-type="dfn">Registries</a> to be chosen</p>
         <li data-md>
-         <p>Enable via <a href="#select-trusted-registry">§ 5.28 Select Specific Trusted Registry</a>, providing each selected <a data-link-type="dfn">Registrys</a></p>
+         <p>Enable via <a href="#select-trusted-registry">§ 5.27 Select Specific Trusted Registry</a>, providing each selected <a data-link-type="dfn">Registrys</a></p>
        </ol>
      </ol>
    </ol>
@@ -1979,7 +1980,7 @@ for a given <a data-link-type="dfn">Access Grant Subject</a></p>
      <tr>
       <td colspan="2">
         Initialize a <a data-link-type="dfn">Data Grant</a> and link it to the provided <a data-link-type="dfn">Access Need</a> <code>NEED</code>. 
-       <p>Initialize <a data-link-type="dfn">Referenced Data Grants</a> if the <a data-link-type="dfn">Access Need</a> <code>NEED</code> has any <a data-link-type="dfn">Referenced Access Needs</a>.</p>
+       <p>Initialize inheriting <a data-link-type="dfn">Data Grants</a> if the <a data-link-type="dfn">Access Need</a> <code>NEED</code> has any inheriting <a data-link-type="dfn">Access Needs</a>.</p>
     <thead>
      <tr>
       <th colspan="2">Inputs
@@ -2017,25 +2018,27 @@ for a given <a data-link-type="dfn">Access Grant Subject</a></p>
      <li data-md>
       <p>Let <code>NEED hasDataGrant</code> be <code>DG</code></p>
      <li data-md>
-      <p>For each <a data-link-type="dfn">Referenced Access Need</a> <code>REFNEED</code> linked
-via <code>NEED hasReferencedAccessNeed</code></p>
+      <p>For each inheriting <a data-link-type="dfn">Access Need</a> <code>INEED</code> linked
+via <code>INEED inheritsFromNeed</code></p>
       <ol>
        <li data-md>
-        <p>Let <code>REFDG</code> be a newly initialized <a data-link-type="dfn">Referenced Data Grant</a></p>
+        <p>Let <code>IDG</code> be a newly initialized <a data-link-type="dfn">Data Grant</a></p>
        <li data-md>
-        <p>Let <code>REFDG hasDataGrant</code> be <code>DG</code></p>
+        <p>Let <code>IDG inheritsFromGrant</code> be <code>DG</code></p>
        <li data-md>
-        <p>Let <code>REFDG satisfiesAccessNeed</code> be <code>REFNEED</code></p>
+        <p>Let <code>IDG satisfiesAccessNeed</code> be <code>INEED</code></p>
        <li data-md>
-        <p>Let <code>REFDG registeredShapeTree</code> be <code>REFNEED registeredShapeTree</code></p>
+        <p>Let <code>IDG registeredShapeTree</code> be <code>INEED registeredShapeTree</code></p>
        <li data-md>
-        <p>Let <code>REFDG hasRegistration</code> be a <a data-link-type="dfn">Data Registration</a> <code>DR</code> where <code>DR registeredShapeTree</code> == <code>REFDG registeredShapeTree</code></p>
+        <p>Let <code>IDG hasRegistration</code> be a <a data-link-type="dfn">Data Registration</a> <code>DR</code> where <code>DR registeredShapeTree</code> == <code>IDG registeredShapeTree</code></p>
        <li data-md>
-        <p>Let <code>REFDG accessMode</code>s be <code>REFNEED accessMode</code>s</p>
+        <p>Let <code>IDG accessMode</code>s be <code>INEED accessMode</code>s</p>
        <li data-md>
-        <p>Let <code>REFDG scopeOfGrant</code> be <code>interop:NoAccess</code></p>
+        <p>Let <code>IDG creatorAccessMode</code>s be <code>INEED creatorAccessMode</code>s</p>
        <li data-md>
-        <p>Link <code>REFDG</code> to <code>DG</code> via <code>DG hasReferencedDataGrant</code></p>
+        <p>Let <code>IDG scopeOfGrant</code> be <code>interop:NoAccess</code></p>
+       <li data-md>
+        <p>Link <code>IDG</code> to <code>DG</code> via <code>IDG inheritsFromGrant</code></p>
       </ol>
      <li data-md>
       <p>Return <code>DG</code></p>
@@ -2326,14 +2329,13 @@ the assigned <a href="interop.tree#AccessInvitationTree">interopt:AccessInvitati
      <tr>
       <td colspan="2">
         This operation applies data permissions for a new or updated <a data-link-type="dfn">Access Grant</a>. 
-       <p>It iterates over each <a data-link-type="dfn">Data Grant</a> linked via <code>GRANT hasDataGrant</code>,
-      including following any <a data-link-type="dfn">Referenced Data Grants</a>.</p>
-       <p>All <a data-link-type="dfn">Data Grants</a> and <a data-link-type="dfn">Referenced Data Grants</a> are added to
+       <p>It iterates over each <a data-link-type="dfn">Data Grant</a> linked via <code>GRANT hasDataGrant</code>.</p>
+       <p>All <a data-link-type="dfn">Data Grants</a> are added to
       a hash map <code>DRHASH</code>. The key is the <a data-link-type="dfn">Data Registration</a> associated
-      with each <a data-link-type="dfn">Data Grant</a> or <a data-link-type="dfn">Referenced Data Grant</a> via <code>hasDataRegistration</code>.</p>
+      with each <a data-link-type="dfn">Data Grant</a> <code>hasDataRegistration</code>.</p>
        <p>The end result is the keys of <code>DRHASH</code> are a unique
       set of <a data-link-type="dfn">Data Registrations</a> affected by <code>GRANT</code>, and each key
-      has an array of related <a data-link-type="dfn">Data Grants</a> and <a data-link-type="dfn">Referenced Data Grants</a> as its value.</p>
+      has an array of related <a data-link-type="dfn">Data Grants</a> as its value.</p>
        <p>Each <a data-link-type="dfn">Data Registration</a> and the array of grants that affect it
       are then passed to <a href="#apply-data-registration-permissions">§ 5.13 Apply Data Registration Permissions</a>.</p>
        <figure id="fig-drhash"> <img src="diagrams/apply-data-permissions-drhash.svg" width="100%/"> </figure>
@@ -2356,7 +2358,7 @@ the assigned <a href="interop.tree#AccessInvitationTree">interopt:AccessInvitati
     <ol>
      <li data-md>
       <p>Let <code>DRHASH</code> be an empty hash map where a <a data-link-type="dfn">Data Registration</a> is key and
-the value is an array of <a data-link-type="dfn">Data Grants</a> and/or <a data-link-type="dfn">Referenced Data Grants</a>.</p>
+the value is an array of <a data-link-type="dfn">Data Grants</a>.</p>
      <li data-md>
       <p>For each <a data-link-type="dfn">Data Grant</a> <code>DG</code> linked via <code>GRANT hasDataGrant</code></p>
       <ol>
@@ -2364,14 +2366,6 @@ the value is an array of <a data-link-type="dfn">Data Grants</a> and/or <a data-
         <p>Let <code>DRKEY</code> be <code>DG hasDataRegistration</code> added or found in <code>DRHASH</code></p>
        <li data-md>
         <p>Add <code>DG</code> to the value array for <code>DRKEY</code> if missing</p>
-       <li data-md>
-        <p>For each <a data-link-type="dfn">Referenced Data Grant</a> <code>REFDG</code> linked via <code>DG hasReferencedDataGrant</code></p>
-        <ol>
-         <li data-md>
-          <p>Let <code>REFDRKEY</code> be <code>REFDG hasDataRegistration</code> added or found in <code>DRHASH</code></p>
-         <li data-md>
-          <p>Add <code>REFDG</code> to the array for <code>REFDRKEY</code> if missing</p>
-        </ol>
       </ol>
      <li data-md>
       <p>For each <a data-link-type="dfn">Data Registration</a> <code>DR</code> in <code>DRHASH</code></p>
@@ -2399,8 +2393,7 @@ the value is an array of <a data-link-type="dfn">Data Grants</a> and/or <a data-
        <p>Before assigning permissions, any existing permissions for the <a data-link-type="dfn">Access Grant Subject</a> are cleared. This operation does a full
       scan for simplicity, but optimization is recommended.</p>
        <p>All of the grants are iterated, and organized into a hash map
-      with data-specific <code>interop:scopeOfGrant</code> values as keys. Each <a data-link-type="dfn">Data Grant</a> or <a data-link-type="dfn">Referenced Data Grant</a> with that scope will
-      update the associated value.</p>
+      with data-specific <code>interop:scopeOfGrant</code> values as keys. Each <a data-link-type="dfn">Data Grant</a> with that scope will update the associated value.</p>
        <ul>
         <li data-md>
          <p><code>interop:AllInstances</code> - An array of <code>interop:accessMode</code> values</p>
@@ -2422,7 +2415,7 @@ the value is an array of <a data-link-type="dfn">Data Grants</a> and/or <a data-
       <td>A <a data-link-type="dfn">Data Registration</a>
      <tr>
       <td><code>DATAGRANTS</code>
-      <td>An array of <a data-link-type="dfn">Data Grants</a> and <a data-link-type="dfn">Referenced Data Grants</a> associated with the <a data-link-type="dfn">Data Registration</a> in <code>GRANT</code>
+      <td>An array of <a data-link-type="dfn">Data Grants</a> associated with the <a data-link-type="dfn">Data Registration</a> in <code>GRANT</code>
      <tr>
       <td><code>GRANT</code>
       <td><a data-link-type="dfn">Access Grant</a> that permissions are being applied for
@@ -2454,7 +2447,7 @@ the value is an array of <a data-link-type="dfn">Data Grants</a> and/or <a data-
       <p>Let <code>SCOPEHASH[interop:InheritInstances]</code> be an empty hash map where
 parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <code>interop:AccessMode</code>s as values</p>
      <li data-md>
-      <p>For each <a data-link-type="dfn">Data Grant</a> or <a data-link-type="dfn">Referenced Data Grant</a> <code>DATAGRANT</code> in <code>DATAGRANTS</code></p>
+      <p>For each <a data-link-type="dfn">Data Grant</a> <code>DATAGRANT</code> in <code>DATAGRANTS</code></p>
       <ol>
        <li data-md>
         <p>If <code>DATAGRANT scopeOfGrant</code> is <code>interop:AllInstances</code></p>
@@ -2484,7 +2477,7 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
         <p>If <code>DATAGRANT scopeOfGrant</code> is <code>interop:InheritInstances</code></p>
         <ol>
          <li data-md>
-          <p>Let <code>PDG</code> be the parent <a data-link-type="dfn">Data Grant</a> linked via <code>DATAGRANT hasDataGrant</code> that the <a data-link-type="dfn">Referenced Data Grant</a> inherits from.</p>
+          <p>Let <code>PDG</code> be the parent <a data-link-type="dfn">Data Grant</a> linked via <code>DATAGRANT inheritsFromGrant</code> that the <a data-link-type="dfn">Data Grant</a> inherits from.</p>
          <li data-md>
           <p>Error if <code>PDG scopeOfGrant</code> is not <code>interop:SelectedInstances</code></p>
          <li data-md>
@@ -2843,7 +2836,7 @@ associated with <code>SUBJECT</code>.</p>
       <p>For each <a data-link-type="dfn">Trusted Need</a> <code>TNEED</code> in <code>GROUP</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#deny-trusted-grant">§ 5.29 Deny Trusted Grant</a> with inputs: <code>NEED hasTrustedGrant</code>, <code>GRANT</code></p>
+        <p>Call <a href="#deny-trusted-grant">§ 5.28 Deny Trusted Grant</a> with inputs: <code>NEED hasTrustedGrant</code>, <code>GRANT</code></p>
       </ol>
     </ol>
    </div>
@@ -2873,41 +2866,14 @@ associated with <code>SUBJECT</code>.</p>
      <li data-md>
       <p>Let <code>DG scopeOfGrant</code> be <code>interop:NoAccess</code></p>
      <li data-md>
-      <p>For each <a data-link-type="dfn">Referenced Data Grant</a> <code>REFDG</code> linked via <code>DG hasReferencedDataGrant</code></p>
+      <p>For each inheriting <a data-link-type="dfn">Data Grant</a> <code>IDG</code> linked via <code>IDG inheritsFromGrant</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#deny-referenced-data-grant">§ 5.21 Deny Referenced Data Grant</a> with inputs: <code>REFDG</code>, <code>DG</code></p>
+        <p>Call <a href="#deny-data-grant">§ 5.20 Deny Data Grant</a> with inputs: <code>IDG</code>, <code>GRANT</code></p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.21" id="deny-referenced-data-grant"><span class="secno">5.21. </span><span class="content">Deny Referenced Data Grant</span><a class="self-link" href="#deny-referenced-data-grant"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> This operation is used when a given <a data-link-type="dfn">Referenced Data Grant</a> has been denied. 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>REFDG</code>
-      <td>A <a data-link-type="dfn">Referenced Data Grant</a>
-     <tr>
-      <td><code>DG</code>
-      <td>The <a data-link-type="dfn">Data Grant</a> that <code>REFDG</code> is linked to
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>REFDG scopeOfGrant</code> be <code>interop:NoAccess</code></p>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.22" id="select-all-data-instances"><span class="secno">5.22. </span><span class="content">Select All Data Instances</span><a class="self-link" href="#select-all-data-instances"></a></h3>
+   <h3 class="heading settled" data-level="5.21" id="select-all-data-instances"><span class="secno">5.21. </span><span class="content">Select All Data Instances</span><a class="self-link" href="#select-all-data-instances"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2935,14 +2901,14 @@ associated with <code>SUBJECT</code>.</p>
      <li data-md>
       <p>Remove all links for <code>DG hasDataInstance</code></p>
      <li data-md>
-      <p>For each <a data-link-type="dfn">Referenced Data Grant</a> <code>REFDG</code> linked via <code>DG hasReferencedDataGrant</code></p>
+      <p>For each inheriting <a data-link-type="dfn">Data Grant</a> <code>IDG</code> linked via <code>IDG inheritsFromGrant</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#select-all-referenced-data-instances">§ 5.23 Select All Referenced Data Instances</a> with inputs: <code>REFDG</code></p>
+        <p>Call <a href="#select-all-inherited-data-instances">§ 5.22 Select All Inherited Data Instances</a> with inputs: <code>IDG</code></p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.23" id="select-all-referenced-data-instances"><span class="secno">5.23. </span><span class="content">Select All Referenced Data Instances</span><a class="self-link" href="#select-all-referenced-data-instances"></a></h3>
+   <h3 class="heading settled" data-level="5.22" id="select-all-inherited-data-instances"><span class="secno">5.22. </span><span class="content">Select All Inherited Data Instances</span><a class="self-link" href="#select-all-inherited-data-instances"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2951,24 +2917,24 @@ associated with <code>SUBJECT</code>.</p>
       <th colspan="2">Description
     <tbody>
      <tr>
-      <td colspan="2"> Used to select all <a data-link-type="dfn">Data Instances</a> for a given <a data-link-type="dfn">Referenced Data Grant</a>. 
+      <td colspan="2"> Used to select all <a data-link-type="dfn">Data Instances</a> for a given inheriting <a data-link-type="dfn">Data Grant</a>. 
     <thead>
      <tr>
       <th colspan="2">Inputs
     <tbody>
      <tr>
-      <td><code>REFDG</code>
-      <td>The <a data-link-type="dfn">Referenced Data Grant</a>
+      <td><code>IDG</code>
+      <td>The inheriting <a data-link-type="dfn">Data Grant</a>
    </table>
    <div class="opdetails">
     <ol>
      <li data-md>
-      <p>Let <code>REFDG scopeOfGrant</code> be <code>interop:AllInstances</code></p>
+      <p>Let <code>IDG scopeOfGrant</code> be <code>interop:AllInstances</code></p>
      <li data-md>
-      <p>Remove all links for <code>REFDG hasDataInstance</code></p>
+      <p>Remove all links for <code>IDG hasDataInstance</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.24" id="select-data-instance"><span class="secno">5.24. </span><span class="content">Select Specific Data Instance</span><a class="self-link" href="#select-data-instance"></a></h3>
+   <h3 class="heading settled" data-level="5.23" id="select-data-instance"><span class="secno">5.23. </span><span class="content">Select Specific Data Instance</span><a class="self-link" href="#select-data-instance"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2977,7 +2943,7 @@ associated with <code>SUBJECT</code>.</p>
       <th colspan="2">Description
     <tbody>
      <tr>
-      <td colspan="2"> Used to select specific <a data-link-type="dfn">Data Instances</a> for a given <a data-link-type="dfn">Data Grant</a>. If the <a data-link-type="dfn">Data Grant</a> has any <a data-link-type="dfn">Referenced Data Grants</a>,
+      <td colspan="2"> Used to select specific <a data-link-type="dfn">Data Instances</a> for a given <a data-link-type="dfn">Data Grant</a>. If the <a data-link-type="dfn">Data Grant</a> has inheriting <a data-link-type="dfn">Data Grants</a>,
       this will set their scope to <code>interop:InheritInstances</code>.
     <thead>
      <tr>
@@ -3000,14 +2966,14 @@ associated with <code>SUBJECT</code>.</p>
      <li data-md>
       <p>Let <code>DG hasDataInstance</code> be linked to one unique instance of <code>DI</code></p>
      <li data-md>
-      <p>For each <a data-link-type="dfn">Referenced Data Grant</a> <code>REFDG</code> linked via <code>DG hasReferencedDataGrant</code></p>
+      <p>For each inheriting <a data-link-type="dfn">Data Grant</a> <code>IDG</code> linked via <code>IDG inheritsFromGrant</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#select-inherited-referenced-data-instance">§ 5.25 Select Inherited Referenced Data Instance</a> with inputs: <code>REFDG</code>, <code>DG</code></p>
+        <p>Call <a href="#select-inherited-data-instance">§ 5.24 Select Inherited Data Instance</a> with inputs: <code>IDG</code></p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.25" id="select-inherited-referenced-data-instance"><span class="secno">5.25. </span><span class="content">Select Inherited Referenced Data Instance</span><a class="self-link" href="#select-inherited-referenced-data-instance"></a></h3>
+   <h3 class="heading settled" data-level="5.24" id="select-inherited-data-instance"><span class="secno">5.24. </span><span class="content">Select Inherited Data Instance</span><a class="self-link" href="#select-inherited-data-instance"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3016,27 +2982,24 @@ associated with <code>SUBJECT</code>.</p>
       <th colspan="2">Description
     <tbody>
      <tr>
-      <td colspan="2"> Used to set the scope of a <a data-link-type="dfn">Referenced Data Grant</a> to inherited access. 
+      <td colspan="2"> Used to set the scope of a <a data-link-type="dfn">Data Grant</a> to inherited access. 
     <thead>
      <tr>
       <th colspan="2">Inputs
     <tbody>
      <tr>
-      <td><code>REFDG</code>
-      <td>The <a data-link-type="dfn">Referenced Data Grant</a> to adjust
-     <tr>
-      <td><code>DG</code>
-      <td>The <a data-link-type="dfn">Data Grant</a> that <code>REFDG</code> is linked to
+      <td><code>IDG</code>
+      <td>The inheriting <a data-link-type="dfn">Data Grant</a> to adjust
    </table>
    <div class="opdetails">
     <ol>
      <li data-md>
-      <p>Let <code>REFDG scopeOfGrant</code> be <code>interop:InheritInstances</code></p>
+      <p>Let <code>IDG scopeOfGrant</code> be <code>interop:InheritInstances</code></p>
      <li data-md>
-      <p>Remove all links via <code>REFDG hasDataInstance</code></p>
+      <p>Remove all links via <code>IDG hasDataInstance</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.26" id="select-referenced-data-instance"><span class="secno">5.26. </span><span class="content">Select Specific Referenced Data Instance</span><a class="self-link" href="#select-referenced-data-instance"></a></h3>
+   <h3 class="heading settled" data-level="5.25" id="select-inherited-data-instance①"><span class="secno">5.25. </span><span class="content">Select Specific Inherited Data Instance</span><a class="self-link" href="#select-inherited-data-instance①"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3045,7 +3008,7 @@ associated with <code>SUBJECT</code>.</p>
       <th colspan="2">Description
     <tbody>
      <tr>
-      <td colspan="2"> Used to set the scope of a <a data-link-type="dfn">Referenced Data Grant</a> to inherited access. 
+      <td colspan="2"> Used to set the scope of a <a data-link-type="dfn">Data Grant</a> to inherited access. 
     <thead>
      <tr>
       <th colspan="2">Inputs
@@ -3054,22 +3017,19 @@ associated with <code>SUBJECT</code>.</p>
       <td><code>DI</code>
       <td>A <a data-link-type="dfn">Data Instance</a> selected for access
      <tr>
-      <td><code>REFDG</code>
-      <td>The <a data-link-type="dfn">Referenced Data Grant</a> to adjust
-     <tr>
-      <td><code>DG</code>
-      <td>The <a data-link-type="dfn">Data Grant</a> that <code>REFDG</code> is linked to
+      <td><code>IDG</code>
+      <td>The inheriting <a data-link-type="dfn">Data Grant</a> to adjust
    </table>
    <div class="opdetails">
     <ol>
      <li data-md>
-      <p>Let <code>REFDG scopeOfGrant</code> be <code>interop:SelectedInstances</code></p>
+      <p>Let <code>IDG scopeOfGrant</code> be <code>interop:SelectedInstances</code></p>
      <li data-md>
-      <p>Let <code>REFDG hasDataInstance</code> be linked to one unique instance of <code>DI</code></p>
+      <p>Let <code>IDG hasDataInstance</code> be linked to one unique instance of <code>DI</code></p>
     </ol>
    </div>
    <p></p>
-   <h3 class="heading settled" data-level="5.27" id="select-trusted-registry-set"><span class="secno">5.27. </span><span class="content">Select Trusted Registry Set</span><a class="self-link" href="#select-trusted-registry-set"></a></h3>
+   <h3 class="heading settled" data-level="5.26" id="select-trusted-registry-set"><span class="secno">5.26. </span><span class="content">Select Trusted Registry Set</span><a class="self-link" href="#select-trusted-registry-set"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3104,7 +3064,7 @@ associated with <code>SUBJECT</code>.</p>
       <p>Let <code>TG trustedWithType</code> be <code>SET rdf:type</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.28" id="select-trusted-registry"><span class="secno">5.28. </span><span class="content">Select Specific Trusted Registry</span><a class="self-link" href="#select-trusted-registry"></a></h3>
+   <h3 class="heading settled" data-level="5.27" id="select-trusted-registry"><span class="secno">5.27. </span><span class="content">Select Specific Trusted Registry</span><a class="self-link" href="#select-trusted-registry"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3139,7 +3099,7 @@ associated with <code>SUBJECT</code>.</p>
       <p>Let <code>TG trustedWithType</code> be <code>SET rdf:type</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.29" id="deny-trusted-grant"><span class="secno">5.29. </span><span class="content">Deny Trusted Grant</span><a class="self-link" href="#deny-trusted-grant"></a></h3>
+   <h3 class="heading settled" data-level="5.28" id="deny-trusted-grant"><span class="secno">5.28. </span><span class="content">Deny Trusted Grant</span><a class="self-link" href="#deny-trusted-grant"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
