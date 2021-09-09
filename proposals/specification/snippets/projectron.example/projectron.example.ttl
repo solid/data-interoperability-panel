@@ -29,42 +29,44 @@ projectron:\#id
   interop:hasAccessNeedDecorator projectron:index\#projectDecorator ;
   interop:accessNecessity interop:accessRequired ;
   interop:accessMode acl:read, acl:write ;
-  interop:creatorAccessMode acl:Control ;
-  interop:hasReferencedAccessNeed
-      <#need-issue>, <#need-task>, <#need-release>, <#need-milestone> .
+  interop:creatorAccessMode acl:Control .
 
 <#need-issue>
-  a interop:ReferencedAccessNeed ;
-  interop:hasAccessNeed <#need-project> ;
+  a interop:AccessNeed ;
+  interop:inAccessNeedGroup <#need-group-pm> ;
   interop:hasAccessNeedDecorator projectron:index\#issueDecorator ;
   interop:registeredShapeTree pm-shapetrees:IssueTree ;
   interop:accessNecessity interop:accessRequired ;
   interop:accessMode acl:read, acl:write ;
-  interop:creatorAccessMode acl:Control .
+  interop:creatorAccessMode acl:Control ;
+  interop:inheritsFromNeed <#need-project> .
 
 <#need-task>
-  a interop:ReferencedAccessNeed ;
-  interop:hasAccessNeed <#need-project> ;
+  a interop:AccessNeed ;
+  interop:inAccessNeedGroup <#need-group-pm> ;
   interop:hasAccessNeedDecorator projectron:index\#taskDecorator ;
   interop:registeredShapeTree pm-shapetrees:TaskTree ;
   interop:accessNecessity interop:accessRequired ;
   interop:accessMode acl:read, acl:write ;
-  interop:creatorAccessMode acl:Control .
+  interop:creatorAccessMode acl:Control ;
+  interop:inheritsFromNeed <#need-project> .
 
 <#need-release>
-  a interop:ReferencedAccessNeed ;
-  interop:hasAccessNeed <#need-project> ;
+  a interop:AccessNeed ;
+  interop:inAccessNeedGroup <#need-group-pm> ;
   interop:hasAccessNeedDecorator projectron:index\#releaseDecorator ;
   interop:registeredShapeTree pm-shapetrees:ReleaseTree ;
   interop:accessNecessity interop:accessRequired ;
   interop:accessMode acl:read, acl:write ;
-  interop:creatorAccessMode acl:Control .
+  interop:creatorAccessMode acl:Control ;
+  interop:inheritsFromNeed <#need-project> .
 
 <#need-milestone>
-  a interop:ReferencedAccessNeed ;
-  interop:hasAccessNeed <#need-project> ;
+  a interop:AccessNeed ;
+  interop:inAccessNeedGroup <#need-group-pm> ;
   interop:hasAccessNeedDecorator projectron:index\#milestoneDecorator ;
   interop:registeredShapeTree pm-shapetrees:MilestoneTree ;
   interop:accessNecessity interop:accessRequired ;
   interop:accessMode acl:read, acl:write ;
-  interop:creatorAccessMode acl:Control .
+  interop:creatorAccessMode acl:Control ;
+  interop:inheritsFromNeed <#need-project> .

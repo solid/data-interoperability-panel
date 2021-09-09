@@ -410,7 +410,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   a rdf:Property ;
   rdfs:comment "Links to an AccessNeed that the grant satisfies"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:range [ owl:oneOf ( :AccessNeed :ReferencedAccessNeed ) ] ;
+  rdfs:range :AccessNeed ;
   rdfs:label "Satisfies Access Need"@en .
 
 :scopeOfGrant
@@ -418,6 +418,18 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "Links to a scope identifier for one of the grant types"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Scope of Grant"@en .
+
+:dataOwner
+  a rdf:Property ;
+  rdfs:comment "Identifies the Social Agent that owns a given data set"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Data Owner"@en .
+
+:inheritsFromGrant
+  a rdf:Property ;
+  rdfs:comment "Links to a Data Grant that another Data Grant inherits from"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Inherits From Grant"@en .
 
 # IRIs for various grant scopes
 #############################################################################
@@ -621,13 +633,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :TrustedNeed ;
   rdfs:label "Has Trusted Need"@en .
 
-:hasAccessNeedOverride
-  a rdf:Property ;
-  rdfs:comment "Overrides inherited evaluation of an Access Need"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range :AccessNeed ;
-  rdfs:label "Has Access Need Override"@en .
-
 :hasAccessNeedDecoratorIndex
   a rdf:Property ;
   rdfs:comment "SKOS Index for describing Access Needs"@en ;
@@ -673,14 +678,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :AccessNeedGroup ;
   rdfs:label "In Access Need Group"@en .
 
-:recursivelyAuthorize
-  a rdf:Property ;
-  rdfs:comment "Continue traversing shape tree hierarchy for authorization when true"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessNeed ;
-  rdfs:range xsd:boolean ;
-  rdfs:label "Recursively Authorize"@en .
-
 :accessNecessity
   a rdf:Property ;
   rdfs:comment "Identifies the necessity of the AccessNeed"@en ;
@@ -721,14 +718,14 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   a rdf:Property ;
   rdfs:comment "Links to an AccessNeed this AccessNeed supports"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:range [ owl:oneOf ( :AccessNeed :ReferencedAccessNeed ) ] ;
+  rdfs:range :AccessNeed ;
   rdfs:label "Supports"@en .
 
 :supportedBy
   a rdf:Property ;
   rdfs:comment "Links to an AccessNeed supported by this AccessNeed"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:range [ owl:oneOf ( :AccessNeed :ReferencedAccessNeed ) ] ;
+  rdfs:range :AccessNeed ;
   rdfs:label "Supported By Access Need"@en .
 
 :hasShapeTreeDecorator
@@ -745,6 +742,12 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:domain :AccessNeed ;
   rdfs:range :AccessNeedDecorator ;
   rdfs:label "Has Access Need Decorator"@en .
+
+:inheritsFromNeed
+  a rdf:Property ;
+  rdfs:comment "Links to an Access Need that another Access Need inherits from"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Inherits From Need"@en .
 
 # TrustedNeed Class
 #############################################################################
