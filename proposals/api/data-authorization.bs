@@ -137,7 +137,7 @@ workflow.
   <figcaption>
   Depicting an [=Access Need=] 
   associated with a given [=Access Need Group=], and several 
-  [=Referenced Access Needs=] linked to it. The controller
+  inheriting [=Access Needs=] linked to it. The controller
   chose to grant access to all instances now and in the future.
   </figcaption>
   <img src="diagrams/present-needgroup.svg" width=100%/>  
@@ -180,14 +180,14 @@ workflow.
       data, identified by a [=shape tree=].
       
       Each [=Access Need=] directly linked to an [=Access Need Group=]
-      may have zero or more [=Referenced Access Needs=] associated with it.
-      Each [=Referenced Access Need=] is presented under the [=Access Need=]
+      may have zero or more inheriting [=Access Needs=] associated with it.
+      Each inheriting [=Access Need=] is presented under the [=Access Need=]
       it is linked to.
 
       The controller can grant access to all data for the 
-      [=Access Need=] and the [=Referenced Access Needs=], select 
+      [=Access Need=] and the inheriting [=Access Needs=], select 
       specific instances of the [=Access Need=] and narrow the 
-      [=Referenced Access Need=] instances to only those related.
+      inheriting [=Access Need=] instances to only those related.
       Manual selection with no inheritance can also be done 
       instead.
       
@@ -221,7 +221,7 @@ workflow.
 <figure id="fig-present-inherited">
   <figcaption>
   Depicting an [=Access Need=] with two selected [=Data Instances=],
-  with access to the [=Referenced Access Needs=] set based on
+  with access to the inheriting [=Access Needs=] set based on
   whether there is a link to the selected instances.
   </figcaption>
   <img src="diagrams/present-needgroup-inherited.svg" width=100%/>  
@@ -242,24 +242,24 @@ workflow.
             linked via `DG hasDataInstance`
         1. Allow one or more to be chosen
         1. Enable via [[#select-data-instance]], providing each selected [=Data Instance=]
-1. For each [=Referenced Access Need=] `REFNEED` linked via `NEED hasReferencedAccessNeed`
-    1. Let `REFDG` be the [=Referenced Data Grant=] linked via `NEED hasReferencedDataGrant`
-    1. Call [[#present-need-details]] to explain the [=Referenced Access Need=]
-        1. Manage the scope of data to be granted `REFDG scopeOfGrant`:
+1. For each inheriting [=Access Need=] `INEED` linked via `INEED inheritsFromNeed`
+    1. Let `IDG` be the inheriting [=Data Grant=] linked via `IDG satisfiesAccessNeed`
+    1. Call [[#present-need-details]] to explain the [=Access Need=]
+        1. Manage the scope of data to be granted `IDG scopeOfGrant`:
             1. **No Access** - `interop:NoAccess` (if necessity is optional)
-                1. Enable via [[#deny-referenced-data-grant]]  
+                1. Enable via [[#deny-data-grant]]  
             1. **All Current and Future** - `interop:AllInstances`
-                1. Enable via [[#select-all-referenced-data-instances]]
+                1. Enable via [[#select-all-inherited-data-instances]]
             1. **Only Inherited Instances** - `interop:InheritInstances` (if `DG scopeOfGrant` is `interop:SelectedInstances`)
-                1. Present [=Data Instances=] of `REFNEED registeredShapeTree`
+                1. Present [=Data Instances=] of `INEED registeredShapeTree`
                     linked to all [=Data Instances=] for `DG` via
                     `st:traverseViaShapePath` of `DG registeredShapeTree`
             1. **Only Selected Instances** - `interop:SelectedInstances`
                 1. Present existing [=Data Instances=] corresponding to
-                    `REFDG registeredShapeTree`, identifying any existing 
-                    selections linked via `REFDG hasDataInstance`
+                    `IDG registeredShapeTree`, identifying any existing 
+                    selections linked via `IDG hasDataInstance`
                 1. Allow one or more to be chosen
-                1. Enable via [[#select-referenced-data-instance]], providing 
+                1. Enable via [[#select-inherited-data-instance]], providing 
                     each selected [=Data Instance=].
 
 Note: Access to data shared by other [=Social Agents=] 
@@ -303,7 +303,7 @@ Issue: Update this operation after refactoring of [=Delegated Data Grants=]
     <tr>
       <td colspan=2>
       This sub-operation of [[#present-need]] is used to present specific
-      details of an [=Access Need=] or [=Referenced Access Need=].
+      details of an [=Access Need=].
       </td>
     </tr>
   </tbody>
@@ -313,7 +313,7 @@ Issue: Update this operation after refactoring of [=Delegated Data Grants=]
   <tbody>
     <tr>
       <td>`NEED`</td>
-      <td>The [=Access Need=] or [=Referenced Access Need=] to present</td>
+      <td>The [=Access Need=] to present</td>
     </tr>
   </tbody>
 </table>

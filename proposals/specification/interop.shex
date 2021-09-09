@@ -83,7 +83,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   ( interop:hasAccessNeed IRI+ | interop:hasTrustedNeed IRI+ )
 }
 
-#  Access Need
+# Access Need
 <#AccessNeedShape> {
   a [ interop:AccessNeed ] ;
   interop:inAccessNeedGroup @<#:AccessNeedGroupShape> ;
@@ -95,24 +95,26 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:creatorAccessMode @<#:AccessModes>* ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
   interop:supportedBy IRI* ;  # ?
-  interop:supports IRI?       # ?
-  interop:hasReferencedAccessNeed @<#:ReferencedAccessNeedShape>* ;
+  interop:supports IRI? ;      # ?
+  interop:hasAccessNeed @<#:InheritedAccessNeedShape>* ;
   interop:hasDataGrant @<#:DataGrantShape>?
 }
 
-# Referenced Access Need
-<#ReferencedAccessNeedShape> {
-  a [ interop:ReferencedAccessNeed ] ;
-  interop:hasAccessNeed @<#:AccessNeedShape> ;
+# Inherited Access Need
+<#InheritedAccessNeedShape> {
+  a [ interop:AccessNeed ] ;
+  interop:inAccessNeedGroup @<#:AccessNeedGroupShape> ;
   interop:registeredShapeTree IRI ;
   interop:hasShapeTreeDecorator IRI ;
   interop:hasAccessNeedDecorator IRI? ;
   interop:hasDataInstance IRI* ;
   interop:accessMode @<#:AccessModes>+ ;
-  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ]
+  interop:creatorAccessMode @<#:AccessModes>* ;
+  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
   interop:supportedBy IRI* ;  # ?
   interop:supports IRI? ;     # ?
-  interop:hasReferencedDataGrant @<#:DataGrantShape>?
+  interop:inheritsFromNeed @<#:AccessNeedShape> ;
+  interop:hasDataGrant @<#:InheritedDataGrantShape>?
 }
 
 # Trusted Need
@@ -247,37 +249,29 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   :LDNInvitationChannel     # Linked Data Notification
 ]
 
-#  Data Grant
+# Data Grant
 <#DataGrantShape> {
   a [ interop:DataGrant ] ;
-  interop:hasAccessGrant @<#:AccessGrantShape> ;
-  interop:satisfiesAccessNeed @<#:AccessNeedShape> ;
+  interop:dataOwner IRI ;
   interop:registeredShapeTree IRI ;
   interop:hasDataRegistration IRI ;
   interop:accessMode @<#:AccessModes>+ ;
   interop:creatorAccessMode @<#:AccessModes>* ;
   interop:scopeOfGrant @<#:DataGrantScopes> ;
   interop:hasDataInstance IRI* ;
-  interop:hasReferencedDataGrant @<#:ReferencedDataGrantShape>
 }
 
-#  Referenced Data Grant
-<#ReferencedDataGrantShape> {
-  a [ interop:ReferencedDataGrant ] ;
-  # Primary DataGrant that references the ReferencedDataGrant
-  interop:hasDataGrant @<#:DataGrantShape> ;
-  # Access Need that the Data Grant satisfies
-  interop:satisfiesAccessNeed @<#:AccessNeedShape> ;
-  # Type of data (via shape tree) to grant access to
+# Inherited Data Grant
+<#DataGrantShape> {
+  a [ interop:DataGrant ] ;
+  interop:dataOwner IRI ;
   interop:registeredShapeTree IRI ;
-  # Data Registration for shape tree that access will be granted to
   interop:hasDataRegistration IRI ;
-  # Access modes that have been granted to the data registration
   interop:accessMode @<#:AccessModes>+ ;
-  # What scope of access the data grant applies to
+  interop:creatorAccessMode @<#:AccessModes>* ;
   interop:scopeOfGrant @<#:DataGrantScopes> ;
-  # Link to individual data instances if scope is SelectedInstances
-  interop:hasDataInstance IRI*
+  interop:hasDataInstance IRI* ;
+  interop:inheritsFromGrant IRI
 }
 
 # Data Grant Scopes

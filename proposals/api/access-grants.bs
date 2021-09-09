@@ -184,8 +184,8 @@ Apply permissions based on the composition of an [=Access Grant=]:
         Initialize a [=Data Grant=] and link it to the provided
         [=Access Need=] `NEED`.
 
-        Initialize [=Referenced Data Grants=] if the [=Access Need=] `NEED`
-        has any [=Referenced Access Needs=].
+        Initialize inheriting [=Data Grants=] if the [=Access Need=] `NEED`
+        has any inheriting [=Access Needs=].
       </td>
     </tr>
   </tbody>
@@ -224,17 +224,18 @@ Apply permissions based on the composition of an [=Access Grant=]:
 1. Let `DG accessmode`s be `CACCESS accessmode`s
 1. Let `DG scopeOGrant` be `interop:NoAccess`
 1. Let `NEED hasDataGrant` be `DG`
-1. For each [=Referenced Access Need=] `REFNEED` linked
-    via `NEED hasReferencedAccessNeed`
-    1. Let `REFDG` be a newly initialized [=Referenced Data Grant=]
-    1. Let `REFDG hasDataGrant` be `DG`
-    1. Let `REFDG satisfiesAccessNeed` be `REFNEED`
-    1. Let `REFDG registeredShapeTree` be `REFNEED registeredShapeTree`
-    1. Let `REFDG hasRegistration` be a [=Data Registration=] `DR`
-        where `DR registeredShapeTree` == `REFDG registeredShapeTree`
-    1. Let `REFDG accessMode`s be `REFNEED accessMode`s
-    1. Let `REFDG scopeOfGrant` be `interop:NoAccess`
-    1. Link `REFDG` to `DG` via `DG hasReferencedDataGrant`
+1. For each inheriting [=Access Need=] `INEED` linked
+    via `INEED inheritsFromNeed`
+    1. Let `IDG` be a newly initialized [=Data Grant=]
+    1. Let `IDG inheritsFromGrant` be `DG`
+    1. Let `IDG satisfiesAccessNeed` be `INEED`
+    1. Let `IDG registeredShapeTree` be `INEED registeredShapeTree`
+    1. Let `IDG hasRegistration` be a [=Data Registration=] `DR`
+        where `DR registeredShapeTree` == `IDG registeredShapeTree`
+    1. Let `IDG accessMode`s be `INEED accessMode`s
+    1. Let `IDG creatorAccessMode`s be `INEED creatorAccessMode`s
+    1. Let `IDG scopeOfGrant` be `interop:NoAccess`
+    1. Link `IDG` to `DG` via `IDG inheritsFromGrant`
 1. Return `DG`
 
 </div>
@@ -576,18 +577,15 @@ Issue: Write standard operation for validating an invitation
       This operation applies data permissions for a new or updated
       [=Access Grant=].
 
-      It iterates over each [=Data Grant=] linked via `GRANT hasDataGrant`,
-      including following any [=Referenced Data Grants=].
+      It iterates over each [=Data Grant=] linked via `GRANT hasDataGrant`.
 
-      All [=Data Grants=] and [=Referenced Data Grants=] are added to
+      All [=Data Grants=] are added to
       a hash map `DRHASH`. The key is the [=Data Registration=] associated
-      with each [=Data Grant=] or [=Referenced Data Grant=] via
-      `hasDataRegistration`.
+      with each [=Data Grant=] `hasDataRegistration`.
 
       The end result is the keys of `DRHASH` are a unique
       set of [=Data Registrations=] affected by `GRANT`, and each key
-      has an array of related [=Data Grants=] and [=Referenced Data Grants=]
-      as its value.
+      has an array of related [=Data Grants=] as its value.
 
       Each [=Data Registration=] and the array of grants that affect it
       are then passed to [[#apply-data-registration-permissions]].
@@ -622,13 +620,10 @@ Issue: Write standard operation for validating an invitation
 <div class="opdetails">
 
 1. Let `DRHASH` be an empty hash map where a [=Data Registration=] is key and
-    the value is an array of [=Data Grants=] and/or [=Referenced Data Grants=].
+    the value is an array of [=Data Grants=].
 1. For each [=Data Grant=] `DG` linked via `GRANT hasDataGrant`
     1. Let `DRKEY` be `DG hasDataRegistration` added or found in `DRHASH`
     1. Add `DG` to the value array for `DRKEY` if missing
-    1. For each [=Referenced Data Grant=] `REFDG` linked via `DG hasReferencedDataGrant`
-        1. Let `REFDRKEY` be `REFDG hasDataRegistration` added or found in `DRHASH`
-        1. Add `REFDG` to the array for `REFDRKEY` if missing
 1. For each [=Data Registration=] `DR` in `DRHASH`
     1. Call [[#apply-data-registration-permissions]] with inputs:
         `DR`, `DRHASH[DR]`, `GRANT`
@@ -658,8 +653,7 @@ Issue: Write standard operation for validating an invitation
 
       All of the grants are iterated, and organized into a hash map
       with data-specific `interop:scopeOfGrant` values as keys. Each
-      [=Data Grant=] or [=Referenced Data Grant=] with that scope will
-      update the associated value.
+      [=Data Grant=] with that scope will update the associated value.
 
       * `interop:AllInstances` - An array of `interop:accessMode` values
       * `interop:SelectedInstances` - A hash map with [=Data Instance=] as
@@ -685,8 +679,8 @@ Issue: Write standard operation for validating an invitation
     </tr>
     <tr>
       <td>`DATAGRANTS`</td>
-      <td>An array of [=Data Grants=] and [=Referenced Data Grants=]
-      associated with the [=Data Registration=] in `GRANT`</td>
+      <td>An array of [=Data Grants=] associated with the 
+      [=Data Registration=] in `GRANT`</td>
     </tr>
     <tr>
       <td>`GRANT`</td>
@@ -717,7 +711,7 @@ Issue: Write standard operation for validating an invitation
     [=Data Instances=] are keys with an array of `interop:AccessMode`s as values
 1. Let `SCOPEHASH[interop:InheritInstances]` be an empty hash map where
     parent [=Data Instances=] are keys with an array of `interop:AccessMode`s as values
-1. For each [=Data Grant=] or [=Referenced Data Grant=] `DATAGRANT` in `DATAGRANTS`
+1. For each [=Data Grant=] `DATAGRANT` in `DATAGRANTS`
     1. If `DATAGRANT scopeOfGrant` is `interop:AllInstances`
         1. Let `SCOPEHASH[interop:AllInstances]` value be a union of current
             [=access modes=] and `DATAGRANT accessMode`s
@@ -730,8 +724,8 @@ Issue: Write standard operation for validating an invitation
             1. Let `SCOPEHASH[interop:SelectedInstances][DI]` value be a union of current
                 [=access modes=] and `DATAGRANT accessMode`s
     1. If `DATAGRANT scopeOfGrant` is `interop:InheritInstances`
-        1. Let `PDG` be the parent [=Data Grant=] linked via `DATAGRANT hasDataGrant`
-            that the [=Referenced Data Grant=] inherits from.
+        1. Let `PDG` be the parent [=Data Grant=] linked via `DATAGRANT inheritsFromGrant`
+            that the [=Data Grant=] inherits from.
         1. Error if `PDG scopeOfGrant` is not `interop:SelectedInstances`
         1. For each [=Data Instance=] `DI` linked via `PDG hasDataInstance`
              1. Let `INSTKEY` be [=Data Instance=] `DI` added or found in
@@ -1130,44 +1124,8 @@ the subject identifier could? vary
 <div class="opdetails">
 
 1. Let `DG scopeOfGrant` be `interop:NoAccess`
-1. For each [=Referenced Data Grant=] `REFDG` linked via `DG hasReferencedDataGrant`
-    1. Call [[#deny-referenced-data-grant]] with inputs: `REFDG`, `DG`
-
-</div>
-
-## Deny Referenced Data Grant ## {#deny-referenced-data-grant}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation is used when a given [=Referenced Data Grant=] has been denied.
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`REFDG`</td>
-      <td>A [=Referenced Data Grant=]</td>
-    </tr>
-    <tr>
-      <td>`DG`</td>
-      <td>The [=Data Grant=] that `REFDG` is linked to</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `REFDG scopeOfGrant` be `interop:NoAccess`
+1. For each inheriting [=Data Grant=] `IDG` linked via `IDG inheritsFromGrant`
+    1. Call [[#deny-data-grant]] with inputs: `IDG`, `GRANT`
 
 </div>
 
@@ -1205,12 +1163,12 @@ the subject identifier could? vary
 
 1. Let `DG scopeOfGrant` be `interop:AllInstances`
 1. Remove all links for `DG hasDataInstance`
-1. For each [=Referenced Data Grant=] `REFDG` linked via `DG hasReferencedDataGrant`
-    1. Call [[#select-all-referenced-data-instances]] with inputs: `REFDG`
+1. For each inheriting [=Data Grant=] `IDG` linked via `IDG inheritsFromGrant`
+    1. Call [[#select-all-inherited-data-instances]] with inputs: `IDG`
 
 </div>
 
-## Select All Referenced Data Instances ## {#select-all-referenced-data-instances}
+## Select All Inherited Data Instances ## {#select-all-inherited-data-instances}
 
 <table class="data operation" align="left">
   <colgroup></colgroup>
@@ -1221,7 +1179,7 @@ the subject identifier could? vary
   <tbody>
     <tr>
       <td colspan=2>
-      Used to select all [=Data Instances=] for a given [=Referenced Data Grant=].
+      Used to select all [=Data Instances=] for a given inheriting [=Data Grant=].
       </td>
     </tr>
   </tbody>
@@ -1230,16 +1188,16 @@ the subject identifier could? vary
   </thead>
   <tbody>
     <tr>
-      <td>`REFDG`</td>
-      <td>The [=Referenced Data Grant=]</td>
+      <td>`IDG`</td>
+      <td>The inheriting [=Data Grant=]</td>
     </tr>
   </tbody>
 </table>
 
 <div class="opdetails">
 
-1. Let `REFDG scopeOfGrant` be `interop:AllInstances`
-1. Remove all links for `REFDG hasDataInstance`
+1. Let `IDG scopeOfGrant` be `interop:AllInstances`
+1. Remove all links for `IDG hasDataInstance`
 
 </div>
 
@@ -1255,7 +1213,7 @@ the subject identifier could? vary
     <tr>
       <td colspan=2>
       Used to select specific [=Data Instances=] for a given
-      [=Data Grant=]. If the [=Data Grant=] has any [=Referenced Data Grants=],
+      [=Data Grant=]. If the [=Data Grant=] has inheriting [=Data Grants=],
       this will set their scope to `interop:InheritInstances`.</td>
     </tr>
   </tbody>
@@ -1282,12 +1240,12 @@ the subject identifier could? vary
 
 1. Let `DG scopeOfGrant` be `interop:SelectedInstances`
 1. Let `DG hasDataInstance` be linked to one unique instance of `DI`
-1. For each [=Referenced Data Grant=] `REFDG` linked via `DG hasReferencedDataGrant`
-    1. Call [[#select-inherited-referenced-data-instance]] with inputs: `REFDG`, `DG`
+1. For each inheriting [=Data Grant=] `IDG` linked via `IDG inheritsFromGrant`
+    1. Call [[#select-inherited-data-instance]] with inputs: `IDG`
 
 </div>
 
-## Select Inherited Referenced Data Instance ## {#select-inherited-referenced-data-instance}
+## Select Inherited Data Instance ## {#select-inherited-data-instance}
 
 <table class="data operation" align="left">
   <colgroup></colgroup>
@@ -1298,7 +1256,7 @@ the subject identifier could? vary
   <tbody>
     <tr>
       <td colspan=2>
-      Used to set the scope of a [=Referenced Data Grant=] to inherited access.
+      Used to set the scope of a [=Data Grant=] to inherited access.
       </td>
     </tr>
   </tbody>
@@ -1306,26 +1264,21 @@ the subject identifier could? vary
     <tr><th colspan=2>Inputs</th></tr>
   </thead>
   <tbody>
-
     <tr>
-      <td>`REFDG`</td>
-      <td>The [=Referenced Data Grant=] to adjust</td>
-    </tr>
-    <tr>
-      <td>`DG`</td>
-      <td>The [=Data Grant=] that `REFDG` is linked to</td>
+      <td>`IDG`</td>
+      <td>The inheriting [=Data Grant=] to adjust</td>
     </tr>
   </tbody>
 </table>
 
 <div class="opdetails">
 
-1. Let `REFDG scopeOfGrant` be `interop:InheritInstances`
-1. Remove all links via `REFDG hasDataInstance`
+1. Let `IDG scopeOfGrant` be `interop:InheritInstances`
+1. Remove all links via `IDG hasDataInstance`
 
 </div>
 
-## Select Specific Referenced Data Instance ## {#select-referenced-data-instance}
+## Select Specific Inherited Data Instance ## {#select-inherited-data-instance}
 
 <table class="data operation" align="left">
   <colgroup></colgroup>
@@ -1336,7 +1289,7 @@ the subject identifier could? vary
   <tbody>
     <tr>
       <td colspan=2>
-      Used to set the scope of a [=Referenced Data Grant=] to inherited access.
+      Used to set the scope of a [=Data Grant=] to inherited access.
       </td>
     </tr>
   </tbody>
@@ -1349,20 +1302,16 @@ the subject identifier could? vary
       <td>A [=Data Instance=] selected for access</td>
     </tr>
     <tr>
-      <td>`REFDG`</td>
-      <td>The [=Referenced Data Grant=] to adjust</td>
-    </tr>
-    <tr>
-      <td>`DG`</td>
-      <td>The [=Data Grant=] that `REFDG` is linked to</td>
+      <td>`IDG`</td>
+      <td>The inheriting [=Data Grant=] to adjust</td>
     </tr>
   </tbody>
 </table>
 
 <div class="opdetails">
 
-1. Let `REFDG scopeOfGrant` be `interop:SelectedInstances`
-1. Let `REFDG hasDataInstance` be linked to one unique instance of `DI`
+1. Let `IDG scopeOfGrant` be `interop:SelectedInstances`
+1. Let `IDG hasDataInstance` be linked to one unique instance of `DI`
 
 </div>
 
