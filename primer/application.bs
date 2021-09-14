@@ -1,0 +1,401 @@
+<pre class='metadata'>
+Title: Solid Application Interoperability - Application Primer
+Shortname: solid-interop-application-primer
+Level: 1
+Status: w3c/CG-DRAFT
+Group: solid-cg
+URL: https://solid.github.io/data-interoperability-panel/primer/applications.html
+Repository: https://github.com/solid/data-interoperability-panel
+Inline Github Issues: title
+Editor: elf Pavlik
+Abstract: Primer for libraries intented to be used by applications.
+Boilerplate: omit conformance, omit abstract
+</pre>
+
+# Introduction # {#introduction}
+
+This primer is intended to acompany [[SOLID-INTEROP]] and [[SOLID-INTEROP-API]].
+Focusing on providing friendly introduction for developers of libraries intended
+for solid applications.
+
+This document was developed along side the open-source TypeScript implementation [[SAI-JS]]
+
+We will follow example of an application called <em>Projectron</em>,
+which manages projects and tasks.
+End user, named <em>Alice</em>, collaborates on projects
+with other Individuals and Organizations.
+
+# Shape Trees # {#shape-trees}
+
+Shape Trees [[SHAPETREES]] allow  for the definition and validation of data hierarchies
+including which shapes [[SHEX]] should be used to validate data.
+In our examples we will use following Shapes and Shape Trees.
+
+<figure>
+  <pre class=include-code>
+  path: snippets/solidshapes.example/trees/Project.ttl
+  highlight: turtle
+  show: 6-100
+  </pre>
+  <figcaption>Project shape tree</figcaption>
+</figure>
+
+<figure>
+  <pre class=include-code>
+  path: snippets/solidshapes.example/shapes/Project.shex
+  highlight: shex
+  show: 6-100
+  </pre>
+  <figcaption>Project shape (ShEx)</figcaption>
+</figure>
+
+<figure>
+  <pre class=include-code>
+  path: snippets/solidshapes.example/trees/Task.ttl
+  highlight: turtle
+  show: 5-100
+  </pre>
+  <figcaption>Task shape tree</figcaption>
+</figure>
+
+<figure>
+  <pre class=include-code>
+  path: snippets/solidshapes.example/shapes/Task.shex
+  highlight: shex
+  show: 6-100
+  </pre>
+  <figcaption>Task shape (ShEx)</figcaption>
+</figure>
+
+Issue: Reference shape path documentation
+
+# Application # {#appliction}
+
+In this primer we will consider the use-case of a project management application
+identified by <code>https://projectron.example/#app</code>
+Every application has public WebID Document providing information about it.
+
+<figure>
+  <pre class=include-code>
+  path: snippets/projectron.example/projectron.example.ttl
+  highlight: turtle
+  show: 7-100
+  line-start: 1
+  line-highlight: 16, 18, 21, 23
+  </pre>
+  <figcaption>Projectron WebID document</figcaption>
+</figure>
+
+Access Needs explain what kind of data application works with.
+They use combination of [[#shape-trees]] and access modes to
+convey how the application can work with data.
+
+Issue: Details can change based on experience from implementing Authorization Agent role
+
+# Authorization Flow # {#authorization-flow}
+
+User always needs to authenticate first.
+For the rest of this primer we'll be assuming that user has already authenticated,
+and that applicaction know WebID of the authenticated user.
+
+## Authorization Agent Discovery ## {#authorization-agent-discovery}
+
+Every user has an Authorization Agent which can be discovered from
+their WebID Document via <code>interop:hasAuthorizationAgent</code> predicate.
+
+<figure>
+  <pre class=include-code>
+  path: snippets/alice.example/alice.example.ttl
+  highlight: turtle
+  show: 3-100
+  line-start: 1
+  line-highlight: 3
+  </pre>
+  <figcaption>Alice's WebID document</figcaption>
+</figure>
+
+Here we see that Alice designates <code>https://auth.alice.example/</code> as their Authorization Agent.
+
+## Application Registration Discovery ## {#application-registration-discovery}
+
+Application can discover Application Registration created for it by the user,
+by performing <code>HEAD</code> or <code>GET</code> request on IRI denoting
+user's Authorization Agent. Response will include HTTP Link header relating
+Application Registration to the application making the request using
+<code>http://www.w3.org/ns/solid/interop#registeredApplication</code>
+as link relation.
+
+<figure>
+  <pre highlight=http>
+    HEAD / HTTP/1.1
+    Host: auth.alice.example
+    Authorization: DPoP ....
+  </pre>
+  <pre highlight=http line-highlight=3>
+    HTTP/1.1 200 OK
+    Link: &lt;https://projectron.example/#app&gt;;
+      anchor="https://auth.alice.example/bcf22534-0187-4ae4-b88f-fe0f9fa96659";
+      rel="http://www.w3.org/ns/solid/interop#registeredApplication"
+  </pre>
+  <figcaption>HEAD request to and response from Authorization Agent</figcaption>
+</figure>
+
+Details in <a href="https://solid.github.io/data-interoperability-panel/api/#ar-lookup">1.1. Lookup Agent Registration</a>
+([[SOLID-INTEROP-API]])
+
+## User Consent ## {#user-consent}
+
+In case where application haven't been registered yet it needs to initiate flow with Authorization Agent.
+
+Issue: Add details as soon as defined for Authorization Agent
+
+After successful flow aplication will be able to discover its registration.
+
+# Application Registration # {#application-registration}
+
+Issue: Specification will change to store Access Grants in Application Registration
+
+Application Registration can be considered an entry point to all the data
+that user authorized it to access. Next step in discovery of that data
+is the Access Receipt linked via <code>interop:hasAccessReceipt</code> predicate.
+
+<figure>
+  <pre class=include-code>
+  path: snippets/auth.alice.example/bcf22534-0187-4ae4-b88f-fe0f9fa96659.ttl
+  highlight: turtle
+  show: 5-100
+  line-start: 1
+  line-highlight: 8
+  </pre>
+  <figcaption>Alice's application registration for Projectron</figcaption>
+</figure>
+
+## Access Receipt ## {#access-receipt}
+
+Access Receipt links to all the Data Grants issued to the application
+via <code>interop:hasDataGrant</code> predicate.
+
+<figure>
+  <pre class=include-code>
+  path: snippets/auth.alice.example/dd442d1b-bcc7-40e2-bbb9-4abfa7309fbe.ttl
+  highlight: turtle
+  show: 5-100
+  line-start: 1
+  line-highlight: 13-23
+  </pre>
+  <figcaption>Alice's access receipt for Projectron</figcaption>
+</figure>
+
+## Data Grant ## {#data-grant}
+
+Eeach Data grant represents access granted by specific Social Agent, to all or selected
+Data Instances in specific Data Registration.
+
+<figure>
+  <pre class=include-code>
+  path: snippets/auth.alice.example/cd247a67-0879-4301-abd0-828f63abb252.ttl
+  highlight: turtle
+  show: 7-100
+  line-start: 1
+  </pre>
+  <figcaption>Alice's data grant for Projectron - Pro Projects</figcaption>
+</figure>
+
+Data Grant can be consider as the most important data structure, it provides following information:
+
+: dataOwner
+:: Social Agent who owns the data
+
+: registeredShapeTree
+:: Shape Tree used by related Data Registration
+
+: hasDataRegistration
+:: Data Registration that this Data Grant applies to. As well as <code>iriPrefix</code> of that Data Registration (see [[#data-registration]])
+
+: accessMode
+:: List of access modes defining what application can do with the data
+
+: scopeOfGrant
+:: Defines which instances can be accessed (see [[#data-grant-scopes]])
+
+: inheritsFromGrant
+:: If grant has <code>InheritInstances</code> scope, it will be the Data Grant for Data Registraion with parent Data Instances (see [[#data-grant-inheritance]])
+
+: hasDataInstance
+:: If grant has <code>SelectedInstances</code> scope, it will be all the Data Instances that application can access in the Data Registration
+
+: delegationOfGrant
+:: If Data Grant is issued by Social Agent other than data owner, it will be the original Data Grant issued by the data owner (see [[#data-grant-delegation]])
+
+### Scopes ### {#data-grant-scopes}
+
+Data Grant can have one of three scopes:
+
+: AllInstances
+:: All the Data Instances in the Data Registration. Application will be able to access the Data Registration and see the list of all contained instances (see [[#data-registration]])
+
+: SelectedInstances
+:: Only specific Data Instances in the Data Registration. Application will not be able to access the Data Registration, so it will not see the list al all contained instances. Instad list of selected Data Instances is available via <code>hasDataInstance</code>
+
+: InheritInstances
+:: Only those Data Instances in the Data Registration, which are related to parent kData Instances in Data Registration of the Data Grant referenced with <code>inheritsFromGrant</code> (see [[#data-grant-inheritance]])
+
+### Inheritance ### {#data-grant-inheritance}
+
+<code>InheritInstances</code> Data Grant doesn't provide access to the Data Registration, so
+application can't get the list of all the Data Instances. Neither it provides a list of specific
+Data Instances in the Data Registration.
+
+To find Data Instances from that Data Registration, application first needs to access parent
+Data Instances from Data Registration which Data Grant referenced by <code>inheritsFromGrant</code>
+makes accessible. Based on shape tree definition, each parent Data Instance will reference all its
+child Data Instances.
+
+Both parent and child Data Registrations have to be in the same Data Registry. Since only one
+Data Registration for specific shape tree can be created in any given Data Registry.
+All parent Data Instances are from one Data Registration and all child Data Instances are from
+one Data Registration.
+
+### Delegation ### {#data-grant-delegation}
+
+Application doesn't need to handle delegated Data Grants in any special way.
+To know if Data Grant was issued by currently logged in user or someone else,
+application should rely on <code>dataOwner</code> information in the Data Grant.
+
+# Data Registration # {#data-registration}
+
+<img class="flowchart-diagram" src="diagrams/pro.alice.example.flow.mmd.png" />
+
+<figure>
+  <pre class=include-code>
+  path: snippets/pro.alice.example/773605f0-b5bf-4d46-878d-5c167eac8b5d.ttl
+  highlight: turtle
+  show: 7-100
+  line-start: 1
+  line-highlight: 6-10
+  </pre>
+  <figcaption>Alice's data registration for <strong>pro</strong> projects</figcaption>
+</figure>
+
+: registeredShapeTree
+:: Shape Tree used by this Data Registration
+
+: iriPrefix
+:: String that should be used as base for creating IRIs for new Data Instances in this registration, by appending a unique string to the `iriPrefix`
+
+## Data Instance ## {#data-instance}
+
+Data Instances are domain specific data records. They don't use <code>interop:</code> vocabulary,
+instead they use some domain specific vocabularies.
+
+<figure>
+  <pre class=include-code>
+  path: snippets/pro.alice.example/ccbd77ae-f769-4e07-b41f-5136501e13e7.ttl
+  highlight: turtle
+  show: 5-100
+  line-start: 1
+  line-highlight: 4-6
+  </pre>
+  <figcaption>Alice's <strong>pro</strong> project 1</figcaption>
+</figure>
+
+As we discussed in [[#data-grant-inheritance]] a Shape Tree will specify how parent data instances
+relate to child data instances. For Project shape three the predicate is <code>pm:hasTask</code>,
+links to child Task data instances.
+
+<figure>
+  <pre class=include-code>
+  path: snippets/pro.alice.example/576520a6-af5a-4cf9-8b40-8b1512b59c73.ttl
+  highlight: turtle
+  show: 5-100
+  </pre>
+  <figcaption>Alice's <strong>pro</strong> task 1</figcaption>
+</figure>
+
+When creating or updating data instance with HTTP PUT method. Application should include
+link header linking Data Instance to Data Registration using link relation
+<code>http://www.w3.org/ns/solid/interop#targetDataRegistration</code>
+
+Update should include <code>If-Match</code> HTTP header with value of ETag from
+HTTP response when the representation was retreived.
+<figure>
+  <pre highlight=http>
+    PUT /ccbd77ae-f769-4e07-b41f-5136501e13e7 HTTP/1.1
+    Host: pro.alice.example
+    Authorization: DPoP ....
+    If-Match: "..."
+    Link: &lt;https://pro.alice.example/773605f0-b5bf-4d46-878d-5c167eac8b5d&gt;;
+      rel="http://www.w3.org/ns/solid/interop#targetDataRegistration"
+
+  </pre>
+  <figcaption>Updating Data Instance with PUT</figcaption>
+</figure>
+
+When creating new data instance client should also include <code>If-None-Match: *</code>
+header in HTTP request.
+
+<figure>
+  <pre highlight=http>
+    PUT /d046dd43-b619-46c8-91f6-a0713d967c0d HTTP/1.1
+    Host: pro.alice.example
+    Authorization: DPoP ....
+    If-None-Match: *
+    Link: &lt;https://pro.alice.example/773605f0-b5bf-4d46-878d-5c167eac8b5d&gt;;
+      rel="http://www.w3.org/ns/solid/interop#targetDataRegistration"
+
+  </pre>
+  <figcaption>Creating new Data Instance with PUT</figcaption>
+</figure>
+
+
+<pre class="biblio">
+{
+  "solid-interop": {
+    "href": "https://solid.github.io/data-interoperability-panel/specification/",
+    "title": "Solid Application Interoperability",
+    "authors": [
+      "Justin Bingham",
+      "Eric Prud'hommeaux",
+      "elf Pavlik"
+    ]
+  },
+  "solid-interop-api": {
+    "href": "https://solid.github.io/data-interoperability-panel/api/",
+    "title": "Solid Application Interoperability Operations and API",
+    "authors": [
+      "Justin Bingham",
+      "Eric Prud'hommeaux",
+      "elf Pavlik"
+    ]
+  },
+  "shapetrees": {
+    "href": "https://shapetrees.org/TR/specification/",
+    "title": "Shape Trees",
+    "authors": [
+      "Justin Bingham",
+      "Eric Prud'hommeaux",
+      "Jamie Fiedler",
+      "Josh Collins"
+    ]
+  },
+  "shex": {
+    "href": "http://shex.io/shex-semantics/index.html",
+    "title": "Shape Expressions Language 2.1",
+    "authors": [
+      "Eric Prud'hommeaux",
+      "Iovka Boneva",
+      "Jose Emilio Labra Gayo",
+      "Gregg Kellogg"
+    ]
+  },
+  "sai-js": {
+    "href": "https://github.com/janeirodigital/sai-js",
+    "title": "Solid Application Interoperability - TypeScript implementation",
+    "authors": [
+      "elf Pavlik",
+      "Maciej Samoraj",
+      "Ángel Araya"
+    ]
+  }
+}
+</pre>
