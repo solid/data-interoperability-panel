@@ -29,8 +29,11 @@ jobs:
           python3 -m pip install --upgrade bikeshed
           bikeshed update
 
-      - name: generate html
-        run: for bsfile in proposals/*/*.bs; do bikeshed spec $bsfile; done
+      - name: generate primary html
+        run: for bsfile in proposals/*/index.bs; do bikeshed spec $bsfile; done
+
+      - name: generate secondary html
+        run: for bsfile in proposals/primer/*.bs; do bikeshed spec $bsfile; done
 
       - name: generate svg
         run: for diagram in proposals/*/diagrams/*.seq.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
