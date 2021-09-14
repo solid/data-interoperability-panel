@@ -4,6 +4,11 @@ for bsdoc in proposals/*/index.bs
     bikeshed spec $bsdoc
 done
 
+for bsdoc in proposals/primer/*.bs
+  do
+    bikeshed spec $bsdoc
+done
+
 echo "Build: running mermaid for sequence diagrams"
 for diagram in proposals/*/diagrams/*.seq.mmd
   do
