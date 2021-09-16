@@ -1,0 +1,24 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
+PREFIX bob: <https://bob.example>
+PREFIX projectron: <https://projectron.example/>
+PREFIX alice-projectron: <https://alice.example/agents/2f2f3628/>
+PREFIX bob-alice: <https://bob.example/agents/255aa181/>
+PREFIX bob-work-data: <https://work.bob.example/data/>
+
+alice-projectron:017d6a07
+  a interop:DelegatedDataGrant ;
+  interop:dataOwner bob:\#id ;
+  interop:registeredShapeTree pm-shapetrees:TaskTree ;
+  interop:hasDataRegistration bob-work-data:45e092cf\/ ;
+  interop:satisfiesAccessNeed projectron:\#9462959c ;
+  interop:accessMode acl:Read, acl:Create ;
+  interop:creatorAccessMode acl:Update, acl:Delete ;
+  interop:scopeOfGrant interop:InheritInstances ;
+  interop:inheritsFromGrant alice-projectron:fe818190 ;
+  interop:delegationOfGrant
+    bob-alice:d5b5760c .

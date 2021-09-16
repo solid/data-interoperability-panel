@@ -1,0 +1,820 @@
+Access Consents {#consents}
+=====================
+
+[=Access Consents=] record a [=Social Agent's=] decision to grant access to
+some portion of the data in their control to another [=Social Agent=] or 
+[=Application=]. [=Access Consents=] are not shared with a grantee.
+
+[=Access Grants=] are generated from [=Access Consents=]. They are shared
+with a given [=Agent=] to communicate the scope of access that has been
+granted to them.
+
+Note: See 
+[Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#grants)
+for a detailed explanation of how Access Consents and Access Grants should be processed.
+
+## Access Consent ## {#access-consent}
+
+An <dfn>Access Consent</dfn> records the decision of a [=Social Agent=]
+to grant access to some portion of data in their control to 
+another [=Agent=]. 
+
+[=Access Consents=] should not be shared with the [=Agent=] that
+has been granted access. [=Access Grants=] are generated from 
+[=Access Consents=], and are appropriate to share with the grantee.
+
+[=Access Consents=] are recorded in a [=Social Agent's=] [=Access Consent Registry=].
+
+[Class Definition](interop.ttl#AccessConsent) -
+[Shape Definition](interop.shex#AccessConsentShape) -
+[Shape Tree Definition](interop.tree#AccessConsentTree)
+
+<table class="classinfo data" align="left" id="classAccessConsent">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that recorded the [=Access Consent=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>[Application](#classApplication)</td>
+      <td>[=Application=] used to record the [=Access Consent=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Consent=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Consent=] was updated</td>
+    </tr>
+    <tr>
+      <td>registeredAgent</td>
+      <td>[Agent](#classAgent)</td>
+      <td>The [=Social Agent=] or [=Application=] that has received
+      consent</td>
+    </tr>
+    <tr>
+      <td>hasAccessNeedGroup</td>
+      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
+      <td>An [=Access Need Group=] used to communicate the 
+      [=Access Needs=] that the [=Access Consent=] is
+      satisfying</td>
+    </tr>
+    <tr>
+      <td>hasDataConsent</td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>Consent for a specific type of data</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>Alice's [=Access Consent=] for Projectron at  
+    https://alice.example/consents/e2765d6c -
+    <a href="snippets/alice.example/e2765d6c.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/e2765d6c.ttl
+  highlight: turtle
+  show: 11-21
+  </pre>
+</figure>
+
+<figure>
+  <figcaption>Alice's [=Access Consent=] for Bob at  
+    https://alice.example/consents/4460dce3 -
+    <a href="snippets/alice.example/4460dce3.ttl">View</a>
+    </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/4460dce3.ttl
+  highlight: turtle
+  show: 11-21
+  </pre>
+</figure>
+
+## Data Consent ## {#data-consent}
+
+A <dfn>Data Consent</dfn> records the decision of a [=Social Agent=]
+to grant access to a specific type of data in their control, identified
+by a [=Shape Tree=]. They are always associated with a single
+[=Access Consent=].
+
+[=Data Consents=] should not be shared with the [=Agent=] that has 
+been granted access. [=Data Grants=] are generated from [=Data Consents=],
+and are appropriate to share with the grantee.
+
+[Class Definition](interop.ttl#DataConsent) -
+[Shape Definition](interop.shex#DataConsentShape) -
+[Shape Tree Definition](interop.tree#DataConsentTree)
+
+<table class="classinfo data" align="left" id="classDataConsent">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>dataOwner</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that owns the data being consented</td>
+    </tr>
+    <tr>
+      <td>registeredShapeTree</td>
+      <td><a href="https://www.w3.org/ns/shapetrees#ShapeTree" class="vocab">st:ShapeTree</a></td>
+      <td>[=Shape Tree=] representing the type of data being consented</td>
+    </tr>
+    <tr>
+      <td>accessMode</td>
+      <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
+      <td>Modes of access granted to the consented data</td>
+    </tr>
+    <tr>
+      <td>creatorAccessMode</td>
+      <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
+      <td>Additional access mode assigned to the creator of a
+        data instance. Adds to the set of modes linked via 
+        `interop:accessMode`. Only valid when `accessMode` includes
+         `acl:Write` or `acl:Append`</td>
+    </tr>
+    <tr>
+      <td>scopeOfConsent</td>
+      <td> interop:AllInstances, interop:SelectedInstances,
+      interop:InheritInstances, interop:NoAccess</td>
+      <td>Identifies the access scope of the [=Data Consent=]</td>
+    </tr>
+    <tr>
+      <td>hasDataInstance</td>
+      <td>[=Data instance=] of `registeredShapeTree`</td>
+      <td>Links to a [=Data Instance=] of registeredShapeTree in a 
+      [=Data Registry=].</td>
+    </tr>
+    <tr>
+      <td>hasDataResource</td>
+      <td>Data resource of `registeredShapeTree`</td>
+      <td>Links to a resource of registeredShapeTree.</td>
+    </tr>
+    <tr>
+      <td>satisfiesAccessNeed</td>
+      <td>[AccessNeed](#classAccessNeed)</td>
+      <td>Links to the [=Access Need=] satisfied by the [=Data Consent=]</td>
+    </tr>
+    <tr>
+      <td>inheritsFromConsent</td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>Links to a parent [=Data Consent=] whose registeredShapeTree
+      references the shape tree associated with the current
+      [=Data Consent=].</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>Alice's [=Data Consent=] for Projectron to access Projects
+    at https://alice.example/consents/54a1b6a0 -
+    <a href="snippets/alice.example/54a1b6a0.ttl">View</a>
+    </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/54a1b6a0.ttl
+  highlight: turtle
+  show: 12-19
+  </pre>
+</figure>
+
+<figure>
+  <figcaption>Alice's [=Data Consent=] for Projectron to access Tasks
+    at https://alice.example/consents/0e4cb692 -
+    <a href="snippets/alice.example/0e4cb692.ttl">View</a>
+    </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/0e4cb692.ttl
+  highlight: turtle
+  show: 12-21
+  </pre>
+</figure>
+
+## Access Grant ## {#access-grant}
+
+An <dfn>Access Grant</dfn> provides an [=Agent=] with a detailed 
+description of access that has been granted to them. [=Access Grants=]
+are generated from [=Access Consents=], and are stored in the 
+[=Agent Registry=] of the [=Data Owner=].
+
+Each [=Access Grant=] has one or more [=Data Grants=], each of which
+represents access granted to a specific type of data.
+
+[Class Definition](interop.ttl#AccessGrant) -
+[Shape Definition](interop.shex#AccessGrantShape) -
+[Shape Tree Definition](interop.tree#AccessGrantTree)
+
+<table class="classinfo data" align="left" id="classAccessGrant">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that registered the [=Access Grant=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Grant=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Grant=] was updated</td>
+    </tr>
+    <tr>
+      <td>registeredAgent</td>
+      <td>[Agent](#classAgent)</td>
+      <td>Links to the [=Social Agent=] or [=Application=] that was granted access.</td>
+    </tr>
+    <tr>
+      <td>hasAccessNeedGroup</td>
+      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
+      <td>Links to an [=Access Need Group=] associated with the Access Grant.</td>
+    </tr>
+    <tr>
+      <td>hasDataGrant</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>Links to a [=Data Grant=] associated with the Access Grant.</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>Alice's [=Access Grant=] to Projectron, stored in the
+  [=Agent Registration=] for Projectron in her [=Agent Registry=] at
+  https://alice.pod.example/agents/2f2f3628/27eae14b -
+  <a href="snippets/alice.example/27eae14b.ttl">View</a> 
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/27eae14b.ttl
+  highlight: turtle
+  show: 10-21
+  </pre>
+</figure>
+
+## Data Grant ## {#data-grant}
+
+A <dfn>Data Grant</dfn> provides an [=Agent=] with a detailed description
+of access that has been granted to them for a specific type of data,
+identified by a [=Shape Tree=]. Each [=Data Grant=] is associated with
+a single [=Access Grant=].
+
+A [=Data Grant=] may inherit from another [=Data Grant=], when the 
+[=shape tree=] associated with the "parent" [=Data Grant=] has one or
+more [=Shape Tree References=].
+
+Each [=Data Grant=] has an assigned scope (`interop:scopeOfGrant`), which
+determines how permissions are assigned.
+
+When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
+
+* There should be an [=Access Need=] linked via `interop:satisfiesAccessNeed` that
+    belongs to an [=Access Need Group=] linked to the same [=Access Grant=].
+* [=Access Need=] and [=Data Grant=] must have the same `interop:registeredShapeTree`
+
+When a [=Social Agent=] grants another [=Agent=] access to data that was shared
+with them, a [=Delegated Data Grant=] is used instead.
+
+[Class Definition](interop.ttl#DataGrant) -
+[Shape Definition](interop.shex#DataGrantShape) -
+[Shape Tree Definition](interop.tree#DataGrantTree)
+
+<table class="classinfo data" align="left" id="classDataGrant">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>dataOwner</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that owns the data being granted</td>
+    </tr>
+    <tr>
+      <td>registeredShapeTree</td>
+      <td>st:ShapeTree</td>
+      <td>[=Data Registration=] for the [=shape tree=] that access
+      will be granted to</td>
+    </tr>
+    <tr>
+      <td>hasDataRegistration</td>
+      <td>[DataRegistration](#classDataRegistration)</td>
+      <td>[=Data Registration=] for `registeredShapeTree` that the
+      [=Data Grant=] applies to</td>
+    </tr>
+    <tr>
+      <td>hasDataResource</td>
+      <td>Data resource of `registeredShapeTree`</td>
+      <td>Links to a resource of `registeredShapeTree`.</td>
+    </tr>
+    <tr>
+      <td>accessMode</td>
+      <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
+      <td>Modes of access granted to the target data at hasRegistration</td>
+    </tr>
+    <tr>
+      <td>creatorAccessMode</td>
+      <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
+      <td>Additional access mode assigned to the creator of a
+        data instance. Adds to the set of modes linked via 
+        `interop:accessMode`. Only valid when `accessMode` includes
+         `acl:Write` or `acl:Append`</td>
+    </tr>
+    <tr>
+      <td>scopeOfGrant</td>
+      <td> interop:AllInstances, interop:SelectedInstances,
+      interop:InheritInstances, interop:NoAccess</td>
+      <td>Identifies the [[#access-scopes|access scope]] of the [=Data Grant=]</td>
+    </tr>
+    <tr>
+      <td>satisfiesAccessNeed</td>
+      <td>[AccessNeed](#classAccessNeed)</td>
+      <td>Links to the [=Access Need=] satisfied by the [=Data Grant=]</td>
+    </tr>
+    <tr>
+      <td>hasDataInstance</td>
+      <td>Instance of registeredShapeTree</td>
+      <td>Links to a [=Data Instance=] of registeredShapeTree.</td>
+    </tr>
+    <tr>
+      <td>inheritsFromGrant</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>Links to another [=Data Grant=] whose registeredShapeTree
+      references the shape tree associated with the current
+      [=Data Grant=].</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>Alice's [=Data Grant=] for Projectron to access Projects at
+  https://alice.example/agents/2f2f3628/40d038ea -
+  <a href="snippets/alice.example/40d038ea.ttl">View</a> 
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/40d038ea.ttl
+  highlight: turtle
+  show: 12-20
+  </pre>
+</figure>
+
+<figure>
+  <figcaption>Alice's [=Data Grant=] for Projectron to access Tasks at
+  https://alice.example/agents/2f2f3628/0945218b -
+  <a href="snippets/alice.example/0945218b.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/0945218b.ttl
+  highlight: turtle
+  show: 13-21
+  </pre>
+</figure>
+
+### Access Scopes ### {#access-scopes}
+
+The following scopes, linked via `interop:ScopeOfGrant`, are valid for a [=Data Grant=]:
+
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Scope</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>`interop:AllInstances`</b></td>
+      <td>Applies to all [=Data Instances=] belonging to the associated 
+      [=Data Registration=]. Permissions will be set for the 
+      `interop:registeredAgent` on the [=Data Registration=] container,
+      and will be inherited by all member [=Data Instances=].</td>
+    </tr>
+    <tr>
+      <td><b>`interop:SelectedInstances`</b></td>
+      <td>Applies only to selected [=Data Instances=] belonging to the associated 
+      [=Data Registration=] which are linked to the [=Data Grant=] via 
+      `interop:hasDataInstance`, or selected Data Resources which are linked 
+      via `interop:hasDataResource`. Permissions will be set for the 
+      `interop:registeredAgent` on each selected [=Data Instance=] or Data Resource.</td>
+    </tr>
+    <tr>
+      <td><b>`interop:InheritInstances`</b></td>
+      <td>When the [=Data Grant=] linked via `interop:inheritsFromGrant` has a scope 
+      of `interop:AllInstances` or `interop:SelectedInstances` with one
+      or more [=Data Instances=] selected, any inheriting [=Data Grants=]
+      can narrow their own access scope to only include
+      "child" [=Data Instances=] linked to the "parent" [=Data Instances=]. The 
+      link must follow the [=Shape Tree Reference=] between the parent [=Data Grant=] 
+      shape tree and the inheriting [=Data Grant=] shape tree.
+      Permissions are set conditionally for the `interop:registeredAgent`,
+      and have the benefit of applying to current and future [=Data Instances=]
+      associated with a parent [=Data Instance=].</td>
+    </tr>
+    <tr>
+      <td><b>`interop:NoAccess`</b></td>
+      <td>Indicates that no access is granted to the `interop:registeredAgent`. 
+        Applies to the entire [=Data Registration=] when there are no 
+        [=Data Instances=] linked via `interop:hasDataInstance`.
+        When there are [=Data Instances=] linked via `interop:hasDataInstance`,
+        this scope only applies to them. When there are Data Resources linked 
+        via `interop:hasDataResource`,
+        this scope only applies to them.</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## Delegated Data Grant ## {#delegated-data-grant}
+
+A <dfn>Delegated Data Grant</dfn> is a sub-class of [=Data Grant=]
+used when a grantee re-shares or "delegates" access they've
+received to another [=Agent=]. The most common use case 
+is when Alice shares access with Bob, and Bob delegates
+that access to his project management application.
+
+[Class Definition](interop.ttl#DelegatedDataGrant) -
+[Shape Definition](interop.shex#DelegatedDataGrantShape) -
+[Shape Tree Definition](interop.tree#DelegatedDataGrantTree)
+
+<table class="classinfo data" align="left" id="classDelegatedDataGrant">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>delegationOfGrant</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[=Data Grant=] that is being delegated</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>Alice's [=Delegated Data Grant=] for Projectron to access Projects 
+  that Bob shared with her at https://alice.example/agents/2f2f3628/fe818190 -
+  <a href="snippets/alice.example/fe818190.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/fe818190.ttl
+  highlight: turtle
+  show: 13-23
+  </pre>
+</figure>
+
+<figure>
+  <figcaption>Alice's [=Delegated Data Grant=] for Projectron to access Tasks 
+  that Bob shared with her at https://alice.example/agents/2f2f3628/017d6a07 -
+  <a href="snippets/alice.example/017d6a07.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/017d6a07.ttl
+  highlight: turtle
+  show: 13-24
+  </pre>
+</figure>
+
+## Access Invitation ## {#datamodel-access-invitation}
+
+An <dfn>Access Invitation</dfn> is a subclass of [=Access Grant=] used when
+a [=Social Agent=] wishes to grant access to another [=Social Agent=] whose
+decentralized [=identity=] is unknown to them, or may not exist yet, so they
+must be first invited through another channel (such as phone or email).
+
+Like an [=Access Grant=], an [=Access Invitation=] links to access
+criteria detailed in one or more [=Access Need Groups=], with
+associated [=Data Grants=] or [=Trusted Grants=] indicating the
+intended access to be granted.
+
+However, instead of linking to an [=Access Grant Subject=], an
+[=Access Invitation=] links to one or more [=Access Invitation Channels=].
+
+Each channel represents a mechanism through which the invitation can
+be delivered and validated. The mechanism is designed so that multiple
+channels may be validated before an invitation is confirmed and
+converted to an [=Access Grant=].
+
+[Class Definition](interop.ttl#AccessInvitation) -
+[Shape Definition](interop.shex#AccessInvitationShape) -
+[Shape Tree Definition](interop.tree#AccessInvitationTree)
+
+<table class="classinfo data" align="left" id="classAccessInvitation">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that registered the [=Access Invitation=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>[Application](#classApplication)</td>
+      <td>[=Application=] used to create the [=Access Invitation=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Invitation=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Invitation=] was updated</td>
+    </tr>
+    <tr>
+      <td>expiresAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Invitation=] expires</td>
+    </tr>
+    <tr>
+      <td>hasAccessInvitationChannel</td>
+      <td>[AccessInvitationChannel](#classAccessInvitationChannel)</td>
+      <td>Links to an [=Access Invitation Channel=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessNeedGroup</td>
+      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
+      <td>Links to an [=Access Need Group=] associated with
+      the [=Access Invitation=].</td>
+    </tr>
+    <tr>
+      <td>hasDataGrant</td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>Links to a [=Data Grant=] associated with the
+      [=Access Invitation=].</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>An [=Access Invitation=] at
+  https://alice.example/grants/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f.ttl
+  highlight: turtle
+  show: 13-27
+  </pre>
+</figure>
+
+## Access Invitation Channel ## {#datamodel-access-invitation-channel}
+
+An <dfn>Access Invitation Channel</dfn> represents a mechanism through
+which an [=Access Invitation=] can be delivered and validated.
+
+[Class Definition](interop.ttl#AccessInvitationChannel) -
+[Shape Definition](interop.shex#AccessInvitationChannelShape)
+
+<table class="classinfo data" align="left" id="classAccessInvitationChannel">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>rdf:type</td>
+      <td>interop:PhoneInvitationChannel,
+      interop:EmailInvitationChannel,
+      interop:SMSInvitationChannel,
+      interop:OfflineInvitationChannel,
+      interop:LDNInvitationChannel</td>
+      <td>Each channel is represented by a subClassOf
+      AccessInvitationChannel</td>
+    </tr>
+    <tr>
+      <td>channelTarget</td>
+      <td>xsd:string</td>
+      <td>Target used when validating the channel</td>
+    </tr>
+    <tr>
+      <td>channelCode</td>
+      <td>xsd:string</td>
+      <td>Code used for channel validation</td>
+    </tr>
+    <tr>
+      <td>isValidated</td>
+      <td>xsd:boolean</td>
+      <td>Indicates whether the channel has been validated</td>
+    </tr>
+    <tr>
+      <td>remainingAttempts</td>
+      <td>xsd:integer</td>
+      <td>Number of allowed validation attempts remaining</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>[=Access Invitation Channels=] in the [=Access Invitation=] at
+  https://alice.example/grants/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f.ttl
+  highlight: turtle
+  show: 29-41
+  </pre>
+</figure>
+
+## Access Consent Registry ## {#access-consent-registry}
+
+An <dfn>Access Consent Registry</dfn> is a collection of [=Access Consents=].
+
+The [=Access Consent Registry=] is linked to a [=Social Agent=] via their [=Registry Set=].
+
+An [=Access Consent Registry=] links to any number of registered [=Access Consents=].
+
+[Class Definition](interop.ttl#AccessConsentRegistry) -
+[Shape Definition](interop.shex#AccessConsentRegistryShape) -
+[Shape Tree Definition](interop.tree#AccessConsentRegistryTree)
+
+<table class="classinfo data" align="left" id="classAccessConsentRegistry">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>[Registration](interop.ttl#Registration)</td>
+      <td>Link to associated [=Access Consents=]</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>An [=Access Consent Registry=] at 
+  https://alice.example/consents/ -
+  <a href="snippets/alice.example/consents.ttl">View</a></figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/consents.ttl
+  highlight: turtle
+  show: 4-10
+  </pre>
+</figure>
+
+### Resource Hierarchy ### {#consents-hierarchy}
+
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Class</th>
+      <th>Shape</th>
+      <th>Shape Tree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code><a href="snippets/alice.example/consents.ttl">consents/</a></code></td>
+      <td>[AccessConsentRegistry](#classAccessConsentRegistry)</td>
+      <td>[AccessConsentRegistryShape](interop.shex#AccessConsentRegistryShape)</td>
+      <td>[AccessConsentRegistryTree](interop.tree#AccessConsentRegistryTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/e2765d6c.ttl">e2765d6c/</a></code></td>
+      <td>[AccessConsent](#classAccessConsent)</td>
+      <td>[AccessConsentShape](interop.shex#AccessConsentShape)</td>
+      <td>[AccessConsentTree](interop.tree#AccessConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/54a1b6a0.ttl">54a1b6a0/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/0e4cb692.ttl">0e4cb692/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/47e07897.ttl">47e07897/</a></code></td>
+      <td>[AccessConsent](#classAccessConsent)</td>
+      <td>[AccessConsentShape](interop.shex#AccessConsentShape)</td>
+      <td>[AccessConsentTree](interop.tree#AccessConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/55363f56.ttl">55363f56/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/935458cf.ttl">935458cf/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/d577d117.ttl">d577d117/</a></code></td>
+      <td>[AccessConsent](#classAccessConsent)</td>
+      <td>[AccessConsentShape](interop.shex#AccessConsentShape)</td>
+      <td>[AccessConsentTree](interop.tree#AccessConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/2d1568fb.ttl">2d1568fb/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/5ca4692b.ttl">5ca4692b/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/4460dce3.ttl">4460dce3/</a></code></td>
+      <td>[AccessConsent](#classAccessConsent)</td>
+      <td>[AccessConsentShape](interop.shex#AccessConsentShape)</td>
+      <td>[AccessConsentTree](interop.tree#AccessConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/f800b10c.ttl">f800b10c/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/ec6057d9.ttl">ec6057d9/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+  </tbody>
+</table>
+
+The [=Access Consent Registry=] resources MAY use any resource or subject name.
+
+The resource names for [=Access Grants=] <em class="rfc2119">SHOULD</em> 
+be unpredictable.

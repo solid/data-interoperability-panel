@@ -1,0 +1,21 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
+PREFIX alice: <https://alice.example>
+PREFIX projectron: <https://projectron.example/>
+PREFIX alice-projectron: <https://alice.example/agents/2f2f3628/>
+PREFIX alice-work-data: <https://work.alice.example/data/>
+
+alice-projectron:0945218b
+  a interop:DataGrant ;
+  interop:dataOwner alice:\#id ;
+  interop:registeredShapeTree pm-shapetrees:TaskTree ;
+  interop:hasDataRegistration alice-work-data:f0f04f3e\/ ;
+  interop:satisfiesAccessNeed projectron:\#9462959c ;
+  interop:accessMode acl:Read, acl:Create ;
+  interop:creatorAccessMode acl:Update, acl:Delete ;
+  interop:scopeOfGrant interop:InheritInstances ;
+  interop:inheritsFromGrant alice-projectron:40d038ea .

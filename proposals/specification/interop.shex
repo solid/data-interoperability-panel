@@ -2,8 +2,8 @@ PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 # Agent
-<#AgentShape> {
-  a [ interop:Agent ] ;
+<#SocialAgentShape> {
+  a [ interop:SocialAgent ] ;
   interop:hasRegistrySet IRI ;
   interop:hasAuthorizationAgent IRI ;
   interop:hasInbox IRI ;
@@ -14,8 +14,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <#RegistrySetShape> {
   a [ interop:RegistrySet ] ;
   interop:hasAgentRegistry IRI ;
-  interop:hasAccessGrantRegistry IRI ;
-  interop:hasAccessReceiptRegistry IRI ;
+  interop:hasAccessConsentRegistry IRI ;
   interop:hasDataRegistry IRI*
 }
 
@@ -33,6 +32,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;
   interop:registeredAgent IRI ;
+  interop:hasAccessGrant IRI ;
+  interop:reciprocalRegistration IRI?
 }
 
 # Application Registration
@@ -43,6 +44,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;
   interop:registeredAgent IRI ;
+  interop:hasAccessGrant IRI ;
 }
 
 # Data Registry
@@ -69,7 +71,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:applicationDescription xsd:string ;
   interop:applicationAuthor IRI ;
   interop:applicationThumbnail IRI? ;
-  interop:hasAccessNeedGroup IRI* ;
+  interop:hasAccessNeedGroup IRI*
 }
 
 # Access Need Group
@@ -80,7 +82,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
   interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
   interop:authenticatesAs [ interop:Agent interop:Pilot ] ;
-  ( interop:hasAccessNeed IRI+ | interop:hasTrustedNeed IRI+ )
+  interop:hasAccessNeed IRI+
 }
 
 # Access Need
@@ -116,26 +118,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:inheritsFromNeed @<#:AccessNeedShape> ;
   interop:hasDataGrant @<#:InheritedDataGrantShape>?
 }
-
-# Trusted Need
-<#TrustedNeedShape> {
-  a [ interop:TrustedNeed ] ;
-  interop:inAccessNeedGroup IRI+ ;
-  interop:hasAccessNeedDecorator IRI? ;
-  interop:trustedWith IRI* ;
-  interop:trustedWithType @<#:TrustedWithNeedTypes> ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
-  interop:hasTrustedGrant @<#:TrustedGrantShape>?
-}
-
-<#TrustedWithNeedTypes> [
-  interop:Agent
-  interop:AgentRegistry
-  interop:DataRegistry
-  interop:AccessGrantRegistry
-  interop:AccessReceiptRegistry
-]
 
 # Access Modes
 <#AccessModes> [
@@ -191,30 +173,36 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+
 }
 
-# Access Grant Registry
-<#AccessGrantRegistryShape> {
-  a [ interop:AccessGrantRegistry ] ;
+# Access Consent Registry
+<#AccessConsentRegistryShape> {
+  a [ interop:AccessConsentRegistry ] ;
   interop:hasRegistration IRI*
 }
 
-# Access Grant
-<#AccessGrantShape> {
-  a [ interop:AccessGrant ] ;
+# Access Consent
+<#AccessConsentShape> {
+  a [ interop:AccessConsent ] ;
   interop:registeredBy IRI ;
   interop:registeredWith IRI? ;
   interop:registeredAt xsd:dateTime ;
   interop:updatedAt xsd:dateTime ;
-  interop:hasAccessGrantSubject @<#:AccessGrantSubject> ;
-  interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+ ;
-  ( interop:hasDataGrant @<#:DataGrantShape>+ |
-  interop:hasTrustedGrant @<#:TrustedGrantShape>+ )
+  interop:registeredAgent IRI ;
+  interop:hasAccessNeedGroup IRI? ;
+  interop:hasDataConsent IRI+
 }
 
-# Access Grant Subject
-<#AccessGrantSubjectShape> {
-  a [ interop:AccessGrantSubject ] ;
-  interop:accessGrantSubjectAgent IRI? ;
-  interop:accessGrantSubjectApplication IRI?
+<#DataConsentShape> {
+  a [ interop:DataConsent ] ;
+  interop:dataOwner IRI ;
+  interop:registeredShapeTree IRI ;
+  interop:satisfiesAccessNeed IRI? ;
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:creatorAccessMode @<#:AccessModes>* ;
+  interop:scopeOfConsent @<#:DataGrantScopes> ;
+  interop:satisfiesAccessNeed IRI? ;
+  ( interop:hasDataInstance IRI* |
+    interop:hasDataResource IRI* ) ;
+  interop:inheritsFromConsent IRI?
 }
 
 # Access Invitation
@@ -226,8 +214,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:updatedAt xsd:dateTime ;
   interop:expiresAt xsd:dateTime? ;
   interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+ ;
-  ( interop:hasDataGrant @<#:DataGrantShape>+ |
-  interop:hasTrustedGrant @<#:TrustedGrantShape>+ ) ;
+  interop:hasDataGrant @<#:DataGrantShape>+ ;
   interop:hasAccessInvitationChannel @<#:AccessInvitationChannelShape>+
 }
 
@@ -249,15 +236,29 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   :LDNInvitationChannel     # Linked Data Notification
 ]
 
+# Access Grant
+<#AccessGrantShape> {
+  a [ interop:AccessGrant ] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI? ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:registeredAgent IRI ;
+  interop:hasAccessNeedGroup IRI ;
+  interop:hasDataGrant IRI+
+}
+
 # Data Grant
 <#DataGrantShape> {
   a [ interop:DataGrant ] ;
   interop:dataOwner IRI ;
   interop:registeredShapeTree IRI ;
-  interop:hasDataRegistration IRI ;
+  ( interop:hasDataRegistration IRI |
+    interop:hasDataResource IRI ) ;
   interop:accessMode @<#:AccessModes>+ ;
   interop:creatorAccessMode @<#:AccessModes>* ;
   interop:scopeOfGrant @<#:DataGrantScopes> ;
+  interop:satisfiesAccessNeed IRI? ;
   interop:hasDataInstance IRI* ;
 }
 
@@ -266,10 +267,12 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   a [ interop:DataGrant ] ;
   interop:dataOwner IRI ;
   interop:registeredShapeTree IRI ;
-  interop:hasDataRegistration IRI ;
+  ( interop:hasDataRegistration IRI |
+    interop:hasDataResource IRI ) ;
   interop:accessMode @<#:AccessModes>+ ;
   interop:creatorAccessMode @<#:AccessModes>* ;
   interop:scopeOfGrant @<#:DataGrantScopes> ;
+  interop:satisfiesAccessNeed IRI? ;
   interop:hasDataInstance IRI* ;
   interop:inheritsFromGrant IRI
 }
@@ -282,57 +285,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:NoAccess
 ]
 
-# Trusted Grant
-<#TrustedGrantShape> {
-  a [ interop:TrustedGrant ] ;
-  # AccessGrant the TrustedGrant belongs to
-  interop:hasAccessGrant @<#:AccessGrantShape> ;
-  # TrustedNeed that the TrustedGrant satisfies
-  interop:satisfiesTrustedNeed @<#:TrustedNeedShape>+ ;
-  # Trusted resource of `trustedWithType` that access is related to
-  interop:trustedWith IRI ;
-  # Type of trusted resource
-  interop:trustedWithType @<#:TrustedWithTypes> ;
-  # Access Modes that have been granted to `trustedWith` Trusted Resource
-  interop:accessMode @<#:AccessModes>+ ;
-  # Scope of access for the trusted grant
-  interop:scopeOfGrant @<#:TrustedGrantScopes>+
-}
-
-# Trusted Grant Target Types
-<#TrustedWithGrantTypes> [
-  interop:Agent
-  interop:RegistrySet
-  interop:AgentRegistry
-  interop:DataRegistry
-  interop:AccessGrantRegistry
-  interop:AccessReceiptRegistry
-]
-
-# Trusted Grant Scopes
-<#TrustedGrantScopes> [
-  interop:NoAccess
-  interop:TrustedAccess
-]
-
-# Access Receipt Registry
-<#AccessReceiptRegistryShape> {
-  a [ interop:AccessReceiptRegistry ] ;
-  interop:hasRegistration IRI*
-}
-
 # Access Receipt
 <#AccessReceiptShape> {
   a [interop:AccessReceipt] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI? ;
-  interop:registeredAt xsd:dateTime ;
-  interop:updatedAt xsd:dateTime ;
   interop:providedAt xsd:dateTime ;
-  interop:fromAgent IRI ;             # Agent who sent the receipt
-  interop:viaAgent IRI ;             # Trusted agent on behalf of fromAgent
-  interop:hasAccessGrantSubject @<#:AccessGrantSubject> ;  # Subject / recipient
-  interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+ ;
-  ( interop:hasDataGrant @<#:DataGrantShape>+ |
-  interop:hasTrustedGrant @<#:TrustedGrantShape>+ ) ;
+  interop:fromSocialAgent IRI ;
+  interop:viaSocialAgent IRI ;
+  interop:hasSocialAgentRegistration IRI
 }
