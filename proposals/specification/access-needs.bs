@@ -11,18 +11,15 @@ providing one or more [=Access Need Groups=] to the [=Social Agent=]
 controlling the data they require access to. The channels through which 
 these may be communicated are detailed in [[SAI-API#authz-workflows]].
 
-Each [=Access Need Group=] is associated with up to three types of needs:
+Each [=Access Need Group=] is associated with one or more [=Access Needs=].
 
-* [=Access Needs=] represent a need to access a particular type of data in 
-    a [=Data Registry=] identified by the [=shape tree=] type. 
-* [=Trusted Needs=] represent a need for elevated access to entire [=Registries=],
-    as well as the [=Identity Profile Document=] or [=Registry Set=] for 
-    the [=Social Agent=].
+[=Access Needs=] represent a need to access a particular type of data
+identified by [=shape tree=] type such as the [=Identity Profile Document=]
+or [=Registry Set=] of the [=Social Agent=], or in a [=Data Registry=].
 
 [=Access Need Groups=] are essential to a [=Social Agent's=] decision-making
 when determining whether to grant access, as illustrated in the 
-[[SAI-API#present-grant]] workflow. They are stored as part of the [=Access Grant=] 
-in the [=Access Grant Registry=].
+[[SAI-API#present-grant]] workflow.
 
 Note: See
 [Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#needs)
@@ -30,9 +27,8 @@ for a detailed explanation of how Access Needs should be processed.
 
 ## Access Need Group ## {#needs-access-need-group}
 
-An <dfn>Access Need Group</dfn> is a collection of [=Access Needs=]
-and/or [=Trusted Needs=] that a given [=Social Agent=] and/or [=Application=] 
-uses to communicate an access request to other [=Social Agents=].
+An <dfn>Access Need Group</dfn> is a collection of [=Access Needs=] 
+used to communicate access requests to [=Social Agents=].
 
 An [=Access Need Group=] links to an [=Access Decorator Index=] of
 different [=Access Decorator Series=] that explain the [=Access Need Group=]
@@ -59,7 +55,7 @@ language-specific content mappings.
       <td>hasAccessNeedDecoratorIndex</td>
       <td>-</td>
       <td>Index of [=Access Decorator Resources=] to describe
-      [=Access Need Groups=], [=Access Needs=], and [=Trusted Needs=]</td>
+      [=Access Need Groups=] and [=Access Needs=]</td>
     </tr>
     <tr>
       <td>hasAccessNeedGroupDecorator</td>
@@ -85,11 +81,6 @@ language-specific content mappings.
       <td>hasAccessNeed</td>
       <td>[AccessNeed](#classAccessNeed)</td>
       <td>Link to an [=Access Need=]</td>
-    </tr>
-    <tr>
-      <td>hasTrustedNeed</td>
-      <td>[TrustedNeed](#classTrustedNeed)</td>
-      <td>Link to a [=Trusted Need=]</td>
     </tr>
   </tbody>
 </table>
@@ -231,73 +222,6 @@ specified.
   show: 25-42
   </pre> 
 </figure>
-
-## Trusted Need ## {#needs-trusted}
-
-A <dfn>Trusted Need</dfn> represents the request for elevated access
-to various types of top-level resources, including 
-the [=Identity Profile Document=], [=Registry Set=], or specific 
-[=Registries=].
-
-Each [=Trusted Need=] has a single `interop:trustedWithType`, which identifies
-the type of trusted resource that is being requested.
-
-Each [=Trusted Need=] has one or more [=access modes=], and a property that
-indicates the necessity of the [=Access Need=]; *required* or
-*optional*. For example, an [=Access Need=] for read access to
-[=shape tree=] `N` can be identified as a required item in the
-[=Access Need Group=].
-
-[=Trusted Needs=] are described using language-specific
-[=Access Need Decorators=].
-
-[Class Definition](interop.ttl#TrustedNeed) -
-[Shape Definition](interop.shex#TrustedNeedShape)
-
-<table class="classinfo data" align="left" id="classTrustedNeed">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>inAccessNeedGroup</td>
-      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
-      <td>[=Access Need Group=] that the [=Trusted Need=] is part of</td>
-    </tr>
-    <tr>
-      <td>trustedWithType</td>
-      <td>  `interop:Agent`, `interop:RegistrySet`, `interop:AgentRegistry`
-        `interop:DataRegistry`, `interop:AccessGrantRegistry`,
-        `interop:AccessReceiptRegistry`
-      </td>
-      <td>Resource types that can be requested through a [=Trusted Need=]</td>
-    </tr>
-    <tr>
-      <td>accessMode</td>
-      <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
-      <td>Requested modes of access for the [=Trusted Need=]</td>
-    </tr>
-    <tr>
-      <td>accessNecessity</td>
-      <td>`interop:AccessRequired`, `interop:AccessOptional`</td>
-      <td>Necessity of the access to the requesting party</td>
-    </tr>
-    <tr>
-      <td>hasTrustedGrant</td>
-      <td>[TrustedGrant](#classTrustedGrant)</td>
-      <td>[=Trusted Grant=] associated with the 
-      [=Trusted Need=], established when the [=Access Grant=] 
-      is created</td>
-    </tr>
-  </tbody>
-</table>
 
 ## Access Request ## {#needs-access-request}
 

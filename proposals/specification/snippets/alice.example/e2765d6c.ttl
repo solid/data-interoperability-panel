@@ -2,17 +2,19 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
-PREFIX alice: <https://alice.example/>
+PREFIX alice: <https://alice.example>
 PREFIX jarvis: <https://jarvis.alice.example>
 PREFIX projectron: <https://projectron.example/>
-PREFIX authz-agent: <https://trusted.example/>
-PREFIX alice-agents: <https://alice.example/agents/>
+PREFIX alice-consents: <https://alice.example/consents/>
 
-alice-agents:2f2f3628\/
-  a interop:ApplicationRegistration ;
+alice-consents:e2765d6c
+  a interop:AccessConsent ;
   interop:registeredBy alice:\#id ;
   interop:registeredWith jarvis:\#id ;
-  interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
-  interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
+  interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+  interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
   interop:registeredAgent projectron:\#id ;
-  interop:hasAccessGrant alice-agents:2f2f3628\/27eae14b .
+  interop:hasAccessNeedGroup projectron:\#d8219b1f ;
+  interop:hasDataConsent
+    alice-consents:54a1b6a0 ,
+    alice-consents:0e4cb692 .

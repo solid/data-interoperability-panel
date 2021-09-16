@@ -22,13 +22,18 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Agent"@en .
 
-#############################################################################
-
 :SocialAgent
   rdfs:subClassOf :Agent ;
   rdfs:comment "A strongly identifiable individual, group, or organization"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Social Agent"@en .
+
+:hasSocialAgent
+  a rdf:Property ;
+  rdfs:comment "Links to a given Social Agent"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range :SocialAgent ;
+  rdfs:label "Has Social Agent"@en .
 
 :hasInbox
   a rdf:Property ;
@@ -80,19 +85,12 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :AgentRegistry ;
   rdfs:label "Has Agent Registry"@en .
 
-:hasAccessGrantRegistry
+:hasAccessConsentRegistry
   rdfs:subPropertyOf :hasRegistry ;
-  rdfs:comment "Links to an Access Grant Registry in a registry set"@en ;
+  rdfs:comment "Links to an Access Consent Registry in a registry set"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:range :AccessGrantRegistry ;
-  rdfs:label "Has Access Grant Registry"@en .
-
-:hasAccessReceiptRegistry
-  rdfs:subPropertyOf :hasRegistry ;
-  rdfs:comment "Links to an Access Receipt Registry in a registry set"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range :AccessReceiptRegistry ;
-  rdfs:label "Has Access Receipt Registry"@en .
+  rdfs:range :AccessConsentRegistry ;
+  rdfs:label "Has Access Consent Registry"@en .
 
 :hasDataRegistry
   rdfs:subPropertyOf :hasRegistry ;
@@ -192,6 +190,20 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :Agent ;
   rdfs:label "Registered Agent"@en .
 
+:hasSocialAgentRegistration
+  rdfs:subPropertyOf :hasRegistration ;
+  rdfs:comment "Links to an AgentRegistration for a SocialAgent"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range :SocialAgentRegistration ;
+  rdfs:label "Has Social Agent Registration"@en .
+
+:hasApplicationRegistration
+  rdfs:subPropertyOf :hasRegistration ;
+  rdfs:comment "Links to an AgentRegistration for an Application"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range :ApplicationRegistration ;
+  rdfs:label "Has Application Registration"@en .
+
 #############################################################################
 # Data Registration
 #############################################################################
@@ -214,13 +226,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range st:ShapeTree ;
   rdfs:label "Registered Shape Tree"@en .
 
-:registeredType
-  a rdf:Property ;
-  rdfs:comment "Links to the rdf:type associated with a given Data Registration"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range rdf:type ;
-  rdfs:label "Registered Type"@en .
-
 :hasDataInstance
   a rdf:Property ;
   rdfs:comment "Links to instances of the shape tree in a data registration"@en ;
@@ -242,71 +247,12 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Grant"@en .
 
-:hasGrantStatus
-  a rdf:Property ;
-  rdfs:comment "Links to the status of the AccessGrant"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessGrant ;
-  rdfs:range [ owl:oneOf ( :ActiveGrant :RevokedGrant ) ] ;
-  rdfs:label "Has Grant Status"@en .
-
-:hasAccessGrantSubject
-  a rdf:Property ;
-  rdfs:comment "Links to the subject of the AccessGrant"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessGrant ;
-  rdfs:range :AccessGrantSubject ;
-  rdfs:label "Has Access Grant Subject"@en .
-
 :hasDataGrant
   a rdf:Property ;
   rdfs:comment "Link to a DataGrant"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:range :DataGrant ;
   rdfs:label "Has Data Grant"@en .
-
-:hasTrustedGrant
-  a rdf:Property ;
-  rdfs:comment "Link to a TrustedGrant"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range :TrustedGrant ;
-  rdfs:label "Has Trusted Grant"@en .
-
-# IRIs for grant types
-#############################################################################
-:ActiveGrant
-  rdfs:comment "Access Grant is active"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Active Grant"@en .
-
-:RevokedGrant
-  rdfs:comment "Access Grant is revoked"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Access Grant Revoked"@en .
-
-# Subject of an Access grant
-#############################################################################
-:AccessGrantSubject
-  a rdfs:Class ;
-  rdfs:comment "Subject of an AccessGrant"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Access Grant Subject"@en .
-
-:accessBySocialAgent
-  a rdf:Property ;
-  rdfs:comment "Social Agent associated with Access Grant"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessGrant ;
-  rdfs:range :SocialAgent ;
-  rdfs:label "Access Grant Subject Social Agent"@en .
-
-:accessByApplication
-  a rdf:Property ;
-  rdfs:comment "Application associated with Access Grant"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessGrant ;
-  rdfs:range :Application ;
-  rdfs:label "Access Grant Subject Application"@en .
 
 # AccessInvitation Class
 #############################################################################
@@ -431,6 +377,12 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Inherits From Grant"@en .
 
+:hasDataResource
+  a rdf:Property ;
+  rdfs:comment "A data resource that access is being granted to"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Has Data Resource"@en .
+
 # IRIs for various grant scopes
 #############################################################################
 :AllInstances
@@ -453,61 +405,9 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "No Access"@en .
 
-:AllRemote
-  rdfs:comment "Access to all remote instances"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "All Remote"@en .
-
-:SelectedRemote
-  rdfs:comment "Access to selected remote instances"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Selected Remote"@en .
-
-# TrustedGrant Class
-#############################################################################
-:TrustedGrant
-  a rdfs:Class ;
-  rdfs:comment "Represents elevated access granted to a trusted Agent"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Trusted Grant"@en .
-
-:trustedWith
-  a rdf:Property ;
-  rdfs:comment "Target of the trusted grant"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :TrustedGrant ;
-  rdfs:range [ owl:oneOf ( :SocialAgent :RegistrySet :Registry ) ] ;
-  rdfs:label "Trusted With"@en .
-
-:trustedWithType
-  a rdf:Property ;
-  rdfs:comment "Type of the target linked via TrustedWith"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :TrustedGrant ;
-  rdfs:range [ owl:oneOf ( :SocialAgent
-                           :RegistrySet
-                           :AgentRegistry
-                           :DataRegistry
-                           :AccessGrantRegistry
-                           :AccessReceiptRegistry ) ] ;
-  rdfs:label "Trusted With Type"@en .
-
-:satisfiesTrustedNeed
-  a rdf:Property ;
-  rdfs:comment "Links to a TrustedNeed that the TrustedGrant satisfies"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain :TrustedGrant ;
-  rdfs:range :TrustedNeed ;
-  rdfs:label "Satisfies Trusted Need"@en .
-
 #############################################################################
 # Access Receipts
 #############################################################################
-:AccessReceiptRegistry
-  rdfs:subClassOf :Registry ;
-  rdfs:comment "A collection of Access Receipt instances"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Access Receipt Registry"@en .
 
 :AccessReceipt
   rdfs:subClassOf :AccessGrant ;
@@ -536,25 +436,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :AccessReceipt ;
   rdfs:label "Has Access Receipt"@en .
 
-:receivesAccessReceipt
-  a rdf:Property ;
-  rdfs:comment "Express a preference in how access receipts are delivered"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range [ owl:oneOf ( :ReceiptInRegistration :ReceiptInMessage ) ] ;
-  rdfs:label "Receives Access Receipt"@en .
-
-# IRIs for Access Receipt Preferences
-#############################################################################
-:ReceiptInRegistration
-  rdfs:comment "Receive access receipt in application registration"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Receipt in Registration"@en .
-
-:ReceiptInMessage
-  rdfs:comment "Receive access receipt in direct message"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Receipt In Message"@en .
-
 #############################################################################
 # Application
 #############################################################################
@@ -563,6 +444,13 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "A client software application in the Solid Ecosystem"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Application"@en .
+
+:hasApplication
+  a rdf:Property ;
+  rdfs:comment "Links to a given Application"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range :Application ;
+  rdfs:label "Has Application"@en .
 
 :applicationName
   a rdf:Property ;
@@ -625,13 +513,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:range :AccessNeed ;
   rdfs:label "Has Access Need"@en .
-
-:hasTrustedNeed
-  a rdf:Property ;
-  rdfs:comment "Links to a Trusted Need"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:range :TrustedNeed ;
-  rdfs:label "Has Trusted Need"@en .
 
 :hasAccessNeedDecoratorIndex
   a rdf:Property ;
@@ -748,14 +629,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:comment "Links to an Access Need that another Access Need inherits from"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Inherits From Need"@en .
-
-# TrustedNeed Class
-#############################################################################
-:TrustedNeed
-  a rdfs:Class ;
-  rdfs:comment "Request for trusted access to key resources"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:label "Trusted Need"@en .
 
 # IRIs for accessNecessity types
 #############################################################################

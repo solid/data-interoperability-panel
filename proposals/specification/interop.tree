@@ -4,10 +4,10 @@ PREFIX interops: <https://shapes.pub/drafts/ns/solid/interop#>
 # Agent
 ##############################################################################
 
-<#AgentTree>
+<#SocialAgentTree>
   a st:ShapeTree ;
   st:expectsType st:Resource ;
-  st:shape interops:AgentShape .
+  st:shape interops:SocialAgentShape .
 
 <#AccessInboxTree>
   a st:ShapeTree ;
@@ -125,18 +125,6 @@ PREFIX interops: <https://shapes.pub/drafts/ns/solid/interop#>
   a st:ShapeTree ;
   st:expectsType st:Resource ;
   st:shape interops:AccessInvitationShape .
-
-# Access Receipt Registry
-##############################################################################
-# Ensure the registry container graph contains a valid
-# AccessReceiptRegistry instance, and the resources inside of
-# it are valid AccessReceipt instances.
-##############################################################################
-<#AccessReceiptRegistryTree>
-  a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:shape interops:AccessReceiptRegistryShape ;
-  st:contains <#AccessReceiptTree> .
 
 # Access Receipt
 ##############################################################################
