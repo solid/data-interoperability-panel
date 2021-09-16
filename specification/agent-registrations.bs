@@ -1,0 +1,353 @@
+Agent Registrations {#ar}
+=====================
+
+[=Social Agents=] manage the other [=Social Agents=] and [=Applications=] they interact with
+by registering these [=Agents=] in their [=Agent Registry=].
+
+When a given [=Agent=] is the subject of an [=Access Consent=],
+an [=Access Grant=] is generated and [[#ar-hierarchy|stored]] 
+in the [=Agent Registration=] for that [=Agent=].
+
+Note: See
+[Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#agentreg)
+for a detailed explanation of how Agent Registrations should be processed.
+
+## Social Agent Registration ## {#social-agent-registration}
+
+A <dfn>Social Agent Registration</dfn> provides the [=Social Agent=]
+with a place to track and manage other [=Social Agents=] they
+interact with.
+
+[=Social Agent Registrations=] are stored in an [=Agent Registry=].
+
+[Class Definition](interop.ttl#SocialAgentRegistration) -
+[Shape Definition](interop.shex#SocialAgentRegistrationShape) -
+[Shape Tree Definition](interop.tree#SocialAgentRegistrationTree)
+
+<table class="classinfo data" align="left" id="classSocialAgentRegistration">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that registered the [=Social Agent Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>[Application](#classApplication)</td>
+      <td>[=Application=] used to create the [=Social Agent Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Social Agent Registration=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Social Agent Registration=] was updated</td>
+    </tr>
+    <tr>
+      <td>registeredAgent</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>The [=Social Agent=] that was registered</td>
+    </tr>
+    <tr>
+      <td>reciprocalRegistration</td>
+      <td>[SocialAgentRegistration](#classSocialAgentRegistration)</td>
+      <td>The [=Social Agent Registration=] that `registeredAgent` maintains
+      for the [=Social Agent=] that owns this [=Registry=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessGrant</td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>Links to an [=Access Grant=] describing the access that has been
+      granted to the `registeredAgent`</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>Alice's [=Social Agent Registration=] for Bob at
+  https://alice.pod.example/agents/c4562da9/ -
+  <a href="snippets/alice.example/c4562da9.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/c4562da9.ttl
+  highlight: turtle
+  show: 13-21
+  </pre>
+</figure>
+
+## Application Registration ## {#application-registration}
+
+An <dfn>Application Registration</dfn> provides the [=Social Agent=]
+with a place to maintain metadata, state, preferences, and
+other application-specific data associated with a given [=Application=] they
+have elected to use.
+
+[=Application Registrations=] are stored in an [=Agent Registry=].
+
+[Class Definition](interop.ttl#ApplicationRegistration) -
+[Shape Definition](interop.shex#ApplicationRegistrationShape) -
+[Shape Tree Definition](interop.tree#ApplicationRegistrationTree)
+
+<table class="classinfo data" align="left" id="classApplicationRegistration">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that registered the [=Application Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>[Application](#classApplication)</td>
+      <td>[=Application=] used to create the [=Application Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Application Registration=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Application Registration=] was updated</td>
+    </tr>
+    <tr>
+      <td>registeredAgent</td>
+      <td>[Application](#classApplication)</td>
+      <td>The [=Application=] that was registered</td>
+    </tr>
+    <tr>
+      <td>hasAccessGrant</td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>Links to an [=Access Grant=] describing the access that has been
+      granted to the `registeredAgent`</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>Alice's [=Application Registration=] for Projectron at
+  https://alice.pod.example/agents/2f2f3628/ -
+  <a href="snippets/alice.example/2f2f3628.ttl">View</a></figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/2f2f3628.ttl
+  highlight: turtle
+  show: 11-18
+  </pre>
+</figure>
+
+## Agent Registry ## {#ar-registry}
+
+An <dfn>Agent Registry</dfn> is a collection of <dfn>Agent Registrations</dfn>.
+
+Each [=Application=] a [=Social Agent=] interacts with has an [=Application Registration=].
+
+Each [=Social Agent=] a [=Social Agent=] interacts with has a [=Social Agent Registration=].
+
+The [=Agent Registry=] is linked to a [=Social Agent=] via their [=Registry Set=].
+
+
+[Class Definition](interop.ttl#AgentRegistry) -
+[Shape Definition](interop.shex#AgentRegistryShape) -
+[Shape Tree Definition](interop.tree#AgentRegistryTree)
+
+<table class="classinfo data" align="left" id="classAgentRegistry">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasSocialAgentRegistration</td>
+      <td>[SocialAgentRegistration](#classSocialAgentRegistration)</td>
+      <td>Link to an associated [=Social Agent Registration=] for 
+      a given [=Social Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasApplicationRegistration</td>
+      <td>[ApplicationRegistration](#classApplicationRegistration)</td>
+      <td>Link to an associated [=Application Registration=] for 
+      a given [=Application=]</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>An [=Agent Registry=] at https://alice.example/agents/ -
+  <a href="snippets/alice.example/agents.ttl">View</a></figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/agents.ttl
+  highlight: turtle
+  show: 7-15
+  </pre>
+</figure>
+
+### Resource Hierarchy ### {#ar-hierarchy}
+
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Resource</th>
+      <th>Class</th>
+      <th>Shape</th>
+      <th>Shape Tree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code><a href="snippets/alice.example/agents.ttl">agents/</a></code></td>
+      <td>[AgentRegistry](#classAgentRegistry)</td>
+      <td>[AgentRegistryShape](interop.shex#AgentRegistryShape)</td>
+      <td>[AgentRegistryTree](interop.tree#AgentRegistryTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/c4562da9.ttl">c4562da9/</a></code></td>
+      <td>[SocialAgentRegistration](#classSocialAgentRegistration)</td>
+      <td>[SocialAgentRegistrationShape](interop.shex#SocialAgentRegistrationShape)</td>
+      <td>[SocialAgentRegistrationTree](interop.tree#SocialAgentRegistrationTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/b6e125b8.ttl">b6e125b8/</a></code></td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>[AccessGrantShape](interop.shex#AccessGrantShape)</td>
+      <td>[AccessGrantTree](interop.tree#AccessGrantTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/b42228af.ttl">b6e125b8/</a></code></td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[DataGrantShape](interop.shex#DataGrantShape)</td>
+      <td>[DataGrantTree](interop.tree#DataGrantTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/95ff7580.ttl">95ff7580/</a></code></td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[DataGrantShape](interop.shex#DataGrantShape)</td>
+      <td>[DataGrantTree](interop.tree#DataGrantTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/b49afcdf.ttl">b49afcdf/</a></code></td>
+      <td>[SocialAgentRegistration](#classSocialAgentRegistration)</td>
+      <td>[SocialAgentRegistrationShape](interop.shex#SocialAgentRegistrationShape)</td>
+      <td>[SocialAgentRegistrationTree](interop.tree#SocialAgentRegistrationTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/731b43ec.ttl">731b43ec/</a></code></td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>[AccessGrantShape](interop.shex#AccessGrantShape)</td>
+      <td>[AccessGrantTree](interop.tree#AccessGrantTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/d85fd1f5.ttl">d85fd1f5/</a></code></td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[DataGrantShape](interop.shex#DataGrantShape)</td>
+      <td>[DataGrantTree](interop.tree#DataGrantTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/8fac3576.ttl">8fac3576/</a></code></td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[DataGrantShape](interop.shex#DataGrantShape)</td>
+      <td>[DataGrantTree](interop.tree#DataGrantTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/2f2f3628.ttl">2f2f3628/</a></code></td>
+      <td>[ApplicationRegistration](#classApplicationRegistration)</td>
+      <td>[ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)</td>
+      <td>[ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/27eae14b.ttl">27eae14b/</a></code></td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>[AccessGrantShape](interop.shex#AccessGrantShape)</td>
+      <td>[AccessGrantTree](interop.tree#AccessGrantTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/40d038ea.ttl">40d038ea/</a></code></td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[DataGrantShape](interop.shex#DataGrantShape)</td>
+      <td>[DataGrantTree](interop.tree#DataGrantTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/0945218b.ttl">0945218b/</a></code></td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[DataGrantShape](interop.shex#DataGrantShape)</td>
+      <td>[DataGrantTree](interop.tree#DataGrantTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/fe818190.ttl">fe818190/</a></code></td>
+      <td>[DelegatedDataGrant](#classDelegatedDataGrant)</td>
+      <td>[DelegatedDataGrantShape](interop.shex#DelegatedDataGrantShape)</td>
+      <td>[DelegatedDataGrantTree](interop.tree#DelegatedDataGrantTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/017d6a07.ttl">017d6a07/</a></code></td>
+      <td>[DelegatedDataGrant](#classDelegatedDataGrant)</td>
+      <td>[DelegatedDataGrantShape](interop.shex#DelegatedDataGrantShape)</td>
+      <td>[DelegatedDataGrantTree](interop.tree#DelegatedDataGrantTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/b5eea7bb.ttl">b5eea7bb/</a></code></td>
+      <td>[ApplicationRegistration](#classApplicationRegistration)</td>
+      <td>[ApplicationRegistrationShape](interop.shex#ApplicationRegistrationShape)</td>
+      <td>[ApplicationRegistrationTree](interop.tree#ApplicationRegistrationTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/5ad22737.ttl">5ad22737/</a></code></td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>[AccessGrantShape](interop.shex#AccessGrantShape)</td>
+      <td>[AccessGrantTree](interop.tree#AccessGrantTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/b0dc6c78.ttl">b0dc6c78/</a></code></td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[DataGrantShape](interop.shex#DataGrantShape)</td>
+      <td>[DataGrantTree](interop.tree#DataGrantTree)</td>
+    </tr>
+    <tr>
+      <td><code>------ <a href="snippets/alice.example/6ef722af.ttl">6ef722af/</a></code></td>
+      <td>[DataGrant](#classDataGrant)</td>
+      <td>[DataGrantShape](interop.shex#DataGrantShape)</td>
+      <td>[DataGrantTree](interop.tree#DataGrantTree)</td>
+    </tr>
+  </tbody>
+</table>
+
+The [=Agent Registry=] MAY use any resource or subject name.
+
+The resource name for an [=Agent Registration=]
+<em class="rfc2119">SHOULD</em> be unpredictable.
+
+The `interop:registeredAgent` of a given [=Agent Registration=] 
+<em class="rfc2119">SHOULD</em> have `acl:Read`
+access to that [=Agent Registration=].

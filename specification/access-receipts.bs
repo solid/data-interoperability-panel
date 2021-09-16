@@ -5,10 +5,7 @@ When a [=Social Agent=] grants access to another [=Social Agent=] or
 [=Application=], an [=Access Receipt=] is provided to the grantee that 
 communicates what they have been given access to, and why.
 
-[=Access Receipts=] are sent to a [=Social Agent's=] Access Inbox. When the 
-grantee is an [=Application=], the [=Social Agent=] will store the 
-[=Access Receipt=] in an [=Application Registration=] in their 
-[=Agent Registry=].
+[=Access Receipts=] are sent to a [=Social Agent's=] Access Inbox.
 
 [=Access Receipts=] received by a [=Social Agent=] are used to 
 populate data shared from other [=Social Agents=] in the
@@ -16,63 +13,15 @@ populate data shared from other [=Social Agents=] in the
 [=Social Agent=] and their [=Applications=] to lookup and access data 
 that been shared with them.
 
-When a [=Social Agent=] receives an [=Access Receipt=], it is stored in their
-[=Access Receipt Registry=].
-
 Note: See
 [Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#receipts)
 for a detailed explanation of how Access Receipts should be processed.
 
-## Access Receipt Registry ## {#access-receipt-registry}
-
-An <dfn>Access Receipt Registry</dfn> is a collection of
-[=Access Receipts=] stored in a specific location in a [=pod=].
-
-[Class Definition](interop.ttl#AccessReceiptRegistry) -
-[Shape Definition](interop.shex#AccessReceiptRegistryShape) -
-[Shape Tree Definition](interop.tree#AccessReceiptRegistryTree)
-
-<table class="classinfo data" align="left" id="classAccessReceiptRegistry">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>hasRegistration</td>
-      <td>[Registration](interop.ttl#Registration)</td>
-      <td>Link to associated [=Access Receipts=]</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-  <figcaption>An [=Access Receipt Registry=] at https://alice.example/receipts/</figcaption>
-  <pre class=include-code>
-  path: snippets/alice.example/receipt-registry.ttl
-  highlight: turtle
-  show: 4-9
-  </pre>
-</figure>
-
-## Access Receipt ## {#datamodel-access-receipt}
+## Access Receipt ## {#access-receipt}
 
 A [=Social Agent=] provides an <dfn>Access Receipt</dfn> to another 
-[=Agent=] after granting them access to some scope of data as the
-[=Access Grant Subject=] of an [=Access Grant=].
-
-[=Access Receipts=] extend the [=Access Grant=] class with additional
-properties that provide context to the recipient. Otherwise, they
-retain the same structure, linked to any [=Access Need Groups=] used to
-formulate the [=Access Grant=], as well as any [=Data Grants=] 
-or [=Trusted Grants=] that detail the scope
-of access granted.
+[=Agent=] after granting them access to some scope of data 
+in an [=Access Consent=].
 
 [Class Definition](interop.ttl#AccessReceipt) -
 [Shape Definition](interop.shex#AccessReceiptShape) -
@@ -91,26 +40,6 @@ of access granted.
   </thead>
   <tbody>
     <tr>
-      <td>registeredBy</td>
-      <td>[SocialAgent](#classSocialAgent)</td>
-      <td>[=SocialAgent=] that registered the [=Access Receipt=]</td>
-    </tr>
-    <tr>
-      <td>registeredWith</td>
-      <td>[Application](#classApplication)</td>
-      <td>[=Application=] used to create the [=Access Receipt=]</td>
-    </tr>
-    <tr>
-      <td>registeredAt</td>
-      <td>xsd:dateTime</td>
-      <td>Date and time the [=Access Receipt=] was created</td>
-    </tr>
-    <tr>
-      <td>updatedAt</td>
-      <td>xsd:dateTime</td>
-      <td>Date and time the [=Access Receipt=] was updated</td>
-    </tr>
-    <tr>
       <td>providedAt</td>
       <td>xsd:dateTime</td>
       <td>Date and time the [=Access Receipt=] was provided</td>
@@ -128,82 +57,19 @@ of access granted.
       by a [=Trusted Agent=] of `fromSocialAgent`.</td>
     </tr>
     <tr>
-      <td>hasAccessGrantSubject</td>
-      <td>[AccessGrantSubject](#classAccessGrantSubject)</td>
-      <td>Links to the [=Access Grant Subject=] that was granted access.</td>
-    </tr>
-    <tr>
-      <td>hasAccessNeedGroup</td>
-      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
-      <td>Links to an [=Access Need Group=] associated with the [=Access Receipt=].</td>
-    </tr>
-    <tr>
-      <td>hasDataGrant</td>
-      <td>[DataGrant](#classDataGrant)</td>
-      <td>Links to a [=Data Grant=] associated with the [=Access Receipt=].</td>
-    </tr>
-    <tr>
-      <td>hasTrustedGrant</td>
-      <td>[TrustedGrant](#classTrustedGrant)</td>
-      <td>Links to a [=Trusted Grant=] associated with the [=Access Receipt=].</td>
+      <td>hasSocialAgentRegistration</td>
+      <td>[SocialAgentRegistration](#classSocialAgentRegistration)</td>
+      <td>Links to the [=Social Agent Registration=] maintained for the grantee by the
+      data owner (identified by `fromSocialAgent`).</td>
     </tr>
   </tbody>
 </table>
 
 <figure>
-  <figcaption>An [=Access Receipt=] at https://alice.example/receipts/fa6d6553-0308-4abd-bce6-888df653695a</figcaption>
+  <figcaption>An example [=Access Receipt=] from Alice to Bob</figcaption>
   <pre class=include-code>
-  path: snippets/alice.example/fa6d6553-0308-4abd-bce6-888df653695a.ttl
+  path: snippets/alice.example/fa6d6553.ttl
   highlight: turtle
-  show: 9-20
+  show: 7-12
   </pre>
 </figure>
-
-## Resource Hierarchy ## {#receipts-hierarchy}
-
-<table class="data tree" align="left">
-  <col>
-  <col>
-  <col>
-  <col>
-  <thead>
-    <tr>
-      <th>Resource</th>
-      <th>Class</th>
-      <th>Shape</th>
-      <th>Shape Tree</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`/receipts/`</td>
-      <td>[AccessReceiptRegistry](#classAccessReceiptRegistry)</td>
-      <td>[AccessReceiptRegistryShape](interop.shex#AccessReceiptRegistryShape)</td>
-      <td>[AccessReceiptRegistryTree](interop.tree#AccessReceiptRegistryTree)</td>
-    </tr>
-    <tr>
-      <td>`-- fa6d6553...5a`</td>
-      <td>[AccessReceipt](#classAccessReceipt)</td>
-      <td>[AccessReceiptShape](interop.shex#AccessReceiptShape)</td>
-      <td>[AccessReceiptTree](interop.tree#AccessReceiptTree)</td>
-    </tr>
-    <tr>
-      <td>`-- d49eae8c...6b`</td>
-      <td>[AccessReceipt](#classAccessReceipt)</td>
-      <td>[AccessReceiptShape](interop.shex#AccessReceiptShape)</td>
-      <td>[AccessReceiptTree](interop.tree#AccessReceiptTree)</td>
-    </tr>
-    <tr>
-      <td>`-- 506a0cee...02`</td>
-      <td>[AccessReceipt](#classAccessReceipt)</td>
-      <td>[AccessReceiptShape](interop.shex#AccessReceiptShape)</td>
-      <td>[AccessReceiptTree](interop.tree#AccessReceiptTree)</td>
-    </tr>
-  </tbody>
-</table>
-
-The [=Access Receipt Registry=] resource
-<em class="rfc2119">MAY</em> use any resource or subject name.
-
-The resource names for [=Access Receipts=]
-<em class="rfc2119">SHOULD</em> be unpredictable.
