@@ -1,7 +1,7 @@
 Data Registrations {#dr}
 =====================
 
-Data Registration lets [=Social Agents=] store and manage the 
+Data Registrations let [=Social Agents=] store and manage the 
 data they control. Data of various types is organized and stored in a 
 uniform way to aid validation, authorization, 
 discovery, and more.
@@ -10,66 +10,15 @@ Complex hierarchies that hinder interoperability are avoided
 by storing data in a relatively flat hierarchy. This creates natural
 data boundaries that make data storage and authorization more intuitive.
 
-Note: See
-[Solid Application Interoperability Operations and API](https://solid.github.io/data-interoperability-panel/api/#datareg)
-for a detailed explanation of how Data Registrations should be processed.
-
-## Data Registry ## {#data-registry}
-
-A <dfn>Data Registry</dfn> is a collection of [=Data Registrations=], each
-of which represents a unique type of data, identified by a [=shape tree=].
-
-A [=Data Registry=] can be used for basic discovery, but it is not
-designed nor intended to be an efficient means to query or index data.
-However, it is *intended* to be used as reliable source data for different
-query engines or indexing schemes.
-
-A [=Data Registry=] is linked to a [=Social Agent=] via their [=Registry Set=].
-
-[Class Definition](interop.ttl#DataRegistry) -
-[Shape Definition](interop.shex#DataRegistryShape) -
-[Shape Tree Definition](interop.tree#DataRegistryTree)
-
-<table class="classinfo data" align="left" id="classDataRegistry">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>hasRegistration</td>
-      <td>[DataRegistration](#classDataRegistration)</td>
-      <td>Link to an associated [=Data Registration=]</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-  <figcaption>A [=Data Registry=] at https://work.alice.example/data/ 
-  linking to several [=Data Registrations=]</figcaption>
-  <pre class=include-code>
-  path: snippets/work.alice.example/data-registry.ttl
-  highlight: turtle
-  show: 5-13
-  </pre>
-</figure>
-
 ## Data Registration ## {#data-registration}
 
 A <dfn>Data Registration</dfn> provides the [=Social Agent=] 
 with a place to store [=Data Instances=] that conform to the
-registered [=shape tree=] of that registration, indicated by the
-[interop:registeredShapeTree](#classDataRegistration) property.
+registered [=shape tree=] of that registration. [=Data Registrations=] are 
+stored in a [=Data Registry=].
 
 A <dfn>Data Instance</dfn> is a unique, stored instance of data
-that conforms to the [=shape tree=] for the instance's 
-[=Data Registration=].
+in a [=Data Registration=] that conforms to it's `interop:registeredShapeTree`.
 
 Each [=Data Instance=] is linked to the [=Data Registration=] via the
 <a href="https://www.w3.org/ns/ldp#contains" class="vocab">ldp:contains</a>
@@ -120,15 +69,65 @@ property.
 </table>
 
 <figure>
-  <figcaption>A [=Data Registration=] at https://work.alice.example/data/8501f084-deb9-4775-8a35-2040df435d21/</figcaption>
+  <figcaption>Alice's [=Data Registration=] for Projects at https://work.alice.example/data/8501f084/ -
+  <a href="snippets/work.alice.example/8501f084.ttl">View</a>
+  </figcaption>
   <pre class=include-code>
-  path: snippets/work.alice.example/8501f084-deb9-4775-8a35-2040df435d21.ttl
+  path: snippets/work.alice.example/8501f084.ttl
   highlight: turtle
   show: 8-14
   </pre>
 </figure>
 
-## Resource Hierarchy ## {#dr-hierarchy}
+## Data Registry ## {#data-registry}
+
+A <dfn>Data Registry</dfn> is a collection of [=Data Registrations=], each
+of which represents a unique type of data, identified by a [=shape tree=].
+
+A [=Data Registry=] can be used for basic discovery, but it is not
+designed nor intended to be an efficient means to query or index data.
+However, it is *intended* to be used as reliable source data for different
+query engines or indexing schemes.
+
+A [=Data Registry=] is linked to a [=Social Agent=] via their [=Registry Set=].
+
+[Class Definition](interop.ttl#DataRegistry) -
+[Shape Definition](interop.shex#DataRegistryShape) -
+[Shape Tree Definition](interop.tree#DataRegistryTree)
+
+<table class="classinfo data" align="left" id="classDataRegistry">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasRegistration</td>
+      <td>[DataRegistration](#classDataRegistration)</td>
+      <td>Link to an associated [=Data Registration=]</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>A [=Data Registry=] at https://work.alice.example/data/ 
+  linking to [=Data Registrations=] for Projects and Tasks - 
+  <a href="snippets/work.alice.example/data-registry.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/work.alice.example/data-registry.ttl
+  highlight: turtle
+  show: 4-8
+  </pre>
+</figure>
+
+### Resource Hierarchy ### {#dr-hierarchy}
 
 <table class="data tree" align="left">
   <col>
@@ -145,91 +144,72 @@ property.
   </thead>
   <tbody>
     <tr>
-      <td>`/data/`</td>
+      <td><code><a href="snippets/work.alice.example/data-registry.ttl">data/</a></code></td>
       <td>[DataRegistry](#classDataRegistry)</td>
       <td>[DataRegistryShape](interop.shex#DataRegistry)</td>
       <td>[DataRegistryTree](interop.tree#DataRegistry)</td>
     </tr>
     <tr>
-      <td>`-- 8501f084...2040df43/`</td>
+      <td><code>-- <a href="snippets/work.alice.example/8501f084.ttl">8501f084/</a></code></td>
       <td>[DataRegistration](#classDataRegistration)</td>
       <td>[DataRegistrationShape](interop.shex#DataRegistration)</td>
       <td>[DataRegistrationTree](interop.tree#DataRegistration),
           [ProjectRegistrationTree](snippets/data.example/pm-shapetrees.tree#ProjectRegistrationTree)</td>
     </tr>
     <tr>
-      <td>`---- 16e1eae9...ca3805c4/`</td>
+      <td><code>------ <a href="snippets/work.alice.example/16e1eae9.ttl">16e1eae9</a></code></td>
       <td>[Project](snippets/data.example/pm-vocab.ttl#Project)</td>
       <td>[ProjectShape](snippets/data.example/pm-shapes.shex#ProjectShape)</td>
       <td>[ProjectTree](snippets/data.example/pm-shapetrees.tree#ProjectTree)</td>
     </tr>
     <tr>
-      <td>`---- 886785d2...5ac36b7b/`</td>
+      <td>`------ 886785d2`</td>
       <td>[Project](snippets/data.example/pm-vocab.ttl#Project)</td>
       <td>[ProjectShape](snippets/data.example/pm-shapes.shex#ProjectShape)</td>
       <td>[ProjectTree](snippets/data.example/pm-shapetrees.tree#ProjectTree)</td>
     </tr>
     <tr>
-      <td>`---- dae5015c...7ca7a198/`</td>
+      <td>`------ dae5015c`</td>
       <td>[Project](snippets/data.example/pm-vocab.ttl#Project)</td>
       <td>[ProjectShape](snippets/data.example/pm-shapes.shex#ProjectShape)</td>
       <td>[ProjectTree](snippets/data.example/pm-shapetrees.tree#ProjectTree)</td>
     </tr>
     <tr>
-      <td>`-- df4ab227...fad10fb9/`</td>
+      <td><code>-- <a href="snippets/work.alice.example/df4ab227.ttl">df4ab227/</a></code></td>
       <td>[DataRegistration](#classDataRegistration)</td>
       <td>[DataRegistrationShape](interop.shex#DataRegistration)</td>
       <td>[DataRegistrationTree](interop.tree#DataRegistration),
           [TaskRegistrationTree](snippets/data.example/pm-shapetrees.tree#TaskRegistrationTree)</td>
     </tr>
     <tr>
-      <td>`---- 9b60a354...cb9da85c/`</td>
+      <td>`------ 9b60a354`</td>
       <td>[Task](snippets/data.example/pm-vocab.ttl#Task)</td>
       <td>[TaskShape](snippets/data.example/pm-shapes.shex#TaskShape)</td>
       <td>[TaskTree](snippets/data.example/pm-shapetrees.tree#TaskTree)</td>
     </tr>
     <tr>
-      <td>`---- 6e545b74...b15cbdce/`</td>
+      <td>`------ 6e545b74`</td>
       <td>[Task](snippets/data.example/pm-vocab.ttl#Task)</td>
       <td>[TaskShape](snippets/data.example/pm-shapes.shex#TaskShape)</td>
       <td>[TaskTree](snippets/data.example/pm-shapetrees.tree#TaskTree)</td>
     </tr>
     <tr>
-      <td>`---- d33e01c8...ac9e3cc6/`</td>
+      <td>`------ d33e01c8`</td>
       <td>[Task](snippets/data.example/pm-vocab.ttl#Task)</td>
       <td>[TaskShape](snippets/data.example/pm-shapes.shex#TaskShape)</td>
       <td>[TaskTree](snippets/data.example/pm-shapetrees.tree#TaskTree)</td>
     </tr>
     <tr>
-      <td>`---- 927108fa...14985cb9/`</td>
+      <td>`------ 927108fa`</td>
       <td>[Task](snippets/data.example/pm-vocab.ttl#Task)</td>
       <td>[TaskShape](snippets/data.example/pm-shapes.shex#TaskShape)</td>
       <td>[TaskTree](snippets/data.example/pm-shapetrees.tree#TaskTree)</td>
     </tr>
     <tr>
-      <td>`---- 180dda0b...c4f8c4dc/`</td>
+      <td>`------ 180dda0b`</td>
       <td>[Task](snippets/data.example/pm-vocab.ttl#Task)</td>
       <td>[TaskShape](snippets/data.example/pm-shapes.shex#TaskShape)</td>
       <td>[TaskTree](snippets/data.example/pm-shapetrees.tree#TaskTree)</td>
-    </tr>
-    <tr>
-      <td>`-- 3c9c9cff...fc7f916b/`</td>
-      <td>[DataRegistration](#classDataRegistration)</td>
-      <td>[DataRegistrationShape](interop.shex#DataRegistration)</td>
-      <td>[DataRegistrationTree](interop.tree#DataRegistration),
-          [MilestoneRegistrationTree](snippets/data.example/pm-shapetrees.tree#MilestoneRegistrationTree)</td>
-    </tr>
-    <tr>
-      <td>`---- 4376595a...f8d2547c/`</td>
-      <td>[Milestone](snippets/data.example/pm-vocab.ttl#Milestone)</td>
-      <td>[MilestoneShape](snippets/data.example/pm-shapes.shex#MilestoneShape)</td>
-      <td>[MilestoneTree](snippets/data.example/pm-shapetrees.tree#MilestoneTree)</td>
-    </tr>
-    <tr>
-      <td>`---- 14c9fc6a...7f6de3ca/`</td>
-      <td>[Milestone](snippets/data.example/pm-vocab.ttl#Milestone)</td>
-      <td>[MilestoneShape](snippets/data.example/pm-shapes.shex#MilestoneShape)</td>
-      <td>[MilestoneTree](snippets/data.example/pm-shapetrees.tree#MilestoneTree)</td>
     </tr>
   </tbody>
 </table>
@@ -270,14 +250,14 @@ to [ProjectTree](snippets/data.example/pm-shapetrees.tree#ProjectTree) per the d
     <tbody>
       <tr>
         <td colspan=2>
-        `-- 8501f084-deb9-4775-8a35-2040df435d21/`
+        `-- 8501f084/`
         </td>
       </tr>
       <tr>
         <td>
           Contents of the [=Data Registration=]
           <pre class=include-code>
-            path: snippets/work.alice.example/8501f084-deb9-4775-8a35-2040df435d21.ttl
+            path: snippets/work.alice.example/8501f084.ttl
             highlight: turtle
             show: 8-14
           </pre>
@@ -288,7 +268,7 @@ to [ProjectTree](snippets/data.example/pm-shapetrees.tree#ProjectTree) per the d
           <pre class=include-code>
             path: interop.tree
             highlight: turtle
-            show: 100-103
+            show: 74-77
           </pre>
           And also ensure the [=Data Registration=] only
           contains resources that conform to `pm:ProjectTree`.
@@ -301,14 +281,14 @@ to [ProjectTree](snippets/data.example/pm-shapetrees.tree#ProjectTree) per the d
       </tr>
       <tr>
         <td colspan=2>
-        `------ 16e1eae9-20a5-489d-8380-8c07ca3805c4`
+        `------ 16e1eae9`
         </td>
       </tr>
       <tr>
         <td>
           Contents of the [=Data Instance=]
           <pre class=include-code>
-            path: snippets/work.alice.example/16e1eae9-20a5-489d-8380-8c07ca3805c4.ttl
+            path: snippets/work.alice.example/16e1eae9.ttl
             highlight: turtle
             show: 8-12
           </pre>
@@ -327,182 +307,16 @@ to [ProjectTree](snippets/data.example/pm-shapetrees.tree#ProjectTree) per the d
   </table>
 </figure>
 
-## Permission Model ## {#dr-permissions}
+### Permission Model ### {#dr-permissions}
 
-Almost all of the collaborative use cases between [=Agents=]
-in the [=ecosystem=] are based on data furnished through the
-[=Data Registry=].
+Issue: This section should be updated to complement the access
+scopes and modes detailed in a given [[#data-grant]]. See
+[this issue](https://github.com/solid/data-interoperability-panel/issues/155)
 
 Only a [=Social Agent=] or their [=Trusted Agents=] have the ability 
-to manage contents and permissions across [=Data Registries=], 
-including the creation and modification of [=Data Registrations=]. The
-[table below](#permDataRegistry) illustrates this using the
-[[#dr-hierarchy|resource hierarchy]] from the previous section.
-*Other Agents* are granted varying levels of access by the [=Social Agent=] 
-or their [=Trusted Agents=].
-
-Note: [[#authz]] provides patterns for managing [=Access Grants=] and 
-sending [=Access Receipts=] to the [=Agents=] that were granted access.
-
-<figure id="permDataRegistry">
-<figcaption>Permission model for [=Data Registry=] resources.
-</figcaption>
-  <table class="data permissions" align="left">
-    <col>
-    <col>
-    <colgroup></colgroup>
-    <colgroup></colgroup>
-    <colgroup></colgroup>
-    <colgroup span=2></colgroup>
-    <thead>
-      <tr>
-        <th></th>
-        <th></th>
-        <th scope="colgroup">Owner</th>
-        <th scope="colgroup">Public</th>
-        <th scope="colgroup">Trusted Agents</th>
-        <th scope="colgroup">Other Agents</th>
-      </tr>
-      <tr>
-        <th scope="col">Resource</th>
-        <th scope="col"></th>
-        <th scope="col">Access</th>
-        <th scope="col">Access</th>
-        <th scope="col">Access</th>
-        <th scope="col">Subject</th>
-        <th scope="col">Access</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>`/data/`</td>
-        <td>[=Data Registry=]</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td>`-- 8501f084...2040df43`</td>
-        <td>[=Data Registration=]</td>
-        <td>Control</td>
-        <td>Varies</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-      <tr>
-        <td>`---- 16e1eae9...ca3805c4`</td>
-        <td>[=Data Instance=]</td>
-        <td>Control</td>
-        <td>Varies</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-      <tr>
-        <td>`---- 886785d2...5ac36b7b`</td>
-        <td>[=Data Instance=]</td>
-        <td>Control</td>
-        <td>Varies</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-      <tr>
-        <td>`---- dae5015c...7ca7a198`</td>
-        <td>[=Data Instance=]</td>
-        <td>Control</td>
-        <td>Varies</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-      <tr>
-        <td>`-- df4ab227...fad10fb9`</td>
-        <td>[=Data Registration=]</td>
-        <td>Control</td>
-        <td>Varies</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-      <tr>
-        <td>`---- 9b60a354...cb9da85c`</td>
-        <td>[=Data Instance=]</td>
-        <td>Control</td>
-        <td>Varies</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-      <tr>
-        <td>`---- 6e545b74...b15cbdce`</td>
-        <td>[=Data Instance=]</td>
-        <td>Control</td>
-        <td>Varies</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-      <tr>
-        <td>`---- d33e01c8...ac9e3cc6`</td>
-        <td>[=Data Instance=]</td>
-        <td>Control</td>
-        <td>Varies</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-      <tr>
-        <td>`---- 927108fa...14985cb9`</td>
-        <td>[=Data Instance=]</td>
-        <td>Control</td>
-        <td>Varies</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-      <tr>
-        <td>`---- 180dda0b...c4f8c4dc`</td>
-        <td>[=Data Instance=]</td>
-        <td>Control</td>
-        <td>Varies</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-      <tr>
-        <td>`-- 3c9c9cff...fc7f916b`</td>
-        <td>[=Data Registration=]</td>
-        <td>Control</td>
-        <td>Varies</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-      <tr>
-        <td>`---- 4376595a...f8d2547c`</td>
-        <td>[=Data Instance=]</td>
-        <td>Control</td>
-        <td>Varies</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-      <tr>
-        <td>`---- 14c9fc6a...7f6de3ca`</td>
-        <td>[=Data Instance=]</td>
-        <td>Control</td>
-        <td>Varies</td>
-        <td>Control</td>
-        <td>Grantee</td>
-        <td>Varies</td>
-      </tr>
-    </tbody>
-  </table>
-</figure>
+to manage contents and permissions across [=Data Registries=] via
+consented [=Applications=], including the creation and modification 
+of [=Data Registrations=]. 
 
 A significant amount of 
 flexibility is needed in granting other Agents access to
@@ -521,7 +335,7 @@ Note: [[!WAC]] doesn't have any mechanism to extend or modify
 inherited permissions. Access Control Policies (ACP) is recommended
 for optimal results.
 
-### Access to a Data Registration ### {#dr-all}
+#### Access to a Data Registration #### {#dr-all}
 
 Access granted at the [=Data Registration=] 
 applies to all [=Data Instances=] within it.
@@ -577,7 +391,7 @@ creator of the [=Data Instance=] can be further specified via
   </table>
 </figure>
 
-### Access to Specific Data Instances ### {#dr-specific}
+#### Access to Specific Data Instances #### {#dr-specific}
 
 Access granted at the [=Data Instance=] level apply only to
 that instance, and the resources within it.

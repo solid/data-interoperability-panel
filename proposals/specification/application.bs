@@ -11,10 +11,14 @@ they want to use that [=Application=]. It lets them know what kind of
 data the [=Application=] needs access to and why. This lets the 
 [=Social Agent=] make an informed choice.
 
-The [=Application=] profile is designed to be publicly accessible.
-
 An [=Application=] identifies the types of data it requires access to
 by linking to [=Access Need Groups=].
+
+The [=identity profile document=] of an [=Application=] 
+<em class="rfc2119">MUST</em> be readable by the public, along with
+its thumbnail and any identified [=Access Need Groups=]. 
+They <em class="rfc2119">MAY</em>
+use any resource or subject names.
 
 [Class Definition](interop.ttl#Application) -
 [Shape Definition](interop.shex#ApplicationShape) -
@@ -62,92 +66,12 @@ by linking to [=Access Need Groups=].
 </table>
 
 <figure>
-  <figcaption>[=Application=] at https://app.example/id#app</figcaption>  
+  <figcaption>[=Application=] at https://projectron.example/#id -
+  <a href="snippets/projectron.example/projectron.example.ttl">View</a>
+  </figcaption>  
   <pre class=include-code>
   path: snippets/projectron.example/projectron.example.ttl
   highlight: turtle
   show: 9-15
   </pre> 
-</figure>
-
-## Resource Hierarchy ## {#app-hierarchy}
-
-<table class="data tree" align="left">
-  <col>
-  <col>
-  <col>
-  <col>
-  <thead>
-    <tr>
-      <th>Resource</th>
-      <th>Class</th>
-      <th>Shape</th>
-      <th>Shape Tree</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`/id`</td>
-      <td>[Application](#classApplication)</td>
-      <td>[ApplicationShape](interop.shex#ApplicationShape)</td>
-      <td>[ApplicationTree](interop.tree#ApplicationTree)</td>
-    </tr>
-    <tr>
-      <td>`/thumb.svg`</td>
-      <td>-</td>
-      <td>-</td>
-      <td>-</td>
-    </tr>
-  </tbody>
-</table>
-
-[=Application=] resources <em class="rfc2119">MAY</em> use any resource or
-subject names. The names used herein have been selected for comprehension
-and readability.
-
-## Permission Model ## {#app-permissions}
-
-<figure>
-  <table class="data permissions" align="left">
-    <col>
-    <colgroup></colgroup>
-    <colgroup></colgroup>
-    <colgroup></colgroup>
-    <colgroup span=2></colgroup>
-    <thead>
-      <tr>
-        <th></th>
-        <th scope="colgroup">Agent</th>
-        <th scope="colgroup">Public</th>
-        <th scope="colgroup">Trusted Agents</th>
-        <th scope="colgroup">Other Agents Granted Access</th>
-      </tr>
-      <tr>
-        <th scope="col">Resource</th>
-        <th scope="col">Access</th>
-        <th scope="col">Access</th>
-        <th scope="col">Access</th>
-        <th scope="col">Subject</th>
-        <th scope="col">Access</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>`/id`</td>
-        <td>Control</td>
-        <td>Read</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td>`/thumb.svg`</td>
-        <td>Control</td>
-        <td>Read</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-    </tbody>
-  </table>
 </figure>
