@@ -16,6 +16,16 @@ which must be a separate resource from the [=identity profile document=]
 that the [=Social Agent=] graph resides in so that it can be given more
 restrictive (i.e. non-public) permissions.
 
+The [=identity profile document=] <em class="rfc2119">MUST</em> 
+be readable by the public. It <em class="rfc2119">MAY</em> 
+use any resource or subject names.
+
+Inboxes <em class="rfc2119">MUST</em> allow for other
+[=Social Agents=] or [=Applications=] to create resources. Inboxes
+<em class="rfc2119">SHOULD</em> limit the [=Social Agents=]
+with create privileges to prevent denial of service, spam, or other
+unwanted conditions.
+
 [Class Definition](interop.ttl#SocialAgent) -
 [Shape Definition](interop.shex#SocialAgentShape) -
 [Shape Tree Definition](interop.tree#SocialAgentTree)
@@ -56,7 +66,9 @@ restrictive (i.e. non-public) permissions.
 </table>
 
 <figure>
-  <figcaption>[=Social Agent=] at https://alice.example/#id</figcaption>  
+  <figcaption>[=Social Agent=] at https://alice.example/#id -
+  <a href="snippets/alice.example/alice.example.ttl">View</a>
+</figcaption>  
   <pre class=include-code>
   path: snippets/alice.example/alice.example.ttl
   highlight: turtle
@@ -69,6 +81,13 @@ A <dfn>Registry Set</dfn> links to all of the [=Registries=] owned
 by a given [=Social Agent=]. A non-public document, it is accessed by or
 on behalf of the [=Social Agent=] or their [=Trusted Agents=] via trusted
 [=Applications=].
+
+The [=Registry Set=] <em class="rfc2119">MAY</em> use any resource or
+subject names. It <em class="rfc2119">SHOULD NOT</em> be readable
+by the public. It <em class="rfc2119">SHOULD</em> be accessible
+and manageable by the [=Social Agent=] that owns it, or other
+[=Social Agents=] that have received appropriate consent, via
+consented [=Applications=].
 
 [Class Definition](interop.ttl#RegistrySet) -
 [Shape Definition](interop.shex#RegistrySetShape) -
@@ -105,103 +124,11 @@ on behalf of the [=Social Agent=] or their [=Trusted Agents=] via trusted
 </table>
 
 <figure>
-  <figcaption>[=Social Agent=] at https://alice.example/#id</figcaption>  
+  <figcaption>[=Social Agent=] at https://alice.example/#id -
+  <a href="snippets/alice.example/registries.ttl">View</a>
+  </figcaption>  
   <pre class=include-code>
   path: snippets/alice.example/registries.ttl
   highlight: turtle
   </pre> 
-</figure>
-
-## Resource Hierarchy ## {#agents-hierarchy}
-
-<table class="data tree" align="left">
-  <col>
-  <col>
-  <col>
-  <col>
-  <thead>
-    <tr>
-      <th>Resource</th>
-      <th>Class</th>
-      <th>Shape</th>
-      <th>Shape Tree</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`/#me`</td>
-      <td>[SocialAgent](#classSocialAgent)</td>
-      <td>[AgentShape](interop.shex#AgentShape)</td>
-      <td>[AgentTree](interop.tree#AgentTree)</td>
-    </tr>
-    <tr>
-      <td>`/registries`</td>
-      <td>[RegistrySet](interop.ttl#RegistrySet)</td>
-      <td>[RegistrySetShape](interop.shex#RegistrySetShape)</td>
-      <td>[RegistrySetTree](interop.tree#RegistrySetTree)</td>
-    </tr>
-    <tr>
-      <td>`/inbox/access`</td>
-      <td><a href="https://www.w3.org/ns/ldp#inbox" class="vocab">ldp:inbox</a></td>
-      <td>-</td>
-      <td>[AccessInboxTree](interop.tree#AccessInboxTree)</td>
-    </tr>
-    <tr>
-      <td>`/inbox/general`</td>
-      <td><a href="https://www.w3.org/ns/ldp#inbox" class="vocab">ldp:inbox</a></td>
-      <td>-</td>
-      <td>-</td>
-    </tr>
-  </tbody>
-</table>
-
-[=Social Agent=] resources <em class="rfc2119">MAY</em> use any resource or
-subject names. The names used herein have been selected for comprehension
-and readability.
-
-## Permission Model ## {#agents-permissions}
-
-<figure>
-  <table class="data permissions" align="left">
-    <col>
-    <colgroup></colgroup>
-    <colgroup></colgroup>
-    <colgroup></colgroup>
-    <colgroup span=2></colgroup>
-    <thead>
-      <tr>
-        <th></th>
-        <th scope="colgroup">Agent</th>
-        <th scope="colgroup">Public</th>
-        <th scope="colgroup">Trusted Agents</th>
-        <th scope="colgroup">Other Agents Granted Access</th>
-      </tr>
-      <tr>
-        <th scope="col">Resource</th>
-        <th scope="col">Access</th>
-        <th scope="col">Access</th>
-        <th scope="col">Access</th>
-        <th scope="col">Subject</th>
-        <th scope="col">Access</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>`/`</td>
-        <td>Control</td>
-        <td>Read</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-      <tr>
-        <td>`/registries`</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>Control</td>
-        <td>-</td>
-        <td>-</td>
-      </tr>
-    </tbody>
-  </table>
 </figure>
