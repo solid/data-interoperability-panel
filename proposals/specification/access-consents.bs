@@ -524,14 +524,23 @@ via `interop:scopeOfGrant`.
 
 ### <code>All</code> ### {#scope-all}
 
-The `interop:All` [=access scope=] includes all data of a specified type belonging to a given data owner, 
-and all data of that same type shared with the data owner, across all of the data owner’s registries.
+The `interop:All` [=access scope=] includes all data of a specified type 
+belonging to a given data owner, and all data of that same type shared with the data 
+owner, across all of the data owner’s registries.
 
-<b>Shapes:</b> [Data Consent](interop.shex#DataConsentAllShape) - [Data Grant](interop.shex#DataGrantAllShape)
+<b>Shapes:</b> 
+[Data Consent](interop.shex#DataConsentAllShape) - 
+[Data Grant](interop.shex#DataGrantAllShape)
 
-The follow example illustrates *Alice's* consent to give *Projectron* access to data of type `pm-shapetrees:ProjectTree`
-with a scope of `interop:All`. Since Alice has two [=Data Registries=] and Bob has shared projects with her, several
-[=Data Grants=] will be generated from this [=Data Consent=] and shared with Projectron. 
+The follow example illustrates *Alice's* consent to give *Projectron* access to 
+data of type `pm-shapetrees:ProjectTree` with a scope of `interop:All`. Since 
+Alice has two [=Data Registries=] and Bob has shared projects with her, several
+[=Data Grants=] will be generated from this [=Data Consent=] and shared 
+with Projectron.
+
+Note: `interop:All` is only valid for a [=Data Consent=].
+Generated [=Data Grants=] use the more specific `interop:AllFromRegistry`
+for each unique [=Data Registry=], including Bob's.
 
 <figure>
   <figcaption>Alice's [=Data Consent=] for Projectron to access Projects
@@ -556,7 +565,7 @@ with a scope of `interop:All`. Since Alice has two [=Data Registries=] and Bob h
   path: snippets/alice.example/40d038ea.ttl
   highlight: turtle
   show: 12-20
-  line-highlight: 16
+  line-highlight: 16, 20
   </pre>
 </figure>
 
@@ -570,7 +579,7 @@ with a scope of `interop:All`. Since Alice has two [=Data Registries=] and Bob h
   path: snippets/alice.example/a0623c8f.ttl
   highlight: turtle
   show: 12-20
-  line-highlight: 16
+  line-highlight: 16, 20
   </pre>
 </figure>
 
@@ -583,13 +592,19 @@ with a scope of `interop:All`. Since Alice has two [=Data Registries=] and Bob h
   path: snippets/alice.example/fe818190.ttl
   highlight: turtle
   show: 13-23
-  line-highlight: 17
+  line-highlight: 17, 21
   </pre>
 </figure>
 
 ### <code>AllFromAgent</code> ### {#scope-fromagent}
 
-All from a given agent, for a given type
+The `interop:AllFromAgent` [=access scope=] includes all data of a given type 
+shared by a specified [=Social Agent=] with the data owner, across that 
+[=Social Agent’s=] registries.
+
+<b>Shapes:</b> [Data Consent](interop.shex#DataConsentAllFromAgentShape) - [Data Grant](interop.shex#DataGrantAllFromAgentShape)
+
+The follow example illustrates...
 
 ### <code>AllFromRegistry</code> ### {#scope-fromregistry}
 
