@@ -205,6 +205,17 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:inheritsFromConsent IRI?
 }
 
+<#DataConsentAllShape> {
+  a [ interop:DataConsent ] ;
+  interop:dataOwner IRI ;
+  interop:registeredShapeTree IRI ;
+  interop:satisfiesAccessNeed IRI? ;
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:creatorAccessMode @<#:AccessModes>* ;
+  interop:scopeOfConsent [ interop:All ] ;
+  interop:satisfiesAccessNeed IRI? .
+}
+
 # Access Invitation
 <#AccessInvitationShape> {
   a [ interop:AccessInvitation ] ;
@@ -262,6 +273,17 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasDataInstance IRI* ;
 }
 
+<#DataGrantAllShape> {
+  a [ interop:DataGrant ] ;
+  interop:dataOwner IRI ;
+  interop:registeredShapeTree IRI ;
+  interop:hasDataRegistration IRI ;
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:creatorAccessMode @<#:AccessModes>* ;
+  interop:scopeOfGrant [ interop:All ] ;
+  interop:satisfiesAccessNeed IRI? .
+}
+
 # Inherited Data Grant
 <#DataGrantShape> {
   a [ interop:DataGrant ] ;
@@ -279,9 +301,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 # Data Grant Scopes
 <#DataGrantScopes> [
-  interop:SelectedInstances
-  interop:AllInstances
-  interop:InheritInstances
+  interop:SelectedFromRegistry
+  interop:AllFromRegistry
+  interop:All
+  interop:Inherited
   interop:NoAccess
 ]
 

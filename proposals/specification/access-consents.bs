@@ -154,9 +154,9 @@ and are appropriate to share with the grantee.
     </tr>
     <tr>
       <td>scopeOfConsent</td>
-      <td> interop:AllInstances, interop:SelectedInstances,
-      interop:InheritInstances, interop:NoAccess</td>
-      <td>Identifies the access scope of the [=Data Consent=]</td>
+      <td>interop:All, interop:AllFromAgent, interop:AllFromRegistry, 
+      interop:SelectedFromRegistry, interop:Inherited</td>
+      <td>Identifies the [=access scope=] of the [=Data Consent=]</td>
     </tr>
     <tr>
       <td>hasDataRegistration</td>
@@ -363,9 +363,9 @@ with them, a [=Delegated Data Grant=] is used instead.
     </tr>
     <tr>
       <td>scopeOfGrant</td>
-      <td> interop:AllInstances, interop:SelectedInstances,
-      interop:InheritInstances, interop:NoAccess</td>
-      <td>Identifies the [[#access-scopes|access scope]] of the [=Data Grant=]</td>
+      <td>interop:All, interop:AllFromAgent, interop:AllFromRegistry, 
+      interop:SelectedFromRegistry, interop:Inherited</td>
+      <td>Identifies the [=access scope=] of the [=Data Grant=]</td>
     </tr>
     <tr>
       <td>satisfiesAccessNeed</td>
@@ -410,62 +410,6 @@ with them, a [=Delegated Data Grant=] is used instead.
   show: 13-21
   </pre>
 </figure>
-
-### Access Scopes ### {#access-scopes}
-
-The following scopes, linked via `interop:ScopeOfGrant`, are valid for a [=Data Grant=]:
-
-<table class="data tree" align="left">
-  <col>
-  <col>
-  <thead>
-    <tr>
-      <th>Scope</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><b>`interop:AllInstances`</b></td>
-      <td>Applies to all [=Data Instances=] belonging to the associated 
-      [=Data Registration=]. Permissions will be set for the 
-      `interop:registeredAgent` on the [=Data Registration=] container,
-      and will be inherited by all member [=Data Instances=].</td>
-    </tr>
-    <tr>
-      <td><b>`interop:SelectedInstances`</b></td>
-      <td>Applies only to selected [=Data Instances=] belonging to the associated 
-      [=Data Registration=] which are linked to the [=Data Grant=] via 
-      `interop:hasDataInstance`, or selected Data Resources which are linked 
-      via `interop:hasDataResource`. Permissions will be set for the 
-      `interop:registeredAgent` on each selected [=Data Instance=] or Data Resource.</td>
-    </tr>
-    <tr>
-      <td><b>`interop:InheritInstances`</b></td>
-      <td>When the [=Data Grant=] linked via `interop:inheritsFromGrant` has a scope 
-      of `interop:AllInstances` or `interop:SelectedInstances` with one
-      or more [=Data Instances=] selected, any inheriting [=Data Grants=]
-      can narrow their own access scope to only include
-      "child" [=Data Instances=] linked to the "parent" [=Data Instances=]. The 
-      link must follow the [=Shape Tree Reference=] between the parent [=Data Grant=] 
-      shape tree and the inheriting [=Data Grant=] shape tree.
-      Permissions are set conditionally for the `interop:registeredAgent`,
-      and have the benefit of applying to current and future [=Data Instances=]
-      associated with a parent [=Data Instance=].</td>
-    </tr>
-    <tr>
-      <td><b>`interop:NoAccess`</b></td>
-      <td>Indicates that no access is granted to the `interop:registeredAgent`. 
-        Applies to the entire [=Data Registration=] when there are no 
-        [=Data Instances=] linked via `interop:hasDataInstance`.
-        When there are [=Data Instances=] linked via `interop:hasDataInstance`,
-        this scope only applies to them. When there are Data Resources linked 
-        via `interop:hasDataResource`,
-        this scope only applies to them.</td>
-    </tr>
-  </tbody>
-</table>
-
 
 ## Delegated Data Grant ## {#delegated-data-grant}
 
@@ -520,6 +464,165 @@ that access to his project management application.
   path: snippets/alice.example/017d6a07.ttl
   highlight: turtle
   show: 13-24
+  </pre>
+</figure>
+
+## Data Access Scopes ## {#access-scopes}
+
+Each [=Data Consent=] applies to a specific type of data, 
+identified by a [=shape tree=]. The amount of access consented for data of that type is specified by the
+<dfn>Access Scope</dfn>, via `interop:scopeOfConsent`.
+
+[=Data Grants=] generated from a given [=Data Consent=] are influenced by the [=access scope=] for that [=Data Consent=].
+[=Data Grants=] utilize a subset of the [=access scopes=] used for [=Data Consents=], identifying the assigned scope
+via `interop:scopeOfGrant`.
+
+<table class="data tree" align="left">
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th>Scope</th>
+      <th>Consent</th>
+      <th>Grant</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="#scope-all"><b>`All`</b></a></td>
+      <td>Yes</td>
+      <td><b>No</b></td>
+      <td>All of the owner's data of a specified type, and all data shared with the owner of that type, across the owner's registries</td>
+    </tr>
+    <tr>
+      <td><a href="#scope-fromagent"><b>`AllFromAgent`</b></a></td>
+      <td>Yes</td>
+      <td><b>No</b></td>
+      <td>All data of a given type shared by a specified [=Social Agent=] with the owner, across that [=Social Agent's=] registries</td>
+    </tr>
+    <tr>
+      <td><a href="#scope-fromregistry"><b>`AllFromRegistry`</b></a></td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>All of the data owner's data of a specified type in a specified [=Data Registry=]</td>
+    </tr>
+    <tr>
+      <td><a href="#scope-selected"><b>`SelectedFromRegistry`</b></a></td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Only specified [=Data Instances=] of the data owner's of a given type in a specified [=Data Registry=]</td>
+    </tr>
+    <tr>
+      <td><a href="#scope-inherited"><b>`Inherited`</b></a></td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Only [=Data Instances=] of the data owner's that are associated with [=Data Instances=] allowed by another consent or grant</td>
+    </tr>
+  </tbody>
+</table>
+
+### <code>All</code> ### {#scope-all}
+
+The `interop:All` [=access scope=] includes all data of a specified type belonging to a given data owner, 
+and all data of that same type shared with the data owner, across all of the data owner’s registries.
+
+<b>Shapes:</b> [Data Consent](interop.shex#DataConsentAllShape) - [Data Grant](interop.shex#DataGrantAllShape)
+
+The follow example illustrates *Alice's* consent to give *Projectron* access to data of type `pm-shapetrees:ProjectTree`
+with a scope of `interop:All`. Since Alice has two [=Data Registries=] and Bob has shared projects with her, several
+[=Data Grants=] will be generated from this [=Data Consent=] and shared with Projectron. 
+
+<figure>
+  <figcaption>Alice's [=Data Consent=] for Projectron to access Projects
+    at https://alice.example/consents/54a1b6a0 -
+    <a href="snippets/alice.example/54a1b6a0.ttl">View</a>
+    </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/54a1b6a0.ttl
+  highlight: turtle
+  show: 12-19
+  line-highlight: 18
+  </pre>
+</figure>
+
+<figure>
+  <figcaption>Alice's [=Data Grant=] for Projectron to access Projects in her 
+  Work [=Data Registry=] at
+  https://alice.example/agents/2f2f3628/40d038ea -
+  <a href="snippets/alice.example/40d038ea.ttl">View</a> 
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/40d038ea.ttl
+  highlight: turtle
+  show: 12-20
+  line-highlight: 16
+  </pre>
+</figure>
+
+<figure>
+  <figcaption>Alice's [=Data Grant=] for Projectron to access her Projects in
+  her Personal [=Data Registry=] at
+  https://alice.example/agents/2f2f3628/a0623c8f -
+  <a href="snippets/alice.example/a0623c8f.ttl">View</a> 
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/a0623c8f.ttl
+  highlight: turtle
+  show: 12-20
+  line-highlight: 16
+  </pre>
+</figure>
+
+<figure>
+  <figcaption>Alice's [=Delegated Data Grant=] for Projectron to access Projects 
+  that Bob shared with her at https://alice.example/agents/2f2f3628/fe818190 -
+  <a href="snippets/alice.example/fe818190.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/fe818190.ttl
+  highlight: turtle
+  show: 13-23
+  line-highlight: 17
+  </pre>
+</figure>
+
+### <code>AllFromAgent</code> ### {#scope-fromagent}
+
+All from a given agent, for a given type
+
+### <code>AllFromRegistry</code> ### {#scope-fromregistry}
+
+All from a given registry, for a given type
+
+### <code>SelectedFromRegistry</code> ### {#scope-selected}
+
+Selected data instances from a given registry, for a given type
+
+### <code>Inherited</code> ### {#scope-inherited}
+
+Inherited from another consent for a related type
+
+The [=shape tree=] `pm-shapetrees:ProjectTree` specifies a virtual hierarchy
+via `st:references`, that indicates that a Project [=Data Instance=] virtually
+includes Tasks through the predicate `pm:hasTask`.
+
+<pre class=include-code>
+path: snippets/data.example/pm-shapetrees.tree
+highlight: turtle
+show: 10-17
+</pre>
+
+<figure>
+  <figcaption>Alice's [=Data Consent=] for Projectron to access Tasks
+    at https://alice.example/consents/0e4cb692 -
+    <a href="snippets/alice.example/0e4cb692.ttl">View</a>
+    </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/0e4cb692.ttl
+  highlight: turtle
+  show: 12-21
+  line-highlight: 18 
   </pre>
 </figure>
 

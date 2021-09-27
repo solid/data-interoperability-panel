@@ -385,20 +385,30 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 
 # IRIs for various grant scopes
 #############################################################################
-:AllInstances
-  rdfs:comment "Access to all instances"@en ;
+:All
+  rdfs:comment "All of the data owners data of a specified type, and all data shared with the owner of that type, across the owners registries"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "All Instances"@en .
+  rdfs:label "All"@en .
 
-:SelectedInstances
-  rdfs:comment "Access to selected instances"@en ;
+:AllFromAgent
+  rdfs:comment "All data of a given type shared by a specified Social Agent with the owner, across that Social Agents registries"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Selected Instances"@en .
+  rdfs:label "All From Agent"@en .
 
-:InheritInstances
-  rdfs:comment "Access to inherited instances"@en ;
+:AllFromRegistry
+  rdfs:comment "All of the data owners data of a specified type in a specified Data Registry"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Inherit Instances"@en .
+  rdfs:label "All From Registry"@en .
+
+:SelectedFromRegistry
+  rdfs:comment "Only specified Data Instances of the data owners of a given type in a specified Data Registry"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Selected From Registry"@en .
+
+:Inherited
+  rdfs:comment "Only Data Instances of the data owners that are associated with Data Instances allowed by another consent or grant"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Inherited"@en .
 
 :NoAccess
   rdfs:comment "No access"@en ;
