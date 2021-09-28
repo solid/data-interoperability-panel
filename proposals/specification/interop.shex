@@ -194,6 +194,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <#DataConsentShape> {
   a [ interop:DataConsent ] ;
   interop:dataOwner IRI ;
+  interop:registeredAgent IRI ;
   interop:registeredShapeTree IRI ;
   interop:satisfiesAccessNeed IRI? ;
   interop:accessMode @<#:AccessModes>+ ;
@@ -208,11 +209,51 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <#DataConsentAllShape> {
   a [ interop:DataConsent ] ;
   interop:dataOwner IRI ;
+  interop:registeredAgent IRI ;
   interop:registeredShapeTree IRI ;
   interop:satisfiesAccessNeed IRI? ;
   interop:accessMode @<#:AccessModes>+ ;
   interop:creatorAccessMode @<#:AccessModes>* ;
   interop:scopeOfConsent [ interop:All ] ;
+  interop:satisfiesAccessNeed IRI? .
+}
+
+<#DataConsentAllFromAgentShape> {
+  a [ interop:DataConsent ] ;
+  interop:dataOwner IRI ;
+  interop:registeredAgent IRI ;
+  interop:registeredShapeTree IRI ;
+  interop:satisfiesAccessNeed IRI? ;
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:creatorAccessMode @<#:AccessModes>* ;
+  interop:scopeOfConsent [ interop:AllFromAgent ] ;
+  interop:satisfiesAccessNeed IRI? .
+}
+
+<#DataConsentAllFromRegistryShape> {
+  a [ interop:DataConsent ] ;
+  interop:dataOwner IRI ;
+  interop:registeredAgent IRI ;
+  interop:registeredShapeTree IRI ;
+  interop:satisfiesAccessNeed IRI? ;
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:creatorAccessMode @<#:AccessModes>* ;
+  interop:scopeOfConsent [ interop:AllFromRegistry ] ;
+  interop:hasDataRegistration IRI ;
+  interop:satisfiesAccessNeed IRI? .
+}
+
+<#DataConsentInheritedShape> {
+  a [ interop:DataConsent ] ;
+  interop:dataOwner IRI ;
+  interop:registeredAgent IRI ;
+  interop:registeredShapeTree IRI ;
+  interop:satisfiesAccessNeed IRI? ;
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:creatorAccessMode @<#:AccessModes>* ;
+  interop:scopeOfConsent [ interop:Inherited ] ;
+  interop:hasDataRegistration IRI ;
+  interop:inheritsFromConsent IRI ;
   interop:satisfiesAccessNeed IRI? .
 }
 
@@ -263,6 +304,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <#DataGrantShape> {
   a [ interop:DataGrant ] ;
   interop:dataOwner IRI ;
+  interop:registeredAgent IRI ;
   interop:registeredShapeTree IRI ;
   ( interop:hasDataRegistration IRI |
     interop:hasDataResource IRI ) ;
@@ -273,36 +315,49 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:hasDataInstance IRI* ;
 }
 
-<#DataGrantAllShape> {
+<#DataGrantAllFromRegistryShape> {
   a [ interop:DataGrant ] ;
   interop:dataOwner IRI ;
+  interop:registeredAgent IRI ;
   interop:registeredShapeTree IRI ;
   interop:hasDataRegistration IRI ;
   interop:accessMode @<#:AccessModes>+ ;
   interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:scopeOfGrant [ interop:All ] ;
+  interop:scopeOfGrant [ interop:AllFromRegistry ] ;
   interop:satisfiesAccessNeed IRI? .
 }
 
-# Inherited Data Grant
-<#DataGrantShape> {
+<#DataGrantSelectedFromRegistryShape> {
   a [ interop:DataGrant ] ;
   interop:dataOwner IRI ;
+  interop:registeredAgent IRI ;
   interop:registeredShapeTree IRI ;
-  ( interop:hasDataRegistration IRI |
-    interop:hasDataResource IRI ) ;
+  interop:hasDataRegistration IRI ;
   interop:accessMode @<#:AccessModes>+ ;
   interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:scopeOfGrant @<#:DataGrantScopes> ;
-  interop:satisfiesAccessNeed IRI? ;
-  interop:hasDataInstance IRI* ;
-  interop:inheritsFromGrant IRI
+  interop:scopeOfGrant [ interop:SelectedFromRegistry ] ;
+  interop:hasDataInstance IRI+ ;
+  interop:satisfiesAccessNeed IRI? .
+}
+
+<#DataGrantInheritedShape> {
+  a [ interop:DataGrant ] ;
+  interop:dataOwner IRI ;
+  interop:registeredAgent IRI ;
+  interop:registeredShapeTree IRI ;
+  interop:hasDataRegistration IRI ;
+  interop:accessMode @<#:AccessModes>+ ;
+  interop:creatorAccessMode @<#:AccessModes>* ;
+  interop:scopeOfGrant [ interop:Inherited ] ;
+  interop:inheritsFromGrant IRI ;
+  interop:satisfiesAccessNeed IRI? .
 }
 
 # Data Grant Scopes
 <#DataGrantScopes> [
   interop:SelectedFromRegistry
   interop:AllFromRegistry
+  interop:AllFromAgent
   interop:All
   interop:Inherited
   interop:NoAccess

@@ -135,6 +135,12 @@ and are appropriate to share with the grantee.
       <td>[=Social Agent=] that owns the data being consented</td>
     </tr>
     <tr>
+      <td>registeredAgent</td>
+      <td>[Agent](#classAgent)</td>
+      <td>The [=Social Agent=] or [=Application=] that has received
+      consent</td>
+    </tr>
+    <tr>
       <td>registeredShapeTree</td>
       <td><a href="https://www.w3.org/ns/shapetrees#ShapeTree" class="vocab">st:ShapeTree</a></td>
       <td>[=Shape Tree=] representing the type of data being consented</td>
@@ -199,7 +205,7 @@ and are appropriate to share with the grantee.
   <pre class=include-code>
   path: snippets/alice.example/54a1b6a0.ttl
   highlight: turtle
-  show: 12-19
+  show: 12-20
   </pre>
 </figure>
 
@@ -211,7 +217,7 @@ and are appropriate to share with the grantee.
   <pre class=include-code>
   path: snippets/alice.example/0e4cb692.ttl
   highlight: turtle
-  show: 12-21
+  show: 12-22
   </pre>
 </figure>
 
@@ -332,6 +338,12 @@ with them, a [=Delegated Data Grant=] is used instead.
       <td>[=Social Agent=] that owns the data being granted</td>
     </tr>
     <tr>
+      <td>registeredAgent</td>
+      <td>[Agent](#classAgent)</td>
+      <td>The [=Social Agent=] or [=Application=] that has received
+      consent</td>
+    </tr>
+    <tr>
       <td>registeredShapeTree</td>
       <td>st:ShapeTree</td>
       <td>[=Data Registration=] for the [=shape tree=] that access
@@ -395,7 +407,7 @@ with them, a [=Delegated Data Grant=] is used instead.
   <pre class=include-code>
   path: snippets/alice.example/40d038ea.ttl
   highlight: turtle
-  show: 12-20
+  show: 12-25
   </pre>
 </figure>
 
@@ -407,7 +419,7 @@ with them, a [=Delegated Data Grant=] is used instead.
   <pre class=include-code>
   path: snippets/alice.example/0945218b.ttl
   highlight: turtle
-  show: 13-21
+  show: 13-25
   </pre>
 </figure>
 
@@ -451,7 +463,7 @@ that access to his project management application.
   <pre class=include-code>
   path: snippets/alice.example/fe818190.ttl
   highlight: turtle
-  show: 13-23
+  show: 13-26
   </pre>
 </figure>
 
@@ -463,7 +475,7 @@ that access to his project management application.
   <pre class=include-code>
   path: snippets/alice.example/017d6a07.ttl
   highlight: turtle
-  show: 13-24
+  show: 13-26
   </pre>
 </figure>
 
@@ -528,9 +540,7 @@ The `interop:All` [=access scope=] includes all data of a specified type
 belonging to a given data owner, and all data of that same type shared with the data 
 owner, across all of the data owner’s registries.
 
-<b>Shapes:</b> 
-[Data Consent](interop.shex#DataConsentAllShape) - 
-[Data Grant](interop.shex#DataGrantAllShape)
+<b>Shapes:</b> [DataConsentAllShape](interop.shex#DataConsentAllShape)
 
 The follow example illustrates *Alice's* consent to give *Projectron* access to 
 data of type `pm-shapetrees:ProjectTree` with a scope of `interop:All`. Since 
@@ -550,8 +560,8 @@ for each unique [=Data Registry=], including Bob's.
   <pre class=include-code>
   path: snippets/alice.example/54a1b6a0.ttl
   highlight: turtle
-  show: 12-19
-  line-highlight: 18
+  show: 12-25
+  line-highlight: 19
   </pre>
 </figure>
 
@@ -564,8 +574,8 @@ for each unique [=Data Registry=], including Bob's.
   <pre class=include-code>
   path: snippets/alice.example/40d038ea.ttl
   highlight: turtle
-  show: 12-20
-  line-highlight: 16, 20
+  show: 12-25
+  line-highlight: 21
   </pre>
 </figure>
 
@@ -578,8 +588,8 @@ for each unique [=Data Registry=], including Bob's.
   <pre class=include-code>
   path: snippets/alice.example/a0623c8f.ttl
   highlight: turtle
-  show: 12-20
-  line-highlight: 16, 20
+  show: 12-25
+  line-highlight: 21
   </pre>
 </figure>
 
@@ -591,42 +601,219 @@ for each unique [=Data Registry=], including Bob's.
   <pre class=include-code>
   path: snippets/alice.example/fe818190.ttl
   highlight: turtle
-  show: 13-23
-  line-highlight: 17, 21
+  show: 13-26
+  line-highlight: 22
   </pre>
 </figure>
 
 ### <code>AllFromAgent</code> ### {#scope-fromagent}
 
 The `interop:AllFromAgent` [=access scope=] includes all data of a given type 
-shared by a specified [=Social Agent=] with the data owner, across that 
-[=Social Agent’s=] registries.
+owned and shared by a specified [=Social Agent=], across all of their 
+[=Data Registries=]. Essentially, Alice can use this scope to delegate
+any access that she has been given to another [=Social Agent's=] 
+data (e.g. Bob), to another [=Agent=] of her choosing.
 
-<b>Shapes:</b> [Data Consent](interop.shex#DataConsentAllFromAgentShape) - [Data Grant](interop.shex#DataGrantAllFromAgentShape)
+The [=Social Agent=] whose access is being shared is identified via
+`interop:dataOwner`.
 
-The follow example illustrates...
+<b>Shapes:</b> [DataConsentAllFromAgentShape](interop.shex#DataConsentAllFromAgentShape)
+
+The following example illustrates *Alice's* consent to give Performchart access to
+data of type `pm-shapetrees:ProjectTree` with a scope of `interop:AllFromAgent`
+and an `interop:dataOwner` of *Bob*.
+
+Note: While Bob has granted Alice the ability to manipulate his project data,
+Alice grants Performchart a narrower scope of read-only access.
+
+<figure>
+  <figcaption>Alice's [=Data Consent=] for Performchart to access Projects
+    that Bob shared with her at https://alice.example/consents/0e36ba8f -
+    <a href="snippets/alice.example/0e36ba8f.ttl">View</a>
+    </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/0e36ba8f.ttl
+  highlight: turtle
+  show: 12-25
+  line-highlight: 20
+  </pre>
+</figure>
+
+Bob has shared data of this type with Alice from
+only one [=Data Registry=], which he shared with her previously
+through her [=Agent Registration=] in his [=Agent Registry=].
+
+<figure>
+  <figcaption>Bob's [=Data Grant=] for Alice to access Projects 
+  at https://bob.example/agents/255aa181/b2b6a645 -
+  <a href="snippets/bob.example/b2b6a645.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/bob.example/b2b6a645.ttl
+  highlight: turtle
+  show: 13-26
+  line-highlight: 22
+  </pre>
+</figure>
+
+Alice generates one [=Delegated Data Grant=] for Performchart to access
+the Project data that Bob shared with her, which she stores in
+the [=Agent Registration=] for Performchart in her [=Agent Registry=].
+It is marked as a delegation of Bob's [=Data Grant=] 
+via `interop:delegationOfGrant`.
+
+<figure>
+  <figcaption>Alice's [=Delegated Data Grant=] for Performchart to access Projects 
+  that Bob shared with her at https://alice.example/agents/c2328cdd/efc426c9 -
+  <a href="snippets/alice.example/efc426c9.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/efc426c9.ttl
+  highlight: turtle
+  show: 13-26
+  line-highlight: 21
+  </pre>
+</figure>
 
 ### <code>AllFromRegistry</code> ### {#scope-fromregistry}
 
-All from a given registry, for a given type
+The `interop:AllFromRegistry` [=access scope=] includes all 
+data of a specified type in a specified [=Data Registry=] of a given data owner. 
+Since a [=Data Registry=] can only have one [=Data Registration=] per [=shape tree=],
+this scope provide access to all [=Data Instances=] in the [=Data Registration=]
+of the [=shape tree=] specified via `interop:registeredShapeTree`.
+
+<b>Shapes:</b> [DataConsentAllFromRegistryShape](interop.shex#DataConsentAllFromRegistryShape) -
+[DataGrantAllFromRegistryShape](interop.shex#DataGrantAllFromRegistryShape)
+
+The following example illustrates *Bob's* consent to give Alice access to
+all data of type `pm-shapetrees:ProjectTree` in the [=Data Registry=] he uses
+for his professional work.
+
+<figure>
+  <figcaption>Bob's [=Data Consent=] at https://bob.example/consents/e4b1b154 
+  for Alice to access his Project data - 
+  <a href="snippets/bob.example/e4b1b154.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/bob.example/e4b1b154.ttl
+  highlight: turtle
+  show: 13-25
+  line-highlight: 20
+  </pre>
+</figure>
+
+The following [=Data Grant=] is generated for Alice based on the above 
+[=Data Consent=], and stored in the [=Agent Registration=] for Alice in
+Bob's [=Agent Registry=].
+
+<figure>
+  <figcaption>Bob's [=Data Grant=]   
+  at https://bob.example/agents/255aa181/b2b6a645 
+  for Alice to access his work Project data -
+  <a href="snippets/bob.example/b2b6a645.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/bob.example/b2b6a645.ttl
+  highlight: turtle
+  show: 13-26
+  line-highlight: 22
+  </pre>
+</figure>
 
 ### <code>SelectedFromRegistry</code> ### {#scope-selected}
 
-Selected data instances from a given registry, for a given type
+The `interop:SelectedFromRegistry` [=access scope=] includes only
+specific [=Data Instances=] of the [=shape tree=] specified via 
+`interop:registeredShapeTree` in the [=Data Registry=] of a given 
+data owner.
+
+<b>Shapes:</b> [DataConsentSelectedFromRegistryShape](interop.shex#DataConsentSelectedFromRegistryShape) -
+[DataGrantSelectedFromRegistryShape](interop.shex#DataGrantSelectedFromRegistryShape)
+
+The following example illustrates *Jose's* consent for Alice to access
+two specific [=Data Instances=] of `pm-shapetrees:ProjectTree` in the 
+[=Data Registry=] he uses for his professional work.
+
+<figure>
+  <figcaption>Jose's [=Data Consent=] at https://jose.example/consents/69095550 
+  for Alice to access his Project data - 
+  <a href="snippets/jose.example/69095550.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/jose.example/69095550.ttl
+  highlight: turtle
+  show: 13-27
+  line-highlight: 20
+  </pre>
+</figure>
+
+The following [=Data Grant=] is generated for Alice based on the above
+[=Data Consent=], and stored in the [=Agent Registration=] for Alice in
+Jose's [=Agent Registry=].
+
+<figure>
+  <figcaption>Jose's [=Data Grant=]   
+  at https://jose.example/agents/efba320e/2aa21a8c 
+  to share specific work projects with Alice -
+  <a href="snippets/jose.example/2aa21a8c.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/jose.example/2aa21a8c.ttl
+  highlight: turtle
+  show: 14-28
+  line-highlight: 23
+  </pre>
+</figure>
 
 ### <code>Inherited</code> ### {#scope-inherited}
 
-Inherited from another consent for a related type
+The `interop:Inherited` [=access scope=] is unique in that it depends
+on the existence of another [=Data Consent=] with a scope of
+`interop:All`, `interop:AllFromAgent`, `interop:AllFromRegistry`, or
+`interop:SelectedFromRegistry`. 
 
-The [=shape tree=] `pm-shapetrees:ProjectTree` specifies a virtual hierarchy
-via `st:references`, that indicates that a Project [=Data Instance=] virtually
-includes Tasks through the predicate `pm:hasTask`.
+When a [=Data Consent=] exists with
+one of those scopes, and its `interop:registeredShapeTree` specifies
+one or more virtual hierarchies via `st:references`, a corresponding
+[=Data Consent=] with a scope of `interop:Inherited` can be created
+for each distinct reference.
 
-<pre class=include-code>
-path: snippets/data.example/pm-shapetrees.tree
-highlight: turtle
-show: 10-17
-</pre>
+<b>Shapes:</b> [DataConsentInheritedShape](interop.shex#DataConsentInheritedShape) -
+[DataGrantInheritedShape](interop.shex#DataGrantInheritedShape)
+
+<figure>
+  <figcaption>Alice's [=Data Consent=] for Projectron to access Projects
+    at https://alice.example/consents/54a1b6a0 -
+    <a href="snippets/alice.example/54a1b6a0.ttl">View</a>
+    </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/54a1b6a0.ttl
+  highlight: turtle
+  show: 12-22
+  line-highlight: 19
+  </pre>
+</figure>
+
+The [=shape tree=] `pm-shapetrees:ProjectTree` specifies one virtual hierarchy
+via `st:references`, indicating that a Project [=Data Instance=] virtually
+includes Task instances of `pm-shapetrees:TaskTree` through the 
+predicate `pm:hasTask`.
+
+<figure>
+  <figcaption>
+  ProjectTree definition at https://data.example/shapetrees/pm-shapetrees.tree -
+  <a href="snippets/data.example/pm-shapetrees.tree">View Definition</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/data.example/pm-shapetrees.tree
+  highlight: turtle
+  show: 10-17
+  </pre>
+</figure>
+
+Consequently, a [=Data Consent=] with `interop:Inherited` scope can be created
+for `pm-shapetrees:TaskTree`.
 
 <figure>
   <figcaption>Alice's [=Data Consent=] for Projectron to access Tasks
@@ -636,8 +823,39 @@ show: 10-17
   <pre class=include-code>
   path: snippets/alice.example/0e4cb692.ttl
   highlight: turtle
-  show: 12-21
-  line-highlight: 18 
+  show: 12-25
+  line-highlight: 19
+  </pre>
+</figure>
+
+[=Data Grants=] for Projects and their associated Tasks can then be generated
+for Projectron based on the above [=Data Consents=].
+
+<figure>
+  <figcaption>Alice's [=Data Grant=] for Projectron to access Projects in her 
+  Work [=Data Registry=] at
+  https://alice.example/agents/2f2f3628/40d038ea -
+  <a href="snippets/alice.example/40d038ea.ttl">View</a> 
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/40d038ea.ttl
+  highlight: turtle
+  show: 12-23
+  line-highlight: 21
+  </pre>
+</figure>
+
+<figure>
+  <figcaption>Alice's [=Data Grant=] for Projectron to access Tasks associated 
+  with consented Work Projects at
+  https://alice.example/agents/2f2f3628/0945218b -
+  <a href="snippets/alice.example/0945218b.ttl">View</a> 
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/0945218b.ttl
+  highlight: turtle
+  show: 12-25
+  line-highlight: 21
   </pre>
 </figure>
 
@@ -928,6 +1146,48 @@ An [=Access Consent Registry=] links to any number of registered [=Access Consen
     </tr>
     <tr>
       <td><code>-- <a href="snippets/alice.example/ec6057d9.ttl">ec6057d9/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/cce01253.ttl">cce01253/</a></code></td>
+      <td>[AccessConsent](#classAccessConsent)</td>
+      <td>[AccessConsentShape](interop.shex#AccessConsentShape)</td>
+      <td>[AccessConsentTree](interop.tree#AccessConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/8f178288.ttl">8f178288/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/6531c8e2.ttl">6531c8e2/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/0e36ba8f.ttl">0e36ba8f/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/ca14a518.ttl">ca14a518/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/3e94161f.ttl">3e94161f/</a></code></td>
+      <td>[DataConsent](#classDataConsent)</td>
+      <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
+      <td>[DataConsentTree](interop.tree#DataConsentTree)</td>
+    </tr>
+    <tr>
+      <td><code>-- <a href="snippets/alice.example/60e37fe3.ttl">60e37fe3/</a></code></td>
       <td>[DataConsent](#classDataConsent)</td>
       <td>[DataConsentShape](interop.shex#DataConsentShape)</td>
       <td>[DataConsentTree](interop.tree#DataConsentTree)</td>

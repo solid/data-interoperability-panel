@@ -3,18 +3,18 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
-PREFIX alice: <https://alice.example>
+PREFIX jose: <https://jose.example>
 PREFIX jarvis: <https://jarvis.example>
-PREFIX sarah: <https://sarah.example/>
-PREFIX alice-sarah: <https://alice.example/agents/b49afcdf/>
+PREFIX alice: <https://alice.example/>
+PREFIX jose-alice: <https://jose.example/agents/efba320e/>
 
-alice-sarah:731b43ec
+jose-alice:85b51e6a
   a interop:AccessGrant ;
-  interop:registeredBy alice:\#id ;
+  interop:registeredBy jose:\#id ;
   interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
   interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
-  interop:registeredAgent sarah:\#id ;
+  interop:registeredAgent alice:\#id ;
   interop:hasAccessNeedGroup jarvis:\#4fd1482d ;
   interop:hasDataGrant
-    alice-sarah:d85fd1f5 ,
-    alice-sarah:8fac3576 .
+    jose-alice:2aa21a8c ,
+    jose-alice:10d14db3 .

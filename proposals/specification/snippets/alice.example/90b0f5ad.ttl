@@ -4,18 +4,24 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
-PREFIX alice: <https://alice.example>
+PREFIX jose: <https://jose.example>
 PREFIX projectron: <https://projectron.example/>
 PREFIX alice-projectron: <https://alice.example/agents/2f2f3628/>
-PREFIX alice-work-data: <https://work.alice.example/data/>
+PREFIX jose-alice: <https://jose.example/agents/efba320e/>
+PREFIX jose-work-data: <https://work.jose.example/data/>
 
-alice-projectron:40d038ea
-  a interop:DataGrant ;
-  interop:dataOwner alice:\#id ;
+alice-projectron:90b0f5ad
+  a interop:DelegatedDataGrant ;
+  interop:dataOwner jose:\#id ;
   interop:registeredAgent projectron:\#id ;
   interop:registeredShapeTree pm-shapetrees:ProjectTree ;
-  interop:hasDataRegistration alice-work-data:8501f084\/ ;
+  interop:hasDataRegistration jose-work-data:c3feca8c\/ ;
   interop:satisfiesAccessNeed projectron:\#ac54ff1e ;
   interop:accessMode acl:Read, acl:Create ;
   interop:creatorAccessMode acl:Update, acl:Delete ;
-  interop:scopeOfGrant interop:AllFromRegistry .
+  interop:scopeOfGrant interop:SelectedFromRegistry ;
+  interop:hasDataInstance
+    jose-work-data:c3feca8c\/9355352a ,
+    jose-work-data:c3feca8c\/3d3dc323 ;
+  interop:delegationOfGrant
+    jose-alice:2aa21a8c .

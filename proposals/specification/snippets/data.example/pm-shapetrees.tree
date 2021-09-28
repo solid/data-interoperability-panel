@@ -9,7 +9,7 @@ PREFIX pm: <http://data.example/ns/pm#>
 
 <#ProjectTree>
   a st:ShapeTree ;
-  st:expectsType st:Container ;
+  st:expectsType st:Resource ;
   st:shape pm-shex:ProjectShape ;
   st:references [
     st:hasShapeTree <#TaskTree> ;
@@ -23,5 +23,5 @@ PREFIX pm: <http://data.example/ns/pm#>
 
 <#TaskTree>
   a st:ShapeTree ;
-  st:expectsType st:Container ;
+  st:expectsType st:Resource ;
   st:shape pm-shex:TaskShape .

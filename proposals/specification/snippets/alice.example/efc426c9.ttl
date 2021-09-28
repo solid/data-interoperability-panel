@@ -4,21 +4,21 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
+PREFIX alice: <https://alice.example>
 PREFIX bob: <https://bob.example>
-PREFIX projectron: <https://projectron.example/>
-PREFIX alice-projectron: <https://alice.example/agents/2f2f3628/>
 PREFIX bob-alice: <https://bob.example/agents/255aa181/>
+PREFIX performchart: <https://performchart.example/>
+PREFIX alice-performchart: <https://alice.example/agents/c2328cdd/>
 PREFIX bob-work-data: <https://work.bob.example/data/>
 
-alice-projectron:fe818190
+alice-performchart:efc426c9
   a interop:DelegatedDataGrant ;
   interop:dataOwner bob:\#id ;
-  interop:registeredAgent projectron:\#id ;
+  interop:registeredAgent performchart:\#id ;
   interop:registeredShapeTree pm-shapetrees:ProjectTree ;
   interop:hasDataRegistration bob-work-data:08a99a10\/ ;
-  interop:satisfiesAccessNeed projectron:\#ac54ff1e ;
-  interop:accessMode acl:Read, acl:Create ;
-  interop:creatorAccessMode acl:Update, acl:Delete ;
+  interop:satisfiesAccessNeed performchart:\#ac54ff1e ;
+  interop:accessMode acl:Read ;
   interop:scopeOfGrant interop:AllFromRegistry ;
   interop:delegationOfGrant
     bob-alice:b2b6a645 .

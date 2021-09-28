@@ -5,17 +5,16 @@ PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
 PREFIX alice: <https://alice.example>
-PREFIX projectron: <https://projectron.example/>
-PREFIX alice-projectron: <https://alice.example/agents/2f2f3628/>
+PREFIX performchart: <https://performchart.example/>
+PREFIX alice-performchart: <https://alice.example/agents/c2328cdd/>
 PREFIX alice-work-data: <https://work.alice.example/data/>
 
-alice-projectron:40d038ea
+alice-performchart:a8a224e6
   a interop:DataGrant ;
   interop:dataOwner alice:\#id ;
-  interop:registeredAgent projectron:\#id ;
+  interop:registeredAgent performchart:\#id ;
   interop:registeredShapeTree pm-shapetrees:ProjectTree ;
   interop:hasDataRegistration alice-work-data:8501f084\/ ;
-  interop:satisfiesAccessNeed projectron:\#ac54ff1e ;
-  interop:accessMode acl:Read, acl:Create ;
-  interop:creatorAccessMode acl:Update, acl:Delete ;
+  interop:satisfiesAccessNeed performchart:\#53c43f3d ;
+  interop:accessMode acl:Read ;
   interop:scopeOfGrant interop:AllFromRegistry .

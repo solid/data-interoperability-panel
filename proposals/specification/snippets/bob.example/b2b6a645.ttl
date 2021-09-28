@@ -3,18 +3,20 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
-PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
-PREFIX alice: <https://alice.example>
+PREFIX bob: <https://bob.example>
+PREFIX jarvis: <https://jarvis.example>
+PREFIX alice: <https://alice.example/>
+PREFIX bob-alice: <https://bob.example/agents/255aa181/>
+PREFIX bob-work-data: <https://work.bob.example/data/>
 PREFIX projectron: <https://projectron.example/>
-PREFIX alice-projectron: <https://alice.example/agents/2f2f3628/>
-PREFIX alice-work-data: <https://work.alice.example/data/>
+PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
 
-alice-projectron:40d038ea
+bob-alice:b2b6a645
   a interop:DataGrant ;
-  interop:dataOwner alice:\#id ;
-  interop:registeredAgent projectron:\#id ;
+  interop:dataOwner bob: ;
+  interop:registeredAgent alice:\#id ;
   interop:registeredShapeTree pm-shapetrees:ProjectTree ;
-  interop:hasDataRegistration alice-work-data:8501f084\/ ;
+  interop:hasDataRegistration bob-work-data:08a99a10\/ ;
   interop:satisfiesAccessNeed projectron:\#ac54ff1e ;
   interop:accessMode acl:Read, acl:Create ;
   interop:creatorAccessMode acl:Update, acl:Delete ;

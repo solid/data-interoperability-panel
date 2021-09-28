@@ -1,0 +1,17 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX alice: <https://alice.example/>
+PREFIX performchart: <https://performchart.example/>
+PREFIX jarvis: <https://jarvis.example/>
+PREFIX alice-agents: <https://alice.example/agents/>
+
+alice-agents:c2328cdd\/
+  a interop:ApplicationRegistration ;
+  interop:registeredBy alice:\#id ;
+  interop:registeredWith jarvis:\#id ;
+  interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
+  interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
+  interop:registeredAgent performchart:\#id ;
+  interop:hasAccessGrant alice-agents:c2328cdd\/2ae35a57 .

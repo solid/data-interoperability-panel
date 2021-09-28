@@ -4,17 +4,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX alice: <https://alice.example>
-PREFIX jarvis: <https://jarvis.example>
-PREFIX sarah: <https://sarah.example/>
-PREFIX alice-sarah: <https://alice.example/agents/b49afcdf/>
+PREFIX jarvis: <https://jarvis.alice.example>
+PREFIX jose: <https://jose.example>
+PREFIX alice-agents: <https://alice.example/agents/>
+PREFIX jose-agents: <https://jose.example/agents/>
 
-alice-sarah:731b43ec
-  a interop:AccessGrant ;
+alice-agents:4ae3abf8\/
+  a interop:SocialAgentRegistration ;
   interop:registeredBy alice:\#id ;
+  interop:registeredWith jarvis:\#id ;
   interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
   interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
-  interop:registeredAgent sarah:\#id ;
-  interop:hasAccessNeedGroup jarvis:\#4fd1482d ;
-  interop:hasDataGrant
-    alice-sarah:d85fd1f5 ,
-    alice-sarah:8fac3576 .
+  interop:registeredAgent jose:\#id ;
+  interop:reciprocalRegistration jose-agents:efba320e\/ .
