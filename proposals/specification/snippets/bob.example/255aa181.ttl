@@ -1,0 +1,20 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX bob: <https://bob.example>
+PREFIX jarvis: <https://jarvis.bob.example>
+PREFIX alice: <https://alice.example>
+PREFIX bob-agents: <https://bob.example/agents/>
+PREFIX alice-agents: <https://alice.example/agents/>
+
+bob-agents:255aa181\/
+  a interop:SocialAgentRegistration ;
+  interop:registeredBy bob:\#id ;
+  interop:registeredWith jarvis:\#id ;
+  interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
+  interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
+  interop:registeredAgent alice:\#id ;
+  interop:reciprocalRegistration alice-agents:c4562da9\/ ;
+  interop:hasAccessGrant bob-agents:255aa181\/05f60b20 .

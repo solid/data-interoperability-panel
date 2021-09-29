@@ -12,10 +12,12 @@ PREFIX alice-work-data: <https://work.alice.example/data/>
 alice-projectron:0945218b
   a interop:DataGrant ;
   interop:dataOwner alice:\#id ;
+  interop:registeredAgent projectron:\#id ;
   interop:registeredShapeTree pm-shapetrees:TaskTree ;
-  interop:hasDataRegistration alice-work-data:f0f04f3e\/ ;
+  interop:hasDataRegistration alice-work-data:df4ab227\/ ;
   interop:satisfiesAccessNeed projectron:\#9462959c ;
   interop:accessMode acl:Read, acl:Create ;
   interop:creatorAccessMode acl:Update, acl:Delete ;
-  interop:scopeOfGrant interop:InheritInstances ;
-  interop:inheritsFromGrant alice-projectron:40d038ea .
+  interop:scopeOfGrant interop:Inherited ;
+  interop:inheritsFromGrant
+    alice-projectron:40d038ea .

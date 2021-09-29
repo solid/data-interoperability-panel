@@ -13,11 +13,12 @@ PREFIX bob-work-data: <https://work.bob.example/data/>
 alice-projectron:fe818190
   a interop:DelegatedDataGrant ;
   interop:dataOwner bob:\#id ;
+  interop:registeredAgent projectron:\#id ;
   interop:registeredShapeTree pm-shapetrees:ProjectTree ;
   interop:hasDataRegistration bob-work-data:08a99a10\/ ;
   interop:satisfiesAccessNeed projectron:\#ac54ff1e ;
   interop:accessMode acl:Read, acl:Create ;
   interop:creatorAccessMode acl:Update, acl:Delete ;
-  interop:scopeOfGrant interop:AllInstances ;
+  interop:scopeOfGrant interop:AllFromRegistry ;
   interop:delegationOfGrant
     bob-alice:b2b6a645 .

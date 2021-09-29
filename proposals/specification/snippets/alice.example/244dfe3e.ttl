@@ -1,0 +1,20 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
+PREFIX alice: <https://alice.example>
+PREFIX performchart: <https://performchart.example/>
+PREFIX alice-performchart: <https://alice.example/agents/c2328cdd/>
+PREFIX alice-work-data: <https://work.alice.example/data/>
+
+alice-performchart:244dfe3e
+  a interop:DataGrant ;
+  interop:dataOwner alice:\#id ;
+  interop:registeredAgent performchart:\#id ;
+  interop:registeredShapeTree pm-shapetrees:TaskTree ;
+  interop:hasDataRegistration alice-work-data:df4ab227\/ ;
+  interop:satisfiesAccessNeed performchart:\#f92e605c ;
+  interop:accessMode acl:Read ;
+  interop:scopeOfGrant interop:AllFromRegistry .
