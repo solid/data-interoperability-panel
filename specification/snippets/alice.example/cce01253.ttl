@@ -1,0 +1,24 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX alice: <https://alice.example>
+PREFIX jarvis: <https://jarvis.alice.example>
+PREFIX performchart: <https://performchart.example/>
+PREFIX alice-consents: <https://alice.example/consents/>
+
+alice-consents:cce01253
+  a interop:AccessConsent ;
+  interop:registeredBy alice:\#id ;
+  interop:registeredWith jarvis:\#id ;
+  interop:registeredAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+  interop:updatedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
+  interop:registeredAgent performchart:\#id ;
+  interop:hasAccessNeedGroup performchart:\#53c43f3d ;
+  interop:hasDataConsent
+    alice-consents:8f178288 ,
+    alice-consents:6531c8e2 ,
+    alice-consents:0e36ba8f ,
+    alice-consents:ca14a518 ,
+    alice-consents:3e94161f ,
+    alice-consents:60e37fe3 .

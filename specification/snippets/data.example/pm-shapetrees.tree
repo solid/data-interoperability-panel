@@ -1,5 +1,6 @@
 PREFIX st: <http://www.w3.org/ns/shapetrees#>
 PREFIX pm-shex: <http://data.example/shex/pm#>
+PREFIX pm: <http://data.example/ns/pm#>
 
 <#ProjectRegistrationTree>
   a st:ShapeTree ;
@@ -8,20 +9,12 @@ PREFIX pm-shex: <http://data.example/shex/pm#>
 
 <#ProjectTree>
   a st:ShapeTree ;
-  st:expectsType st:Container ;
+  st:expectsType st:Resource ;
   st:shape pm-shex:ProjectShape ;
-  st:contains <#MilestoneTree> .
-
-<#MilestoneRegistrationTree>
-  a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:contains <#MilestoneTree> .
-
-<#MilestoneTree>
-  a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:shape pm-shex:MilestoneShape ;
-  st:contains <#TaskTree>, <#IssueTree> .
+  st:references [
+    st:hasShapeTree <#TaskTree> ;
+    st:viaPredicate pm:hasTask
+  ] .
 
 <#TaskRegistrationTree>
   a st:ShapeTree ;
@@ -30,15 +23,5 @@ PREFIX pm-shex: <http://data.example/shex/pm#>
 
 <#TaskTree>
   a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:shape pm-shex:TaskShape .
-
-<#IssueRegistrationTree>
-  a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:contains <#IssueTree> .
-
-<#IssueTree>
-  a st:ShapeTree ;
   st:expectsType st:Resource ;
-  st:shape pm-shex:IssueShape .
+  st:shape pm-shex:TaskShape .

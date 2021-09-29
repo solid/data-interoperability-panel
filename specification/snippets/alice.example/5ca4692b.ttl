@@ -4,6 +4,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX alice: <https://alice.example>
+PREFIX sarah: <https://sarah.example>
 PREFIX jarvis: <https://jarvis.example>
 PREFIX alice-consents: <https://alice.example/consents/>
 PREFIX alice-agents: <https://alice.example/agents/>
@@ -11,6 +12,7 @@ PREFIX alice-agents: <https://alice.example/agents/>
 alice-consents:5ca4692b
   a interop:DataConsent ;
   interop:dataOwner alice:\#id ;
+  interop:registeredAgent sarah:\#id ;
   interop:satisfiesAccessNeed jarvis:\#fde6805e ;
   interop:accessMode acl:Read, acl:Write, acl:Control ;
   interop:registeredShapeTree interop:RegistrySetTree ;
