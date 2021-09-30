@@ -149,16 +149,16 @@ needs to change, it should be replaced.
     </tr>
     <tr>
       <td>accessMode</td>
-      <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
+      <td>`acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append`</td>
       <td>Modes of access granted to the consented data</td>
     </tr>
     <tr>
       <td>creatorAccessMode</td>
-      <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
+      <td>`acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append`</td>
       <td>Additional access mode assigned to the creator of a
         data instance. Adds to the set of modes linked via 
         `interop:accessMode`. Only valid when `accessMode` includes
-         `acl:Write` or `acl:Append`</td>
+         `acl:Create`, `acl:Write`, or `acl:Append`</td>
     </tr>
     <tr>
       <td>scopeOfConsent</td>
@@ -365,16 +365,16 @@ needs to change, it should be replaced.
     </tr>
     <tr>
       <td>accessMode</td>
-      <td>acl:Read, acl:Write, acl:Control, acl:Append</td>
+      <td>`acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append`</td>
       <td>Modes of access granted to the target data at hasRegistration</td>
     </tr>
     <tr>
       <td>creatorAccessMode</td>
-      <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
+      <td>`acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append`</td>
       <td>Additional access mode assigned to the creator of a
         data instance. Adds to the set of modes linked via 
         `interop:accessMode`. Only valid when `accessMode` includes
-         `acl:Write` or `acl:Append`</td>
+         `acl:Create`, `acl:Write`, or `acl:Append`</td>
     </tr>
     <tr>
       <td>scopeOfGrant</td>
@@ -488,12 +488,25 @@ needs to change, it should be replaced.
 ## Data Access Scopes ## {#access-scopes}
 
 Each [=Data Consent=] applies to a specific type of data, 
-identified by a [=shape tree=]. The amount of access consented for data of that type is specified by the
+identified by a [=shape tree=]. The amount of access consented for data 
+of that type is specified by the
 <dfn>Access Scope</dfn>, via `interop:scopeOfConsent`.
 
-[=Data Grants=] generated from a given [=Data Consent=] are influenced by the [=access scope=] for that [=Data Consent=].
-[=Data Grants=] utilize a subset of the [=access scopes=] used for [=Data Consents=], identifying the assigned scope
-via `interop:scopeOfGrant`.
+[=Data Grants=] are generated from a given [=Data Consent=] based on 
+[=access scope=] and other supporting criteria detailed below.
+
+Each [=Data Grant=] corresponds to a specific [=Data Registration=]
+in a [=Data Registry=], and has an associated [=access scope=]
+and [=access modes=].
+
+Issue: This specification uses some access modes in the `acl:` namespace that
+have not been adopted to demonstrate the most secure and accurate
+expression of a [=Social Agent's=] consent.
+[Discussions are underway](https://github.com/solid/authorization-panel/issues/253)
+to add these modes.
+
+Issue: [[!WAC]] does not have any mechanism to extend or modify
+inherited permissions.
 
 <table class="data tree" align="left">
   <col>
@@ -727,6 +740,66 @@ Bob's [=Agent Registry=].
   </pre>
 </figure>
 
+When a [=Data Grant=] is assigned the `interop:AllFromRegistry` scope, the
+`interop:registeredAgent` is authorized to access all [=Data Instances=]
+in the [=Data Registration=] linked via `interop:hasDataRegistration`,
+limited by the [=access modes=] linked via `interop:accessMode`.
+
+In the above example, Bob would be giving Alice the following access to
+`pm-shapetrees:ProjectTree` [=Data Instances=] (Projects) in the `bob-work-data:08a99a10`
+[=Data Registration=]:
+
+- Read the Data Registration
+- List all Projects
+- Read all Projects
+- Create a new Project
+- Read a Project she creates
+- Delete a Project she creates
+- Create resources in a Project she creates
+- Modify existing resources in a Project she creates
+
+<figure>
+  <figcaption>Interpreting [=access modes=] for a [=Data Registration=] with
+  AllFromRegistry scope</figcaption>
+  <table class="data tree" align="left">
+    <col>
+    <col>
+    <thead>
+      <tr>
+        <th>Mode</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`acl:Create`</td>
+        <td>Create new [=Data Instances=]. [=Access modes=] assigned to 
+        the creator on the created [=Data Instance=] should be a union of 
+        `interop:accessMode` and `interop:createAccessMode` modes. 
+        <b>acl:Create is not currently supported. 
+        Substitute with acl:Write or acl:Append, but may exceed intended scope
+        of access.</b></td>
+      </tr>
+      <tr>
+        <td>`acl:Read`</td>
+        <td>Read [=Data Registration=]. List and read all [=Data Instances=]</td>
+      </tr>
+      <tr>
+        <td>`acl:Update`</td>
+        <td>Modify [=Data Instances=]. Modification of [=Data Registration=] graph 
+        not permitted. <b>`acl:Update` is not currently supported. Substitute with 
+        `acl:Write` or `acl:Append`, but may exceed intended scope of access.</b></td>
+      </tr>
+      <tr>
+        <td>`acl:Delete`</td>
+        <td>Delete [=Data Instances=]. Deletion of [=Data Registration=] not permitted. 
+        <b>`acl:Delete` is not currently supported. Substitute with `acl:Write`, but 
+        may exceed intended scope of access.</b></td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
 ### <code>SelectedFromRegistry</code> ### {#scope-selected}
 
 The `interop:SelectedFromRegistry` [=access scope=] includes only
@@ -770,6 +843,59 @@ Jose's [=Agent Registry=].
   show: 14-28
   line-highlight: 23
   </pre>
+</figure>
+
+When a [=Data Grant=] is assigned the `interop:SelectedFromRegistry` scope, the
+`interop:registeredAgent` is authorized to access only the specific
+[=Data Instances=] linked via `interop:hasDataInstance` in the [=Data Registration=]
+linked via `interop:hasDataRegistration`,
+limited by the [=access modes=] linked via `interop:accessMode`.
+
+<figure>
+  <figcaption>Valid [=access modes=] for a [=Data Instance=]</figcaption>
+  <table class="data tree" align="left">
+    <col>
+    <col>
+    <thead>
+      <tr>
+        <th>Mode</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`acl:Create`</td>
+        <td>Create new resources within the [=Data Instances=] where applicable. 
+        [=Access modes=] assigned to 
+        the creator on a created resource should be a union of 
+        `interop:accessMode` and `interop:createAccessMode` modes. 
+        <b>acl:Create is not currently supported. 
+        Substitute with acl:Write or acl:Append, but may exceed intended scope
+        of access.</b></td>
+      </tr>
+      <tr>
+        <td>`acl:Read`</td>
+        <td>Read [=Data Instance=] and any contained resources where applicable.</td>
+      </tr>
+      <tr>
+        <td>`acl:Update`</td>
+        <td>Modify [=Data Instance=] and any contained resources where applicable. 
+        <b>`acl:Update` is not currently supported. Substitute with `acl:Write` or 
+        `acl:Append`, but may exceed intended scope of access.</b></td>
+      </tr>
+      <tr>
+        <td>`acl:Append`</td>
+        <td>Add new data to resources in the [=Data Instance=], without changing any
+        existing data.</td>
+      </tr>
+      <tr>
+        <td>`acl:Delete`</td>
+        <td>Delete [=Data Instance=] or any contained resources where applicable.
+        <b>`acl:Delete` is not currently supported. Substitute with `acl:Write`, but 
+        may exceed intended scope of access.</b></td>
+      </tr>
+    </tbody>
+  </table>
 </figure>
 
 ### <code>Inherited</code> ### {#scope-inherited}
@@ -863,6 +989,79 @@ for Projectron based on the above [=Data Consents=].
   show: 12-25
   line-highlight: 21
   </pre>
+</figure>
+
+When a [=Data Grant=] is assigned the `interop:Inherited` scope, the
+`interop:registeredAgent` is authorized to access only the specific
+[=Data Instances=] linked via `st:references` in the [=shape tree=]
+of the [=Data Grant=] linked via `interop:inheritsFromGrant`
+
+In the example above, Alice grants Projectron the following access to
+<b>only the</b> `pm-shapetrees:TaskTree` [=Data Instances=] (Tasks) in the 
+`alice-work-data:df4ab227` [=Data Registration=] that are linked
+to `pm-shapetrees:ProjectTree` [=Data Instances=] (Projects) in the
+`alice-work-data:8501f084` [=Data Registration=].
+
+For example, the three Tasks linked from the Project [=Data Instance=] 
+below via `pm:hasTask` would be included in the `interop:Inherited` scope. 
+
+<figure>
+  <figcaption>A Project [=Data Instance=] in `alice-work-data:8501f084` -
+  <a href="snippets/work.alice.example/16e1eae9.ttl">View</a> 
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/work.alice.example/16e1eae9.ttl
+  highlight: turtle
+  show: 9-25
+  </pre>
+</figure>
+
+<figure>
+  <figcaption>Valid [=access modes=] on [=Data Registration=] with Inherited scope</figcaption>
+  <table class="data tree" align="left">
+    <col>
+    <col>
+    <thead>
+      <tr>
+        <th>Mode</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`acl:Create`</td>
+        <td>Create new [=Data Instances=] linked by shape tree reference. 
+        [=Access modes=] assigned to 
+        the creator on the created [=Data Instance=] should be a union of 
+        `interop:accessMode` and `interop:createAccessMode` modes. 
+        <b>acl:Create is not currently supported. 
+        Substitute with acl:Write or acl:Append, but may exceed intended scope
+        of access.</b></td>
+      </tr>
+      <tr>
+        <td>`acl:Read`</td>
+        <td>Read [=Data Instances=] linked by shape tree reference</td>
+      </tr>
+      <tr>
+        <td>`acl:Update`</td>
+        <td>Modify [=Data Instances=] linked by shape tree reference. 
+        <b>`acl:Update` is not currently supported. Substitute with 
+        `acl:Write` or `acl:Append`, but may exceed intended scope of access.</b></td>
+      </tr>
+      <tr>
+        <td>`acl:Append`</td>
+        <td>Add new data to [=Data Instances=] linked by shape tree reference, 
+        without changing any existing data.</td>
+      </tr>
+      <tr>
+        <td>`acl:Delete`</td>
+        <td>Delete [=Data Instances=] linked by shape tree reference. Deletion of 
+        [=Data Registration=] not permitted. 
+        <b>`acl:Delete` is not currently supported. Substitute with `acl:Write`, but 
+        may exceed intended scope of access.</b></td>
+      </tr>
+    </tbody>
+  </table>  
 </figure>
 
 ## Access Invitation ## {#datamodel-access-invitation}
