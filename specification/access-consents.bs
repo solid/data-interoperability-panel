@@ -21,6 +21,10 @@ has been granted access. [=Access Grants=] are generated from
 
 [=Access Consents=] are recorded in a [=Social Agent's=] [=Access Consent Registry=].
 
+[=Access Consents=] are immutable. If an [=Access Consent=] for an
+[=Agent=] needs to change, it should be replaced.
+
+
 [Class Definition](interop.ttl#AccessConsent) -
 [Shape Definition](interop.shex#AccessConsentShape) -
 [Shape Tree Definition](interop.tree#AccessConsentTree)
@@ -53,11 +57,6 @@ has been granted access. [=Access Grants=] are generated from
       <td>Date and time the [=Access Consent=] was created</td>
     </tr>
     <tr>
-      <td>updatedAt</td>
-      <td>xsd:dateTime</td>
-      <td>Date and time the [=Access Consent=] was updated</td>
-    </tr>
-    <tr>
       <td>registeredAgent</td>
       <td>[Agent](#classAgent)</td>
       <td>The [=Social Agent=] or [=Application=] that has received
@@ -86,7 +85,7 @@ has been granted access. [=Access Grants=] are generated from
   <pre class=include-code>
   path: snippets/alice.example/e2765d6c.ttl
   highlight: turtle
-  show: 11-21
+  show: 10-25
   </pre>
 </figure>
 
@@ -98,7 +97,7 @@ has been granted access. [=Access Grants=] are generated from
   <pre class=include-code>
   path: snippets/alice.example/4460dce3.ttl
   highlight: turtle
-  show: 11-21
+  show: 12-25
   </pre>
 </figure>
 
@@ -112,6 +111,9 @@ by a [=Shape Tree=]. They are always associated with a single
 [=Data Consents=] should not be shared with the [=Agent=] that has 
 been granted access. [=Data Grants=] are generated from [=Data Consents=],
 and are appropriate to share with the grantee.
+
+[=Data Consents=] are immutable. If a [=Data Consent=]
+needs to change, it should be replaced.
 
 [Class Definition](interop.ttl#DataConsent) -
 [Shape Definition](interop.shex#DataConsentShape) -
@@ -231,6 +233,9 @@ are generated from [=Access Consents=], and are stored in the
 Each [=Access Grant=] has one or more [=Data Grants=], each of which
 represents access granted to a specific type of data.
 
+[=Access Grants=] are immutable. If an [=Access Grant=]
+needs to change, it must be replaced.
+
 [Class Definition](interop.ttl#AccessGrant) -
 [Shape Definition](interop.shex#AccessGrantShape) -
 [Shape Tree Definition](interop.tree#AccessGrantTree)
@@ -256,11 +261,6 @@ represents access granted to a specific type of data.
       <td>registeredAt</td>
       <td>xsd:dateTime</td>
       <td>Date and time the [=Access Grant=] was created</td>
-    </tr>
-    <tr>
-      <td>updatedAt</td>
-      <td>xsd:dateTime</td>
-      <td>Date and time the [=Access Grant=] was updated</td>
     </tr>
     <tr>
       <td>registeredAgent</td>
@@ -315,6 +315,9 @@ When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
 
 When a [=Social Agent=] grants another [=Agent=] access to data that was shared
 with them, a [=Delegated Data Grant=] is used instead.
+
+[=Data Grants=] are immutable. If a [=Data Grant=]
+needs to change, it should be replaced.
 
 [Class Definition](interop.ttl#DataGrant) -
 [Shape Definition](interop.shex#DataGrantShape) -
@@ -430,6 +433,9 @@ used when a grantee re-shares or "delegates" access they've
 received to another [=Agent=]. The most common use case 
 is when Alice shares access with Bob, and Bob delegates
 that access to his project management application.
+
+[=Delegated Data Grants=] are immutable. If a [=Delegated Data Grant=]
+needs to change, it should be replaced.
 
 [Class Definition](interop.ttl#DelegatedDataGrant) -
 [Shape Definition](interop.shex#DelegatedDataGrantShape) -
@@ -634,7 +640,7 @@ Alice grants Performchart a narrower scope of read-only access.
   <pre class=include-code>
   path: snippets/alice.example/0e36ba8f.ttl
   highlight: turtle
-  show: 12-25
+  show: 14-25
   line-highlight: 20
   </pre>
 </figure>
@@ -1052,7 +1058,7 @@ An [=Access Consent Registry=] links to any number of registered [=Access Consen
   <pre class=include-code>
   path: snippets/alice.example/consents.ttl
   highlight: turtle
-  show: 4-10
+  show: 4-11
   </pre>
 </figure>
 
