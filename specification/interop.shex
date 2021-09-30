@@ -77,46 +77,23 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Access Need Group
 <#AccessNeedGroupShape> {
   a [ interop:AccessNeedGroup ] ;
-  interop:hasAccessDecoratorIndex IRI
-  interop:hasAccessNeedGroupDecorator IRI? ;
+  interop:hasAccessDecoratorSet IRI*
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
   interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
-  interop:authenticatesAs [ interop:Agent interop:Pilot ] ;
+  interop:authenticatesAs [ interop:SocialAgent interop:Application ] ;
   interop:hasAccessNeed IRI+
 }
 
 # Access Need
 <#AccessNeedShape> {
   a [ interop:AccessNeed ] ;
-  interop:inAccessNeedGroup @<#:AccessNeedGroupShape> ;
   interop:registeredShapeTree IRI ;
-  interop:hasShapeTreeDecorator IRI ;
-  interop:hasAccessNeedDecorator IRI? ;
   interop:hasDataInstance IRI* ;
   interop:accessMode @<#:AccessModes>+ ;
   interop:creatorAccessMode @<#:AccessModes>* ;
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
-  interop:supportedBy IRI* ;  # ?
-  interop:supports IRI? ;      # ?
-  interop:hasAccessNeed @<#:InheritedAccessNeedShape>* ;
   interop:hasDataGrant @<#:DataGrantShape>?
-}
-
-# Inherited Access Need
-<#InheritedAccessNeedShape> {
-  a [ interop:AccessNeed ] ;
-  interop:inAccessNeedGroup @<#:AccessNeedGroupShape> ;
-  interop:registeredShapeTree IRI ;
-  interop:hasShapeTreeDecorator IRI ;
-  interop:hasAccessNeedDecorator IRI? ;
-  interop:hasDataInstance IRI* ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
-  interop:supportedBy IRI* ;  # ?
-  interop:supports IRI? ;     # ?
-  interop:inheritsFromNeed @<#:AccessNeedShape> ;
-  interop:hasDataGrant @<#:InheritedDataGrantShape>?
+  interop:inheritsFromNeed IRI ;
 }
 
 # Access Modes
@@ -130,26 +107,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   acl:Delete
 ]
 
-# Access Decorator Index
-<#AccessDecoratorIndexShape> {
-  a [ interop:AccessDecoratorIndex ] ;
-  interop:defaultLanguage xsd:language ;
-  interop:hasSeries @AccessDecoratorSeries+ ;
-}
-
-# Access Decorator Series
-<#AccessDecoratorSeriesShape> {
-  a [ interop:AccessDecoratorSeries ] ;
-  interop:usesLanguage xsd:language ;
-  interop:hasVersion @AccessDecoratorVersion+ ;
-}
-
-# Access Decorator Version
-<#AccessDecoratorVersionShape> {
-  a [ interop:AccessDecoratorVersion ] ;
-  interop:isVersion xsd:string ;
-  interop:hasSHA256 xsd:string ;
-  interop:hasAccessDecoratorResource IRI ;
+# Access Decorator Set
+<#AccessDecoratorSet> {
+  a [ interop:AccessDecoratorSet ] ;
+  interop:usesLanguage xsd:language
 }
 
 # Access Need Group Decorator
@@ -164,7 +125,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <#AccessNeedDecoratorShape> {
   a [ interop:AccessNeedDecorator ] ;
   interop:hasAccessNeedGroup IRI ;
-  interop:registeredShapeTree IRI ;
   skos:prefLabel xsd:string
 }
 

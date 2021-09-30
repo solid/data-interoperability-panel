@@ -13,24 +13,20 @@ these may be communicated are detailed in [[SAI-API#authz-workflows]].
 
 Each [=Access Need Group=] is associated with one or more [=Access Needs=].
 
-[=Access Needs=] represent a need to access a particular type of data
-identified by [=shape tree=] type such as the [=Identity Profile Document=]
-or [=Registry Set=] of the [=Social Agent=], or in a [=Data Registry=].
+[=Access Needs=] represent a request to access a particular type of data
+identified by [=shape tree=] type, corresponding with [=Data Registrations=] 
+in a [=Data Registry=], an [=Identity Profile Document=], or a [=Registry Set=].
 
 [=Access Need Groups=] are essential to a [=Social Agent's=] decision-making
-when determining whether to grant access, as illustrated in the 
-[[SAI-API#present-grant]] workflow.
+when determining whether to grant access.
 
-## Access Need Group ## {#needs-access-need-group}
+## Access Need Group ## {#access-need-group}
 
 An <dfn>Access Need Group</dfn> is a collection of [=Access Needs=] 
-used to communicate access requests to [=Social Agents=].
+used to communicate an access request to [=Social Agents=].
 
-An [=Access Need Group=] links to an [=Access Decorator Index=] of
-different [=Access Decorator Series=] that explain the [=Access Need Group=]
-and [=Access Needs=] in different languages. Each [=Access Decorator Series=]
-points to an [=Access Decorator Resource=], which contains the actual 
-language-specific content mappings.
+[=Access Need Groups=] are described using language-specific 
+[=Access Need Group Decorators=].
 
 [Class Definition](interop.ttl#AccessNeedGroup) -
 [Shape Definition](interop.shex#AccessNeedGroupShape)
@@ -48,15 +44,11 @@ language-specific content mappings.
   </thead>
   <tbody>
     <tr>
-      <td>hasAccessNeedDecoratorIndex</td>
-      <td>-</td>
-      <td>Index of [=Access Decorator Resources=] to describe
-      [=Access Need Groups=] and [=Access Needs=]</td>
-    </tr>
-    <tr>
-      <td>hasAccessNeedGroupDecorator</td>
-      <td>[AccessNeedGroupDecorator](#classAccessNeedGroupDecorator)</td>
-      <td>[=Access Need Group Decorator=] that describes the [=Access Need Group=]</td>
+      <td>hasAccessDecoratorSet</td>
+      <td>[AccessDecoratorSet](#classAccessDecoratorSet)</td>
+      <td>Links to an [=Access Decorator Set=] containing 
+      [=Access Need Group Decorators=] and [=Access Need Decorators=]
+      in the preferred language of the [=Social Agent=]</td>
     </tr>
     <tr>
       <td>accessNecessity</td>
@@ -82,11 +74,13 @@ language-specific content mappings.
 </table>
 
 <figure>
-  <figcaption>An example [=Access Need Group=]</figcaption>  
+  <figcaption>An example [=Access Need Group=] for Projectron -
+  <a href="snippets/projectron.example/projectron.example.ttl">View</a></figcaption>  
+  </figcaption>  
   <pre class=include-code>
   path: snippets/projectron.example/projectron.example.ttl
   highlight: turtle
-  show: 17-23
+  show: 9-29
   </pre> 
 </figure>
 
@@ -95,33 +89,14 @@ language-specific content mappings.
 An <dfn>Access Need</dfn> represents the requirement of one specific type
 of data represented by a [=shape tree=], as part of an [=Access Need Group=].
 
-Each [=Access Need=] represents a request to access, create, or manage
-all or a subset of data in [=Data Registries=].
-
-In a [=Data Registry=], they can also request access to specific 
-[=Data Instances=] associated with a [=Data Registration=] for a given 
-[=shape tree=] if they have advance knowledge of their existence.
-
-[=Shape trees=] provide both physical and virtual hierarchies.
-It is often the case that a [=shape tree=] which virtually references 
-other [=shape trees=] will be assigned to an [=Access Need=]. The 
-referenced [=shape trees=] can then be assigned to 
-[=Access Needs=] that inherit from the referencing [=Access Need=].
+It is often the case that a [=shape tree=] associated with an 
+[=Access Need=] references other [=shape trees=], providing a
+path to request access to related types. Consequently,
+[=Access Needs=] can be specified that *inherit* from other
+[=Access Needs=] through a shape tree reference.
 
 Specific [=Data Instances=] may be requested by explicitly
-associating them with the [=Access Need=] via
-[hasDataInstance](#classAccessNeed).
-
-Each [=Access Need=] has one or more [=access modes=], and a property that
-indicates the necessity of the [=Access Need=]; *required* or
-*optional*. For example, an [=Access Need=] for read access to
-[=shape tree=] `N` can be identified as a required item in the
-[=Access Need Group=]. In cases where `acl:Create`, `acl:Write`, 
-or `acl:Append` permit
-the ability to create new [=Data Instances=], the
-[interop:creatorAccessMode](interop.ttl#creatorAccessMode)
-allows the resultant modes for the creator of the resource to be
-specified.
+associating them with the [=Access Need=].
 
 [=Access Needs=] are described using language-specific
 [=Access Need Decorators=].
@@ -142,34 +117,9 @@ specified.
   </thead>
   <tbody>
     <tr>
-      <td>inAccessNeedGroup</td>
-      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
-      <td>[=Access Need Group=] that the [=Access Need=] is part of</td>
-    </tr>
-    <tr>
-      <td>hasAccessNeedDecorator</td>
-      <td>[AccessNeedDecorator](#classAccessNeedDecorator)</td>
-      <td>Decorator that explains the reason for the access need in the
-      preferred language of the [=Social Agent=]</td>
-    </tr>
-    <tr>
       <td>registeredShapeTree</td>
       <td>`st:ShapeTree`</td>
       <td>The [=shape tree=] requested by the [=Access Need=]</td>
-    </tr>
-    <tr>
-      <td>hasShapeTreeDecorator</td>
-      <td>`st:ShapeTreeDecorator`</td>
-      <td>Decorator associated with the [=shape tree=] that describes the
-      name of the shape-tree and what data it represents in the preferred
-      language of the [=Social Agent=]</td>
-    </tr>
-    <tr>
-      <td>hasDataInstance</td>
-      <td>-</td>
-      <td>Request specific [=Data Instance=] of the registered
-      [=shape tree=]. Requires advance knowledge of the 
-      [=Data Instance=]</td>
     </tr>
     <tr>
       <td>accessMode</td>
@@ -190,17 +140,12 @@ specified.
       <td>Necessity of the access to the requesting party</td>
     </tr>
     <tr>
-      <td>supportedBy</td>
-      <td>[AccessNeed](#classAccessNeed)</td>
-      <td>An [=Access Need=] whose [=shape tree=] `st:supports` the
-      [=shape tree=] of this [=Access Need=]</td>
+      <td>hasDataInstance</td>
+      <td>[=Data Instance=]</td>
+      <td>Request specific [=Data Instance=] of the registered
+      [=shape tree=]. Requires advance knowledge of the 
+      [=Data Instance=]</td>
     </tr>
-    <tr>
-      <td>supports</td>
-      <td>[AccessNeed](#classAccessNeed)</td>
-      <td>An [=Access Need=] that the [=shape tree=] of this
-      [=Access Need=] `st:supports`</td>
-    </tr>        
     <tr>
       <td>inheritsFromNeed</td>
       <td>[AccessNeed](#classAccessNeed)</td>
@@ -212,15 +157,161 @@ specified.
 </table>
 
 <figure>
-  <figcaption>[=Access Needs=] for Projects and Issues</figcaption>  
+  <figcaption>[=Access Needs=] for Projects and Tasks in an [=Access Need Group=] for Projectron -
+  <a href="snippets/projectron.example/projectron.example.ttl">View</a></figcaption>
   <pre class=include-code>
   path: snippets/projectron.example/projectron.example.ttl
   highlight: turtle
-  show: 25-42
+  show: 17-45
   </pre> 
 </figure>
 
-## Access Request ## {#needs-access-request}
+## Access Decorators ## {#access-decorators}
+
+### Access Need Group Decorator ### {#access-need-group-decorator}
+
+An <dfn>Access Need Group Decorator</dfn> provides a short label or
+title and a more in-depth description that explains why a given 
+[=Access Need Group=] is being requested of a [=Social Agent=].
+
+[Class Definition](interop.ttl#AccessNeedGroupDecorator) -
+[Shape Definition](interop.shex#AccessNeedGroupDecoratorShape)
+
+<table class="classinfo data" align="left" id="classAccessNeedGroupDecorator">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>inAccessDecoratorSet</td>
+      <td>[AccessDecoratorSet](#classAccessDecoratorSet)</td>
+      <td>[=Access Decorator Set=] the decorator is part of</td>
+    </tr>
+    <tr>
+      <td>hasAccessNeedGroup</td>
+      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
+      <td>[=Access Need Group=] the decorator applies to</td>
+    </tr>
+    <tr>
+      <td>skos:preflabel</td>
+      <td>`xsd:string`</td>
+      <td>Short label (title) for the [=Access Need Group=]</td>
+    </tr>
+    <tr>
+      <td>skos:definition</td>
+      <td>`xsd:string`</td>
+      <td>Description of why the [=Access Need Group=] requires the
+      access it is requesting.</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>English [=Access Need Group Decorator=] for Projectron -
+  <a href="snippets/projectron.example/access-en.ttl">View</a></figcaption>
+  <pre class=include-code>
+  path: snippets/projectron.example/access-en.ttl
+  highlight: turtle
+  show: 10-15
+  </pre> 
+</figure>
+
+### Access Need Decorator ### {#access-need-decorator}
+
+An <dfn>Access Need Decorator</dfn> provides a specific
+explanation of why that data type is being requested by
+a given [=Access Need=].
+
+[Class Definition](interop.ttl#AccessNeedDecorator) -
+[Shape Definition](interop.shex#AccessNeedDecoratorShape)
+
+<table class="classinfo data" align="left" id="classAccessNeedDecorator">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>inAccessDecoratorSet</td>
+      <td>[AccessDecoratorSet](#classAccessDecoratorSet)</td>
+      <td>[=Access Decorator Set=] the decorator is part of</td>
+    </tr>
+    <tr>
+      <td>hasAccessNeedGroup</td>
+      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
+      <td>[=Access Need Group=] the decorator applies to</td>
+    </tr>
+    <tr>
+      <td>skos:prefLabel</td>
+      <td>`xsd:string`</td>
+      <td>Specific explanation of why that data type is being requested</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>English [=Access Need Decorator=] for Projects -
+  <a href="snippets/projectron.example/access-en.ttl">View</a></figcaption>
+  <pre class=include-code>
+  path: snippets/projectron.example/access-en.ttl
+  highlight: turtle
+  show: 17-21
+  </pre> 
+</figure>
+
+### Access Decorator Set ### {#access-decorator-set}
+
+An <dfn>Access Decorator Set</dfn> is a collection of [=Access Need Group Decorators=]
+and [=Access Need Decorators=].
+
+[Class Definition](interop.ttl#AccessDecoratorSet) -
+[Shape Definition](interop.shex#AccessDecoratorSetShape)
+
+<table class="classinfo data" align="left" id="classAccessDecoratorSet">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>usesLanguage</td>
+      <td>`xsd:language`</td>
+      <td>Language that the [=Access Need Group Decorators=] and
+      [=Access Needs=] in the Set use</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>English [=Access Decorator Set=] for Projectron -
+  <a href="snippets/projectron.example/access-en.ttl">View</a></figcaption>
+  <pre class=include-code>
+  path: snippets/projectron.example/access-en.ttl
+  highlight: turtle
+  show: 6-30
+  </pre> 
+</figure>
+
+## Access Request ## {#access-request}
 
 An <dfn>Access Request</dfn> is used to send [=Access Need Groups=] from
 one [=Agent=] to another.
@@ -261,248 +352,8 @@ one [=Agent=] to another.
 <figure>
   <figcaption>An [=Access Request=] sent from one agent to another</figcaption>  
   <pre class=include-code>
-  path: snippets/alice.example/66e90b51-abd1-444c-b1df-74370c8c7969.ttl
+  path: snippets/alice.example/66e90b51.ttl
   highlight: turtle
   show: 6-9
   </pre> 
 </figure>
-
-## Access Decorator Index ## {#needs-access-decorator-index}
-
-An <dfn>Access Decorator Index</dfn> is a listing of one or more
-[=Access Decorator Series=].
-
-[Class Definition](interop.ttl#AccessDecoratorIndex) -
-[Shape Definition](interop.shex#AccessDecoratorIndexShape)
-
-<table class="classinfo data" align="left" id="classAccessDecoratorIndex">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>defaultLanguage</td>
-      <td>`xsd:language`</td>
-      <td>Default language to select if not provided as input</td>
-    </tr>
-    <tr>
-      <td>hasSeries</td>
-      <td>[AccessDecoratorSeries](#classAccessDecoratorSeries)</td>
-      <td>Link to an [=Access Decorator Series=]</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-  <figcaption>[=Access Decorator Index=] document linked by the
-  project management access need group</figcaption>  
-  <pre class=include-code>
-  path: snippets/projectron.example/projectron-decorator-index.ttl
-  highlight: turtle
-  show: 4-7
-  </pre> 
-</figure>
-
-### Access Decorator Series ### {#needs-access-decorator-series}
-
-An <dfn>Access Decorator Series</dfn> has one or
-more [=Access Decorator Versions=] in a given language.
-
-[Class Definition](interop.ttl#AccessDecoratorSeries) -
-[Shape Definition](interop.shex#AccessDecoratorSeriesShape)
-
-<table class="classinfo data" align="left" id="classAccessDecoratorSeries">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>usesLanguage</td>
-      <td>xsd:language</td>
-      <td>Language code associated with the [=Access Decorator Series=]</td>
-    </tr>
-    <tr>
-      <td>hasVersion</td>
-      <td>[AccessDecoratorVersion](#classAccessDecoratorVersion)</td>
-      <td>Links to an [=Access Decorator Version=] in the series</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-  <figcaption>[=Access Decorator Series=] containing english decorator versions</figcaption>  
-  <pre class=include-code>
-  path: snippets/projectron.example/projectron-decorator-index.ttl
-  highlight: turtle
-  show: 9-12
-  </pre> 
-</figure>
-
-### Access Decorator Version ### {#needs-access-decorator-version}
-
-An <dfn>Access Decorator Version</dfn> is a versioned instance of
-a given [=Access Decorator Resource=].
-
-[Class Definition](interop.ttl#AccessDecoratorVersion) -
-[Shape Definition](interop.shex#AccessDecoratorVersionShape)
-
-<table class="classinfo data" align="left" id="classAccessDecoratorVersion">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>isVersion</td>
-      <td>xsd:string</td>
-      <td>Semantic version of the [=Access Decorator Resource=] (e.g. "1.1.0")</td>
-    </tr>
-    <tr>
-      <td>hasSHA256</td>
-      <td>xsd:string</td>
-      <td>SHA-256 hash of the linked [=Access Decorator Resource=]</td>
-    </tr>
-    <tr>
-      <td>hasAccessDecoratorResource</td>
-      <td>[AccessDecoratorResource](#classAccessDecoratorResource)</td>
-      <td>Links to the actual [=Access Decorator Resource=] document</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-  <figcaption>[=Access Decorator Versions=] for english</figcaption>  
-  <pre class=include-code>
-  path: snippets/projectron.example/projectron-decorator-index.ttl
-  highlight: turtle
-  show: 14-24
-  </pre> 
-</figure>
-
-## Access Decorator Resource ## {#needs-access-decorator-resource}
-
-An <dfn>Access Decorator Resource</dfn> is a document that contains
-[=Access Need Group Decorators=] and [=Access Need Decorators=] in a
-given language.
-
-[Class Definition](interop.ttl#AccessDecoratorResource) -
-[Shape Definition](interop.shex#AccessDecoratorResourceShape)
-
-<table class="classinfo data" align="left" id="classAccessDecoratorResource">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><i>No properties</i></td>
-      <td>-</td>
-      <td>-</td>
-    </tr>
-  </tbody>
-</table>
-
-### Access Need Group Decorator ### {#needs-access-need-group-decorator}
-
-An <dfn>Access Need Group Decorator</dfn> provides a subject name and
-a more in-depth description that explains why a given [=Access Need Group=]
-is being requested of a [=Social Agent=].
-
-[Class Definition](interop.ttl#AccessNeedGroupDecorator) -
-[Shape Definition](interop.shex#AccessNeedGroupDecoratorShape)
-
-<table class="classinfo data" align="left" id="classAccessNeedGroupDecorator">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>hasAccessNeedGroup</td>
-      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
-      <td>[=Access Need Group=] the decorator applies to</td>
-    </tr>
-    <tr>
-      <td>skos:preflabel</td>
-      <td>`xsd:string`</td>
-      <td>Short label (title) for the [=Access Need Group=]</td>
-    </tr>
-    <tr>
-      <td>skos:definition</td>
-      <td>`xsd:string`</td>
-      <td>Description of why the [=Access Need Group=] requires the
-      access it is requesting.</td>
-    </tr>
-  </tbody>
-</table>
-
-### Access Need Decorator ### {#needs-access-need-decorator}
-
-An <dfn>Access Need Decorator</dfn> provides a specific
-explanation of why that data type is being requested.
-
-[Class Definition](interop.ttl#AccessNeedDecorator) -
-[Shape Definition](interop.shex#AccessNeedDecoratorShape)
-
-<table class="classinfo data" align="left" id="classAccessNeedDecorator">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>hasAccessNeedGroup</td>
-      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
-      <td>[=Access Need Group=] the decorator applies to</td>
-    </tr>
-    <tr>
-      <td>registeredShapeTree</td>
-      <td>`st:ShapeTree`</td>
-      <td>[=Shape tree=] associated with the [=Access Need=] the decorator
-      should apply to</td>
-    </tr>
-    <tr>
-      <td>skos:prefLabel</td>
-      <td>`xsd:string`</td>
-      <td>Specific explanation of why that data type is being requested</td>
-    </tr>
-  </tbody>
-</table>
