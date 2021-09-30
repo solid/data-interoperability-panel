@@ -28,8 +28,8 @@ projectron:\#id
   interop:registeredShapeTree pm-shapetrees:ProjectTree ;
   interop:hasAccessNeedDecorator projectron:index\#projectDecorator ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write ;
-  interop:creatorAccessMode acl:Control .
+  interop:accessMode acl:Read, acl:Create ;
+  interop:creatorAccessMode acl:Update, acl:Delete .
 
 <#need-issue>
   a interop:AccessNeed ;
@@ -37,8 +37,8 @@ projectron:\#id
   interop:hasAccessNeedDecorator projectron:index\#issueDecorator ;
   interop:registeredShapeTree pm-shapetrees:IssueTree ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write ;
-  interop:creatorAccessMode acl:Control ;
+  interop:accessMode acl:Read, acl:Create ;
+  interop:creatorAccessMode acl:Update, acl:Delete ;
   interop:inheritsFromNeed <#need-project> .
 
 <#need-task>
@@ -47,8 +47,8 @@ projectron:\#id
   interop:hasAccessNeedDecorator projectron:index\#taskDecorator ;
   interop:registeredShapeTree pm-shapetrees:TaskTree ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write ;
-  interop:creatorAccessMode acl:Control ;
+  interop:accessMode acl:Read, acl:Create ;
+  interop:creatorAccessMode acl:Update, acl:Delete ;
   interop:inheritsFromNeed <#need-project> .
 
 <#need-release>
@@ -57,8 +57,8 @@ projectron:\#id
   interop:hasAccessNeedDecorator projectron:index\#releaseDecorator ;
   interop:registeredShapeTree pm-shapetrees:ReleaseTree ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write ;
-  interop:creatorAccessMode acl:Control ;
+  interop:accessMode acl:Read, acl:Create ;
+  interop:creatorAccessMode acl:Update, acl:Delete ;
   interop:inheritsFromNeed <#need-project> .
 
 <#need-milestone>
@@ -67,6 +67,6 @@ projectron:\#id
   interop:hasAccessNeedDecorator projectron:index\#milestoneDecorator ;
   interop:registeredShapeTree pm-shapetrees:MilestoneTree ;
   interop:accessNecessity interop:accessRequired ;
-  interop:accessMode acl:read, acl:write ;
-  interop:creatorAccessMode acl:Control ;
+  interop:accessMode acl:Read, acl:Create ;
+  interop:creatorAccessMode acl:Update, acl:Delete ;
   interop:inheritsFromNeed <#need-project> .

@@ -86,7 +86,7 @@ language-specific content mappings.
   <pre class=include-code>
   path: snippets/projectron.example/projectron.example.ttl
   highlight: turtle
-  show: 19-25
+  show: 17-23
   </pre> 
 </figure>
 
@@ -116,7 +116,8 @@ Each [=Access Need=] has one or more [=access modes=], and a property that
 indicates the necessity of the [=Access Need=]; *required* or
 *optional*. For example, an [=Access Need=] for read access to
 [=shape tree=] `N` can be identified as a required item in the
-[=Access Need Group=]. In cases where `acl:Write` or `acl:Append` permit
+[=Access Need Group=]. In cases where `acl:Create`, `acl:Write`, 
+or `acl:Append` permit
 the ability to create new [=Data Instances=], the
 [interop:creatorAccessMode](interop.ttl#creatorAccessMode)
 allows the resultant modes for the creator of the resource to be
@@ -172,16 +173,16 @@ specified.
     </tr>
     <tr>
       <td>accessMode</td>
-      <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
+      <td>`acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append`</td>
       <td>Requested modes of access for the [=Access Need=]</td>
     </tr>
     <tr>
       <td>creatorAccessMode</td>
-      <td>`acl:Read, acl:Write, acl:Control, acl:Append`</td>
+      <td>`acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append`</td>
       <td>Requested mode of access for the creator of a Data Instance. 
         Adds to the set of modes linked via 
         `interop:accessMode`. Only valid when `accessMode` includes
-        `acl:Write` or `acl:Append`</td>
+        `acl:Create`, `acl:Write`, or `acl:Append`</td>
     </tr>
     <tr>
       <td>accessNecessity</td>
