@@ -5,20 +5,15 @@ The following operations pertain to
 [Access Grants](https://solid.github.io/data-interoperability-panel/specification/#grants)
 in the [[SAI|Solid Application Interoperability Specification]].
 
-Load or initialize the two main grant types: [=Access Grant=], [=Access Invitation=]
+Load or initialize [=Access Grants=]
 
 * [[#grants-loadgrant]] - Load an existing [=Access Grant=]
-    from an [=Access Grant Registry=]
-* [[#grants-loadinvitation]] - Load an existing [=Access Invitation=]
     from an [=Access Grant Registry=]
 
 * [[#grants-initializegrant]] - Initializes a new [=Access Grant=] for a given
     [=Access Grant Subject=] with one or more [=Access Need Groups=]
-* [[#grants-initializeinvitation]] - Initializes a new [=Access Invitation=]
-    for one or more [=Access Invitation Channels=] with one or more
-    [=Access Need Groups=]
 
-Each [=Access Grant=] or [=Access Invitation=] will have some combination
+Each [=Access Grant=] will have some combination
 of [=Data Grants=], and/or [=Trusted Grants=]:
 
 * [[#grants-initializedatagrant]] - Initialize a [=Data Grant=] as part
@@ -26,11 +21,9 @@ of [=Data Grants=], and/or [=Trusted Grants=]:
 * [[#grants-initializetrustedgrant]] - Initialize a [=Trusted Grant=] as part
     of [=Access Grant=] initialization
 
-Record [=Access Grants=] and [=Access Invitations=]:
+Record [=Access Grants=]:
 
 * [[#grants-recordgrant]] - Store a new or updated [=Access Grant=]
-    in an [=Access Grant Registry=]
-* [[#grants-recordinvitation]] - Store a new or updated [=Access Invitation=]
     in an [=Access Grant Registry=]
 
 Apply permissions based on the composition of an [=Access Grant=]:
@@ -105,68 +98,6 @@ Apply permissions based on the composition of an [=Access Grant=]:
     1. For each [=Trusted Need=] `TNEED` in `GROUP`
         1. Call [[#grants-initializetrustedgrant]] with inputs: `TNEED`
 1. Return `GRANT`
-
-</div>
-
-## Initialize Invitation ## {#grants-initializeinvitation}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-        Initialize an [=Access Invitation=] by processing
-        the input [=Access Need Groups=] and
-        then initializing [=Data Grants=], 
-        or [=Trusted Grants=] with no access (yet).
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`ICHANNELS`</td>
-      <td>A set of [=Access Invitation Channels=]</td>
-    </tr>
-    <tr>
-      <td>`GROUPS`</td>
-      <td>[=Access Need Groups=] to associate with the [=Access Invitation=]</td>
-    </tr>
-    <tr>
-      <td>`LANG`</td>
-      <td>The [=Social Agent's=] preferred language</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>[=Access Invitation=]</td>
-      <td>Newly initialized based on input [=Access Invitation Channels=]</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `INVITE` be a newly initialized [=Access Invitation=]
-1. For each [=Access Invitation Channel=] `ICHANNEL` in `ICHANNELS`
-    1. Let `ICHANNEL` be linked to `INVITE` via `INVITE hasAccessInvitationChannel`
-1. For each [=Access Need Group=] `GROUP` in `GROUPS`
-    1. Link `GROUP` to `INVITE` via `INVITE hasAccessNeedGroup`
-1. For each [=Access Need Group=] `GROUP` linked via `INVITE hasAccessNeedGroup`
-    1. For each [=Access Need=] `NEED` in `GROUP`
-        1. Call [[#grants-initializedatagrant]] with inputs: `NEED`, `GRANT`
-    1. For each [=Trusted Need=] `TNEED` in `GROUP`
-        1. Call [[#grants-initializetrustedgrant]] with inputs: `TNEED`, `GRANT`
-1. Return `INVITE`
 
 </div>
 
@@ -341,63 +272,6 @@ Apply permissions based on the composition of an [=Access Grant=]:
 
 </div>
 
-## Load Invitation ## {#grants-loadinvitation}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation will load an [=Access Invitation=] from a
-      given [=Access Grant Registry=]
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`TARGET`</td>
-      <td>An `interop:ChannelTarget` to match</td>
-    </tr>
-    <tr>
-      <td>`CODE`</td>
-      <td>An optional `interop:channelCode` to match</td>
-    </tr>
-    <tr>
-      <td>`REGISTRY`</td>
-      <td>An [=Access Grant Registry=] to search</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>[=Access Invitations=]</td>
-      <td>Matching `TARGET` and (if provided) `CODE`</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Let `INVITATIONS` be an empty set of [=Access Invitations=]
-1. For each [=Access Invitation=] `INVITATION` linked via `REGISTRY hasRegistration`
-    1. For each [=Access Invitation Channel=] `ICHANNEL` linked via
-        `INVITATION hasAccessInvitationChannel`
-        1. Next if `ICHANNEL channelTarget` != `TARGET`
-        1. Next if `CODE` is not empty and `ICHANNEL channelCode` != `CODE`
-        1. Add `INVITATION` to `INVITATIONS`
-1. Return `INVITATIONS`
-
-</div>
-
 ## Record Grant ## {#grants-recordgrant}
 
 <table class="data operation" align="left">
@@ -455,66 +329,6 @@ Apply permissions based on the composition of an [=Access Grant=]:
 Issue: Need to properly factor in multi-pod scenarios. Must identify the
 proper access registry to store things in based on the data registration, which
 means pods will also need to be registered.
-
-## Record Invitation ## {#grants-recordinvitation}
-
-<table class="data operation" align="left">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr><th colspan=2>Description</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td colspan=2>
-      This operation stores a new or updated [=Access Invitation=] in
-      an [=Access Grant Registry=].
-      </td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Inputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>`INVITATION`</td>
-      <td>An [=Access Invitation=]</td>
-    </tr>
-    <tr>
-      <td>`REGISTRY`</td>
-      <td>An [=Access Grant Registry=]</td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr><th colspan=2>Outputs</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>[=Access Invitation=]</td>
-      <td>Stored in `REGISTRY`</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="opdetails">
-
-1. Add or Update `INVITATION` resource in the `REGISTRY` container, conforming to
-    the assigned
-    [interopt:AccessInvitationTree](interop.tree#AccessInvitationTree)
-1. Link `INVITATION` to the `REGISTRY` via `ACCESS hasRegistration` if
-        it has not already been added
-1. Call [[#grants-deliverinvitation]] with inputs: `INVITATION`
-1. Return `INVITATION`
-
-</div>
-
-## Deliver Invitation ## {#grants-deliverinvitation}
-
-Issue: Write standard operation for invitation delivery
-
-## Validate Invitation ## {#grants-validateinvitation}
-
-Issue: Write standard operation for validating an invitation
 
 ## Apply Permissions ## {#apply-permissions}
 

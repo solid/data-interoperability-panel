@@ -230,37 +230,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   interop:satisfiesAccessNeed IRI? .
 }
 
-# Access Invitation
-<#AccessInvitationShape> {
-  a [ interop:AccessInvitation ] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI? ;
-  interop:registeredAt xsd:dateTime ;
-  interop:updatedAt xsd:dateTime ;
-  interop:expiresAt xsd:dateTime? ;
-  interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+ ;
-  interop:hasDataGrant @<#:DataGrantShape>+ ;
-  interop:hasAccessInvitationChannel @<#:AccessInvitationChannelShape>+
-}
-
-# Access Invitation Channel
-<#AccessInvitationChannelShape> {
-   a @<#ChannelTypes> ;
-   interop:channelTarget xsd:string ;
-   interop:channelCode xsd:string ;
-   interop:isValidated xsd:boolean ;
-   interop:remainingAttempts xsd:integer
-}
-
-# Access Invitation Channel Types
-<#ChannelTypes> [
-  :PhoneInvitationChannel   # Telephone
-  :EmailInvitationChannel   # E-mail
-  :SMSInvitationChannel     # SMS (Simple Messaging Service)
-  :OfflineInvitationChannel # Other communication, e.g. verbal, shared note
-  :LDNInvitationChannel     # Linked Data Notification
-]
-
 # Access Grant
 <#AccessGrantShape> {
   a [ interop:AccessGrant ] ;
