@@ -1,0 +1,442 @@
+Access Invitations {#invitations}
+=====================
+
+[=Access Consents=] record a [=Social Agent's=] decision to grant access to
+some portion of the data in their control to another [=Social Agent=] or 
+[=Application=]. [=Access Consents=] are not shared with a grantee.
+
+[=Access Grants=] are generated from [=Access Consents=]. They are shared
+with a given [=Agent=] to communicate the scope of access that has been
+granted to them.
+
+## Access Invitations ## {#access-invitations}
+
+An <dfn>Access Invitation</dfn> is a subclass of [=Access Grant=] used when
+a [=Social Agent=] wishes to grant access to another [=Social Agent=] whose
+decentralized [=identity=] is unknown to them, or may not exist yet, so they
+must be first invited through another channel (such as phone or email).
+
+Like an [=Access Grant=], an [=Access Invitation=] links to access
+criteria detailed in one or more [=Access Need Groups=], with
+associated [=Data Grants=] or [=Trusted Grants=] indicating the
+intended access to be granted.
+
+However, instead of linking to an [=Access Grant Subject=], an
+[=Access Invitation=] links to one or more [=Access Invitation Channels=].
+
+Each channel represents a mechanism through which the invitation can
+be delivered and validated. The mechanism is designed so that multiple
+channels may be validated before an invitation is confirmed and
+converted to an [=Access Grant=].
+
+[Class Definition](interop.ttl#AccessInvitation) -
+[Shape Definition](interop.shex#AccessInvitationShape) -
+[Shape Tree Definition](interop.tree#AccessInvitationTree)
+
+<table class="classinfo data" align="left" id="classAccessInvitation">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>[[SAI#classSocialAgent]]</td>
+      <td>[=Social Agent=] that registered the [=Access Invitation=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>[[SAI#classApplication]]</td>
+      <td>[=Application=] used to create the [=Access Invitation=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Invitation=] was created</td>
+    </tr>
+    <tr>
+      <td>expiresAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Invitation=] expires</td>
+    </tr>
+    <tr>
+      <td>hasAccessInvitationChannel</td>
+      <td>[AccessInvitationChannel](#classAccessInvitationChannel)</td>
+      <td>Links to an [=Access Invitation Channel=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessNeedGroup</td>
+      <td>[[SAI#classAccessNeedGrouup]]</td>
+      <td>Links to an [=Access Need Group=] associated with
+      the [=Access Invitation=].</td>
+    </tr>
+    <tr>
+      <td>hasDataGrant</td>
+      <td>[[SAI#classDataGrant]]</td>
+      <td>Links to a [=Data Grant=] associated with the
+      [=Access Invitation=].</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>An [=Access Invitation=] at
+  https://alice.example/grants/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f.ttl
+  highlight: turtle
+  show: 13-27
+  </pre>
+</figure>
+
+## Access Invitation Channel ## {#datamodel-access-invitation-channel}
+
+An <dfn>Access Invitation Channel</dfn> represents a mechanism through
+which an [=Access Invitation=] can be delivered and validated.
+
+[Class Definition](interop.ttl#AccessInvitationChannel) -
+[Shape Definition](interop.shex#AccessInvitationChannelShape)
+
+<table class="classinfo data" align="left" id="classAccessInvitationChannel">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>rdf:type</td>
+      <td>interop:PhoneInvitationChannel,
+      interop:EmailInvitationChannel,
+      interop:SMSInvitationChannel,
+      interop:OfflineInvitationChannel,
+      interop:LDNInvitationChannel</td>
+      <td>Each channel is represented by a subClassOf
+      AccessInvitationChannel</td>
+    </tr>
+    <tr>
+      <td>channelTarget</td>
+      <td>xsd:string</td>
+      <td>Target used when validating the channel</td>
+    </tr>
+    <tr>
+      <td>channelCode</td>
+      <td>xsd:string</td>
+      <td>Code used for channel validation</td>
+    </tr>
+    <tr>
+      <td>isValidated</td>
+      <td>xsd:boolean</td>
+      <td>Indicates whether the channel has been validated</td>
+    </tr>
+    <tr>
+      <td>remainingAttempts</td>
+      <td>xsd:integer</td>
+      <td>Number of allowed validation attempts remaining</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>[=Access Invitation Channels=] in the [=Access Invitation=] at
+  https://alice.example/grants/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f.ttl
+  highlight: turtle
+  show: 29-41
+  </pre>
+</figure>
+
+Operations {#operations}
+=====================
+
+Load or initialize [=Access Invitations=]
+
+* [[#loadinvitation]] - Load an existing [=Access Invitation=]
+    from an [=Access Grant Registry=]
+* [[#initializeinvitation]] - Initializes a new [=Access Invitation=]
+    for one or more [=Access Invitation Channels=] with one or more
+    [=Access Need Groups=]
+
+Record [=Access Invitations=]:
+
+* [[#recordinvitation]] - Store a new or updated [=Access Invitation=]
+    in an [=Access Grant Registry=]
+
+## Initialize Invitation ## {#initializeinvitation}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+        Initialize an [=Access Invitation=] by processing
+        the input [=Access Need Groups=] and
+        then initializing [=Data Grants=], 
+        or [=Trusted Grants=] with no access (yet).
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`ICHANNELS`</td>
+      <td>A set of [=Access Invitation Channels=]</td>
+    </tr>
+    <tr>
+      <td>`GROUPS`</td>
+      <td>[=Access Need Groups=] to associate with the [=Access Invitation=]</td>
+    </tr>
+    <tr>
+      <td>`LANG`</td>
+      <td>The [=Social Agent's=] preferred language</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Access Invitation=]</td>
+      <td>Newly initialized based on input [=Access Invitation Channels=]</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `INVITE` be a newly initialized [=Access Invitation=]
+1. For each [=Access Invitation Channel=] `ICHANNEL` in `ICHANNELS`
+  1. Let `ICHANNEL` be linked to `INVITE` via `INVITE hasAccessInvitationChannel`
+1. For each [=Access Need Group=] `GROUP` in `GROUPS`
+  1. Link `GROUP` to `INVITE` via `INVITE hasAccessNeedGroup`
+1. For each [=Access Need Group=] `GROUP` linked via `INVITE hasAccessNeedGroup`
+  1. For each [=Access Need=] `NEED` in `GROUP`
+    1. Call [[SAI#grants-initializedatagrant]] with inputs: `NEED`, `GRANT`
+  1. For each [=Trusted Need=] `TNEED` in `GROUP`
+    1. Call [[SAI#grants-initializetrustedgrant]] with inputs: `TNEED`, `GRANT`
+1. Return `INVITE`
+
+</div>
+
+## Load Invitation ## {#loadinvitation}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation will load an [=Access Invitation=] from a
+      given [=Access Grant Registry=]
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`TARGET`</td>
+      <td>An `interop:ChannelTarget` to match</td>
+    </tr>
+    <tr>
+      <td>`CODE`</td>
+      <td>An optional `interop:channelCode` to match</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>An [=Access Grant Registry=] to search</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Access Invitations=]</td>
+      <td>Matching `TARGET` and (if provided) `CODE`</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Let `INVITATIONS` be an empty set of [=Access Invitations=]
+1. For each [=Access Invitation=] `INVITATION` linked via `REGISTRY hasRegistration`
+  1. For each [=Access Invitation Channel=] `ICHANNEL` linked via
+     `INVITATION hasAccessInvitationChannel`
+    1. Next if `ICHANNEL channelTarget` != `TARGET`
+    1. Next if `CODE` is not empty and `ICHANNEL channelCode` != `CODE`
+    1. Add `INVITATION` to `INVITATIONS`
+1. Return `INVITATIONS`
+
+</div>
+
+## Record Invitation ## {#recordinvitation}
+
+<table class="data operation" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr><th colspan=2>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=2>
+      This operation stores a new or updated [=Access Invitation=] in
+      an [=Access Grant Registry=].
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Inputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`INVITATION`</td>
+      <td>An [=Access Invitation=]</td>
+    </tr>
+    <tr>
+      <td>`REGISTRY`</td>
+      <td>An [=Access Grant Registry=]</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr><th colspan=2>Outputs</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[=Access Invitation=]</td>
+      <td>Stored in `REGISTRY`</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="opdetails">
+
+1. Add or Update `INVITATION` resource in the `REGISTRY` container, conforming to
+    the assigned
+    [interopt:AccessInvitationTree](interop.tree#AccessInvitationTree)
+1. Link `INVITATION` to the `REGISTRY` via `ACCESS hasRegistration` if
+    it has not already been added
+1. Call [[#deliverinvitation]] with inputs: `INVITATION`
+1. Return `INVITATION`
+
+</div>
+
+## Deliver Invitation ## {#deliverinvitation}
+
+Issue: Write standard operation for invitation delivery
+
+## Validate Invitation ## {#validateinvitation}
+
+Issue: Write standard operation for validating an invitation
+
+## Controller Shares Access with Invited Agent ## {#controllerinvite}
+
+Controlling Agent initiates sharing their data with an Agent that doesn't
+have an identity or a pod.
+
+Let `CONTROLLER` be a [=Social Agent=] in control of data that
+they would like to authorize `INVITEE` to access.
+
+Let `CAPP` be an [=Application=] piloted by `CONTROLLER`
+
+Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
+authorization and access control.
+
+Let `CISERVICE` be an [=Application=] trusted by `CONTROLLER` to validate
+invitations made to `INVITEE`s.
+
+Let `INVITEE` be a person without an [=identity=] or [=pod=] that `CONTROLLER`
+would like to authorize to access their data. `CONTROLLER` knows their
+e-mail address and mobile phone number.
+
+LET `PROVIDER` be a service that hosts [=identities=] and [=pods=] who
+provisions the same for `INVITEE`
+
+Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
+`INVITEE` for authorization and access control.
+
+1. `CONTROLLER` would like to give `INVITEE` access to their data.
+1. `CONTROLLER` provides `INVITEE`'s e-mail address and mobile number to `CAPP`.
+1. `CAPP` discovers that `CAUTHZ` is an [=Application=] that is a
+    [=Trusted Agent=] of `CONTROLLER` for data authorization
+1. `CAPP` redirects `CONTROLLER` to `CAUTHZ`
+  1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
+     [=Access Need Groups=] with an `interop:accessScenario` of
+     `interop:SharedAccess`
+  1. Any [=Access Need Groups=] found are passed to
+     the [[##present-grant]]
+     workflow, which presents them to `CONTROLLER`.
+  1. `CONTROLLER` authorizes the data to share with `INVITEE` based on
+     the provided [=Access Need Groups=].
+      1. The [[#recordinvitation]] operation is invoked
+          1. An [=Access Invitation=] is stored in `CONTROLLER`'s
+              [=Access Grant Registry=].
+          1. [[#deliverinvitation]] is called to create an
+              invitation entry for each [=Access Invitation Channel=] in
+              the [=Access Invitation=] with `CISERVICE`
+      1. For each [=Access Invitation Channel=] in the
+         [=Access Invitation=]
+        1. `CISERVICE` sends a notification to `INIVITEE` using the
+             medium associated with the [=Access Invitation Channel=]
+             type
+  1. `CAUTHZ` redirects `CONTROLLER` back to `CAPP`
+1. `INVITEE` receives a notification associated with one of the
+    [=Access Invitation Channels=].
+  1. `INVITEE` clicks a link in the notification to register an
+     identity and pod with `PROVIDER`.
+  1. `INVITEE` clicks a link in the notification bringing them to the
+     `CISERVICE` user interface to validate the invitation by
+     invoking [[#validateinvitation]].
+    1. If validation is successful, but there are other
+        [=Access Invitation Channels=] left to validate, the `INVITEE` will
+        be prompted to validate them. Continue until failure or
+        validation of all [=Access Invitation Channels=] are succesful.
+    1. `CISERVICE` initializes a new [=Access Grant=] via
+        [[SAI#grants-initializegrant]], using the contents of
+         the [=Access Invitation=], and the new registered
+         [=identity=] for `INVITEE`.
+    1. `CISERVICE` calls [[SAI#grants-recordgrant]] using the
+         [=Access Grant=] initialized from the [=Access Invitation=]
+      1. An [=Access Grant=] is stored in `CONTROLLER`'s
+         [=Access Grant Registry=].
+      1. [[SAI#apply-permissions]] is called to apply permissions
+         based on the [=Access Grant=].
+      1. [[SAI#provide-access-receipt]] is called to store the
+         [=Access Receipt=]. `INVITEE` has set
+         `interop:receivesAccessReceipt` to
+         `ReceiptInMessage`, so the [=Access Receipt=] is posted
+         to the access inbox identified via `hasAccessInbox` in
+         `INVITEE`'s '[=identity profile document=].
+
+
+Issue: Should we assume that CISERVICE is able to manage grants, or should
+it need to redirect through the authorization agent? Perhaps the recommendation
+should be that they are combined? Bad separation of concerns?
+
+Issue: This doesn't take account a sequencing of validation steps from
+one channel to another.
+

@@ -1,0 +1,34 @@
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX invite: <http://www.w3.org/ns/solid/invitation#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+# Access Invitation
+<#AccessInvitationShape> {
+  a [ invite:AccessInvitation ] ;
+  interop:registeredBy IRI ;
+  interop:registeredWith IRI? ;
+  interop:registeredAt xsd:dateTime ;
+  interop:updatedAt xsd:dateTime ;
+  interop:expiresAt xsd:dateTime? ;
+  interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+ ;
+  interop:hasDataGrant @<#:DataGrantShape>+ ;
+  invite:hasAccessInvitationChannel @<#:AccessInvitationChannelShape>+
+}
+
+# Access Invitation Channel
+<#AccessInvitationChannelShape> {
+   a @<#ChannelTypes> ;
+   invite:channelTarget xsd:string ;
+   invite:channelCode xsd:string ;
+   invite:isValidated xsd:boolean ;
+   invite:remainingAttempts xsd:integer
+}
+
+# Access Invitation Channel Types
+<#ChannelTypes> [
+  invite:PhoneInvitationChannel   # Telephone
+  invite:EmailInvitationChannel   # E-mail
+  invite:SMSInvitationChannel     # SMS (Simple Messaging Service)
+  invite:OfflineInvitationChannel # Other communication, e.g. verbal, shared note
+  invite:LDNInvitationChannel     # Linked Data Notification
+]

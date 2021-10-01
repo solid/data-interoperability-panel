@@ -86,8 +86,7 @@ PREFIX interops: <https://shapes.pub/drafts/ns/solid/interop#>
   a st:ShapeTree ;
   st:expectsType st:Container ;
   st:shape interops:AccessGrantRegistryShape ;
-  st:contains <#AccessGrantTree> ,
-              <#AccessInvitationTree> .
+  st:contains <#AccessGrantTree> .
 
 # Access Grant
 ##############################################################################
@@ -115,16 +114,6 @@ PREFIX interops: <https://shapes.pub/drafts/ns/solid/interop#>
   a st:ShapeTree ;
   st:expectsType st:Resource ;
   st:shape interops:InheritedDataGrantShape .
-
-# Access Invitation
-##############################################################################
-# Ensure the invititation resource graph contains a valid
-# AccessInvitation instance
-##############################################################################
-<#AccessInvitationTree>
-  a st:ShapeTree ;
-  st:expectsType st:Resource ;
-  st:shape interops:AccessInvitationShape .
 
 # Access Receipt
 ##############################################################################
