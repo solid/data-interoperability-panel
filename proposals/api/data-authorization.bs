@@ -427,7 +427,7 @@ Let `AUTHZ` be an [=Application=] trusted by the [=Social Agent=] for
                 [=Access Grant Registry=].
             1. [[#apply-permissions]] is called to apply permissions based
                 on the [=Access Grant=].
-            1. [[#provide-access-receipt]] is called to store the
+            1. [[#deliver-access-receipt]] is called to store the
                 [=Access Receipt=]. The Application has set
                 `interop:receivesAccessReceipt` to
                 `ReceiptInRegistration`, so the [=Access Receipt=] is
@@ -478,7 +478,7 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
         [=Access Grant Registry=].
         1. [[#apply-permissions]] is called to apply permissions based on the
             [=Access Grant=].
-        1. [[#provide-access-receipt]] is called to deliver the [=Access Receipt=].
+        1. [[#deliver-access-receipt]] is called to deliver the [=Access Receipt=].
             1. `CAUTHZ` dereferences `REQUESTER`'s [=identity=] to get
                 `REQUESTER`'s [=identity profile document=].
             1. `REQUESTER` has set `interop:receivesAccessReceipt` to
@@ -491,8 +491,8 @@ Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
         `RAUTHZ` user interface, and presenting the [=Access Receipt=]
         to `REQUESTER`.        
     1. `REQUESTER` accepts the [=Access Receipt=], and `RAUTHZ`
-        invokes the [[#record-access-receipt]] operation.
-        1. [[#record-access-receipt]] is called to store the [=Access Receipt=]
+        invokes the [[#process-access-receipt]] operation.
+        1. [[#process-access-receipt]] is called to store the [=Access Receipt=]
             in `REQUESTER`'s [=Access Receipt Registry=].
         1. Update the `REQUESTER`'s [=Agent Registy=] to reflect
             what is in the [=Access Receipt=].
@@ -532,7 +532,7 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
                 [=Access Grant Registry=].
             1. [[#apply-permissions]] is called to apply permissions based
                 on the [=Access Grant=].
-            1. [[#provide-access-receipt]] is called to store the
+            1. [[#deliver-access-receipt]] is called to store the
                 [=Access Receipt=]. `RECEIVER` has set
                 `interop:receivesAccessReceipt` to
                 `ReceiptInMessage`, so the [=Access Receipt=] is posted
@@ -544,8 +544,8 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
     1. `RECEIVER` clicks the link in the notification, opening the
         `RAUTHZ` user interface to review the [=Access Receipt=].
     1. `RECEIVER` accepts the [=Access Receipt=], and `RAUTHZ`
-        invokes the [[#record-access-receipt]] operation.
-        1. [[#record-access-receipt]] is called to store the [=Access Receipt=]
+        invokes the [[#process-access-receipt]] operation.
+        1. [[#process-access-receipt]] is called to store the [=Access Receipt=]
             in `RECEIVER`'s [=Access Receipt Registry=].
         1. Update the `RECEIVER`'s [=Agent Registry=] to reflect what 
             is in the [=Access Receipt=].
