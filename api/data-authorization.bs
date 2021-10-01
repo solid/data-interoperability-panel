@@ -5,7 +5,7 @@ The following workflows represent the
 [Data Authorization](https://solid.github.io/data-interoperability-panel/specification/#authz)
 patterns enabled by the [[SAI|Solid Application Interoperability Specification]].
 
-##  Presenting an Access Grant ##   {#present-grant}
+##  Presenting an Access Grant ## {#present-grant}
 
 <table class="data operation" align="left">
   <colgroup></colgroup>
@@ -28,9 +28,8 @@ patterns enabled by the [[SAI|Solid Application Interoperability Specification]]
 
       Access Grant presentation may be invoked from a number of 
       workflows and contexts, including but not limited to 
-      [[#authz-apprequest]], [[#authz-agentrequest]], 
-      [[#authz-controllershare]], and 
-      [[#authz-controllerinvite]].
+      [[#authz-apprequest]], [[#authz-agentrequest]], and 
+      [[#authz-controllershare]].
 
       This workflow is composed of several operations:
       
@@ -550,96 +549,3 @@ Let `RAUTHZ` be an [=Application=] trusted by `RECEIVER` for
             in `RECEIVER`'s [=Access Receipt Registry=].
         1. Update the `RECEIVER`'s [=Agent Registry=] to reflect what 
             is in the [=Access Receipt=].
-
-##  Controller Shares Access with Invited Agent ##  {#authz-controllerinvite}
-
-Controlling Agent initiates sharing their data with an Agent that doesn't
-have an identity or a pod.
-
-Let `CONTROLLER` be a [=Social Agent=] in control of data that
-    they would like to authorize `INVITEE` to access.
-
-Let `CAPP` be an [=Application=] piloted by `CONTROLLER`
-
-Let `CAUTHZ` be an [=Application=] trusted by `CONTROLLER` for
-    authorization and access control.
-
-Let `CISERVICE` be an [=Application=] trusted by `CONTROLLER` to validate
-    invitations made to `INVITEE`s.
-
-Let `INVITEE` be a person without an [=identity=] or [=pod=] that `CONTROLLER`
-    would like to authorize to access their data. `CONTROLLER` knows their
-    e-mail address and mobile phone number.
-
-LET `PROVIDER` be a service that hosts [=identities=] and [=pods=] who
-    provisions the same for `INVITEE`
-
-Let `PAUTHZ` be an [=Application=] offered by `PROVIDER` and trusted by
-    `INVITEE` for authorization and access control.
-
-1. `CONTROLLER` would like to give `INVITEE` access to their data.
-1. `CONTROLLER` provides `INVITEE`'s e-mail address and mobile number to `CAPP`.
-1. `CAPP` discovers that `CAUTHZ` is an [=Application=] that is a 
-    [=Trusted Agent=] of `CONTROLLER` for data authorization
-1. `CAPP` redirects `CONTROLLER` to `CAUTHZ`
-    1. `CAUTHZ` looks in `CAPP`'s [=application profile document=] for
-        [=Access Need Groups=] with an `interop:accessScenario` of
-        `interop:SharedAccess`
-    1. Any [=Access Need Groups=] found are passed to 
-        the [[##present-grant]]
-        workflow, which presents them to `CONTROLLER`.
-    1. `CONTROLLER` authorizes the data to share with `INVITEE` based on
-        the provided [=Access Need Groups=].
-        1. The [[#grants-recordinvitation]] operation is invoked
-            1. An [=Access Invitation=] is stored in `CONTROLLER`'s
-                [=Access Grant Registry=].
-            1. [[#grants-deliverinvitation]] is called to create an
-                invitation entry for each [=Access Invitation Channel=] in
-                the [=Access Invitation=] with `CISERVICE`
-            1. For each [=Access Invitation Channel=] in the
-                [=Access Invitation=]
-                1. `CISERVICE` sends a notification to `INIVITEE` using the
-                    medium associated with the [=Access Invitation Channel=]
-                    type
-    1. `CAUTHZ` redirects `CONTROLLER` back to `CAPP`
-1. `INVITEE` receives a notification associated with one of the
-    [=Access Invitation Channels=].
-    1. `INVITEE` clicks a link in the notification to register an
-        identity and pod with `PROVIDER`.
-    1. `INVITEE` clicks a link in the notification bringing them to the
-        `CISERVICE` user interface to validate the invitation by
-        invoking [[#grants-validateinvitation]].
-        1. If validation is successful, but there are other
-            [=Access Invitation Channels=] left to validate, the `INVITEE` will
-            be prompted to validate them. Continue until failure or
-            validation of all [=Access Invitation Channels=] are succesful.
-        1. `CISERVICE` initializes a new [=Access Grant=] via
-            [[#grants-initializegrant]], using the contents of
-            the [=Access Invitation=], and the new registered
-            [=identity=] for `INVITEE`.
-        1. `CISERVICE` calls [[#grants-recordgrant]] using the
-            [=Access Grant=] initialized from the [=Access Invitation=]
-            1. An [=Access Grant=] is stored in `CONTROLLER`'s
-                [=Access Grant Registry=].
-            1. [[#apply-permissions]] is called to apply permissions
-                based on the [=Access Grant=].
-            1. [[#provide-access-receipt]] is called to store the
-                [=Access Receipt=]. `INVITEE` has set
-                `interop:receivesAccessReceipt` to
-                `ReceiptInMessage`, so the [=Access Receipt=] is posted
-                to the access inbox identified via `hasAccessInbox` in
-                `INVITEE`'s '[=identity profile document=].
-
-
-Issue: Should we assume that CISERVICE is able to manage grants, or should
-it need to redirect through the authorization agent? Perhaps the recommendation
-should be that they are combined? Bad separation of concerns?
-
-Issue: This doesn't take account a sequencing of validation steps from
-one channel to another.
-
-## Application Services ## {#authz-services}
-
-###  Authorize Data Service ###  {#authz-service-authorize}
-
-Issue: Define data authorization service

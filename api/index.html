@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version a210b7d86, updated Thu Sep 16 13:45:19 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/api/" rel="canonical">
-  <meta content="8ca8be17147b570105eed249cf8632921b6cfe98" name="document-revision">
+  <meta content="bbd1d41aacf087bbbdec9e0aa3e672e273ac33c6" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -456,7 +456,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability Operations and API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-30">30 September 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-10-01">1 October 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -509,8 +509,6 @@ dfn > a.self-link::before      { content: "#"; }
       <li><a href="#authz-apprequest"><span class="secno">3.2</span> <span class="content">Application Requests Access</span></a>
       <li><a href="#authz-agentrequest"><span class="secno">3.3</span> <span class="content">Another Agent Requests Access</span></a>
       <li><a href="#authz-controllershare"><span class="secno">3.4</span> <span class="content">Controller Shares Access</span></a>
-      <li><a href="#authz-controllerinvite"><span class="secno">3.5</span> <span class="content">Controller Shares Access with Invited Agent</span></a>
-      <li><a href="#authz-services"><span class="secno">3.6</span> <span class="content">Application Services</span></a>
      </ol>
     <li>
      <a href="#needs"><span class="secno">4</span> <span class="content">Access Needs</span></a>
@@ -523,33 +521,28 @@ dfn > a.self-link::before      { content: "#"; }
      <a href="#grants"><span class="secno">5</span> <span class="content">Access Grants</span></a>
      <ol class="toc">
       <li><a href="#grants-initializegrant"><span class="secno">5.1</span> <span class="content">Initialize Grant</span></a>
-      <li><a href="#grants-initializeinvitation"><span class="secno">5.2</span> <span class="content">Initialize Invitation</span></a>
-      <li><a href="#grants-initializedatagrant"><span class="secno">5.3</span> <span class="content">Initialize Data Grant</span></a>
-      <li><a href="#grants-initializetrustedgrant"><span class="secno">5.4</span> <span class="content">Initialize Trusted Grant</span></a>
-      <li><a href="#grants-loadgrant"><span class="secno">5.5</span> <span class="content">Load Grant</span></a>
-      <li><a href="#grants-loadinvitation"><span class="secno">5.6</span> <span class="content">Load Invitation</span></a>
-      <li><a href="#grants-recordgrant"><span class="secno">5.7</span> <span class="content">Record Grant</span></a>
-      <li><a href="#grants-recordinvitation"><span class="secno">5.8</span> <span class="content">Record Invitation</span></a>
-      <li><a href="#grants-deliverinvitation"><span class="secno">5.9</span> <span class="content">Deliver Invitation</span></a>
-      <li><a href="#grants-validateinvitation"><span class="secno">5.10</span> <span class="content">Validate Invitation</span></a>
-      <li><a href="#apply-permissions"><span class="secno">5.11</span> <span class="content">Apply Permissions</span></a>
-      <li><a href="#apply-data-permissions"><span class="secno">5.12</span> <span class="content">Apply Data Permissions</span></a>
-      <li><a href="#apply-data-registration-permissions"><span class="secno">5.13</span> <span class="content">Apply Data Registration Permissions</span></a>
-      <li><a href="#get-shape-tree-reference"><span class="secno">5.14</span> <span class="content">Get Shape Tree Reference</span></a>
-      <li><a href="#apply-trusted-permissions"><span class="secno">5.15</span> <span class="content">Apply Trusted Permissions</span></a>
-      <li><a href="#apply-resource-permissions"><span class="secno">5.16</span> <span class="content">Apply Resource Permissions</span></a>
-      <li><a href="#apply-conditional-permissions"><span class="secno">5.17</span> <span class="content">Apply Conditional Resource Permissions</span></a>
-      <li><a href="#remove-resource-permissions"><span class="secno">5.18</span> <span class="content">Remove Resource Permissions</span></a>
-      <li><a href="#deny-access-need-group"><span class="secno">5.19</span> <span class="content">Deny Access Need Group</span></a>
-      <li><a href="#deny-data-grant"><span class="secno">5.20</span> <span class="content">Deny Data Grant</span></a>
-      <li><a href="#select-all-data-instances"><span class="secno">5.21</span> <span class="content">Select All Data Instances</span></a>
-      <li><a href="#select-all-inherited-data-instances"><span class="secno">5.22</span> <span class="content">Select All Inherited Data Instances</span></a>
-      <li><a href="#select-data-instance"><span class="secno">5.23</span> <span class="content">Select Specific Data Instance</span></a>
-      <li><a href="#select-inherited-data-instance"><span class="secno">5.24</span> <span class="content">Select Inherited Data Instance</span></a>
-      <li><a href="#select-inherited-data-instance①"><span class="secno">5.25</span> <span class="content">Select Specific Inherited Data Instance</span></a>
-      <li><a href="#select-trusted-registry-set"><span class="secno">5.26</span> <span class="content">Select Trusted Registry Set</span></a>
-      <li><a href="#select-trusted-registry"><span class="secno">5.27</span> <span class="content">Select Specific Trusted Registry</span></a>
-      <li><a href="#deny-trusted-grant"><span class="secno">5.28</span> <span class="content">Deny Trusted Grant</span></a>
+      <li><a href="#grants-initializedatagrant"><span class="secno">5.2</span> <span class="content">Initialize Data Grant</span></a>
+      <li><a href="#grants-initializetrustedgrant"><span class="secno">5.3</span> <span class="content">Initialize Trusted Grant</span></a>
+      <li><a href="#grants-loadgrant"><span class="secno">5.4</span> <span class="content">Load Grant</span></a>
+      <li><a href="#grants-recordgrant"><span class="secno">5.5</span> <span class="content">Record Grant</span></a>
+      <li><a href="#apply-permissions"><span class="secno">5.6</span> <span class="content">Apply Permissions</span></a>
+      <li><a href="#apply-data-permissions"><span class="secno">5.7</span> <span class="content">Apply Data Permissions</span></a>
+      <li><a href="#apply-data-registration-permissions"><span class="secno">5.8</span> <span class="content">Apply Data Registration Permissions</span></a>
+      <li><a href="#get-shape-tree-reference"><span class="secno">5.9</span> <span class="content">Get Shape Tree Reference</span></a>
+      <li><a href="#apply-trusted-permissions"><span class="secno">5.10</span> <span class="content">Apply Trusted Permissions</span></a>
+      <li><a href="#apply-resource-permissions"><span class="secno">5.11</span> <span class="content">Apply Resource Permissions</span></a>
+      <li><a href="#apply-conditional-permissions"><span class="secno">5.12</span> <span class="content">Apply Conditional Resource Permissions</span></a>
+      <li><a href="#remove-resource-permissions"><span class="secno">5.13</span> <span class="content">Remove Resource Permissions</span></a>
+      <li><a href="#deny-access-need-group"><span class="secno">5.14</span> <span class="content">Deny Access Need Group</span></a>
+      <li><a href="#deny-data-grant"><span class="secno">5.15</span> <span class="content">Deny Data Grant</span></a>
+      <li><a href="#select-all-data-instances"><span class="secno">5.16</span> <span class="content">Select All Data Instances</span></a>
+      <li><a href="#select-all-inherited-data-instances"><span class="secno">5.17</span> <span class="content">Select All Inherited Data Instances</span></a>
+      <li><a href="#select-data-instance"><span class="secno">5.18</span> <span class="content">Select Specific Data Instance</span></a>
+      <li><a href="#select-inherited-data-instance"><span class="secno">5.19</span> <span class="content">Select Inherited Data Instance</span></a>
+      <li><a href="#select-inherited-data-instance①"><span class="secno">5.20</span> <span class="content">Select Specific Inherited Data Instance</span></a>
+      <li><a href="#select-trusted-registry-set"><span class="secno">5.21</span> <span class="content">Select Trusted Registry Set</span></a>
+      <li><a href="#select-trusted-registry"><span class="secno">5.22</span> <span class="content">Select Specific Trusted Registry</span></a>
+      <li><a href="#deny-trusted-grant"><span class="secno">5.23</span> <span class="content">Deny Trusted Grant</span></a>
      </ol>
     <li>
      <a href="#receipts"><span class="secno">6</span> <span class="content">Access Receipts</span></a>
@@ -909,7 +902,7 @@ of the <code>RESOURCES</code> hierarchy</p>
        <p>Each <a data-link-type="dfn">Access Grant</a> is associated with a specific <a data-link-type="dfn">Access Grant Subject</a>, and one or more <a data-link-type="dfn">Access Need Groups</a>. 
       The <a data-link-type="dfn">Access Grant Subject</a> may be another <a data-link-type="dfn">Agent</a>, an <a data-link-type="dfn">Agent</a> using an <a data-link-type="dfn">Application</a>, or an <a data-link-type="dfn">Application</a> operating as an <a data-link-type="dfn">Agent</a>.</p>
        <p>Access Grant presentation may be invoked from a number of
-      workflows and contexts, including but not limited to <a href="#authz-apprequest">§ 3.2 Application Requests Access</a>, <a href="#authz-agentrequest">§ 3.3 Another Agent Requests Access</a>, <a href="#authz-controllershare">§ 3.4 Controller Shares Access</a>, and <a href="#authz-controllerinvite">§ 3.5 Controller Shares Access with Invited Agent</a>.</p>
+      workflows and contexts, including but not limited to <a href="#authz-apprequest">§ 3.2 Application Requests Access</a>, <a href="#authz-agentrequest">§ 3.3 Another Agent Requests Access</a>, and <a href="#authz-controllershare">§ 3.4 Controller Shares Access</a>.</p>
        <p>This workflow is composed of several operations:</p>
        <ol>
         <li data-md>
@@ -951,7 +944,7 @@ workflow.</p>
    <div class="opdetails">
     <ol>
      <li data-md>
-      <p>Let <code>GRANT</code> be an existing <a data-link-type="dfn">Access Grant</a> for <code>SUBJECT</code> returned by <a href="#grants-loadgrant">§ 5.5 Load Grant</a></p>
+      <p>Let <code>GRANT</code> be an existing <a data-link-type="dfn">Access Grant</a> for <code>SUBJECT</code> returned by <a href="#grants-loadgrant">§ 5.4 Load Grant</a></p>
       <ol>
        <li data-md>
         <p>If <code>GRANT</code> is missing, create one via <a href="#grants-initializegrant">§ 5.1 Initialize Grant</a></p>
@@ -984,7 +977,7 @@ workflow.</p>
       <p>Call <a href="#present-needgroup">§ 3.1.1 Presenting an Access Need Group</a> for each <a data-link-type="dfn">Access Need Group</a> linked
 via <code>GRANT hasAccessNeedGroup</code>.</p>
      <li data-md>
-      <p>Present an option to authorize the grant by calling <a href="#grants-recordgrant">§ 5.7 Record Grant</a>,
+      <p>Present an option to authorize the grant by calling <a href="#grants-recordgrant">§ 5.5 Record Grant</a>,
 or cancel.</p>
     </ol>
    </div>
@@ -1035,7 +1028,7 @@ or cancel.</p>
         <p>Necessity - <code>GROUP accessNecessity</code></p>
       </ol>
      <li data-md>
-      <p>Allow <code>GROUP</code> to be disabled via <a href="#deny-access-need-group">§ 5.19 Deny Access Need Group</a> if group
+      <p>Allow <code>GROUP</code> to be disabled via <a href="#deny-access-need-group">§ 5.14 Deny Access Need Group</a> if group
 necessity is optional</p>
      <li data-md>
       <p>For each <a data-link-type="dfn">Access Need</a> <code>NEED</code> linked via <code>GROUP hasAccessNeed</code></p>
@@ -1108,13 +1101,13 @@ necessity is optional</p>
         <p><strong>No Access</strong> - <code>interop:NoAccess</code> (if necessity is optional)</p>
         <ol>
          <li data-md>
-          <p>Enable via <a href="#deny-data-grant">§ 5.20 Deny Data Grant</a></p>
+          <p>Enable via <a href="#deny-data-grant">§ 5.15 Deny Data Grant</a></p>
         </ol>
        <li data-md>
         <p><strong>All Current and Future</strong> - <code>interop:AllInstances</code></p>
         <ol>
          <li data-md>
-          <p>Enable via <a href="#select-all-data-instances">§ 5.21 Select All Data Instances</a></p>
+          <p>Enable via <a href="#select-all-data-instances">§ 5.16 Select All Data Instances</a></p>
         </ol>
        <li data-md>
         <p><strong>Only Selected Instances</strong> - <code>interop:SelectedInstances</code></p>
@@ -1125,7 +1118,7 @@ linked via <code>DG hasDataInstance</code></p>
          <li data-md>
           <p>Allow one or more to be chosen</p>
          <li data-md>
-          <p>Enable via <a href="#select-data-instance">§ 5.23 Select Specific Data Instance</a>, providing each selected <a data-link-type="dfn">Data Instance</a></p>
+          <p>Enable via <a href="#select-data-instance">§ 5.18 Select Specific Data Instance</a>, providing each selected <a data-link-type="dfn">Data Instance</a></p>
         </ol>
       </ol>
      <li data-md>
@@ -1143,13 +1136,13 @@ linked via <code>DG hasDataInstance</code></p>
             <p><strong>No Access</strong> - <code>interop:NoAccess</code> (if necessity is optional)</p>
             <ol>
              <li data-md>
-              <p>Enable via <a href="#deny-data-grant">§ 5.20 Deny Data Grant</a></p>
+              <p>Enable via <a href="#deny-data-grant">§ 5.15 Deny Data Grant</a></p>
             </ol>
            <li data-md>
             <p><strong>All Current and Future</strong> - <code>interop:AllInstances</code></p>
             <ol>
              <li data-md>
-              <p>Enable via <a href="#select-all-inherited-data-instances">§ 5.22 Select All Inherited Data Instances</a></p>
+              <p>Enable via <a href="#select-all-inherited-data-instances">§ 5.17 Select All Inherited Data Instances</a></p>
             </ol>
            <li data-md>
             <p><strong>Only Inherited Instances</strong> - <code>interop:InheritInstances</code> (if <code>DG scopeOfGrant</code> is <code>interop:SelectedInstances</code>)</p>
@@ -1166,7 +1159,7 @@ selections linked via <code>IDG hasDataInstance</code></p>
              <li data-md>
               <p>Allow one or more to be chosen</p>
              <li data-md>
-              <p>Enable via <a href="#select-inherited-data-instance">§ 5.24 Select Inherited Data Instance</a>, providing
+              <p>Enable via <a href="#select-inherited-data-instance">§ 5.19 Select Inherited Data Instance</a>, providing
 each selected <a data-link-type="dfn">Data Instance</a>.</p>
             </ol>
           </ol>
@@ -1327,7 +1320,7 @@ presented as follows:</p>
        <p><strong>All Registries</strong> - where <code>rdf:type</code> of <a data-link-type="dfn">Registry</a> is <code>TNEED trustedWithType</code></p>
        <ol>
         <li data-md>
-         <p>Enable via <a href="#select-trusted-registry-set">§ 5.26 Select Trusted Registry Set</a></p>
+         <p>Enable via <a href="#select-trusted-registry-set">§ 5.21 Select Trusted Registry Set</a></p>
        </ol>
       <li data-md>
        <p><strong>Specific TYPE Registries</strong></p>
@@ -1337,7 +1330,7 @@ presented as follows:</p>
         <li data-md>
          <p>Allow one or more <a data-link-type="dfn">Registries</a> to be chosen</p>
         <li data-md>
-         <p>Enable via <a href="#select-trusted-registry">§ 5.27 Select Specific Trusted Registry</a>, providing each selected <a data-link-type="dfn">Registrys</a></p>
+         <p>Enable via <a href="#select-trusted-registry">§ 5.22 Select Specific Trusted Registry</a>, providing each selected <a data-link-type="dfn">Registrys</a></p>
        </ol>
      </ol>
    </ol>
@@ -1376,12 +1369,12 @@ get <code>CONTROLLER</code>'s <a data-link-type="dfn">identity profile document<
        <p><code>CONTROLLER</code> authorizes the requested <a data-link-type="dfn">Access Need Groups</a> and <a data-link-type="dfn">Access Needs</a>:</p>
        <ol>
         <li data-md>
-         <p>The <a href="#grants-recordgrant">§ 5.7 Record Grant</a> operation is invoked</p>
+         <p>The <a href="#grants-recordgrant">§ 5.5 Record Grant</a> operation is invoked</p>
          <ol>
           <li data-md>
            <p>An <a data-link-type="dfn">Access Grant</a> is stored in <code>CONTROLLER</code>'s <a data-link-type="dfn">Access Grant Registry</a>.</p>
           <li data-md>
-           <p><a href="#apply-permissions">§ 5.11 Apply Permissions</a> is called to apply permissions based
+           <p><a href="#apply-permissions">§ 5.6 Apply Permissions</a> is called to apply permissions based
 on the <a data-link-type="dfn">Access Grant</a>.</p>
           <li data-md>
            <p><a href="#provide-access-receipt">§ 6.1 Provide Access Receipt</a> is called to store the <a data-link-type="dfn">Access Receipt</a>. The Application has set <code>interop:receivesAccessReceipt</code> to <code>ReceiptInRegistration</code>, so the <a data-link-type="dfn">Access Receipt</a> is
@@ -1427,12 +1420,12 @@ the <a data-link-type="dfn">Access Request</a>.</p>
       <li data-md>
        <p>Assuming <code>CONTROLLER</code> authorizes a minimum of the
 required <a data-link-type="dfn">Access Need Groups</a> and <a data-link-type="dfn">Access Needs</a>,
-the <a href="#grants-recordgrant">§ 5.7 Record Grant</a> operation is invoked.</p>
+the <a href="#grants-recordgrant">§ 5.5 Record Grant</a> operation is invoked.</p>
       <li data-md>
-       <p><a href="#grants-recordgrant">§ 5.7 Record Grant</a> stores an <a data-link-type="dfn">Access Grant</a> in <code>CONTROLLER</code>'s <a data-link-type="dfn">Access Grant Registry</a>.</p>
+       <p><a href="#grants-recordgrant">§ 5.5 Record Grant</a> stores an <a data-link-type="dfn">Access Grant</a> in <code>CONTROLLER</code>'s <a data-link-type="dfn">Access Grant Registry</a>.</p>
        <ol>
         <li data-md>
-         <p><a href="#apply-permissions">§ 5.11 Apply Permissions</a> is called to apply permissions based on the <a data-link-type="dfn">Access Grant</a>.</p>
+         <p><a href="#apply-permissions">§ 5.6 Apply Permissions</a> is called to apply permissions based on the <a data-link-type="dfn">Access Grant</a>.</p>
         <li data-md>
          <p><a href="#provide-access-receipt">§ 6.1 Provide Access Receipt</a> is called to deliver the <a data-link-type="dfn">Access Receipt</a>.</p>
          <ol>
@@ -1491,12 +1484,12 @@ workflow, which presents them to <code>CONTROLLER</code>.</p>
 the provided <a data-link-type="dfn">Access Need Groups</a>.</p>
        <ol>
         <li data-md>
-         <p>The <a href="#grants-recordgrant">§ 5.7 Record Grant</a> operation is invoked</p>
+         <p>The <a href="#grants-recordgrant">§ 5.5 Record Grant</a> operation is invoked</p>
          <ol>
           <li data-md>
            <p>An <a data-link-type="dfn">Access Grant</a> is stored in <code>CONTROLLER</code>'s <a data-link-type="dfn">Access Grant Registry</a>.</p>
           <li data-md>
-           <p><a href="#apply-permissions">§ 5.11 Apply Permissions</a> is called to apply permissions based
+           <p><a href="#apply-permissions">§ 5.6 Apply Permissions</a> is called to apply permissions based
 on the <a data-link-type="dfn">Access Grant</a>.</p>
           <li data-md>
            <p><a href="#provide-access-receipt">§ 6.1 Provide Access Receipt</a> is called to store the <a data-link-type="dfn">Access Receipt</a>. <code>RECEIVER</code> has set <code>interop:receivesAccessReceipt</code> to <code>ReceiptInMessage</code>, so the <a data-link-type="dfn">Access Receipt</a> is posted
@@ -1522,102 +1515,6 @@ is in the <a data-link-type="dfn">Access Receipt</a>.</p>
        </ol>
      </ol>
    </ol>
-   <h3 class="heading settled" data-level="3.5" id="authz-controllerinvite"><span class="secno">3.5. </span><span class="content">Controller Shares Access with Invited Agent</span><a class="self-link" href="#authz-controllerinvite"></a></h3>
-   <p>Controlling Agent initiates sharing their data with an Agent that doesn’t
-have an identity or a pod.</p>
-   <p>Let <code>CONTROLLER</code> be a <a data-link-type="dfn">Social Agent</a> in control of data that
-    they would like to authorize <code>INVITEE</code> to access.</p>
-   <p>Let <code>CAPP</code> be an <a data-link-type="dfn">Application</a> piloted by <code>CONTROLLER</code></p>
-   <p>Let <code>CAUTHZ</code> be an <a data-link-type="dfn">Application</a> trusted by <code>CONTROLLER</code> for
-    authorization and access control.</p>
-   <p>Let <code>CISERVICE</code> be an <a data-link-type="dfn">Application</a> trusted by <code>CONTROLLER</code> to validate
-    invitations made to <code>INVITEE</code>s.</p>
-   <p>Let <code>INVITEE</code> be a person without an <a data-link-type="dfn">identity</a> or <a data-link-type="dfn">pod</a> that <code>CONTROLLER</code> would like to authorize to access their data. <code>CONTROLLER</code> knows their
-    e-mail address and mobile phone number.</p>
-   <p>LET <code>PROVIDER</code> be a service that hosts <a data-link-type="dfn">identities</a> and <a data-link-type="dfn">pods</a> who
-    provisions the same for <code>INVITEE</code></p>
-   <p>Let <code>PAUTHZ</code> be an <a data-link-type="dfn">Application</a> offered by <code>PROVIDER</code> and trusted by <code>INVITEE</code> for authorization and access control.</p>
-   <ol>
-    <li data-md>
-     <p><code>CONTROLLER</code> would like to give <code>INVITEE</code> access to their data.</p>
-    <li data-md>
-     <p><code>CONTROLLER</code> provides <code>INVITEE</code>'s e-mail address and mobile number to <code>CAPP</code>.</p>
-    <li data-md>
-     <p><code>CAPP</code> discovers that <code>CAUTHZ</code> is an <a data-link-type="dfn">Application</a> that is a <a data-link-type="dfn">Trusted Agent</a> of <code>CONTROLLER</code> for data authorization</p>
-    <li data-md>
-     <p><code>CAPP</code> redirects <code>CONTROLLER</code> to <code>CAUTHZ</code></p>
-     <ol>
-      <li data-md>
-       <p><code>CAUTHZ</code> looks in <code>CAPP</code>'s <a data-link-type="dfn">application profile document</a> for <a data-link-type="dfn">Access Need Groups</a> with an <code>interop:accessScenario</code> of <code>interop:SharedAccess</code></p>
-      <li data-md>
-       <p>Any <a data-link-type="dfn">Access Need Groups</a> found are passed to
-the [[##present-grant]]
-workflow, which presents them to <code>CONTROLLER</code>.</p>
-      <li data-md>
-       <p><code>CONTROLLER</code> authorizes the data to share with <code>INVITEE</code> based on
-the provided <a data-link-type="dfn">Access Need Groups</a>.</p>
-       <ol>
-        <li data-md>
-         <p>The <a href="#grants-recordinvitation">§ 5.8 Record Invitation</a> operation is invoked</p>
-         <ol>
-          <li data-md>
-           <p>An <a data-link-type="dfn">Access Invitation</a> is stored in <code>CONTROLLER</code>'s <a data-link-type="dfn">Access Grant Registry</a>.</p>
-          <li data-md>
-           <p><a href="#grants-deliverinvitation">§ 5.9 Deliver Invitation</a> is called to create an
-invitation entry for each <a data-link-type="dfn">Access Invitation Channel</a> in
-the <a data-link-type="dfn">Access Invitation</a> with <code>CISERVICE</code></p>
-          <li data-md>
-           <p>For each <a data-link-type="dfn">Access Invitation Channel</a> in the <a data-link-type="dfn">Access Invitation</a></p>
-           <ol>
-            <li data-md>
-             <p><code>CISERVICE</code> sends a notification to <code>INIVITEE</code> using the
-medium associated with the <a data-link-type="dfn">Access Invitation Channel</a> type</p>
-           </ol>
-         </ol>
-       </ol>
-      <li data-md>
-       <p><code>CAUTHZ</code> redirects <code>CONTROLLER</code> back to <code>CAPP</code></p>
-     </ol>
-    <li data-md>
-     <p><code>INVITEE</code> receives a notification associated with one of the <a data-link-type="dfn">Access Invitation Channels</a>.</p>
-     <ol>
-      <li data-md>
-       <p><code>INVITEE</code> clicks a link in the notification to register an
-identity and pod with <code>PROVIDER</code>.</p>
-      <li data-md>
-       <p><code>INVITEE</code> clicks a link in the notification bringing them to the <code>CISERVICE</code> user interface to validate the invitation by
-invoking <a href="#grants-validateinvitation">§ 5.10 Validate Invitation</a>.</p>
-       <ol>
-        <li data-md>
-         <p>If validation is successful, but there are other <a data-link-type="dfn">Access Invitation Channels</a> left to validate, the <code>INVITEE</code> will
-be prompted to validate them. Continue until failure or
-validation of all <a data-link-type="dfn">Access Invitation Channels</a> are succesful.</p>
-        <li data-md>
-         <p><code>CISERVICE</code> initializes a new <a data-link-type="dfn">Access Grant</a> via <a href="#grants-initializegrant">§ 5.1 Initialize Grant</a>, using the contents of
-the <a data-link-type="dfn">Access Invitation</a>, and the new registered <a data-link-type="dfn">identity</a> for <code>INVITEE</code>.</p>
-        <li data-md>
-         <p><code>CISERVICE</code> calls <a href="#grants-recordgrant">§ 5.7 Record Grant</a> using the <a data-link-type="dfn">Access Grant</a> initialized from the <a data-link-type="dfn">Access Invitation</a></p>
-         <ol>
-          <li data-md>
-           <p>An <a data-link-type="dfn">Access Grant</a> is stored in <code>CONTROLLER</code>'s <a data-link-type="dfn">Access Grant Registry</a>.</p>
-          <li data-md>
-           <p><a href="#apply-permissions">§ 5.11 Apply Permissions</a> is called to apply permissions
-based on the <a data-link-type="dfn">Access Grant</a>.</p>
-          <li data-md>
-           <p><a href="#provide-access-receipt">§ 6.1 Provide Access Receipt</a> is called to store the <a data-link-type="dfn">Access Receipt</a>. <code>INVITEE</code> has set <code>interop:receivesAccessReceipt</code> to <code>ReceiptInMessage</code>, so the <a data-link-type="dfn">Access Receipt</a> is posted
-to the access inbox identified via <code>hasAccessInbox</code> in <code>INVITEE</code>'s '<a data-link-type="dfn">identity profile document</a>.</p>
-         </ol>
-       </ol>
-     </ol>
-   </ol>
-   <p class="issue" id="issue-d5f0eb31"><a class="self-link" href="#issue-d5f0eb31"></a> Should we assume that CISERVICE is able to manage grants, or should
-it need to redirect through the authorization agent? Perhaps the recommendation
-should be that they are combined? Bad separation of concerns?</p>
-   <p class="issue" id="issue-d1e70f49"><a class="self-link" href="#issue-d1e70f49"></a> This doesn’t take account a sequencing of validation steps from
-one channel to another.</p>
-   <h3 class="heading settled" data-level="3.6" id="authz-services"><span class="secno">3.6. </span><span class="content">Application Services</span><a class="self-link" href="#authz-services"></a></h3>
-   <h4 class="heading settled" data-level="3.6.1" id="authz-service-authorize"><span class="secno">3.6.1. </span><span class="content">Authorize Data Service</span><a class="self-link" href="#authz-service-authorize"></a></h4>
-   <p class="issue" id="issue-abd7def3"><a class="self-link" href="#issue-abd7def3"></a> Define data authorization service</p>
    <h2 class="heading settled" data-level="4" id="needs"><span class="secno">4. </span><span class="content">Access Needs</span><a class="self-link" href="#needs"></a></h2>
    <p>The following operations pertain to <a href="https://solid.github.io/data-interoperability-panel/specification/#needs">Access Needs</a> in the <a data-link-type="biblio" href="#biblio-sai">Solid Application Interoperability Specification</a>.</p>
    <h3 class="heading settled" data-level="4.1" id="get-access-dec"><span class="secno">4.1. </span><span class="content">Get Access Decorator Resource</span><a class="self-link" href="#get-access-dec"></a></h3>
@@ -1783,53 +1680,47 @@ of 404 if <code>USENDEC</code> is unassigned</p>
    </div>
    <h2 class="heading settled" data-level="5" id="grants"><span class="secno">5. </span><span class="content">Access Grants</span><a class="self-link" href="#grants"></a></h2>
    <p>The following operations pertain to <a href="https://solid.github.io/data-interoperability-panel/specification/#grants">Access Grants</a> in the <a data-link-type="biblio" href="#biblio-sai">Solid Application Interoperability Specification</a>.</p>
-   <p>Load or initialize the two main grant types: <a data-link-type="dfn">Access Grant</a>, <a data-link-type="dfn">Access Invitation</a></p>
+   <p>Load or initialize <a data-link-type="dfn">Access Grants</a></p>
    <ul>
     <li data-md>
-     <p><a href="#grants-loadgrant">§ 5.5 Load Grant</a> - Load an existing <a data-link-type="dfn">Access Grant</a> from an <a data-link-type="dfn">Access Grant Registry</a></p>
-    <li data-md>
-     <p><a href="#grants-loadinvitation">§ 5.6 Load Invitation</a> - Load an existing <a data-link-type="dfn">Access Invitation</a> from an <a data-link-type="dfn">Access Grant Registry</a></p>
+     <p><a href="#grants-loadgrant">§ 5.4 Load Grant</a> - Load an existing <a data-link-type="dfn">Access Grant</a> from an <a data-link-type="dfn">Access Grant Registry</a></p>
     <li data-md>
      <p><a href="#grants-initializegrant">§ 5.1 Initialize Grant</a> - Initializes a new <a data-link-type="dfn">Access Grant</a> for a given <a data-link-type="dfn">Access Grant Subject</a> with one or more <a data-link-type="dfn">Access Need Groups</a></p>
-    <li data-md>
-     <p><a href="#grants-initializeinvitation">§ 5.2 Initialize Invitation</a> - Initializes a new <a data-link-type="dfn">Access Invitation</a> for one or more <a data-link-type="dfn">Access Invitation Channels</a> with one or more <a data-link-type="dfn">Access Need Groups</a></p>
    </ul>
-   <p>Each <a data-link-type="dfn">Access Grant</a> or <a data-link-type="dfn">Access Invitation</a> will have some combination
+   <p>Each <a data-link-type="dfn">Access Grant</a> will have some combination
 of <a data-link-type="dfn">Data Grants</a>, and/or <a data-link-type="dfn">Trusted Grants</a>:</p>
    <ul>
     <li data-md>
-     <p><a href="#grants-initializedatagrant">§ 5.3 Initialize Data Grant</a> - Initialize a <a data-link-type="dfn">Data Grant</a> as part
+     <p><a href="#grants-initializedatagrant">§ 5.2 Initialize Data Grant</a> - Initialize a <a data-link-type="dfn">Data Grant</a> as part
 of <a data-link-type="dfn">Access Grant</a> initialization</p>
     <li data-md>
-     <p><a href="#grants-initializetrustedgrant">§ 5.4 Initialize Trusted Grant</a> - Initialize a <a data-link-type="dfn">Trusted Grant</a> as part
+     <p><a href="#grants-initializetrustedgrant">§ 5.3 Initialize Trusted Grant</a> - Initialize a <a data-link-type="dfn">Trusted Grant</a> as part
 of <a data-link-type="dfn">Access Grant</a> initialization</p>
    </ul>
-   <p>Record <a data-link-type="dfn">Access Grants</a> and <a data-link-type="dfn">Access Invitations</a>:</p>
+   <p>Record <a data-link-type="dfn">Access Grants</a>:</p>
    <ul>
     <li data-md>
-     <p><a href="#grants-recordgrant">§ 5.7 Record Grant</a> - Store a new or updated <a data-link-type="dfn">Access Grant</a> in an <a data-link-type="dfn">Access Grant Registry</a></p>
-    <li data-md>
-     <p><a href="#grants-recordinvitation">§ 5.8 Record Invitation</a> - Store a new or updated <a data-link-type="dfn">Access Invitation</a> in an <a data-link-type="dfn">Access Grant Registry</a></p>
+     <p><a href="#grants-recordgrant">§ 5.5 Record Grant</a> - Store a new or updated <a data-link-type="dfn">Access Grant</a> in an <a data-link-type="dfn">Access Grant Registry</a></p>
    </ul>
    <p>Apply permissions based on the composition of an <a data-link-type="dfn">Access Grant</a>:</p>
    <ul>
     <li data-md>
-     <p><a href="#apply-permissions">§ 5.11 Apply Permissions</a> - Apply permissions for an input <a data-link-type="dfn">Access Grant</a></p>
+     <p><a href="#apply-permissions">§ 5.6 Apply Permissions</a> - Apply permissions for an input <a data-link-type="dfn">Access Grant</a></p>
      <ul>
       <li data-md>
-       <p><a href="#apply-data-permissions">§ 5.12 Apply Data Permissions</a> - Apply permissions for <a data-link-type="dfn">Data Grants</a></p>
+       <p><a href="#apply-data-permissions">§ 5.7 Apply Data Permissions</a> - Apply permissions for <a data-link-type="dfn">Data Grants</a></p>
       <li data-md>
-       <p><a href="#apply-data-registration-permissions">§ 5.13 Apply Data Registration Permissions</a> - Apply permissions for a <a data-link-type="dfn">Data Registration</a></p>
+       <p><a href="#apply-data-registration-permissions">§ 5.8 Apply Data Registration Permissions</a> - Apply permissions for a <a data-link-type="dfn">Data Registration</a></p>
       <li data-md>
-       <p><a href="#apply-trusted-permissions">§ 5.15 Apply Trusted Permissions</a> - Apply permissions for <a data-link-type="dfn">Trusted Grants</a></p>
+       <p><a href="#apply-trusted-permissions">§ 5.10 Apply Trusted Permissions</a> - Apply permissions for <a data-link-type="dfn">Trusted Grants</a></p>
       <li data-md>
-       <p><a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> - Apply permissions on a given resource for
+       <p><a href="#apply-resource-permissions">§ 5.11 Apply Resource Permissions</a> - Apply permissions on a given resource for
 a given <a data-link-type="dfn">Access Grant Subject</a></p>
       <li data-md>
-       <p><a href="#apply-conditional-permissions">§ 5.17 Apply Conditional Resource Permissions</a> - Apply permissions on a given resource
+       <p><a href="#apply-conditional-permissions">§ 5.12 Apply Conditional Resource Permissions</a> - Apply permissions on a given resource
 for a given <a data-link-type="dfn">Access Grant Subject</a>, condiioned upon a graph relationship</p>
       <li data-md>
-       <p><a href="#remove-resource-permissions">§ 5.18 Remove Resource Permissions</a> - Remove permissions on a given resource
+       <p><a href="#remove-resource-permissions">§ 5.13 Remove Resource Permissions</a> - Remove permissions on a given resource
 for a given <a data-link-type="dfn">Access Grant Subject</a></p>
      </ul>
    </ul>
@@ -1886,90 +1777,20 @@ for a given <a data-link-type="dfn">Access Grant Subject</a></p>
         <p>For each <a data-link-type="dfn">Access Need</a> <code>NEED</code> in <code>GROUP</code></p>
         <ol>
          <li data-md>
-          <p>Call <a href="#grants-initializedatagrant">§ 5.3 Initialize Data Grant</a> with inputs: <code>NEED</code></p>
+          <p>Call <a href="#grants-initializedatagrant">§ 5.2 Initialize Data Grant</a> with inputs: <code>NEED</code></p>
         </ol>
        <li data-md>
         <p>For each <a data-link-type="dfn">Trusted Need</a> <code>TNEED</code> in <code>GROUP</code></p>
         <ol>
          <li data-md>
-          <p>Call <a href="#grants-initializetrustedgrant">§ 5.4 Initialize Trusted Grant</a> with inputs: <code>TNEED</code></p>
+          <p>Call <a href="#grants-initializetrustedgrant">§ 5.3 Initialize Trusted Grant</a> with inputs: <code>TNEED</code></p>
         </ol>
       </ol>
      <li data-md>
       <p>Return <code>GRANT</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.2" id="grants-initializeinvitation"><span class="secno">5.2. </span><span class="content">Initialize Invitation</span><a class="self-link" href="#grants-initializeinvitation"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> Initialize an <a data-link-type="dfn">Access Invitation</a> by processing
-        the input <a data-link-type="dfn">Access Need Groups</a> and
-        then initializing <a data-link-type="dfn">Data Grants</a>, 
-        or <a data-link-type="dfn">Trusted Grants</a> with no access (yet). 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>ICHANNELS</code>
-      <td>A set of <a data-link-type="dfn">Access Invitation Channels</a>
-     <tr>
-      <td><code>GROUPS</code>
-      <td><a data-link-type="dfn">Access Need Groups</a> to associate with the <a data-link-type="dfn">Access Invitation</a>
-     <tr>
-      <td><code>LANG</code>
-      <td>The <a data-link-type="dfn">Social Agent’s</a> preferred language
-    <thead>
-     <tr>
-      <th colspan="2">Outputs
-    <tbody>
-     <tr>
-      <td><a data-link-type="dfn">Access Invitation</a>
-      <td>Newly initialized based on input <a data-link-type="dfn">Access Invitation Channels</a>
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>INVITE</code> be a newly initialized <a data-link-type="dfn">Access Invitation</a></p>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Access Invitation Channel</a> <code>ICHANNEL</code> in <code>ICHANNELS</code></p>
-      <ol>
-       <li data-md>
-        <p>Let <code>ICHANNEL</code> be linked to <code>INVITE</code> via <code>INVITE hasAccessInvitationChannel</code></p>
-      </ol>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Access Need Group</a> <code>GROUP</code> in <code>GROUPS</code></p>
-      <ol>
-       <li data-md>
-        <p>Link <code>GROUP</code> to <code>INVITE</code> via <code>INVITE hasAccessNeedGroup</code></p>
-      </ol>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Access Need Group</a> <code>GROUP</code> linked via <code>INVITE hasAccessNeedGroup</code></p>
-      <ol>
-       <li data-md>
-        <p>For each <a data-link-type="dfn">Access Need</a> <code>NEED</code> in <code>GROUP</code></p>
-        <ol>
-         <li data-md>
-          <p>Call <a href="#grants-initializedatagrant">§ 5.3 Initialize Data Grant</a> with inputs: <code>NEED</code>, <code>GRANT</code></p>
-        </ol>
-       <li data-md>
-        <p>For each <a data-link-type="dfn">Trusted Need</a> <code>TNEED</code> in <code>GROUP</code></p>
-        <ol>
-         <li data-md>
-          <p>Call <a href="#grants-initializetrustedgrant">§ 5.4 Initialize Trusted Grant</a> with inputs: <code>TNEED</code>, <code>GRANT</code></p>
-        </ol>
-      </ol>
-     <li data-md>
-      <p>Return <code>INVITE</code></p>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.3" id="grants-initializedatagrant"><span class="secno">5.3. </span><span class="content">Initialize Data Grant</span><a class="self-link" href="#grants-initializedatagrant"></a></h3>
+   <h3 class="heading settled" data-level="5.2" id="grants-initializedatagrant"><span class="secno">5.2. </span><span class="content">Initialize Data Grant</span><a class="self-link" href="#grants-initializedatagrant"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2044,7 +1865,7 @@ via <code>INEED inheritsFromNeed</code></p>
       <p>Return <code>DG</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.4" id="grants-initializetrustedgrant"><span class="secno">5.4. </span><span class="content">Initialize Trusted Grant</span><a class="self-link" href="#grants-initializetrustedgrant"></a></h3>
+   <h3 class="heading settled" data-level="5.3" id="grants-initializetrustedgrant"><span class="secno">5.3. </span><span class="content">Initialize Trusted Grant</span><a class="self-link" href="#grants-initializetrustedgrant"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2094,7 +1915,7 @@ via <code>INEED inheritsFromNeed</code></p>
       <p>Return <code>TG</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.5" id="grants-loadgrant"><span class="secno">5.5. </span><span class="content">Load Grant</span><a class="self-link" href="#grants-loadgrant"></a></h3>
+   <h3 class="heading settled" data-level="5.4" id="grants-loadgrant"><span class="secno">5.4. </span><span class="content">Load Grant</span><a class="self-link" href="#grants-loadgrant"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2132,61 +1953,7 @@ via <code>INEED inheritsFromNeed</code></p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.6" id="grants-loadinvitation"><span class="secno">5.6. </span><span class="content">Load Invitation</span><a class="self-link" href="#grants-loadinvitation"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> This operation will load an <a data-link-type="dfn">Access Invitation</a> from a
-      given <a data-link-type="dfn">Access Grant Registry</a> 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>TARGET</code>
-      <td>An <code>interop:ChannelTarget</code> to match
-     <tr>
-      <td><code>CODE</code>
-      <td>An optional <code>interop:channelCode</code> to match
-     <tr>
-      <td><code>REGISTRY</code>
-      <td>An <a data-link-type="dfn">Access Grant Registry</a> to search
-    <thead>
-     <tr>
-      <th colspan="2">Outputs
-    <tbody>
-     <tr>
-      <td><a data-link-type="dfn">Access Invitations</a>
-      <td>Matching <code>TARGET</code> and (if provided) <code>CODE</code>
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Let <code>INVITATIONS</code> be an empty set of <a data-link-type="dfn">Access Invitations</a></p>
-     <li data-md>
-      <p>For each <a data-link-type="dfn">Access Invitation</a> <code>INVITATION</code> linked via <code>REGISTRY hasRegistration</code></p>
-      <ol>
-       <li data-md>
-        <p>For each <a data-link-type="dfn">Access Invitation Channel</a> <code>ICHANNEL</code> linked via <code>INVITATION hasAccessInvitationChannel</code></p>
-        <ol>
-         <li data-md>
-          <p>Next if <code>ICHANNEL channelTarget</code> != <code>TARGET</code></p>
-         <li data-md>
-          <p>Next if <code>CODE</code> is not empty and <code>ICHANNEL channelCode</code> != <code>CODE</code></p>
-         <li data-md>
-          <p>Add <code>INVITATION</code> to <code>INVITATIONS</code></p>
-        </ol>
-      </ol>
-     <li data-md>
-      <p>Return <code>INVITATIONS</code></p>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.7" id="grants-recordgrant"><span class="secno">5.7. </span><span class="content">Record Grant</span><a class="self-link" href="#grants-recordgrant"></a></h3>
+   <h3 class="heading settled" data-level="5.5" id="grants-recordgrant"><span class="secno">5.5. </span><span class="content">Record Grant</span><a class="self-link" href="#grants-recordgrant"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2225,7 +1992,7 @@ the assigned <a href="interop.tree#AccessGrantTree">interopt:AccessGrantTree</a>
       <p>Link <code>GRANT</code> to the <code>REGISTRY</code> via <code>REGISTRY hasRegistration</code> if
     it has not already been added</p>
      <li data-md>
-      <p>Call <a href="#apply-permissions">§ 5.11 Apply Permissions</a> with inputs: <code>GRANT</code></p>
+      <p>Call <a href="#apply-permissions">§ 5.6 Apply Permissions</a> with inputs: <code>GRANT</code></p>
      <li data-md>
       <p>Call <a href="https://solid.github.io/data-interoperability-panel/specification/#provide-access-receipt">Solid Application Interoperability § provide-access-receipt</a> with inputs: <code>GRANT</code></p>
      <li data-md>
@@ -2235,54 +2002,7 @@ the assigned <a href="interop.tree#AccessGrantTree">interopt:AccessGrantTree</a>
    <p class="issue" id="issue-4a203aca"><a class="self-link" href="#issue-4a203aca"></a> Need to properly factor in multi-pod scenarios. Must identify the
 proper access registry to store things in based on the data registration, which
 means pods will also need to be registered.</p>
-   <h3 class="heading settled" data-level="5.8" id="grants-recordinvitation"><span class="secno">5.8. </span><span class="content">Record Invitation</span><a class="self-link" href="#grants-recordinvitation"></a></h3>
-   <table align="left" class="data operation">
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th colspan="2">Description
-    <tbody>
-     <tr>
-      <td colspan="2"> This operation stores a new or updated <a data-link-type="dfn">Access Invitation</a> in
-      an <a data-link-type="dfn">Access Grant Registry</a>. 
-    <thead>
-     <tr>
-      <th colspan="2">Inputs
-    <tbody>
-     <tr>
-      <td><code>INVITATION</code>
-      <td>An <a data-link-type="dfn">Access Invitation</a>
-     <tr>
-      <td><code>REGISTRY</code>
-      <td>An <a data-link-type="dfn">Access Grant Registry</a>
-    <thead>
-     <tr>
-      <th colspan="2">Outputs
-    <tbody>
-     <tr>
-      <td><a data-link-type="dfn">Access Invitation</a>
-      <td>Stored in <code>REGISTRY</code>
-   </table>
-   <div class="opdetails">
-    <ol>
-     <li data-md>
-      <p>Add or Update <code>INVITATION</code> resource in the <code>REGISTRY</code> container, conforming to
-the assigned <a href="interop.tree#AccessInvitationTree">interopt:AccessInvitationTree</a></p>
-     <li data-md>
-      <p>Link <code>INVITATION</code> to the <code>REGISTRY</code> via <code>ACCESS hasRegistration</code> if
-    it has not already been added</p>
-     <li data-md>
-      <p>Call <a href="#grants-deliverinvitation">§ 5.9 Deliver Invitation</a> with inputs: <code>INVITATION</code></p>
-     <li data-md>
-      <p>Return <code>INVITATION</code></p>
-    </ol>
-   </div>
-   <h3 class="heading settled" data-level="5.9" id="grants-deliverinvitation"><span class="secno">5.9. </span><span class="content">Deliver Invitation</span><a class="self-link" href="#grants-deliverinvitation"></a></h3>
-   <p class="issue" id="issue-2800f864"><a class="self-link" href="#issue-2800f864"></a> Write standard operation for invitation delivery</p>
-   <h3 class="heading settled" data-level="5.10" id="grants-validateinvitation"><span class="secno">5.10. </span><span class="content">Validate Invitation</span><a class="self-link" href="#grants-validateinvitation"></a></h3>
-   <p class="issue" id="issue-00444ef2"><a class="self-link" href="#issue-00444ef2"></a> Write standard operation for validating an invitation</p>
-   <h3 class="heading settled" data-level="5.11" id="apply-permissions"><span class="secno">5.11. </span><span class="content">Apply Permissions</span><a class="self-link" href="#apply-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.6" id="apply-permissions"><span class="secno">5.6. </span><span class="content">Apply Permissions</span><a class="self-link" href="#apply-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2311,14 +2031,14 @@ the assigned <a href="interop.tree#AccessInvitationTree">interopt:AccessInvitati
    <div class="opdetails">
     <ol>
      <li data-md>
-      <p>Call <a href="#apply-data-permissions">§ 5.12 Apply Data Permissions</a> with inputs: <code>GRANT</code></p>
+      <p>Call <a href="#apply-data-permissions">§ 5.7 Apply Data Permissions</a> with inputs: <code>GRANT</code></p>
      <li data-md>
-      <p>Call <a href="#apply-trusted-permissions">§ 5.15 Apply Trusted Permissions</a> with inputs: <code>GRANT</code></p>
+      <p>Call <a href="#apply-trusted-permissions">§ 5.10 Apply Trusted Permissions</a> with inputs: <code>GRANT</code></p>
      <li data-md>
       <p>Return <code>GRANT</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.12" id="apply-data-permissions"><span class="secno">5.12. </span><span class="content">Apply Data Permissions</span><a class="self-link" href="#apply-data-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.7" id="apply-data-permissions"><span class="secno">5.7. </span><span class="content">Apply Data Permissions</span><a class="self-link" href="#apply-data-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2337,7 +2057,7 @@ the assigned <a href="interop.tree#AccessInvitationTree">interopt:AccessInvitati
       set of <a data-link-type="dfn">Data Registrations</a> affected by <code>GRANT</code>, and each key
       has an array of related <a data-link-type="dfn">Data Grants</a> as its value.</p>
        <p>Each <a data-link-type="dfn">Data Registration</a> and the array of grants that affect it
-      are then passed to <a href="#apply-data-registration-permissions">§ 5.13 Apply Data Registration Permissions</a>.</p>
+      are then passed to <a href="#apply-data-registration-permissions">§ 5.8 Apply Data Registration Permissions</a>.</p>
        <figure id="fig-drhash"> <img src="diagrams/apply-data-permissions-drhash.svg" width="100%/"> </figure>
     <thead>
      <tr>
@@ -2371,13 +2091,13 @@ the value is an array of <a data-link-type="dfn">Data Grants</a>.</p>
       <p>For each <a data-link-type="dfn">Data Registration</a> <code>DR</code> in <code>DRHASH</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#apply-data-registration-permissions">§ 5.13 Apply Data Registration Permissions</a> with inputs: <code>DR</code>, <code>DRHASH[DR]</code>, <code>GRANT</code></p>
+        <p>Call <a href="#apply-data-registration-permissions">§ 5.8 Apply Data Registration Permissions</a> with inputs: <code>DR</code>, <code>DRHASH[DR]</code>, <code>GRANT</code></p>
       </ol>
      <li data-md>
       <p>Return <code>GRANT</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.13" id="apply-data-registration-permissions"><span class="secno">5.13. </span><span class="content">Apply Data Registration Permissions</span><a class="self-link" href="#apply-data-registration-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.8" id="apply-data-registration-permissions"><span class="secno">5.8. </span><span class="content">Apply Data Registration Permissions</span><a class="self-link" href="#apply-data-registration-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2432,12 +2152,12 @@ the value is an array of <a data-link-type="dfn">Data Grants</a>.</p>
      <li data-md>
       <p>Let <code>SUBJECT</code> be the <a data-link-type="dfn">Access Grant Subject</a> linked via <code>GRANT hasAccessGrantSubject</code></p>
      <li data-md>
-      <p>Call <a href="#remove-resource-permissions">§ 5.18 Remove Resource Permissions</a> with inputs: <code>DR</code>, <code>SUBJECT</code></p>
+      <p>Call <a href="#remove-resource-permissions">§ 5.13 Remove Resource Permissions</a> with inputs: <code>DR</code>, <code>SUBJECT</code></p>
      <li data-md>
       <p>For each <a data-link-type="dfn">Data Instance</a> <code>DI</code> linked via <code>DR ldp:hasMember</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#remove-resource-permissions">§ 5.18 Remove Resource Permissions</a> with inputs: <code>DI</code>, <code>SUBJECT</code></p>
+        <p>Call <a href="#remove-resource-permissions">§ 5.13 Remove Resource Permissions</a> with inputs: <code>DI</code>, <code>SUBJECT</code></p>
       </ol>
      <li data-md>
       <p>Let <code>SCOPEHASH</code> be a hash map with keys: <code>interop:AllInstances</code>, <code>interop:SelectedInstances</code>, <code>interop:InheritInstances</code>, <code>interop:NoAccess</code></p>
@@ -2494,7 +2214,7 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
       <p>If <code>SCOPEHASH[interop:AllInstances]</code> is not empty</p>
       <ol>
        <li data-md>
-        <p>Call <a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> with inputs: <code>DR</code>, <code>SUBJECT</code>, <code>MODES</code></p>
+        <p>Call <a href="#apply-resource-permissions">§ 5.11 Apply Resource Permissions</a> with inputs: <code>DR</code>, <code>SUBJECT</code>, <code>MODES</code></p>
       </ol>
      <li data-md>
       <p>If <code>SCOPEHASH[interop:InheritInstances]</code> is not empty</p>
@@ -2503,11 +2223,11 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
         <p>For each <a data-link-type="dfn">Data Instance</a> <code>DI</code> in <code>SCOPEHASH[interop:InheritInstances]</code></p>
        <li data-md>
         <p>Let <code>REF</code> be the <a data-link-type="dfn">Shape Tree Reference</a> from
-  calling <a href="#get-shape-tree-reference">§ 5.14 Get Shape Tree Reference</a> with inputs: <code>DR registeredShapeTree</code>, <code>DI registeredShapeTree</code></p>
+  calling <a href="#get-shape-tree-reference">§ 5.9 Get Shape Tree Reference</a> with inputs: <code>DR registeredShapeTree</code>, <code>DI registeredShapeTree</code></p>
        <li data-md>
         <p>Let <code>PRED</code> be the rdf:Property extracted from <code>REF traverseViaShapePath</code></p>
        <li data-md>
-        <p>Call <a href="#apply-conditional-permissions">§ 5.17 Apply Conditional Resource Permissions</a> with inputs: <code>DR</code>, <code>SUBJECT</code>, <code>MODES</code>, <code>DI</code>, <code>PRED</code>, <code>NULL</code></p>
+        <p>Call <a href="#apply-conditional-permissions">§ 5.12 Apply Conditional Resource Permissions</a> with inputs: <code>DR</code>, <code>SUBJECT</code>, <code>MODES</code>, <code>DI</code>, <code>PRED</code>, <code>NULL</code></p>
       </ol>
      <li data-md>
       <p>If <code>SCOPEHASH[interop:SelectedInstances]</code> is not empty</p>
@@ -2516,12 +2236,12 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
         <p>For each <a data-link-type="dfn">Data Instance</a> <code>DI</code> in <code>SCOPEHASH[interop:SelectedInstances]</code></p>
         <ol>
          <li data-md>
-          <p>Call <a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> with inputs: <code>SCOPEHASH[interop:SelectedInstances][DI]</code>, <code>SUBJECT</code>, <code>MODES</code></p>
+          <p>Call <a href="#apply-resource-permissions">§ 5.11 Apply Resource Permissions</a> with inputs: <code>SCOPEHASH[interop:SelectedInstances][DI]</code>, <code>SUBJECT</code>, <code>MODES</code></p>
         </ol>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.14" id="get-shape-tree-reference"><span class="secno">5.14. </span><span class="content">Get Shape Tree Reference</span><a class="self-link" href="#get-shape-tree-reference"></a></h3>
+   <h3 class="heading settled" data-level="5.9" id="get-shape-tree-reference"><span class="secno">5.9. </span><span class="content">Get Shape Tree Reference</span><a class="self-link" href="#get-shape-tree-reference"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2562,7 +2282,7 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
       <p>Error because no <a data-link-type="dfn">Shape Tree Reference</a> was found for <code>REFERENCED</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.15" id="apply-trusted-permissions"><span class="secno">5.15. </span><span class="content">Apply Trusted Permissions</span><a class="self-link" href="#apply-trusted-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.10" id="apply-trusted-permissions"><span class="secno">5.10. </span><span class="content">Apply Trusted Permissions</span><a class="self-link" href="#apply-trusted-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2606,7 +2326,7 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
          <li data-md>
           <p>Let <code>PROFILE</code> be <code>TGRANT trustedWith</code></p>
          <li data-md>
-          <p>Call <a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> with inputs: <code>PROFILE</code>, <code>SUBJECT</code>, <code>MODES</code></p>
+          <p>Call <a href="#apply-resource-permissions">§ 5.11 Apply Resource Permissions</a> with inputs: <code>PROFILE</code>, <code>SUBJECT</code>, <code>MODES</code></p>
         </ol>
        <li data-md>
         <p>If <code>TGRANT trustedWithType</code> is <code>interop:RegistrySet</code></p>
@@ -2616,12 +2336,12 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
          <li data-md>
           <p>Let <code>REGISTRIES</code> be the <a data-link-type="dfn">Registries</a> linked via <code>SET hasRegistry</code></p>
          <li data-md>
-          <p>Call <a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> with inputs: <code>SET</code>, <code>SUBJECT</code>, <code>MODES</code></p>
+          <p>Call <a href="#apply-resource-permissions">§ 5.11 Apply Resource Permissions</a> with inputs: <code>SET</code>, <code>SUBJECT</code>, <code>MODES</code></p>
          <li data-md>
           <p>For each <a data-link-type="dfn">Registry</a> <code>REGISTRY</code> in <code>REGISTRIES</code></p>
           <ol>
            <li data-md>
-            <p>Call <a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> with inputs: <code>REGISTRY</code>, <code>SUBJECT</code>, <code>MODES</code></p>
+            <p>Call <a href="#apply-resource-permissions">§ 5.11 Apply Resource Permissions</a> with inputs: <code>REGISTRY</code>, <code>SUBJECT</code>, <code>MODES</code></p>
           </ol>
         </ol>
        <li data-md>
@@ -2630,12 +2350,12 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
          <li data-md>
           <p>Let <code>REGISTRY</code> be <code>TGRANT trustedWith</code></p>
          <li data-md>
-          <p>Call <a href="#apply-resource-permissions">§ 5.16 Apply Resource Permissions</a> with inputs: <code>REGISTRY</code>, <code>SUBJECT</code>, <code>MODES</code></p>
+          <p>Call <a href="#apply-resource-permissions">§ 5.11 Apply Resource Permissions</a> with inputs: <code>REGISTRY</code>, <code>SUBJECT</code>, <code>MODES</code></p>
         </ol>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.16" id="apply-resource-permissions"><span class="secno">5.16. </span><span class="content">Apply Resource Permissions</span><a class="self-link" href="#apply-resource-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.11" id="apply-resource-permissions"><span class="secno">5.11. </span><span class="content">Apply Resource Permissions</span><a class="self-link" href="#apply-resource-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2671,7 +2391,7 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
    <div class="opdetails">
     <ol>
      <li data-md>
-      <p>Call <a href="#remove-resource-permissions">§ 5.18 Remove Resource Permissions</a> with inputs: <code>RESOURCE</code>, <code>SUBJECT</code></p>
+      <p>Call <a href="#remove-resource-permissions">§ 5.13 Remove Resource Permissions</a> with inputs: <code>RESOURCE</code>, <code>SUBJECT</code></p>
      <li data-md>
       <p>Add a new <a data-link-type="dfn">Authorization Statement</a> <code>NEWSTATEMENT</code> to <code>ACL</code></p>
      <li data-md>
@@ -2686,7 +2406,7 @@ parent <a data-link-type="dfn">Data Instances</a> are keys with an array of <cod
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.17" id="apply-conditional-permissions"><span class="secno">5.17. </span><span class="content">Apply Conditional Resource Permissions</span><a class="self-link" href="#apply-conditional-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.12" id="apply-conditional-permissions"><span class="secno">5.12. </span><span class="content">Apply Conditional Resource Permissions</span><a class="self-link" href="#apply-conditional-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2738,7 +2458,7 @@ the subject identifier could? vary</p>
    <div class="opdetails">
     <ol>
      <li data-md>
-      <p>Call <a href="#remove-resource-permissions">§ 5.18 Remove Resource Permissions</a> with inputs: <code>RESOURCE</code>, <code>SUBJECT</code></p>
+      <p>Call <a href="#remove-resource-permissions">§ 5.13 Remove Resource Permissions</a> with inputs: <code>RESOURCE</code>, <code>SUBJECT</code></p>
      <li data-md>
       <p>Add a new <a data-link-type="dfn">Authorization Statement</a> <code>NEWSTATEMENT</code> to <code>ACL</code></p>
      <li data-md>
@@ -2757,7 +2477,7 @@ subject: <code>CONDSUB</code>, predicate: <code>CONDPRED</code>, object: <code>C
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.18" id="remove-resource-permissions"><span class="secno">5.18. </span><span class="content">Remove Resource Permissions</span><a class="self-link" href="#remove-resource-permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.13" id="remove-resource-permissions"><span class="secno">5.13. </span><span class="content">Remove Resource Permissions</span><a class="self-link" href="#remove-resource-permissions"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2802,7 +2522,7 @@ associated with <code>SUBJECT</code>.</p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.19" id="deny-access-need-group"><span class="secno">5.19. </span><span class="content">Deny Access Need Group</span><a class="self-link" href="#deny-access-need-group"></a></h3>
+   <h3 class="heading settled" data-level="5.14" id="deny-access-need-group"><span class="secno">5.14. </span><span class="content">Deny Access Need Group</span><a class="self-link" href="#deny-access-need-group"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2830,17 +2550,17 @@ associated with <code>SUBJECT</code>.</p>
       <p>For each <a data-link-type="dfn">Access Need</a> <code>NEED</code> in <code>GROUP</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#deny-data-grant">§ 5.20 Deny Data Grant</a> with inputs: <code>NEED hasDataGrant</code>, <code>GRANT</code></p>
+        <p>Call <a href="#deny-data-grant">§ 5.15 Deny Data Grant</a> with inputs: <code>NEED hasDataGrant</code>, <code>GRANT</code></p>
       </ol>
      <li data-md>
       <p>For each <a data-link-type="dfn">Trusted Need</a> <code>TNEED</code> in <code>GROUP</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#deny-trusted-grant">§ 5.28 Deny Trusted Grant</a> with inputs: <code>NEED hasTrustedGrant</code>, <code>GRANT</code></p>
+        <p>Call <a href="#deny-trusted-grant">§ 5.23 Deny Trusted Grant</a> with inputs: <code>NEED hasTrustedGrant</code>, <code>GRANT</code></p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.20" id="deny-data-grant"><span class="secno">5.20. </span><span class="content">Deny Data Grant</span><a class="self-link" href="#deny-data-grant"></a></h3>
+   <h3 class="heading settled" data-level="5.15" id="deny-data-grant"><span class="secno">5.15. </span><span class="content">Deny Data Grant</span><a class="self-link" href="#deny-data-grant"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2869,11 +2589,11 @@ associated with <code>SUBJECT</code>.</p>
       <p>For each inheriting <a data-link-type="dfn">Data Grant</a> <code>IDG</code> linked via <code>IDG inheritsFromGrant</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#deny-data-grant">§ 5.20 Deny Data Grant</a> with inputs: <code>IDG</code>, <code>GRANT</code></p>
+        <p>Call <a href="#deny-data-grant">§ 5.15 Deny Data Grant</a> with inputs: <code>IDG</code>, <code>GRANT</code></p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.21" id="select-all-data-instances"><span class="secno">5.21. </span><span class="content">Select All Data Instances</span><a class="self-link" href="#select-all-data-instances"></a></h3>
+   <h3 class="heading settled" data-level="5.16" id="select-all-data-instances"><span class="secno">5.16. </span><span class="content">Select All Data Instances</span><a class="self-link" href="#select-all-data-instances"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2904,11 +2624,11 @@ associated with <code>SUBJECT</code>.</p>
       <p>For each inheriting <a data-link-type="dfn">Data Grant</a> <code>IDG</code> linked via <code>IDG inheritsFromGrant</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#select-all-inherited-data-instances">§ 5.22 Select All Inherited Data Instances</a> with inputs: <code>IDG</code></p>
+        <p>Call <a href="#select-all-inherited-data-instances">§ 5.17 Select All Inherited Data Instances</a> with inputs: <code>IDG</code></p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.22" id="select-all-inherited-data-instances"><span class="secno">5.22. </span><span class="content">Select All Inherited Data Instances</span><a class="self-link" href="#select-all-inherited-data-instances"></a></h3>
+   <h3 class="heading settled" data-level="5.17" id="select-all-inherited-data-instances"><span class="secno">5.17. </span><span class="content">Select All Inherited Data Instances</span><a class="self-link" href="#select-all-inherited-data-instances"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2934,7 +2654,7 @@ associated with <code>SUBJECT</code>.</p>
       <p>Remove all links for <code>IDG hasDataInstance</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.23" id="select-data-instance"><span class="secno">5.23. </span><span class="content">Select Specific Data Instance</span><a class="self-link" href="#select-data-instance"></a></h3>
+   <h3 class="heading settled" data-level="5.18" id="select-data-instance"><span class="secno">5.18. </span><span class="content">Select Specific Data Instance</span><a class="self-link" href="#select-data-instance"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2969,11 +2689,11 @@ associated with <code>SUBJECT</code>.</p>
       <p>For each inheriting <a data-link-type="dfn">Data Grant</a> <code>IDG</code> linked via <code>IDG inheritsFromGrant</code></p>
       <ol>
        <li data-md>
-        <p>Call <a href="#select-inherited-data-instance">§ 5.24 Select Inherited Data Instance</a> with inputs: <code>IDG</code></p>
+        <p>Call <a href="#select-inherited-data-instance">§ 5.19 Select Inherited Data Instance</a> with inputs: <code>IDG</code></p>
       </ol>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.24" id="select-inherited-data-instance"><span class="secno">5.24. </span><span class="content">Select Inherited Data Instance</span><a class="self-link" href="#select-inherited-data-instance"></a></h3>
+   <h3 class="heading settled" data-level="5.19" id="select-inherited-data-instance"><span class="secno">5.19. </span><span class="content">Select Inherited Data Instance</span><a class="self-link" href="#select-inherited-data-instance"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -2999,7 +2719,7 @@ associated with <code>SUBJECT</code>.</p>
       <p>Remove all links via <code>IDG hasDataInstance</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.25" id="select-inherited-data-instance①"><span class="secno">5.25. </span><span class="content">Select Specific Inherited Data Instance</span><a class="self-link" href="#select-inherited-data-instance①"></a></h3>
+   <h3 class="heading settled" data-level="5.20" id="select-inherited-data-instance①"><span class="secno">5.20. </span><span class="content">Select Specific Inherited Data Instance</span><a class="self-link" href="#select-inherited-data-instance①"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3029,7 +2749,7 @@ associated with <code>SUBJECT</code>.</p>
     </ol>
    </div>
    <p></p>
-   <h3 class="heading settled" data-level="5.26" id="select-trusted-registry-set"><span class="secno">5.26. </span><span class="content">Select Trusted Registry Set</span><a class="self-link" href="#select-trusted-registry-set"></a></h3>
+   <h3 class="heading settled" data-level="5.21" id="select-trusted-registry-set"><span class="secno">5.21. </span><span class="content">Select Trusted Registry Set</span><a class="self-link" href="#select-trusted-registry-set"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3064,7 +2784,7 @@ associated with <code>SUBJECT</code>.</p>
       <p>Let <code>TG trustedWithType</code> be <code>SET rdf:type</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.27" id="select-trusted-registry"><span class="secno">5.27. </span><span class="content">Select Specific Trusted Registry</span><a class="self-link" href="#select-trusted-registry"></a></h3>
+   <h3 class="heading settled" data-level="5.22" id="select-trusted-registry"><span class="secno">5.22. </span><span class="content">Select Specific Trusted Registry</span><a class="self-link" href="#select-trusted-registry"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3099,7 +2819,7 @@ associated with <code>SUBJECT</code>.</p>
       <p>Let <code>TG trustedWithType</code> be <code>SET rdf:type</code></p>
     </ol>
    </div>
-   <h3 class="heading settled" data-level="5.28" id="deny-trusted-grant"><span class="secno">5.28. </span><span class="content">Deny Trusted Grant</span><a class="self-link" href="#deny-trusted-grant"></a></h3>
+   <h3 class="heading settled" data-level="5.23" id="deny-trusted-grant"><span class="secno">5.23. </span><span class="content">Deny Trusted Grant</span><a class="self-link" href="#deny-trusted-grant"></a></h3>
    <table align="left" class="data operation">
     <colgroup>
     <colgroup>
@@ -3478,17 +3198,9 @@ inputs: <code>RECEIPT fromAgent</code>, <code>REGISTRY</code></p>
    <div class="issue"> Cleanup of related data may need to be specified<a href="#issue-1c6aa834"> ↵ </a></div>
    <div class="issue"> Cleanup of related data may need to be specified<a href="#issue-1c6aa834①"> ↵ </a></div>
    <div class="issue"> Update this operation after refactoring of <a data-link-type="dfn">Delegated Data Grants</a><a href="#issue-7e591e60"> ↵ </a></div>
-   <div class="issue"> Should we assume that CISERVICE is able to manage grants, or should
-it need to redirect through the authorization agent? Perhaps the recommendation
-should be that they are combined? Bad separation of concerns?<a href="#issue-d5f0eb31"> ↵ </a></div>
-   <div class="issue"> This doesn’t take account a sequencing of validation steps from
-one channel to another.<a href="#issue-d1e70f49"> ↵ </a></div>
-   <div class="issue"> Define data authorization service<a href="#issue-abd7def3"> ↵ </a></div>
    <div class="issue"> Need to properly factor in multi-pod scenarios. Must identify the
 proper access registry to store things in based on the data registration, which
 means pods will also need to be registered.<a href="#issue-4a203aca"> ↵ </a></div>
-   <div class="issue"> Write standard operation for invitation delivery<a href="#issue-2800f864"> ↵ </a></div>
-   <div class="issue"> Write standard operation for validating an invitation<a href="#issue-00444ef2"> ↵ </a></div>
    <div class="issue"> Need to determine how to deal with objects that are
 dynamic, where we need to match against more than one resource and
 the subject identifier could? vary<a href="#issue-8ac7ce01"> ↵ </a></div>

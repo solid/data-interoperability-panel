@@ -1,0 +1,107 @@
+PREFIX : <#>
+PREFIX solid: <http://www.w3.org/ns/solid/terms>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX st: <http://www.w3.org/ns/shapetree#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+
+<>
+dcterms:issued "2021-09-30"^^xsd:date ;
+dcterms:modified "2021-09-30"^^xsd:date ;
+rdfs:label "Terms for invitation in Solid Application Interoperability"@en .
+
+#############################################################################
+# Access Invitations
+#############################################################################
+
+:AccessInvitation
+  rdfs:subClassOf interop:AccessGrant ;
+  rdfs:comment "Invitation to establish an Access Grant"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Access Invitation"@en .
+
+:expiresAt
+  a rdf:Property ;
+  rdfs:comment "When an invitation is set to expire"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessInvitation ;
+  rdfs:range xsd:dateTime ;
+  rdfs:label "Expires At"@en .
+
+:hasAccessInvitationChannel
+  a rdf:Property ;
+  rdfs:comment "Links an AccessInvitationChannel"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessInvitation ;
+  rdfs:range :AccessInvitationChannel ;
+  rdfs:label "Access Invitation Channel"@en .
+
+# AccessInvitationChannel Class
+#############################################################################
+:AccessInvitationChannel
+  a rdfs:Class ;
+  rdfs:comment "Channel for an Access Invitation"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Access Invitation Channel"@en .
+
+:channelTarget
+  a rdf:Property ;
+  rdfs:comment "Target used when validating the channel"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessInvitationChannel ;
+  rdfs:range xsd:string ;
+  rdfs:label "Channel Target"@en .
+
+:channelCode
+  a rdf:Property ;
+  rdfs:comment "Code used for channel validation"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessInvitationChannel ;
+  rdfs:range xsd:string ;
+  rdfs:label "Channel Code"@en .
+
+:isValidated
+  a rdf:Property ;
+  rdfs:comment "Channel has been validated"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessInvitationChannel ;
+  rdfs:range xsd:boolean ;
+  rdfs:label "Is Validated"@en .
+
+:remainingAttempts
+  a rdf:Property ;
+  rdfs:comment "Validation attempts remaining"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessInvitationChannel ;
+  rdfs:range xsd:integer ;
+  rdfs:label "Remaining Attempts"@en .
+
+# AccessInvitationChannel Subclasses
+#############################################################################
+:PhoneInvitationChannel
+  rdfs:subClassOf :AccessInvitationChannel ;
+  rdfs:comment "Telephone based invitation channel"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Phone Invitation Channel"@en .
+
+:EmailInvitationChannel
+  rdfs:subClassOf :AccessInvitationChannel ;
+  rdfs:comment "E-mail based invitation channel"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "E-mail Invitation Channel"@en .
+
+:SMSInvitationChannel
+  rdfs:subClassOf :AccessInvitationChannel ;
+  rdfs:comment "SMS based invitation channel"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "SMS Invitation Channel"@en .
+
+:OfflineInvitationChannel
+  rdfs:subClassOf :AccessInvitationChannel ;
+  rdfs:comment "Offline invitation channel"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "Offline Invitation Channel"@en .

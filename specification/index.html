@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version a210b7d86, updated Thu Sep 16 13:45:19 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="8ca8be17147b570105eed249cf8632921b6cfe98" name="document-revision">
+  <meta content="bbd1d41aacf087bbbdec9e0aa3e672e273ac33c6" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -536,7 +536,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-30">30 September 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-10-01">1 October 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -607,9 +607,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <li><a href="#data-grant"><span class="secno">9.4</span> <span class="content">Data Grant</span></a>
       <li><a href="#delegated-data-grant"><span class="secno">9.5</span> <span class="content">Delegated Data Grant</span></a>
       <li><a href="#access-scopes"><span class="secno">9.6</span> <span class="content">Data Access Scopes</span></a>
-      <li><a href="#datamodel-access-invitation"><span class="secno">9.7</span> <span class="content">Access Invitation</span></a>
-      <li><a href="#datamodel-access-invitation-channel"><span class="secno">9.8</span> <span class="content">Access Invitation Channel</span></a>
-      <li><a href="#access-consent-registry"><span class="secno">9.9</span> <span class="content">Access Consent Registry</span></a>
+      <li><a href="#access-consent-registry"><span class="secno">9.7</span> <span class="content">Access Consent Registry</span></a>
      </ol>
     <li>
      <a href="#receipts"><span class="secno">10</span> <span class="content">Access Receipts</span></a>
@@ -2476,146 +2474,9 @@ to <code>pm-shapetrees:ProjectTree</code> <a data-link-type="dfn" href="#data-in
         may exceed intended scope of access.</b>
     </table>
    </figure>
-   <h3 class="heading settled" data-level="9.7" id="datamodel-access-invitation"><span class="secno">9.7. </span><span class="content">Access Invitation</span><a class="self-link" href="#datamodel-access-invitation"></a></h3>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-invitation">Access Invitation</dfn> is a subclass of <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑤">Access Grant</a> used when
-a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧②">Social Agent</a> wishes to grant access to another <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧③">Social Agent</a> whose
-decentralized <a data-link-type="dfn" href="#identity" id="ref-for-identity③">identity</a> is unknown to them, or may not exist yet, so they
-must be first invited through another channel (such as phone or email).</p>
-   <p>Like an <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑥">Access Grant</a>, an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation">Access Invitation</a> links to access
-criteria detailed in one or more <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①②⓪">Access Need Groups</a>, with
-associated <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①④⓪">Data Grants</a> or <a data-link-type="dfn">Trusted Grants</a> indicating the
-intended access to be granted.</p>
-   <p>However, instead of linking to an <a data-link-type="dfn">Access Grant Subject</a>, an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation①">Access Invitation</a> links to one or more <a data-link-type="dfn" href="#access-invitation-channel" id="ref-for-access-invitation-channel">Access Invitation Channels</a>.</p>
-   <p>Each channel represents a mechanism through which the invitation can
-be delivered and validated. The mechanism is designed so that multiple
-channels may be validated before an invitation is confirmed and
-converted to an <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑦">Access Grant</a>.</p>
-   <p><a href="interop.ttl#AccessInvitation">Class Definition</a> - <a href="interop.shex#AccessInvitationShape">Shape Definition</a> - <a href="interop.tree#AccessInvitationTree">Shape Tree Definition</a></p>
-   <table align="left" class="classinfo data" id="classAccessInvitation">
-    <colgroup>
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th>Property
-      <th>Range
-      <th>Description
-    <tbody>
-     <tr>
-      <td>registeredBy
-      <td><a href="#classSocialAgent">SocialAgent</a>
-      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧④">Social Agent</a> that registered the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation②">Access Invitation</a>
-     <tr>
-      <td>registeredWith
-      <td><a href="#classApplication">Application</a>
-      <td><a data-link-type="dfn" href="#application" id="ref-for-application③④">Application</a> used to create the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation③">Access Invitation</a>
-     <tr>
-      <td>registeredAt
-      <td>xsd:dateTime
-      <td>Date and time the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation④">Access Invitation</a> was created
-     <tr>
-      <td>updatedAt
-      <td>xsd:dateTime
-      <td>Date and time the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation⑤">Access Invitation</a> was updated
-     <tr>
-      <td>expiresAt
-      <td>xsd:dateTime
-      <td>Date and time the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation⑥">Access Invitation</a> expires
-     <tr>
-      <td>hasAccessInvitationChannel
-      <td><a href="#classAccessInvitationChannel">AccessInvitationChannel</a>
-      <td>Links to an <a data-link-type="dfn" href="#access-invitation-channel" id="ref-for-access-invitation-channel①">Access Invitation Channel</a>
-     <tr>
-      <td>hasAccessNeedGroup
-      <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
-      <td>Links to an <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①②①">Access Need Group</a> associated with
-      the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation⑦">Access Invitation</a>.
-     <tr>
-      <td>hasDataGrant
-      <td><a href="#classDataGrant">DataGrant</a>
-      <td>Links to a <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①④①">Data Grant</a> associated with the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation⑧">Access Invitation</a>.
-   </table>
-   <figure>
-    <figcaption>An <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation⑨">Access Invitation</a> at
-  https://alice.example/grants/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f</figcaption>
-<pre class="include-code highlight"><c- nn>alice-grants</c-><c- p>:</c-><c- f>08c5ae76-6c83-46f8-8e1d-eb14219e7f5f\/</c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessInvitation</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- nn>authz-agent</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-13T19:32:52Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-13T19:32:52Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>expiresAt</c-> <c- s>"2020-09-20T19:32:52Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c->
-    <c- g>&lt;#data-grant-project></c-> <c- p>,</c->
-    <c- g>&lt;#data-grant-issue></c-> <c- p>,</c->
-    <c- g>&lt;#data-grant-task></c-> <c- p>,</c->
-    <c- g>&lt;#data-grant-milestone></c-> <c- p>,</c->
-    <c- g>&lt;#data-grant-release></c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessInvitationChannel</c-> <c- g>&lt;#phone-channel></c-> <c- p>,</c-> <c- g>&lt;#email-channel></c-> <c- p>.</c->
-</pre>
-   </figure>
-   <h3 class="heading settled" data-level="9.8" id="datamodel-access-invitation-channel"><span class="secno">9.8. </span><span class="content">Access Invitation Channel</span><a class="self-link" href="#datamodel-access-invitation-channel"></a></h3>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-invitation-channel">Access Invitation Channel</dfn> represents a mechanism through
-which an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation①⓪">Access Invitation</a> can be delivered and validated.</p>
-   <p><a href="interop.ttl#AccessInvitationChannel">Class Definition</a> - <a href="interop.shex#AccessInvitationChannelShape">Shape Definition</a></p>
-   <table align="left" class="classinfo data" id="classAccessInvitationChannel">
-    <colgroup>
-    <colgroup>
-    <colgroup>
-    <thead>
-     <tr>
-      <th>Property
-      <th>Range
-      <th>Description
-    <tbody>
-     <tr>
-      <td>rdf:type
-      <td>interop:PhoneInvitationChannel,
-      interop:EmailInvitationChannel,
-      interop:SMSInvitationChannel,
-      interop:OfflineInvitationChannel,
-      interop:LDNInvitationChannel
-      <td>Each channel is represented by a subClassOf
-      AccessInvitationChannel
-     <tr>
-      <td>channelTarget
-      <td>xsd:string
-      <td>Target used when validating the channel
-     <tr>
-      <td>channelCode
-      <td>xsd:string
-      <td>Code used for channel validation
-     <tr>
-      <td>isValidated
-      <td>xsd:boolean
-      <td>Indicates whether the channel has been validated
-     <tr>
-      <td>remainingAttempts
-      <td>xsd:integer
-      <td>Number of allowed validation attempts remaining
-   </table>
-   <figure>
-    <figcaption><a data-link-type="dfn" href="#access-invitation-channel" id="ref-for-access-invitation-channel②">Access Invitation Channels</a> in the <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-invitation①①">Access Invitation</a> at
-  https://alice.example/grants/08c5ae76-6c83-46f8-8e1d-eb14219e7f5f</figcaption>
-<pre class="include-code highlight"><c- g>&lt;#phone-channel></c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>PhoneInvitationChannel</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>channelTarget</c-> <c- s>"(555) 555-1212"</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>channelCode</c-> <c- s>"654345"</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>isValidated</c-> <c- l>false</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>remainingAttempts</c-> <c- mi>3</c-> <c- p>.</c->
-
-<c- g>&lt;#email-channel></c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>EmailInvitationChannel</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>channelTarget</c-> <c- s>"bob@example.com"</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>channelCode</c-> <c- s>"434567"</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>isValidated</c-> <c- l>true</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>remainingAttempts</c-> <c- mi>3</c-> <c- p>.</c->
-</pre>
-   </figure>
-   <h3 class="heading settled" data-level="9.9" id="access-consent-registry"><span class="secno">9.9. </span><span class="content">Access Consent Registry</span><a class="self-link" href="#access-consent-registry"></a></h3>
+   <h3 class="heading settled" data-level="9.7" id="access-consent-registry"><span class="secno">9.7. </span><span class="content">Access Consent Registry</span><a class="self-link" href="#access-consent-registry"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-consent-registry①">Access Consent Registry</dfn> is a collection of <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①⑦">Access Consents</a>.</p>
-   <p>The <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①②">Access Consent Registry</a> is linked to a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑤">Social Agent</a> via their <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑥">Registry Set</a>.</p>
+   <p>The <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①②">Access Consent Registry</a> is linked to a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧②">Social Agent</a> via their <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑥">Registry Set</a>.</p>
    <p>An <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①③">Access Consent Registry</a> links to any number of registered <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①⑧">Access Consents</a>.</p>
    <p><a href="interop.ttl#AccessConsentRegistry">Class Definition</a> - <a href="interop.shex#AccessConsentRegistryShape">Shape Definition</a> - <a href="interop.tree#AccessConsentRegistryTree">Shape Tree Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessConsentRegistry">
@@ -2646,7 +2507,7 @@ which an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-in
     <c- nn>alice-consents</c-><c- p>:</c-><c- f>cce01253</c-> <c- p>.</c->   <c- c># performchart</c->
 </pre>
    </figure>
-   <h4 class="heading settled" data-level="9.9.1" id="consents-hierarchy"><span class="secno">9.9.1. </span><span class="content">Resource Hierarchy</span><a class="self-link" href="#consents-hierarchy"></a></h4>
+   <h4 class="heading settled" data-level="9.7.1" id="consents-hierarchy"><span class="secno">9.7.1. </span><span class="content">Resource Hierarchy</span><a class="self-link" href="#consents-hierarchy"></a></h4>
    <table align="left" class="data tree">
     <colgroup>
      <col>
@@ -2762,16 +2623,16 @@ which an <a data-link-type="dfn" href="#access-invitation" id="ref-for-access-in
       <td><a href="interop.tree#DataConsentTree">DataConsentTree</a>
    </table>
    <p>The <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①⑤">Access Consent Registry</a> resources MAY use any resource or subject name.</p>
-   <p>The resource names for <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑧">Access Grants</a> <em class="rfc2119">SHOULD</em> be unpredictable.</p>
+   <p>The resource names for <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑤">Access Grants</a> <em class="rfc2119">SHOULD</em> be unpredictable.</p>
    <h2 class="heading settled" data-level="10" id="receipts"><span class="secno">10. </span><span class="content">Access Receipts</span><a class="self-link" href="#receipts"></a></h2>
-   <p>When a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑥">Social Agent</a> grants access to another <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑦">Social Agent</a> or <a data-link-type="dfn" href="#application" id="ref-for-application③⑤">Application</a>, an <a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①">Access Receipt</a> is provided to the grantee that 
+   <p>When a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧③">Social Agent</a> grants access to another <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧④">Social Agent</a> or <a data-link-type="dfn" href="#application" id="ref-for-application③④">Application</a>, an <a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①">Access Receipt</a> is provided to the grantee that 
 communicates what they have been given access to, and why.</p>
-   <p><a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①①">Access Receipts</a> are sent to a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑧">Social Agent’s</a> Access Inbox.</p>
-   <p><a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①②">Access Receipts</a> received by a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑨">Social Agent</a> are used to
-populate data shared from other <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⓪">Social Agents</a> in the <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry①③">Agent Registry</a>. This allows the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨①">Social Agent</a> and their <a data-link-type="dfn" href="#application" id="ref-for-application③⑥">Applications</a> to lookup and access data 
+   <p><a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①①">Access Receipts</a> are sent to a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑤">Social Agent’s</a> Access Inbox.</p>
+   <p><a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①②">Access Receipts</a> received by a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑥">Social Agent</a> are used to
+populate data shared from other <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑦">Social Agents</a> in the <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry①③">Agent Registry</a>. This allows the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑧">Social Agent</a> and their <a data-link-type="dfn" href="#application" id="ref-for-application③⑤">Applications</a> to lookup and access data 
 that been shared with them.</p>
    <h3 class="heading settled" data-level="10.1" id="access-receipt"><span class="secno">10.1. </span><span class="content">Access Receipt</span><a class="self-link" href="#access-receipt"></a></h3>
-   <p>A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨②">Social Agent</a> provides an <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-receipt①">Access Receipt</dfn> to another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②⑨">Agent</a> after granting them access to some scope of data 
+   <p>A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑨">Social Agent</a> provides an <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-receipt①">Access Receipt</dfn> to another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②⑨">Agent</a> after granting them access to some scope of data 
 in an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②⓪">Access Consent</a>.</p>
    <p><a href="interop.ttl#AccessReceipt">Class Definition</a> - <a href="interop.shex#AccessReceiptShape">Shape Definition</a> - <a href="interop.tree#AccessReceiptTree">Shape Tree Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessReceipt">
@@ -2791,11 +2652,11 @@ in an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-conse
      <tr>
       <td>fromSocialAgent
       <td><a href="#classSocialAgent">SocialAgent</a>
-      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨③">Social Agent</a> whose data is being shared through the <a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①④">Access Receipt</a>
+      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⓪">Social Agent</a> whose data is being shared through the <a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①④">Access Receipt</a>
      <tr>
       <td>viaSocialAgent
       <td><a href="#classSocialAgent">SocialAgent</a>
-      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨④">Social Agent</a> who granted access and delivered the <a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①⑤">Access Receipt</a>.
+      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨①">Social Agent</a> who granted access and delivered the <a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①⑤">Access Receipt</a>.
       This can be different than <code>fromSocialAgent</code> when access is being managed
       by a <a data-link-type="dfn">Trusted Agent</a> of <code>fromSocialAgent</code>.
      <tr>
@@ -2816,30 +2677,30 @@ in an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-conse
    </figure>
    <h2 class="heading settled" data-level="11" id="security"><span class="secno">11. </span><span class="content">Security</span><a class="self-link" href="#security"></a></h2>
    <h3 class="heading settled" data-level="11.1" id="security-appauthz"><span class="secno">11.1. </span><span class="content">Application Authorization</span><a class="self-link" href="#security-appauthz"></a></h3>
-   <p>For authorization purposes, client <a data-link-type="dfn" href="#application" id="ref-for-application③⑦">Applications</a> in use today fall into
+   <p>For authorization purposes, client <a data-link-type="dfn" href="#application" id="ref-for-application③⑥">Applications</a> in use today fall into
 two buckets:</p>
    <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="strongly-identifiable-applications">Strongly identifiable applications</dfn> can be identified by
-third parties independently from the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑤">Social Agent</a> controlling them.
+third parties independently from the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨②">Social Agent</a> controlling them.
 Only <a data-link-type="dfn" href="#server-side-application" id="ref-for-server-side-application">server-side applications</a> are
 strongly identifiable. As confidential clients, they can keep secrets
 and can present attestations and third-party credentials
 via DNS / domain certificates.</p>
-   <p>In the case of a <a data-link-type="dfn" href="#strongly-identifiable-applications" id="ref-for-strongly-identifiable-applications">strongly identifiable application</a>, the <a data-link-type="dfn" href="#application" id="ref-for-application③⑧">Application</a> has its own <a data-link-type="dfn" href="#identity" id="ref-for-identity④">identity</a>. A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑥">Social Agent</a> can authorize a given <a data-link-type="dfn" href="#application" id="ref-for-application③⑨">Application</a> to access data based solely on the <a data-link-type="dfn" href="#identity" id="ref-for-identity⑤">identity</a> of that <a data-link-type="dfn" href="#application" id="ref-for-application④⓪">Application</a>.</p>
-   <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="weakly-identifiable-applications">Weakly identifiable applications</dfn> include in-browser Javascript <a data-link-type="dfn" href="#application" id="ref-for-application④①">Applications</a> and native desktop or mobile <a data-link-type="dfn" href="#application" id="ref-for-application④②">Applications</a>. They are
+   <p>In the case of a <a data-link-type="dfn" href="#strongly-identifiable-applications" id="ref-for-strongly-identifiable-applications">strongly identifiable application</a>, the <a data-link-type="dfn" href="#application" id="ref-for-application③⑦">Application</a> has its own <a data-link-type="dfn" href="#identity" id="ref-for-identity③">identity</a>. A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨③">Social Agent</a> can authorize a given <a data-link-type="dfn" href="#application" id="ref-for-application③⑧">Application</a> to access data based solely on the <a data-link-type="dfn" href="#identity" id="ref-for-identity④">identity</a> of that <a data-link-type="dfn" href="#application" id="ref-for-application③⑨">Application</a>.</p>
+   <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="weakly-identifiable-applications">Weakly identifiable applications</dfn> include in-browser Javascript <a data-link-type="dfn" href="#application" id="ref-for-application④⓪">Applications</a> and native desktop or mobile <a data-link-type="dfn" href="#application" id="ref-for-application④①">Applications</a>. They are
 considered weakly identifiable because they
 are not able to keep secrets on an instance level. They are often referred to
 as public clients. Native apps should be strongly-identifiable in theory
 (since they are able to keep secrets on an instance level), but not in
 practice because the OS manufacturers do not make their trust
 infrastructure available. Weakly identifiable clients are only strongly
-identifiable to the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑦">Social Agent</a> controlling them.</p>
+identifiable to the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨④">Social Agent</a> controlling them.</p>
    <p>In the case of <a data-link-type="dfn" href="#weakly-identifiable-applications" id="ref-for-weakly-identifiable-applications">Weakly identifiable applications</a>, the ability for a Solid
-pod to limit access to data by the <a data-link-type="dfn" href="#application" id="ref-for-application④③">Application</a> in use is only as strong as
-the trustworthiness of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑧">Social Agent</a> piloting that <a data-link-type="dfn" href="#application" id="ref-for-application④④">Application</a>, along with
-their ability to avoid using malicious <a data-link-type="dfn" href="#application" id="ref-for-application④⑤">Applications</a>. The <a data-link-type="dfn" href="#identity" id="ref-for-identity⑥">identity</a> of the <a data-link-type="dfn" href="#application" id="ref-for-application④⑥">Application</a> can be manipulated
-by the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑨">Social Agent</a> in control. This means that Alice can strongly control
-the <a data-link-type="dfn" href="#application" id="ref-for-application④⑦">Applications</a> that she uses to access her own data, but has
-limited ability to control the <a data-link-type="dfn" href="#application" id="ref-for-application④⑧">Applications</a> that Bob uses to access the data
+pod to limit access to data by the <a data-link-type="dfn" href="#application" id="ref-for-application④②">Application</a> in use is only as strong as
+the trustworthiness of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑤">Social Agent</a> piloting that <a data-link-type="dfn" href="#application" id="ref-for-application④③">Application</a>, along with
+their ability to avoid using malicious <a data-link-type="dfn" href="#application" id="ref-for-application④④">Applications</a>. The <a data-link-type="dfn" href="#identity" id="ref-for-identity⑤">identity</a> of the <a data-link-type="dfn" href="#application" id="ref-for-application④⑤">Application</a> can be manipulated
+by the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑥">Social Agent</a> in control. This means that Alice can strongly control
+the <a data-link-type="dfn" href="#application" id="ref-for-application④⑥">Applications</a> that she uses to access her own data, but has
+limited ability to control the <a data-link-type="dfn" href="#application" id="ref-for-application④⑦">Applications</a> that Bob uses to access the data
 she shares with him.</p>
    <h2 class="heading settled" data-level="12" id="definitions"><span class="secno">12. </span><span class="content">Definitions</span><a class="self-link" href="#definitions"></a></h2>
    <p><b>All definitions as stated below should be considered in the context of
@@ -2851,7 +2712,7 @@ aimed at decentralizing data on the web.</p>
 the <a data-link-type="dfn" href="#solid" id="ref-for-solid①">Solid</a> protocol, with mechanisms for controlling who or what can
 access that data.</p>
    <p>An interoperable <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="ecosystem">ecosystem</dfn> is
-a collection of <a data-link-type="dfn" href="#solid" id="ref-for-solid②">Solid</a> compatible <a data-link-type="dfn" href="#application" id="ref-for-application④⑨">applications</a> developed by one or more
+a collection of <a data-link-type="dfn" href="#solid" id="ref-for-solid②">Solid</a> compatible <a data-link-type="dfn" href="#application" id="ref-for-application④⑧">applications</a> developed by one or more
 entities, used by a community of users, that can safely access and manipulate
 the same kinds of data in <a data-link-type="dfn" href="#pod" id="ref-for-pod">pods</a>.</p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="server-side-application">server-side application</dfn> runs on a dedicated server. They may
@@ -2860,12 +2721,12 @@ also act as autonomous <a data-link-type="dfn" href="#authenticated-agent" id="r
 as the <a data-link-type="dfn" href="#authenticated-agent" id="ref-for-authenticated-agent①">authenticated agent</a>. They include in-browser javascript
 applications, native desktop applications, and mobile applications.</p>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="authenticated-agent">authenticated agent</dfn> is an <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③⓪">agent</a> that has strongly
-authenticated their <a data-link-type="dfn" href="#identity" id="ref-for-identity⑦">identity</a> by proving control of the <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document⑦">identity profile document</a> via an authentication protocol such as <a data-link-type="biblio" href="#biblio-solid-oidc">[SOLID-OIDC]</a>.</p>
+authenticated their <a data-link-type="dfn" href="#identity" id="ref-for-identity⑥">identity</a> by proving control of the <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document⑦">identity profile document</a> via an authentication protocol such as <a data-link-type="biblio" href="#biblio-solid-oidc">[SOLID-OIDC]</a>.</p>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="identity">identity</dfn> is a unique URI that can be dereferenced
 to return an <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document⑧">identity profile document</a>. Compatible
 identity systems include <a data-link-type="dfn" href="#webid" id="ref-for-webid">WebID</a> and <a data-link-type="dfn" href="#did" id="ref-for-did">DID</a>.</p>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="identity-profile-document">identity profile document</dfn> is a linked data document obtained by
-dereferencing the URI for a given <a data-link-type="dfn" href="#identity" id="ref-for-identity⑧">identity</a>. It provides information that
+dereferencing the URI for a given <a data-link-type="dfn" href="#identity" id="ref-for-identity⑦">identity</a>. It provides information that
 can be used to prove that a given <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③①">Agent</a> controls the document.</p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="webid">WebID</dfn> is a web resource at an HTTP URI which refers to an <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③②">agent</a>. An <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document⑨">identity profile document</a> can be accessed by
 dereferencing the WebID. <a data-link-type="biblio" href="#biblio-webid">[WEBID]</a></p>
@@ -2874,7 +2735,7 @@ thing, data model, abstract entity, etc.) with a DID document,
 equivalent to an <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document①⓪">identity profile document</a>, to allow trustable
 interactions with that subject. <a data-link-type="biblio" href="#biblio-did">[DID]</a></p>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="application-identity">application identity</dfn> is a web resource at an HTTP URI
-that uniquely identifies a given <a data-link-type="dfn" href="#application" id="ref-for-application⑤⓪">Application</a>, and dereferences to an <a data-link-type="dfn" href="#application-profile-document" id="ref-for-application-profile-document">application profile document</a>.</p>
+that uniquely identifies a given <a data-link-type="dfn" href="#application" id="ref-for-application④⑨">Application</a>, and dereferences to an <a data-link-type="dfn" href="#application-profile-document" id="ref-for-application-profile-document">application profile document</a>.</p>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="application-profile-document">application profile document</dfn> is a linked data document
 obtained by dereferencing the URI for a given <a data-link-type="dfn" href="#application-identity" id="ref-for-application-identity">application identity</a>.</p>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="acl-resource">acl resource</dfn> as defined by <a data-link-type="biblio" href="#biblio-wac">[WAC]</a> may be directly
@@ -2907,11 +2768,9 @@ associate instances of related shape trees via a ShapePath</p>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
    <li><a href="#access-consent①">Access Consent</a><span>, in § 9.1</span>
-   <li><a href="#access-consent-registry①">Access Consent Registry</a><span>, in § 9.9</span>
+   <li><a href="#access-consent-registry①">Access Consent Registry</a><span>, in § 9.7</span>
    <li><a href="#access-decorator-set①">Access Decorator Set</a><span>, in § 8.3.3</span>
    <li><a href="#access-grant①">Access Grant</a><span>, in § 9.3</span>
-   <li><a href="#access-invitation">Access Invitation</a><span>, in § 9.7</span>
-   <li><a href="#access-invitation-channel">Access Invitation Channel</a><span>, in § 9.8</span>
    <li><a href="#access-mode">access mode</a><span>, in § 12</span>
    <li><a href="#access-need">Access Need</a><span>, in § 8.2</span>
    <li><a href="#access-need-decorator①">Access Need Decorator</a><span>, in § 8.3.2</span>
@@ -3036,11 +2895,10 @@ inherited permissions.<a href="#issue-5157d1cb"> ↵ </a></div>
     <li><a href="#ref-for-social-agent⑦③">9.4. Data Grant</a> <a href="#ref-for-social-agent⑦④">(2)</a> <a href="#ref-for-social-agent⑦⑤">(3)</a>
     <li><a href="#ref-for-social-agent⑦⑥">9.6. Data Access Scopes</a> <a href="#ref-for-social-agent⑦⑦">(2)</a> <a href="#ref-for-social-agent⑦⑧">(3)</a>
     <li><a href="#ref-for-social-agent⑦⑨">9.6.2. AllFromAgent</a> <a href="#ref-for-social-agent⑧⓪">(2)</a> <a href="#ref-for-social-agent⑧①">(3)</a>
-    <li><a href="#ref-for-social-agent⑧②">9.7. Access Invitation</a> <a href="#ref-for-social-agent⑧③">(2)</a> <a href="#ref-for-social-agent⑧④">(3)</a>
-    <li><a href="#ref-for-social-agent⑧⑤">9.9. Access Consent Registry</a>
-    <li><a href="#ref-for-social-agent⑧⑥">10. Access Receipts</a> <a href="#ref-for-social-agent⑧⑦">(2)</a> <a href="#ref-for-social-agent⑧⑧">(3)</a> <a href="#ref-for-social-agent⑧⑨">(4)</a> <a href="#ref-for-social-agent⑨⓪">(5)</a> <a href="#ref-for-social-agent⑨①">(6)</a>
-    <li><a href="#ref-for-social-agent⑨②">10.1. Access Receipt</a> <a href="#ref-for-social-agent⑨③">(2)</a> <a href="#ref-for-social-agent⑨④">(3)</a>
-    <li><a href="#ref-for-social-agent⑨⑤">11.1. Application Authorization</a> <a href="#ref-for-social-agent⑨⑥">(2)</a> <a href="#ref-for-social-agent⑨⑦">(3)</a> <a href="#ref-for-social-agent⑨⑧">(4)</a> <a href="#ref-for-social-agent⑨⑨">(5)</a>
+    <li><a href="#ref-for-social-agent⑧②">9.7. Access Consent Registry</a>
+    <li><a href="#ref-for-social-agent⑧③">10. Access Receipts</a> <a href="#ref-for-social-agent⑧④">(2)</a> <a href="#ref-for-social-agent⑧⑤">(3)</a> <a href="#ref-for-social-agent⑧⑥">(4)</a> <a href="#ref-for-social-agent⑧⑦">(5)</a> <a href="#ref-for-social-agent⑧⑧">(6)</a>
+    <li><a href="#ref-for-social-agent⑧⑨">10.1. Access Receipt</a> <a href="#ref-for-social-agent⑨⓪">(2)</a> <a href="#ref-for-social-agent⑨①">(3)</a>
+    <li><a href="#ref-for-social-agent⑨②">11.1. Application Authorization</a> <a href="#ref-for-social-agent⑨③">(2)</a> <a href="#ref-for-social-agent⑨④">(3)</a> <a href="#ref-for-social-agent⑨⑤">(4)</a> <a href="#ref-for-social-agent⑨⑥">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="registry">
@@ -3059,7 +2917,7 @@ inherited permissions.<a href="#issue-5157d1cb"> ↵ </a></div>
     <li><a href="#ref-for-registry-set③">5.3. Agent Registry</a>
     <li><a href="#ref-for-registry-set④">6.2. Data Registry</a>
     <li><a href="#ref-for-registry-set⑤">8. Access Needs</a>
-    <li><a href="#ref-for-registry-set⑥">9.9. Access Consent Registry</a>
+    <li><a href="#ref-for-registry-set⑥">9.7. Access Consent Registry</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="application">
@@ -3082,10 +2940,9 @@ inherited permissions.<a href="#issue-5157d1cb"> ↵ </a></div>
     <li><a href="#ref-for-application③①">9.2. Data Consent</a>
     <li><a href="#ref-for-application③②">9.3. Access Grant</a>
     <li><a href="#ref-for-application③③">9.4. Data Grant</a>
-    <li><a href="#ref-for-application③④">9.7. Access Invitation</a>
-    <li><a href="#ref-for-application③⑤">10. Access Receipts</a> <a href="#ref-for-application③⑥">(2)</a>
-    <li><a href="#ref-for-application③⑦">11.1. Application Authorization</a> <a href="#ref-for-application③⑧">(2)</a> <a href="#ref-for-application③⑨">(3)</a> <a href="#ref-for-application④⓪">(4)</a> <a href="#ref-for-application④①">(5)</a> <a href="#ref-for-application④②">(6)</a> <a href="#ref-for-application④③">(7)</a> <a href="#ref-for-application④④">(8)</a> <a href="#ref-for-application④⑤">(9)</a> <a href="#ref-for-application④⑥">(10)</a> <a href="#ref-for-application④⑦">(11)</a> <a href="#ref-for-application④⑧">(12)</a>
-    <li><a href="#ref-for-application④⑨">12. Definitions</a> <a href="#ref-for-application⑤⓪">(2)</a>
+    <li><a href="#ref-for-application③④">10. Access Receipts</a> <a href="#ref-for-application③⑤">(2)</a>
+    <li><a href="#ref-for-application③⑥">11.1. Application Authorization</a> <a href="#ref-for-application③⑦">(2)</a> <a href="#ref-for-application③⑧">(3)</a> <a href="#ref-for-application③⑨">(4)</a> <a href="#ref-for-application④⓪">(5)</a> <a href="#ref-for-application④①">(6)</a> <a href="#ref-for-application④②">(7)</a> <a href="#ref-for-application④③">(8)</a> <a href="#ref-for-application④④">(9)</a> <a href="#ref-for-application④⑤">(10)</a> <a href="#ref-for-application④⑥">(11)</a> <a href="#ref-for-application④⑦">(12)</a>
+    <li><a href="#ref-for-application④⑧">12. Definitions</a> <a href="#ref-for-application④⑨">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="social-agent-registration①">
@@ -3189,7 +3046,6 @@ inherited permissions.<a href="#issue-5157d1cb"> ↵ </a></div>
     <li><a href="#ref-for-access-need-group①①⑦">9.1. Access Consent</a>
     <li><a href="#ref-for-access-need-group①①⑧">9.3. Access Grant</a>
     <li><a href="#ref-for-access-need-group①①⑨">9.4. Data Grant</a>
-    <li><a href="#ref-for-access-need-group①②⓪">9.7. Access Invitation</a> <a href="#ref-for-access-need-group①②①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-need">
@@ -3245,7 +3101,7 @@ inherited permissions.<a href="#issue-5157d1cb"> ↵ </a></div>
     <li><a href="#ref-for-access-consent①④">9.1. Access Consent</a> <a href="#ref-for-access-consent①⑤">(2)</a> <a href="#ref-for-access-consent①⑥">(3)</a> <a href="#ref-for-access-consent①⑦">(4)</a> <a href="#ref-for-access-consent①⑧">(5)</a> <a href="#ref-for-access-consent①⑨">(6)</a> <a href="#ref-for-access-consent①①⓪">(7)</a> <a href="#ref-for-access-consent①①①">(8)</a> <a href="#ref-for-access-consent①①②">(9)</a> <a href="#ref-for-access-consent①①③">(10)</a> <a href="#ref-for-access-consent①①④">(11)</a>
     <li><a href="#ref-for-access-consent①①⑤">9.2. Data Consent</a>
     <li><a href="#ref-for-access-consent①①⑥">9.3. Access Grant</a>
-    <li><a href="#ref-for-access-consent①①⑦">9.9. Access Consent Registry</a> <a href="#ref-for-access-consent①①⑧">(2)</a> <a href="#ref-for-access-consent①①⑨">(3)</a>
+    <li><a href="#ref-for-access-consent①①⑦">9.7. Access Consent Registry</a> <a href="#ref-for-access-consent①①⑧">(2)</a> <a href="#ref-for-access-consent①①⑨">(3)</a>
     <li><a href="#ref-for-access-consent①②⓪">10.1. Access Receipt</a>
    </ul>
   </aside>
@@ -3272,8 +3128,7 @@ inherited permissions.<a href="#issue-5157d1cb"> ↵ </a></div>
     <li><a href="#ref-for-access-grant①⑤">9.1. Access Consent</a>
     <li><a href="#ref-for-access-grant①⑥">9.3. Access Grant</a> <a href="#ref-for-access-grant①⑦">(2)</a> <a href="#ref-for-access-grant①⑧">(3)</a> <a href="#ref-for-access-grant①⑨">(4)</a> <a href="#ref-for-access-grant①①⓪">(5)</a> <a href="#ref-for-access-grant①①①">(6)</a> <a href="#ref-for-access-grant①①②">(7)</a>
     <li><a href="#ref-for-access-grant①①③">9.4. Data Grant</a> <a href="#ref-for-access-grant①①④">(2)</a>
-    <li><a href="#ref-for-access-grant①①⑤">9.7. Access Invitation</a> <a href="#ref-for-access-grant①①⑥">(2)</a> <a href="#ref-for-access-grant①①⑦">(3)</a>
-    <li><a href="#ref-for-access-grant①①⑧">9.9.1. Resource Hierarchy</a>
+    <li><a href="#ref-for-access-grant①①⑤">9.7.1. Resource Hierarchy</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="data-grant①">
@@ -3289,7 +3144,6 @@ inherited permissions.<a href="#issue-5157d1cb"> ↵ </a></div>
     <li><a href="#ref-for-data-grant①②⑨">9.6.3. AllFromRegistry</a> <a href="#ref-for-data-grant①③⓪">(2)</a> <a href="#ref-for-data-grant①③①">(3)</a>
     <li><a href="#ref-for-data-grant①③②">9.6.4. SelectedFromRegistry</a> <a href="#ref-for-data-grant①③③">(2)</a> <a href="#ref-for-data-grant①③④">(3)</a>
     <li><a href="#ref-for-data-grant①③⑤">9.6.5. Inherited</a> <a href="#ref-for-data-grant①③⑥">(2)</a> <a href="#ref-for-data-grant①③⑦">(3)</a> <a href="#ref-for-data-grant①③⑧">(4)</a> <a href="#ref-for-data-grant①③⑨">(5)</a>
-    <li><a href="#ref-for-data-grant①④⓪">9.7. Access Invitation</a> <a href="#ref-for-data-grant①④①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="delegated-data-grant①">
@@ -3314,27 +3168,13 @@ inherited permissions.<a href="#issue-5157d1cb"> ↵ </a></div>
     <li><a href="#ref-for-access-scope⑧">9.6.5. Inherited</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-invitation">
-   <b><a href="#access-invitation">#access-invitation</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-access-invitation">9.7. Access Invitation</a> <a href="#ref-for-access-invitation①">(2)</a> <a href="#ref-for-access-invitation②">(3)</a> <a href="#ref-for-access-invitation③">(4)</a> <a href="#ref-for-access-invitation④">(5)</a> <a href="#ref-for-access-invitation⑤">(6)</a> <a href="#ref-for-access-invitation⑥">(7)</a> <a href="#ref-for-access-invitation⑦">(8)</a> <a href="#ref-for-access-invitation⑧">(9)</a> <a href="#ref-for-access-invitation⑨">(10)</a>
-    <li><a href="#ref-for-access-invitation①⓪">9.8. Access Invitation Channel</a> <a href="#ref-for-access-invitation①①">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="access-invitation-channel">
-   <b><a href="#access-invitation-channel">#access-invitation-channel</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-access-invitation-channel">9.7. Access Invitation</a> <a href="#ref-for-access-invitation-channel①">(2)</a>
-    <li><a href="#ref-for-access-invitation-channel②">9.8. Access Invitation Channel</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="access-consent-registry①">
    <b><a href="#access-consent-registry①">#access-consent-registry①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-consent-registry①">3.1. Registry Set</a>
     <li><a href="#ref-for-access-consent-registry①①">9.1. Access Consent</a>
-    <li><a href="#ref-for-access-consent-registry①②">9.9. Access Consent Registry</a> <a href="#ref-for-access-consent-registry①③">(2)</a> <a href="#ref-for-access-consent-registry①④">(3)</a>
-    <li><a href="#ref-for-access-consent-registry①⑤">9.9.1. Resource Hierarchy</a>
+    <li><a href="#ref-for-access-consent-registry①②">9.7. Access Consent Registry</a> <a href="#ref-for-access-consent-registry①③">(2)</a> <a href="#ref-for-access-consent-registry①④">(3)</a>
+    <li><a href="#ref-for-access-consent-registry①⑤">9.7.1. Resource Hierarchy</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-receipt①">
@@ -3400,9 +3240,8 @@ inherited permissions.<a href="#issue-5157d1cb"> ↵ </a></div>
    <b><a href="#identity">#identity</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-identity">2. Agents</a> <a href="#ref-for-identity①">(2)</a> <a href="#ref-for-identity②">(3)</a>
-    <li><a href="#ref-for-identity③">9.7. Access Invitation</a>
-    <li><a href="#ref-for-identity④">11.1. Application Authorization</a> <a href="#ref-for-identity⑤">(2)</a> <a href="#ref-for-identity⑥">(3)</a>
-    <li><a href="#ref-for-identity⑦">12. Definitions</a> <a href="#ref-for-identity⑧">(2)</a>
+    <li><a href="#ref-for-identity③">11.1. Application Authorization</a> <a href="#ref-for-identity④">(2)</a> <a href="#ref-for-identity⑤">(3)</a>
+    <li><a href="#ref-for-identity⑥">12. Definitions</a> <a href="#ref-for-identity⑦">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="identity-profile-document">
