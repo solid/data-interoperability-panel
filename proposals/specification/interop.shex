@@ -201,7 +201,10 @@ PREFIX sts: <http://www.w3.org/ns/shapetrees-schema#>
   <#DataGrantInheritedShape>
 
 <#DataGrantAllFromRegistryShape> {
-  a [ interop:DataGrant ] ;
+  ( a [ interop:DataGrant ]
+    |
+    a [ interop:DelegatedDataGrant ] ;
+    interop:delegationOfGrant               IRI  // shex:reference <#DataGrantShape> ) ;
   &<#CommonDataConsentProperties> ;
   interop:dataOwner                         IRI  // shex:reference <#AgentShape> ;
   interop:hasDataRegistration               IRI  // shex:reference <#DataRegistrationShape> ;
@@ -209,7 +212,10 @@ PREFIX sts: <http://www.w3.org/ns/shapetrees-schema#>
 }
 
 <#DataGrantSelectedFromRegistryShape> {
-  a [ interop:DataGrant ] ;
+  ( a [ interop:DataGrant ]
+    |
+    a [ interop:DelegatedDataGrant ] ;
+    interop:delegationOfGrant               IRI  // shex:reference <#DataGrantShape> ) ;
   &<#CommonDataConsentProperties> ;
   interop:dataOwner                         IRI  // shex:reference <#AgentShape> ;
   interop:hasDataRegistration               IRI  // shex:reference <#DataRegistrationShape> ;
@@ -218,7 +224,10 @@ PREFIX sts: <http://www.w3.org/ns/shapetrees-schema#>
 }
 
 <#DataGrantInheritedShape> {
-  a [ interop:DataGrant ] ;
+  ( a [ interop:DataGrant ]
+    |
+    a [ interop:DelegatedDataGrant ] ;
+    interop:delegationOfGrant               IRI  // shex:reference <#DataGrantShape> ) ;
   &<#CommonDataConsentProperties> ;
   interop:dataOwner                         IRI  // shex:reference <#AgentShape> ;
   interop:hasDataRegistration               IRI  // shex:reference <#DataRegistrationShape> ;
