@@ -1,111 +1,109 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX st: <http://www.w3.org/ns/shapetrees#>
 PREFIX interops: <http://www.w3.org/ns/solid/interop-schema#>
+
+# Social Agent Identity
+##########################################################
 
 <#SocialAgentTree>
   a st:ShapeTree ;
   st:expectsType st:Resource ;
   st:shape interops:SocialAgentShape .
 
-<#AccessInboxTree>
-  a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:contains <#AccessReceiptTree> ,
-              <#AccessRequestTree> .
-
 <#RegistrySetTree>
   a st:ShapeTree ;
-  st:expectsType      st:Resource ;
-  st:shape            interops:RegistrySetShape .
+  st:expectsType    st:Resource ;
+  st:shape          interops:RegistrySetShape .
 
-<#AgentRegistryTree>
+<#AccessInboxTree>
   a st:ShapeTree ;
-  st:expectsType      st:Container ;
-  st:shape            interops:AgentRegistryShape ;
-  st:contains         <#ApplicationRegistrationTree> ,
-                      <#SocialAgentRegistrationTree> .
+  st:expectsType    st:Container ;
+  st:contains       <#AccessReceiptTree> ,
+                    <#AccessRequestTree> .
 
-<#ApplicationRegistrationTree>
-  a st:ShapeTree ;
-  st:expectsType      st:Container ;
-  st:shape            interops:ApplicationRegistrationShape ;
-  st:contains         <#AccessGrantTree> ,
-                      <#DataGrantTree> ,
-                      <#DelegatedDataGrantTree> .
-
-<#SocialAgentRegistrationTree>
-  a st:ShapeTree ;
-  st:expectsType      st:Container ;
-  st:shape            interops:SocialAgentRegistrationShape .
-
-<#DataRegistryTree>
-  a st:ShapeTree ;
-  st:expectsType      st:Container ;
-  st:shape            interops:DataRegistryShape ;
-  st:contains         <#DataRegistrationTree> .
-
-# Data Registration
-##############################################################################
-# Ensure the registration container graph contains a valid
-# DataRegistration instance, which will in turn contain instances of
-# whatever shape tree was registered by the eco:DataRegistration.
-##############################################################################
-<#DataRegistrationTree>
-  a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:shape interops:DataRegistrationShape .
-
-# Access Grant Registry
-##############################################################################
-# Ensure the registry container graph contains a valid
-# AccessGrantRegistry instance, and the resource inside of
-# it are valid AccessGrant instances.
-##############################################################################
-<#AccessGrantRegistryTree>
-  a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:shape interops:AccessGrantRegistryShape ;
-  st:contains <#AccessGrantTree> .
-
-# Access Grant
-##############################################################################
-# Ensure the grant resource graph contains a valid AccessGrant instance
-##############################################################################
-<#AccessGrantTree>
-  a st:ShapeTree ;
-  st:expectsType st:Resource ;
-  st:shape interops:AccessGrantShape .
-
-# Data Grant
-##############################################################################
-# Ensure the grant resource graph contains a valid DataGrant instance
-##############################################################################
-<#DataGrantTree>
-  a st:ShapeTree ;
-  st:expectsType st:Resource ;
-  st:shape interops:DataGrantShape .
-
-# Inherited Data Grant
-##############################################################################
-# Ensure the grant resource graph contains a valid InheritedDataGrant instance
-##############################################################################
-<#InheritedDataGrantTree>
-  a st:ShapeTree ;
-  st:expectsType st:Resource ;
-  st:shape interops:InheritedDataGrantShape .
-
-# Access Receipt
-##############################################################################
-# Ensure the receipt resource graph contains a valid AccessReceipt instance
-##############################################################################
 <#AccessReceiptTree>
   a st:ShapeTree ;
-  st:expectsType st:Resource ;
-  st:shape interops:AccessReceiptShape .
+  st:expectsType    st:Resource ;
+  st:shape          interops:AccessReceiptShape .
 
-# Application
-##############################################################################
+<#AccessRequestTree>
+  a st:ShapeTree ;
+  st:expectsType    st:Resource ;
+  st:shape          interops:AccessRequestShape .
+
+# Application Identity
+##########################################################
 
 <#ApplicationTree>
   a st:ShapeTree ;
-  st:expectsType st:Resource ;
-  st:shape interops:ApplicationShape .
+  st:expectsType    st:Resource ;
+  st:shape          interops:ApplicationShape .
+
+# Agent Registry
+##########################################################
+
+<#AgentRegistryTree>
+  a st:ShapeTree ;
+  st:expectsType    st:Container ;
+  st:shape          interops:AgentRegistryShape ;
+  st:contains       <#ApplicationRegistrationTree> ,
+                    <#SocialAgentRegistrationTree> .
+
+<#ApplicationRegistrationTree>
+  a st:ShapeTree ;
+  st:expectsType    st:Container ;
+  st:shape          interops:ApplicationRegistrationShape ;
+  st:contains       <#AccessGrantTree> ,
+                    <#DataGrantTree> .
+
+<#SocialAgentRegistrationTree>
+  a st:ShapeTree ;
+  st:expectsType    st:Container ;
+  st:shape          interops:SocialAgentRegistrationShape ;
+  st:contains       <#AccessGrantTree> ,
+                    <#DataGrantTree> .
+
+<#AccessGrantTree>
+  a st:ShapeTree ;
+  st:expectsType    st:Resource ;
+  st:shape          interops:AccessGrantShape .
+
+<#DataGrantTree>
+  a st:ShapeTree ;
+  st:expectsType    st:Resource ;
+  st:shape          interops:DataGrantShape .
+
+# Data Registry
+##########################################################
+
+<#DataRegistryTree>
+  a st:ShapeTree ;
+  st:expectsType    st:Container ;
+  st:shape          interops:DataRegistryShape ;
+  st:contains       <#DataRegistrationTree> .
+
+<#DataRegistrationTree>
+  a st:ShapeTree ;
+  st:expectsType    st:Container ;
+  st:shape          interops:DataRegistrationShape .
+
+# Access Consent Registry
+##########################################################
+
+<#AccessConsentRegistryTree>
+  a st:ShapeTree ;
+  st:expectsType    st:Container ;
+  st:shape          interops:AccessConsentRegistryShape ;
+  st:contains       <#AccessConsentTree> ,
+                    <#DataConsentTree> .
+
+<#AccessConsentTree>
+  a st:ShapeTree ;
+  st:expectsType    st:Resource ;
+  st:shape          interops:AccessConsentShape .
+
+<#DataConsentTree>
+  a st:ShapeTree ;
+  st:expectsType    st:Resource ;
+  st:shape          interops:DataConsentShape .
