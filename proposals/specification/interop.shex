@@ -1,6 +1,9 @@
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX sts: <http://www.w3.org/ns/shapetrees-schema#>
+PREFIX shex: <http://www.w3.org/ns/shex>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <#SocialAgentShape> {
   a [ interop:SocialAgent ] ;
@@ -81,7 +84,7 @@ PREFIX sts: <http://www.w3.org/ns/shapetrees-schema#>
 
 <#AccessNeedShape> {
   a [ interop:AccessNeed ] ;
-  interop:registeredShapeTree               IRI  // shex:reference sts:ShapeTree;
+  interop:registeredShapeTree               IRI  // shex:reference sts:ShapeTree ;
   interop:accessMode                        @<#AccessModes>+ ;
   interop:creatorAccessMode                 @<#AccessModes>* ;
   interop:accessNecessity                   [ interop:AccessRequired interop:AccessOptional ] ;
@@ -91,7 +94,7 @@ PREFIX sts: <http://www.w3.org/ns/shapetrees-schema#>
 
 <#AccessModes> [ acl:Read acl:Write acl:Append acl:Control acl:Create acl:Update acl:Delete ]
 
-<#AccessDecoratorSet> {
+<#AccessDecoratorSetShape> {
   a [ interop:AccessDecoratorSet ] ;
   interop:usesLanguage                      xsd:language
 }
