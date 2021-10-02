@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version a210b7d86, updated Thu Sep 16 13:45:19 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="de6d15e768c84cc4f35d8e14757062a7618b98f4" name="document-revision">
+  <meta content="da20bfbf64318a3f043e8ab392c15d4fc01ac959" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -1366,10 +1366,10 @@ to <a href="snippets/data.example/pm-shapetrees.tree#ProjectTree">ProjectTree</a
 </pre>
        <td>
          Ensure the container resource for the <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①①⑧">Data Registration</a> conforms to <code>interops#DataRegistrationShape</code>. 
-<pre class="include-code highlight"><c- g>&lt;#DataRegistrationTree></c->
-  <c- b>a</c-> <c- nn>st</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
-  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>st</c-><c- p>:</c-><c- f>Container</c-> <c- p>;</c->
-  <c- nn>st</c-><c- p>:</c-><c- f>shape</c-> <c- nn>interops</c-><c- p>:</c-><c- f>DataRegistrationShape</c-> <c- p>.</c->
+<pre class="include-code highlight">  <c- nn>st</c-><c- p>:</c-><c- f>expectsType</c->    <c- nn>st</c-><c- p>:</c-><c- f>Resource</c-> <c- p>;</c->
+  <c- nn>st</c-><c- p>:</c-><c- f>shape</c->          <c- nn>interops</c-><c- p>:</c-><c- f>DataGrantShape</c-> <c- p>.</c->
+
+<c- c># Data Registry</c->
 </pre>
         <p>And also ensure the <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①①⑨">Data Registration</a> only
           contains resources that conform to <code>pm:ProjectTree</code>.</p>
