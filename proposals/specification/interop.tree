@@ -1,8 +1,5 @@
-PREFIX st: <http://www.w3.org/ns/shapetree#>
-PREFIX interops: <https://shapes.pub/drafts/ns/solid/interop#>
-
-# Agent
-##############################################################################
+PREFIX st: <http://www.w3.org/ns/shapetrees#>
+PREFIX interops: <http://www.w3.org/ns/solid/interop-schema#>
 
 <#SocialAgentTree>
   a st:ShapeTree ;
@@ -17,53 +14,34 @@ PREFIX interops: <https://shapes.pub/drafts/ns/solid/interop#>
 
 <#RegistrySetTree>
   a st:ShapeTree ;
-  st:expectsType st:Resource ;
-  st:shape interops:RegistrySetShape .
+  st:expectsType      st:Resource ;
+  st:shape            interops:RegistrySetShape .
 
-# Agent Registry
-##############################################################################
-# Ensure the registry container graph contains a valid
-# AgentRegistry instance, and the resource inside of
-# it are valid AgentRegistration instances.
-##############################################################################
 <#AgentRegistryTree>
   a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:shape interops:AgentRegistryShape ;
-  st:contains <#ApplicationRegistrationTree> ,
-              <#SocialAgentRegistrationTree> .
+  st:expectsType      st:Container ;
+  st:shape            interops:AgentRegistryShape ;
+  st:contains         <#ApplicationRegistrationTree> ,
+                      <#SocialAgentRegistrationTree> .
 
-# Application Registration
-##############################################################################
-# Ensure the registration container graph contains a valid
-# ApplicationRegistration instance.
-##############################################################################
 <#ApplicationRegistrationTree>
   a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:shape <interops:ApplicationRegistrationShape> .
+  st:expectsType      st:Container ;
+  st:shape            interops:ApplicationRegistrationShape ;
+  st:contains         <#AccessGrantTree> ,
+                      <#DataGrantTree> ,
+                      <#DelegatedDataGrantTree> .
 
-# Social Agent Registration
-##############################################################################
-# Ensure the registration container graph contains a valid
-# SocialAgentRegistration instance.
-##############################################################################
 <#SocialAgentRegistrationTree>
   a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:shape <interops:SocialAgentRegistrationShape> .
+  st:expectsType      st:Container ;
+  st:shape            interops:SocialAgentRegistrationShape .
 
-# Data Registry
-##############################################################################
-# Ensure the registry container graph contains a valid
-# DataRegistry instance, and the resource inside of
-# it are valid DataRegistration instances.
-##############################################################################
 <#DataRegistryTree>
   a st:ShapeTree ;
-  st:expectsType st:Container ;
-  st:shape interops:DataRegistryShape ;
-  st:contains <#DataRegistrationTree> .
+  st:expectsType      st:Container ;
+  st:shape            interops:DataRegistryShape ;
+  st:contains         <#DataRegistrationTree> .
 
 # Data Registration
 ##############################################################################
