@@ -75,7 +75,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <#AccessNeedGroupShape> {
   a [ interop:AccessNeedGroup ] ;
-  interop:hasAccessDecoratorSet             IRI*  // shex:reference <#AccessDecoratorSetShape> ;
+  interop:hasAccessDescriptionSet             IRI*  // shex:reference <#AccessDescriptionSetShape> ;
   interop:accessNecessity                   [ interop:AccessRequired interop:AccessOptional ] ;
   interop:accessScenario                    [ interop:PersonalAccess interop:SharedAccess ]+ ;
   interop:authenticatesAs                   [ interop:SocialAgent interop:Application ] ;
@@ -94,22 +94,22 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <#AccessModes> [ acl:Read acl:Write acl:Append acl:Control acl:Create acl:Update acl:Delete ]
 
-<#AccessDecoratorSetShape> {
-  a [ interop:AccessDecoratorSet ] ;
+<#AccessDescriptionSetShape> {
+  a [ interop:AccessDescriptionSet ] ;
   interop:usesLanguage                      xsd:language
 }
 
-<#AccessNeedGroupDecoratorShape> {
-  a [ interop:AccessNeedGroupDecorator ] ;
-  interop:inAccessDecoratorSet              IRI  // shex:reference <#AccessDecoratorSetShape> ;
+<#AccessNeedGroupDescriptionShape> {
+  a [ interop:AccessNeedGroupDescription ] ;
+  interop:inAccessDescriptionSet              IRI  // shex:reference <#AccessDescriptionSetShape> ;
   interop:hasAccessNeedGroup                IRI  // shex:reference <#AccessNeedGroupShape> ;
   skos:prefLabel                            xsd:string ;
   skos:definition                           xsd:string
 }
 
-<#AccessNeedDecoratorShape> {
-  a [ interop:AccessNeedDecorator ] ;
-  interop:inAccessDecoratorSet              IRI  // shex:reference <#AccessDecoratorSetShape> ;
+<#AccessNeedDescriptionShape> {
+  a [ interop:AccessNeedDescription ] ;
+  interop:inAccessDescriptionSet              IRI  // shex:reference <#AccessDescriptionSetShape> ;
   interop:hasAccessNeedGroup                IRI  // shex:reference <#AccessNeedGroupShape> ;
   skos:prefLabel xsd:string
 }
