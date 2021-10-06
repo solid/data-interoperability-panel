@@ -1,314 +1,247 @@
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX sts: <http://www.w3.org/ns/shapetrees-schema#>
+PREFIX shex: <http://www.w3.org/ns/shex>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-# Agent
 <#SocialAgentShape> {
   a [ interop:SocialAgent ] ;
-  interop:hasRegistrySet IRI ;
-  interop:hasAuthorizationAgent IRI ;
-  interop:hasInbox IRI ;
-  interop:hasAccessInbox IRI
+  interop:hasRegistrySet                    IRI // shex:reference <#RegistrySetShape> ;
+  interop:hasAuthorizationAgent             IRI // shex:reference <#ApplicationShape> ;
+  interop:hasInbox                          IRI ;
+  interop:hasAccessInbox                    IRI
 }
 
-# Registry Set
 <#RegistrySetShape> {
   a [ interop:RegistrySet ] ;
-  interop:hasAgentRegistry IRI ;
-  interop:hasAccessConsentRegistry IRI ;
-  interop:hasDataRegistry IRI*
+  interop:hasAgentRegistry                  IRI  // shex:reference <#AgentRegistryShape> ;
+  interop:hasAccessConsentRegistry          IRI  // shex:reference <#AccessConsentRegistryShape> ;
+  interop:hasDataRegistry                   IRI* // shex:reference <#DataRegistryShape>
 }
 
-# Agent Registry
+<#RegistrationShape> {
+  $<#CommonRegistrationProperties> (
+    interop:registeredBy                    IRI // shex:reference <#AgentShape> ;
+    interop:registeredWith                  IRI // shex:reference <#ApplicationShape> ;
+    interop:registeredAt                    xsd:dateTime ;
+    interop:updatedAt                       xsd:dateTime ;
+  )
+}
+
 <#AgentRegistryShape> {
   a [ interop:AgentRegistry ] ;
-  interop:hasRegistration IRI*
+  interop:hasRegistration                   IRI* // shex:reference <#AgentRegistrationShape> ;
 }
 
-# Social Agent Registration
+<#AgentRegistrationShape>
+  <#SocialAgentRegistrationShape> OR
+  <#ApplicationRegistrationShape>
+
 <#SocialAgentRegistrationShape> {
   a [ interop:SocialAgentRegistration ] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI ;
-  interop:registeredAt xsd:dateTime ;
-  interop:updatedAt xsd:dateTime ;
-  interop:registeredAgent IRI ;
-  interop:hasAccessGrant IRI ;
-  interop:reciprocalRegistration IRI?
+  &<#CommonRegistrationProperties> ;
+  interop:registeredAgent                   IRI  // shex:reference <#AgentShape> ;
+  interop:hasAccessGrant                    IRI  // shex:reference <#AccessGrantShape> ;
+  interop:reciprocalRegistration            IRI? // shex:reference <#SocialAgentShape>
 }
 
-# Application Registration
 <#ApplicationRegistrationShape> {
   a [ interop:ApplicationRegistration ] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI ;
-  interop:registeredAt xsd:dateTime ;
-  interop:updatedAt xsd:dateTime ;
-  interop:registeredAgent IRI ;
-  interop:hasAccessGrant IRI ;
+  &<#CommonRegistrationProperties> ;
+  interop:registeredAgent                   IRI  // shex:reference <#AgentShape> ;
+  interop:hasAccessGrant                    IRI  // shex:reference <#AccessGrantShape>
 }
 
-# Data Registry
 <#DataRegistryShape> {
   a [ interop:DataRegistry ] ;
-  interop:hasRegistration IRI*
+  interop:hasRegistration                   IRI* // shex:reference <#DataRegistrationShape>
 }
 
-# Data Registration
 <#DataRegistrationShape> {
   a [ interop:DataRegistration ] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI ;
-  interop:registeredAt xsd:dateTime ;
-  interop:updatedAt xsd:dateTime ;
-  interop:registeredShapeTree IRI ;
-  interop:registeredType IRI*
+  &<#CommonRegistrationProperties> ;
+  interop:registeredShapeTree               IRI  // shex:reference sts:ShapeTree;
 }
 
-# Application
 <#ApplicationShape> {
   a [ interop:Application ] ;
-  interop:applicationName xsd:string ;
-  interop:applicationDescription xsd:string ;
-  interop:applicationAuthor IRI ;
-  interop:applicationThumbnail IRI? ;
-  interop:hasAccessNeedGroup IRI*
+  interop:applicationName                   xsd:string ;
+  interop:applicationDescription            xsd:string ;
+  interop:applicationAuthor                 IRI  // shex:reference <#AgentShape> ;
+  interop:applicationThumbnail              IRI? ;
+  interop:hasAccessNeedGroup                IRI* // shex:reference <#AccessNeedGroupShape>
 }
 
-# Access Need Group
 <#AccessNeedGroupShape> {
   a [ interop:AccessNeedGroup ] ;
-  interop:hasAccessDescriptionSet IRI*
-  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
-  interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
-  interop:authenticatesAs [ interop:SocialAgent interop:Application ] ;
-  interop:hasAccessNeed IRI+
+  interop:hasAccessDescriptionSet             IRI*  // shex:reference <#AccessDescriptionSetShape> ;
+  interop:accessNecessity                   [ interop:AccessRequired interop:AccessOptional ] ;
+  interop:accessScenario                    [ interop:PersonalAccess interop:SharedAccess ]+ ;
+  interop:authenticatesAs                   [ interop:SocialAgent interop:Application ] ;
+  interop:hasAccessNeed                     IRI+  // shex:reference <#AccessNeedShape> ;
 }
 
-# Access Need
 <#AccessNeedShape> {
   a [ interop:AccessNeed ] ;
-  interop:registeredShapeTree IRI ;
-  interop:hasDataInstance IRI* ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
-  interop:hasDataGrant @<#:DataGrantShape>?
-  interop:inheritsFromNeed IRI ;
+  interop:registeredShapeTree               IRI  // shex:reference sts:ShapeTree ;
+  interop:accessMode                        @<#AccessModes>+ ;
+  interop:creatorAccessMode                 @<#AccessModes>* ;
+  interop:accessNecessity                   [ interop:AccessRequired interop:AccessOptional ] ;
+  interop:hasDataInstance                   IRI* ;
+  interop:inheritsFromNeed                  IRI? // shex:reference <#AccessNeedShape> ;
 }
 
-# Access Modes
-<#AccessModes> [
-  acl:Read
-  acl:Write
-  acl:Append
-  acl:Control
-  acl:Create
-  acl:Update
-  acl:Delete
-]
+<#AccessModes> [ acl:Read acl:Write acl:Append acl:Control acl:Create acl:Update acl:Delete ]
 
-# Access Description Set
-<#AccessDescriptionSet> {
+<#AccessDescriptionSetShape> {
   a [ interop:AccessDescriptionSet ] ;
-  interop:usesLanguage xsd:language
+  interop:usesLanguage                      xsd:language
 }
 
-# Access Need Group Description
 <#AccessNeedGroupDescriptionShape> {
   a [ interop:AccessNeedGroupDescription ] ;
-  interop:hasAccessNeedGroup IRI ;
-  skos:prefLabel xsd:string ;
-  skos:definition xsd:string
+  interop:inAccessDescriptionSet              IRI  // shex:reference <#AccessDescriptionSetShape> ;
+  interop:hasAccessNeedGroup                IRI  // shex:reference <#AccessNeedGroupShape> ;
+  skos:prefLabel                            xsd:string ;
+  skos:definition                           xsd:string
 }
 
-# Access Need Description
 <#AccessNeedDescriptionShape> {
   a [ interop:AccessNeedDescription ] ;
-  interop:hasAccessNeedGroup IRI ;
+  interop:inAccessDescriptionSet              IRI  // shex:reference <#AccessDescriptionSetShape> ;
+  interop:hasAccessNeedGroup                IRI  // shex:reference <#AccessNeedGroupShape> ;
   skos:prefLabel xsd:string
 }
 
-# Access Request
 <#AccessRequestShape> {
   a [interop:AccessRequest] ;
-  interop:fromAgent IRI ;             # Agent who sent the receipt
-  interop:toAgent IRI ;               # Recipient of the receipt
-  interop:hasAccessNeedGroup @<#:AccessNeedGroupShape>+
+  interop:fromSocialAgent                   IRI  // shex:reference <#SocialAgentShape> ;
+  interop:toSocialAgent                     IRI  // shex:reference <#SocialAgentShape> ;
+  interop:hasAccessNeedGroup                @<#AccessNeedGroupShape>+
 }
 
-# Access Consent Registry
 <#AccessConsentRegistryShape> {
   a [ interop:AccessConsentRegistry ] ;
-  interop:hasRegistration IRI*
+  interop:hasRegistration                   IRI* // shex:reference <#AccessConsentShape>
 }
 
-# Access Consent
 <#AccessConsentShape> {
   a [ interop:AccessConsent ] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI? ;
-  interop:registeredAt xsd:dateTime ;
-  interop:registeredAgent IRI ;
-  interop:hasAccessNeedGroup IRI? ;
-  interop:hasDataConsent IRI+
+  interop:registeredBy                      IRI  // shex:reference <#AgentShape> ;
+  interop:registeredWith                    IRI? // shex:reference <#ApplicationShape> ;
+  interop:registeredAt                      xsd:dateTime ;
+  interop:registeredAgent                   IRI  // shex:reference <#AgentShape> ;
+  interop:hasAccessNeedGroup                IRI? // shex:reference <#AccessNeedGroupShape> ;
+  interop:hasDataConsent                    IRI+ // shex:reference <#DataConsentShape>
 }
 
-<#DataConsentShape> {
-  a [ interop:DataConsent ] ;
-  interop:dataOwner IRI ;
-  interop:registeredAgent IRI ;
-  interop:registeredShapeTree IRI ;
-  interop:satisfiesAccessNeed IRI? ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:scopeOfConsent @<#:DataGrantScopes> ;
-  interop:satisfiesAccessNeed IRI? ;
-  ( interop:hasDataInstance IRI* |
-    interop:hasDataResource IRI* ) ;
-  interop:inheritsFromConsent IRI?
-}
+<#DataConsentShape>
+  <#DataConsentAllShape> OR
+  <#DataConsentAllFromAgentShape> OR
+  <#DataConsentAllFromRegistryShape> OR
+  <#DataConsentSelectedFromRegistryShape> OR
+  <#DataConsentInheritedShape>
 
 <#DataConsentAllShape> {
   a [ interop:DataConsent ] ;
-  interop:registeredAgent IRI ;
-  interop:registeredShapeTree IRI ;
-  interop:satisfiesAccessNeed IRI? ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:scopeOfConsent [ interop:All ] ;
-  interop:satisfiesAccessNeed IRI? .
+  $<#CommonDataConsentProperties> (
+    interop:registeredAgent                 IRI  // shex:reference <#AgentShape> ;
+    interop:registeredShapeTree             IRI  // shex:reference sts:ShapeTree ;
+    interop:satisfiesAccessNeed             IRI? // shex:reference <#AccessNeedShape> ;
+    interop:accessMode                      @<#AccessModes>+ ;
+    interop:creatorAccessMode               @<#AccessModes>* ;
+  ) ;
+  interop:scopeOfConsent                    [ interop:All ]
 }
 
 <#DataConsentAllFromAgentShape> {
   a [ interop:DataConsent ] ;
-  interop:dataOwner IRI ;
-  interop:registeredAgent IRI ;
-  interop:registeredShapeTree IRI ;
-  interop:satisfiesAccessNeed IRI? ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:scopeOfConsent [ interop:AllFromAgent ] ;
-  interop:satisfiesAccessNeed IRI? .
+  &<#CommonDataConsentProperties> ;
+  interop:dataOwner                         IRI  // shex:reference <#SocialAgentShape> ;
+  interop:scopeOfConsent                    [ interop:AllFromAgent ]
 }
 
 <#DataConsentAllFromRegistryShape> {
   a [ interop:DataConsent ] ;
-  interop:dataOwner IRI ;
-  interop:registeredAgent IRI ;
-  interop:registeredShapeTree IRI ;
-  interop:satisfiesAccessNeed IRI? ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:scopeOfConsent [ interop:AllFromRegistry ] ;
-  interop:hasDataRegistration IRI ;
-  interop:satisfiesAccessNeed IRI? .
+  &<#CommonDataConsentProperties> ;
+  interop:dataOwner                         IRI  // shex:reference <#SocialAgentShape> ;
+  interop:scopeOfConsent                    [ interop:AllFromRegistry ] ;
+  interop:hasDataRegistration               IRI  // shex:reference <#DataRegistrationShape>
 }
 
 <#DataConsentSelectedFromRegistryShape> {
   a [ interop:DataConsent ] ;
-  interop:dataOwner IRI ;
-  interop:registeredAgent IRI ;
-  interop:registeredShapeTree IRI ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:scopeOfConsent [ interop:SelectedFromRegistry ] ;
-  interop:hasDataRegistration IRI ;
-  interop:hasDataInstance IRI+ ;
-  interop:satisfiesAccessNeed IRI? .
+  &<#CommonDataConsentProperties> ;
+  interop:dataOwner                         IRI  // shex:reference <#SocialAgentShape> ;
+  interop:scopeOfConsent                    [ interop:SelectedFromRegistry ] ;
+  interop:hasDataRegistration               IRI  // shex:reference <#DataRegistrationShape> ;
+  interop:hasDataInstance                   IRI+
 }
+
 <#DataConsentInheritedShape> {
   a [ interop:DataConsent ] ;
-  interop:dataOwner IRI? ;
-  interop:registeredAgent IRI ;
-  interop:registeredShapeTree IRI ;
-  interop:satisfiesAccessNeed IRI? ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:scopeOfConsent [ interop:Inherited ] ;
-  interop:hasDataRegistration IRI? ;
-  interop:inheritsFromConsent IRI ;
-  interop:satisfiesAccessNeed IRI? .
+  &<#CommonDataConsentProperties> ;
+  interop:dataOwner                         IRI  // shex:reference <#SocialAgentShape> ;
+  interop:scopeOfConsent                    [ interop:Inherited ] ;
+  interop:hasDataRegistration               IRI? // shex:reference <#DataRegistrationShape> ;
+  interop:inheritsFromConsent               IRI  // shex:reference <#DataConsentShape>
 }
 
-# Access Grant
 <#AccessGrantShape> {
   a [ interop:AccessGrant ] ;
-  interop:registeredBy IRI ;
-  interop:registeredWith IRI? ;
-  interop:registeredAt xsd:dateTime ;
-  interop:registeredAgent IRI ;
-  interop:hasAccessNeedGroup IRI ;
-  interop:hasDataGrant IRI+
+  interop:registeredBy                      IRI  // shex:reference <#AgentShape> ;
+  interop:registeredWith                    IRI? // shex:reference <#ApplicationShape> ;
+  interop:registeredAt                      xsd:dateTime ;
+  interop:registeredAgent                   IRI  // shex:reference <#AgentShape> ;
+  interop:hasAccessNeedGroup                IRI  // shex:reference <#AccessNeedGroupShape> ;
+  interop:hasDataGrant                      IRI+ // shex:reference <#DataGrant> ;
 }
 
-# Data Grant
-<#DataGrantShape> {
-  a [ interop:DataGrant ] ;
-  interop:dataOwner IRI ;
-  interop:registeredAgent IRI ;
-  interop:registeredShapeTree IRI ;
-  ( interop:hasDataRegistration IRI |
-    interop:hasDataResource IRI ) ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:scopeOfGrant @<#:DataGrantScopes> ;
-  interop:satisfiesAccessNeed IRI? ;
-  interop:hasDataInstance IRI* ;
-}
+<#DataGrantShape>
+  <#DataGrantAllFromRegistryShape> OR
+  <#DataGrantSelectedFromRegistryShape> OR
+  <#DataGrantInheritedShape>
 
 <#DataGrantAllFromRegistryShape> {
-  a [ interop:DataGrant ] ;
-  interop:dataOwner IRI ;
-  interop:registeredAgent IRI ;
-  interop:registeredShapeTree IRI ;
-  interop:hasDataRegistration IRI ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:scopeOfGrant [ interop:AllFromRegistry ] ;
-  interop:satisfiesAccessNeed IRI? .
+  ( a [ interop:DataGrant ]
+    |
+    a [ interop:DelegatedDataGrant ] ;
+    interop:delegationOfGrant               IRI  // shex:reference <#DataGrantShape> ) ;
+  &<#CommonDataConsentProperties> ;
+  interop:dataOwner                         IRI  // shex:reference <#AgentShape> ;
+  interop:hasDataRegistration               IRI  // shex:reference <#DataRegistrationShape> ;
+  interop:scopeOfGrant                      [ interop:AllFromRegistry ]
 }
 
 <#DataGrantSelectedFromRegistryShape> {
-  a [ interop:DataGrant ] ;
-  interop:dataOwner IRI ;
-  interop:registeredAgent IRI ;
-  interop:registeredShapeTree IRI ;
-  interop:hasDataRegistration IRI ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:scopeOfGrant [ interop:SelectedFromRegistry ] ;
-  interop:hasDataInstance IRI+ ;
-  interop:satisfiesAccessNeed IRI? .
+  ( a [ interop:DataGrant ]
+    |
+    a [ interop:DelegatedDataGrant ] ;
+    interop:delegationOfGrant               IRI  // shex:reference <#DataGrantShape> ) ;
+  &<#CommonDataConsentProperties> ;
+  interop:dataOwner                         IRI  // shex:reference <#AgentShape> ;
+  interop:hasDataRegistration               IRI  // shex:reference <#DataRegistrationShape> ;
+  interop:scopeOfGrant                      [ interop:SelectedFromRegistry ] ;
+  interop:hasDataInstance                   IRI+
 }
 
 <#DataGrantInheritedShape> {
-  a [ interop:DataGrant ] ;
-  interop:dataOwner IRI ;
-  interop:registeredAgent IRI ;
-  interop:registeredShapeTree IRI ;
-  interop:hasDataRegistration IRI ;
-  interop:accessMode @<#:AccessModes>+ ;
-  interop:creatorAccessMode @<#:AccessModes>* ;
-  interop:scopeOfGrant [ interop:Inherited ] ;
-  interop:inheritsFromGrant IRI ;
-  interop:satisfiesAccessNeed IRI? .
+  ( a [ interop:DataGrant ]
+    |
+    a [ interop:DelegatedDataGrant ] ;
+    interop:delegationOfGrant               IRI  // shex:reference <#DataGrantShape> ) ;
+  &<#CommonDataConsentProperties> ;
+  interop:dataOwner                         IRI  // shex:reference <#AgentShape> ;
+  interop:hasDataRegistration               IRI  // shex:reference <#DataRegistrationShape> ;
+  interop:scopeOfGrant                      [ interop:Inherited ] ;
+  interop:inheritsFromGrant                 IRI  // shex:reference <#DataGrantShape> ;
 }
 
-# Data Grant Scopes
-<#DataGrantScopes> [
-  interop:SelectedFromRegistry
-  interop:AllFromRegistry
-  interop:AllFromAgent
-  interop:All
-  interop:Inherited
-  interop:NoAccess
-]
-
-# Access Receipt
 <#AccessReceiptShape> {
   a [interop:AccessReceipt] ;
-  interop:providedAt xsd:dateTime ;
-  interop:fromSocialAgent IRI ;
-  interop:viaSocialAgent IRI ;
-  interop:hasSocialAgentRegistration IRI
+  interop:providedAt                        xsd:dateTime ;
+  interop:fromSocialAgent                   IRI  // shex:reference <#SocialAgentShape> ;
+  interop:viaSocialAgent                    IRI  // shex:reference <#SocialAgentShape> ;
+  interop:hasSocialAgentRegistration        IRI  // shex:reference <#SocialAgentRegistration>
 }
