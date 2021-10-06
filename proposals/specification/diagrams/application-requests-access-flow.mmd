@@ -1,0 +1,37 @@
+sequenceDiagram
+    autonumber
+    actor Alice
+    participant Projectron
+    participant Authorization Agent
+    participant Alice's Pod
+    participant Alice's Identity Provider
+    participant Alice's Identity Document
+    Alice->>Projectron: Decides to use
+    Alice->>Projectron: Provides Identity
+    Projectron->>Alice's Identity Document: Dereferences Alice's Identity
+    Alice's Identity Document->>Projectron: Gets Alice's Profile Document
+    Note over Alice's Identity Document,Projectron: Discovers Alice's Authorization Agent and IdP in her Profile Document
+    Projectron->>Authorization Agent: Check for Application Registration
+    Authorization Agent->>Projectron: 401 Not Authorized
+    Note over Authorization Agent,Projectron: Alice/Projectron needs to authenticate first
+    Projectron->>Alice's Identity Provider: Initiate Solid-OIDC Flow
+    Alice's Identity Provider->>Projectron: Provide DPoP-bound Access Token and Proof
+    Projectron->>Authorization Agent: Check for Application Registration
+    Authorization Agent->>Alice's Pod: Check Agent Registry
+    Authorization Agent->>Projectron: No Application Registration Found
+    Projectron->>Alice: Redirect Alice to Authorization Agent with Projectron ID
+    Alice->>Authorization Agent: Open Authorization Agent providing Projectron's ID
+    Authorization Agent->>Projectron: Fetch Application Profile
+    Authorization Agent->>Alice: Present Projectron Access Needs
+    Alice->>Authorization Agent: Choose scope of access for Projectron
+    Authorization Agent->>Alice's Pod: Record Access Consent
+    Authorization Agent->>Alice's Pod: Create Application Registration
+    Authorization Agent->>Alice's Pod: Provide Access Grant
+    Authorization Agent->>Alice: Redirect back to Projectron
+    Alice->>Projectron: Return to Projectron
+    Projectron->>Authorization Agent: Check for Application Registration
+    Authorization Agent->>Alice's Pod: Check Agent Registry
+    Authorization Agent->>Projectron: Provide Application Registration
+    Projectron->>Alice's Pod: Fetch Access Grant and Data Grants
+    Projectron->>Alice's Pod: Access authorized data
+

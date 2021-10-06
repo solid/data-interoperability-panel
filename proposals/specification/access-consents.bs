@@ -307,11 +307,8 @@ more [=Shape Tree References=].
 Each [=Data Grant=] has an assigned scope (`interop:scopeOfGrant`), which
 determines how permissions are assigned.
 
-When recording a [=Data Grant=] via [[SAI-API#grants-recordgrant]]:
-
-* There should be an [=Access Need=] linked via `interop:satisfiesAccessNeed` that
-    belongs to an [=Access Need Group=] linked to the same [=Access Grant=].
-* [=Access Need=] and [=Data Grant=] must have the same `interop:registeredShapeTree`
+When creating a [=Data Grant=], there should be an [=Access Need=] linked 
+via `interop:satisfiesAccessNeed` with the same `interop:registeredShapeTree`.
 
 When a [=Social Agent=] grants another [=Agent=] access to data that was shared
 with them, a [=Delegated Data Grant=] is used instead.
@@ -1062,6 +1059,63 @@ below via `pm:hasTask` would be included in the `interop:Inherited` scope.
       </tr>
     </tbody>
   </table>  
+</figure>
+
+## Access Receipt ## {#access-receipt}
+
+A [=Social Agent=] provides an <dfn>Access Receipt</dfn> to another
+[=Agent=] after granting them access to some scope of data
+in an [=Access Consent=].
+
+[Class Definition](interop.ttl#AccessReceipt) -
+[Shape Definition](interop.shex#AccessReceiptShape) -
+[Shape Tree Definition](interop.tree#AccessReceiptTree)
+
+<table class="classinfo data" align="left" id="classAccessReceipt">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>providedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Access Receipt=] was provided</td>
+    </tr>
+    <tr>
+      <td>fromSocialAgent</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] whose data is being shared through the [=Access Receipt=]</td>
+    </tr>
+    <tr>
+      <td>viaSocialAgent</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] who granted access and delivered the [=Access Receipt=].
+      This can be different than `fromSocialAgent` when access is being managed
+      by a [=Trusted Agent=] of `fromSocialAgent`.</td>
+    </tr>
+    <tr>
+      <td>hasSocialAgentRegistration</td>
+      <td>[SocialAgentRegistration](#classSocialAgentRegistration)</td>
+      <td>Links to the [=Social Agent Registration=] maintained for the grantee by the
+      data owner (identified by `fromSocialAgent`).</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>An example [=Access Receipt=] from Alice to Bob</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/fa6d6553.ttl
+  highlight: turtle
+  show: 7-12
+  </pre>
 </figure>
 
 ## Access Consent Registry ## {#access-consent-registry}

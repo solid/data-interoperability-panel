@@ -17,7 +17,6 @@ Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth unde
 ### Solid Application Interoperability
 
 * **Specification** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/specification) - [Rendered](https://solid.github.io/data-interoperability-panel/specification/)
-* **Operations and API** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/api) - [Rendered](https://solid.github.io/data-interoperability-panel/api/)
 * **Application Primer** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/primer/application.bs) - [Rendered](https://solid.github.io/data-interoperability-panel/primer/application.html)
 * **Authorization Agent Primer** (TBA)
 * **Resources**
@@ -25,7 +24,6 @@ Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth unde
   * [Application Interoperability Walkthrough - Part 2](https://solid-interop-public.s3.amazonaws.com/application-interoperability-walkthrough-part-2.mp4) (VIDEO)
 
 #### Current targets
-- Publish 1.0 Draft of Application Interoperability Use Cases
 - Publish 1.0 Draft of Application Interoperability Specification
 - Publish 1.0 Draft of Application Interoperability Primer
 - Complete Typescript library implementation
