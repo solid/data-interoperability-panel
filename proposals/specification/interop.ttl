@@ -226,7 +226,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   a rdf:Property ;
   rdfs:comment "Links to instances of the shape tree in a data registration"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :DataRegistry ;
+  rdfs:domain [ owl:unionOf ( :AccessNeed :DataConsent :DataGrant ) ] ;
   rdfs:label "Data Instance"@en .
 
 #############################################################################
