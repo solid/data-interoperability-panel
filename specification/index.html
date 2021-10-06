@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version a210b7d86, updated Thu Sep 16 13:45:19 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="016fa34e5eea103bdcd914863a2e302672165d38" name="document-revision">
+  <meta content="9772e1f7b73dbc90a9db6a4cc08ac41ac65e318a" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -608,7 +608,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <ol class="toc">
       <li><a href="#access-need-group"><span class="secno">8.1</span> <span class="content">Access Need Group</span></a>
       <li><a href="#needs-access-need"><span class="secno">8.2</span> <span class="content">Access Need</span></a>
-      <li><a href="#access-decorators"><span class="secno">8.3</span> <span class="content">Access Decorators</span></a>
+      <li><a href="#access-descriptions"><span class="secno">8.3</span> <span class="content">Access Descriptions</span></a>
       <li><a href="#access-request"><span class="secno">8.4</span> <span class="content">Access Request</span></a>
      </ol>
     <li>
@@ -1584,7 +1584,7 @@ identified by <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree�
 when determining whether to grant access.</p>
    <h3 class="heading settled" data-level="8.1" id="access-need-group"><span class="secno">8.1. </span><span class="content">Access Need Group</span><a class="self-link" href="#access-need-group"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-need-group①">Access Need Group</dfn> is a collection of <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑦">Access Needs</a> used to communicate an access request to <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑥">Social Agents</a>.</p>
-   <p><a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①⑧">Access Need Groups</a> are described using language-specific <a data-link-type="dfn" href="#access-need-group-decorator①" id="ref-for-access-need-group-decorator①">Access Need Group Decorators</a>.</p>
+   <p><a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①⑧">Access Need Groups</a> are described using language-specific <a data-link-type="dfn" href="#access-need-group-description①" id="ref-for-access-need-group-description①">Access Need Group Descriptions</a>.</p>
    <p><a href="interop.ttl#AccessNeedGroup">Class Definition</a> - <a href="interop.shex#AccessNeedGroupShape">Shape Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessNeedGroup">
     <colgroup>
@@ -1597,9 +1597,9 @@ when determining whether to grant access.</p>
       <th>Description
     <tbody>
      <tr>
-      <td>hasAccessDecoratorSet
-      <td><a href="#classAccessDecoratorSet">AccessDecoratorSet</a>
-      <td>Links to an <a data-link-type="dfn" href="#access-decorator-set①" id="ref-for-access-decorator-set①">Access Decorator Set</a> containing <a data-link-type="dfn" href="#access-need-group-decorator①" id="ref-for-access-need-group-decorator①①">Access Need Group Decorators</a> and <a data-link-type="dfn" href="#access-need-decorator①" id="ref-for-access-need-decorator①">Access Need Decorators</a> in the preferred language of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑦">Social Agent</a>
+      <td>hasAccessDescriptionSet
+      <td><a href="#classAccessDescriptionSet">AccessDescriptionSet</a>
+      <td>Links to an <a data-link-type="dfn" href="#access-description-set①" id="ref-for-access-description-set①">Access Description Set</a> containing <a data-link-type="dfn" href="#access-need-group-description①" id="ref-for-access-need-group-description①①">Access Need Group Descriptions</a> and <a data-link-type="dfn" href="#access-need-description①" id="ref-for-access-need-description①">Access Need Descriptions</a> in the preferred language of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑦">Social Agent</a>
      <tr>
       <td>accessNecessity
       <td><code>interop:AccessRequired</code>, <code>interop:AccessOptional</code>
@@ -1632,7 +1632,7 @@ when determining whether to grant access.</p>
   <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessScenario</c-> <c- nn>interop</c-><c- p>:</c-><c- f>PersonalAccess</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>authenticatesAs</c-> <c- nn>interop</c-><c- p>:</c-><c- f>SocialAgent</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessDecoratorSet</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessDescriptionSet</c->
     <c- nn>projectron</c-><c- p>:</c-><c- f>access-en</c-> <c- p>,</c->
     <c- nn>projectron</c-><c- p>:</c-><c- f>access-es</c-> <c- p>,</c->
     <c- nn>projectron</c-><c- p>:</c-><c- f>access-nl</c-> <c- p>,</c->
@@ -1649,7 +1649,7 @@ of data represented by a <a data-link-type="dfn" href="#shape-tree" id="ref-for-
 path to request access to related types. Consequently, <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⓪">Access Needs</a> can be specified that <em>inherit</em> from other <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①①">Access Needs</a> through a shape tree reference.</p>
    <p>Specific <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑦">Data Instances</a> may be requested by explicitly
 associating them with the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①②">Access Need</a>.</p>
-   <p><a data-link-type="dfn" href="#access-need" id="ref-for-access-need①③">Access Needs</a> are described using language-specific <a data-link-type="dfn" href="#access-need-decorator①" id="ref-for-access-need-decorator①①">Access Need Decorators</a>.</p>
+   <p><a data-link-type="dfn" href="#access-need" id="ref-for-access-need①③">Access Needs</a> are described using language-specific <a data-link-type="dfn" href="#access-need-description①" id="ref-for-access-need-description①①">Access Need Descriptions</a>.</p>
    <p><a href="interop.ttl#AccessNeed">Class Definition</a> - <a href="interop.shex#AccessNeedGroup">Shape Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessNeed">
     <colgroup>
@@ -1695,7 +1695,7 @@ associating them with the <a data-link-type="dfn" href="#access-need" id="ref-fo
   <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessScenario</c-> <c- nn>interop</c-><c- p>:</c-><c- f>PersonalAccess</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>authenticatesAs</c-> <c- nn>interop</c-><c- p>:</c-><c- f>SocialAgent</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessDecoratorSet</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessDescriptionSet</c->
     <c- nn>projectron</c-><c- p>:</c-><c- f>access-en</c-> <c- p>,</c->
     <c- nn>projectron</c-><c- p>:</c-><c- f>access-es</c-> <c- p>,</c->
     <c- nn>projectron</c-><c- p>:</c-><c- f>access-nl</c-> <c- p>,</c->
@@ -1720,12 +1720,12 @@ associating them with the <a data-link-type="dfn" href="#access-need" id="ref-fo
   <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromNeed</c-> <c- g>&lt;#need-project></c-> <c- p>.</c->
 </pre>
    </figure>
-   <h3 class="heading settled" data-level="8.3" id="access-decorators"><span class="secno">8.3. </span><span class="content">Access Decorators</span><a class="self-link" href="#access-decorators"></a></h3>
-   <h4 class="heading settled" data-level="8.3.1" id="access-need-group-decorator"><span class="secno">8.3.1. </span><span class="content">Access Need Group Decorator</span><a class="self-link" href="#access-need-group-decorator"></a></h4>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-need-group-decorator①">Access Need Group Decorator</dfn> provides a short label or
+   <h3 class="heading settled" data-level="8.3" id="access-descriptions"><span class="secno">8.3. </span><span class="content">Access Descriptions</span><a class="self-link" href="#access-descriptions"></a></h3>
+   <h4 class="heading settled" data-level="8.3.1" id="access-need-group-description"><span class="secno">8.3.1. </span><span class="content">Access Need Group Description</span><a class="self-link" href="#access-need-group-description"></a></h4>
+   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-need-group-description①">Access Need Group Description</dfn> provides a short label or
 title and a more in-depth description that explains why a given <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①②">Access Need Group</a> is being requested of a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⑨">Social Agent</a>.</p>
-   <p><a href="interop.ttl#AccessNeedGroupDecorator">Class Definition</a> - <a href="interop.shex#AccessNeedGroupDecoratorShape">Shape Definition</a></p>
-   <table align="left" class="classinfo data" id="classAccessNeedGroupDecorator">
+   <p><a href="interop.ttl#AccessNeedGroupDescription">Class Definition</a> - <a href="interop.shex#AccessNeedGroupDescriptionShape">Shape Definition</a></p>
+   <table align="left" class="classinfo data" id="classAccessNeedGroupDescription">
     <colgroup>
     <colgroup>
     <colgroup>
@@ -1736,13 +1736,13 @@ title and a more in-depth description that explains why a given <a data-link-typ
       <th>Description
     <tbody>
      <tr>
-      <td>inAccessDecoratorSet
-      <td><a href="#classAccessDecoratorSet">AccessDecoratorSet</a>
-      <td><a data-link-type="dfn" href="#access-decorator-set①" id="ref-for-access-decorator-set①①">Access Decorator Set</a> the decorator is part of
+      <td>inAccessDescriptionSet
+      <td><a href="#classAccessDescriptionSet">AccessDescriptionSet</a>
+      <td><a data-link-type="dfn" href="#access-description-set①" id="ref-for-access-description-set①①">Access Description Set</a> the description is part of
      <tr>
       <td>hasAccessNeedGroup
       <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
-      <td><a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①③">Access Need Group</a> the decorator applies to
+      <td><a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①③">Access Need Group</a> the description applies to
      <tr>
       <td>skos:preflabel
       <td><code>xsd:string</code>
@@ -1754,21 +1754,21 @@ title and a more in-depth description that explains why a given <a data-link-typ
       access it is requesting.
    </table>
    <figure>
-    <figcaption>English <a data-link-type="dfn" href="#access-need-group-decorator①" id="ref-for-access-need-group-decorator①②">Access Need Group Decorator</a> for Projectron - <a href="snippets/projectron.example/access-en.ttl">View</a></figcaption>
+    <figcaption>English <a data-link-type="dfn" href="#access-need-group-description①" id="ref-for-access-need-group-description①②">Access Need Group Description</a> for Projectron - <a href="snippets/projectron.example/access-en.ttl">View</a></figcaption>
 <pre class="include-code highlight"><c- g>&lt;#en-need-group-pm></c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedGroupDecorator</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessDecoratorSet</c-> <c- g>&lt;></c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedGroupDescription</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessDescriptionSet</c-> <c- g>&lt;></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>need-group-pm</c-> <c- p>;</c->
   <c- nn>skos</c-><c- p>:</c-><c- f>prefLabel</c-> <c- s>"Read and Contribute to Projects"</c-><c- o>@</c->en <c- p>;</c->
   <c- nn>skos</c-><c- p>:</c-><c- f>description</c-> <c- s>"Allow Projectron to read the Projects you select, and create new ones. Projectron won't modify existing data, but can add more."</c-><c- o>@</c->en <c- p>.</c->
 </pre>
    </figure>
-   <h4 class="heading settled" data-level="8.3.2" id="access-need-decorator"><span class="secno">8.3.2. </span><span class="content">Access Need Decorator</span><a class="self-link" href="#access-need-decorator"></a></h4>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-need-decorator①">Access Need Decorator</dfn> provides a specific
+   <h4 class="heading settled" data-level="8.3.2" id="access-need-description"><span class="secno">8.3.2. </span><span class="content">Access Need Description</span><a class="self-link" href="#access-need-description"></a></h4>
+   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-need-description①">Access Need Description</dfn> provides a specific
 explanation of why that data type is being requested by
 a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑨">Access Need</a>.</p>
-   <p><a href="interop.ttl#AccessNeedDecorator">Class Definition</a> - <a href="interop.shex#AccessNeedDecoratorShape">Shape Definition</a></p>
-   <table align="left" class="classinfo data" id="classAccessNeedDecorator">
+   <p><a href="interop.ttl#AccessNeedDescription">Class Definition</a> - <a href="interop.shex#AccessNeedDescriptionShape">Shape Definition</a></p>
+   <table align="left" class="classinfo data" id="classAccessNeedDescription">
     <colgroup>
     <colgroup>
     <colgroup>
@@ -1779,31 +1779,31 @@ a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①�
       <th>Description
     <tbody>
      <tr>
-      <td>inAccessDecoratorSet
-      <td><a href="#classAccessDecoratorSet">AccessDecoratorSet</a>
-      <td><a data-link-type="dfn" href="#access-decorator-set①" id="ref-for-access-decorator-set①②">Access Decorator Set</a> the decorator is part of
+      <td>inAccessDescriptionSet
+      <td><a href="#classAccessDescriptionSet">AccessDescriptionSet</a>
+      <td><a data-link-type="dfn" href="#access-description-set①" id="ref-for-access-description-set①②">Access Description Set</a> the description is part of
      <tr>
       <td>hasAccessNeedGroup
       <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
-      <td><a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑥">Access Need Group</a> the decorator applies to
+      <td><a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑥">Access Need Group</a> the description applies to
      <tr>
       <td>skos:prefLabel
       <td><code>xsd:string</code>
       <td>Specific explanation of why that data type is being requested
    </table>
    <figure>
-    <figcaption>English <a data-link-type="dfn" href="#access-need-decorator①" id="ref-for-access-need-decorator①②">Access Need Decorator</a> for Projects - <a href="snippets/projectron.example/access-en.ttl">View</a></figcaption>
+    <figcaption>English <a data-link-type="dfn" href="#access-need-description①" id="ref-for-access-need-description①②">Access Need Description</a> for Projects - <a href="snippets/projectron.example/access-en.ttl">View</a></figcaption>
 <pre class="include-code highlight"><c- g>&lt;#en-need-project></c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedGroupDecorator</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessDecoratorSet</c-> <c- g>&lt;></c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedGroupDescription</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessDescriptionSet</c-> <c- g>&lt;></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>need-project</c-> <c- p>;</c->
   <c- nn>skos</c-><c- p>:</c-><c- f>prefLabel</c-> <c- s>"Access to Projects is essential for Projectron to perform its core function of Project Management"</c-><c- o>@</c->en <c- p>.</c->
 </pre>
    </figure>
-   <h4 class="heading settled" data-level="8.3.3" id="access-decorator-set"><span class="secno">8.3.3. </span><span class="content">Access Decorator Set</span><a class="self-link" href="#access-decorator-set"></a></h4>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-decorator-set①">Access Decorator Set</dfn> is a collection of <a data-link-type="dfn" href="#access-need-group-decorator①" id="ref-for-access-need-group-decorator①③">Access Need Group Decorators</a> and <a data-link-type="dfn" href="#access-need-decorator①" id="ref-for-access-need-decorator①③">Access Need Decorators</a>.</p>
-   <p><a href="interop.ttl#AccessDecoratorSet">Class Definition</a> - <a href="interop.shex#AccessDecoratorSetShape">Shape Definition</a></p>
-   <table align="left" class="classinfo data" id="classAccessDecoratorSet">
+   <h4 class="heading settled" data-level="8.3.3" id="access-description-set"><span class="secno">8.3.3. </span><span class="content">Access Description Set</span><a class="self-link" href="#access-description-set"></a></h4>
+   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-description-set①">Access Description Set</dfn> is a collection of <a data-link-type="dfn" href="#access-need-group-description①" id="ref-for-access-need-group-description①③">Access Need Group Descriptions</a> and <a data-link-type="dfn" href="#access-need-description①" id="ref-for-access-need-description①③">Access Need Descriptions</a>.</p>
+   <p><a href="interop.ttl#AccessDescriptionSet">Class Definition</a> - <a href="interop.shex#AccessDescriptionSetShape">Shape Definition</a></p>
+   <table align="left" class="classinfo data" id="classAccessDescriptionSet">
     <colgroup>
     <colgroup>
     <colgroup>
@@ -1816,30 +1816,30 @@ a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①�
      <tr>
       <td>usesLanguage
       <td><code>xsd:language</code>
-      <td>Language that the <a data-link-type="dfn" href="#access-need-group-decorator①" id="ref-for-access-need-group-decorator①④">Access Need Group Decorators</a> and <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⓪">Access Needs</a> in the Set use
+      <td>Language that the <a data-link-type="dfn" href="#access-need-group-description①" id="ref-for-access-need-group-description①④">Access Need Group Descriptions</a> and <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⓪">Access Needs</a> in the Set use
    </table>
    <figure>
-    <figcaption>English <a data-link-type="dfn" href="#access-decorator-set①" id="ref-for-access-decorator-set①③">Access Decorator Set</a> for Projectron - <a href="snippets/projectron.example/access-en.ttl">View</a></figcaption>
+    <figcaption>English <a data-link-type="dfn" href="#access-description-set①" id="ref-for-access-description-set①③">Access Description Set</a> for Projectron - <a href="snippets/projectron.example/access-en.ttl">View</a></figcaption>
 <pre class="include-code highlight"><c- g>&lt;></c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessDecoratorSet</c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessDescriptionSet</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>usesLanguage</c-> <c- s>"en"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>language</c-> <c- p>.</c->
 
 <c- g>&lt;#en-need-group-pm></c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedGroupDecorator</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessDecoratorSet</c-> <c- g>&lt;></c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedGroupDescription</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessDescriptionSet</c-> <c- g>&lt;></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>need-group-pm</c-> <c- p>;</c->
   <c- nn>skos</c-><c- p>:</c-><c- f>prefLabel</c-> <c- s>"Read and Contribute to Projects"</c-><c- o>@</c->en <c- p>;</c->
   <c- nn>skos</c-><c- p>:</c-><c- f>description</c-> <c- s>"Allow Projectron to read the Projects you select, and create new ones. Projectron won't modify existing data, but can add more."</c-><c- o>@</c->en <c- p>.</c->
 
 <c- g>&lt;#en-need-project></c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedGroupDecorator</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessDecoratorSet</c-> <c- g>&lt;></c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedGroupDescription</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessDescriptionSet</c-> <c- g>&lt;></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>need-project</c-> <c- p>;</c->
   <c- nn>skos</c-><c- p>:</c-><c- f>prefLabel</c-> <c- s>"Access to Projects is essential for Projectron to perform its core function of Project Management"</c-><c- o>@</c->en <c- p>.</c->
 
 <c- g>&lt;#en-need-task></c->
-  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedDecorator</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessDecoratorSet</c-> <c- g>&lt;></c-> <c- p>;</c->
+  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedDescription</c-> <c- p>;</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>inAccessDescriptionSet</c-> <c- g>&lt;></c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>need-task</c-> <c- p>;</c->
   <c- nn>skos</c-><c- p>:</c-><c- f>prefLabel</c-> <c- s>"Access to Tasks allows Projectron to identify and manage the work to be done in a given Project."</c-><c- o>@</c->en <c- p>.</c->
 </pre>
@@ -2902,13 +2902,13 @@ associate instances of related shape trees via a ShapePath</p>
   <ul class="index">
    <li><a href="#access-consent①">Access Consent</a><span>, in § 9.1</span>
    <li><a href="#access-consent-registry①">Access Consent Registry</a><span>, in § 9.8</span>
-   <li><a href="#access-decorator-set①">Access Decorator Set</a><span>, in § 8.3.3</span>
+   <li><a href="#access-description-set①">Access Description Set</a><span>, in § 8.3.3</span>
    <li><a href="#access-grant①">Access Grant</a><span>, in § 9.3</span>
    <li><a href="#access-mode">access mode</a><span>, in § 11</span>
    <li><a href="#access-need">Access Need</a><span>, in § 8.2</span>
-   <li><a href="#access-need-decorator①">Access Need Decorator</a><span>, in § 8.3.2</span>
+   <li><a href="#access-need-description①">Access Need Description</a><span>, in § 8.3.2</span>
    <li><a href="#access-need-group①">Access Need Group</a><span>, in § 8.1</span>
-   <li><a href="#access-need-group-decorator①">Access Need Group Decorator</a><span>, in § 8.3.1</span>
+   <li><a href="#access-need-group-description①">Access Need Group Description</a><span>, in § 8.3.1</span>
    <li><a href="#access-receipt①">Access Receipt</a><span>, in § 9.7</span>
    <li><a href="#access-request①">Access Request</a><span>, in § 8.4</span>
    <li><a href="#access-scope">Access Scope</a><span>, in § 9.6</span>
@@ -2965,7 +2965,7 @@ associate instances of related shape trees via a ShapePath</p>
    <dt id="biblio-shacl">[SHACL]
    <dd>Holger Knublauch; Dimitris Kontokostas. <a href="https://www.w3.org/TR/shacl/"><cite>Shapes Constraint Language (SHACL)</cite></a>. URL: <a href="https://www.w3.org/TR/shacl/">https://www.w3.org/TR/shacl/</a>
    <dt id="biblio-shapetrees">[SHAPETREES]
-   <dd>Justin Bingham; Eric Prud'hommeaux. <a href="https://shapetrees.org/TR/specification/index.html"><cite>Shape Trees</cite></a>. URL: <a href="https://shapetrees.org/TR/specification/index.html">https://shapetrees.org/TR/specification/index.html</a>
+   <dd>Justin Bingham; Eric Prud'hommeaux. <a href="https://shapetrees.org/TR/specification/"><cite>Shape Trees</cite></a>. URL: <a href="https://shapetrees.org/TR/specification/">https://shapetrees.org/TR/specification/</a>
    <dt id="biblio-shex">[SHEX]
    <dd>Eric Prud'hommeaux; et al. <a href="http://shex.io/shex-semantics/index.html"><cite>Shape Expressions Language 2.1</cite></a>. URL: <a href="http://shex.io/shex-semantics/index.html">http://shex.io/shex-semantics/index.html</a>
    <dt id="biblio-solid-oidc">[SOLID-OIDC]
@@ -3026,7 +3026,7 @@ inherited permissions.<a href="#issue-5157d1cb"> ↵ </a></div>
     <li><a href="#ref-for-social-agent⑥⑧">7.2.2. Agent Registration Discovery</a> <a href="#ref-for-social-agent⑥⑨">(2)</a> <a href="#ref-for-social-agent⑦⓪">(3)</a>
     <li><a href="#ref-for-social-agent⑦①">8. Access Needs</a> <a href="#ref-for-social-agent⑦②">(2)</a> <a href="#ref-for-social-agent⑦③">(3)</a> <a href="#ref-for-social-agent⑦④">(4)</a> <a href="#ref-for-social-agent⑦⑤">(5)</a>
     <li><a href="#ref-for-social-agent⑦⑥">8.1. Access Need Group</a> <a href="#ref-for-social-agent⑦⑦">(2)</a> <a href="#ref-for-social-agent⑦⑧">(3)</a>
-    <li><a href="#ref-for-social-agent⑦⑨">8.3.1. Access Need Group Decorator</a>
+    <li><a href="#ref-for-social-agent⑦⑨">8.3.1. Access Need Group Description</a>
     <li><a href="#ref-for-social-agent⑧⓪">8.4. Access Request</a> <a href="#ref-for-social-agent⑧①">(2)</a>
     <li><a href="#ref-for-social-agent⑧②">9. Access Consents</a> <a href="#ref-for-social-agent⑧③">(2)</a>
     <li><a href="#ref-for-social-agent⑧④">9.1. Access Consent</a> <a href="#ref-for-social-agent⑧⑤">(2)</a> <a href="#ref-for-social-agent⑧⑥">(3)</a> <a href="#ref-for-social-agent⑧⑦">(4)</a>
@@ -3195,8 +3195,8 @@ inherited permissions.<a href="#issue-5157d1cb"> ↵ </a></div>
     <li><a href="#ref-for-access-need-group①⑤">8. Access Needs</a> <a href="#ref-for-access-need-group①⑥">(2)</a> <a href="#ref-for-access-need-group①⑦">(3)</a>
     <li><a href="#ref-for-access-need-group①⑧">8.1. Access Need Group</a> <a href="#ref-for-access-need-group①⑨">(2)</a>
     <li><a href="#ref-for-access-need-group①①⓪">8.2. Access Need</a> <a href="#ref-for-access-need-group①①①">(2)</a>
-    <li><a href="#ref-for-access-need-group①①②">8.3.1. Access Need Group Decorator</a> <a href="#ref-for-access-need-group①①③">(2)</a> <a href="#ref-for-access-need-group①①④">(3)</a> <a href="#ref-for-access-need-group①①⑤">(4)</a>
-    <li><a href="#ref-for-access-need-group①①⑥">8.3.2. Access Need Decorator</a>
+    <li><a href="#ref-for-access-need-group①①②">8.3.1. Access Need Group Description</a> <a href="#ref-for-access-need-group①①③">(2)</a> <a href="#ref-for-access-need-group①①④">(3)</a> <a href="#ref-for-access-need-group①①⑤">(4)</a>
+    <li><a href="#ref-for-access-need-group①①⑥">8.3.2. Access Need Description</a>
     <li><a href="#ref-for-access-need-group①①⑦">8.4. Access Request</a> <a href="#ref-for-access-need-group①①⑧">(2)</a>
     <li><a href="#ref-for-access-need-group①①⑨">9.1. Access Consent</a>
     <li><a href="#ref-for-access-need-group①②⓪">9.3. Access Grant</a>
@@ -3209,37 +3209,37 @@ inherited permissions.<a href="#issue-5157d1cb"> ↵ </a></div>
     <li><a href="#ref-for-access-need⑤">8. Access Needs</a> <a href="#ref-for-access-need⑥">(2)</a>
     <li><a href="#ref-for-access-need⑦">8.1. Access Need Group</a> <a href="#ref-for-access-need⑧">(2)</a>
     <li><a href="#ref-for-access-need⑨">8.2. Access Need</a> <a href="#ref-for-access-need①⓪">(2)</a> <a href="#ref-for-access-need①①">(3)</a> <a href="#ref-for-access-need①②">(4)</a> <a href="#ref-for-access-need①③">(5)</a> <a href="#ref-for-access-need①④">(6)</a> <a href="#ref-for-access-need①⑤">(7)</a> <a href="#ref-for-access-need①⑥">(8)</a> <a href="#ref-for-access-need①⑦">(9)</a> <a href="#ref-for-access-need①⑧">(10)</a>
-    <li><a href="#ref-for-access-need①⑨">8.3.2. Access Need Decorator</a>
-    <li><a href="#ref-for-access-need②⓪">8.3.3. Access Decorator Set</a>
+    <li><a href="#ref-for-access-need①⑨">8.3.2. Access Need Description</a>
+    <li><a href="#ref-for-access-need②⓪">8.3.3. Access Description Set</a>
     <li><a href="#ref-for-access-need②①">9.1. Access Consent</a>
     <li><a href="#ref-for-access-need②②">9.2. Data Consent</a>
     <li><a href="#ref-for-access-need②③">9.4. Data Grant</a> <a href="#ref-for-access-need②④">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-need-group-decorator①">
-   <b><a href="#access-need-group-decorator①">#access-need-group-decorator①</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="access-need-group-description①">
+   <b><a href="#access-need-group-description①">#access-need-group-description①</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-access-need-group-decorator①">8.1. Access Need Group</a> <a href="#ref-for-access-need-group-decorator①①">(2)</a>
-    <li><a href="#ref-for-access-need-group-decorator①②">8.3.1. Access Need Group Decorator</a>
-    <li><a href="#ref-for-access-need-group-decorator①③">8.3.3. Access Decorator Set</a> <a href="#ref-for-access-need-group-decorator①④">(2)</a>
+    <li><a href="#ref-for-access-need-group-description①">8.1. Access Need Group</a> <a href="#ref-for-access-need-group-description①①">(2)</a>
+    <li><a href="#ref-for-access-need-group-description①②">8.3.1. Access Need Group Description</a>
+    <li><a href="#ref-for-access-need-group-description①③">8.3.3. Access Description Set</a> <a href="#ref-for-access-need-group-description①④">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-need-decorator①">
-   <b><a href="#access-need-decorator①">#access-need-decorator①</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="access-need-description①">
+   <b><a href="#access-need-description①">#access-need-description①</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-access-need-decorator①">8.1. Access Need Group</a>
-    <li><a href="#ref-for-access-need-decorator①①">8.2. Access Need</a>
-    <li><a href="#ref-for-access-need-decorator①②">8.3.2. Access Need Decorator</a>
-    <li><a href="#ref-for-access-need-decorator①③">8.3.3. Access Decorator Set</a>
+    <li><a href="#ref-for-access-need-description①">8.1. Access Need Group</a>
+    <li><a href="#ref-for-access-need-description①①">8.2. Access Need</a>
+    <li><a href="#ref-for-access-need-description①②">8.3.2. Access Need Description</a>
+    <li><a href="#ref-for-access-need-description①③">8.3.3. Access Description Set</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-decorator-set①">
-   <b><a href="#access-decorator-set①">#access-decorator-set①</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="access-description-set①">
+   <b><a href="#access-description-set①">#access-description-set①</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-access-decorator-set①">8.1. Access Need Group</a>
-    <li><a href="#ref-for-access-decorator-set①①">8.3.1. Access Need Group Decorator</a>
-    <li><a href="#ref-for-access-decorator-set①②">8.3.2. Access Need Decorator</a>
-    <li><a href="#ref-for-access-decorator-set①③">8.3.3. Access Decorator Set</a>
+    <li><a href="#ref-for-access-description-set①">8.1. Access Need Group</a>
+    <li><a href="#ref-for-access-description-set①①">8.3.1. Access Need Group Description</a>
+    <li><a href="#ref-for-access-description-set①②">8.3.2. Access Need Description</a>
+    <li><a href="#ref-for-access-description-set①③">8.3.3. Access Description Set</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-request①">

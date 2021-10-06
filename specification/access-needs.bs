@@ -26,7 +26,7 @@ An <dfn>Access Need Group</dfn> is a collection of [=Access Needs=]
 used to communicate an access request to [=Social Agents=].
 
 [=Access Need Groups=] are described using language-specific 
-[=Access Need Group Decorators=].
+[=Access Need Group Descriptions=].
 
 [Class Definition](interop.ttl#AccessNeedGroup) -
 [Shape Definition](interop.shex#AccessNeedGroupShape)
@@ -44,10 +44,10 @@ used to communicate an access request to [=Social Agents=].
   </thead>
   <tbody>
     <tr>
-      <td>hasAccessDecoratorSet</td>
-      <td>[AccessDecoratorSet](#classAccessDecoratorSet)</td>
-      <td>Links to an [=Access Decorator Set=] containing 
-      [=Access Need Group Decorators=] and [=Access Need Decorators=]
+      <td>hasAccessDescriptionSet</td>
+      <td>[AccessDescriptionSet](#classAccessDescriptionSet)</td>
+      <td>Links to an [=Access Description Set=] containing 
+      [=Access Need Group Descriptions=] and [=Access Need Descriptions=]
       in the preferred language of the [=Social Agent=]</td>
     </tr>
     <tr>
@@ -99,7 +99,7 @@ Specific [=Data Instances=] may be requested by explicitly
 associating them with the [=Access Need=].
 
 [=Access Needs=] are described using language-specific
-[=Access Need Decorators=].
+[=Access Need Descriptions=].
 
 [Class Definition](interop.ttl#AccessNeed) -
 [Shape Definition](interop.shex#AccessNeedGroup)
@@ -166,18 +166,18 @@ associating them with the [=Access Need=].
   </pre> 
 </figure>
 
-## Access Decorators ## {#access-decorators}
+## Access Descriptions ## {#access-descriptions}
 
-### Access Need Group Decorator ### {#access-need-group-decorator}
+### Access Need Group Description ### {#access-need-group-description}
 
-An <dfn>Access Need Group Decorator</dfn> provides a short label or
+An <dfn>Access Need Group Description</dfn> provides a short label or
 title and a more in-depth description that explains why a given 
 [=Access Need Group=] is being requested of a [=Social Agent=].
 
-[Class Definition](interop.ttl#AccessNeedGroupDecorator) -
-[Shape Definition](interop.shex#AccessNeedGroupDecoratorShape)
+[Class Definition](interop.ttl#AccessNeedGroupDescription) -
+[Shape Definition](interop.shex#AccessNeedGroupDescriptionShape)
 
-<table class="classinfo data" align="left" id="classAccessNeedGroupDecorator">
+<table class="classinfo data" align="left" id="classAccessNeedGroupDescription">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
@@ -190,14 +190,14 @@ title and a more in-depth description that explains why a given
   </thead>
   <tbody>
     <tr>
-      <td>inAccessDecoratorSet</td>
-      <td>[AccessDecoratorSet](#classAccessDecoratorSet)</td>
-      <td>[=Access Decorator Set=] the decorator is part of</td>
+      <td>inAccessDescriptionSet</td>
+      <td>[AccessDescriptionSet](#classAccessDescriptionSet)</td>
+      <td>[=Access Description Set=] the description is part of</td>
     </tr>
     <tr>
       <td>hasAccessNeedGroup</td>
       <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
-      <td>[=Access Need Group=] the decorator applies to</td>
+      <td>[=Access Need Group=] the description applies to</td>
     </tr>
     <tr>
       <td>skos:preflabel</td>
@@ -214,7 +214,7 @@ title and a more in-depth description that explains why a given
 </table>
 
 <figure>
-  <figcaption>English [=Access Need Group Decorator=] for Projectron -
+  <figcaption>English [=Access Need Group Description=] for Projectron -
   <a href="snippets/projectron.example/access-en.ttl">View</a></figcaption>
   <pre class=include-code>
   path: snippets/projectron.example/access-en.ttl
@@ -223,16 +223,16 @@ title and a more in-depth description that explains why a given
   </pre> 
 </figure>
 
-### Access Need Decorator ### {#access-need-decorator}
+### Access Need Description ### {#access-need-description}
 
-An <dfn>Access Need Decorator</dfn> provides a specific
+An <dfn>Access Need Description</dfn> provides a specific
 explanation of why that data type is being requested by
 a given [=Access Need=].
 
-[Class Definition](interop.ttl#AccessNeedDecorator) -
-[Shape Definition](interop.shex#AccessNeedDecoratorShape)
+[Class Definition](interop.ttl#AccessNeedDescription) -
+[Shape Definition](interop.shex#AccessNeedDescriptionShape)
 
-<table class="classinfo data" align="left" id="classAccessNeedDecorator">
+<table class="classinfo data" align="left" id="classAccessNeedDescription">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
@@ -245,14 +245,14 @@ a given [=Access Need=].
   </thead>
   <tbody>
     <tr>
-      <td>inAccessDecoratorSet</td>
-      <td>[AccessDecoratorSet](#classAccessDecoratorSet)</td>
-      <td>[=Access Decorator Set=] the decorator is part of</td>
+      <td>inAccessDescriptionSet</td>
+      <td>[AccessDescriptionSet](#classAccessDescriptionSet)</td>
+      <td>[=Access Description Set=] the description is part of</td>
     </tr>
     <tr>
       <td>hasAccessNeedGroup</td>
       <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
-      <td>[=Access Need Group=] the decorator applies to</td>
+      <td>[=Access Need Group=] the description applies to</td>
     </tr>
     <tr>
       <td>skos:prefLabel</td>
@@ -263,7 +263,7 @@ a given [=Access Need=].
 </table>
 
 <figure>
-  <figcaption>English [=Access Need Decorator=] for Projects -
+  <figcaption>English [=Access Need Description=] for Projects -
   <a href="snippets/projectron.example/access-en.ttl">View</a></figcaption>
   <pre class=include-code>
   path: snippets/projectron.example/access-en.ttl
@@ -272,15 +272,15 @@ a given [=Access Need=].
   </pre> 
 </figure>
 
-### Access Decorator Set ### {#access-decorator-set}
+### Access Description Set ### {#access-description-set}
 
-An <dfn>Access Decorator Set</dfn> is a collection of [=Access Need Group Decorators=]
-and [=Access Need Decorators=].
+An <dfn>Access Description Set</dfn> is a collection of [=Access Need Group Descriptions=]
+and [=Access Need Descriptions=].
 
-[Class Definition](interop.ttl#AccessDecoratorSet) -
-[Shape Definition](interop.shex#AccessDecoratorSetShape)
+[Class Definition](interop.ttl#AccessDescriptionSet) -
+[Shape Definition](interop.shex#AccessDescriptionSetShape)
 
-<table class="classinfo data" align="left" id="classAccessDecoratorSet">
+<table class="classinfo data" align="left" id="classAccessDescriptionSet">
   <colgroup></colgroup>
   <colgroup></colgroup>
   <colgroup></colgroup>
@@ -295,14 +295,14 @@ and [=Access Need Decorators=].
     <tr>
       <td>usesLanguage</td>
       <td>`xsd:language`</td>
-      <td>Language that the [=Access Need Group Decorators=] and
+      <td>Language that the [=Access Need Group Descriptions=] and
       [=Access Needs=] in the Set use</td>
     </tr>
   </tbody>
 </table>
 
 <figure>
-  <figcaption>English [=Access Decorator Set=] for Projectron -
+  <figcaption>English [=Access Description Set=] for Projectron -
   <a href="snippets/projectron.example/access-en.ttl">View</a></figcaption>
   <pre class=include-code>
   path: snippets/projectron.example/access-en.ttl
