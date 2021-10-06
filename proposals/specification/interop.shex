@@ -77,7 +77,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # Access Need Group
 <#AccessNeedGroupShape> {
   a [ interop:AccessNeedGroup ] ;
-  interop:hasAccessDecoratorSet IRI*
+  interop:hasAccessDescriptionSet IRI*
   interop:accessNecessity [ interop:AccessRequired interop:AccessOptional ] ;
   interop:accessScenario [ interop:PersonalAccess interop:SharedAccess ]+ ;
   interop:authenticatesAs [ interop:SocialAgent interop:Application ] ;
@@ -107,23 +107,23 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   acl:Delete
 ]
 
-# Access Decorator Set
-<#AccessDecoratorSet> {
-  a [ interop:AccessDecoratorSet ] ;
+# Access Description Set
+<#AccessDescriptionSet> {
+  a [ interop:AccessDescriptionSet ] ;
   interop:usesLanguage xsd:language
 }
 
-# Access Need Group Decorator
-<#AccessNeedGroupDecoratorShape> {
-  a [ interop:AccessNeedGroupDecorator ] ;
+# Access Need Group Description
+<#AccessNeedGroupDescriptionShape> {
+  a [ interop:AccessNeedGroupDescription ] ;
   interop:hasAccessNeedGroup IRI ;
   skos:prefLabel xsd:string ;
   skos:definition xsd:string
 }
 
-# Access Need Decorator
-<#AccessNeedDecoratorShape> {
-  a [ interop:AccessNeedDecorator ] ;
+# Access Need Description
+<#AccessNeedDescriptionShape> {
+  a [ interop:AccessNeedDescription ] ;
   interop:hasAccessNeedGroup IRI ;
   skos:prefLabel xsd:string
 }

@@ -474,12 +474,12 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :AccessNeed ;
   rdfs:label "Has Access Need"@en .
 
-:hasAccessDecoratorSet
+:hasAccessDescriptionSet
   a rdf:Property ;
-  rdfs:comment "Link to an Access Decorator Set"@en ;
+  rdfs:comment "Link to an Access Description Set"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:range :AccessDecoratorSet ;
-  rdfs:label "Has Access Decorator Set"@en .
+  rdfs:range :AccessDescriptionSet ;
+  rdfs:label "Has Access Description Set"@en .
 
 :authenticatesAs
   a rdf:Property ;
@@ -547,13 +547,13 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range [ owl:oneOf ( acl:Read acl:Write acl:Control acl:Append acl:Create acl:Update acl:Delete ) ] ;
   rdfs:label "Creator Access Mode"@en .
 
-:hasAccessNeedGroupDecorator
+:hasAccessNeedGroupDescription
   a rdf:Property ;
-  rdfs:comment "Links to an AccessNeedGroupDecorator"@en ;
+  rdfs:comment "Links to an AccessNeedGroupDescription"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :AccessNeedGroup ;
-  rdfs:range :AccessNeedGroupDecorator ;
-  rdfs:label "Has Access Need Group Decorator"@en .
+  rdfs:range :AccessNeedGroupDescription ;
+  rdfs:label "Has Access Need Group Description"@en .
 
 :hasShapeTreeDecorator
   a rdf:Property ;
@@ -562,13 +562,13 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range st:ShapeTreeDecorator ;
   rdfs:label "Has Shape Tree Decorator"@en .
 
-:hasAccessNeedDecorator
+:hasAccessNeedDescription
   a rdf:Property ;
-  rdfs:comment "Links to an AccessNeedDecorator"@en ;
+  rdfs:comment "Links to an AccessNeedDescription"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :AccessNeed ;
-  rdfs:range :AccessNeedDecorator ;
-  rdfs:label "Has Access Need Decorator"@en .
+  rdfs:range :AccessNeedDescription ;
+  rdfs:label "Has Access Need Description"@en .
 
 :inheritsFromNeed
   a rdf:Property ;
@@ -600,52 +600,52 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Shared Access"@en .
 
-# AccessDecoratorSet class
+# AccessDescriptionSet class
 #############################################################################
-:AccessDecoratorSet
+:AccessDescriptionSet
   a rdfs:Class ;
   rdfs:comment "A set of SKOS poly-hierarchies to describe AccessNeeds in an AccessNeedGroup"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Access Decorator Set"@en .
+  rdfs:label "Access Description Set"@en .
 
 :usesLanguage
   a rdf:Property ;
-  rdfs:domain :AccessDecoratorSet ;
+  rdfs:domain :AccessDescriptionSet ;
   rdfs:range xsd:lang ;
   rdfs:comment "Language code"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Uses Language"@en .
 
-:inAccessDecoratorSet
+:inAccessDescriptionSet
   a rdf:Property ;
-  rdfs:range :AccessDecoratorSet ;
-  rdfs:comment "Access Decoratorr Set the decorator belongs to"@en ;
+  rdfs:range :AccessDescriptionSet ;
+  rdfs:comment "Access Description Set the description belongs to"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "In Access Decorator Set"@en .
+  rdfs:label "In Access Description Set"@en .
 
-# AccessDecorator class
+# AccessDescription class
 #############################################################################
-:AccessDecorator
+:AccessDescription
   a rdfs:Class ;
   rdfs:comment "Describes the association between a SKOS label and an Access Need"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Access Decorator"@en .
+  rdfs:label "Access Description"@en .
 
-# AccessNeedDecorator class
+# AccessNeedDescription class
 #############################################################################
-:AccessNeedDecorator
-  rdfs:subClassOf :AccessDecorator ;
+:AccessNeedDescription
+  rdfs:subClassOf :AccessDescription ;
   rdfs:comment "Describes the association between a SKOS label and an Access Need"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "AccessNeed Decorator"@en .
+  rdfs:label "Access Need Description"@en .
 
-# AccessNeedGroupDecorator class
+# AccessNeedGroupDescription class
 #############################################################################
-:AccessNeedGroupDecorator
-  rdfs:subClassOf :AccessDecorator ;
+:AccessNeedGroupDescription
+  rdfs:subClassOf :AccessDescription ;
   rdfs:comment "Describes the association between a SKOS label and an Access Need Group"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "AccessNeedGroup Decorator"@en .
+  rdfs:label "Access Need Group Description"@en .
 
 # AccessRequest Class
 #############################################################################
