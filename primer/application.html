@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version a210b7d86, updated Thu Sep 16 13:45:19 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/primer/applications.html" rel="canonical">
-  <meta content="154979b654c74a1cee45093ad15d59b83a41974a" name="document-revision">
+  <meta content="016fa34e5eea103bdcd914863a2e302672165d38" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -563,7 +563,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability - Application Primer</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-10-05">5 October 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2021-10-06">6 October 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -624,10 +624,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   </nav>
   <main>
    <h2 class="heading settled" data-level="1" id="introduction"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#introduction"></a></h2>
-   <p>This primer is intended to acompany <a data-link-type="biblio" href="#biblio-solid-interop">[SOLID-INTEROP]</a> and <a data-link-type="biblio" href="#biblio-solid-interop-api">[SOLID-INTEROP-API]</a>.
-Focusing on providing friendly introduction for developers of libraries intended
+   <p>This primer is intended to accompany <a data-link-type="biblio" href="#biblio-solid-interop">[SOLID-INTEROP]</a>.
+It is focused on providing friendly introduction for developers of libraries intended
 for solid applications.</p>
-   <p>This document was developed along side the open-source TypeScript implementation <a data-link-type="biblio" href="#biblio-sai-js">[SAI-JS]</a></p>
+   <p>This document was developed alongside the open-source TypeScript implementation <a data-link-type="biblio" href="#biblio-sai-js">[SAI-JS]</a></p>
    <p>We will follow example of an application called <em>Projectron</em>,
 which manages projects and tasks.
 End user, named <em>Alice</em>, collaborates on projects
@@ -712,7 +712,7 @@ Application Registration to the application making the request using <code>http:
 <pre class="highlight line-numbered"><span class="line-no"></span><span class="line"><c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c-> <c- m>200</c-> <c- ne>OK</c-></span><span class="line-no"></span><span class="line"><c- e>Link</c-><c- o>:</c-> <c- l>&lt;https://projectron.example/#app>;</c-></span><span class="line-no highlight-line" data-line="3"></span><span class="line highlight-line">  <c- l>anchor="https://auth.alice.example/bcf22534-0187-4ae4-b88f-fe0f9fa96659";</c-></span><span class="line-no"></span><span class="line">  <c- l>rel="http://www.w3.org/ns/solid/interop#registeredApplication"</c-></span></pre>
     <figcaption>HEAD request to and response from Authorization Agent</figcaption>
    </figure>
-   <p>Details in <a href="https://solid.github.io/data-interoperability-panel/api/#ar-lookup">1.1. Lookup Agent Registration</a> (<a data-link-type="biblio" href="#biblio-solid-interop-api">[SOLID-INTEROP-API]</a>)</p>
+   <p>Details in <a href="https://solid.github.io/data-interoperability-panel/specification/#authorization">7. Data Authorization</a> (<a data-link-type="biblio" href="#biblio-solid-interop">[SOLID-INTEROP]</a>)</p>
    <h3 class="heading settled" data-level="4.3" id="user-consent"><span class="secno">4.3. </span><span class="content">User Consent</span><a class="self-link" href="#user-consent"></a></h3>
    <p>In case where application haven’t been registered yet it needs to initiate flow with Authorization Agent.</p>
    <p class="issue" id="issue-ab34eff5"><a class="self-link" href="#issue-ab34eff5"></a> Add details as soon as defined for Authorization Agent</p>
@@ -880,8 +880,6 @@ HTTP response when the representation was retreived.</p>
    <dd>Eric Prud'hommeaux; et al. <a href="http://shex.io/shex-semantics/index.html"><cite>Shape Expressions Language 2.1</cite></a>. URL: <a href="http://shex.io/shex-semantics/index.html">http://shex.io/shex-semantics/index.html</a>
    <dt id="biblio-solid-interop">[SOLID-INTEROP]
    <dd>Justin Bingham; Eric Prud'hommeaux; elf Pavlik. <a href="https://solid.github.io/data-interoperability-panel/specification/"><cite>Solid Application Interoperability</cite></a>. URL: <a href="https://solid.github.io/data-interoperability-panel/specification/">https://solid.github.io/data-interoperability-panel/specification/</a>
-   <dt id="biblio-solid-interop-api">[SOLID-INTEROP-API]
-   <dd>Justin Bingham; Eric Prud'hommeaux; elf Pavlik. <a href="https://solid.github.io/data-interoperability-panel/api/"><cite>Solid Application Interoperability Operations and API</cite></a>. URL: <a href="https://solid.github.io/data-interoperability-panel/api/">https://solid.github.io/data-interoperability-panel/api/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
