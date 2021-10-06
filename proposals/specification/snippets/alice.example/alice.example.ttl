@@ -1,15 +1,17 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX alice: <https://alice.example/>
+PREFIX alice-jarvis: <https://alice.jarvis.example/>
 PREFIX alice-auth: <https://auth.alice.example/>
 PREFIX alice-inbox: <https://alice.example/inbox/>
-PREFIX authz-agent: <https://trusted.example/>
 
 alice:\#id
   a interop:Agent ;
   ######## Registry Sets ########
   interop:hasRegistrySet alice:registries ;
   ######## Authorization Agent ########
-  interop:hasAuthorizationAgent authz-agent: ;
+  interop:hasAuthorizationAgent alice-jarvis: ;
   ######## Inboxes ########
   interop:hasInbox alice-inbox:general ;
   interop:hasAccessInbox alice-inbox:access .
