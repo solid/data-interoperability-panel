@@ -3,7 +3,7 @@ Data Authorization {#authorization}
 
 Data Authorization represents several key elements that
 work together to grant, adjust, and rescind access to data controlled
-by a [=Social Agent=]. 
+by a [=Social Agent=].
 
 Key [[#authorization-flows]] are facilitated by an [=Authorization Agent=]
 on behalf of a [=Social Agent=].
@@ -22,8 +22,8 @@ on behalf of a [=Social Agent=].
   <tbody>
     <tr>
       <td><b>Application Requests Access</b></td>
-      <td>A [=Social Agent=] elects to use a new 
-        [=Application=]. The [=Application=] prompts the 
+      <td>A [=Social Agent=] elects to use a new
+        [=Application=]. The [=Application=] prompts the
         [=Social Agent=] for access to data in their control.
         [=Access Needs=] are provided by the [=Application=].
         </td>
@@ -37,10 +37,10 @@ on behalf of a [=Social Agent=].
     </tr>
     <tr>
       <td><b>Social Agent Shares Access</b></td>
-      <td>A [=Social Agent=] using an [=Application=] elects to share 
-        access to data in their control with another [=Social Agent=] 
-        that did not request it. [=Access Needs=] are provided by 
-        [=Application=]. Notification that access was shared is provided 
+      <td>A [=Social Agent=] using an [=Application=] elects to share
+        access to data in their control with another [=Social Agent=]
+        that did not request it. [=Access Needs=] are provided by
+        [=Application=]. Notification that access was shared is provided
         through an [=Access Receipt=].</td>
     </tr>
   </tbody>
@@ -59,7 +59,7 @@ on behalf of a [=Social Agent=].
 4.  The requesting [=Agent=] looks for an [=Access Grant=]
     stored in a corresponding [=Agent Registration=] in the [=Agent Registry=] of the
     data owner. This [=Access Grant=] tells them exactly what they have access to.
-    
+
 </div>
 
 Slight variations concerning where [=Access Needs=] are sourced from, and
@@ -79,7 +79,7 @@ one flow to another.
       <tbody>
         <tr>
           <td><b>1</b></td>
-          <td>Alice's finds an [=Application=] called Projectron that she'd like 
+          <td>Alice's finds an [=Application=] called Projectron that she'd like
             to use to manage her Projects and Tasks.</td>
         </tr>
         <tr>
@@ -87,94 +87,95 @@ one flow to another.
           <td>Alice provides her [=WebID=] to Projectron</td>
         </tr>
         <tr>
-          <td><b>3-4</b></td>
+          <td><b>3</b></td>
           <td>Projectron dereferences her [=WebID=] and retrieves her IdP and [=Authorization Agent=] from her [=Identity Profile Document=]</td>
         </tr>
         <tr>
-          <td><b>5</b></td>
+          <td><b>4</b></td>
           <td>Projectron [[#agent-registration-discovery|asks]] Alice's [=Authorization Agent=] if Alice already has an [=Application Registration=] for Projectron</td>
         </tr>
         <tr>
-          <td><b>6</b></td>
+          <td><b>5</b></td>
           <td>Projectron receives a `401 Not Authorized`, because Alice / Projectron needs to authenticate first</td>
         </tr>
         <tr>
-          <td><b>7-8</b></td>
+          <td><b>6</b></td>
           <td>Projectron initiates a [[SOLID-OIDC]] flow with Alice's Identity Provider and receives a DPOP-bound Access Token and Proof</td>
         </tr>
         <tr>
-          <td><b>9</b></td>
+          <td><b>7</b></td>
           <td>Now authenticated, Projectron [[#agent-registration-discovery|asks]] Alice's [=Authorization Agent=] again for a Projectron [=Application Registration=]</td>
         </tr>
         <tr>
-          <td><b>10</b></td>
+          <td><b>8</b></td>
           <td>Alice's [=Authorization Agent=] checks the [=Agent Registry=] in Alice's Pod for a Projectron [=Application Registration=]</td>
         </tr>
         <tr>
-          <td><b>11</b></td>
-          <td>A `404 Not Found` is returned to Projectron when no [=Application Registration=] for Projectron is found.
+          <td><b>9</b></td>
+          <td>No [=Application Registration=] for Projectron is found.
           Projectron now knows that Alice hasn't given it permission to access her data, so it must ask.</td>
         </tr>
         <tr>
-          <td><b>12-13</b></td>
+          <td><b>10</b></td>
           <td>Projectron redirects Alice to her [=Authorization Agent=], supplying its [=identity=] for context</td>
         </tr>
         <tr>
-          <td><b>14</b></td>
+          <td><b>11</b></td>
           <td>Alice's [=Authorization Agent=] dereferences the supplied Projectron [=identity=], retrieving Projection's
-          [=Application=] profile graph and corresponding [=Access Need Groups=] from the [=Identity Profile Document=].</td>
+          [=Application=] profile graph and corresponding [=Access Need Groups=] from the [=Identity Profile Document=].
+          As well as <code>redirect_uri</code></td>
         </tr>
         <tr>
-          <td><b>15</b></td>
+          <td><b>12</b></td>
           <td>Alice's [=Authorization Agent=] presents the [=Access Need Groups=] from Projectron's [=Application=]
           profile graph, so that Alice understands what kind of data is being requested, and why.</td>
         </tr>
         <tr>
-          <td><b>16</b></td>
+          <td><b>13</b></td>
           <td>Alice's chooses the [[#access-scopes|scope of access]] that Projectron will receive to the data it has
           asked for access to via the presented [=Access Needs=].</td>
         </tr>
         <tr>
-          <td><b>17-19</b></td>
-          <td>Alice's [=Authorization Agent=] records her decision as an [=Access Consent=] in Alice's 
-            [=Access Consent Registry=]. An [=Application Registration=] is created for Projectron in 
+          <td><b>14-16</b></td>
+          <td>Alice's [=Authorization Agent=] records her decision as an [=Access Consent=] in Alice's
+            [=Access Consent Registry=]. An [=Application Registration=] is created for Projectron in
             Alice's [=Agent Registry=]. An [=Access Grant=] and corresponding [=Data Grants=] are generated
             from the [=Access Consent=] and stored in the Projectron [=Application Registration=].
         </tr>
         <tr>
-          <td><b>20-21</b></td>
-          <td>Alice's [=Authorization Agent=] sends her back to Projectron now that the appropriate access has been granted</td>
+          <td><b>17</b></td>
+          <td>Alice's [=Authorization Agent=] redirects her back to Projectron now that the appropriate access has been granted</td>
         </tr>
         <tr>
-          <td><b>21</b></td>
+          <td><b>18</b></td>
           <td>Projectron [[#agent-registration-discovery|asks]] Alice's [=Authorization Agent=] again for a Projectron [=Application Registration=]</td>
         </tr>
         <tr>
-          <td><b>22-23</b></td>
+          <td><b>19</b></td>
           <td>Alice's [=Authorization Agent=] finds the newly created Projectron [=Application Registration=] in the [=Agent Registry=] in Alice's Pod</td>
         </tr>
         <tr>
-          <td><b>24</b></td>
+          <td><b>20</b></td>
           <td>Alice's [=Authorization Agent=] [[#agent-registration-discovery|provides]] the URI of the [=Application Registration=] to Projectron</td>
         </tr>
         <tr>
-          <td><b>25</b></td>
+          <td><b>21</b></td>
           <td>Projectron learns what access it received through the [=Access Grant=] in Alice's Projectron [=Application Registration=]</td>
         </tr>
         <tr>
-          <td><b>26</b></td>
+          <td><b>22</b></td>
           <td>Projectron may now function as intended, within the scope of consent it was given by Alice.</td>
         </tr>
       </tbody>
     </table>
 </figure>
 
-<img class="sequence-diagram" src="diagrams/application-requests-access-flow.seq.svg" />
+<img class="sequence-diagram" src="diagrams/application-requests-access-flow.seq.mmd.svg" />
 
 ## Authorization Agent ## {#authorization-agent}
 
 An <dfn>Authorization Agent</dfn> is an [=Application=] designated by
-a [=Social Agent=] to be responsible for managing the access to data 
+a [=Social Agent=] to be responsible for managing the access to data
 under their control, linked via their [=Registry Set=].
 
 Any requests for access to the [=Social Agent=]
@@ -189,35 +190,35 @@ by de-referencing the [=identity=] of that [=Social Agent=], and extracting
 the object value of the `interop:hasAuthorizationAgent` statement from the
 [=Social Agent=] graph in the returned [=identity profile document=].
 
-The extracted [=Authorization Agent=] IRI <em class="rfc2119">MUST</em> be 
+The extracted [=Authorization Agent=] IRI <em class="rfc2119">MUST</em> be
 unique to that [=Social Agent=]. In scenarios where the [=Authorization Agent=]
 services multiple [=Social Agents=], this may be facilitated through
-a unique sub-domain (see example below) or path. 
+a unique sub-domain (see example below) or path.
 
 <figure>
   <figcaption>[=Social Agent=] at https://alice.example/#id -
   <a href="snippets/alice.example/alice.example.ttl">View</a>
-</figcaption>  
+</figcaption>
   <pre class=include-code>
   path: snippets/alice.example/alice.example.ttl
   highlight: turtle
   show: 9-20
   line-highlight: 14
-  </pre> 
+  </pre>
 </figure>
 
 ### Agent Registration Discovery ### {#agent-registration-discovery}
 
 An [=Agent=] that needs to discover whether a target [=Social Agent=] has
-a corresponding [=Agent Registration=] for them can query the 
-[=Authorization Agent=] for that target [=Social Agent=]. 
+a corresponding [=Agent Registration=] for them can query the
+[=Authorization Agent=] for that target [=Social Agent=].
 
 To discover a corresponding [=Agent Regsitration=] the requesting [=Agent=]
 may perform an `HTTP HEAD` or `HTTP GET` request on the IRI of the
 [=Authorization Agent=] for the target [=Social Agent=].
 
-The response will include an `HTTP Link` header relating the [=Agent Registration=] 
-to the [=Agent=] making the request via the 
+The response will include an `HTTP Link` header relating the [=Agent Registration=]
+to the [=Agent=] making the request via the
 `http://www.w3.org/ns/solid/interop#registeredAgent` link relation.
 
 <figure>
