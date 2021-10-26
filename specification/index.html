@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version a210b7d86, updated Thu Sep 16 13:45:19 2021 -0700" name="generator">
+  <meta content="Bikeshed version d7036035b, updated Fri Oct 8 17:07:11 2021 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="d32c98cce6a6362fd6c576a4dfb575a17af56c41" name="document-revision">
+  <meta content="8eb68bb94d3a31639e4ba5a0c041ffe64c8089e4" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -380,6 +380,16 @@ figcaption:not(.no-marker)::before {
 
 .dfn-paneled { cursor: pointer; }
 </style>
+<style>/* style-issues */
+
+a[href].issue-return {
+    float: right;
+    float: inline-end;
+    color: var(--issueheading-text);
+    font-weight: bold;
+    text-decoration: none;
+}
+</style>
 <style>/* style-line-highlighting */
 
 :root {
@@ -544,7 +554,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-10-07">7 October 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-10-26">26 October 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1438,8 +1448,8 @@ by a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent④⑧
         provided through an <a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①">Access Receipt</a>.
      <tr>
       <td><b>Social Agent Shares Access</b>
-      <td>A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑤④">Social Agent</a> using an <a data-link-type="dfn" href="#application" id="ref-for-application②⑨">Application</a> elects to share 
-        access to data in their control with another <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑤⑤">Social Agent</a> that did not request it. <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②">Access Needs</a> are provided by <a data-link-type="dfn" href="#application" id="ref-for-application③⓪">Application</a>. Notification that access was shared is provided 
+      <td>A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑤④">Social Agent</a> using an <a data-link-type="dfn" href="#application" id="ref-for-application②⑨">Application</a> elects to share
+        access to data in their control with another <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑤⑤">Social Agent</a> that did not request it. <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②">Access Needs</a> are provided by <a data-link-type="dfn" href="#application" id="ref-for-application③⓪">Application</a>. Notification that access was shared is provided
         through an <a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①①">Access Receipt</a>.
    </table>
    <div class="assertion">
@@ -1473,75 +1483,76 @@ one flow to another.</p>
      <tbody>
       <tr>
        <td><b>1</b>
-       <td>Alice’s finds an <a data-link-type="dfn" href="#application" id="ref-for-application③①">Application</a> called Projectron that she’d like 
+       <td>Alice’s finds an <a data-link-type="dfn" href="#application" id="ref-for-application③①">Application</a> called Projectron that she’d like
             to use to manage her Projects and Tasks.
       <tr>
        <td><b>2</b>
        <td>Alice provides her <a data-link-type="dfn" href="#webid" id="ref-for-webid">WebID</a> to Projectron
       <tr>
-       <td><b>3-4</b>
+       <td><b>3</b>
        <td>Projectron dereferences her <a data-link-type="dfn" href="#webid" id="ref-for-webid①">WebID</a> and retrieves her IdP and <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①②">Authorization Agent</a> from her <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document⑥">Identity Profile Document</a>
       <tr>
-       <td><b>5</b>
+       <td><b>4</b>
        <td>Projectron <a href="#agent-registration-discovery">asks</a> Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①③">Authorization Agent</a> if Alice already has an <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①⑧">Application Registration</a> for Projectron
       <tr>
-       <td><b>6</b>
+       <td><b>5</b>
        <td>Projectron receives a <code>401 Not Authorized</code>, because Alice / Projectron needs to authenticate first
       <tr>
-       <td><b>7-8</b>
+       <td><b>6</b>
        <td>Projectron initiates a <a data-link-type="biblio" href="#biblio-solid-oidc">[SOLID-OIDC]</a> flow with Alice’s Identity Provider and receives a DPOP-bound Access Token and Proof
       <tr>
-       <td><b>9</b>
+       <td><b>7</b>
        <td>Now authenticated, Projectron <a href="#agent-registration-discovery">asks</a> Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①④">Authorization Agent</a> again for a Projectron <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①⑨">Application Registration</a>
       <tr>
-       <td><b>10</b>
+       <td><b>8</b>
        <td>Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①⑤">Authorization Agent</a> checks the <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry⑧">Agent Registry</a> in Alice’s Pod for a Projectron <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①①⓪">Application Registration</a>
       <tr>
-       <td><b>11</b>
-       <td>A <code>404 Not Found</code> is returned to Projectron when no <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①①①">Application Registration</a> for Projectron is found.
+       <td><b>9</b>
+       <td>No <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①①①">Application Registration</a> for Projectron is found.
           Projectron now knows that Alice hasn’t given it permission to access her data, so it must ask.
       <tr>
-       <td><b>12-13</b>
+       <td><b>10</b>
        <td>Projectron redirects Alice to her <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①⑥">Authorization Agent</a>, supplying its <a data-link-type="dfn" href="#identity" id="ref-for-identity③">identity</a> for context
       <tr>
-       <td><b>14</b>
-       <td>Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①⑦">Authorization Agent</a> dereferences the supplied Projectron <a data-link-type="dfn" href="#identity" id="ref-for-identity④">identity</a>, retrieving Projection’s <a data-link-type="dfn" href="#application" id="ref-for-application③②">Application</a> profile graph and corresponding <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①③">Access Need Groups</a> from the <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document⑦">Identity Profile Document</a>.
+       <td><b>11</b>
+       <td>Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①⑦">Authorization Agent</a> dereferences the supplied Projectron <a data-link-type="dfn" href="#identity" id="ref-for-identity④">identity</a>, retrieving Projection’s <a data-link-type="dfn" href="#application" id="ref-for-application③②">Application</a> profile graph and corresponding <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①③">Access Need Groups</a> from the <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document⑦">Identity Profile Document</a>,
+          as well as <code>redirect_uri</code>
       <tr>
-       <td><b>15</b>
+       <td><b>12</b>
        <td>Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①⑧">Authorization Agent</a> presents the <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①④">Access Need Groups</a> from Projectron’s <a data-link-type="dfn" href="#application" id="ref-for-application③③">Application</a> profile graph, so that Alice understands what kind of data is being requested, and why.
       <tr>
-       <td><b>16</b>
+       <td><b>13</b>
        <td>Alice’s chooses the <a href="#access-scopes">scope of access</a> that Projectron will receive to the data it has
           asked for access to via the presented <a data-link-type="dfn" href="#access-need" id="ref-for-access-need④">Access Needs</a>.
       <tr>
-       <td><b>17-19</b>
-       <td>Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①⑨">Authorization Agent</a> records her decision as an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①">Access Consent</a> in Alice’s <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①①">Access Consent Registry</a>. An <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①①②">Application Registration</a> is created for Projectron in 
+       <td><b>14-16</b>
+       <td>Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①⑨">Authorization Agent</a> records her decision as an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①">Access Consent</a> in Alice’s <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①①">Access Consent Registry</a>. An <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①①②">Application Registration</a> is created for Projectron in
             Alice’s <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry⑨">Agent Registry</a>. An <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑤">Access Grant</a> and corresponding <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①">Data Grants</a> are generated
             from the <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②">Access Consent</a> and stored in the Projectron <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①①③">Application Registration</a>. 
       <tr>
-       <td><b>20-21</b>
-       <td>Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①①⓪">Authorization Agent</a> sends her back to Projectron now that the appropriate access has been granted
+       <td><b>17</b>
+       <td>Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①①⓪">Authorization Agent</a> redirects her back to Projectron now that the appropriate access has been granted
       <tr>
-       <td><b>21</b>
+       <td><b>18</b>
        <td>Projectron <a href="#agent-registration-discovery">asks</a> Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①①①">Authorization Agent</a> again for a Projectron <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①①④">Application Registration</a>
       <tr>
-       <td><b>22-23</b>
+       <td><b>19</b>
        <td>Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①①②">Authorization Agent</a> finds the newly created Projectron <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①①⑤">Application Registration</a> in the <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry①⓪">Agent Registry</a> in Alice’s Pod
       <tr>
-       <td><b>24</b>
+       <td><b>20</b>
        <td>Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①①③">Authorization Agent</a> <a href="#agent-registration-discovery">provides</a> the URI of the <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①①⑥">Application Registration</a> to Projectron
       <tr>
-       <td><b>25</b>
+       <td><b>21</b>
        <td>Projectron learns what access it received through the <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑥">Access Grant</a> in Alice’s Projectron <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①①⑦">Application Registration</a>
       <tr>
-       <td><b>26</b>
+       <td><b>22</b>
        <td>Projectron may now function as intended, within the scope of consent it was given by Alice.
     </table>
    </figure>
-   <p><img class="sequence-diagram" src="diagrams/application-requests-access-flow.seq.svg"></p>
+   <p><img class="sequence-diagram" src="diagrams/application-requests-access-flow.seq.mmd.svg"></p>
    <h3 class="heading settled" data-level="7.2" id="authorization-agent"><span class="secno">7.2. </span><span class="content">Authorization Agent</span><a class="self-link" href="#authorization-agent"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="authorization-agent①">Authorization Agent</dfn> is an <a data-link-type="dfn" href="#application" id="ref-for-application③④">Application</a> designated by
-a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑤⑨">Social Agent</a> to be responsible for managing the access to data 
+a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑤⑨">Social Agent</a> to be responsible for managing the access to data
 under their control, linked via their <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑤">Registry Set</a>.</p>
    <p>Any requests for access to the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⓪">Social Agent</a> are processed by the <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①①④">Authorization Agent</a>.
 Similarly, any decisions by the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥①">Social Agent</a> to share data with another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①①⑦">Agent</a> are processed by the <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①①⑤">Authorization Agent</a>.</p>
@@ -2977,9 +2988,9 @@ associate instances of related shape trees via a ShapePath</p>
   <div style="counter-reset:issue">
    <div class="issue"> This specification uses some access modes in the <code>acl:</code> namespace that
 have not been adopted to demonstrate the most secure and accurate
-expression of a <a data-link-type="dfn" href="#social-agent">Social Agent’s</a> consent. <a href="https://github.com/solid/authorization-panel/issues/253">Discussions are underway</a> to add these modes.<a href="#issue-a96dc382"> ↵ </a></div>
+expression of a <a data-link-type="dfn" href="#social-agent">Social Agent’s</a> consent. <a href="https://github.com/solid/authorization-panel/issues/253">Discussions are underway</a> to add these modes. <a class="issue-return" href="#issue-a96dc382" title="Jump to section">↵</a></div>
    <div class="issue"> <a data-link-type="biblio" href="#biblio-wac">[WAC]</a> does not have any mechanism to extend or modify
-inherited permissions.<a href="#issue-5157d1cb"> ↵ </a></div>
+inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jump to section">↵</a></div>
   </div>
   <aside class="dfn-panel" data-for="agents①">
    <b><a href="#agents①">#agents①</a></b><b>Referenced in:</b>
