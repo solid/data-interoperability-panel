@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version dfbc2b297, updated Thu Nov 11 15:52:32 2021 -0800" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="d1b15e7dfa3add306e39d59f743a78f9f074e83c" name="document-revision">
+  <meta content="8d056c47523c11cc43caa6c1b2e0e220f32f41c9" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -2656,11 +2656,6 @@ in an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-conse
       <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪④">Social Agent</a> who granted access and delivered the <a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①④">Access Receipt</a>.
       This can be different than <code>fromSocialAgent</code> when access is being managed
       by a <a data-link-type="dfn">Trusted Agent</a> of <code>fromSocialAgent</code>.
-     <tr>
-      <td>hasSocialAgentRegistration
-      <td><a href="#classSocialAgentRegistration">SocialAgentRegistration</a>
-      <td>Links to the <a data-link-type="dfn" href="#social-agent-registration①" id="ref-for-social-agent-registration①⑨">Social Agent Registration</a> maintained for the grantee by the
-      data owner (identified by <code>fromSocialAgent</code>).
    </table>
    <figure>
     <figcaption>An example <a data-link-type="dfn" href="#access-receipt①" id="ref-for-access-receipt①⑤">Access Receipt</a> from Alice to Bob</figcaption>
@@ -2668,13 +2663,14 @@ in an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-conse
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessReceipt</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>fromSocialAgent</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>viaSocialAgent</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasSocialAgentRegistration</c-> <c- nn>alice-agents</c-><c- p>:</c-><c- f>c4562da9\/</c-> <c- p>.</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>viaSocialAgent</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>.</c->
 </pre>
    </figure>
+   <p>The <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①②①">Authorization Agent</a> of the recipient can use <a href="#agent-registration-discovery">§ 7.2.2 Agent Registration Discovery</a> to discover the <a data-link-type="dfn" href="#social-agent-registration①" id="ref-for-social-agent-registration①⑨">Social Agent Registration</a> created for them. It should use the value of <code>fromSocialAgent</code> as the target <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑤">Social Agent</a>.</p>
+   <p class="issue" id="issue-60bf90fe"><a class="self-link" href="#issue-60bf90fe"></a> Depending on outcomes from the ongoing work on delegation, target <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑥">Social Agent</a> may change to the value of <code>viaSocialAgent</code>.</p>
    <h3 class="heading settled" data-level="9.8" id="access-consent-registry"><span class="secno">9.8. </span><span class="content">Access Consent Registry</span><a class="self-link" href="#access-consent-registry"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-consent-registry①">Access Consent Registry</dfn> is a collection of <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②⓪">Access Consents</a>.</p>
-   <p>The <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①③">Access Consent Registry</a> is linked to a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑤">Social Agent</a> via their <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑦">Registry Set</a>.</p>
+   <p>The <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①③">Access Consent Registry</a> is linked to a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑦">Social Agent</a> via their <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑦">Registry Set</a>.</p>
    <p>An <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①④">Access Consent Registry</a> links to any number of registered <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②①">Access Consents</a>.</p>
    <p><a href="interop.ttl#AccessConsentRegistry">Class Definition</a> - <a href="interop.shex#AccessConsentRegistryShape">Shape Definition</a> - <a href="interop.tree#AccessConsentRegistryTree">Shape Tree Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessConsentRegistry">
@@ -2827,12 +2823,12 @@ in an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-conse
    <p>For authorization purposes, client <a data-link-type="dfn" href="#application" id="ref-for-application④④">Applications</a> in use today fall into
 two buckets:</p>
    <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="strongly-identifiable-applications">Strongly identifiable applications</dfn> can be identified by
-third parties independently from the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑥">Social Agent</a> controlling them.
+third parties independently from the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑧">Social Agent</a> controlling them.
 Only <a data-link-type="dfn" href="#server-side-application" id="ref-for-server-side-application">server-side applications</a> are
 strongly identifiable. As confidential clients, they can keep secrets
 and can present attestations and third-party credentials
 via DNS / domain certificates.</p>
-   <p>In the case of a <a data-link-type="dfn" href="#strongly-identifiable-applications" id="ref-for-strongly-identifiable-applications">strongly identifiable application</a>, the <a data-link-type="dfn" href="#application" id="ref-for-application④⑤">Application</a> has its own <a data-link-type="dfn" href="#identity" id="ref-for-identity⑥">identity</a>. A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑦">Social Agent</a> can authorize a given <a data-link-type="dfn" href="#application" id="ref-for-application④⑥">Application</a> to access data based solely on the <a data-link-type="dfn" href="#identity" id="ref-for-identity⑦">identity</a> of that <a data-link-type="dfn" href="#application" id="ref-for-application④⑦">Application</a>.</p>
+   <p>In the case of a <a data-link-type="dfn" href="#strongly-identifiable-applications" id="ref-for-strongly-identifiable-applications">strongly identifiable application</a>, the <a data-link-type="dfn" href="#application" id="ref-for-application④⑤">Application</a> has its own <a data-link-type="dfn" href="#identity" id="ref-for-identity⑥">identity</a>. A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑨">Social Agent</a> can authorize a given <a data-link-type="dfn" href="#application" id="ref-for-application④⑥">Application</a> to access data based solely on the <a data-link-type="dfn" href="#identity" id="ref-for-identity⑦">identity</a> of that <a data-link-type="dfn" href="#application" id="ref-for-application④⑦">Application</a>.</p>
    <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="weakly-identifiable-applications">Weakly identifiable applications</dfn> include in-browser Javascript <a data-link-type="dfn" href="#application" id="ref-for-application④⑧">Applications</a> and native desktop or mobile <a data-link-type="dfn" href="#application" id="ref-for-application④⑨">Applications</a>. They are
 considered weakly identifiable because they
 are not able to keep secrets on an instance level. They are often referred to
@@ -2840,12 +2836,12 @@ as public clients. Native apps should be strongly-identifiable in theory
 (since they are able to keep secrets on an instance level), but not in
 practice because the OS manufacturers do not make their trust
 infrastructure available. Weakly identifiable clients are only strongly
-identifiable to the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑧">Social Agent</a> controlling them.</p>
+identifiable to the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①①⓪">Social Agent</a> controlling them.</p>
    <p>In the case of <a data-link-type="dfn" href="#weakly-identifiable-applications" id="ref-for-weakly-identifiable-applications">Weakly identifiable applications</a>, the ability for a Solid
 pod to limit access to data by the <a data-link-type="dfn" href="#application" id="ref-for-application⑤⓪">Application</a> in use is only as strong as
-the trustworthiness of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑨">Social Agent</a> piloting that <a data-link-type="dfn" href="#application" id="ref-for-application⑤①">Application</a>, along with
+the trustworthiness of the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①①①">Social Agent</a> piloting that <a data-link-type="dfn" href="#application" id="ref-for-application⑤①">Application</a>, along with
 their ability to avoid using malicious <a data-link-type="dfn" href="#application" id="ref-for-application⑤②">Applications</a>. The <a data-link-type="dfn" href="#identity" id="ref-for-identity⑧">identity</a> of the <a data-link-type="dfn" href="#application" id="ref-for-application⑤③">Application</a> can be manipulated
-by the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①①⓪">Social Agent</a> in control. This means that Alice can strongly control
+by the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①①②">Social Agent</a> in control. This means that Alice can strongly control
 the <a data-link-type="dfn" href="#application" id="ref-for-application⑤④">Applications</a> that she uses to access her own data, but has
 limited ability to control the <a data-link-type="dfn" href="#application" id="ref-for-application⑤⑤">Applications</a> that Bob uses to access the data
 she shares with him.</p>
@@ -2994,6 +2990,7 @@ have not been adopted to demonstrate the most secure and accurate
 expression of a <a data-link-type="dfn" href="#social-agent">Social Agent’s</a> consent. <a href="https://github.com/solid/authorization-panel/issues/253">Discussions are underway</a> to add these modes. <a class="issue-return" href="#issue-a96dc382" title="Jump to section">↵</a></div>
    <div class="issue"> <a data-link-type="biblio" href="#biblio-wac">[WAC]</a> does not have any mechanism to extend or modify
 inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jump to section">↵</a></div>
+   <div class="issue"> Depending on outcomes from the ongoing work on delegation, target <a data-link-type="dfn" href="#social-agent">Social Agent</a> may change to the value of <code>viaSocialAgent</code>. <a class="issue-return" href="#issue-60bf90fe" title="Jump to section">↵</a></div>
   </div>
   <aside class="dfn-panel" data-for="agents①">
    <b><a href="#agents①">#agents①</a></b><b>Referenced in:</b>
@@ -3049,9 +3046,9 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-social-agent⑨③">9.4. Data Grant</a> <a href="#ref-for-social-agent⑨④">(2)</a> <a href="#ref-for-social-agent⑨⑤">(3)</a>
     <li><a href="#ref-for-social-agent⑨⑥">9.6. Data Access Scopes</a> <a href="#ref-for-social-agent⑨⑦">(2)</a> <a href="#ref-for-social-agent⑨⑧">(3)</a>
     <li><a href="#ref-for-social-agent⑨⑨">9.6.2. AllFromAgent</a> <a href="#ref-for-social-agent①⓪⓪">(2)</a> <a href="#ref-for-social-agent①⓪①">(3)</a>
-    <li><a href="#ref-for-social-agent①⓪②">9.7. Access Receipt</a> <a href="#ref-for-social-agent①⓪③">(2)</a> <a href="#ref-for-social-agent①⓪④">(3)</a>
-    <li><a href="#ref-for-social-agent①⓪⑤">9.8. Access Consent Registry</a>
-    <li><a href="#ref-for-social-agent①⓪⑥">10.1. Application Authorization</a> <a href="#ref-for-social-agent①⓪⑦">(2)</a> <a href="#ref-for-social-agent①⓪⑧">(3)</a> <a href="#ref-for-social-agent①⓪⑨">(4)</a> <a href="#ref-for-social-agent①①⓪">(5)</a>
+    <li><a href="#ref-for-social-agent①⓪②">9.7. Access Receipt</a> <a href="#ref-for-social-agent①⓪③">(2)</a> <a href="#ref-for-social-agent①⓪④">(3)</a> <a href="#ref-for-social-agent①⓪⑤">(4)</a> <a href="#ref-for-social-agent①⓪⑥">(5)</a>
+    <li><a href="#ref-for-social-agent①⓪⑦">9.8. Access Consent Registry</a>
+    <li><a href="#ref-for-social-agent①⓪⑧">10.1. Application Authorization</a> <a href="#ref-for-social-agent①⓪⑨">(2)</a> <a href="#ref-for-social-agent①①⓪">(3)</a> <a href="#ref-for-social-agent①①①">(4)</a> <a href="#ref-for-social-agent①①②">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="registry">
@@ -3199,6 +3196,7 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-authorization-agent①①④">7.2. Authorization Agent</a> <a href="#ref-for-authorization-agent①①⑤">(2)</a>
     <li><a href="#ref-for-authorization-agent①①⑥">7.2.1. Authorization Agent Discovery</a> <a href="#ref-for-authorization-agent①①⑦">(2)</a> <a href="#ref-for-authorization-agent①①⑧">(3)</a>
     <li><a href="#ref-for-authorization-agent①①⑨">7.2.2. Agent Registration Discovery</a> <a href="#ref-for-authorization-agent①②⓪">(2)</a>
+    <li><a href="#ref-for-authorization-agent①②①">9.7. Access Receipt</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="access-need-group①">
