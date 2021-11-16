@@ -1100,12 +1100,6 @@ in an [=Access Consent=].
       This can be different than `fromSocialAgent` when access is being managed
       by a [=Trusted Agent=] of `fromSocialAgent`.</td>
     </tr>
-    <tr>
-      <td>hasSocialAgentRegistration</td>
-      <td>[SocialAgentRegistration](#classSocialAgentRegistration)</td>
-      <td>Links to the [=Social Agent Registration=] maintained for the grantee by the
-      data owner (identified by `fromSocialAgent`).</td>
-    </tr>
   </tbody>
 </table>
 
@@ -1117,6 +1111,11 @@ in an [=Access Consent=].
   show: 7-12
   </pre>
 </figure>
+
+The [=Authorization Agent=] of the recipient can use [[#agent-registration-discovery]] to discover the [=Social Agent Registration=]
+created for them. It should use the value of <code>fromSocialAgent</code> as the target [=Social Agent=].
+
+Issue: Depending on outcomes from the ongoing work on delegation, target [=Social Agent=] may change to the value of <code>viaSocialAgent</code>.
 
 ## Access Consent Registry ## {#access-consent-registry}
 
