@@ -42,22 +42,22 @@ has been granted access. [=Access Grants=] are generated from
   </thead>
   <tbody>
     <tr>
-      <td>registeredBy</td>
+      <td>grantedBy</td>
       <td>[SocialAgent](#classSocialAgent)</td>
       <td>[=Social Agent=] that recorded the [=Access Consent=]</td>
     </tr>
     <tr>
-      <td>registeredWith</td>
+      <td>grantedWith</td>
       <td>[Application](#classApplication)</td>
       <td>[=Application=] used to record the [=Access Consent=]</td>
     </tr>
     <tr>
-      <td>registeredAt</td>
+      <td>grantedAt</td>
       <td>xsd:dateTime</td>
       <td>Date and time the [=Access Consent=] was created</td>
     </tr>
     <tr>
-      <td>registeredAgent</td>
+      <td>grantee</td>
       <td>[Agent](#classAgent)</td>
       <td>The [=Social Agent=] or [=Application=] that has received
       consent</td>
@@ -137,7 +137,7 @@ needs to change, it should be replaced.
       <td>[=Social Agent=] that owns the data being consented</td>
     </tr>
     <tr>
-      <td>registeredAgent</td>
+      <td>grantee</td>
       <td>[Agent](#classAgent)</td>
       <td>The [=Social Agent=] or [=Application=] that has received
       consent</td>
@@ -253,17 +253,17 @@ needs to change, it must be replaced.
   </thead>
   <tbody>
     <tr>
-      <td>registeredBy</td>
+      <td>grantedBy</td>
       <td>[SocialAgent](#classSocialAgent)</td>
       <td>[=Social Agent=] that registered the [=Access Grant=]</td>
     </tr>
     <tr>
-      <td>registeredAt</td>
+      <td>grantedAt</td>
       <td>xsd:dateTime</td>
       <td>Date and time the [=Access Grant=] was created</td>
     </tr>
     <tr>
-      <td>registeredAgent</td>
+      <td>grantee</td>
       <td>[Agent](#classAgent)</td>
       <td>Links to the [=Social Agent=] or [=Application=] that was granted access.</td>
     </tr>
@@ -338,7 +338,7 @@ needs to change, it should be replaced.
       <td>[=Social Agent=] that owns the data being granted</td>
     </tr>
     <tr>
-      <td>registeredAgent</td>
+      <td>grantee</td>
       <td>[Agent](#classAgent)</td>
       <td>The [=Social Agent=] or [=Application=] that has received
       consent</td>
@@ -738,7 +738,7 @@ Bob's [=Agent Registry=].
 </figure>
 
 When a [=Data Grant=] is assigned the `interop:AllFromRegistry` scope, the
-`interop:registeredAgent` is authorized to access all [=Data Instances=]
+`interop:grantee` is authorized to access all [=Data Instances=]
 in the [=Data Registration=] linked via `interop:hasDataRegistration`,
 limited by the [=access modes=] linked via `interop:accessMode`.
 
@@ -843,7 +843,7 @@ Jose's [=Agent Registry=].
 </figure>
 
 When a [=Data Grant=] is assigned the `interop:SelectedFromRegistry` scope, the
-`interop:registeredAgent` is authorized to access only the specific
+`interop:grantee` is authorized to access only the specific
 [=Data Instances=] linked via `interop:hasDataInstance` in the [=Data Registration=]
 linked via `interop:hasDataRegistration`,
 limited by the [=access modes=] linked via `interop:accessMode`.
@@ -989,7 +989,7 @@ for Projectron based on the above [=Data Consents=].
 </figure>
 
 When a [=Data Grant=] is assigned the `interop:Inherited` scope, the
-`interop:registeredAgent` is authorized to access only the specific
+`interop:grantee` is authorized to access only the specific
 [=Data Instances=] linked via `st:references` in the [=shape tree=]
 of the [=Data Grant=] linked via `interop:inheritsFromGrant`
 
@@ -1089,16 +1089,9 @@ in an [=Access Consent=].
       <td>Date and time the [=Access Receipt=] was provided</td>
     </tr>
     <tr>
-      <td>fromSocialAgent</td>
+      <td>grantedBy</td>
       <td>[SocialAgent](#classSocialAgent)</td>
-      <td>[=Social Agent=] whose data is being shared through the [=Access Receipt=]</td>
-    </tr>
-    <tr>
-      <td>viaSocialAgent</td>
-      <td>[SocialAgent](#classSocialAgent)</td>
-      <td>[=Social Agent=] who granted access and delivered the [=Access Receipt=].
-      This can be different than `fromSocialAgent` when access is being managed
-      by a [=Trusted Agent=] of `fromSocialAgent`.</td>
+      <td>[=Social Agent=] who granted access and delivered the [=Access Receipt=].</td>
     </tr>
   </tbody>
 </table>
@@ -1113,9 +1106,7 @@ in an [=Access Consent=].
 </figure>
 
 The [=Authorization Agent=] of the recipient can use [[#agent-registration-discovery]] to discover the [=Social Agent Registration=]
-created for them. It should use the value of <code>fromSocialAgent</code> as the target [=Social Agent=].
-
-Issue: Depending on outcomes from the ongoing work on delegation, target [=Social Agent=] may change to the value of <code>viaSocialAgent</code>.
+created for them. It should use the value of <code>grantedBy</code> as the target [=Social Agent=].
 
 ## Access Consent Registry ## {#access-consent-registry}
 

@@ -274,6 +274,38 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :DataConsent ;
   rdfs:label "Inherits From Consent"@en .
 
+:grantedBy
+  a rdf:Property ;
+  rdfs:comment "Social agent that issued consent"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain [ owl:unionOf ( :AccessConsent :AccessGrant :AccessReceipt ) ] ;
+  rdfs:range :SocialAgent ;
+  rdfs:label "Granted By"@en .
+
+:grantedWith
+  a rdf:Property ;
+  rdfs:comment "Application used by a Social Agent to issue consent"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessConsent ;
+  rdfs:range :Application ;
+  rdfs:label "Granted With"@en .
+
+:grantedAt
+  a rdf:Property ;
+  rdfs:comment "Time that consent was granted"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain [ owl:unionOf ( :AccessConsent :AccessGrant ) ] ;
+  rdfs:range xsd:dateTime ;
+  rdfs:label "Granted At"@en .
+
+:grantee
+  a rdf:Property ;
+  rdfs:comment "Recipient of consent"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain [ owl:unionOf ( :AccessConsent :DataConsent :AccessGrant :DataGrant ) ] ;
+  rdfs:range xsd:dateTime ;
+  rdfs:label "Granted At"@en .
+
 # AccessGrant Class
 #############################################################################
 
