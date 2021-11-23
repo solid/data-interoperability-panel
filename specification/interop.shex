@@ -128,10 +128,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <#AccessConsentShape> {
   a [ interop:AccessConsent ] ;
-  interop:registeredBy                      IRI  // shex:reference <#AgentShape> ;
-  interop:registeredWith                    IRI? // shex:reference <#ApplicationShape> ;
-  interop:registeredAt                      xsd:dateTime ;
-  interop:registeredAgent                   IRI  // shex:reference <#AgentShape> ;
+  interop:grantedBy                         IRI  // shex:reference <#AgentShape> ;
+  interop:grantedWith                       IRI? // shex:reference <#ApplicationShape> ;
+  interop:grantedAt                         xsd:dateTime ;
+  interop:grantee                           IRI  // shex:reference <#AgentShape> ;
   interop:hasAccessNeedGroup                IRI? // shex:reference <#AccessNeedGroupShape> ;
   interop:hasDataConsent                    IRI+ // shex:reference <#DataConsentShape>
 }
@@ -146,7 +146,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 <#DataConsentAllShape> {
   a [ interop:DataConsent ] ;
   $<#CommonDataConsentProperties> (
-    interop:registeredAgent                 IRI  // shex:reference <#AgentShape> ;
+    interop:grantee                         IRI  // shex:reference <#AgentShape> ;
     interop:registeredShapeTree             IRI  // shex:reference sts:ShapeTree ;
     interop:satisfiesAccessNeed             IRI? // shex:reference <#AccessNeedShape> ;
     interop:accessMode                      @<#AccessModes>+ ;
@@ -190,10 +190,10 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <#AccessGrantShape> {
   a [ interop:AccessGrant ] ;
-  interop:registeredBy                      IRI  // shex:reference <#AgentShape> ;
-  interop:registeredWith                    IRI? // shex:reference <#ApplicationShape> ;
-  interop:registeredAt                      xsd:dateTime ;
-  interop:registeredAgent                   IRI  // shex:reference <#AgentShape> ;
+  interop:grantedBy                         IRI  // shex:reference <#AgentShape> ;
+  interop:grantedWith                       IRI? // shex:reference <#ApplicationShape> ;
+  interop:grantedAt                         xsd:dateTime ;
+  interop:grantee                           IRI  // shex:reference <#AgentShape> ;
   interop:hasAccessNeedGroup                IRI  // shex:reference <#AccessNeedGroupShape> ;
   interop:hasDataGrant                      IRI+ // shex:reference <#DataGrant> ;
 }
@@ -241,6 +241,5 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 <#AccessReceiptShape> {
   a [interop:AccessReceipt] ;
   interop:providedAt                        xsd:dateTime ;
-  interop:fromSocialAgent                   IRI  // shex:reference <#SocialAgentShape> ;
-  interop:viaSocialAgent                    IRI  // shex:reference <#SocialAgentShape>
+  interop:grantedBy                         IRI  // shex:reference <#SocialAgentShape>
 }
