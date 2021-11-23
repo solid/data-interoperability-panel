@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version bbc364800, updated Mon Nov 15 13:57:55 2021 -0800" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="e1a76bfa7eb4719140b50945828714a6d542e280" name="document-revision">
+  <meta content="b375bcddb3c95160d1c0b869eeef7225c29d0b93" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -1906,6 +1906,9 @@ another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②③">A
 has been granted access. <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑧">Access Grants</a> are generated from <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①⑦">Access Consents</a>, and are appropriate to share with the grantee.</p>
    <p><a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①⑧">Access Consents</a> are recorded in a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑤">Social Agent’s</a> <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①②">Access Consent Registry</a>.</p>
    <p><a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①⑨">Access Consents</a> are immutable. If an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①⓪">Access Consent</a> for an <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②⑤">Agent</a> needs to change, it should be replaced.</p>
+   <p>If an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①①">Access Consent</a> is replaced, history may be retained by unlinking the
+previous <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①②">Access Consent</a> from the <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①③">Access Consent Registry</a>, and linking 
+to it from the replacement <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①③">Access Consent</a> via <code>interop:replaces</code>.</p>
    <p><a href="interop.ttl#AccessConsent">Class Definition</a> - <a href="interop.shex#AccessConsentShape">Shape Definition</a> - <a href="interop.tree#AccessConsentTree">Shape Tree Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessConsent">
     <colgroup>
@@ -1920,15 +1923,15 @@ has been granted access. <a data-link-type="dfn" href="#access-grant①" id="ref
      <tr>
       <td>grantedBy
       <td><a href="#classSocialAgent">SocialAgent</a>
-      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑥">Social Agent</a> that granted the <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①①">Access Consent</a>
+      <td><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑥">Social Agent</a> that granted the <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①④">Access Consent</a>
      <tr>
       <td>grantedWith
       <td><a href="#classApplication">Application</a>
-      <td><a data-link-type="dfn" href="#application" id="ref-for-application③⑨">Application</a> used to grant the <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①②">Access Consent</a>
+      <td><a data-link-type="dfn" href="#application" id="ref-for-application③⑨">Application</a> used to grant the <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①⑤">Access Consent</a>
      <tr>
       <td>grantedAt
       <td>xsd:dateTime
-      <td>Date and time the <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①③">Access Consent</a> was granted
+      <td>Date and time the <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①⑥">Access Consent</a> was granted
      <tr>
       <td>grantee
       <td><a href="#classAgent">Agent</a>
@@ -1937,15 +1940,19 @@ has been granted access. <a data-link-type="dfn" href="#access-grant①" id="ref
      <tr>
       <td>hasAccessNeedGroup
       <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
-      <td>An <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑨">Access Need Group</a> used to communicate the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②①">Access Needs</a> that the <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①④">Access Consent</a> is
+      <td>An <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑨">Access Need Group</a> used to communicate the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②①">Access Needs</a> that the <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①⑦">Access Consent</a> is
       satisfying
      <tr>
       <td>hasDataConsent
       <td><a href="#classDataConsent">DataConsent</a>
       <td>Consent for a specific type of data
+     <tr>
+      <td>replaces
+      <td><a href="#classAccessConsent">AccessConsent</a>
+      <td>Previous <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①⑧">Access Consent</a> replaced by current instance
    </table>
    <figure>
-    <figcaption>Alice’s <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①⑤">Access Consent</a> for Projectron at  
+    <figcaption>Alice’s <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①⑨">Access Consent</a> for Projectron at  
     https://alice.example/consents/e2765d6c - <a href="snippets/alice.example/e2765d6c.ttl">View</a> </figcaption>
 <pre class="include-code highlight"><c- nn>alice-consents</c-><c- p>:</c-><c- f>e2765d6c</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessConsent</c-> <c- p>;</c->
@@ -1960,7 +1967,7 @@ has been granted access. <a data-link-type="dfn" href="#access-grant①" id="ref
 </pre>
    </figure>
    <figure>
-    <figcaption>Alice’s <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①⑥">Access Consent</a> for Bob at  
+    <figcaption>Alice’s <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②⓪">Access Consent</a> for Bob at  
     https://alice.example/consents/4460dce3 - <a href="snippets/alice.example/4460dce3.ttl">View</a> </figcaption>
 <pre class="include-code highlight"><c- nn>alice-consents</c-><c- p>:</c-><c- f>4460dce3</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessConsent</c-> <c- p>;</c->
@@ -1976,7 +1983,7 @@ has been granted access. <a data-link-type="dfn" href="#access-grant①" id="ref
    </figure>
    <h3 class="heading settled" data-level="9.2" id="data-consent"><span class="secno">9.2. </span><span class="content">Data Consent</span><a class="self-link" href="#data-consent"></a></h3>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="data-consent①">Data Consent</dfn> records the decision of a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑧">Social Agent</a> to grant access to a specific type of data in their control, identified
-by a <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①⑤">Shape Tree</a>. They are always associated with a single <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①⑦">Access Consent</a>.</p>
+by a <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①⑤">Shape Tree</a>. They are always associated with a single <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②①">Access Consent</a>.</p>
    <p><a data-link-type="dfn" href="#data-consent①" id="ref-for-data-consent①">Data Consents</a> should not be shared with the <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②⑥">Agent</a> that has
 been granted access. <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①">Data Grants</a> are generated from <a data-link-type="dfn" href="#data-consent①" id="ref-for-data-consent①①">Data Consents</a>,
 and are appropriate to share with the grantee.</p>
@@ -2073,7 +2080,7 @@ and are appropriate to share with the grantee.</p>
    </figure>
    <h3 class="heading settled" data-level="9.3" id="access-grant"><span class="secno">9.3. </span><span class="content">Access Grant</span><a class="self-link" href="#access-grant"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-grant①">Access Grant</dfn> provides an <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②⑦">Agent</a> with a detailed
-description of access that has been granted to them. <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑨">Access Grants</a> are generated from <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①⑧">Access Consents</a>, and are stored in the <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry①①">Agent Registry</a> of the <a data-link-type="dfn">Data Owner</a>.</p>
+description of access that has been granted to them. <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑨">Access Grants</a> are generated from <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②②">Access Consents</a>, and are stored in the <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry①①">Agent Registry</a> of the <a data-link-type="dfn">Data Owner</a>.</p>
    <p>Each <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⓪">Access Grant</a> has one or more <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②">Data Grants</a>, each of which
 represents access granted to a specific type of data.</p>
    <p><a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①①">Access Grants</a> are immutable. If an <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①②">Access Grant</a> needs to change, it must be replaced.</p>
@@ -2629,7 +2636,7 @@ to <code>pm-shapetrees:ProjectTree</code> <a data-link-type="dfn" href="#data-in
    </figure>
    <h3 class="heading settled" data-level="9.7" id="access-receipt"><span class="secno">9.7. </span><span class="content">Access Receipt</span><a class="self-link" href="#access-receipt"></a></h3>
    <p>A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪②">Social Agent</a> provides an <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-receipt①">Access Receipt</dfn> to another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③②">Agent</a> after granting them access to some scope of data
-in an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①①⑨">Access Consent</a>.</p>
+in an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②③">Access Consent</a>.</p>
    <p><a href="interop.ttl#AccessReceipt">Class Definition</a> - <a href="interop.shex#AccessReceiptShape">Shape Definition</a> - <a href="interop.tree#AccessReceiptTree">Shape Tree Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessReceipt">
     <colgroup>
@@ -2660,9 +2667,9 @@ in an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-conse
    </figure>
    <p>The <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①②①">Authorization Agent</a> of the recipient can use <a href="#agent-registration-discovery">§ 7.2.2 Agent Registration Discovery</a> to discover the <a data-link-type="dfn" href="#social-agent-registration①" id="ref-for-social-agent-registration①⑨">Social Agent Registration</a> created for them. It should use the value of <code>grantedBy</code> as the target <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪④">Social Agent</a>.</p>
    <h3 class="heading settled" data-level="9.8" id="access-consent-registry"><span class="secno">9.8. </span><span class="content">Access Consent Registry</span><a class="self-link" href="#access-consent-registry"></a></h3>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-consent-registry①">Access Consent Registry</dfn> is a collection of <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②⓪">Access Consents</a>.</p>
-   <p>The <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①③">Access Consent Registry</a> is linked to a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑤">Social Agent</a> via their <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑦">Registry Set</a>.</p>
-   <p>An <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①④">Access Consent Registry</a> links to any number of registered <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②①">Access Consents</a>.</p>
+   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-consent-registry①">Access Consent Registry</dfn> is a collection of <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②④">Access Consents</a>.</p>
+   <p>The <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①④">Access Consent Registry</a> is linked to a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪⑤">Social Agent</a> via their <a data-link-type="dfn" href="#registry-set" id="ref-for-registry-set⑦">Registry Set</a>.</p>
+   <p>An <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①⑤">Access Consent Registry</a> links to any number of registered <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②⑤">Access Consents</a>.</p>
    <p><a href="interop.ttl#AccessConsentRegistry">Class Definition</a> - <a href="interop.shex#AccessConsentRegistryShape">Shape Definition</a> - <a href="interop.tree#AccessConsentRegistryTree">Shape Tree Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessConsentRegistry">
     <colgroup>
@@ -2677,10 +2684,10 @@ in an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-conse
      <tr>
       <td>hasRegistration
       <td><a href="interop.ttl#Registration">Registration</a>
-      <td>Link to associated <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②②">Access Consents</a>
+      <td>Link to associated <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②⑥">Access Consents</a>
    </table>
    <figure>
-    <figcaption>An <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①⑤">Access Consent Registry</a> at 
+    <figcaption>An <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①⑥">Access Consent Registry</a> at 
   https://alice.example/consents/ - <a href="snippets/alice.example/consents.ttl">View</a></figcaption>
 <pre class="include-code highlight"><c- nn>alice-consents</c-><c- p>:</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessConsentRegistry</c-><c- p>;</c->
@@ -2807,7 +2814,7 @@ in an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-conse
       <td><a href="interop.shex#DataConsentShape">DataConsentShape</a>
       <td><a href="interop.tree#DataConsentTree">DataConsentTree</a>
    </table>
-   <p>The <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①⑥">Access Consent Registry</a> resources MAY use any resource or subject name.</p>
+   <p>The <a data-link-type="dfn" href="#access-consent-registry①" id="ref-for-access-consent-registry①⑦">Access Consent Registry</a> resources MAY use any resource or subject name.</p>
    <p>The resource names for <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①①⑦">Access Grants</a> <em class="rfc2119">SHOULD</em> be unpredictable.</p>
    <h2 class="heading settled" data-level="10" id="security"><span class="secno">10. </span><span class="content">Security</span><a class="self-link" href="#security"></a></h2>
    <h3 class="heading settled" data-level="10.1" id="security-appauthz"><span class="secno">10.1. </span><span class="content">Application Authorization</span><a class="self-link" href="#security-appauthz"></a></h3>
@@ -3257,11 +3264,11 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-access-consent①">5. Agent Registrations</a>
     <li><a href="#ref-for-access-consent①①">7.1. Authorization Flows</a> <a href="#ref-for-access-consent①②">(2)</a>
     <li><a href="#ref-for-access-consent①③">9. Access Consents</a> <a href="#ref-for-access-consent①④">(2)</a> <a href="#ref-for-access-consent①⑤">(3)</a>
-    <li><a href="#ref-for-access-consent①⑥">9.1. Access Consent</a> <a href="#ref-for-access-consent①⑦">(2)</a> <a href="#ref-for-access-consent①⑧">(3)</a> <a href="#ref-for-access-consent①⑨">(4)</a> <a href="#ref-for-access-consent①①⓪">(5)</a> <a href="#ref-for-access-consent①①①">(6)</a> <a href="#ref-for-access-consent①①②">(7)</a> <a href="#ref-for-access-consent①①③">(8)</a> <a href="#ref-for-access-consent①①④">(9)</a> <a href="#ref-for-access-consent①①⑤">(10)</a> <a href="#ref-for-access-consent①①⑥">(11)</a>
-    <li><a href="#ref-for-access-consent①①⑦">9.2. Data Consent</a>
-    <li><a href="#ref-for-access-consent①①⑧">9.3. Access Grant</a>
-    <li><a href="#ref-for-access-consent①①⑨">9.7. Access Receipt</a>
-    <li><a href="#ref-for-access-consent①②⓪">9.8. Access Consent Registry</a> <a href="#ref-for-access-consent①②①">(2)</a> <a href="#ref-for-access-consent①②②">(3)</a>
+    <li><a href="#ref-for-access-consent①⑥">9.1. Access Consent</a> <a href="#ref-for-access-consent①⑦">(2)</a> <a href="#ref-for-access-consent①⑧">(3)</a> <a href="#ref-for-access-consent①⑨">(4)</a> <a href="#ref-for-access-consent①①⓪">(5)</a> <a href="#ref-for-access-consent①①①">(6)</a> <a href="#ref-for-access-consent①①②">(7)</a> <a href="#ref-for-access-consent①①③">(8)</a> <a href="#ref-for-access-consent①①④">(9)</a> <a href="#ref-for-access-consent①①⑤">(10)</a> <a href="#ref-for-access-consent①①⑥">(11)</a> <a href="#ref-for-access-consent①①⑦">(12)</a> <a href="#ref-for-access-consent①①⑧">(13)</a> <a href="#ref-for-access-consent①①⑨">(14)</a> <a href="#ref-for-access-consent①②⓪">(15)</a>
+    <li><a href="#ref-for-access-consent①②①">9.2. Data Consent</a>
+    <li><a href="#ref-for-access-consent①②②">9.3. Access Grant</a>
+    <li><a href="#ref-for-access-consent①②③">9.7. Access Receipt</a>
+    <li><a href="#ref-for-access-consent①②④">9.8. Access Consent Registry</a> <a href="#ref-for-access-consent①②⑤">(2)</a> <a href="#ref-for-access-consent①②⑥">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="data-consent①">
@@ -3340,9 +3347,9 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
    <ul>
     <li><a href="#ref-for-access-consent-registry①">3.1. Registry Set</a>
     <li><a href="#ref-for-access-consent-registry①①">7.1. Authorization Flows</a>
-    <li><a href="#ref-for-access-consent-registry①②">9.1. Access Consent</a>
-    <li><a href="#ref-for-access-consent-registry①③">9.8. Access Consent Registry</a> <a href="#ref-for-access-consent-registry①④">(2)</a> <a href="#ref-for-access-consent-registry①⑤">(3)</a>
-    <li><a href="#ref-for-access-consent-registry①⑥">9.8.1. Resource Hierarchy</a>
+    <li><a href="#ref-for-access-consent-registry①②">9.1. Access Consent</a> <a href="#ref-for-access-consent-registry①③">(2)</a>
+    <li><a href="#ref-for-access-consent-registry①④">9.8. Access Consent Registry</a> <a href="#ref-for-access-consent-registry①⑤">(2)</a> <a href="#ref-for-access-consent-registry①⑥">(3)</a>
+    <li><a href="#ref-for-access-consent-registry①⑦">9.8.1. Resource Hierarchy</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="strongly-identifiable-applications">

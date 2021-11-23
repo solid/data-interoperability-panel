@@ -244,6 +244,14 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Consent"@en .
 
+:replaces
+  a rdf:Property ;
+  rdfs:comment "Links to a previous Access Consent that has been superseded"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AccessConsent ;
+  rdfs:range :AccessConsent ;
+  rdfs:label "Replaces"@en .
+
 :DataConsent
   a rdfs:Class ;
   rdfs:comment "Records the decision of a Social Agent to grant access to a specific type of data in their control"@en ;

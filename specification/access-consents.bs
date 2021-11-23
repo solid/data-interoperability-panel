@@ -24,6 +24,9 @@ has been granted access. [=Access Grants=] are generated from
 [=Access Consents=] are immutable. If an [=Access Consent=] for an
 [=Agent=] needs to change, it should be replaced.
 
+If an [=Access Consent=] is replaced, history may be retained by unlinking the 
+previous [=Access Consent=] from the [=Access Consent Registry=], and linking 
+to it from the replacement [=Access Consent=] via `interop:replaces`.
 
 [Class Definition](interop.ttl#AccessConsent) -
 [Shape Definition](interop.shex#AccessConsentShape) -
@@ -73,6 +76,11 @@ has been granted access. [=Access Grants=] are generated from
       <td>hasDataConsent</td>
       <td>[DataConsent](#classDataConsent)</td>
       <td>Consent for a specific type of data</td>
+    </tr>
+    <tr>
+      <td>replaces</td>
+      <td>[AccessConsent](#classAccessConsent)</td>
+      <td>Previous [=Access Consent=] replaced by current instance</td>
     </tr>
   </tbody>
 </table>
