@@ -1,0 +1,33 @@
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX projectron: <https://projectron.example/>
+PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
+
+<#need-group-pm>
+  a interop:AccessNeedGroup ;
+  interop:accessNecessity interop:accessRequired ;
+  interop:accessScenario interop:PersonalAccess ;
+  interop:authenticatesAs interop:SocialAgent ;
+  interop:hasAccessDescriptionSet
+    projectron:access-en ,
+    projectron:access-es ,
+    projectron:access-nl ,
+    projectron:access-fr ,
+    projectron:access-ru ,
+    projectron:access-ko ;
+  interop:hasAccessNeed <#need-project> .
+
+<#need-project>
+  a interop:AccessNeed ;
+  interop:registeredShapeTree pm-shapetrees:ProjectTree ;
+  interop:accessNecessity interop:accessRequired ;
+  interop:accessMode acl:Read, acl:Create ;
+  interop:creatorAccessMode acl:Update, acl:Delete .
+
+<#need-task>
+  a interop:AccessNeed ;
+  interop:registeredShapeTree pm-shapetrees:TaskTree ;
+  interop:accessNecessity interop:accessRequired ;
+  interop:accessMode acl:Read, acl:Create ;
+  interop:creatorAccessMode acl:Update, acl:Delete ;
+  interop:inheritsFromNeed <#need-project> .
