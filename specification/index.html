@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 2e3c4c68b, updated Fri Jan 14 14:49:00 2022 -0800" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="ecce135e015eb87e6e1693e1764e5aa894854c71" name="document-revision">
+  <meta content="60cda798dfb351f799f7e757a8d223f26bd90e98" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -554,7 +554,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-02-09">9 February 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-02-16">16 February 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -1267,7 +1267,7 @@ query engines or indexing schemes.</p>
       <th>Description
     <tbody>
      <tr>
-      <td>hasRegistration
+      <td>hasDataRegistration
       <td><a href="#classDataRegistration">DataRegistration</a>
       <td>Link to an associated <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①⑨">Data Registration</a>
    </table>
@@ -1276,7 +1276,7 @@ query engines or indexing schemes.</p>
   linking to <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①①⓪">Data Registrations</a> for Projects and Tasks - <a href="snippets/work.alice.example/data-registry.ttl">View</a> </figcaption>
 <pre class="include-code highlight"><c- nn>alice-work-data</c-><c- p>:</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistry</c-><c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c->
     <c- nn>alice-work-data</c-><c- p>:</c-><c- f>8501f084\/</c-> <c- p>,</c->
     <c- nn>alice-work-data</c-><c- p>:</c-><c- f>df4ab227\/</c-> <c- p>.</c->
 </pre>
@@ -2028,10 +2028,6 @@ and are appropriate to share with the grantee.</p>
       <td><a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance①①">Data instance</a> of <code>registeredShapeTree</code>
       <td>Links to a <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance①②">Data Instance</a> of registeredShapeTree in a <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①⑧">Data Registry</a>.
      <tr>
-      <td>hasDataResource
-      <td>Data resource of <code>registeredShapeTree</code>
-      <td>Links to a resource of registeredShapeTree.
-     <tr>
       <td>satisfiesAccessNeed
       <td><a href="#classAccessNeed">AccessNeed</a>
       <td>Links to the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②②">Access Need</a> satisfied by the <a data-link-type="dfn" href="#data-consent①" id="ref-for-data-consent①⑥">Data Consent</a>
@@ -2168,13 +2164,9 @@ with them, a <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for
       <td><a href="#classDataRegistration">DataRegistration</a>
       <td><a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①②④">Data Registration</a> for <code>registeredShapeTree</code> that the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①②">Data Grant</a> applies to
      <tr>
-      <td>hasDataResource
-      <td>Data resource of <code>registeredShapeTree</code>
-      <td>Links to a resource of <code>registeredShapeTree</code>.
-     <tr>
       <td>accessMode
       <td><code>acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append</code>
-      <td>Modes of access granted to the target data at hasRegistration
+      <td>Modes of access granted to the target data at hasDataRegistration
      <tr>
       <td>creatorAccessMode
       <td><code>acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append</code>
@@ -2675,8 +2667,8 @@ in an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-conse
       <th>Description
     <tbody>
      <tr>
-      <td>hasRegistration
-      <td><a href="interop.ttl#Registration">Registration</a>
+      <td>hasAccessConsent
+      <td><a href="interop.ttl#AccessConsent">AccessConsent</a>
       <td>Link to associated <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-consent①②⑥">Access Consents</a>
    </table>
    <figure>
@@ -2684,7 +2676,7 @@ in an <a data-link-type="dfn" href="#access-consent①" id="ref-for-access-conse
   https://alice.example/consents/ - <a href="snippets/alice.example/consents.ttl">View</a></figcaption>
 <pre class="include-code highlight"><c- nn>alice-consents</c-><c- p>:</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessConsentRegistry</c-><c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistration</c->
+  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessConsent</c->
     <c- nn>alice-consents</c-><c- p>:</c-><c- f>e2765d6c</c-> <c- p>,</c->   <c- c># projectron</c->
     <c- nn>alice-consents</c-><c- p>:</c-><c- f>47e07897</c-> <c- p>,</c->   <c- c># jarvis</c->
     <c- nn>alice-consents</c-><c- p>:</c-><c- f>d577d117</c-> <c- p>,</c->   <c- c># sarah</c->

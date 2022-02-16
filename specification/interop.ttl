@@ -97,6 +97,14 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :DataRegistry ;
   rdfs:label "Has Data registry"@en .
 
+:hasDataRegistration
+  rdfs:subPropertyOf :hasRegistration ;
+  rdfs:comment "Links to a DataRegistration in a Data Registry"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain [ owl:unionOf ( :DataRegistry :DataConsent :DataGrant :DelegatedDataGrant ) ] ;
+  rdfs:range :DataRegistration ;
+  rdfs:label "Has Data Registration"@en .
+
 # Registry Class
 #############################################################################
 :Registry
@@ -238,6 +246,14 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:label "Access Consent Registry"@en .
 
+:hasAccessConsent
+  rdfs:subPropertyOf :hasRegistration ;
+  rdfs:comment "Links to an AccessConsent in an Access Consent Registry"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain [ owl:unionOf ( :AccessConsentRegistry ) ] ;
+  rdfs:range :AccessConsent ;
+  rdfs:label "Has Access Consent"@en .
+
 :AccessConsent
   rdfs:subClassOf :Registration ;
   rdfs:comment "Records an access consent made by a Social Agent to another Agent for data in their control"@en ;
@@ -370,13 +386,6 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:domain :DataGrant ;
   rdfs:range :DataGrant ;
   rdfs:label "Inherits From Grant"@en .
-
-:hasDataResource
-  a rdf:Property ;
-  rdfs:comment "A data resource that access is being granted to"@en ;
-  rdfs:isDefinedBy <> ;
-  rdfs:domain [ owl:unionOf (:DataConsent :DataGrant) ] ;
-  rdfs:label "Has Data Resource"@en .
 
 :DelegatedDataGrant
   rdfs:subClassOf :DataGrant ;

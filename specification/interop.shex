@@ -31,12 +31,9 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <#AgentRegistryShape> {
   a [ interop:AgentRegistry ] ;
-  interop:hasRegistration                   IRI* // shex:reference <#AgentRegistrationShape> ;
+  interop:hasSocialAgentRegistration        IRI* // shex:reference <#SocialAgentRegistrationShape> ;
+  interop:hasApplicationRegistration        IRI* // shex:reference <#ApplicationRegistrationShape>
 }
-
-<#AgentRegistrationShape>
-  <#SocialAgentRegistrationShape> OR
-  <#ApplicationRegistrationShape>
 
 <#SocialAgentRegistrationShape> {
   a [ interop:SocialAgentRegistration ] ;
@@ -55,7 +52,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <#DataRegistryShape> {
   a [ interop:DataRegistry ] ;
-  interop:hasRegistration                   IRI* // shex:reference <#DataRegistrationShape>
+  interop:hasDataRegistration               IRI* // shex:reference <#DataRegistrationShape>
 }
 
 <#DataRegistrationShape> {
@@ -123,7 +120,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <#AccessConsentRegistryShape> {
   a [ interop:AccessConsentRegistry ] ;
-  interop:hasRegistration                   IRI* // shex:reference <#AccessConsentShape>
+  interop:hasAccessConsent                   IRI* // shex:reference <#AccessConsentShape>
 }
 
 <#AccessConsentShape> {
