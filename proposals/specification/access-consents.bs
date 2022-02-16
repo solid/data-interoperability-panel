@@ -188,11 +188,6 @@ needs to change, it should be replaced.
       [=Data Registry=].</td>
     </tr>
     <tr>
-      <td>hasDataResource</td>
-      <td>Data resource of `registeredShapeTree`</td>
-      <td>Links to a resource of registeredShapeTree.</td>
-    </tr>
-    <tr>
       <td>satisfiesAccessNeed</td>
       <td>[AccessNeed](#classAccessNeed)</td>
       <td>Links to the [=Access Need=] satisfied by the [=Data Consent=]</td>
@@ -363,14 +358,9 @@ needs to change, it should be replaced.
       [=Data Grant=] applies to</td>
     </tr>
     <tr>
-      <td>hasDataResource</td>
-      <td>Data resource of `registeredShapeTree`</td>
-      <td>Links to a resource of `registeredShapeTree`.</td>
-    </tr>
-    <tr>
       <td>accessMode</td>
       <td>`acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append`</td>
-      <td>Modes of access granted to the target data at hasRegistration</td>
+      <td>Modes of access granted to the target data at hasDataRegistration</td>
     </tr>
     <tr>
       <td>creatorAccessMode</td>
@@ -1140,8 +1130,8 @@ An [=Access Consent Registry=] links to any number of registered [=Access Consen
   </thead>
   <tbody>
     <tr>
-      <td>hasRegistration</td>
-      <td>[Registration](interop.ttl#Registration)</td>
+      <td>hasAccessConsent</td>
+      <td>[AccessConsent](interop.ttl#AccessConsent)</td>
       <td>Link to associated [=Access Consents=]</td>
     </tr>
   </tbody>
