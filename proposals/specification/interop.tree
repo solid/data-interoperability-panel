@@ -88,22 +88,22 @@ PREFIX interops: <http://www.w3.org/ns/solid/interop-schema#>
   st:expectsType    st:Container ;
   st:shape          interops:DataRegistrationShape .
 
-# Access Consent Registry
+# Access Registry
 ##########################################################
 
-<#AccessConsentRegistryTree>
+<#AccessRegistryTree>
   a st:ShapeTree ;
   st:expectsType    st:Container ;
-  st:shape          interops:AccessConsentRegistryShape ;
-  st:contains       <#AccessConsentTree> ,
-                    <#DataConsentTree> .
+  st:shape          interops:AccessRegistryShape ;
+  st:contains       <#AccessAuthorizationTree> ,
+                    <#DataAuthorizationTree> .
 
-<#AccessConsentTree>
+<#AccessAuthorizationTree>
   a st:ShapeTree ;
   st:expectsType    st:Resource ;
-  st:shape          interops:AccessConsentShape .
+  st:shape          interops:AccessAuthorizationShape .
 
-<#DataConsentTree>
+<#DataAuthorizationTree>
   a st:ShapeTree ;
   st:expectsType    st:Resource ;
-  st:shape          interops:DataConsentShape .
+  st:shape          interops:DataAuthorizationShape .

@@ -5,17 +5,17 @@ PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX alice: <https://alice.example/>
 PREFIX performchart: <https://performchart.example/>
-PREFIX alice-consents: <https://alice.example/consents/>
+PREFIX alice-access: <https://alice.example/access/>
 PREFIX alice-agents: <https://alice.example/agents/>
 PREFIX alice-work-data: <https://work.alice.example>
 PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
 
-alice-consents:8f178288
-  a interop:DataConsent ;
+alice-access:8f178288
+  a interop:DataAuthorization ;
   interop:dataOwner alice:\#id ;
   interop:grantee performchart:\#id ;
   interop:registeredShapeTree pm-shapetrees:ProjectTree ;
   interop:accessMode acl:Read ;
-  interop:scopeOfConsent interop:AllFromRegistry ;
+  interop:scopeOfAuthorization interop:AllFromRegistry ;
   interop:hasDataRegistration alice-work-data:8501f084\/ ;
   interop:satisfiesAccessNeed performchart:\#ac54ff1e .

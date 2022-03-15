@@ -16,7 +16,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 <#RegistrySetShape> {
   a [ interop:RegistrySet ] ;
   interop:hasAgentRegistry                  IRI  // shex:reference <#AgentRegistryShape> ;
-  interop:hasAccessConsentRegistry          IRI  // shex:reference <#AccessConsentRegistryShape> ;
+  interop:hasAccessRegistry          IRI  // shex:reference <#AccessRegistryShape> ;
   interop:hasDataRegistry                   IRI* // shex:reference <#DataRegistryShape>
 }
 
@@ -118,72 +118,72 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
   interop:hasAccessNeedGroup                @<#AccessNeedGroupShape>+
 }
 
-<#AccessConsentRegistryShape> {
-  a [ interop:AccessConsentRegistry ] ;
-  interop:hasAccessConsent                   IRI* // shex:reference <#AccessConsentShape>
+<#AccessRegistryShape> {
+  a [ interop:AccessRegistry ] ;
+  interop:hasAccessAuthorization                   IRI* // shex:reference <#AccessAuthorizationShape>
 }
 
-<#AccessConsentShape> {
-  a [ interop:AccessConsent ] ;
+<#AccessAuthorizationShape> {
+  a [ interop:AccessAuthorization ] ;
   interop:grantedBy                         IRI  // shex:reference <#AgentShape> ;
   interop:grantedWith                       IRI? // shex:reference <#ApplicationShape> ;
   interop:grantedAt                         xsd:dateTime ;
   interop:grantee                           IRI  // shex:reference <#AgentShape> ;
   interop:hasAccessNeedGroup                IRI? // shex:reference <#AccessNeedGroupShape> ;
-  interop:hasDataConsent                    IRI+ // shex:reference <#DataConsentShape> ;
-  interop:replaces                          IRI? // shex:reference <#AccessConsentShape>
+  interop:hasDataAuthorization                    IRI+ // shex:reference <#DataAuthorizationShape> ;
+  interop:replaces                          IRI? // shex:reference <#AccessAuthorizationShape>
 }
 
-<#DataConsentShape>
-  <#DataConsentAllShape> OR
-  <#DataConsentAllFromAgentShape> OR
-  <#DataConsentAllFromRegistryShape> OR
-  <#DataConsentSelectedFromRegistryShape> OR
-  <#DataConsentInheritedShape>
+<#DataAuthorizationShape>
+  <#DataAuthorizationAllShape> OR
+  <#DataAuthorizationAllFromAgentShape> OR
+  <#DataAuthorizationAllFromRegistryShape> OR
+  <#DataAuthorizationSelectedFromRegistryShape> OR
+  <#DataAuthorizationInheritedShape>
 
-<#DataConsentAllShape> {
-  a [ interop:DataConsent ] ;
-  $<#CommonDataConsentProperties> (
+<#DataAuthorizationAllShape> {
+  a [ interop:DataAuthorization ] ;
+  $<#CommonDataAuthorizationProperties> (
     interop:grantee                         IRI  // shex:reference <#AgentShape> ;
     interop:registeredShapeTree             IRI  // shex:reference sts:ShapeTree ;
     interop:satisfiesAccessNeed             IRI? // shex:reference <#AccessNeedShape> ;
     interop:accessMode                      @<#AccessModes>+ ;
     interop:creatorAccessMode               @<#AccessModes>* ;
   ) ;
-  interop:scopeOfConsent                    [ interop:All ]
+  interop:scopeOfAuthorization                    [ interop:All ]
 }
 
-<#DataConsentAllFromAgentShape> {
-  a [ interop:DataConsent ] ;
-  &<#CommonDataConsentProperties> ;
+<#DataAuthorizationAllFromAgentShape> {
+  a [ interop:DataAuthorization ] ;
+  &<#CommonDataAuthorizationProperties> ;
   interop:dataOwner                         IRI  // shex:reference <#SocialAgentShape> ;
-  interop:scopeOfConsent                    [ interop:AllFromAgent ]
+  interop:scopeOfAuthorization                    [ interop:AllFromAgent ]
 }
 
-<#DataConsentAllFromRegistryShape> {
-  a [ interop:DataConsent ] ;
-  &<#CommonDataConsentProperties> ;
+<#DataAuthorizationAllFromRegistryShape> {
+  a [ interop:DataAuthorization ] ;
+  &<#CommonDataAuthorizationProperties> ;
   interop:dataOwner                         IRI  // shex:reference <#SocialAgentShape> ;
-  interop:scopeOfConsent                    [ interop:AllFromRegistry ] ;
+  interop:scopeOfAuthorization                    [ interop:AllFromRegistry ] ;
   interop:hasDataRegistration               IRI  // shex:reference <#DataRegistrationShape>
 }
 
-<#DataConsentSelectedFromRegistryShape> {
-  a [ interop:DataConsent ] ;
-  &<#CommonDataConsentProperties> ;
+<#DataAuthorizationSelectedFromRegistryShape> {
+  a [ interop:DataAuthorization ] ;
+  &<#CommonDataAuthorizationProperties> ;
   interop:dataOwner                         IRI  // shex:reference <#SocialAgentShape> ;
-  interop:scopeOfConsent                    [ interop:SelectedFromRegistry ] ;
+  interop:scopeOfAuthorization                    [ interop:SelectedFromRegistry ] ;
   interop:hasDataRegistration               IRI  // shex:reference <#DataRegistrationShape> ;
   interop:hasDataInstance                   IRI+
 }
 
-<#DataConsentInheritedShape> {
-  a [ interop:DataConsent ] ;
-  &<#CommonDataConsentProperties> ;
+<#DataAuthorizationInheritedShape> {
+  a [ interop:DataAuthorization ] ;
+  &<#CommonDataAuthorizationProperties> ;
   interop:dataOwner                         IRI  // shex:reference <#SocialAgentShape> ;
-  interop:scopeOfConsent                    [ interop:Inherited ] ;
+  interop:scopeOfAuthorization                    [ interop:Inherited ] ;
   interop:hasDataRegistration               IRI? // shex:reference <#DataRegistrationShape> ;
-  interop:inheritsFromConsent               IRI  // shex:reference <#DataConsentShape>
+  interop:inheritsFromAuthorization               IRI  // shex:reference <#DataAuthorizationShape>
 }
 
 <#AccessGrantShape> {
@@ -206,7 +206,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
     |
     a [ interop:DelegatedDataGrant ] ;
     interop:delegationOfGrant               IRI  // shex:reference <#DataGrantShape> ) ;
-  &<#CommonDataConsentProperties> ;
+  &<#CommonDataAuthorizationProperties> ;
   interop:dataOwner                         IRI  // shex:reference <#AgentShape> ;
   interop:hasDataRegistration               IRI  // shex:reference <#DataRegistrationShape> ;
   interop:scopeOfGrant                      [ interop:AllFromRegistry ]
@@ -217,7 +217,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
     |
     a [ interop:DelegatedDataGrant ] ;
     interop:delegationOfGrant               IRI  // shex:reference <#DataGrantShape> ) ;
-  &<#CommonDataConsentProperties> ;
+  &<#CommonDataAuthorizationProperties> ;
   interop:dataOwner                         IRI  // shex:reference <#AgentShape> ;
   interop:hasDataRegistration               IRI  // shex:reference <#DataRegistrationShape> ;
   interop:scopeOfGrant                      [ interop:SelectedFromRegistry ] ;
@@ -229,7 +229,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
     |
     a [ interop:DelegatedDataGrant ] ;
     interop:delegationOfGrant               IRI  // shex:reference <#DataGrantShape> ) ;
-  &<#CommonDataConsentProperties> ;
+  &<#CommonDataAuthorizationProperties> ;
   interop:dataOwner                         IRI  // shex:reference <#AgentShape> ;
   interop:hasDataRegistration               IRI  // shex:reference <#DataRegistrationShape> ;
   interop:scopeOfGrant                      [ interop:Inherited ] ;
