@@ -83,6 +83,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
   a [ interop:AccessNeed ] ;
   interop:registeredShapeTree               IRI  // shex:reference sts:ShapeTree ;
   interop:accessMode                        @<#AccessModes>+ ;
+  interop:publicAccessMode                  @<#AccessModes>* ;
   interop:creatorAccessMode                 @<#AccessModes>* ;
   interop:accessNecessity                   [ interop:AccessRequired interop:AccessOptional ] ;
   interop:hasDataInstance                   IRI* ;
@@ -148,6 +149,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
     interop:registeredShapeTree             IRI  // shex:reference sts:ShapeTree ;
     interop:satisfiesAccessNeed             IRI? // shex:reference <#AccessNeedShape> ;
     interop:accessMode                      @<#AccessModes>+ ;
+    interop:publicAccessMode                @<#AccessModes>* ;
     interop:creatorAccessMode               @<#AccessModes>* ;
   ) ;
   interop:scopeOfConsent                    [ interop:All ]

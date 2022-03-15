@@ -584,6 +584,13 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range [ owl:oneOf ( acl:Read acl:Write acl:Control acl:Append acl:Create acl:Update acl:Delete ) ] ;
   rdfs:label "Access Mode"@en .
 
+:publicAccessMode
+  a rdf:Property ;
+  rdfs:comment "An requested acl:mode of access for public agents"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:range [ owl:oneOf ( acl:Read acl:Write acl:Control acl:Append acl:Create acl:Update acl:Delete ) ] ;
+  rdfs:label "Public Access Mode"@en .
+
 :creatorAccessMode
   a rdf:Property ;
   rdfs:comment "An additional requested acl:mode of access for the creator of a resource"@en ;
