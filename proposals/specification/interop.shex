@@ -16,7 +16,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 <#RegistrySetShape> {
   a [ interop:RegistrySet ] ;
   interop:hasAgentRegistry                  IRI  // shex:reference <#AgentRegistryShape> ;
-  interop:hasAccessRegistry          IRI  // shex:reference <#AccessRegistryShape> ;
+  interop:hasAuthorizationRegistry          IRI  // shex:reference <#AuthorizationRegistryShape> ;
   interop:hasDataRegistry                   IRI* // shex:reference <#DataRegistryShape>
 }
 
@@ -118,8 +118,8 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
   interop:hasAccessNeedGroup                @<#AccessNeedGroupShape>+
 }
 
-<#AccessRegistryShape> {
-  a [ interop:AccessRegistry ] ;
+<#AuthorizationRegistryShape> {
+  a [ interop:AuthorizationRegistry ] ;
   interop:hasAccessAuthorization                   IRI* // shex:reference <#AccessAuthorizationShape>
 }
 

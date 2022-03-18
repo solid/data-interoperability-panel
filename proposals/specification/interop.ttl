@@ -81,13 +81,13 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :AgentRegistry ;
   rdfs:label "Has Agent Registry"@en .
 
-:hasAccessRegistry
+:hasAuthorizationRegistry
   rdfs:subPropertyOf :hasRegistry ;
-  rdfs:comment "Links to an Access Authorization Registry in a registry set"@en ;
+  rdfs:comment "Links to an Authorization Registry in a registry set"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :RegistrySet ;
-  rdfs:range :AccessRegistry ;
-  rdfs:label "Has Access Authorization Registry"@en .
+  rdfs:range :AuthorizationRegistry ;
+  rdfs:label "Has Authorization Registry"@en .
 
 :hasDataRegistry
   rdfs:subPropertyOf :hasRegistry ;
@@ -240,17 +240,17 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 #############################################################################
 # Access Authorizations
 #############################################################################
-:AccessRegistry
+:AuthorizationRegistry
   rdfs:subClassOf :Registry ;
   rdfs:comment "A collection of Access Authorizations"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Access Authorization Registry"@en .
+  rdfs:label "Authorization Registry"@en .
 
 :hasAccessAuthorization
   rdfs:subPropertyOf :hasRegistration ;
-  rdfs:comment "Links to an AccessAuthorization in an Access Authorization Registry"@en ;
+  rdfs:comment "Links to an AccessAuthorization in an Authorization Registry"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain [ owl:unionOf ( :AccessRegistry ) ] ;
+  rdfs:domain [ owl:unionOf ( :AuthorizationRegistry ) ] ;
   rdfs:range :AccessAuthorization ;
   rdfs:label "Has Access Authorization"@en .
 

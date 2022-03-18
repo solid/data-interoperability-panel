@@ -6,12 +6,12 @@ PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX alice: <https://alice.example/>
 PREFIX bob: <https://bob.example>
 PREFIX performchart: <https://performchart.example/>
-PREFIX alice-access: <https://alice.example/access/>
+PREFIX alice-authorization: <https://alice.example/authorization/>
 PREFIX alice-agents: <https://alice.example/agents/>
 PREFIX alice-work-data: <https://work.alice.example>
 PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
 
-alice-access:ca14a518
+alice-authorization:ca14a518
   a interop:DataAuthorization ;
   interop:dataOwner bob:\#id ;
   interop:grantee performchart:\#id ;
@@ -19,4 +19,4 @@ alice-access:ca14a518
   interop:accessMode acl:Read ;
   interop:scopeOfAuthorization interop:Inherited ;
   interop:satisfiesAccessNeed performchart:\#f92e605c ;
-  interop:inheritsFromAuthorization alice-access:0e36ba8f .
+  interop:inheritsFromAuthorization alice-authorization:0e36ba8f .
