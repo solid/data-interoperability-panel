@@ -1,14 +1,12 @@
-Data Authorization {#authorization}
+Authorization Flows {#authorization}
 =====================
 
-Data Authorization represents several key elements that
+Authorization represents several key elements that
 work together to grant, adjust, and rescind access to data controlled
 by a [=Social Agent=].
 
-Key [[#authorization-flows]] are facilitated by an [=Authorization Agent=]
+Key authorization flows are facilitated by an [=Authorization Agent=]
 on behalf of a [=Social Agent=].
-
-## Authorization Flows ## {#authorization-flows}
 
 <table class="data tree" align="left">
   <col>
@@ -55,7 +53,7 @@ on behalf of a [=Social Agent=].
 2. [[#needs|Access Needs]] are processed and presented to the [=Social Agent=]
     by their [=Authorization Agent=].
 3.  The [=Social Agent's=] access decisions are captured and enacted
-    through [[#consents]].
+    through [[#authorizations]].
 4.  The requesting [=Agent=] looks for an [=Access Grant=]
     stored in a corresponding [=Agent Registration=] in the [=Agent Registry=] of the
     data owner. This [=Access Grant=] tells them exactly what they have access to.
@@ -137,10 +135,10 @@ one flow to another.
         </tr>
         <tr>
           <td><b>14-16</b></td>
-          <td>Alice's [=Authorization Agent=] records her decision as an [=Access Consent=] in Alice's
-            [=Access Consent Registry=]. An [=Application Registration=] is created for Projectron in
+          <td>Alice's [=Authorization Agent=] records her decision as an [=Access Authorization=] in Alice's
+            [=Authorization Registry=]. An [=Application Registration=] is created for Projectron in
             Alice's [=Agent Registry=]. An [=Access Grant=] and corresponding [=Data Grants=] are generated
-            from the [=Access Consent=] and stored in the Projectron [=Application Registration=].
+            from the [=Access Authorization=] and stored in the Projectron [=Application Registration=].
         </tr>
         <tr>
           <td><b>17</b></td>
@@ -164,7 +162,7 @@ one flow to another.
         </tr>
         <tr>
           <td><b>22</b></td>
-          <td>Projectron may now function as intended, within the scope of consent it was given by Alice.</td>
+          <td>Projectron may now function as intended, within the scope of authorization it was given by Alice.</td>
         </tr>
       </tbody>
     </table>

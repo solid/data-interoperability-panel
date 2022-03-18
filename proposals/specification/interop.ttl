@@ -81,13 +81,13 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :AgentRegistry ;
   rdfs:label "Has Agent Registry"@en .
 
-:hasAccessConsentRegistry
+:hasAuthorizationRegistry
   rdfs:subPropertyOf :hasRegistry ;
-  rdfs:comment "Links to an Access Consent Registry in a registry set"@en ;
+  rdfs:comment "Links to an Authorization Registry in a registry set"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:domain :RegistrySet ;
-  rdfs:range :AccessConsentRegistry ;
-  rdfs:label "Has Access Consent Registry"@en .
+  rdfs:range :AuthorizationRegistry ;
+  rdfs:label "Has Authorization Registry"@en .
 
 :hasDataRegistry
   rdfs:subPropertyOf :hasRegistry ;
@@ -101,7 +101,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:subPropertyOf :hasRegistration ;
   rdfs:comment "Links to a DataRegistration in a Data Registry"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain [ owl:unionOf ( :DataRegistry :DataConsent :DataGrant :DelegatedDataGrant ) ] ;
+  rdfs:domain [ owl:unionOf ( :DataRegistry :DataAuthorization :DataGrant :DelegatedDataGrant ) ] ;
   rdfs:range :DataRegistration ;
   rdfs:label "Has Data Registration"@en .
 
@@ -234,99 +234,99 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   a rdf:Property ;
   rdfs:comment "Links to instances of the shape tree in a data registration"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain [ owl:unionOf ( :AccessNeed :DataConsent :DataGrant ) ] ;
+  rdfs:domain [ owl:unionOf ( :AccessNeed :DataAuthorization :DataGrant ) ] ;
   rdfs:label "Data Instance"@en .
 
 #############################################################################
-# Access Consents
+# Access Authorizations
 #############################################################################
-:AccessConsentRegistry
+:AuthorizationRegistry
   rdfs:subClassOf :Registry ;
-  rdfs:comment "A collection of Access Consents"@en ;
+  rdfs:comment "A collection of Access Authorizations"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Access Consent Registry"@en .
+  rdfs:label "Authorization Registry"@en .
 
-:hasAccessConsent
+:hasAccessAuthorization
   rdfs:subPropertyOf :hasRegistration ;
-  rdfs:comment "Links to an AccessConsent in an Access Consent Registry"@en ;
+  rdfs:comment "Links to an AccessAuthorization in an Authorization Registry"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain [ owl:unionOf ( :AccessConsentRegistry ) ] ;
-  rdfs:range :AccessConsent ;
-  rdfs:label "Has Access Consent"@en .
+  rdfs:domain [ owl:unionOf ( :AuthorizationRegistry ) ] ;
+  rdfs:range :AccessAuthorization ;
+  rdfs:label "Has Access Authorization"@en .
 
-:AccessConsent
+:AccessAuthorization
   rdfs:subClassOf :Registration ;
-  rdfs:comment "Records an access consent made by a Social Agent to another Agent for data in their control"@en ;
+  rdfs:comment "Records an access authorization made by a Social Agent to another Agent for data in their control"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Access Consent"@en .
+  rdfs:label "Access Authorization"@en .
 
 :replaces
   a rdf:Property ;
-  rdfs:comment "Links to a previous Access Consent that has been superseded"@en ;
+  rdfs:comment "Links to a previous Access Authorization that has been superseded"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessConsent ;
-  rdfs:range :AccessConsent ;
+  rdfs:domain :AccessAuthorization ;
+  rdfs:range :AccessAuthorization ;
   rdfs:label "Replaces"@en .
 
-:DataConsent
+:DataAuthorization
   a rdfs:Class ;
   rdfs:comment "Records the decision of a Social Agent to grant access to a specific type of data in their control"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:label "Data Consent"@en .
+  rdfs:label "Data Authorization"@en .
 
-:hasDataConsent
+:hasDataAuthorization
   a rdf:Property ;
-  rdfs:comment "Link to a DataConsent"@en ;
+  rdfs:comment "Link to a DataAuthorization"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessConsent ;
-  rdfs:range :DataConsent ;
-  rdfs:label "Has Data Consent"@en .
+  rdfs:domain :AccessAuthorization ;
+  rdfs:range :DataAuthorization ;
+  rdfs:label "Has Data Authorization"@en .
 
-:scopeOfConsent
+:scopeOfAuthorization
   a rdf:Property ;
-  rdfs:comment "Identifies the access scope of a Data Consent"@en ;
+  rdfs:comment "Identifies the access scope of a Data Authorization"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :DataConsent ;
+  rdfs:domain :DataAuthorization ;
   rdfs:range :AccessScope ;
-  rdfs:label "Scope of Consent"@en .
+  rdfs:label "Scope of Authorization"@en .
 
-:inheritsFromConsent
+:inheritsFromAuthorization
   a rdf:Property ;
-  rdfs:comment "Data Consent to inherit from"@en ;
+  rdfs:comment "Data Authorization to inherit from"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :DataConsent ;
-  rdfs:range :DataConsent ;
-  rdfs:label "Inherits From Consent"@en .
+  rdfs:domain :DataAuthorization ;
+  rdfs:range :DataAuthorization ;
+  rdfs:label "Inherits From Authorization"@en .
 
 :grantedBy
   a rdf:Property ;
-  rdfs:comment "Social agent that granted consent or grant"@en ;
+  rdfs:comment "Social agent that granted authorization or grant"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain [ owl:unionOf ( :AccessConsent :AccessGrant :AccessReceipt ) ] ;
+  rdfs:domain [ owl:unionOf ( :AccessAuthorization :AccessGrant :AccessReceipt ) ] ;
   rdfs:range :SocialAgent ;
   rdfs:label "Granted By"@en .
 
 :grantedWith
   a rdf:Property ;
-  rdfs:comment "Application used by a Social Agent to grant consent or issue access grant"@en ;
+  rdfs:comment "Application used by a Social Agent to grant authorization or issue access grant"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessConsent ;
+  rdfs:domain :AccessAuthorization ;
   rdfs:range :Application ;
   rdfs:label "Granted With"@en .
 
 :grantedAt
   a rdf:Property ;
-  rdfs:comment "Time that consent or grant was granted"@en ;
+  rdfs:comment "Time that authorization or grant was granted"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain [ owl:unionOf ( :AccessConsent :AccessGrant ) ] ;
+  rdfs:domain [ owl:unionOf ( :AccessAuthorization :AccessGrant ) ] ;
   rdfs:range xsd:dateTime ;
   rdfs:label "Granted At"@en .
 
 :grantee
   a rdf:Property ;
-  rdfs:comment "Recipient of consent or grant"@en ;
+  rdfs:comment "Recipient of authorization or grant"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain [ owl:unionOf ( :AccessConsent :DataConsent :AccessGrant :DataGrant ) ] ;
+  rdfs:domain [ owl:unionOf ( :AccessAuthorization :DataAuthorization :AccessGrant :DataGrant ) ] ;
   rdfs:range xsd:dateTime ;
   rdfs:label "Granted At"@en .
 
@@ -374,7 +374,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 :dataOwner
   a rdf:Property ;
   rdfs:comment "Identifies the Social Agent that owns a given data set"@en ;
-  rdfs:domain [ owl:unionOf (:DataConsent :DataGrant) ] ;
+  rdfs:domain [ owl:unionOf (:DataAuthorization :DataGrant) ] ;
   rdfs:range :SocialAgent ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Data Owner"@en .
@@ -433,7 +433,7 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 
 :Inherited
   a :AccessScope ;
-  rdfs:comment "Only Data Instances of the data owners that are associated with Data Instances allowed by another consent or grant"@en ;
+  rdfs:comment "Only Data Instances of the data owners that are associated with Data Instances allowed by another authorization or grant"@en ;
   rdfs:isDefinedBy <> ;
   rdfs:label "Inherited"@en .
 

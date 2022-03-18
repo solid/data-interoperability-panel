@@ -6,15 +6,15 @@ PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX alice: <https://alice.example/>
 PREFIX sarah: <https://sarah.example>
 PREFIX jarvis: <https://jarvis.example/>
-PREFIX alice-consents: <https://alice.example/consents/>
+PREFIX alice-authorization: <https://alice.example/authorization/>
 
-alice-consents:d577d117
-  a interop:AccessConsent ;
+alice-authorization:d577d117
+  a interop:AccessAuthorization ;
   interop:grantedBy alice:\#id ;
   interop:grantedWith jarvis:\#id ;
   interop:grantedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
   interop:grantee sarah:\#id ;
   interop:hasAccessNeedGroup jarvis:\#4fd1482d ;
-  interop:hasDataConsent
-    alice-consents:2d1568fb ,
-    alice-consents:5ca4692b .
+  interop:hasDataAuthorization
+    alice-authorization:2d1568fb ,
+    alice-authorization:5ca4692b .

@@ -5,18 +5,18 @@ PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX alice: <https://alice.example/>
 PREFIX projectron: <https://projectron.example/>
-PREFIX alice-consents: <https://alice.example/consents/>
+PREFIX alice-authorization: <https://alice.example/authorization/>
 PREFIX alice-agents: <https://alice.example/agents/>
 PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
 
-alice-consents:0e4cb692
-  a interop:DataConsent ;
+alice-authorization:0e4cb692
+  a interop:DataAuthorization ;
   interop:dataOwner alice:\#id ;
   interop:grantee projectron:\#id ;
   interop:registeredShapeTree pm-shapetrees:TaskTree ;
   interop:accessMode acl:Read, acl:Create ;
   interop:creatorAccessMode acl:Update, acl:Delete ;
-  interop:scopeOfConsent interop:Inherited ;
+  interop:scopeOfAuthorization interop:Inherited ;
   interop:satisfiesAccessNeed projectron:\#9462959c ;
-  interop:inheritsFromConsent
-    alice-consents:54a1b6a0 .
+  interop:inheritsFromAuthorization
+    alice-authorization:54a1b6a0 .
