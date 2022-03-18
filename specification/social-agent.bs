@@ -2,7 +2,7 @@ Social Agents {#social-agents}
 =====================
 
 A <dfn>Social Agent</dfn> is a strongly identifiable individual, group, or
-organization that can own or be responsible for data, and provide consent to the
+organization that can own or be responsible for data, and provide authorization to the
 access of that data by other [=Agents=].
 
 Most of a [=Social Agent's=] information is stored in [=Registries=].
@@ -86,8 +86,8 @@ The [=Registry Set=] <em class="rfc2119">MAY</em> use any resource or
 subject names. It <em class="rfc2119">SHOULD NOT</em> be readable
 by the public. It <em class="rfc2119">SHOULD</em> be accessible
 and manageable by the [=Social Agent=] that owns it, or other
-[=Social Agents=] that have received appropriate consent, via
-consented [=Applications=].
+[=Social Agents=] that have received appropriate authorization, via
+authorized [=Applications=].
 
 [Class Definition](interop.ttl#RegistrySet) -
 [Shape Definition](interop.shex#RegistrySetShape) -
@@ -111,9 +111,9 @@ consented [=Applications=].
       <td>[=Agent Registry=] for the [=Social Agent=]</td>
     </tr>
     <tr>
-      <td>hasAccessConsentRegistry</td>
-      <td>[AccessConsentRegistry](#classAccessConsentRegistry)</td>
-      <td>[=Access Consent Registry=] for the [=Social Agent=]</td>
+      <td>hasAuthorizationRegistry</td>
+      <td>[AuthorizationRegistry](#classAuthorizationRegistry)</td>
+      <td>[=Authorization Registry=] for the [=Social Agent=]</td>
     </tr>
     <tr>
       <td>hasDataRegistry</td>

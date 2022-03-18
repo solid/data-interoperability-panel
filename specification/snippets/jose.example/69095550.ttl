@@ -6,19 +6,19 @@ PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX jose: <https://jose.example>
 PREFIX alice: <https://alice.example>
 PREFIX projectron: <https://projectron.example/>
-PREFIX jose-consents: <https://jose.example/consents/>
+PREFIX jose-authorization: <https://jose.example/authorization/>
 PREFIX jose-agents: <https://jose.example/agents/>
 PREFIX jose-work-data: <https://work.jose.example>
 PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
 
-jose-consents:69095550
-  a interop:DataConsent ;
+jose-authorization:69095550
+  a interop:DataAuthorization ;
   interop:dataOwner jose:\#id ;
   interop:grantee alice:\#id ;
   interop:registeredShapeTree pm-shapetrees:ProjectTree ;
   interop:accessMode acl:Read, acl:Create ;
   interop:creatorAccessMode acl:Update, acl:Delete ;
-  interop:scopeOfConsent interop:SelectedFromRegistry ;
+  interop:scopeOfAuthorization interop:SelectedFromRegistry ;
   interop:hasDataRegistration jose-work-data:c3feca8c\/ ;
   interop:hasDataInstance
     jose-work-data:c3feca8c\/9355352a ,

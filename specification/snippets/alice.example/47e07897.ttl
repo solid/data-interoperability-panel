@@ -5,15 +5,15 @@ PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX alice: <https://alice.example/>
 PREFIX jarvis: <https://jarvis.example/>
-PREFIX alice-consents: <https://alice.example/consents/>
+PREFIX alice-authorization: <https://alice.example/authorization/>
 
-alice-consents:47e07897
-  a interop:AccessConsent ;
+alice-authorization:47e07897
+  a interop:AccessAuthorization ;
   interop:grantedBy alice:\#id ;
   interop:grantedWith jarvis:\#id ;
   interop:grantedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
   interop:grantee jarvis:\#id ;
   interop:hasAccessNeedGroup jarvis:\#4fd1482d ;
-  interop:hasDataConsent
-    alice-consents:55363f56 ,
-    alice-consents:935458cf .
+  interop:hasDataAuthorization
+    alice-authorization:55363f56 ,
+    alice-authorization:935458cf .

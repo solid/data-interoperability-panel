@@ -7,15 +7,15 @@ PREFIX alice: <https://alice.example/>
 PREFIX jarvis: <https://jarvis.example/>
 PREFIX projectron: <https://projectron.example/>
 PREFIX bob: <https://bob.example/>
-PREFIX alice-consents: <https://alice.example/consents/>
+PREFIX alice-authorization: <https://alice.example/authorization/>
 
-alice-consents:4460dce3
-  a interop:AccessConsent ;
+alice-authorization:4460dce3
+  a interop:AccessAuthorization ;
   interop:grantedBy alice:\#id ;
   interop:grantedWith jarvis:\#id ;
   interop:grantedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
   interop:grantee bob:\#id ;
   interop:hasAccessNeedGroup projectron:\#d8219b1f ;
-  interop:hasDataConsent
-    alice-consents:f800b10c ,
-    alice-consents:ec6057d9 .
+  interop:hasDataAuthorization
+    alice-authorization:f800b10c ,
+    alice-authorization:ec6057d9 .

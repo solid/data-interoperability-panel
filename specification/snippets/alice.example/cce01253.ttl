@@ -5,19 +5,19 @@ PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX alice: <https://alice.example/>
 PREFIX jarvis: <https://jarvis.example/>
 PREFIX performchart: <https://performchart.example/>
-PREFIX alice-consents: <https://alice.example/consents/>
+PREFIX alice-authorization: <https://alice.example/authorization/>
 
-alice-consents:cce01253
-  a interop:AccessConsent ;
+alice-authorization:cce01253
+  a interop:AccessAuthorization ;
   interop:grantedBy alice:\#id ;
   interop:grantedWith jarvis:\#id ;
   interop:grantedAt "2020-09-05T06:15:01Z"^^xsd:dateTime ;
   interop:grantee performchart:\#id ;
   interop:hasAccessNeedGroup performchart:\#53c43f3d ;
-  interop:hasDataConsent
-    alice-consents:8f178288 ,
-    alice-consents:6531c8e2 ,
-    alice-consents:0e36ba8f ,
-    alice-consents:ca14a518 ,
-    alice-consents:3e94161f ,
-    alice-consents:60e37fe3 .
+  interop:hasDataAuthorization
+    alice-authorization:8f178288 ,
+    alice-authorization:6531c8e2 ,
+    alice-authorization:0e36ba8f ,
+    alice-authorization:ca14a518 ,
+    alice-authorization:3e94161f ,
+    alice-authorization:60e37fe3 .
