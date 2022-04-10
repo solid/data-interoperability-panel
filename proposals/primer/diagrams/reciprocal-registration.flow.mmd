@@ -1,0 +1,19 @@
+flowchart TB
+
+  AliceAgentRegistry(["Agent Registry"])
+  AliceAgentAcme["🏢 ACME"]
+
+  AcmeAgentRegistry(["Agent Registry"])
+  AcmeAgentAlice["👩 Alice"]
+
+
+  AcmeAgentAlice -- :reciprocalRegistration ----> AliceAgentAcme
+  AliceAgentAcme -- :reciprocalRegistration ----> AcmeAgentAlice
+
+  subgraph auth.acme.example
+    AcmeAgentRegistry -- :hasSocialAgentRegistration --> AcmeAgentAlice
+  end
+
+  subgraph auth.alice.example
+    AliceAgentRegistry -- :hasSocialAgentRegistration --> AliceAgentAcme
+  end

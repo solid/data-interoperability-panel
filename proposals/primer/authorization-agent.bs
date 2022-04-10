@@ -1,0 +1,364 @@
+
+<pre class='metadata'>
+Title: Solid Application Interoperability - Authorization Agent Primer
+Shortname: solid-interop-authorization-agent-primer
+Level: 1
+Status: w3c/UD
+Group: solid-cg
+URL: https://solid.github.io/data-interoperability-panel/primer/authorization-agent.html
+Repository: https://github.com/solid/data-interoperability-panel
+Inline Github Issues: title
+Boilerplate: issues-index no
+Local Boilerplate: logo yes
+Markup Shorthands: markdown yes
+Editor: elf Pavlik
+Abstract: Primer for libraries intended to be used by authorization agents.
+Boilerplate: omit conformance, omit abstract
+</pre>
+
+# Introduction # {#introduction}
+
+This primer is intended to accompany [[SAI]].
+It is focused on providing a friendly introduction for developers of libraries intended
+for solid authorization agents.
+
+This document was developed alongside the open-source TypeScript implementation [[SAI-JS]]
+and open-source Java implementation [[SAI-JAVA]].
+
+<pre class=include>path: shape-trees.bs</pre>
+
+# Registry Set # {#registry-set}
+
+Authorization Agent uses a set of different registries to perform its dutes. Specificaly,
+* one or more [[#data-registry]],
+* one [[#authorization-registry]],
+* one [[#agent-registry]],
+
+each one of them is described in a dedicated section.
+
+The Registry Set can be discovered from a social agent's WebID Profile using `interop:hasRegistrySet` predicate.
+
+<figure>
+  <pre class=include-code>
+  path: snippets/alice.example/alice.example.ttl
+  highlight: turtle
+  show: 4-100
+  line-start: 1
+  line-highlight: 3
+  </pre>
+  <figcaption>Alice's WebID document</figcaption>
+</figure>
+
+While WebID Profile is readable to the public, Registry Set should only be readable by its owner
+and their Authorization Agent.
+
+<img class="flowchart-diagram" src="diagrams/registry-set.flow.mmd.png" />
+
+<figure>
+  <pre class=include-code>
+  path: snippets/auth.alice.example/13e60d32-77a6-4239-864d-cfe2c90807c8.ttl
+  highlight: turtle
+  show: 5-100
+  line-start: 1
+  </pre>
+  <figcaption>Alice's Registry Set</figcaption>
+</figure>
+
+# Data Registry # {#data-registry}
+
+A Data Registry is a collection of Data Registrations, each of which represents a unique type of data,
+identified by a shape tree.
+
+<figure>
+  <pre class=include-code>
+  path: snippets/pro.alice.example/71e96aaa-f3dc-4263-97d6-a5b4c83524cb.ttl
+  highlight: turtle
+  show: 3-100
+  line-start: 1
+  </pre>
+  <figcaption>one of Alice's Data Registries</figcaption>
+</figure>
+
+In a Data Registry, there can be at most one Data Registration for any given shape tree.
+
+## Data Registration ## {#data-registration}
+
+Data Registration is a container, which contains Data Instances. Each of those Data Instances conforms to one specific
+shape tree assigned to the Data Registration.
+
+<img class="flowchart-diagram" src="diagrams/pro.alice.example.flow.mmd.png" />
+
+<figure>
+  <pre class=include-code>
+  path: snippets/pro.alice.example/773605f0-b5bf-4d46-878d-5c167eac8b5d.ttl
+  highlight: turtle
+  show: 6-100
+  line-start: 1
+  line-highlight: 3
+  </pre>
+  </pre>
+  <figcaption>Data Registration for projects in one of Alice's Data Registries</figcaption>
+</figure>
+
+: registeredShapeTree
+:: Shape Tree used by this Data Registration
+
+## Data Instance ## {#data-instance}
+
+Data Instance is a resource representing something specific, for example, a project or a task.
+An Authorization Agent is not responsible for modifying data instances. Sometimes it still needs to access them
+during [[#gathering-authorizations]] if the user wants to select specific data instances.
+
+
+Issue(186):
+
+# Authorization Registry # {#authorization-registry}
+
+Authorization Registry is a container, which contains Access Authorizations.
+Each of those Access Authorizations is created for a specific grantee,
+and groups together one or more Data Authorizations.
+
+<figure>
+  <pre class=include-code>
+  path: snippets/auth.alice.example/96feb105-063e-4996-ab74-5e504c6ceae5.ttl
+  highlight: turtle
+  show: 3-100
+  line-start: 1
+  </pre>
+  <figcaption>Alice's Authorization Registry</figcaption>
+</figure>
+
+## Access Authorization ## {#access-authorization}
+
+Access Authorization groups one or more [[#data-authorization| data authorizations]].
+Together they represent the whole access granted by a social agent to another agent.
+One of the primary responsibilities of the authorization agent is [[#generating-grants-from-authorizations]].
+
+An Access Authorization is immutable, it never gets updated, instead it can be only replaced
+with a newer Access Authorization.
+
+## Data Authorization ## {#data-authorization}
+
+Data Authorization, similar to [[#data-grant]], represents access granted by a specific Social Agent.
+It is always associated with a specific [[#shape-tree]]. Depending on its scope it can apply to all the
+Data Instances in any number of Data Registrations. In that case, `interop:hasDataRegistration` will not be specified.
+
+<figure>
+  <pre class=include-code>
+  path: snippets/auth.alice.example/e2765d6c-848a-4fc0-9092-556903730263.ttl
+  highlight: turtle
+  show: 5-100
+  line-start: 1
+  </pre>
+  <figcaption>Alice's data authorization for Projectron to ACME's Projects</figcaption>
+</figure>
+
+A Data Authorization is immutable, it never gets updated, instead it can be only replaced
+with a newer Data Authorization.
+
+### Scopes ### {#data-authorization-scopes}
+
+Data Authorization can have one of five scopes:
+
+: All
+:: All the Data Instances in all the Data Registration the End-user has access to.
+    This includes ones owned by the End-user as well as ones owned by others, where End-user has been granted access.
+
+: AllFromAgent
+:: All the Data Instances in all the Data Registrations, owned by a specific social agent.
+    This could be the End-user themselves or any other social agent who granted access to the End-user.
+
+Plus all the [[#data-grant-scopes| Data Grant Scopes]]
+
+# Agent Registry # {#agent-registry}
+
+<figure>
+  <pre class=include-code>
+  path: snippets/auth.alice.example/1cf3e08b-ffe2-465a-ac5b-94ce165cb8f0.ttl
+  highlight: turtle
+  show: 3-100
+  line-start: 1
+  </pre>
+  <figcaption>Alice's Authorization Registry</figcaption>
+</figure>
+
+## Agent Registration ## {#agent-registration}
+
+There can be only one Agent Registration for any given agent in Agent Registry.
+Its main purpose is to make [[#access-grant]] available to the registered agent.
+
+## Social Agent Registration
+
+Social Agent Registration is created for a Social Agent. Besides [[##access-grant]]
+it can also reference a [[#reciprocal-registration]]
+
+### Reciprocal Registration ### {#reciprocal-registration}
+
+The reference to reciprocal registration can be created after receiving an [[#access-receipt]]
+from another Social Agent and performing [[#agent-registration-discovery]]
+
+In the case of Social Agent Registration for ACME, created in Alice's Agent Registry. The reciprocal registration
+will be the Social Agent Reigstration for Alice, created in ACME's Agent Registry.
+
+<img class="flowchart-diagram" src="diagrams/reciprocal-registration.flow.mmd.png" />
+
+## Application Registration
+
+Application Registrations are created by the End-user for applications they use.
+Since applications do not own or share data, they will never have a [#reciprocal-registration].
+
+## Agent Registration Discovery ## {#agent-registration-discovery}
+
+Both Social Agent and Application can discover Agent Registration created for them,
+by performing <code>HEAD</code> or <code>GET</code> request on IRI denoting
+the Authorization Agent. Response will include HTTP Link header relating
+Agent Registration to the agent making the request using
+<code>http://www.w3.org/ns/solid/interop#registeredAgent</code>
+as link relation.
+
+In a case where End-user using an application performs the discovery on their
+own Authorization Agent. The response will include a link to the Application registration.
+
+<figure>
+  <pre highlight=http>
+    HEAD / HTTP/1.1
+    Host: auth.alice.example
+    Authorization: DPoP ....
+  </pre>
+  <pre highlight=http line-highlight=3>
+    HTTP/1.1 200 OK
+    Link: &lt;https://projectron.example/#app&gt;;
+      anchor="https://auth.alice.example/bcf22534-0187-4ae4-b88f-fe0f9fa96659";
+      rel="http://www.w3.org/ns/solid/interop#registeredAgent"
+  </pre>
+  <figcaption>HEAD request to and response from End-user's Authorization Agent</figcaption>
+</figure>
+
+In the case where the client acting on behalf of one social agent, performs the discovery on
+another's social agent Authorization Agent. The response will include a link to Social Agent Registration.
+
+<figure>
+  <pre highlight=http>
+    HEAD / HTTP/1.1
+    Host: auth.alice.example
+    Authorization: DPoP ....
+  </pre>
+  <pre highlight=http line-highlight=3>
+    HTTP/1.1 200 OK
+    Link: &lt;https://bob.example/#id&gt;;
+      anchor="https://auth.alice.example/92868ad4-a9e6-42df-9cb0-883350c62769";
+      rel="http://www.w3.org/ns/solid/interop#registeredAgent"
+  </pre>
+  <figcaption>HEAD request to and response from someone else's Authorization Agent</figcaption>
+</figure>
+
+
+## Access Grant ## {#access-grant}
+
+An Access Grant grups together all the Data Grants provided for specific agent.
+
+An Access Grant is immutable, it never gets updated, instead it can be only replaced with a newer Access Grant.
+
+<pre class=include>path: data-grant.bs</pre>
+
+## Access Receipt ## {#access-receipt}
+
+Access Receipt helps to establish data sharing between two social agents. Once received the authorization agent
+should prompt the user to approve creating [[#social-agent-registration]] for that data owner.
+If user approves [[#reciprocal-registration]] can be associated and subscription for notifications established
+to keep track on the latest [[#access-grant]]. Once reciprocal registration gets associated there is no
+further need for its data owner to send access receipts to the agent registered in that reciprocal registration.
+
+Issue(238):
+
+## Access Need Group ## {#access-need-group}
+
+An Access Need Group is a collection of Access Needs used to communicate an access request to Social Agents.
+
+An Authorization Agent uses them during [[#gathering-authorizations]].
+
+## Access Need ## {#access-need}
+
+An Access Need represents the requirement of one specific type of data represented by a shape tree,
+as part of an Access Need Group.
+
+Issue: Complete this section based on implementation of UI for Authorization Agent Service
+
+# Gathering Authorizations from the user # {#gathering-authorizations}
+
+The most common case is authorizing an application based on its [[#access-need]].
+The authorization screen should combine those Access Needs with existing [[#access-authorization]] if one exists.
+It should also assist the user in composing new Access Authorization, taking into account all their:
+* Data Registries with Data Registrations and Data Instances
+* [[#access-grant]] with [[#data-grant]] others issued to them (available via all the [[#reciprocal-registration]])
+
+<img src="images/authorization-screen.svg" width="100%" />
+
+Issue(186):
+
+Issue(138):
+
+# Generating Access Grant from Access Authorization # {#generating-grants-from-authorizations}
+
+Based on an [[#access-authorization]], authorization agent can generate an [[#access-grant]].
+For [[#data-authorization]] using `AllFromRegistry`, `SelectedFromRegistry` scope,
+a single [[#data-grant]] gets generated. Similar for data authorization using `Inherited` scope and
+inheriting from data authorization with one of those two scopes. Here a data authorization gets directly
+translated into a data grant, only changing type and all authorization specific properties to grant specific properties.
+
+For data authorization using `All` or `AllFromAgent`, zero or more data grant gets generated.
+This number depends on a number of Data Registries owned by the social agent giving the authorization,
+as well as number of data grants given to them by other social agents. Data authorization with `Inherited` scope
+will also have zero or more data grants if it is inheriting from data authorization using one of those two scopes.
+
+Example of an implementation can be found in [[SAI-JS]] and [[SAI-JAVA]]
+
+<pre class="biblio">
+{
+  "sai": {
+    "href": "https://solid.github.io/data-interoperability-panel/specification/",
+    "title": "Solid Application Interoperability",
+    "authors": [
+      "Justin Bingham",
+      "Eric Prud'hommeaux",
+      "elf Pavlik"
+    ]
+  },
+  "shapetrees": {
+    "href": "https://shapetrees.org/TR/specification/",
+    "title": "Shape Trees",
+    "authors": [
+      "Justin Bingham",
+      "Eric Prud'hommeaux",
+      "Jamie Fiedler",
+      "Josh Collins"
+    ]
+  },
+  "shex": {
+    "href": "http://shex.io/shex-semantics/index.html",
+    "title": "Shape Expressions Language 2.1",
+    "authors": [
+      "Eric Prud'hommeaux",
+      "Iovka Boneva",
+      "Jose Emilio Labra Gayo",
+      "Gregg Kellogg"
+    ]
+  },
+  "sai-js": {
+    "href": "https://github.com/janeirodigital/sai-js",
+    "title": "Solid Application Interoperability - TypeScript implementation",
+    "authors": [
+      "elf Pavlik",
+      "Maciej Samoraj",
+      "Ángel Araya"
+    ]
+  },
+  "sai-java": {
+    "href": "https://github.com/janeirodigital/sai-java",
+    "title": "Solid Application Interoperability - Java implementation",
+    "authors": [
+      "Justin Bingham"
+    ]
+  }
+}
+</pre>

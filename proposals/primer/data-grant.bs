@@ -1,0 +1,80 @@
+## Data Grant ## {#data-grant}
+
+Each Data grant represents access granted by specific Social Agent, to all or selected
+Data Instances in specific Data Registration.
+
+<figure>
+  <pre class=include-code>
+  path: snippets/auth.alice.example/cd247a67-0879-4301-abd0-828f63abb252.ttl
+  highlight: turtle
+  show: 7-100
+  line-start: 1
+  </pre>
+  <figcaption>Alice's data grant for Projectron - Pro Projects</figcaption>
+</figure>
+
+A Data Grant is immutable, it never gets updated, instead it can be only replaced
+with a newer Data Grant.
+
+Data Grant can be consider as the most important data structure, it provides following information:
+
+: dataOwner
+:: Social Agent who owns the data
+
+: registeredShapeTree
+:: Shape Tree used by related Data Registration
+
+: hasDataRegistration
+:: Data Registration that this Data Grant applies to. As well as <code>iriPrefix</code> of that Data Registration (see [[#data-registration]])
+
+: accessMode
+:: List of access modes defining what application can do with the data
+
+: scopeOfGrant
+:: Defines which instances can be accessed (see [[#data-grant-scopes]])
+
+: inheritsFromGrant
+:: If grant has <code>InheritInstances</code> scope, it will be the Data Grant for Data Registraion with parent Data Instances (see [[#data-grant-inheritance]])
+
+: hasDataInstance
+:: If grant has <code>SelectedInstances</code> scope, it will be all the Data Instances that application can access in the Data Registration
+
+: delegationOfGrant
+:: If Data Grant is issued by Social Agent other than data owner, it will be the original Data Grant issued by the data owner (see [[#data-grant-delegation]])
+
+### Scopes ### {#data-grant-scopes}
+
+Data Grant can have one of three scopes:
+
+: AllFromRegistry
+:: All the Data Instances in the Data Registration. Application will be able to access the Data Registration and see the list of all contained instances (see [[#data-registration]])
+
+: SelectedFromRegistry
+:: Only specific Data Instances in the Data Registration. Application will not be able to access the Data Registration, so it will not see the list al all contained instances. Instad list of selected Data Instances is available via <code>hasDataInstance</code>
+
+: Inherited
+:: Only those Data Instances in the Data Registration, which are related to parent kData Instances in Data Registration of the Data Grant referenced with <code>inheritsFromGrant</code> (see [[#data-grant-inheritance]])
+
+### Inheritance ### {#data-grant-inheritance}
+
+<code>InheritInstances</code> Data Grant doesn't provide access to the Data Registration, so
+application can't get the list of all the Data Instances. Neither it provides a list of specific
+Data Instances in the Data Registration.
+
+To find Data Instances from that Data Registration, application first needs to access parent
+Data Instances from Data Registration which Data Grant referenced by <code>inheritsFromGrant</code>
+makes accessible. Based on shape tree definition, each parent Data Instance will reference all its
+child Data Instances.
+
+Both parent and child Data Registrations have to be in the same Data Registry. Since only one
+Data Registration for specific shape tree can be created in any given Data Registry.
+All parent Data Instances are from one Data Registration and all child Data Instances are from
+one Data Registration.
+
+### Delegation ### {#data-grant-delegation}
+
+Application doesn't need to handle delegated Data Grants in any special way.
+To know if Data Grant was issued by currently logged in user or someone else,
+application should rely on <code>dataOwner</code> information in the Data Grant.
+
+Issue(222):

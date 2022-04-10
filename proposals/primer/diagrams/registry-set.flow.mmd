@@ -1,0 +1,20 @@
+flowchart LR
+
+  AliceRegistrySet{{"Registry Set"}}
+  AliceAgentRegistry(["Agent Registry"])
+  AliceAuthorizationRegistry(["Authorization Registry"])
+  AliceProRegistry(["🗄️ Data Registry (Professional)"])
+  AliceHomeRegistry(["🗄️ Data Registry (Home)"])
+
+  subgraph auth.alice.example
+    AliceRegistrySet -- :hasAuthorizationRegistry --> AliceAuthorizationRegistry
+    AliceRegistrySet -- :hasAgentRegistry --> AliceAgentRegistry
+  end
+
+  subgraph home.alice.example
+    AliceRegistrySet -- :hasDataRegistry ---> AliceHomeRegistry
+  end
+
+  subgraph pro.alice.example
+    AliceRegistrySet -- :hasDataRegistry ---> AliceProRegistry
+  end
