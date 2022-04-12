@@ -1,20 +1,20 @@
 Access Needs {#needs}
 =====================
 
-[=Social Agents=] and [=Applications=] in the [=ecosystem=] often 
-require access to data controlled by some other [=Social Agent=]. 
+[=Social Agents=] and [=Applications=] in the [=ecosystem=] often
+require access to data controlled by some other [=Social Agent=].
 Consequently, a common way to explain
 and communicate data needs between these parties is required.
 
 A given [=Social Agent=] or [=Application=] expresses their access needs by
-providing one or more [=Access Need Groups=] to the [=Social Agent=] 
-controlling the data they require access to. The channels through which 
+providing one or more [=Access Need Groups=] to the [=Social Agent=]
+controlling the data they require access to. The channels through which
 these may be communicated are detailed in [[#authorization]].
 
 Each [=Access Need Group=] is associated with one or more [=Access Needs=].
 
 [=Access Needs=] represent a request to access a particular type of data
-identified by [=shape tree=] type, corresponding with [=Data Registrations=] 
+identified by [=shape tree=] type, corresponding with [=Data Registrations=]
 in a [=Data Registry=], an [=Identity Profile Document=], or a [=Registry Set=].
 
 [=Access Need Groups=] are essential to a [=Social Agent's=] decision-making
@@ -22,10 +22,10 @@ when determining whether to grant access.
 
 ## Access Need Group ## {#access-need-group}
 
-An <dfn>Access Need Group</dfn> is a collection of [=Access Needs=] 
+An <dfn>Access Need Group</dfn> is a collection of [=Access Needs=]
 used to communicate an access request to [=Social Agents=].
 
-[=Access Need Groups=] are described using language-specific 
+[=Access Need Groups=] are described using language-specific
 [=Access Need Group Descriptions=].
 
 [Class Definition](interop.ttl#AccessNeedGroup) -
@@ -46,7 +46,7 @@ used to communicate an access request to [=Social Agents=].
     <tr>
       <td>hasAccessDescriptionSet</td>
       <td>[AccessDescriptionSet](#classAccessDescriptionSet)</td>
-      <td>Links to an [=Access Description Set=] containing 
+      <td>Links to an [=Access Description Set=] containing
       [=Access Need Group Descriptions=] and [=Access Need Descriptions=]
       in the preferred language of the [=Social Agent=]</td>
     </tr>
@@ -80,7 +80,7 @@ used to communicate an access request to [=Social Agents=].
   path: snippets/projectron.example/needs.ttl
   highlight: turtle
   show: 6-35
-  </pre> 
+  </pre>
 </figure>
 
 ## Access Need ## {#needs-access-need}
@@ -88,7 +88,7 @@ used to communicate an access request to [=Social Agents=].
 An <dfn>Access Need</dfn> represents the requirement of one specific type
 of data represented by a [=shape tree=], as part of an [=Access Need Group=].
 
-It is often the case that a [=shape tree=] associated with an 
+It is often the case that a [=shape tree=] associated with an
 [=Access Need=] references other [=shape trees=], providing a
 path to request access to related types. Consequently,
 [=Access Needs=] can be specified that *inherit* from other
@@ -128,8 +128,8 @@ associating them with the [=Access Need=].
     <tr>
       <td>creatorAccessMode</td>
       <td>`acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append`</td>
-      <td>Requested mode of access for the creator of a Data Instance. 
-        Adds to the set of modes linked via 
+      <td>Requested mode of access for the creator of a Data Instance.
+        Adds to the set of modes linked via
         `interop:accessMode`. Only valid when `accessMode` includes
         `acl:Create`, `acl:Write`, or `acl:Append`</td>
     </tr>
@@ -142,7 +142,7 @@ associating them with the [=Access Need=].
       <td>hasDataInstance</td>
       <td>[=Data Instance=]</td>
       <td>Request specific [=Data Instance=] of the registered
-      [=shape tree=]. Requires advance knowledge of the 
+      [=shape tree=]. Requires advance knowledge of the
       [=Data Instance=]</td>
     </tr>
     <tr>
@@ -162,15 +162,19 @@ associating them with the [=Access Need=].
   path: snippets/projectron.example/needs.ttl
   highlight: turtle
   show: 20-35
-  </pre> 
+  </pre>
 </figure>
+
+Issue(243):
+
+Issue(237):
 
 ## Access Descriptions ## {#access-descriptions}
 
 ### Access Need Group Description ### {#access-need-group-description}
 
 An <dfn>Access Need Group Description</dfn> provides a short label or
-title and a more in-depth description that explains why a given 
+title and a more in-depth description that explains why a given
 [=Access Need Group=] is being requested of a [=Social Agent=].
 
 [Class Definition](interop.ttl#AccessNeedGroupDescription) -
@@ -219,7 +223,7 @@ title and a more in-depth description that explains why a given
   path: snippets/projectron.example/access-en.ttl
   highlight: turtle
   show: 10-15
-  </pre> 
+  </pre>
 </figure>
 
 ### Access Need Description ### {#access-need-description}
@@ -268,7 +272,7 @@ a given [=Access Need=].
   path: snippets/projectron.example/access-en.ttl
   highlight: turtle
   show: 17-21
-  </pre> 
+  </pre>
 </figure>
 
 ### Access Description Set ### {#access-description-set}
@@ -307,7 +311,7 @@ and [=Access Need Descriptions=].
   path: snippets/projectron.example/access-en.ttl
   highlight: turtle
   show: 6-30
-  </pre> 
+  </pre>
 </figure>
 
 ## Access Request ## {#access-request}
@@ -349,10 +353,12 @@ one [=Agent=] to another.
 </table>
 
 <figure>
-  <figcaption>An [=Access Request=] sent from one agent to another</figcaption>  
+  <figcaption>An [=Access Request=] sent from one agent to another</figcaption>
   <pre class=include-code>
   path: snippets/alice.example/66e90b51.ttl
   highlight: turtle
   show: 6-9
-  </pre> 
+  </pre>
 </figure>
+
+Issue(214):
