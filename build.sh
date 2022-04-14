@@ -1,13 +1,7 @@
 echo "Build: running bikeshed"
-for bsdoc in proposals/*/index.bs
-  do
-    bikeshed spec $bsdoc
-done
-
-for bsdoc in proposals/primer/*.bs
-  do
-    bikeshed spec $bsdoc
-done
+bikeshed spec proposals/specification/index.bs
+bikeshed spec  proposals/primer/application.bs
+bikeshed spec  proposals/primer/authorization-agent.bs
 
 echo "Build: running mermaid for sequence diagrams"
 for diagram in proposals/*/diagrams/*.seq.mmd

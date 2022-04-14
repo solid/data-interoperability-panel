@@ -18,21 +18,23 @@ Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth unde
 
 * **Specification** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/specification) - [Rendered](https://solid.github.io/data-interoperability-panel/specification/)
 * **Application Primer** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/primer/application.bs) - [Rendered](https://solid.github.io/data-interoperability-panel/primer/application.html)
-* **Authorization Agent Primer** (TBA)
+* **Authorization Agent Primer** - [Source](https://github.com/solid/data-interoperability-panel/tree/master/proposals/primer/authorization-agent.bs) - [Rendered](https://solid.github.io/data-interoperability-panel/primer/authorization-agent.html)
 * **Resources**
   * [Application Interoperability Walkthrough - Part 1](https://solid-interop-public.s3.amazonaws.com/application-interoperability-walkthrough-part-1.mp4) (VIDEO)
   * [Application Interoperability Walkthrough - Part 2](https://solid-interop-public.s3.amazonaws.com/application-interoperability-walkthrough-part-2.mp4) (VIDEO)
 
 #### Current targets
 - Publish 1.0 Draft of Application Interoperability Specification
-- Publish 1.0 Draft of Application Interoperability Primer
+- Publish 1.0 Draft of Application Primer
+- Publish 1.0 Draft of Authorization Agent Primer
 - Complete Typescript library implementation
-- Complete Typescript Application Service implementation
+- Complete Java library implementation
+- Complete Typescript Authorization Agent Service implementation
 
 ### Shape Trees
 
 * **Specification** - [Source](https://github.com/shapetrees/specification) - [Rendered](https://shapetrees.org/TR/specification/index.html)
-* **Library** - [Source](https://github.com/shapetrees/shapetree.js) 
+* **Library** - [Source](https://github.com/shapetrees/shapetree.js)
 * **Test Suite** - [Source](https://github.com/shapetrees/test-suite)
 
 #### Current targets
