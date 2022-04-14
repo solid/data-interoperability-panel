@@ -1,0 +1,18 @@
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX alice-auth: <https://auth.alice.example/>
+PREFIX alice-home: <https://home.alice.example/>
+
+alice-auth:bee6bc10-2eb9-4b2d-b0c4-84c5d9039e53
+  a interop:DataConsent ;
+  interop:grantedBy <https://alice.example/#id> ;
+  interop:grantedWith <https://jarvis.alice.example/#agent> ;
+  interop:grantee <https://jane.example/#id> ;
+  interop:dataOwner <https://alice.example/#id> ;
+  interop:accessMode acl:Read, acl:Write ;
+  interop:scopeOfConsent interop:SelectedFromRegistry ;
+  interop:hasDataRegistration alice-home:92f43be4-d12c-4ca3-9bd6-c18e83167b2f ;
+  interop:hasDataInstance
+    alice-home:46fea403-8605-473b-a9a1-a86f50fb1633\#task ,
+    alice-home:72eb1958-5ad1-4268-96cb-739a71592cc0\#task .

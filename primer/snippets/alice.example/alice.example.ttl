@@ -1,6 +1,8 @@
 PREFIX interop: <http://www.w3.org/ns/solid/interop#>
 PREFIX alice: <https://alice.example/>
+PREFIX alice-auth: <https://auth.alice.example/>
 
 alice:\#id
   a interop:Agent ;
+  interop:hasRegistrySet alice-auth:13e60d32-77a6-4239-864d-cfe2c90807c8 ;
   interop:hasAuthorizationAgent <https://auth.alice.example/> .

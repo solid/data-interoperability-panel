@@ -1,0 +1,13 @@
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX alice-auth: <https://auth.alice.example/>
+
+alice-auth:04ad5e03-872e-4b63-a81a-21d2d3922411
+  a interop:AccessConsent ;
+  interop:hasAccessNeedGroup <https://someapp.example/#access-need-group> ;
+  interop:grantedBy <https://alice.example/#id> ;
+  interop:grantedWith <https://jarvis.alice.example/#agent> ;
+  interop:grantee <https://someapp.example/#app> ;
+  interop:hasDataConsent
+    alice-auth:d246d4da-79d9-4232-b5ab-94282cd0a63b ,
+    alice-auth:dbad38a1-4f99-4cd3-9107-23743a4059a8 ,
+    alice-auth:8307e5b4-4fd6-4e76-99bf-64df6a7d2894 .

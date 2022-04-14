@@ -5,10 +5,13 @@ PREFIX alice-auth: <https://auth.alice.example/>
 
 alice-auth:e2765d6c-848a-4fc0-9092-556903730263
   a interop:DataConsent ;
-    interop:registeredShapeTree solidtrees:Project ;
-    interop:onDataOwnedBy <https://acme.example/#corp> ;
-    interop:accessMode acl:Read, acl:Write ;
-    interop:scopeOfConsent interop:AllRemoteFromAgent .
+  interop:grantedBy <https://alice.example/#id> ;
+  interop:grantedWith <https://jarvis.alice.example/#agent> ;
+  interop:grantee <https://projectron.example/#app> ;
+  interop:registeredShapeTree solidtrees:Project ;
+  interop:dataOwner <https://acme.example/#corp> ;
+  interop:accessMode acl:Read, acl:Write ;
+  interop:scopeOfConsent interop:AllFromAgent .
 alice-auth:6a9feb57-252b-43b2-8470-5a938888b2fa
-    interop:inheritsFromConsent
-      alice-auth:e2765d6c-848a-4fc0-9092-556903730263 .
+  interop:inheritsFromConsent
+    alice-auth:e2765d6c-848a-4fc0-9092-556903730263 .

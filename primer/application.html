@@ -3,12 +3,12 @@
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <title>Solid Application Interoperability - Application Primer</title>
-  <meta content="w3c/CG-DRAFT" name="w3c-status">
-  <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
+  <meta content="w3c/UD" name="w3c-status">
+  <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/primer/applications.html" rel="canonical">
-  <meta content="4a443b8ca43bec1274204f36bb2253d529d6ce29" name="document-revision">
+  <meta content="f6b422e59a082d1b3e3a5776da7e4b570204573b" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -571,9 +571,9 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </style>
  <body class="h-entry">
   <div class="head">
-   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
+   <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solidproject.org/TR/solid.svg" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability - Application Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2022-03-18">18 March 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2022-04-14">14 April 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -582,7 +582,6 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dd><a class="u-url" href="https://solid.github.io/data-interoperability-panel/primer/applications.html">https://solid.github.io/data-interoperability-panel/primer/applications.html</a>
       <dt>Issue Tracking:
       <dd><a href="https://github.com/solid/data-interoperability-panel/issues/">GitHub</a>
-      <dd><a href="#issues-index">Inline In Spec</a>
       <dt class="editor">Editor:
       <dd class="editor p-author h-card vcard"><span class="p-name fn">elf Pavlik</span>
      </dl>
@@ -601,7 +600,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
     <li><a href="#introduction"><span class="secno">1</span> <span class="content">Introduction</span></a>
-    <li><a href="#shape-trees"><span class="secno">2</span> <span class="content">Shape Trees</span></a>
+    <li><a href="#shape-tree"><span class="secno">2</span> <span class="content">Shape Tree</span></a>
     <li><a href="#appliction"><span class="secno">3</span> <span class="content">Application</span></a>
     <li>
      <a href="#authorization-flow"><span class="secno">4</span> <span class="content">Authorization Flow</span></a>
@@ -613,7 +612,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <li>
      <a href="#application-registration"><span class="secno">5</span> <span class="content">Application Registration</span></a>
      <ol class="toc">
-      <li><a href="#access-receipt"><span class="secno">5.1</span> <span class="content">Access Receipt</span></a>
+      <li><a href="#access-grant"><span class="secno">5.1</span> <span class="content">Access Grant</span></a>
       <li>
        <a href="#data-grant"><span class="secno">5.2</span> <span class="content">Data Grant</span></a>
        <ol class="toc">
@@ -632,23 +631,22 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <ol class="toc">
       <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
      </ol>
-    <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
    </ol>
   </nav>
   <main>
    <h2 class="heading settled" data-level="1" id="introduction"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#introduction"></a></h2>
-   <p>This primer is intended to accompany <a data-link-type="biblio" href="#biblio-solid-interop">[SOLID-INTEROP]</a>.
-It is focused on providing friendly introduction for developers of libraries intended
+   <p>This primer is intended to accompany <a data-link-type="biblio" href="#biblio-sai">[SAI]</a>.
+It is focused on providing a friendly introduction for developers of libraries intended
 for solid applications.</p>
    <p>This document was developed alongside the open-source TypeScript implementation <a data-link-type="biblio" href="#biblio-sai-js">[SAI-JS]</a></p>
    <p>We will follow example of an application called <em>Projectron</em>,
 which manages projects and tasks.
 End user, named <em>Alice</em>, collaborates on projects
 with other Individuals and Organizations.</p>
-   <h2 class="heading settled" data-level="2" id="shape-trees"><span class="secno">2. </span><span class="content">Shape Trees</span><a class="self-link" href="#shape-trees"></a></h2>
+   <h2 class="heading settled" data-level="2" id="shape-tree"><span class="secno">2. </span><span class="content">Shape Tree</span><a class="self-link" href="#shape-tree"></a></h2>
    <p>Shape Trees <a data-link-type="biblio" href="#biblio-shapetrees">[SHAPETREES]</a> allow  for the definition and validation of data hierarchies
 including which shapes <a data-link-type="biblio" href="#biblio-shex">[SHEX]</a> should be used to validate data.
-In our examples we will use following Shapes and Shape Trees.</p>
+In our examples, we are going to use the following Shapes and Shape Trees.</p>
    <figure>
 <pre class="include-code highlight"><c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c->
   <c- b>a</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
@@ -675,8 +673,8 @@ In our examples we will use following Shapes and Shape Trees.</p>
    <figure>
 <pre class="include-code highlight"><c- nn>solidtrees</c-><c- p>:</c-><c- f>Task</c->
   <c- b>a</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>ShapeTree</c-> <c- p>;</c->
-  <c- nn>shapetrees</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>ShapeTreeResource</c-> <c- p>;</c->
-  <c- nn>shapetrees</c-><c- p>:</c-><c- f>validatedBy</c-> <c- nn>solidshapes</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>expectsType</c-> <c- nn>shapetrees</c-><c- p>:</c-><c- f>Resource</c-> <c- p>;</c->
+  <c- nn>shapetrees</c-><c- p>:</c-><c- f>shape</c-> <c- nn>solidshapes</c-><c- p>:</c-><c- f>Task</c-> <c- p>.</c->
 </pre>
     <figcaption>Task shape tree</figcaption>
    </figure>
@@ -697,7 +695,7 @@ identified by <code>https://projectron.example/#app</code> Every application has
     <figcaption>Projectron WebID document</figcaption>
    </figure>
    <p>Access Needs explain what kind of data application works with.
-They use combination of <a href="#shape-trees">§ 2 Shape Trees</a> and access modes to
+They use combination of <a href="#shape-tree">§ 2 Shape Tree</a> and access modes to
 convey how the application can work with data.</p>
    <p class="issue" id="issue-e982e541"><a class="self-link" href="#issue-e982e541"></a> Details can change based on experience from implementing Authorization Agent role</p>
    <h2 class="heading settled" data-level="4" id="authorization-flow"><span class="secno">4. </span><span class="content">Authorization Flow</span><a class="self-link" href="#authorization-flow"></a></h2>
@@ -708,7 +706,7 @@ and that applicaction know WebID of the authenticated user.</p>
    <p>Every user has an Authorization Agent which can be discovered from
 their WebID Document via <code>interop:hasAuthorizationAgent</code> predicate.</p>
    <figure>
-<pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Agent</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="3"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasAuthorizationAgent</c-> <c- g>&lt;https://auth.alice.example/></c-> <c- p>.</c-></span></pre>
+<pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Agent</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistrySet</c-> <c- nn>alice-auth</c-><c- p>:</c-><c- f>13e60d32-77a6-4239-864d-cfe2c90807c8</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="4"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasAuthorizationAgent</c-> <c- g>&lt;https://auth.alice.example/></c-> <c- p>.</c-></span></pre>
     <figcaption>Alice’s WebID document</figcaption>
    </figure>
    <p>Here we see that Alice designates <code>https://auth.alice.example/</code> as their Authorization Agent.</p>
@@ -716,38 +714,37 @@ their WebID Document via <code>interop:hasAuthorizationAgent</code> predicate.</
    <p>Application can discover Application Registration created for it by the user,
 by performing <code>HEAD</code> or <code>GET</code> request on IRI denoting
 user’s Authorization Agent. Response will include HTTP Link header relating
-Application Registration to the application making the request using <code>http://www.w3.org/ns/solid/interop#registeredApplication</code> as link relation.</p>
+Application Registration to the application making the request using <code>http://www.w3.org/ns/solid/interop#registeredAgent</code> as link relation.</p>
    <figure>
 <pre class="highlight"><c- nf>HEAD</c-> <c- nn>/</c-> <c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c->
 <c- e>Host</c-><c- o>:</c-> <c- l>auth.alice.example</c->
 <c- e>Authorization</c-><c- o>:</c-> <c- l>DPoP ....</c->
 </pre>
-<pre class="highlight line-numbered"><span class="line-no"></span><span class="line"><c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c-> <c- m>200</c-> <c- ne>OK</c-></span><span class="line-no"></span><span class="line"><c- e>Link</c-><c- o>:</c-> <c- l>&lt;https://projectron.example/#app>;</c-></span><span class="line-no highlight-line" data-line="3"></span><span class="line highlight-line">  <c- l>anchor="https://auth.alice.example/bcf22534-0187-4ae4-b88f-fe0f9fa96659";</c-></span><span class="line-no"></span><span class="line">  <c- l>rel="http://www.w3.org/ns/solid/interop#registeredApplication"</c-></span></pre>
+<pre class="highlight line-numbered"><span class="line-no"></span><span class="line"><c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c-> <c- m>200</c-> <c- ne>OK</c-></span><span class="line-no"></span><span class="line"><c- e>Link</c-><c- o>:</c-> <c- l>&lt;https://projectron.example/#app>;</c-></span><span class="line-no highlight-line" data-line="3"></span><span class="line highlight-line">  <c- l>anchor="https://auth.alice.example/bcf22534-0187-4ae4-b88f-fe0f9fa96659";</c-></span><span class="line-no"></span><span class="line">  <c- l>rel="http://www.w3.org/ns/solid/interop#registeredAgent"</c-></span></pre>
     <figcaption>HEAD request to and response from Authorization Agent</figcaption>
    </figure>
-   <p>Details in <a href="https://solid.github.io/data-interoperability-panel/specification/#authorization">7. Data Authorization</a> (<a data-link-type="biblio" href="#biblio-solid-interop">[SOLID-INTEROP]</a>)</p>
+   <p>Details in <a href="https://solid.github.io/data-interoperability-panel/specification/#authorization">7. Data Authorization</a> (<a data-link-type="biblio" href="#biblio-sai">[SAI]</a>)</p>
    <h3 class="heading settled" data-level="4.3" id="user-consent"><span class="secno">4.3. </span><span class="content">User Consent</span><a class="self-link" href="#user-consent"></a></h3>
    <p>In case where application haven’t been registered yet it needs to initiate flow with Authorization Agent.</p>
    <p class="issue" id="issue-ab34eff5"><a class="self-link" href="#issue-ab34eff5"></a> Add details as soon as defined for Authorization Agent</p>
    <p>After successful flow aplication will be able to discover its registration.</p>
    <h2 class="heading settled" data-level="5" id="application-registration"><span class="secno">5. </span><span class="content">Application Registration</span><a class="self-link" href="#application-registration"></a></h2>
-   <p class="issue" id="issue-208eda88"><a class="self-link" href="#issue-208eda88"></a> Specification will change to store Access Grants in Application Registration</p>
    <p>Application Registration can be considered an entry point to all the data
 that user authorized it to access. Next step in discovery of that data
-is the Access Receipt linked via <code>interop:hasAccessReceipt</code> predicate.</p>
+is the Access Grant linked via <code>interop:hasAccessGrant</code> predicate.</p>
    <figure>
-<pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-auth</c-><c- p>:</c-><c- f>bcf22534-0187-4ae4-b88f-fe0f9fa96659</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ApplicationRegistration</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://jarvis.alice.example/#agent></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-04-04T20:15:47.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-04-04T21:11:33.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>registeredApplication</c-> <c- g>&lt;https://projectron.example/#app></c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="8"></span><span class="line highlight-line">    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessReceipt</c-> <c- nn>alice-auth</c-><c- p>:</c-><c- f>dd442d1b-bcc7-40e2-bbb9-4abfa7309fbe</c-> <c- p>.</c-></span></pre>
+<pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-auth</c-><c- p>:</c-><c- f>bcf22534-0187-4ae4-b88f-fe0f9fa96659</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>ApplicationRegistration</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://jarvis.alice.example/#agent></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-04-04T20:15:47.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-04-04T21:11:33.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>registeredAgent</c-> <c- g>&lt;https://projectron.example/#app></c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="8"></span><span class="line highlight-line">    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrant</c-> <c- nn>alice-auth</c-><c- p>:</c-><c- f>dd442d1b-bcc7-40e2-bbb9-4abfa7309fbe</c-> <c- p>.</c-></span></pre>
     <figcaption>Alice’s application registration for Projectron</figcaption>
    </figure>
-   <h3 class="heading settled" data-level="5.1" id="access-receipt"><span class="secno">5.1. </span><span class="content">Access Receipt</span><a class="self-link" href="#access-receipt"></a></h3>
-   <p>Access Receipt links to all the Data Grants issued to the application
+   <h3 class="heading settled" data-level="5.1" id="access-grant"><span class="secno">5.1. </span><span class="content">Access Grant</span><a class="self-link" href="#access-grant"></a></h3>
+   <p>Access Grant links to all the Data Grants issued to the application
 via <code>interop:hasDataGrant</code> predicate.</p>
    <figure>
-<pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-auth</c-><c- p>:</c-><c- f>dd442d1b-bcc7-40e2-bbb9-4abfa7309fbe</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessReceipt</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://jarvis.alice.example/#agent></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>fromAgent</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>viaAgent</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-></span><span class="line-no"></span><span class="line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#grant-subject</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="13"></span><span class="line highlight-line">    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-></span><span class="line-no highlight-line" data-line="14"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>cd247a67-0879-4301-abd0-828f63abb252</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="15"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>9827ae00-2778-4655-9f22-08bb9daaee26</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="16"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>7b2bc4ff-b4b8-47b8-96f6-06695f4c5126</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="17"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>54b1a123-23ca-4733-9371-700b52b9c567</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="18"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>12daf870-a343-4684-b828-c67c5c9c997a</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="19"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>7be5a39f-583d-4464-8ad8-a39e24b99fce</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="20"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>c205e9da-2dc5-4d1f-8be9-a3f90c13eedc</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="21"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>68dd1212-b0f3-4611-aae2-f9f5ea30ee07</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="22"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>92328851-ffb0-427d-847e-f6d9c8417648</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="23"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>a2e961fa-a26a-4cd6-b00d-7992b8cfd1b8</c-> <c- p>.</c-></span><span class="line-no"></span><span class="line"></span><span class="line-no"></span><span class="line"><c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#grant-subject</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c->  <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>accessByApplication</c-> <c- g>&lt;https://projectron.example/#app></c-> <c- p>.</c-></span></pre>
-    <figcaption>Alice’s access receipt for Projectron</figcaption>
+<pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-auth</c-><c- p>:</c-><c- f>dd442d1b-bcc7-40e2-bbb9-4abfa7309fbe</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrant</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>grantedBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>grantedWith</c-> <c- g>&lt;https://jarvis.alice.example/#agent></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>grantedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>updatedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>providedAt</c-> <c- s>"2020-09-05T06:15:01Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>fromAgent</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>viaAgent</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessGrantSubject</c-></span><span class="line-no"></span><span class="line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#grant-subject</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- g>&lt;#need-group-pm></c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="13"></span><span class="line highlight-line">    <c- nn>interop</c-><c- p>:</c-><c- f>hasDataGrant</c-></span><span class="line-no highlight-line" data-line="14"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>cd247a67-0879-4301-abd0-828f63abb252</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="15"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>9827ae00-2778-4655-9f22-08bb9daaee26</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="16"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>7b2bc4ff-b4b8-47b8-96f6-06695f4c5126</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="17"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>54b1a123-23ca-4733-9371-700b52b9c567</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="18"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>12daf870-a343-4684-b828-c67c5c9c997a</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="19"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>7be5a39f-583d-4464-8ad8-a39e24b99fce</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="20"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>c205e9da-2dc5-4d1f-8be9-a3f90c13eedc</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="21"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>68dd1212-b0f3-4611-aae2-f9f5ea30ee07</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="22"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>92328851-ffb0-427d-847e-f6d9c8417648</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="23"></span><span class="line highlight-line">      <c- nn>alice-auth</c-><c- p>:</c-><c- f>a2e961fa-a26a-4cd6-b00d-7992b8cfd1b8</c-> <c- p>.</c-></span><span class="line-no"></span><span class="line"></span><span class="line-no"></span><span class="line"><c- nn>alice-auth</c-><c- p>:</c-><c- f>3fcef0f6-5807-4f1b-b77a-63d64df25a69\#grant-subject</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessGrantSubject</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>accessByAgent</c->  <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">    <c- nn>interop</c-><c- p>:</c-><c- f>accessByApplication</c-> <c- g>&lt;https://projectron.example/#app></c-> <c- p>.</c-></span></pre>
+    <figcaption>Alice’s access grant for Projectron</figcaption>
    </figure>
    <h3 class="heading settled" data-level="5.2" id="data-grant"><span class="secno">5.2. </span><span class="content">Data Grant</span><a class="self-link" href="#data-grant"></a></h3>
-   <p>Eeach Data grant represents access granted by specific Social Agent, to all or selected
+   <p>Each Data grant represents access granted by specific Social Agent, to all or selected
 Data Instances in specific Data Registration.</p>
    <figure>
 <pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>cd247a67-0879-4301-abd0-828f63abb252</c->
@@ -756,7 +753,7 @@ Data Instances in specific Data Registration.</p>
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>773605f0-b5bf-4d46-878d-5c167eac8b5d</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
-    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>SelectedInstances</c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>SelectedFromRegistry</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataInstance</c->
       <c- nn>alice-pro</c-><c- p>:</c-><c- f>7a130c38-668a-4775-821a-08b38f2306fb\#project</c-> <c- p>.</c->
 
@@ -769,6 +766,8 @@ Data Instances in specific Data Registration.</p>
 </pre>
     <figcaption>Alice’s data grant for Projectron - Pro Projects</figcaption>
    </figure>
+   <p>A Data Grant is immutable, it never gets updated, instead it can be only replaced
+with a newer Data Grant.</p>
    <p>Data Grant can be consider as the most important data structure, it provides following information:</p>
    <dl>
     <dt data-md>dataOwner
@@ -799,13 +798,13 @@ Data Instances in specific Data Registration.</p>
    <h4 class="heading settled" data-level="5.2.1" id="data-grant-scopes"><span class="secno">5.2.1. </span><span class="content">Scopes</span><a class="self-link" href="#data-grant-scopes"></a></h4>
    <p>Data Grant can have one of three scopes:</p>
    <dl>
-    <dt data-md>AllInstances
+    <dt data-md>AllFromRegistry
     <dd data-md>
      <p>All the Data Instances in the Data Registration. Application will be able to access the Data Registration and see the list of all contained instances (see <a href="#data-registration">§ 6 Data Registration</a>)</p>
-    <dt data-md>SelectedInstances
+    <dt data-md>SelectedFromRegistry
     <dd data-md>
      <p>Only specific Data Instances in the Data Registration. Application will not be able to access the Data Registration, so it will not see the list al all contained instances. Instad list of selected Data Instances is available via <code>hasDataInstance</code></p>
-    <dt data-md>InheritInstances
+    <dt data-md>Inherited
     <dd data-md>
      <p>Only those Data Instances in the Data Registration, which are related to parent kData Instances in Data Registration of the Data Grant referenced with <code>inheritsFromGrant</code> (see <a href="#data-grant-inheritance">§ 5.2.2 Inheritance</a>)</p>
    </dl>
@@ -824,10 +823,11 @@ one Data Registration.</p>
    <p>Application doesn’t need to handle delegated Data Grants in any special way.
 To know if Data Grant was issued by currently logged in user or someone else,
 application should rely on <code>dataOwner</code> information in the Data Grant.</p>
+   <div class="issue no-marker" id="issue-d41d8cd9"><a class="self-link" href="#issue-d41d8cd9"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/222" style="text-transform:none">solid/data-interoperability-panel/222</a><a href="https://github.com/solid/data-interoperability-panel/issues/222">Support longer delegation chains</a></div>
    <h2 class="heading settled" data-level="6" id="data-registration"><span class="secno">6. </span><span class="content">Data Registration</span><a class="self-link" href="#data-registration"></a></h2>
    <p><img class="flowchart-diagram" src="diagrams/pro.alice.example.flow.mmd.png"></p>
    <figure>
-<pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-pro</c-><c- p>:</c-><c- f>773605f0-b5bf-4d46-878d-5c167eac8b5d</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-10-17T11:42:35.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="6"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="7"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>iriPrefix</c-> <c- s>"https://pro.alice.example/"</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="8"></span><span class="line highlight-line">  <c- nn>ldp</c-><c- p>:</c-><c- f>contains</c-></span><span class="line-no highlight-line" data-line="9"></span><span class="line highlight-line">    <c- nn>alice-pro</c-><c- p>:</c-><c- f>ccbd77ae-f769-4e07-b41f-5136501e13e7\#project</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="10"></span><span class="line highlight-line">    <c- nn>alice-pro</c-><c- p>:</c-><c- f>7a130c38-668a-4775-821a-08b38f2306fb\#project</c-> <c- p>.</c-></span></pre>
+<pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-pro</c-><c- p>:</c-><c- f>773605f0-b5bf-4d46-878d-5c167eac8b5d</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataRegistration</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredAt</c-> <c- s>"2020-10-17T11:42:35.000Z"</c-><c- p>^^</c-><c- nn>xsd</c-><c- p>:</c-><c- f>dateTime</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="6"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredWith</c-> <c- g>&lt;https://solidmin.example/#app></c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="7"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>iriPrefix</c-> <c- s>"https://pro.alice.example/"</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="8"></span><span class="line highlight-line">  <c- nn>ldp</c-><c- p>:</c-><c- f>contains</c-></span><span class="line-no highlight-line" data-line="9"></span><span class="line highlight-line">    <c- nn>alice-pro</c-><c- p>:</c-><c- f>ccbd77ae-f769-4e07-b41f-5136501e13e7\#project</c-> <c- p>,</c-></span><span class="line-no highlight-line" data-line="10"></span><span class="line highlight-line">    <c- nn>alice-pro</c-><c- p>:</c-><c- f>7a130c38-668a-4775-821a-08b38f2306fb\#project</c-> <c- p>.</c-></span></pre>
     <figcaption>Alice’s data registration for <strong>pro</strong> projects</figcaption>
    </figure>
    <dl>
@@ -836,7 +836,7 @@ application should rely on <code>dataOwner</code> information in the Data Grant.
      <p>Shape Tree used by this Data Registration</p>
     <dt data-md>iriPrefix
     <dd data-md>
-     <p>String that should be used as base for creating IRIs for new Data Instances in this registration, by appending a unique string to the `iriPrefix`</p>
+     <p>String that should be used as base for creating IRIs for new Data Instances in this registration, by appending a unique string to the <code>iriPrefix</code></p>
    </dl>
    <h3 class="heading settled" data-level="6.1" id="data-instance"><span class="secno">6.1. </span><span class="content">Data Instance</span><a class="self-link" href="#data-instance"></a></h3>
    <p>Data Instances are domain specific data records. They don’t use <code>interop:</code> vocabulary,
@@ -885,19 +885,12 @@ HTTP response when the representation was retreived.</p>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
+   <dt id="biblio-sai">[SAI]
+   <dd>Justin Bingham; Eric Prud'hommeaux; elf Pavlik. <a href="https://solid.github.io/data-interoperability-panel/specification/"><cite>Solid Application Interoperability</cite></a>. URL: <a href="https://solid.github.io/data-interoperability-panel/specification/">https://solid.github.io/data-interoperability-panel/specification/</a>
    <dt id="biblio-sai-js">[SAI-JS]
    <dd>elf Pavlik; Maciej Samoraj; Ángel Araya. <a href="https://github.com/janeirodigital/sai-js"><cite>Solid Application Interoperability - TypeScript implementation</cite></a>. URL: <a href="https://github.com/janeirodigital/sai-js">https://github.com/janeirodigital/sai-js</a>
    <dt id="biblio-shapetrees">[SHAPETREES]
    <dd>Justin Bingham; et al. <a href="https://shapetrees.org/TR/specification/"><cite>Shape Trees</cite></a>. URL: <a href="https://shapetrees.org/TR/specification/">https://shapetrees.org/TR/specification/</a>
    <dt id="biblio-shex">[SHEX]
    <dd>Eric Prud'hommeaux; et al. <a href="http://shex.io/shex-semantics/index.html"><cite>Shape Expressions Language 2.1</cite></a>. URL: <a href="http://shex.io/shex-semantics/index.html">http://shex.io/shex-semantics/index.html</a>
-   <dt id="biblio-solid-interop">[SOLID-INTEROP]
-   <dd>Justin Bingham; Eric Prud'hommeaux; elf Pavlik. <a href="https://solid.github.io/data-interoperability-panel/specification/"><cite>Solid Application Interoperability</cite></a>. URL: <a href="https://solid.github.io/data-interoperability-panel/specification/">https://solid.github.io/data-interoperability-panel/specification/</a>
   </dl>
-  <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
-  <div style="counter-reset:issue">
-   <div class="issue"> Reference shape path documentation <a class="issue-return" href="#issue-f026f3dd" title="Jump to section">↵</a></div>
-   <div class="issue"> Details can change based on experience from implementing Authorization Agent role <a class="issue-return" href="#issue-e982e541" title="Jump to section">↵</a></div>
-   <div class="issue"> Add details as soon as defined for Authorization Agent <a class="issue-return" href="#issue-ab34eff5" title="Jump to section">↵</a></div>
-   <div class="issue"> Specification will change to store Access Grants in Application Registration <a class="issue-return" href="#issue-208eda88" title="Jump to section">↵</a></div>
-  </div>

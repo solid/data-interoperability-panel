@@ -1,0 +1,18 @@
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX solidtrees: <https://solidshapes.example/trees/>
+PREFIX alice-auth: <https://auth.alice.example/>
+PREFIX alice-pro: <https://pro.alice.example/>
+
+alice-auth:8307e5b4-4fd6-4e76-99bf-64df6a7d2894
+  a interop:DataConsent ;
+  interop:grantedBy <https://alice.example/#id> ;
+  interop:grantedWith <https://jarvis.alice.example/#agent> ;
+  interop:grantee <https://someapp.example/#app> ;
+  interop:registeredShapeTree solidtrees:Project ;
+  interop:accessMode acl:Read, acl:Write ;
+  interop:scopeOfConsent interop:SelectedFromRegistry ;
+  interop:dataOwner <https://alice.example/#id> ;
+  interop:hasDataRegistration alice-pro:773605f0-b5bf-4d46-878d-5c167eac8b5d ;
+  interop:hasDataInstance
+    alice-pro:ccbd77ae-f769-4e07-b41f-5136501e13e7\#project .
