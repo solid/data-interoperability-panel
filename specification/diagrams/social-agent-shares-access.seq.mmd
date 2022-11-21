@@ -1,0 +1,36 @@
+sequenceDiagram
+
+    participant id_proj as Projectron's ID Document
+    participant proj as Projectron
+    
+    participant id_alice as Alice's Identity Document
+    participant idp_alice as Alice's Identity Provider
+    participant aa_alice as Authorization Agent
+    participant pod_alice as Alice's Pod
+    
+    participant id_bob as Bob's Identity Document
+    participant pod_bob as Bob's Pod
+
+    Note over proj: 1. 👩 Alice uses Projectron
+    Note over proj: 2. 👩 Alice provides her Identity
+    Note over proj, id_alice: 3. Projectron discovers Alice's IdP & AA
+    Note over proj, idp_alice: 4. 👩 Alice logs in via her IdP
+    Note over proj, aa_alice: 5. Projectron gets Application Registration
+    Note over proj: 6. 👩 Alice decides to share a project with Bob
+    Note over proj: 7. Projectron generates Access Needs for Bob
+    
+    proj-->>aa_alice: 8. Redirects to AA with Bob's Access Needs
+    
+    Note over id_proj, aa_alice: 9. AA discovers Projectron's redirect uri
+    Note over aa_alice: 10. Presents Alice with Access Needs
+    Note over aa_alice: 11. 👩 Alice reviews Access Needs
+    Note over aa_alice: 12. 👩 Alice chooses scope of access for Bob
+    Note over aa_alice, pod_alice: 14. Record Access Authorization
+    Note over aa_alice, pod_alice: 15. Create Social Agent Registration
+    Note over aa_alice, pod_alice: 16. Record Access Grant
+    Note over aa_alice, id_bob: 17. Discover Bob's Access Inbox
+    Note over aa_alice, pod_bob: 18. Put Access Receipt in Access Inbox
+    
+    aa_alice-->>proj: 19. Redirect Alice back to Projectron
+    
+    Note over proj: 20. 🟢 Now Bob can access the shared project
