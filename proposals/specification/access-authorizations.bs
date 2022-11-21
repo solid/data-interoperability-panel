@@ -2,7 +2,7 @@ Access Authorizations {#authorizations}
 =====================
 
 [=Access Authorizations=] record a [=Social Agent's=] decision to grant access to
-some portion of the data in their control to another [=Social Agent=] or 
+some portion of the data in their control to another [=Social Agent=] or
 [=Application=]. [=Access Authorizations=] are not shared with a grantee.
 
 [=Access Grants=] are generated from [=Access Authorizations=]. They are shared
@@ -12,11 +12,11 @@ granted to them.
 ## Access Authorization ## {#access-authorization}
 
 An <dfn>Access Authorization</dfn> records the decision of a [=Social Agent=]
-to grant access to some portion of data in their control to 
-another [=Agent=]. 
+to grant access to some portion of data in their control to
+another [=Agent=].
 
 [=Access Authorizations=] should not be shared with the [=Agent=] that
-has been granted access. [=Access Grants=] are generated from 
+has been granted access. [=Access Grants=] are generated from
 [=Access Authorizations=], and are appropriate to share with the grantee.
 
 [=Access Authorizations=] are recorded in a [=Social Agent's=] [=Authorization Registry=].
@@ -24,8 +24,8 @@ has been granted access. [=Access Grants=] are generated from
 [=Access Authorizations=] are immutable. If an [=Access Authorization=] for an
 [=Agent=] needs to change, it should be replaced.
 
-If an [=Access Authorization=] is replaced, history may be retained by unlinking the 
-previous [=Access Authorization=] from the [=Authorization Registry=], and linking 
+If an [=Access Authorization=] is replaced, history may be retained by unlinking the
+previous [=Access Authorization=] from the [=Authorization Registry=], and linking
 to it from the replacement [=Access Authorization=] via `interop:replaces`.
 
 [Class Definition](interop.ttl#AccessAuthorization) -
@@ -68,7 +68,7 @@ to it from the replacement [=Access Authorization=] via `interop:replaces`.
     <tr>
       <td>hasAccessNeedGroup</td>
       <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
-      <td>An [=Access Need Group=] used to communicate the 
+      <td>An [=Access Need Group=] used to communicate the
       [=Access Needs=] that the [=Access Authorization=] is
       satisfying</td>
     </tr>
@@ -86,7 +86,7 @@ to it from the replacement [=Access Authorization=] via `interop:replaces`.
 </table>
 
 <figure>
-  <figcaption>Alice's [=Access Authorization=] for Projectron at  
+  <figcaption>Alice's [=Access Authorization=] for Projectron at
     https://alice.example/authorization/e2765d6c -
     <a href="snippets/alice.example/e2765d6c.ttl">View</a>
   </figcaption>
@@ -98,7 +98,7 @@ to it from the replacement [=Access Authorization=] via `interop:replaces`.
 </figure>
 
 <figure>
-  <figcaption>Alice's [=Access Authorization=] for Bob at  
+  <figcaption>Alice's [=Access Authorization=] for Bob at
     https://alice.example/authorization/4460dce3 -
     <a href="snippets/alice.example/4460dce3.ttl">View</a>
     </figcaption>
@@ -109,6 +109,12 @@ to it from the replacement [=Access Authorization=] via `interop:replaces`.
   </pre>
 </figure>
 
+Issue(177):
+
+Issue(221):
+
+Issue(256):
+
 ## Data Authorization ## {#data-authorization}
 
 A <dfn>Data Authorization</dfn> records the decision of a [=Social Agent=]
@@ -116,7 +122,7 @@ to grant access to a specific type of data in their control, identified
 by a [=Shape Tree=]. They are always associated with a single
 [=Access Authorization=].
 
-[=Data Authorizations=] should not be shared with the [=Agent=] that has 
+[=Data Authorizations=] should not be shared with the [=Agent=] that has
 been granted access. [=Data Grants=] are generated from [=Data Authorizations=],
 and are appropriate to share with the grantee.
 
@@ -164,27 +170,27 @@ needs to change, it should be replaced.
       <td>creatorAccessMode</td>
       <td>`acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append`</td>
       <td>Additional access mode assigned to the creator of a
-        data instance. Adds to the set of modes linked via 
+        data instance. Adds to the set of modes linked via
         `interop:accessMode`. Only valid when `accessMode` includes
          `acl:Create`, `acl:Write`, or `acl:Append`</td>
     </tr>
     <tr>
       <td>scopeOfAuthorization</td>
-      <td>interop:All, interop:AllFromAgent, interop:AllFromRegistry, 
+      <td>interop:All, interop:AllFromAgent, interop:AllFromRegistry,
       interop:SelectedFromRegistry, interop:Inherited</td>
       <td>Identifies the [=access scope=] of the [=Data Authorization=]</td>
     </tr>
     <tr>
       <td>hasDataRegistration</td>
       <td>A [=Data Registration=] for `registeredShapeTree`</td>
-      <td>Links to a [=Data Registration=] of registeredShapeTree in a 
+      <td>Links to a [=Data Registration=] of registeredShapeTree in a
       [=Data Registry=] that is a subject of the current
       [=Data Authorization=].</td>
     </tr>
     <tr>
       <td>hasDataInstance</td>
       <td>[=Data instance=] of `registeredShapeTree`</td>
-      <td>Links to a [=Data Instance=] of registeredShapeTree in a 
+      <td>Links to a [=Data Instance=] of registeredShapeTree in a
       [=Data Registry=].</td>
     </tr>
     <tr>
@@ -228,9 +234,9 @@ needs to change, it should be replaced.
 
 ## Access Grant ## {#access-grant}
 
-An <dfn>Access Grant</dfn> provides an [=Agent=] with a detailed 
+An <dfn>Access Grant</dfn> provides an [=Agent=] with a detailed
 description of access that has been granted to them. [=Access Grants=]
-are generated from [=Access Authorizations=], and are stored in the 
+are generated from [=Access Authorizations=], and are stored in the
 [=Agent Registry=] of the [=Data Owner=].
 
 Each [=Access Grant=] has one or more [=Data Grants=], each of which
@@ -287,7 +293,7 @@ needs to change, it must be replaced.
   <figcaption>Alice's [=Access Grant=] to Projectron, stored in the
   [=Agent Registration=] for Projectron in her [=Agent Registry=] at
   https://alice.pod.example/agents/2f2f3628/27eae14b -
-  <a href="snippets/alice.example/27eae14b.ttl">View</a> 
+  <a href="snippets/alice.example/27eae14b.ttl">View</a>
   </figcaption>
   <pre class=include-code>
   path: snippets/alice.example/27eae14b.ttl
@@ -303,14 +309,14 @@ of access that has been granted to them for a specific type of data,
 identified by a [=Shape Tree=]. Each [=Data Grant=] is associated with
 a single [=Access Grant=].
 
-A [=Data Grant=] may inherit from another [=Data Grant=], when the 
+A [=Data Grant=] may inherit from another [=Data Grant=], when the
 [=shape tree=] associated with the "parent" [=Data Grant=] has one or
 more [=Shape Tree References=].
 
 Each [=Data Grant=] has an assigned scope (`interop:scopeOfGrant`), which
 determines how permissions are assigned.
 
-When creating a [=Data Grant=], there should be an [=Access Need=] linked 
+When creating a [=Data Grant=], there should be an [=Access Need=] linked
 via `interop:satisfiesAccessNeed` with the same `interop:registeredShapeTree`.
 
 When a [=Social Agent=] grants another [=Agent=] access to data that was shared
@@ -366,13 +372,13 @@ needs to change, it should be replaced.
       <td>creatorAccessMode</td>
       <td>`acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append`</td>
       <td>Additional access mode assigned to the creator of a
-        data instance. Adds to the set of modes linked via 
+        data instance. Adds to the set of modes linked via
         `interop:accessMode`. Only valid when `accessMode` includes
          `acl:Create`, `acl:Write`, or `acl:Append`</td>
     </tr>
     <tr>
       <td>scopeOfGrant</td>
-      <td>interop:All, interop:AllFromAgent, interop:AllFromRegistry, 
+      <td>interop:All, interop:AllFromAgent, interop:AllFromRegistry,
       interop:SelectedFromRegistry, interop:Inherited</td>
       <td>Identifies the [=access scope=] of the [=Data Grant=]</td>
     </tr>
@@ -399,7 +405,7 @@ needs to change, it should be replaced.
 <figure>
   <figcaption>Alice's [=Data Grant=] for Projectron to access Projects at
   https://alice.example/agents/2f2f3628/40d038ea -
-  <a href="snippets/alice.example/40d038ea.ttl">View</a> 
+  <a href="snippets/alice.example/40d038ea.ttl">View</a>
   </figcaption>
   <pre class=include-code>
   path: snippets/alice.example/40d038ea.ttl
@@ -420,11 +426,13 @@ needs to change, it should be replaced.
   </pre>
 </figure>
 
+Issue(223):
+
 ## Delegated Data Grant ## {#delegated-data-grant}
 
 A <dfn>Delegated Data Grant</dfn> is a sub-class of [=Data Grant=]
 used when a grantee re-shares or "delegates" access they've
-received to another [=Agent=]. The most common use case 
+received to another [=Agent=]. The most common use case
 is when Alice shares access with Bob, and Bob delegates
 that access to his project management application.
 
@@ -456,7 +464,7 @@ needs to change, it should be replaced.
 </table>
 
 <figure>
-  <figcaption>Alice's [=Delegated Data Grant=] for Projectron to access Projects 
+  <figcaption>Alice's [=Delegated Data Grant=] for Projectron to access Projects
   that Bob shared with her at https://alice.example/agents/2f2f3628/fe818190 -
   <a href="snippets/alice.example/fe818190.ttl">View</a>
   </figcaption>
@@ -468,7 +476,7 @@ needs to change, it should be replaced.
 </figure>
 
 <figure>
-  <figcaption>Alice's [=Delegated Data Grant=] for Projectron to access Tasks 
+  <figcaption>Alice's [=Delegated Data Grant=] for Projectron to access Tasks
   that Bob shared with her at https://alice.example/agents/2f2f3628/017d6a07 -
   <a href="snippets/alice.example/017d6a07.ttl">View</a>
   </figcaption>
@@ -479,14 +487,16 @@ needs to change, it should be replaced.
   </pre>
 </figure>
 
+Issue(222):
+
 ## Data Access Scopes ## {#access-scopes}
 
-Each [=Data Authorization=] applies to a specific type of data, 
-identified by a [=shape tree=]. The amount of access authorized for data 
+Each [=Data Authorization=] applies to a specific type of data,
+identified by a [=shape tree=]. The amount of access authorized for data
 of that type is specified by the
 <dfn>Access Scope</dfn>, via `interop:scopeOfAuthorization`.
 
-[=Data Grants=] are generated from a given [=Data Authorization=] based on 
+[=Data Grants=] are generated from a given [=Data Authorization=] based on
 [=access scope=] and other supporting criteria detailed below.
 
 Each [=Data Grant=] corresponds to a specific [=Data Registration=]
@@ -549,16 +559,16 @@ inherited permissions.
 
 ### <code>All</code> ### {#scope-all}
 
-The `interop:All` [=access scope=] includes all data of a specified type 
-belonging to a given data owner, and all data of that same type shared with the data 
+The `interop:All` [=access scope=] includes all data of a specified type
+belonging to a given data owner, and all data of that same type shared with the data
 owner, across all of the data owner’s registries.
 
 <b>Shapes:</b> [DataAuthorizationAllShape](interop.shex#DataAuthorizationAllShape)
 
-The follow example illustrates *Alice's* authorization to give *Projectron* access to 
-data of type `pm-shapetrees:ProjectTree` with a scope of `interop:All`. Since 
+The follow example illustrates *Alice's* authorization to give *Projectron* access to
+data of type `pm-shapetrees:ProjectTree` with a scope of `interop:All`. Since
 Alice has two [=Data Registries=] and Bob has shared projects with her, several
-[=Data Grants=] will be generated from this [=Data Authorization=] and shared 
+[=Data Grants=] will be generated from this [=Data Authorization=] and shared
 with Projectron.
 
 Note: `interop:All` is only valid for a [=Data Authorization=].
@@ -579,10 +589,10 @@ for each unique [=Data Registry=], including Bob's.
 </figure>
 
 <figure>
-  <figcaption>Alice's [=Data Grant=] for Projectron to access Projects in her 
+  <figcaption>Alice's [=Data Grant=] for Projectron to access Projects in her
   Work [=Data Registry=] at
   https://alice.example/agents/2f2f3628/40d038ea -
-  <a href="snippets/alice.example/40d038ea.ttl">View</a> 
+  <a href="snippets/alice.example/40d038ea.ttl">View</a>
   </figcaption>
   <pre class=include-code>
   path: snippets/alice.example/40d038ea.ttl
@@ -596,7 +606,7 @@ for each unique [=Data Registry=], including Bob's.
   <figcaption>Alice's [=Data Grant=] for Projectron to access her Projects in
   her Personal [=Data Registry=] at
   https://alice.example/agents/2f2f3628/a0623c8f -
-  <a href="snippets/alice.example/a0623c8f.ttl">View</a> 
+  <a href="snippets/alice.example/a0623c8f.ttl">View</a>
   </figcaption>
   <pre class=include-code>
   path: snippets/alice.example/a0623c8f.ttl
@@ -607,7 +617,7 @@ for each unique [=Data Registry=], including Bob's.
 </figure>
 
 <figure>
-  <figcaption>Alice's [=Delegated Data Grant=] for Projectron to access Projects 
+  <figcaption>Alice's [=Delegated Data Grant=] for Projectron to access Projects
   that Bob shared with her at https://alice.example/agents/2f2f3628/fe818190 -
   <a href="snippets/alice.example/fe818190.ttl">View</a>
   </figcaption>
@@ -621,10 +631,10 @@ for each unique [=Data Registry=], including Bob's.
 
 ### <code>AllFromAgent</code> ### {#scope-fromagent}
 
-The `interop:AllFromAgent` [=access scope=] includes all data of a given type 
-owned and shared by a specified [=Social Agent=], across all of their 
+The `interop:AllFromAgent` [=access scope=] includes all data of a given type
+owned and shared by a specified [=Social Agent=], across all of their
 [=Data Registries=]. Essentially, Alice can use this scope to delegate
-any access that she has been given to another [=Social Agent's=] 
+any access that she has been given to another [=Social Agent's=]
 data (e.g. Bob), to another [=Agent=] of her choosing.
 
 The [=Social Agent=] whose access is being shared is identified via
@@ -657,7 +667,7 @@ only one [=Data Registry=], which he shared with her previously
 through her [=Agent Registration=] in his [=Agent Registry=].
 
 <figure>
-  <figcaption>Bob's [=Data Grant=] for Alice to access Projects 
+  <figcaption>Bob's [=Data Grant=] for Alice to access Projects
   at https://bob.example/agents/255aa181/b2b6a645 -
   <a href="snippets/bob.example/b2b6a645.ttl">View</a>
   </figcaption>
@@ -672,11 +682,11 @@ through her [=Agent Registration=] in his [=Agent Registry=].
 Alice generates one [=Delegated Data Grant=] for Performchart to access
 the Project data that Bob shared with her, which she stores in
 the [=Agent Registration=] for Performchart in her [=Agent Registry=].
-It is marked as a delegation of Bob's [=Data Grant=] 
+It is marked as a delegation of Bob's [=Data Grant=]
 via `interop:delegationOfGrant`.
 
 <figure>
-  <figcaption>Alice's [=Delegated Data Grant=] for Performchart to access Projects 
+  <figcaption>Alice's [=Delegated Data Grant=] for Performchart to access Projects
   that Bob shared with her at https://alice.example/agents/c2328cdd/efc426c9 -
   <a href="snippets/alice.example/efc426c9.ttl">View</a>
   </figcaption>
@@ -690,8 +700,8 @@ via `interop:delegationOfGrant`.
 
 ### <code>AllFromRegistry</code> ### {#scope-fromregistry}
 
-The `interop:AllFromRegistry` [=access scope=] includes all 
-data of a specified type in a specified [=Data Registry=] of a given data owner. 
+The `interop:AllFromRegistry` [=access scope=] includes all
+data of a specified type in a specified [=Data Registry=] of a given data owner.
 Since a [=Data Registry=] can only have one [=Data Registration=] per [=shape tree=],
 this scope provide access to all [=Data Instances=] in the [=Data Registration=]
 of the [=shape tree=] specified via `interop:registeredShapeTree`.
@@ -704,8 +714,8 @@ all data of type `pm-shapetrees:ProjectTree` in the [=Data Registry=] he uses
 for his professional work.
 
 <figure>
-  <figcaption>Bob's [=Data Authorization=] at https://bob.example/authorization/e4b1b154 
-  for Alice to access his Project data - 
+  <figcaption>Bob's [=Data Authorization=] at https://bob.example/authorization/e4b1b154
+  for Alice to access his Project data -
   <a href="snippets/bob.example/e4b1b154.ttl">View</a>
   </figcaption>
   <pre class=include-code>
@@ -716,13 +726,13 @@ for his professional work.
   </pre>
 </figure>
 
-The following [=Data Grant=] is generated for Alice based on the above 
+The following [=Data Grant=] is generated for Alice based on the above
 [=Data Authorization=], and stored in the [=Agent Registration=] for Alice in
 Bob's [=Agent Registry=].
 
 <figure>
-  <figcaption>Bob's [=Data Grant=]   
-  at https://bob.example/agents/255aa181/b2b6a645 
+  <figcaption>Bob's [=Data Grant=]
+  at https://bob.example/agents/255aa181/b2b6a645
   for Alice to access his work Project data -
   <a href="snippets/bob.example/b2b6a645.ttl">View</a>
   </figcaption>
@@ -767,10 +777,10 @@ In the above example, Bob would be giving Alice the following access to
     <tbody>
       <tr>
         <td>`acl:Create`</td>
-        <td>Create new [=Data Instances=]. [=Access modes=] assigned to 
-        the creator on the created [=Data Instance=] should be a union of 
-        `interop:accessMode` and `interop:createAccessMode` modes. 
-        <b>acl:Create is not currently supported. 
+        <td>Create new [=Data Instances=]. [=Access modes=] assigned to
+        the creator on the created [=Data Instance=] should be a union of
+        `interop:accessMode` and `interop:createAccessMode` modes.
+        <b>acl:Create is not currently supported.
         Substitute with acl:Write or acl:Append, but may exceed intended scope
         of access.</b></td>
       </tr>
@@ -780,14 +790,14 @@ In the above example, Bob would be giving Alice the following access to
       </tr>
       <tr>
         <td>`acl:Update`</td>
-        <td>Modify [=Data Instances=]. Modification of [=Data Registration=] graph 
-        not permitted. <b>`acl:Update` is not currently supported. Substitute with 
+        <td>Modify [=Data Instances=]. Modification of [=Data Registration=] graph
+        not permitted. <b>`acl:Update` is not currently supported. Substitute with
         `acl:Write` or `acl:Append`, but may exceed intended scope of access.</b></td>
       </tr>
       <tr>
         <td>`acl:Delete`</td>
-        <td>Delete [=Data Instances=]. Deletion of [=Data Registration=] not permitted. 
-        <b>`acl:Delete` is not currently supported. Substitute with `acl:Write`, but 
+        <td>Delete [=Data Instances=]. Deletion of [=Data Registration=] not permitted.
+        <b>`acl:Delete` is not currently supported. Substitute with `acl:Write`, but
         may exceed intended scope of access.</b></td>
       </tr>
     </tbody>
@@ -797,20 +807,20 @@ In the above example, Bob would be giving Alice the following access to
 ### <code>SelectedFromRegistry</code> ### {#scope-selected}
 
 The `interop:SelectedFromRegistry` [=access scope=] includes only
-specific [=Data Instances=] of the [=shape tree=] specified via 
-`interop:registeredShapeTree` in the [=Data Registry=] of a given 
+specific [=Data Instances=] of the [=shape tree=] specified via
+`interop:registeredShapeTree` in the [=Data Registry=] of a given
 data owner.
 
 <b>Shapes:</b> [DataAuthorizationSelectedFromRegistryShape](interop.shex#DataAuthorizationSelectedFromRegistryShape) -
 [DataGrantSelectedFromRegistryShape](interop.shex#DataGrantSelectedFromRegistryShape)
 
 The following example illustrates *Jose's* authorization for Alice to access
-two specific [=Data Instances=] of `pm-shapetrees:ProjectTree` in the 
+two specific [=Data Instances=] of `pm-shapetrees:ProjectTree` in the
 [=Data Registry=] he uses for his professional work.
 
 <figure>
-  <figcaption>Jose's [=Data Authorization=] at https://jose.example/authorization/69095550 
-  for Alice to access his Project data - 
+  <figcaption>Jose's [=Data Authorization=] at https://jose.example/authorization/69095550
+  for Alice to access his Project data -
   <a href="snippets/jose.example/69095550.ttl">View</a>
   </figcaption>
   <pre class=include-code>
@@ -826,8 +836,8 @@ The following [=Data Grant=] is generated for Alice based on the above
 Jose's [=Agent Registry=].
 
 <figure>
-  <figcaption>Jose's [=Data Grant=]   
-  at https://jose.example/agents/efba320e/2aa21a8c 
+  <figcaption>Jose's [=Data Grant=]
+  at https://jose.example/agents/efba320e/2aa21a8c
   to share specific work projects with Alice -
   <a href="snippets/jose.example/2aa21a8c.ttl">View</a>
   </figcaption>
@@ -859,11 +869,11 @@ limited by the [=access modes=] linked via `interop:accessMode`.
     <tbody>
       <tr>
         <td>`acl:Create`</td>
-        <td>Create new resources within the [=Data Instances=] where applicable. 
-        [=Access modes=] assigned to 
-        the creator on a created resource should be a union of 
-        `interop:accessMode` and `interop:createAccessMode` modes. 
-        <b>acl:Create is not currently supported. 
+        <td>Create new resources within the [=Data Instances=] where applicable.
+        [=Access modes=] assigned to
+        the creator on a created resource should be a union of
+        `interop:accessMode` and `interop:createAccessMode` modes.
+        <b>acl:Create is not currently supported.
         Substitute with acl:Write or acl:Append, but may exceed intended scope
         of access.</b></td>
       </tr>
@@ -873,8 +883,8 @@ limited by the [=access modes=] linked via `interop:accessMode`.
       </tr>
       <tr>
         <td>`acl:Update`</td>
-        <td>Modify [=Data Instance=] and any contained resources where applicable. 
-        <b>`acl:Update` is not currently supported. Substitute with `acl:Write` or 
+        <td>Modify [=Data Instance=] and any contained resources where applicable.
+        <b>`acl:Update` is not currently supported. Substitute with `acl:Write` or
         `acl:Append`, but may exceed intended scope of access.</b></td>
       </tr>
       <tr>
@@ -885,19 +895,21 @@ limited by the [=access modes=] linked via `interop:accessMode`.
       <tr>
         <td>`acl:Delete`</td>
         <td>Delete [=Data Instance=] or any contained resources where applicable.
-        <b>`acl:Delete` is not currently supported. Substitute with `acl:Write`, but 
+        <b>`acl:Delete` is not currently supported. Substitute with `acl:Write`, but
         may exceed intended scope of access.</b></td>
       </tr>
     </tbody>
   </table>
 </figure>
 
+Issue(186):
+
 ### <code>Inherited</code> ### {#scope-inherited}
 
 The `interop:Inherited` [=access scope=] is unique in that it depends
 on the existence of another [=Data Authorization=] with a scope of
 `interop:All`, `interop:AllFromAgent`, `interop:AllFromRegistry`, or
-`interop:SelectedFromRegistry`. 
+`interop:SelectedFromRegistry`.
 
 When a [=Data Authorization=] exists with
 one of those scopes, and its `interop:registeredShapeTree` specifies
@@ -923,7 +935,7 @@ for each distinct reference.
 
 The [=shape tree=] `pm-shapetrees:ProjectTree` specifies one virtual hierarchy
 via `st:references`, indicating that a Project [=Data Instance=] virtually
-includes Task instances of `pm-shapetrees:TaskTree` through the 
+includes Task instances of `pm-shapetrees:TaskTree` through the
 predicate `pm:hasTask`.
 
 <figure>
@@ -958,10 +970,10 @@ for `pm-shapetrees:TaskTree`.
 for Projectron based on the above [=Data Authorizations=].
 
 <figure>
-  <figcaption>Alice's [=Data Grant=] for Projectron to access Projects in her 
+  <figcaption>Alice's [=Data Grant=] for Projectron to access Projects in her
   Work [=Data Registry=] at
   https://alice.example/agents/2f2f3628/40d038ea -
-  <a href="snippets/alice.example/40d038ea.ttl">View</a> 
+  <a href="snippets/alice.example/40d038ea.ttl">View</a>
   </figcaption>
   <pre class=include-code>
   path: snippets/alice.example/40d038ea.ttl
@@ -972,10 +984,10 @@ for Projectron based on the above [=Data Authorizations=].
 </figure>
 
 <figure>
-  <figcaption>Alice's [=Data Grant=] for Projectron to access Tasks associated 
+  <figcaption>Alice's [=Data Grant=] for Projectron to access Tasks associated
   with authorized Work Projects at
   https://alice.example/agents/2f2f3628/0945218b -
-  <a href="snippets/alice.example/0945218b.ttl">View</a> 
+  <a href="snippets/alice.example/0945218b.ttl">View</a>
   </figcaption>
   <pre class=include-code>
   path: snippets/alice.example/0945218b.ttl
@@ -991,17 +1003,17 @@ When a [=Data Grant=] is assigned the `interop:Inherited` scope, the
 of the [=Data Grant=] linked via `interop:inheritsFromGrant`
 
 In the example above, Alice grants Projectron the following access to
-<b>only the</b> `pm-shapetrees:TaskTree` [=Data Instances=] (Tasks) in the 
+<b>only the</b> `pm-shapetrees:TaskTree` [=Data Instances=] (Tasks) in the
 `alice-work-data:df4ab227` [=Data Registration=] that are linked
 to `pm-shapetrees:ProjectTree` [=Data Instances=] (Projects) in the
 `alice-work-data:8501f084` [=Data Registration=].
 
-For example, the three Tasks linked from the Project [=Data Instance=] 
-below via `pm:hasTask` would be included in the `interop:Inherited` scope. 
+For example, the three Tasks linked from the Project [=Data Instance=]
+below via `pm:hasTask` would be included in the `interop:Inherited` scope.
 
 <figure>
   <figcaption>A Project [=Data Instance=] in `alice-work-data:8501f084` -
-  <a href="snippets/work.alice.example/16e1eae9.ttl">View</a> 
+  <a href="snippets/work.alice.example/16e1eae9.ttl">View</a>
   </figcaption>
   <pre class=include-code>
   path: snippets/work.alice.example/16e1eae9.ttl
@@ -1024,11 +1036,11 @@ below via `pm:hasTask` would be included in the `interop:Inherited` scope.
     <tbody>
       <tr>
         <td>`acl:Create`</td>
-        <td>Create new [=Data Instances=] linked by shape tree reference. 
-        [=Access modes=] assigned to 
-        the creator on the created [=Data Instance=] should be a union of 
-        `interop:accessMode` and `interop:createAccessMode` modes. 
-        <b>acl:Create is not currently supported. 
+        <td>Create new [=Data Instances=] linked by shape tree reference.
+        [=Access modes=] assigned to
+        the creator on the created [=Data Instance=] should be a union of
+        `interop:accessMode` and `interop:createAccessMode` modes.
+        <b>acl:Create is not currently supported.
         Substitute with acl:Write or acl:Append, but may exceed intended scope
         of access.</b></td>
       </tr>
@@ -1038,25 +1050,27 @@ below via `pm:hasTask` would be included in the `interop:Inherited` scope.
       </tr>
       <tr>
         <td>`acl:Update`</td>
-        <td>Modify [=Data Instances=] linked by shape tree reference. 
-        <b>`acl:Update` is not currently supported. Substitute with 
+        <td>Modify [=Data Instances=] linked by shape tree reference.
+        <b>`acl:Update` is not currently supported. Substitute with
         `acl:Write` or `acl:Append`, but may exceed intended scope of access.</b></td>
       </tr>
       <tr>
         <td>`acl:Append`</td>
-        <td>Add new data to [=Data Instances=] linked by shape tree reference, 
+        <td>Add new data to [=Data Instances=] linked by shape tree reference,
         without changing any existing data.</td>
       </tr>
       <tr>
         <td>`acl:Delete`</td>
-        <td>Delete [=Data Instances=] linked by shape tree reference. Deletion of 
-        [=Data Registration=] not permitted. 
-        <b>`acl:Delete` is not currently supported. Substitute with `acl:Write`, but 
+        <td>Delete [=Data Instances=] linked by shape tree reference. Deletion of
+        [=Data Registration=] not permitted.
+        <b>`acl:Delete` is not currently supported. Substitute with `acl:Write`, but
         may exceed intended scope of access.</b></td>
       </tr>
     </tbody>
-  </table>  
+  </table>
 </figure>
+
+Issue(174):
 
 ## Access Receipt ## {#access-receipt}
 
@@ -1138,7 +1152,7 @@ An [=Authorization Registry=] links to any number of registered [=Access Authori
 </table>
 
 <figure>
-  <figcaption>An [=Authorization Registry=] at 
+  <figcaption>An [=Authorization Registry=] at
   https://alice.example/authorization/ -
   <a href="snippets/alice.example/authorization.ttl">View</a></figcaption>
   <pre class=include-code>
@@ -1289,5 +1303,5 @@ An [=Authorization Registry=] links to any number of registered [=Access Authori
 
 The [=Authorization Registry=] resources MAY use any resource or subject name.
 
-The resource names for [=Access Grants=] <em class="rfc2119">SHOULD</em> 
+The resource names for [=Access Grants=] <em class="rfc2119">SHOULD</em>
 be unpredictable.
