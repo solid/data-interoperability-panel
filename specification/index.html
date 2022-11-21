@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version 44af0bf3e, updated Fri Jul 29 17:05:16 2022 -0700" name="generator">
+  <meta content="Bikeshed version 63e66730b, updated Tue Oct 25 12:35:05 2022 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="71f306e99ccd1df70150c6a2c6b009361bfef6b1" name="document-revision">
+  <meta content="b766a88856d3fb28a40eb065308c3e99a5e0846d" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -466,6 +466,14 @@ a.self-link:hover {
 .heading > a.self-link {
     font-size: 83%;
 }
+.example > a.self-link,
+.note > a.self-link,
+.issue > a.self-link {
+    /* These blocks are overflow:auto, so positioning outside
+       doesn't work. */
+    left: auto;
+    right: 0;
+}
 li > a.self-link {
     left: calc(-1 * (3.5rem - 26px) - 2em);
 }
@@ -554,7 +562,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-09-07">7 September 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-11-21">21 November 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -684,16 +692,17 @@ to other <a data-link-type="dfn" href="#agents①" id="ref-for-agents①①">Age
    </ul>
    <h2 class="heading settled" data-level="2" id="agents"><span class="secno">2. </span><span class="content">Agents</span><a class="self-link" href="#agents"></a></h2>
    <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="agents①">Agents</dfn> are the primary actors in an interoperable Solid <a data-link-type="dfn" href="#ecosystem" id="ref-for-ecosystem">ecosystem</a>.</p>
-   <p>An <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②">Agent</a> is denoted by an <a data-link-type="dfn" href="#identity" id="ref-for-identity">identity</a>. Dereferencing that <a data-link-type="dfn" href="#identity" id="ref-for-identity①">identity</a> leads to <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document">identity profile document</a>, where a graph of useful information 
-about the <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③">Agent</a> can be found. This graph is used by the <a data-link-type="dfn" href="#agents①" id="ref-for-agents①④">Agent</a> as a starting point to look up their own data, as well as data that has 
+   <p>An <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②">Agent</a> is denoted by an <a data-link-type="dfn" href="#identity" id="ref-for-identity">identity</a>. Dereferencing that <a data-link-type="dfn" href="#identity" id="ref-for-identity①">identity</a> leads to <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document">identity profile document</a>, where a graph of useful information
+about the <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③">Agent</a> can be found. This graph is used by the <a data-link-type="dfn" href="#agents①" id="ref-for-agents①④">Agent</a> as a starting point to look up their own data, as well as data that has
 been shared with them.</p>
    <p>The <a data-link-type="dfn" href="#agents①" id="ref-for-agents①⑤">Agent</a> graph in an <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document①">identity profile document</a> is designed to be
-publicly accessible, but many of the things the <a data-link-type="dfn" href="#agents①" id="ref-for-agents①⑥">Agent</a> links to are 
+publicly accessible, but many of the things the <a data-link-type="dfn" href="#agents①" id="ref-for-agents①⑥">Agent</a> links to are
 designed to be private, or accessible only by others they have authorized.</p>
    <p>An <a data-link-type="dfn" href="#agents①" id="ref-for-agents①⑦">Agent</a> can dereference the <a data-link-type="dfn" href="#identity" id="ref-for-identity②">identity</a> of another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①⑧">Agent</a> to obtain
 the public information they need to interact with them.</p>
    <p><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦">Social Agents</a> and <a data-link-type="dfn" href="#application" id="ref-for-application③">Applications</a> are specific types of <a data-link-type="dfn" href="#agents①" id="ref-for-agents①⑨">Agents</a> denoted by this specification.</p>
    <div id="classAgent"></div>
+   <div class="issue no-marker" id="issue-d41d8cd9"><a class="self-link" href="#issue-d41d8cd9"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/210" style="text-transform:none">solid/data-interoperability-panel/210</a><a href="https://github.com/solid/data-interoperability-panel/issues/210">Incorporate profile requirements from solid-oidc for Social Agents and Applications.</a></div>
    <h2 class="heading settled" data-level="3" id="social-agents"><span class="secno">3. </span><span class="content">Social Agents</span><a class="self-link" href="#social-agents"></a></h2>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="social-agent">Social Agent</dfn> is a strongly identifiable individual, group, or
 organization that can own or be responsible for data, and provide authorization to the
@@ -1551,6 +1560,7 @@ one flow to another.</p>
     </table>
    </figure>
    <p><img class="sequence-diagram" src="diagrams/application-requests-access-flow.seq.mmd.svg"></p>
+   <div class="issue no-marker" id="issue-d41d8cd9①"><a class="self-link" href="#issue-d41d8cd9①"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/138" style="text-transform:none">solid/data-interoperability-panel/138</a><a href="https://github.com/solid/data-interoperability-panel/issues/138">document resource centered authorization workflows</a></div>
    <h3 class="heading settled" data-level="7.1" id="authorization-agent"><span class="secno">7.1. </span><span class="content">Authorization Agent</span><a class="self-link" href="#authorization-agent"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="authorization-agent①">Authorization Agent</dfn> is an <a data-link-type="dfn" href="#application" id="ref-for-application③④">Application</a> designated by
 a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑤⑧">Social Agent</a> to be responsible for managing the access to data
@@ -1568,6 +1578,8 @@ a unique sub-domain (see example below) or path.</p>
     <figcaption><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⑥">Social Agent</a> at https://alice.example/#id - <a href="snippets/alice.example/alice.example.ttl">View</a> </figcaption>
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Agent</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- c>######## Registry Sets ########</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasRegistrySet</c-> <c- nn>alice</c-><c- p>:</c-><c- f>registries</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- c>######## Authorization Agent ########</c-></span><span class="line-no highlight-line" data-line="14"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasAuthorizationAgent</c-> <c- nn>alice-jarvis</c-><c- p>:</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- c>######## Inboxes ########</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasInbox</c-> <c- nn>alice-inbox</c-><c- p>:</c-><c- f>general</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessInbox</c-> <c- nn>alice-inbox</c-><c- p>:</c-><c- f>access</c-> <c- p>.</c-></span></pre>
    </figure>
+   <div class="issue no-marker" id="issue-d41d8cd9②"><a class="self-link" href="#issue-d41d8cd9②"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/171" style="text-transform:none">solid/data-interoperability-panel/171</a><a href="https://github.com/solid/data-interoperability-panel/issues/171">Authorization Agent URI should be distinct for each user</a></div>
+   <div class="issue no-marker" id="issue-d41d8cd9③"><a class="self-link" href="#issue-d41d8cd9③"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/232" style="text-transform:none">solid/data-interoperability-panel/232</a><a href="https://github.com/solid/data-interoperability-panel/issues/232">Multiple authorisation apps per social agent</a></div>
    <h4 class="heading settled" data-level="7.1.2" id="agent-registration-discovery"><span class="secno">7.1.2. </span><span class="content">Agent Registration Discovery</span><a class="self-link" href="#agent-registration-discovery"></a></h4>
    <p>An <a data-link-type="dfn" href="#agents①" id="ref-for-agents①①⑧">Agent</a> that needs to discover whether a target <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⑦">Social Agent</a> has
 a corresponding <a data-link-type="dfn" href="#agent-registrations" id="ref-for-agent-registrations⑤">Agent Registration</a> for them can query the <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①①⑨">Authorization Agent</a> for that target <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑥⑧">Social Agent</a>.</p>
@@ -1581,13 +1593,14 @@ a corresponding <a data-link-type="dfn" href="#agent-registrations" id="ref-for-
 </pre>
 <pre class="highlight line-numbered"><span class="line-no"></span><span class="line"><c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c-> <c- m>200</c-> <c- ne>OK</c-></span><span class="line-no"></span><span class="line"><c- e>Link</c-><c- o>:</c-> <c- l>&lt;https://projectron.example/#app>;</c-></span><span class="line-no highlight-line" data-line="3"></span><span class="line highlight-line">  <c- l>anchor="https://alice.jarvis.example/bcf22534-0187-4ae4-b88f-fe0f9fa96659";</c-></span><span class="line-no"></span><span class="line">  <c- l>rel="http://www.w3.org/ns/solid/interop#registeredAgent"</c-></span></pre>
    </figure>
+   <div class="issue no-marker" id="issue-d41d8cd9④"><a class="self-link" href="#issue-d41d8cd9④"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/252" style="text-transform:none">solid/data-interoperability-panel/252</a><a href="https://github.com/solid/data-interoperability-panel/issues/252">Should we restrict Social Agent Reigstration discovery to AA of that social agent?</a></div>
    <h2 class="heading settled" data-level="8" id="needs"><span class="secno">8. </span><span class="content">Access Needs</span><a class="self-link" href="#needs"></a></h2>
    <p><a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦⓪">Social Agents</a> and <a data-link-type="dfn" href="#application" id="ref-for-application③⑤">Applications</a> in the <a data-link-type="dfn" href="#ecosystem" id="ref-for-ecosystem①">ecosystem</a> often
-require access to data controlled by some other <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦①">Social Agent</a>. 
+require access to data controlled by some other <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦①">Social Agent</a>.
 Consequently, a common way to explain
 and communicate data needs between these parties is required.</p>
    <p>A given <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦②">Social Agent</a> or <a data-link-type="dfn" href="#application" id="ref-for-application③⑥">Application</a> expresses their access needs by
-providing one or more <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①⑤">Access Need Groups</a> to the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦③">Social Agent</a> controlling the data they require access to. The channels through which 
+providing one or more <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①⑤">Access Need Groups</a> to the <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦③">Social Agent</a> controlling the data they require access to. The channels through which
 these may be communicated are detailed in <a href="#authorization">§ 7 Authorization Flows</a>.</p>
    <p>Each <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①⑥">Access Need Group</a> is associated with one or more <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑤">Access Needs</a>.</p>
    <p><a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑥">Access Needs</a> represent a request to access a particular type of data
@@ -1691,7 +1704,7 @@ associating them with the <a data-link-type="dfn" href="#access-need" id="ref-fo
      <tr>
       <td>creatorAccessMode
       <td><code>acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append</code>
-      <td>Requested mode of access for the creator of a Data Instance. 
+      <td>Requested mode of access for the creator of a Data Instance.
         Adds to the set of modes linked via <code>interop:accessMode</code>. Only valid when <code>accessMode</code> includes <code>acl:Create</code>, <code>acl:Write</code>, or <code>acl:Append</code>
      <tr>
       <td>accessNecessity
@@ -1725,6 +1738,8 @@ associating them with the <a data-link-type="dfn" href="#access-need" id="ref-fo
   <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromNeed</c-> <c- g>&lt;#need-project></c-> <c- p>.</c->
 </pre>
    </figure>
+   <div class="issue no-marker" id="issue-d41d8cd9⑤"><a class="self-link" href="#issue-d41d8cd9⑤"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/243" style="text-transform:none">solid/data-interoperability-panel/243</a><a href="https://github.com/solid/data-interoperability-panel/issues/243">Access Needs for Public Resources</a></div>
+   <div class="issue no-marker" id="issue-d41d8cd9⑥"><a class="self-link" href="#issue-d41d8cd9⑥"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/237" style="text-transform:none">solid/data-interoperability-panel/237</a><a href="https://github.com/solid/data-interoperability-panel/issues/237">Access needs for pod browser apps</a></div>
    <h3 class="heading settled" data-level="8.3" id="access-descriptions"><span class="secno">8.3. </span><span class="content">Access Descriptions</span><a class="self-link" href="#access-descriptions"></a></h3>
    <h4 class="heading settled" data-level="8.3.1" id="access-need-group-description"><span class="secno">8.3.1. </span><span class="content">Access Need Group Description</span><a class="self-link" href="#access-need-group-description"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-need-group-description①">Access Need Group Description</dfn> provides a short label or
@@ -1884,6 +1899,7 @@ one <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②①">Agent
   <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#need-group-pm</c-> <c- p>.</c->
 </pre>
    </figure>
+   <div class="issue no-marker" id="issue-d41d8cd9⑦"><a class="self-link" href="#issue-d41d8cd9⑦"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/214" style="text-transform:none">solid/data-interoperability-panel/214</a><a href="https://github.com/solid/data-interoperability-panel/issues/214">Use invitation to validate the source of an incoming request</a></div>
    <h2 class="heading settled" data-level="9" id="authorizations"><span class="secno">9. </span><span class="content">Access Authorizations</span><a class="self-link" href="#authorizations"></a></h2>
    <p><a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①③">Access Authorizations</a> record a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧①">Social Agent’s</a> decision to grant access to
 some portion of the data in their control to another <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧②">Social Agent</a> or <a data-link-type="dfn" href="#application" id="ref-for-application③⑧">Application</a>. <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①④">Access Authorizations</a> are not shared with a grantee.</p>
@@ -1891,14 +1907,14 @@ some portion of the data in their control to another <a data-link-type="dfn" hre
 with a given <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②②">Agent</a> to communicate the scope of access that has been
 granted to them.</p>
    <h3 class="heading settled" data-level="9.1" id="access-authorization"><span class="secno">9.1. </span><span class="content">Access Authorization</span><a class="self-link" href="#access-authorization"></a></h3>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-authorization①">Access Authorization</dfn> records the decision of a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧③">Social Agent</a> to grant access to some portion of data in their control to 
+   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-authorization①">Access Authorization</dfn> records the decision of a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧③">Social Agent</a> to grant access to some portion of data in their control to
 another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②③">Agent</a>.</p>
    <p><a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①⑥">Access Authorizations</a> should not be shared with the <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②④">Agent</a> that
 has been granted access. <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-grant①⑧">Access Grants</a> are generated from <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①⑦">Access Authorizations</a>, and are appropriate to share with the grantee.</p>
    <p><a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①⑧">Access Authorizations</a> are recorded in a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧④">Social Agent’s</a> <a data-link-type="dfn" href="#authorization-registry" id="ref-for-authorization-registry②">Authorization Registry</a>.</p>
    <p><a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①⑨">Access Authorizations</a> are immutable. If an <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①①⓪">Access Authorization</a> for an <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②⑤">Agent</a> needs to change, it should be replaced.</p>
    <p>If an <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①①①">Access Authorization</a> is replaced, history may be retained by unlinking the
-previous <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①①②">Access Authorization</a> from the <a data-link-type="dfn" href="#authorization-registry" id="ref-for-authorization-registry③">Authorization Registry</a>, and linking 
+previous <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①①②">Access Authorization</a> from the <a data-link-type="dfn" href="#authorization-registry" id="ref-for-authorization-registry③">Authorization Registry</a>, and linking
 to it from the replacement <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①①③">Access Authorization</a> via <code>interop:replaces</code>.</p>
    <p><a href="interop.ttl#AccessAuthorization">Class Definition</a> - <a href="interop.shex#AccessAuthorizationShape">Shape Definition</a> - <a href="interop.tree#AccessAuthorizationTree">Shape Tree Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessAuthorization">
@@ -1943,7 +1959,7 @@ to it from the replacement <a data-link-type="dfn" href="#access-authorization�
       <td>Previous <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①①⑧">Access Authorization</a> replaced by current instance
    </table>
    <figure>
-    <figcaption>Alice’s <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①①⑨">Access Authorization</a> for Projectron at  
+    <figcaption>Alice’s <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①①⑨">Access Authorization</a> for Projectron at
     https://alice.example/authorization/e2765d6c - <a href="snippets/alice.example/e2765d6c.ttl">View</a> </figcaption>
 <pre class="include-code highlight"><c- nn>alice-authorization</c-><c- p>:</c-><c- f>e2765d6c</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessAuthorization</c-> <c- p>;</c->
@@ -1958,7 +1974,7 @@ to it from the replacement <a data-link-type="dfn" href="#access-authorization�
 </pre>
    </figure>
    <figure>
-    <figcaption>Alice’s <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①②⓪">Access Authorization</a> for Bob at  
+    <figcaption>Alice’s <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①②⓪">Access Authorization</a> for Bob at
     https://alice.example/authorization/4460dce3 - <a href="snippets/alice.example/4460dce3.ttl">View</a> </figcaption>
 <pre class="include-code highlight"><c- nn>alice-authorization</c-><c- p>:</c-><c- f>4460dce3</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessAuthorization</c-> <c- p>;</c->
@@ -1972,6 +1988,9 @@ to it from the replacement <a data-link-type="dfn" href="#access-authorization�
     <c- nn>alice-authorization</c-><c- p>:</c-><c- f>ec6057d9</c-> <c- p>.</c->
 </pre>
    </figure>
+   <div class="issue no-marker" id="issue-d41d8cd9⑧"><a class="self-link" href="#issue-d41d8cd9⑧"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/177" style="text-transform:none">solid/data-interoperability-panel/177</a><a href="https://github.com/solid/data-interoperability-panel/issues/177">Should a copy of access needs be retained when consent is granted?</a></div>
+   <div class="issue no-marker" id="issue-d41d8cd9⑨"><a class="self-link" href="#issue-d41d8cd9⑨"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/221" style="text-transform:none">solid/data-interoperability-panel/221</a><a href="https://github.com/solid/data-interoperability-panel/issues/221">Document pattern of using local group as grantee of consent</a></div>
+   <div class="issue no-marker" id="issue-d41d8cd9①⓪"><a class="self-link" href="#issue-d41d8cd9①⓪"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/256" style="text-transform:none">solid/data-interoperability-panel/256</a><a href="https://github.com/solid/data-interoperability-panel/issues/256">Resource Owner restricting their own access</a></div>
    <h3 class="heading settled" data-level="9.2" id="data-authorization"><span class="secno">9.2. </span><span class="content">Data Authorization</span><a class="self-link" href="#data-authorization"></a></h3>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="data-authorization①">Data Authorization</dfn> records the decision of a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑦">Social Agent</a> to grant access to a specific type of data in their control, identified
 by a <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①⑤">Shape Tree</a>. They are always associated with a single <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①②①">Access Authorization</a>.</p>
@@ -2014,7 +2033,7 @@ and are appropriate to share with the grantee.</p>
         data instance. Adds to the set of modes linked via <code>interop:accessMode</code>. Only valid when <code>accessMode</code> includes <code>acl:Create</code>, <code>acl:Write</code>, or <code>acl:Append</code>
      <tr>
       <td>scopeOfAuthorization
-      <td>interop:All, interop:AllFromAgent, interop:AllFromRegistry, 
+      <td>interop:All, interop:AllFromAgent, interop:AllFromRegistry,
       interop:SelectedFromRegistry, interop:Inherited
       <td>Identifies the <a data-link-type="dfn" href="#access-scope" id="ref-for-access-scope">access scope</a> of the <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①④">Data Authorization</a>
      <tr>
@@ -2172,7 +2191,7 @@ with them, a <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for
         data instance. Adds to the set of modes linked via <code>interop:accessMode</code>. Only valid when <code>accessMode</code> includes <code>acl:Create</code>, <code>acl:Write</code>, or <code>acl:Append</code>
      <tr>
       <td>scopeOfGrant
-      <td>interop:All, interop:AllFromAgent, interop:AllFromRegistry, 
+      <td>interop:All, interop:AllFromAgent, interop:AllFromRegistry,
       interop:SelectedFromRegistry, interop:Inherited
       <td>Identifies the <a data-link-type="dfn" href="#access-scope" id="ref-for-access-scope①">access scope</a> of the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①③">Data Grant</a>
      <tr>
@@ -2220,9 +2239,10 @@ with them, a <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for
     <c- nn>alice-projectron</c-><c- p>:</c-><c- f>40d038ea</c-> <c- p>.</c->
 </pre>
    </figure>
+   <div class="issue no-marker" id="issue-d41d8cd9①①"><a class="self-link" href="#issue-d41d8cd9①①"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/223" style="text-transform:none">solid/data-interoperability-panel/223</a><a href="https://github.com/solid/data-interoperability-panel/issues/223">Address Issuer restrection in data grants, plus RO Client constraints</a></div>
    <h3 class="heading settled" data-level="9.5" id="delegated-data-grant"><span class="secno">9.5. </span><span class="content">Delegated Data Grant</span><a class="self-link" href="#delegated-data-grant"></a></h3>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="delegated-data-grant①">Delegated Data Grant</dfn> is a sub-class of <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①⑨">Data Grant</a> used when a grantee re-shares or "delegates" access they’ve
-received to another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③⓪">Agent</a>. The most common use case 
+received to another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③⓪">Agent</a>. The most common use case
 is when Alice shares access with Bob, and Bob delegates
 that access to his project management application.</p>
    <p><a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for-delegated-data-grant①①">Delegated Data Grants</a> are immutable. If a <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for-delegated-data-grant①②">Delegated Data Grant</a> needs to change, it should be replaced.</p>
@@ -2243,7 +2263,7 @@ that access to his project management application.</p>
       <td><a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⓪">Data Grant</a> that is being delegated
    </table>
    <figure>
-    <figcaption>Alice’s <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for-delegated-data-grant①③">Delegated Data Grant</a> for Projectron to access Projects 
+    <figcaption>Alice’s <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for-delegated-data-grant①③">Delegated Data Grant</a> for Projectron to access Projects
   that Bob shared with her at https://alice.example/agents/2f2f3628/fe818190 - <a href="snippets/alice.example/fe818190.ttl">View</a> </figcaption>
 <pre class="include-code highlight"><c- nn>alice-projectron</c-><c- p>:</c-><c- f>fe818190</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DelegatedDataGrant</c-> <c- p>;</c->
@@ -2260,7 +2280,7 @@ that access to his project management application.</p>
 </pre>
    </figure>
    <figure>
-    <figcaption>Alice’s <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for-delegated-data-grant①④">Delegated Data Grant</a> for Projectron to access Tasks 
+    <figcaption>Alice’s <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for-delegated-data-grant①④">Delegated Data Grant</a> for Projectron to access Tasks
   that Bob shared with her at https://alice.example/agents/2f2f3628/017d6a07 - <a href="snippets/alice.example/017d6a07.ttl">View</a> </figcaption>
 <pre class="include-code highlight"><c- nn>alice-projectron</c-><c- p>:</c-><c- f>017d6a07</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DelegatedDataGrant</c-> <c- p>;</c->
@@ -2277,9 +2297,10 @@ that access to his project management application.</p>
     <c- nn>bob-alice</c-><c- p>:</c-><c- f>d5b5760c</c-> <c- p>.</c->
 </pre>
    </figure>
+   <div class="issue no-marker" id="issue-d41d8cd9①②"><a class="self-link" href="#issue-d41d8cd9①②"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/222" style="text-transform:none">solid/data-interoperability-panel/222</a><a href="https://github.com/solid/data-interoperability-panel/issues/222">Support longer delegation chains</a></div>
    <h3 class="heading settled" data-level="9.6" id="access-scopes"><span class="secno">9.6. </span><span class="content">Data Access Scopes</span><a class="self-link" href="#access-scopes"></a></h3>
    <p>Each <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①①">Data Authorization</a> applies to a specific type of data,
-identified by a <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②⓪">shape tree</a>. The amount of access authorized for data 
+identified by a <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②⓪">shape tree</a>. The amount of access authorized for data
 of that type is specified by the <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-scope">Access Scope</dfn>, via <code>interop:scopeOfAuthorization</code>.</p>
    <p><a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②①">Data Grants</a> are generated from a given <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①②">Data Authorization</a> based on <a data-link-type="dfn" href="#access-scope" id="ref-for-access-scope②">access scope</a> and other supporting criteria detailed below.</p>
    <p>Each <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②②">Data Grant</a> corresponds to a specific <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①②⑤">Data Registration</a> in a <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①⑨">Data Registry</a>, and has an associated <a data-link-type="dfn" href="#access-scope" id="ref-for-access-scope③">access scope</a> and <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mode">access modes</a>.</p>
@@ -2327,12 +2348,12 @@ inherited permissions.</p>
    </table>
    <h4 class="heading settled" data-level="9.6.1" id="scope-all"><span class="secno">9.6.1. </span><span class="content"><code>All</code></span><a class="self-link" href="#scope-all"></a></h4>
    <p>The <code>interop:All</code> <a data-link-type="dfn" href="#access-scope" id="ref-for-access-scope④">access scope</a> includes all data of a specified type
-belonging to a given data owner, and all data of that same type shared with the data 
+belonging to a given data owner, and all data of that same type shared with the data
 owner, across all of the data owner’s registries.</p>
    <p><b>Shapes:</b> <a href="interop.shex#DataAuthorizationAllShape">DataAuthorizationAllShape</a></p>
    <p>The follow example illustrates <em>Alice’s</em> authorization to give <em>Projectron</em> access to
-data of type <code>pm-shapetrees:ProjectTree</code> with a scope of <code>interop:All</code>. Since 
-Alice has two <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①①②">Data Registries</a> and Bob has shared projects with her, several <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②③">Data Grants</a> will be generated from this <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①③">Data Authorization</a> and shared 
+data of type <code>pm-shapetrees:ProjectTree</code> with a scope of <code>interop:All</code>. Since
+Alice has two <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①①②">Data Registries</a> and Bob has shared projects with her, several <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②③">Data Grants</a> will be generated from this <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①③">Data Authorization</a> and shared
 with Projectron.</p>
    <p class="note" role="note"><span>Note:</span> <code>interop:All</code> is only valid for a <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①④">Data Authorization</a>.
 Generated <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②④">Data Grants</a> use the more specific <code>interop:AllFromRegistry</code> for each unique <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①①③">Data Registry</a>, including Bob’s.</p>
@@ -2342,7 +2363,7 @@ Generated <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant�
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-authorization</c-><c- p>:</c-><c- f>54a1b6a0</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataAuthorization</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="19"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfAuthorization</c-> <c- nn>interop</c-><c- p>:</c-><c- f>All</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>.</c-></span></pre>
    </figure>
    <figure>
-    <figcaption>Alice’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⑤">Data Grant</a> for Projectron to access Projects in her 
+    <figcaption>Alice’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⑤">Data Grant</a> for Projectron to access Projects in her
   Work <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①①④">Data Registry</a> at
   https://alice.example/agents/2f2f3628/40d038ea - <a href="snippets/alice.example/40d038ea.ttl">View</a> </figcaption>
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-projectron</c-><c- p>:</c-><c- f>40d038ea</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-work-data</c-><c- p>:</c-><c- f>8501f084\/</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="21"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllFromRegistry</c-> <c- p>.</c-></span></pre>
@@ -2354,7 +2375,7 @@ Generated <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant�
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-projectron</c-><c- p>:</c-><c- f>a0623c8f</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-personal-data</c-><c- p>:</c-><c- f>fe7a8e7b\/</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="21"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllFromRegistry</c-> <c- p>.</c-></span></pre>
    </figure>
    <figure>
-    <figcaption>Alice’s <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for-delegated-data-grant①⑤">Delegated Data Grant</a> for Projectron to access Projects 
+    <figcaption>Alice’s <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for-delegated-data-grant①⑤">Delegated Data Grant</a> for Projectron to access Projects
   that Bob shared with her at https://alice.example/agents/2f2f3628/fe818190 - <a href="snippets/alice.example/fe818190.ttl">View</a> </figcaption>
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-projectron</c-><c- p>:</c-><c- f>fe818190</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DelegatedDataGrant</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>bob</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>bob-work-data</c-><c- p>:</c-><c- f>08a99a10\/</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="22"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllFromRegistry</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>delegationOfGrant</c-></span><span class="line-no"></span><span class="line">    <c- nn>bob-alice</c-><c- p>:</c-><c- f>b2b6a645</c-> <c- p>.</c-></span></pre>
    </figure>
@@ -2377,7 +2398,7 @@ Alice grants Performchart a narrower scope of read-only access.</p>
 only one <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①①⑦">Data Registry</a>, which he shared with her previously
 through her <a data-link-type="dfn" href="#agent-registrations" id="ref-for-agent-registrations⑧">Agent Registration</a> in his <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry①③">Agent Registry</a>.</p>
    <figure>
-    <figcaption>Bob’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⑦">Data Grant</a> for Alice to access Projects 
+    <figcaption>Bob’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⑦">Data Grant</a> for Alice to access Projects
   at https://bob.example/agents/255aa181/b2b6a645 - <a href="snippets/bob.example/b2b6a645.ttl">View</a> </figcaption>
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>bob-alice</c-><c- p>:</c-><c- f>b2b6a645</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>bob</c-><c- p>:</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>bob-work-data</c-><c- p>:</c-><c- f>08a99a10\/</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="22"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllFromRegistry</c-> <c- p>.</c-></span></pre>
    </figure>
@@ -2386,13 +2407,13 @@ the Project data that Bob shared with her, which she stores in
 the <a data-link-type="dfn" href="#agent-registrations" id="ref-for-agent-registrations⑨">Agent Registration</a> for Performchart in her <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry①④">Agent Registry</a>.
 It is marked as a delegation of Bob’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⑧">Data Grant</a> via <code>interop:delegationOfGrant</code>.</p>
    <figure>
-    <figcaption>Alice’s <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for-delegated-data-grant①⑦">Delegated Data Grant</a> for Performchart to access Projects 
+    <figcaption>Alice’s <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for-delegated-data-grant①⑦">Delegated Data Grant</a> for Performchart to access Projects
   that Bob shared with her at https://alice.example/agents/c2328cdd/efc426c9 - <a href="snippets/alice.example/efc426c9.ttl">View</a> </figcaption>
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-performchart</c-><c- p>:</c-><c- f>efc426c9</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DelegatedDataGrant</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>bob</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>performchart</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>bob-work-data</c-><c- p>:</c-><c- f>08a99a10\/</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>performchart</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="21"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllFromRegistry</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>delegationOfGrant</c-></span><span class="line-no"></span><span class="line">    <c- nn>bob-alice</c-><c- p>:</c-><c- f>b2b6a645</c-> <c- p>.</c-></span></pre>
    </figure>
    <h4 class="heading settled" data-level="9.6.3" id="scope-fromregistry"><span class="secno">9.6.3. </span><span class="content"><code>AllFromRegistry</code></span><a class="self-link" href="#scope-fromregistry"></a></h4>
    <p>The <code>interop:AllFromRegistry</code> <a data-link-type="dfn" href="#access-scope" id="ref-for-access-scope⑥">access scope</a> includes all
-data of a specified type in a specified <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①①⑧">Data Registry</a> of a given data owner. 
+data of a specified type in a specified <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①①⑧">Data Registry</a> of a given data owner.
 Since a <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①①⑨">Data Registry</a> can only have one <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①②⑥">Data Registration</a> per <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②①">shape tree</a>,
 this scope provide access to all <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance①⑦">Data Instances</a> in the <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①②⑦">Data Registration</a> of the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②②">shape tree</a> specified via <code>interop:registeredShapeTree</code>.</p>
    <p><b>Shapes:</b> <a href="interop.shex#DataAuthorizationAllFromRegistryShape">DataAuthorizationAllFromRegistryShape</a> - <a href="interop.shex#DataGrantAllFromRegistryShape">DataGrantAllFromRegistryShape</a></p>
@@ -2400,14 +2421,14 @@ this scope provide access to all <a data-link-type="dfn" href="#data-instance" i
 all data of type <code>pm-shapetrees:ProjectTree</code> in the <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①②⓪">Data Registry</a> he uses
 for his professional work.</p>
    <figure>
-    <figcaption>Bob’s <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①⑦">Data Authorization</a> at https://bob.example/authorization/e4b1b154 
+    <figcaption>Bob’s <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①⑦">Data Authorization</a> at https://bob.example/authorization/e4b1b154
   for Alice to access his Project data - <a href="snippets/bob.example/e4b1b154.ttl">View</a> </figcaption>
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>bob-authorization</c-><c- p>:</c-><c- f>e4b1b154</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataAuthorization</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>bob</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="20"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfAuthorization</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllFromRegistry</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>bob-work-data</c-><c- p>:</c-><c- f>08a99a10\/</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>.</c-></span></pre>
    </figure>
    <p>The following <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⑨">Data Grant</a> is generated for Alice based on the above <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①⑧">Data Authorization</a>, and stored in the <a data-link-type="dfn" href="#agent-registrations" id="ref-for-agent-registrations①⓪">Agent Registration</a> for Alice in
 Bob’s <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry①⑤">Agent Registry</a>.</p>
    <figure>
-    <figcaption>Bob’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①③⓪">Data Grant</a> at https://bob.example/agents/255aa181/b2b6a645 
+    <figcaption>Bob’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①③⓪">Data Grant</a> at https://bob.example/agents/255aa181/b2b6a645
   for Alice to access his work Project data - <a href="snippets/bob.example/b2b6a645.ttl">View</a> </figcaption>
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>bob-alice</c-><c- p>:</c-><c- f>b2b6a645</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>bob</c-><c- p>:</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>bob-work-data</c-><c- p>:</c-><c- f>08a99a10\/</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="22"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllFromRegistry</c-> <c- p>.</c-></span></pre>
    </figure>
@@ -2446,8 +2467,8 @@ limited by the <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mo
      <tbody>
       <tr>
        <td><code>acl:Create</code>
-       <td>Create new <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②⓪">Data Instances</a>. <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mode③">Access modes</a> assigned to 
-        the creator on the created <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②①">Data Instance</a> should be a union of <code>interop:accessMode</code> and <code>interop:createAccessMode</code> modes. <b>acl:Create is not currently supported. 
+       <td>Create new <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②⓪">Data Instances</a>. <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mode③">Access modes</a> assigned to
+        the creator on the created <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②①">Data Instance</a> should be a union of <code>interop:accessMode</code> and <code>interop:createAccessMode</code> modes. <b>acl:Create is not currently supported.
         Substitute with acl:Write or acl:Append, but may exceed intended scope
         of access.</b>
       <tr>
@@ -2455,30 +2476,30 @@ limited by the <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mo
        <td>Read <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③①">Data Registration</a>. List and read all <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②②">Data Instances</a>
       <tr>
        <td><code>acl:Update</code>
-       <td>Modify <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②③">Data Instances</a>. Modification of <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③②">Data Registration</a> graph 
+       <td>Modify <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②③">Data Instances</a>. Modification of <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③②">Data Registration</a> graph
         not permitted. <b><code>acl:Update</code> is not currently supported. Substitute with <code>acl:Write</code> or <code>acl:Append</code>, but may exceed intended scope of access.</b>
       <tr>
        <td><code>acl:Delete</code>
-       <td>Delete <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②④">Data Instances</a>. Deletion of <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③③">Data Registration</a> not permitted. <b><code>acl:Delete</code> is not currently supported. Substitute with <code>acl:Write</code>, but 
+       <td>Delete <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②④">Data Instances</a>. Deletion of <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③③">Data Registration</a> not permitted. <b><code>acl:Delete</code> is not currently supported. Substitute with <code>acl:Write</code>, but
         may exceed intended scope of access.</b>
     </table>
    </figure>
    <h4 class="heading settled" data-level="9.6.4" id="scope-selected"><span class="secno">9.6.4. </span><span class="content"><code>SelectedFromRegistry</code></span><a class="self-link" href="#scope-selected"></a></h4>
    <p>The <code>interop:SelectedFromRegistry</code> <a data-link-type="dfn" href="#access-scope" id="ref-for-access-scope⑦">access scope</a> includes only
-specific <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②⑤">Data Instances</a> of the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②③">shape tree</a> specified via <code>interop:registeredShapeTree</code> in the <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①②①">Data Registry</a> of a given 
+specific <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②⑤">Data Instances</a> of the <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②③">shape tree</a> specified via <code>interop:registeredShapeTree</code> in the <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①②①">Data Registry</a> of a given
 data owner.</p>
    <p><b>Shapes:</b> <a href="interop.shex#DataAuthorizationSelectedFromRegistryShape">DataAuthorizationSelectedFromRegistryShape</a> - <a href="interop.shex#DataGrantSelectedFromRegistryShape">DataGrantSelectedFromRegistryShape</a></p>
    <p>The following example illustrates <em>Jose’s</em> authorization for Alice to access
 two specific <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②⑥">Data Instances</a> of <code>pm-shapetrees:ProjectTree</code> in the <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①②②">Data Registry</a> he uses for his professional work.</p>
    <figure>
-    <figcaption>Jose’s <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①⑨">Data Authorization</a> at https://jose.example/authorization/69095550 
+    <figcaption>Jose’s <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①⑨">Data Authorization</a> at https://jose.example/authorization/69095550
   for Alice to access his Project data - <a href="snippets/jose.example/69095550.ttl">View</a> </figcaption>
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>jose-authorization</c-><c- p>:</c-><c- f>69095550</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataAuthorization</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>jose</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="20"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfAuthorization</c-> <c- nn>interop</c-><c- p>:</c-><c- f>SelectedFromRegistry</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>jose-work-data</c-><c- p>:</c-><c- f>c3feca8c\/</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataInstance</c-></span><span class="line-no"></span><span class="line">    <c- nn>jose-work-data</c-><c- p>:</c-><c- f>c3feca8c\/9355352a</c-> <c- p>,</c-></span><span class="line-no"></span><span class="line">    <c- nn>jose-work-data</c-><c- p>:</c-><c- f>c3feca8c\/3d3dc323</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>.</c-></span></pre>
    </figure>
    <p>The following <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①③②">Data Grant</a> is generated for Alice based on the above <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①②⓪">Data Authorization</a>, and stored in the <a data-link-type="dfn" href="#agent-registrations" id="ref-for-agent-registrations①①">Agent Registration</a> for Alice in
 Jose’s <a data-link-type="dfn" href="#agent-registry" id="ref-for-agent-registry①⑥">Agent Registry</a>.</p>
    <figure>
-    <figcaption>Jose’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①③③">Data Grant</a> at https://jose.example/agents/efba320e/2aa21a8c 
+    <figcaption>Jose’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①③③">Data Grant</a> at https://jose.example/agents/efba320e/2aa21a8c
   to share specific work projects with Alice - <a href="snippets/jose.example/2aa21a8c.ttl">View</a> </figcaption>
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>jose</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>jose-work-data</c-><c- p>:</c-><c- f>c3feca8c\/</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>SelectedFromRegistry</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="23"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataInstance</c-></span><span class="line-no"></span><span class="line">    <c- nn>jose-work-data</c-><c- p>:</c-><c- f>c3feca8c\/9355352a</c-> <c- p>,</c-></span><span class="line-no"></span><span class="line">    <c- nn>jose-work-data</c-><c- p>:</c-><c- f>c3feca8c\/3d3dc323</c-> <c- p>.</c-></span></pre>
    </figure>
@@ -2497,8 +2518,8 @@ limited by the <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mo
      <tbody>
       <tr>
        <td><code>acl:Create</code>
-       <td>Create new resources within the <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②⑨">Data Instances</a> where applicable. <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mode⑥">Access modes</a> assigned to 
-        the creator on a created resource should be a union of <code>interop:accessMode</code> and <code>interop:createAccessMode</code> modes. <b>acl:Create is not currently supported. 
+       <td>Create new resources within the <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance②⑨">Data Instances</a> where applicable. <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mode⑥">Access modes</a> assigned to
+        the creator on a created resource should be a union of <code>interop:accessMode</code> and <code>interop:createAccessMode</code> modes. <b>acl:Create is not currently supported.
         Substitute with acl:Write or acl:Append, but may exceed intended scope
         of access.</b>
       <tr>
@@ -2513,10 +2534,11 @@ limited by the <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mo
         existing data.
       <tr>
        <td><code>acl:Delete</code>
-       <td>Delete <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance③③">Data Instance</a> or any contained resources where applicable. <b><code>acl:Delete</code> is not currently supported. Substitute with <code>acl:Write</code>, but 
+       <td>Delete <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance③③">Data Instance</a> or any contained resources where applicable. <b><code>acl:Delete</code> is not currently supported. Substitute with <code>acl:Write</code>, but
         may exceed intended scope of access.</b>
     </table>
    </figure>
+   <div class="issue no-marker" id="issue-d41d8cd9①③"><a class="self-link" href="#issue-d41d8cd9①③"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/186" style="text-transform:none">solid/data-interoperability-panel/186</a><a href="https://github.com/solid/data-interoperability-panel/issues/186">Human readable labels for Data Instances, needed when selecting instances on consent screen. </a></div>
    <h4 class="heading settled" data-level="9.6.5" id="scope-inherited"><span class="secno">9.6.5. </span><span class="content"><code>Inherited</code></span><a class="self-link" href="#scope-inherited"></a></h4>
    <p>The <code>interop:Inherited</code> <a data-link-type="dfn" href="#access-scope" id="ref-for-access-scope⑧">access scope</a> is unique in that it depends
 on the existence of another <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①②①">Data Authorization</a> with a scope of <code>interop:All</code>, <code>interop:AllFromAgent</code>, <code>interop:AllFromRegistry</code>, or <code>interop:SelectedFromRegistry</code>.</p>
@@ -2532,7 +2554,7 @@ for each distinct reference.</p>
    </figure>
    <p>The <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②④">shape tree</a> <code>pm-shapetrees:ProjectTree</code> specifies one virtual hierarchy
 via <code>st:references</code>, indicating that a Project <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance③④">Data Instance</a> virtually
-includes Task instances of <code>pm-shapetrees:TaskTree</code> through the 
+includes Task instances of <code>pm-shapetrees:TaskTree</code> through the
 predicate <code>pm:hasTask</code>.</p>
    <figure>
     <figcaption> ProjectTree definition at https://data.example/shapetrees/pm-shapetrees.tree - <a href="snippets/data.example/pm-shapetrees.tree">View Definition</a> </figcaption>
@@ -2556,13 +2578,13 @@ for <code>pm-shapetrees:TaskTree</code>.</p>
    <p><a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①③⑤">Data Grants</a> for Projects and their associated Tasks can then be generated
 for Projectron based on the above <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①②⑦">Data Authorizations</a>.</p>
    <figure>
-    <figcaption>Alice’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①③⑥">Data Grant</a> for Projectron to access Projects in her 
+    <figcaption>Alice’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①③⑥">Data Grant</a> for Projectron to access Projects in her
   Work <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①②③">Data Registry</a> at
   https://alice.example/agents/2f2f3628/40d038ea - <a href="snippets/alice.example/40d038ea.ttl">View</a> </figcaption>
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-projectron</c-><c- p>:</c-><c- f>40d038ea</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-work-data</c-><c- p>:</c-><c- f>8501f084\/</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="21"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AllFromRegistry</c-> <c- p>.</c-></span></pre>
    </figure>
    <figure>
-    <figcaption>Alice’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①③⑦">Data Grant</a> for Projectron to access Tasks associated 
+    <figcaption>Alice’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①③⑦">Data Grant</a> for Projectron to access Tasks associated
   with authorized Work Projects at
   https://alice.example/agents/2f2f3628/0945218b - <a href="snippets/alice.example/0945218b.ttl">View</a> </figcaption>
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-projectron</c-><c- p>:</c-><c- f>0945218b</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>TaskTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-work-data</c-><c- p>:</c-><c- f>df4ab227\/</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#9462959c</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="21"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfGrant</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Inherited</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromGrant</c-></span><span class="line-no"></span><span class="line">    <c- nn>alice-projectron</c-><c- p>:</c-><c- f>40d038ea</c-> <c- p>.</c-></span></pre>
@@ -2597,8 +2619,8 @@ to <code>pm-shapetrees:ProjectTree</code> <a data-link-type="dfn" href="#data-in
      <tbody>
       <tr>
        <td><code>acl:Create</code>
-       <td>Create new <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⓪">Data Instances</a> linked by shape tree reference. <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mode⑧">Access modes</a> assigned to 
-        the creator on the created <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④①">Data Instance</a> should be a union of <code>interop:accessMode</code> and <code>interop:createAccessMode</code> modes. <b>acl:Create is not currently supported. 
+       <td>Create new <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⓪">Data Instances</a> linked by shape tree reference. <a data-link-type="dfn" href="#access-mode" id="ref-for-access-mode⑧">Access modes</a> assigned to
+        the creator on the created <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④①">Data Instance</a> should be a union of <code>interop:accessMode</code> and <code>interop:createAccessMode</code> modes. <b>acl:Create is not currently supported.
         Substitute with acl:Write or acl:Append, but may exceed intended scope
         of access.</b>
       <tr>
@@ -2609,14 +2631,15 @@ to <code>pm-shapetrees:ProjectTree</code> <a data-link-type="dfn" href="#data-in
        <td>Modify <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④③">Data Instances</a> linked by shape tree reference. <b><code>acl:Update</code> is not currently supported. Substitute with <code>acl:Write</code> or <code>acl:Append</code>, but may exceed intended scope of access.</b>
       <tr>
        <td><code>acl:Append</code>
-       <td>Add new data to <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④④">Data Instances</a> linked by shape tree reference, 
+       <td>Add new data to <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④④">Data Instances</a> linked by shape tree reference,
         without changing any existing data.
       <tr>
        <td><code>acl:Delete</code>
-       <td>Delete <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⑤">Data Instances</a> linked by shape tree reference. Deletion of <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③⑧">Data Registration</a> not permitted. <b><code>acl:Delete</code> is not currently supported. Substitute with <code>acl:Write</code>, but 
+       <td>Delete <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance④⑤">Data Instances</a> linked by shape tree reference. Deletion of <a data-link-type="dfn" href="#data-registration①" id="ref-for-data-registration①③⑧">Data Registration</a> not permitted. <b><code>acl:Delete</code> is not currently supported. Substitute with <code>acl:Write</code>, but
         may exceed intended scope of access.</b>
     </table>
    </figure>
+   <div class="issue no-marker" id="issue-d41d8cd9①④"><a class="self-link" href="#issue-d41d8cd9①④"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/174" style="text-transform:none">solid/data-interoperability-panel/174</a><a href="https://github.com/solid/data-interoperability-panel/issues/174">Determine how to dynamically authorize access to reference lists on inherited instances</a></div>
    <h3 class="heading settled" data-level="9.7" id="access-receipt"><span class="secno">9.7. </span><span class="content">Access Receipt</span><a class="self-link" href="#access-receipt"></a></h3>
    <p>A <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent①⓪①">Social Agent</a> provides an <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-receipt①">Access Receipt</dfn> to another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③②">Agent</a> after granting them access to some scope of data
 in an <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①②③">Access Authorization</a>.</p>
@@ -2670,7 +2693,7 @@ in an <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access
       <td>Link to associated <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①②⑥">Access Authorizations</a>
    </table>
    <figure>
-    <figcaption>An <a data-link-type="dfn" href="#authorization-registry" id="ref-for-authorization-registry⑥">Authorization Registry</a> at 
+    <figcaption>An <a data-link-type="dfn" href="#authorization-registry" id="ref-for-authorization-registry⑥">Authorization Registry</a> at
   https://alice.example/authorization/ - <a href="snippets/alice.example/authorization.ttl">View</a></figcaption>
 <pre class="include-code highlight"><c- nn>alice-authorization</c-><c- p>:</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AuthorizationRegistry</c-><c- p>;</c->
@@ -2966,11 +2989,26 @@ associate instances of related shape trees via a ShapePath</p>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/210" style="text-transform:none">solid/data-interoperability-panel/210</a><a href="https://github.com/solid/data-interoperability-panel/issues/210">Incorporate profile requirements from solid-oidc for Social Agents and Applications.</a> <a class="issue-return" href="#issue-d41d8cd9" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/138" style="text-transform:none">solid/data-interoperability-panel/138</a><a href="https://github.com/solid/data-interoperability-panel/issues/138">document resource centered authorization workflows</a> <a class="issue-return" href="#issue-d41d8cd9①" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/171" style="text-transform:none">solid/data-interoperability-panel/171</a><a href="https://github.com/solid/data-interoperability-panel/issues/171">Authorization Agent URI should be distinct for each user</a> <a class="issue-return" href="#issue-d41d8cd9②" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/232" style="text-transform:none">solid/data-interoperability-panel/232</a><a href="https://github.com/solid/data-interoperability-panel/issues/232">Multiple authorisation apps per social agent</a> <a class="issue-return" href="#issue-d41d8cd9③" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/252" style="text-transform:none">solid/data-interoperability-panel/252</a><a href="https://github.com/solid/data-interoperability-panel/issues/252">Should we restrict Social Agent Reigstration discovery to AA of that social agent?</a> <a class="issue-return" href="#issue-d41d8cd9④" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/243" style="text-transform:none">solid/data-interoperability-panel/243</a><a href="https://github.com/solid/data-interoperability-panel/issues/243">Access Needs for Public Resources</a> <a class="issue-return" href="#issue-d41d8cd9⑤" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/237" style="text-transform:none">solid/data-interoperability-panel/237</a><a href="https://github.com/solid/data-interoperability-panel/issues/237">Access needs for pod browser apps</a> <a class="issue-return" href="#issue-d41d8cd9⑥" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/214" style="text-transform:none">solid/data-interoperability-panel/214</a><a href="https://github.com/solid/data-interoperability-panel/issues/214">Use invitation to validate the source of an incoming request</a> <a class="issue-return" href="#issue-d41d8cd9⑦" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/177" style="text-transform:none">solid/data-interoperability-panel/177</a><a href="https://github.com/solid/data-interoperability-panel/issues/177">Should a copy of access needs be retained when consent is granted?</a> <a class="issue-return" href="#issue-d41d8cd9⑧" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/221" style="text-transform:none">solid/data-interoperability-panel/221</a><a href="https://github.com/solid/data-interoperability-panel/issues/221">Document pattern of using local group as grantee of consent</a> <a class="issue-return" href="#issue-d41d8cd9⑨" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/256" style="text-transform:none">solid/data-interoperability-panel/256</a><a href="https://github.com/solid/data-interoperability-panel/issues/256">Resource Owner restricting their own access</a> <a class="issue-return" href="#issue-d41d8cd9①⓪" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/223" style="text-transform:none">solid/data-interoperability-panel/223</a><a href="https://github.com/solid/data-interoperability-panel/issues/223">Address Issuer restrection in data grants, plus RO Client constraints</a> <a class="issue-return" href="#issue-d41d8cd9①①" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/222" style="text-transform:none">solid/data-interoperability-panel/222</a><a href="https://github.com/solid/data-interoperability-panel/issues/222">Support longer delegation chains</a> <a class="issue-return" href="#issue-d41d8cd9①②" title="Jump to section">↵</a></div>
    <div class="issue"> This specification uses some access modes in the <code>acl:</code> namespace that
 have not been adopted to demonstrate the most secure and accurate
 expression of a <a data-link-type="dfn" href="#social-agent">Social Agent’s</a> authorization. <a href="https://github.com/solid/authorization-panel/issues/253">Discussions are underway</a> to add these modes. <a class="issue-return" href="#issue-a2fe1e29" title="Jump to section">↵</a></div>
    <div class="issue"> <a data-link-type="biblio" href="#biblio-wac">[WAC]</a> does not have any mechanism to extend or modify
 inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/186" style="text-transform:none">solid/data-interoperability-panel/186</a><a href="https://github.com/solid/data-interoperability-panel/issues/186">Human readable labels for Data Instances, needed when selecting instances on consent screen. </a> <a class="issue-return" href="#issue-d41d8cd9①③" title="Jump to section">↵</a></div>
+   <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/174" style="text-transform:none">solid/data-interoperability-panel/174</a><a href="https://github.com/solid/data-interoperability-panel/issues/174">Determine how to dynamically authorize access to reference lists on inherited instances</a> <a class="issue-return" href="#issue-d41d8cd9①④" title="Jump to section">↵</a></div>
   </div>
   <aside class="dfn-panel" data-for="agents①">
    <b><a href="#agents①">#agents①</a></b><b>Referenced in:</b>
