@@ -1,0 +1,438 @@
+<pre class="metadata">
+
+Title: Solid Application Interoperability: Agent-Specific Discovery
+Shortname: SAI-ASD
+
+Editor: Wouter Termont, w3cid 115604, Digita https://digita.ai, https://github.com/woutermont
+
+!Contributor: Wouter Termont
+
+Group: w3c
+Status: w3c/UD
+Revision: 6
+
+URL: https://woutermont.github.io/solid/agent-specific-discovery.html
+Repository: https://github.com/woutermont/solid
+
+Boilerplate: style-darkmode off
+Markup Shorthands: markdown yes
+Inline Github Issues: title
+Max ToC Depth: 2
+
+Complain About: accidental-2119 yes, broken-links yes, missing-example-ids yes, mixed-indents yes
+
+Text Macro: NONORM *This section is non-normative.*
+Text Macro: MUST <em class="rfc2119">MUST</em>
+Text Macro: SHOULD <em class="rfc2119">SHOULD</em>
+Text Macro: MAY <em class="rfc2119">MAY</em>
+
+Abstract: 
+
+  This specification details how Agents can discover the Resource Discovery Hub of an Entity, and how they can interact with it in order to find Agent-Specific Resources related to that Entity.
+
+Status Text: 
+
+  This document was published by the Editor(s) for the [Solid Community Group](https://www.w3.org/community/solid/) as an Unofficial Proposal Draft. The sections that have been incorporated have <strong>NOT</strong> been reviewed following the [Solid process](https://github.com/solid/process). The information in this document is still subject to change. You are invited to [contribute](https://github.com/woutermont/solid/issues) any feedback, comments, or questions you might have. Publication as an Unofficial Proposal Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress. This document was produced by a group operating under the [W3C Community Contributor License Agreement (CLA)](https://www.w3.org/community/about/process/cla/). A human-readable [summary](https://www.w3.org/community/about/process/cla-deed/) is available.
+
+</pre>
+
+<link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css" />
+<script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
+
+<style>
+    .note,
+    .issue,
+    .example,
+    .assertion,
+    .advisement {
+        font-size: 0.9em;
+    }
+    pre {
+        font-size: .8em;
+    }
+    em.rfc2119 {
+        text-transform: lowercase;
+        font-variant: small-caps;
+        font-style: normal;
+        font-size: 18px;
+        color: #900;
+    }
+</style>
+
+<div boilerplate="copyright">
+MIT License Copyright 2019 - 2021 W3C Solid Community Group
+</div>
+
+
+# Terminology # {#terms}
+
+<!-- Set macros for long definitions -->
+
+<pre class="metadata">
+Text Macro: HTTP <l>[[!RFC9110|HTTP]]</l>
+Text Macro: WEB-LINKING <l>[[!WEB-LINKING|Web-Linking]]</l>
+Text Macro: RDF <l>[[!RDF11-CONCEPTS|RDF 1.1]]</l>
+Text Macro: INTEROP <l>[[INTEROP|Solid Application Interoperability]]</l>
+Text Macro: PROF <l>[[PROF|Solid WebID Profile]]</l>
+Text Macro: TI <l>[[TI|Type Indexes]]</l>
+</pre>
+
+<!-- Set macros for long references -->
+
+<pre class="metadata">
+Text Macro: ASR <l>[=Agent-Specific Resource=]</l>
+Text Macro: ASRS <l>[=Agent-Specific Resources=]</l>
+Text Macro: RDH <l>[=Resource Discovery Hub=]</l>
+Text Macro: ARR <l>[=Agent Registration Request=]</l>
+</pre>
+
+<!-- Load anchors from other specifications -->
+
+<pre class="anchors">
+urlPrefix: https://httpwg.org/specs/rfc9110.html#; type: http-header; spec: HTTP-SEMANTICS;
+    text: OPTIONS
+    text: HEAD
+    text: GET
+    text: PUT
+    text: POST
+    text: DELETE
+    text: Authorization
+    text: Location
+    text: 201 Created; url: status.201
+urlPrefix: https://datatracker.ietf.org/doc/html/rfc8288#; spec: WEB-LINKING; 
+    type: dfn; 
+        url: section-3.1; text: target;
+        url: section-3.3; text: relation;
+    type: http-header;
+        url: section-3; text: Link;
+        url: section-3.2; text: anchor;
+        url: section-3.3; text: rel;
+urlPrefix: https://www.w3.org/2005/Incubator/webid/spec/identity/#dfn-; type: dfn; spec: WEBID; 
+    text: WebID
+    text: Profile Document
+urlPrefix: https://www.w3.org/TR/did-core/#dfn-; type: dfn; spec: DID;
+    text: Decentralized Identifiers
+    text: DID Documents
+urlPrefix: https://www.w3.org/TR/rdf11-concepts/#dfn-; type: dfn; spec: RDF11-CONCEPTS
+    text: Resource
+    text: RDF Source
+    text: RDF Document
+urlPrefix: https://woutermont.github.io/solid/concepts-representation.html; type: dfn; spec: CON-WEB-REP
+    text: Entity
+    text: Identity
+    text: Identifier
+    text: Source
+    text: Document
+    text: Identity Document
+    text: Dereferenceable Identifier
+    text: RDF-Dereferenceable Identifier
+    text: Information
+    text: Representation
+    text: Referent
+urlPrefix: https://solid.github.io/data-interoperability-panel/specification/; type:dfn; spec: INTEROP;
+    text: Agents
+    text: Application; url: App
+    text: Social Agent
+    text: Agent Registry;
+    text: Agent Registration; url: AR
+    text: Application Registration
+    text: Social Agent Registration
+    text: Authorization Agent
+    text: Authorization Agent Discovery
+    text: Agent Registration Discovery
+</pre>
+
+This document relies heavily on parts of the architecture proposed in [INTEROP]. It borrows some definitions from [RDF] and concepts from [[CON-WEB-REP|Concepts in Web Representation]]. [[WEBID]] and [[DID]] as used as examples. For conformance, terms from [HTTP] semantics and [WEB-LINKING] are used. References to all these are linked throughout the text, and in [[#index-defined-elsewhere]]. Furthermore, this document uses the terms [=Agent=], [=Server=] and [=Client=] in the following sense.
+
+: <dfn noexport>Agent</dfn>
+:: An [=Entity=] that acts, either on its own or via some other [=Agent=]. This corresponds to the notion of [=Agents=] as defined in [INTEROP].
+
+: <dfn noexport>Server</dfn>
+:: An [=Agent=] capable of receiving requests, and serving responses to those requests.
+
+: <dfn noexport>Client</dfn>
+:: An [=Agent=] interacting with a [=Server=], by sending requests and receiving responses.
+
+
+# Introduction # {#sec-intro}
+
+When an [=Agent=] wishes to *discover* [=Information=] about an [=Entity=] (e.g. a person, document or API), and the possible ways to interact with that [=Entity=], the [=Agent=] typically starts its inquiry at one or more *initial [=Source=] of [=Information=]*, such as the [=Identity Document=] corresponding to one of the [=Entity's=] [=Identifier=] (e.g. the [=Profile Document=] of a [=WebID=] or [=DID Document=] of a [=Decentralized Identifier=]). In the [=Representations=] of these initial [=Source=], other [=Resources=] might be referenced, which in turn might be further [=Source=] of [=Information=].
+
+An [=Entity=] exposing [=Resources=] to [=Agents=] might want to restrict the access to certain [=Resources=] to certain [=Agents=] or groups of [=Agents=]. We use *access* here in a broad sense, indicating the usefulness or lack thereof of a [=Resource=] to an [=Agent=]. Such access restrictions might be necessary because of privacy or security concerns, or to provide [=Information=] specific to those [=Agents=]: tailored indexes, user preferences, application state ... in other words, the <span id="dfn-asr"><dfn export>Agent-Specific Resources</dfn>: <em>[=Resources=] related to an [=Entity=] an [=Agent=] wishes to interact with, which are accessible by and possibly relevant for that [=Agent=].</em></span> This leads to the following question: how can an [=Agent=] discover these [ASRS] between all other [=Resources=] related to an [=Entity=], in a performant, secure, and privacy-minded manner? 
+
+  NOTE: The concept of an [ASR] is based on an abstraction of the [=Agent Registration=] of [INTEROP], in its role as provider of agent-specific information. They divide [=Agents=] into [=Social Agents=] and [=Applications=]: <q><em>[=Social Agents=] manage the other [Agents] they interact with by registering these [=Agents=] in their [=Agent Registry=]. A [=Social Agent Registration=] provides the [=Social Agent=] with a place to track and manage other [=Social Agents=] they interact with. An [=Application Registration=] provides the [=Social Agent=] with a place to maintain metadata, state, preferences, and other application-specific data associated with a given [=Application=] they have elected to use.</em></q> 
+
+<pre class="metadata">
+Text Macro: R <math><mi>R</mi></math>
+Text Macro: A <math><mi>A</mi></math>
+Text Macro: Y <math><mi>Y</mi></math>
+Text Macro: N <math><mi>N</mi></math>
+Text Macro: PART <math><mo>{</mo><mi>Y</mi><mo>,</mo><mi>N</mi><mo>}</mo></math>
+Text Macro: PERF <math><mfrac><mrow><mo>|</mo><mi>Y</mi><mo>|</mo></mrow><mrow><mo>|</mo><mi>R</mi><mo>|</mo></mrow></mfrac></math>
+Text Macro: SIZE <math><mo>|</mo><mi>N</mi><mo>|</mo></math>
+</pre>
+
+Given a complete set [R] of [=Resources=] discoverable by an [=Agent=] [A] with respect to a certain [=Entity=], let [PART] be the partition of [R] into the set [Y] of [ASRS] and the set [N] of other [=Resources=]. Lacking any further information, the performance of [A] will correlate with [PERF]. While this might work for toy examples and proofs of concept, it is not scalable: for increasing [SIZE], [A] would spend ever more time in a trial-and-error search for its [ASRS].
+
+  Note: This is the approach taken in the [PROF] and [TI] specifications.
+
+This document specifies a way to discover an [=Agent's=] [ASRS] relating to an [=Entity=] without having to try *all* discoverable [=Resources=] related to that [=Entity=], using a *single* [=Source=] of [=Information=] that can provide the [=Agent=] with *only* the limited set of [ASRS], based on the [=Identity=] of the [=Agent=].
+
+
+# Resource Discovery Hub # {#sec-resource-disovery-hub}
+
+As explained in [#sec-intro], [=Agents=] cannot simply rely on trial-and-error to discover their [ASRS] related to an [=Entity=], since this results in an unscalable performance. Instead, an [=Entity=] could expose a single [=Source=] of [=Information=], at which each [=Agent=] can identify itself in return for its [ASRS] (if it has any). Let's call this [=Resource=] the <span id="dfn-rdh"><dfn export>Resource Discovery Hub</dfn>: a [=Server=] [=Resource=], linked to an [=Entity=], that provides [=Client=] [=Agents=] interacting with that [=Entity=] quick access to their [ASRS].</span>
+
+  NOTE: The concept of a [RDH] is based on an abstraction of the [=Authorization Agent=] of [INTEROP], in its role as mechanism for [=Agent Registration Discovery=]: <q><em>An [=Agent=] that needs to discover whether a target [=Social Agent=] has a corresponding [=Agent Registration=] for them can query the [=Authorization Agent=] for that target [=Social Agent=].</em></q>
+
+
+## Considerations ## {#sec-considerations}
+
+[NONORM]
+
+Some considerations can be made when conceptualizing the [RDH], and its relation to other [=Resources=] and inquiring [=Clients=].
+
+1. In order to use a [RDH] to discover the [ASRS] related to an [=Entity=], the [=Client=] should be able to discover the [RDH] starting from a [=Dereferenceable Identifier=] of that [=Entity=]. 
+
+2. It should be possible, but not necessary, to integrate the [RDH] into other services, such as the [=Dereferenceable Identifier=] provider. This would, for example, allow for optimization of the [[#sec-asr-discovery]].
+
+    1. The response provided by the [RDH] should be applicable to all document types the other service might respond with.
+
+    2. The response provided by a [RDH] should be minimal, as not to cause too much bloat in case the purpose of a request was purely the response provided by the other service.
+
+    3. [ASRS] might not always be related to the [=Entity=] in the same way that the response of the other service is. The [=Client=] should therefore always be capable of distinguishing the different parts of the combined response.
+
+    4. While a read operation on the combined service might combine the info of both services (in a distinguishable way), the presence of the [RDH] should not disturb the other operations on the other service (e.g. write operations).
+
+3. Since [ASRS] will in many cases remain the same for long periods of time, [ASRS] presented by the [RDH] should be cacheable by the [=Client=].
+
+Based on these considerations, the following sections will specify [[#sec-rdh-discovery]] and [[#sec-asr-discovery]].
+
+
+# Discovery of the Resource Discovery Hub # {#sec-rdh-discovery}
+
+  NOTE: This section takes inspiration from the [=Authorization Agent Discovery=] of [INTEROP].
+
+[=Clients=] wishing to discover the [RDH] for a given [=Entity=] [SHOULD] dereference an [=Identifier=] `<id>` of that [=Entity=]. 
+
+If the response contains an [[!RFC8288|HTTP Link header]] with <mark>relation</mark> type `rel="TBD"`, the [=Client=] [SHOULD] take the link target of the header to be the IRI of the [RDH] of the [=Entity=]. 
+
+If **no** such header is present, and the response contains an [=RDF Document=], the [=Client=] [MAY] parse it. If the document contains a <mark>statement of the form</mark> `<id> <TBD> <rdh>`, the [=Client=] [SHOULD] take the object value `<rdh>` to be the IRI of the [RDH] of the [=Entity=]. 
+
+    <div class="example" id="ex-rdh-discover">
+
+        Example [:GET:] request to an [=Entity=] [=Identifier=], and two possible responses: one *with* Link header, and one *without*.
+        
+        <pre highlight=http>
+            GET &lt;id&gt; HTTP/1.1
+        </pre>
+        
+        <pre highlight=http>
+            HTTP/1.1 200 OK
+            Link: &lt;rdh&gt;; rel="TBD"
+        </pre>
+        
+        <pre highlight=http>
+            HTTP/1.1 200 OK
+            &nbsp;
+            &lt;id&gt; &lt;TBD&gt; &lt;rdh&gt; .
+        </pre>
+
+    </div>
+
+  ISSUE: Relation type TBD (marked)
+
+Each [=Entity=] [SHOULD] only have a single [RDH] related to it. The IRI of that [RDH] [MUST] be unique to that [=Entity=]. In scenarios where a [RDH] services [=Clients=] for multiple [=Entity|Entities=], this may be facilitated through a unique sub-domain or path.
+
+  ISSUE: Advantages of multiple RDHs?
+
+In case a [=Client=] has found **no** [RDH] in the response header or body after dereferencing an [=Entity's=] [=Identifier=] to the [=Entity's=] [=Identity Document=], the requesting [=Client=] [SHOULD] take there to be **no** [RDH] for that [=Entity=], and the [=Client=] [SHOULD] take the [=Identity Document=] to contain the only [=Information=] immediately available.
+
+
+# Agent-Specific Resource Discovery # {#sec-asr-discovery}
+
+  NOTE: This section takes inspiration from the [Agent Registration Discovery](https://solid.github.io/data-interoperability-panel/specification/#agent-registration-discovery) of [INTEROP].
+
+Once the [RDH] related to an [=Entity=] is known, a [=Client=] wishing to discover its [ASRS] related to that [=Entity=] [SHOULD] query the [RDH] by sending a [:HEAD:] or [:GET:] request to the [RDH]'s IRI, in which the value of the [:Authorization:] header is set to a <mark>TBD Token</mark> containing the <mark>[=Identifier=] of the [=Client=]</mark>.
+
+    <div class="example" id="ex-rdh-request">
+        Example [:HEAD:] request to an [RDH].
+        <pre highlight=http>
+            HEAD &lt;id&gt; HTTP/1.1
+            Authorization: TBD ...
+        </pre>
+    </div>
+
+  ISSUE: claims TBD
+
+  ISSUE: oauth access token, oidc id token, or more general (e.g. HttpSig, VC in body...) ?
+
+  ISSUE: need for Entity's ID as well ?
+
+Upon receiving a request, the [RDH] [MUST] check the validity of the <mark>TBD Token</mark>. If the <mark>TBD Token</mark> is valid, the [RDH] [MUST] send a response including, for each [ASR] `<asr>` of the requesting [=Client=], an [:Link:] header with `<asr>` as target value and the <mark>relation `rel="TBD"`</mark> relating it to either the [=Entity=] or to the [=Client=] with the [:anchor:] attribute; or, in case **no** [ASR] was found for the requesting [=Client=], **no** [:Link:] headers of that type.
+
+    <div class="example" id="ex-rdh-response">
+        Example response from an [RDH].
+        <pre highlight=http>
+            HTTP/1.1 200 OK
+            Link: &lt;asr&gt;; rel="TBD"; anchor="id"
+        </pre>  
+    </div>
+
+In case the [=Client=] receives a response from the [RDH] with **no** relevant [HTTP] `Link` header, the requesting [=Client=] [SHOULD] take the [=Identity Document=] of the [=Entity=] to contain the **only** [=Information=] immediately available.
+
+To reduce header bloat, a [RDH] [SHOULD] only advertise a single [ASR] to the requesting [=Client=]. In scenarios where a [RDH] has multiple [ASRS] for the requesting [=Client=], the [RDH] [SHOULD] provide an <dfn>Agent-Specific Discovery Document</dfn>: a single [ASR] encoding an RDF Graph relating the [=Entity=] or the [=Client=] to each of the other [ASRS]. This [=Agent-Specific Discovery Document=] is then the only [ASR] linked to in the response header of the [RDH].
+
+
+# Agent Registration # {#sec-agent-registration}
+
+As pointed out in [[#sec-rdh-discovery]] and [[#sec-asr-discovery]], if a [=Client=] has found no [RDH] in the response header or body after dereferencing an [=Entity's=] [=Identifier=] to the [=Entity's=] [=Identity Document=], or if a [=Client=] did find an [RDH] but receives a response from this [RDH] with no [HTTP] `Link` header of the <mark>type `rel="TBD"`</mark>, then that [=Client=] should take the [=Identity Document=] of the [=Entity=] to contain the only [=Information=] immediately available.
+
+Both the [=Client=] and the [=Entity=] might, however, want to transition from such a situation to one in which the [=Client=] *does* receive links to [=Agent-Specific Resources=] from an [RDH] of the [=Entity=]: the [=Entity=] might want to set up an [RDH] to begin with; it might *register* the [=Client=] at the [RDH], adding one or more [ASRS] for it; the [=Client=] might possibly register itself, e.g. to keep some state; or the [=Client=] might request, from the [=Entity=] or the [RDH], to be registered.
+
+One can imagine any number of mechanisms that implement these flows, and this document will not specify how to do so. To follow up on the situation above, however, it will suggest an extendable framework for <span id="dfn-arr"><dfn export>Agent Registration Requests</dfn>: a one-step notification a [=Client=] [=Agent=] can perform in reaction to the absence of [ASRS] when an [RDH] is already available.</span> In this context, <span id="dfn-ar">we call the [=Agent-Specific Discovery Document=] resulting from the [ARR] an <dfn export>Agent Registration</dfn></span>.
+
+    Note: This is in line with the use of the term [=Agent Registration=] in [INTEROP].
+
+If a [RDH] receives a request from a [=Client=] for which it has no [ASRS], but to which it wants to provide the opportunity to *request* an [=Agent Registration=], the [RDH] [MAY] respond with a [:Link:] header to a third [=Resource=], in which case the [=relation=] type of the header [MUST] hold the semantics that indicate how to perform an [ARR] at the [=target=] of the [:Link:], e.g. as specified in an extension to this document.
+
+    <div class="example" id="ex-arr-link">
+        Example response from an [RDH] when no [ASR] is found for the requesting [=Client=].
+        <pre highlight=http>
+            HTTP/1.1 200 OK
+            Location: new-ar
+            Link: &lt;target&gt;; rel="TBD"; anchor="id"
+        </pre>  
+    </div>
+
+As a basic method of performing [ARR], this document provides the <mark>[=relation=] type `rel="TBD"`</mark>. Upon receiving a response from the [RDH] containing a [:Link:] header of this type, a [=Client=] [MAY] perform a [HTTP] [:POST:] request to the [target] IRI, in which the value of the [:Authorization:] header is set to a <mark>TBD Token</mark> containing the <mark>[=Identifier=] of the [=Client=]</mark>. 
+
+    <div class="example" id="ex-ar-request">
+        Example [ARR] request and response.
+        <pre highlight=http>
+            POST &lt;target&gt; HTTP/1.1
+            Authorization: TBD ...
+        </pre>  
+        <pre highlight=http>
+            HTTP/1.1 201 CREATED
+            Location: new-ar
+        </pre>  
+    </div>
+
+The effect of such a valid request to the [=target=] [MUST] be that an [=Agent Registration=] is created for the requesting [=Client=] at the [RDH] of the [=Entity=]; the response on such requests [SHOULD] be a [:201 Created:], with the IRI of the newly created [=Agent Registration=] in the [:Location:] header.
+
+  ISSUE: oauth access token, oidc id token, or more general (e.g. HttpSig, VC in body...) ?
+
+
+<h2 class="no-num">Appendix A: Summary Sequence Diagram</h2>
+
+<img class="sequence-diagram" src="diagrams/agent-specific-discovery.mmd.svg" />
+
+
+<!-- Bibliography -->
+
+<!-- Includes
+  https://www.specref.org
+  https://drafts.csswg.org/biblio.ref
+-->
+
+<!-- oauth: [[rfc6749|OAuth 2.0]] -->
+
+<pre class="biblio">
+{
+  "CON-WEB-REP": {
+    "href": "https://woutermont.github.io/solid/concepts-representation.html",
+    "title": "Concepts in Web Representation",
+    "authors": [
+      "Wouter Termont"
+    ]
+  },
+  "INTEROP": {
+    "href": "https://solid.github.io/data-interoperability-panel/specification/",
+    "title": "Solid Application Interoperability",
+    "authors": [
+      "Justing Bingham",
+      "Eric Prud'hommeaux",
+      "elf Pavlik"
+    ]
+  },
+  "TI": {
+    "href": "https://solid.github.io/type-indexes/",
+    "title": "Type Indexes",
+    "authors": [
+      "Timea Turdean"
+    ]
+  },
+  "PROF": {
+    "href": "https://solid.github.io/webid-profile/",
+    "title": "Solid WebID Profile",
+    "authors": [
+      "Virginia Balseiro",
+      "Timea Turdean",
+      "Jeff Zucker"
+    ]
+  },
+  "WEBID": {
+    "href": "https://www.w3.org/2005/Incubator/webid/spec/identity/",
+    "title": "WebID 1.0",
+    "authors": [
+      "Tim Berners-Lee",
+      "Henry Story",
+      "Andrei Sambra"
+    ]
+  },
+  "DID": {
+    "href": "https://www.w3.org/TR/did-core/",
+    "title": "Decentralized Identifiers (DIDs) v1.0",
+    "authors": [
+      "Drummond Reed",
+      "Manu Sporney",
+      "Dave Longley",
+      "Christopher Allen",
+      "Ryan Grant",
+      "Markus Sabadello"
+    ]
+  },
+  "HTTP-SEMANTICS": {
+    "href": "https://httpwg.org/specs/rfc9110.html",
+    "title": "RFC 9110: HTTP Semantics",
+    "date": "2022",
+    "authors": [
+        "R. Fielding",
+        "M. Nottingham",
+        "J. Reschke"
+    ]
+  },
+  "WEB-LINKING": {
+    "href": "https://datatracker.ietf.org/doc/html/rfc8288",
+    "title": "RFC 8288: Web Linking",
+    "date": "2017",
+    "authors": [
+        "M. Nottingham"
+    ]
+  },
+  "OIDC": {
+    "href": "https://openid.net/specs/openid-connect-core-1_0.html",
+    "title": "OpenID Connect Core 1.0",
+    "authors": [
+      "N. Sakimura",
+      "J. Bradley",
+      "M. Jones",
+      "B. de Medeiros",
+      "C. Mortimore"
+    ]
+  },
+  "DPOP": {
+    "href": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-dpop",
+    "title": "OAuth 2.0 Demonstrating Proof-of-Possession at the Application Layer",
+    "authors": [
+      "D. Fett",
+      "B. Campbell",
+      "J. Braidley",
+      "T. Lodderstedt",
+      "M. Jones",
+      "D. Waite"
+    ]
+  }
+}
+</pre>
