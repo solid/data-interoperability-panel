@@ -32,14 +32,15 @@ jobs:
       - name: run bikeshed
         run: |
           bikeshed spec proposals/specification/index.bs
+          bikeshed spec proposals/specification/agent-specific-discovery/index.bs
           bikeshed spec proposals/primer/application.bs
           bikeshed spec proposals/primer/authorization-agent.bs
 
       - name: generate svg
-        run: for diagram in proposals/*/diagrams/*.seq.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
+        run: for diagram in proposals/**/diagrams/*.seq.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
 
       - name: generate png
-        run: for diagram in proposals/*/diagrams/*.flow.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram -o /data/$diagram.png; done
+        run: for diagram in proposals/**/diagrams/*.flow.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram -o /data/$diagram.png; done
 
 
       - name: deploy
