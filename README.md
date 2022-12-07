@@ -51,7 +51,7 @@ Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth unde
 
 ## Meetings
 
-Panel meetings are held most Tuesdays at 10:00AM Eastern / 4:00PM Central European. Check-in on [gitter](https://gitter.im/solid/data-interoperability-panel) for weekly agenda.
+Panel meetings are held every other Monday at 3:00PM UTC (10:00AM Eastern / 4:00PM Central European). This bi-weekly schedule started on November 21st 2022; the latest meeting date can be found in the [minutes](https://github.com/solid/data-interoperability-panel/blob/master/meetings/). Every meeting will be announced on [gitter](https://gitter.im/solid/data-interoperability-panel), together with its agenda.
 
 Meeting URL: https://meet.jit.si/solid-data-interoperability
 
