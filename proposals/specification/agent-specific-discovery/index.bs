@@ -1,3 +1,8 @@
+
+<!-------------->
+<!-- METADATA -->
+<!-------------->
+
 <pre class="metadata">
 
 Title: Solid Application Interoperability: Agent-Specific Discovery
@@ -41,108 +46,15 @@ Status Text:
 <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css" />
 <script src="https://fred-wang.github.io/mathml.css/mspace.js"></script>
 
-<style>
-    .note,
-    .issue,
-    .example,
-    .assertion,
-    .advisement {
-        font-size: 0.9em;
-    }
-    pre {
-        font-size: .8em;
-    }
-    em.rfc2119 {
-        text-transform: lowercase;
-        font-variant: small-caps;
-        font-style: normal;
-        font-size: 18px;
-        color: #900;
-    }
-</style>
-
 <div boilerplate="copyright">
 MIT License Copyright 2019 - 2021 W3C Solid Community Group
 </div>
 
+<!--------------->
+<!-- MAIN TEXT -->
+<!--------------->
 
 # Terminology # {#terms}
-
-<!-- Set macros for long definitions -->
-
-<pre class="metadata">
-Text Macro: HTTP <l>[[!RFC9110|HTTP]]</l>
-Text Macro: WEB-LINKING <l>[[!WEB-LINKING|Web-Linking]]</l>
-Text Macro: RDF <l>[[!RDF11-CONCEPTS|RDF 1.1]]</l>
-Text Macro: INTEROP <l>[[INTEROP|Solid Application Interoperability]]</l>
-Text Macro: PROF <l>[[PROF|Solid WebID Profile]]</l>
-Text Macro: TI <l>[[TI|Type Indexes]]</l>
-</pre>
-
-<!-- Set macros for long references -->
-
-<pre class="metadata">
-Text Macro: ASR <l>[=Agent-Specific Resource=]</l>
-Text Macro: ASRS <l>[=Agent-Specific Resources=]</l>
-Text Macro: RDH <l>[=Resource Discovery Hub=]</l>
-Text Macro: ARR <l>[=Agent Registration Request=]</l>
-</pre>
-
-<!-- Load anchors from other specifications -->
-
-<pre class="anchors">
-urlPrefix: https://httpwg.org/specs/rfc9110.html#; type: http-header; spec: HTTP-SEMANTICS;
-    text: OPTIONS
-    text: HEAD
-    text: GET
-    text: PUT
-    text: POST
-    text: DELETE
-    text: Authorization
-    text: Location
-    text: 201 Created; url: status.201
-urlPrefix: https://datatracker.ietf.org/doc/html/rfc8288#; spec: WEB-LINKING; 
-    type: dfn; 
-        url: section-3.1; text: target;
-        url: section-3.3; text: relation;
-    type: http-header;
-        url: section-3; text: Link;
-        url: section-3.2; text: anchor;
-        url: section-3.3; text: rel;
-urlPrefix: https://www.w3.org/2005/Incubator/webid/spec/identity/#dfn-; type: dfn; spec: WEBID; 
-    text: WebID
-    text: Profile Document
-urlPrefix: https://www.w3.org/TR/did-core/#dfn-; type: dfn; spec: DID;
-    text: Decentralized Identifiers
-    text: DID Documents
-urlPrefix: https://www.w3.org/TR/rdf11-concepts/#dfn-; type: dfn; spec: RDF11-CONCEPTS
-    text: Resource
-    text: RDF Source
-    text: RDF Document
-urlPrefix: https://woutermont.github.io/solid/concepts-representation.html; type: dfn; spec: CON-WEB-REP
-    text: Entity
-    text: Identity
-    text: Identifier
-    text: Source
-    text: Document
-    text: Identity Document
-    text: Dereferenceable Identifier
-    text: RDF-Dereferenceable Identifier
-    text: Information
-    text: Representation
-    text: Referent
-urlPrefix: https://solid.github.io/data-interoperability-panel/specification/; type:dfn; spec: INTEROP;
-    text: Agents
-    text: Application; url: App
-    text: Social Agent
-    text: Agent Registry;
-    text: Agent Registration; url: AR
-    text: Application Registration
-    text: Social Agent Registration
-    text: Authorization Agent
-    text: Authorization Agent Discovery
-    text: Agent Registration Discovery
-</pre>
 
 This document relies heavily on parts of the architecture proposed in [INTEROP]. It borrows some definitions from [RDF] and concepts from [[CON-WEB-REP|Concepts in Web Representation]]. [[WEBID]] and [[DID]] as used as examples. For conformance, terms from [HTTP] semantics and [WEB-LINKING] are used. References to all these are linked throughout the text, and in [[#index-defined-elsewhere]]. Furthermore, this document uses the terms [=Agent=], [=Server=] and [=Client=] in the following sense.
 
@@ -325,23 +237,114 @@ The effect of such a valid request to the [=target=] [MUST] be that an [=Agent R
 
   ISSUE: oauth access token, oidc id token, or more general (e.g. HttpSig, VC in body...) ?
 
+<!---------------->
+<!-- APPENDICES -->
+<!---------------->
 
 <h2 class="no-num">Appendix A: Summary Sequence Diagram</h2>
 
 <img class="sequence-diagram" src="diagrams/agent-specific-discovery.seq.mmd.svg" />
 
+<!---------------------->
+<!-- MACROS & ANCHORS -->
+<!---------------------->
 
-<!-- Bibliography -->
+<pre class="metadata">
+
+# Macros for references
+Text Macro: HTTP    <l>[[!RFC9110|HTTP]]</l>
+Text Macro: LINK    <l>[[!LINK|Web-Linking]]</l>
+Text Macro: RDF     <l>[[!RDF11-CONCEPTS|RDF 1.1]]</l>
+Text Macro: INTEROP <l>[[INTEROP|Solid Application Interoperability]]</l>
+Text Macro: PROF    <l>[[PROF|Solid WebID Profile]]</l>
+Text Macro: TI      <l>[[TI|Type Indexes]]</l>
+
+# Macros for definitions
+Text Macro: ASR <l>[=Agent-Specific Resource=]</l>
+Text Macro: ASRS <l>[=Agent-Specific Resources=]</l>
+Text Macro: RDH <l>[=Resource Discovery Hub=]</l>
+Text Macro: ARR <l>[=Agent Registration Request=]</l>
+
+</pre><pre class="anchors">
+
+# HTML
+urlPrefix: https://httpwg.org/specs/rfc9110.html#; type: http-header; spec: HTTP-SEMANTICS;
+    text: OPTIONS
+    text: HEAD
+    text: GET
+    text: PUT
+    text: POST
+    text: DELETE
+    text: Authorization
+    text: Location
+    text: 201 Created; url: status.201
+
+# Web-Linking
+urlPrefix: https://datatracker.ietf.org/doc/html/rfc8288#; spec: WEB-LINKING; 
+    type: dfn; 
+        url: section-3.1; text: target;
+        url: section-3.3; text: relation;
+    type: http-header;
+        url: section-3; text: Link;
+        url: section-3.2; text: anchor;
+        url: section-3.3; text: rel;
+
+# WebID
+urlPrefix: https://www.w3.org/2005/Incubator/webid/spec/identity/#dfn-; type: dfn; spec: WEBID; 
+    text: WebID
+    text: Profile Document
+
+# DID
+urlPrefix: https://www.w3.org/TR/did-core/#dfn-; type: dfn; spec: DID;
+    text: Decentralized Identifiers
+    text: DID Documents
+
+# RDF
+urlPrefix: https://www.w3.org/TR/rdf11-concepts/#dfn-; type: dfn; spec: RDF11-CONCEPTS
+    text: Resource
+    text: RDF Source
+    text: RDF Document
+
+# Representation
+urlPrefix: https://woutermont.github.io/solid/concepts-representation.html; type: dfn; spec: CON-WEB-REP
+    text: Entity
+    text: Identity
+    text: Identifier
+    text: Source
+    text: Document
+    text: Identity Document
+    text: Dereferenceable Identifier
+    text: RDF-Dereferenceable Identifier
+    text: Information
+    text: Representation
+    text: Referent
+
+# Interop
+urlPrefix: https://solid.github.io/data-interoperability-panel/specification/; type:dfn; spec: INTEROP;
+    text: Agents
+    text: Application; url: App
+    text: Social Agent
+    text: Agent Registry;
+    text: Agent Registration; url: AR
+    text: Application Registration
+    text: Social Agent Registration
+    text: Authorization Agent
+    text: Authorization Agent Discovery
+    text: Agent Registration Discovery
+
+</pre>
+
+<!------------------>
+<!-- BIBLIOGRAPHY -->
+<!------------------>
 
 <!-- Includes
   https://www.specref.org
   https://drafts.csswg.org/biblio.ref
 -->
 
-<!-- oauth: [[rfc6749|OAuth 2.0]] -->
+<pre class="biblio">{
 
-<pre class="biblio">
-{
   "CON-WEB-REP": {
     "href": "https://woutermont.github.io/solid/concepts-representation.html",
     "title": "Concepts in Web Representation",
@@ -349,6 +352,7 @@ The effect of such a valid request to the [=target=] [MUST] be that an [=Agent R
       "Wouter Termont"
     ]
   },
+
   "INTEROP": {
     "href": "https://solid.github.io/data-interoperability-panel/specification/",
     "title": "Solid Application Interoperability",
@@ -358,6 +362,7 @@ The effect of such a valid request to the [=target=] [MUST] be that an [=Agent R
       "elf Pavlik"
     ]
   },
+
   "TI": {
     "href": "https://solid.github.io/type-indexes/",
     "title": "Type Indexes",
@@ -365,6 +370,7 @@ The effect of such a valid request to the [=target=] [MUST] be that an [=Agent R
       "Timea Turdean"
     ]
   },
+
   "PROF": {
     "href": "https://solid.github.io/webid-profile/",
     "title": "Solid WebID Profile",
@@ -374,6 +380,7 @@ The effect of such a valid request to the [=target=] [MUST] be that an [=Agent R
       "Jeff Zucker"
     ]
   },
+
   "WEBID": {
     "href": "https://www.w3.org/2005/Incubator/webid/spec/identity/",
     "title": "WebID 1.0",
@@ -383,6 +390,7 @@ The effect of such a valid request to the [=target=] [MUST] be that an [=Agent R
       "Andrei Sambra"
     ]
   },
+
   "DID": {
     "href": "https://www.w3.org/TR/did-core/",
     "title": "Decentralized Identifiers (DIDs) v1.0",
@@ -395,6 +403,7 @@ The effect of such a valid request to the [=target=] [MUST] be that an [=Agent R
       "Markus Sabadello"
     ]
   },
+
   "HTTP-SEMANTICS": {
     "href": "https://httpwg.org/specs/rfc9110.html",
     "title": "RFC 9110: HTTP Semantics",
@@ -405,6 +414,7 @@ The effect of such a valid request to the [=target=] [MUST] be that an [=Agent R
         "J. Reschke"
     ]
   },
+
   "WEB-LINKING": {
     "href": "https://datatracker.ietf.org/doc/html/rfc8288",
     "title": "RFC 8288: Web Linking",
@@ -413,6 +423,7 @@ The effect of such a valid request to the [=target=] [MUST] be that an [=Agent R
         "M. Nottingham"
     ]
   },
+
   "OIDC": {
     "href": "https://openid.net/specs/openid-connect-core-1_0.html",
     "title": "OpenID Connect Core 1.0",
@@ -424,6 +435,7 @@ The effect of such a valid request to the [=target=] [MUST] be that an [=Agent R
       "C. Mortimore"
     ]
   },
+
   "DPOP": {
     "href": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-dpop",
     "title": "OAuth 2.0 Demonstrating Proof-of-Possession at the Application Layer",
@@ -436,5 +448,33 @@ The effect of such a valid request to the [=target=] [MUST] be that an [=Agent R
       "D. Waite"
     ]
   }
+
+}</pre>
+
+<!------------------->
+<!-- STYLE CHANGES -->
+<!------------------->
+
+<style>
+
+.note,
+.issue,
+.example,
+.assertion,
+.advisement {
+  font-size: 0.9em;
 }
-</pre>
+
+pre {
+  font-size: .8em;
+}
+
+em.rfc2119 {
+  text-transform: lowercase;
+  font-variant: small-caps;
+  font-style: normal;
+  font-size: 18px;
+  color: #900;
+}
+  
+</style>
