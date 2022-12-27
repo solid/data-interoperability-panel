@@ -1,0 +1,23 @@
+
+### Discovery Result ### {#sec-amd-result}
+
+If the response to dereferencing an [=Entity's=] [=Identifier=] contains an
+[HTTP] [:Link:] header, the [=Link Context=] of which is the [=Entity's=]
+[=Identifier=] (e.g. `https://my.id/doc#me`), and the [=Relation Type=] of which
+is `interop:hasAgentManager`, the [=Agent=] [SHOULD] take the [=Link Target=] of
+the header to be the URL of the [=Agent Manager=] of that [=Entity=]. 
+
+If no such header is present, and the response contains an [=RDF Document=]
+&mdash; the [=Identifier=] is [=RDF-Dereferenceable=] &mdash; the [=Agent=]
+[MAY] parse it. If the document contains an [=RDF Triple=] linking the
+[=Identifier=] of the [=Entity=] to a URL with the predicate
+`interop:hasAgentManager`, `rdfs:seeAlso`, or `pim:preferencesFile`, the
+[=Agent=] [SHOULD] take the object value to be the URL of the [=Entity's=]
+[=Agent Manager=]. 
+
+In case an [=Agent=] has found no [=Agent Manager=] in the response header or
+response body after dereferencing an [=Entity's=] [=Identifier=] to its
+[=Identity Document=], the requesting [=Agent=] [SHOULD] take there to be no
+[=Agent Manager=] for that [=Identifier=], and the [=Agent=] [SHOULD] take the
+public [=Resources=] discoverable from the [=Identity Document=] to contain the
+only information immediately available.

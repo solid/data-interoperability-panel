@@ -1,0 +1,26 @@
+
+### Discovery Request ### {#sec-ard-request}
+
+Once the [=Agent Manager=] of an [=Entity=] is known, an [=Agent=] wishing to
+discover its [=Agent-Specific Resources=] related to that [=Entity=] [SHOULD]
+query the [=Agent Manager=] by sending a [:HEAD:] or [:GET:] request to the
+[=Agent Manager's=] URL in which the value of the [:Authorization:] header is
+set to a [[DPOP]]-bound [[OIDC]] [=Identity Token=] containing an [=Identifier=]
+of the [=Agent=] as value of the `azp` [=Claim=] or as *sole* value of the
+`aud` [=Claim=].
+
+    <div class=example id=ex-am-request>
+        
+        Example [:HEAD:] request to an [=Agent Manager=].
+        
+        <pre highlight=http>
+            HEAD [L]https://my.id/agent-manager[R] HTTP/1.1
+            Authorization: DPoP [...Identity Token...]
+            DPoP: [...DPoP Proof...]
+        </pre>
+
+        [DISPLAY]
+
+    </div>
+
+    ISSUE: TODO: Add decoded ID Token and DPoP Proof examples

@@ -1,0 +1,64 @@
+
+<h2 id=sec-considerations class=no-num>Appendix B: Design Considerations</h2>
+
+[NONORM]
+
+== About performance
+
+Given a complete set <var>R</var> of [=Resources=] discoverable by an [=Agent=]
+<var>A</var> with respect to a certain [=Entity=], let
+{<var>Y</var>,<var>N</var>} be the partition of <var>R</var> into the set
+<var>Y</var> of [=Agent-Specific Resources=] and the set <var>N</var> of other
+[=Resources=]. Lacking any further information, the performance of <var>A</var>
+will correlate with |<var>Y</var>|/|<var>R</var>|. While this might work for toy
+examples and proofs of concept, it is not scalable: for increasing
+|<var>N</var>|, <var>A</var> would spend ever more time in a trial-and-error
+search for its [=Agent-Specific Resources=].
+
+  Note: This is the approach taken in the [PROF] and [TI] specifications.
+
+
+## Something about hashed resources ## {#hashed}
+
+
+
+## Agent Manger ## {#am}
+
+[NONORM]
+
+Some considerations can be made when conceptualizing the [=Agent Manager=], and
+its relation to other [=Resources=] and inquiring [=Agents=].
+
+1. In order to use a [=Agent Manager=] to discover the [=Agent-Specific
+   Resources=] related to an [=Entity=], the [=Agent=] should be able to
+   discover the [=Agent Manager=] starting from a [=Dereferenceable Identifier=]
+   of that [=Entity=]. 
+
+2. It should be possible, but not necessary, to integrate the [=Agent Manager=]
+   into other services, such as the [=Dereferenceable Identifier=] provider.
+   This would, for example, allow for optimization of the
+   [[#sec-agent-registrations]].
+
+    1. The response provided by the [=Agent Manager=] should be applicable to
+       all document types the other service might respond with.
+
+    2. The response provided by a [=Agent Manager=] should be minimal, as not to
+       cause too much bloat in case the purpose of a request was purely the
+       response provided by the other service.
+
+    3. [=Agent-Specific Resources=] might not always be related to the
+       [=Entity=] in the same way that the response of the other service is. The
+       [=Agent=] should therefore always be capable of distinguishing the
+       different parts of the combined response.
+
+    4. While a read operation on the combined service might combine the info of
+       both services (in a distinguishable way), the presence of the [=Agent
+       Manager=] should not disturb the other operations on the other service
+       (e.g. write operations).
+
+3. Since [=Agent-Specific Resources=] will in many cases remain the same for
+   long periods of time, [=Agent-Specific Resources=] presented by the [=Agent
+   Manager=] should be cacheable by the [=Agent=].
+
+Based on these considerations, the following sections will specify
+[[#sec-agent-manager]] and [[#sec-agent-registrations]].

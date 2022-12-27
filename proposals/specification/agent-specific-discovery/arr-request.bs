@@ -1,0 +1,26 @@
+
+### Registration Request ### {#sec-arr-request}
+
+[=Agents=] that want to register themselves in the [=Agent Registry=] of an
+[=Entity=], and understand the [:Link:] header's [=Relation Type=], [SHOULD]
+send a [:POST:] request to the registration endpoint, containing the necessary
+information in the body.
+
+    <div class=example id=ex-arr-request>
+        
+        Example [=Agent Registration Request=] to the registration endpoint of 
+        the [=Agent Manager=].
+        
+        <pre highlight=http>
+            POST &lt;https://my.id/agent-manager/agents/&gt; HTTP/1.1
+            Authorization: DPoP ...
+            Content-Type: application/json
+
+            {
+                "client_name": "Example Client"
+            }
+        </pre>  
+
+    </div>
+
+    ADVISEMENT: The exact implementation of the process that follows is up to the implementation of the [=Agent Manager=] itself. However, in case the [=Agent=] managing the [=Identity Document=] of the [=Entity=] is present, it is advisable that the process at least contains an interaction sequence between the [=Agent Manager=] and this managing [=Agent=]. 

@@ -1,0 +1,53 @@
+
+### Discovery Response ### {#sec-ard-response}
+
+Upon receiving a request for an [=Agent Registration=], the [=Agent Manager=] [MUST] first check the authentication provided by the [=Agent=].
+
+
+#### Successful Response #### {#sec-ard-response-success}
+
+If an [:Authorization:] header is present, with the scheme set to [:DPoP:], and
+the included [=Identity Token=] is valid, and it authenticates an [=Agent=] known to
+the [=Agent Manager=], the latter [MUST] respond with either of the following.
+
+  - Status code [S303], including an [HTTP] [:Location:] header with
+    the URL of the [=Agent Registration=] URL as value.
+
+  - If the [=Agent=] sent a [:GET:] request, the [=Agent Manager=] [MAY] also
+    respond with status code [S200], including a [[JSON-LD11|JSON-LD]]
+    serialization of the [=Agent Registration=] in the body of the response, and a
+    [HTTP] [:Content-Location:] header with the URL of the [=Agent Registration=]
+    URL as value.
+
+    <div class=example id=ex-am-response-private>
+
+        Example responses from an [=Agent Manager=].
+    
+        <pre highlight=http>
+            HTTP/1.1 303 See Other
+            Location: https://my.id/agents/Q9kKfK
+        </pre>
+
+        <pre highlight=http>
+            HTTP/1.1 200 OK
+            Content-Location: https://my.id/agents/Q9kKfK
+
+            # ... includes agent registration ...
+        </pre>  
+
+        [DISPLAY]
+    
+    </div>
+
+
+#### Error Responses #### {#sec-ard-response-error}
+
+- If no [:Authorization:] header is present, the [=Agent Manager=] [MUST] respond with status code [S401], including a [:WWW-Authenticate:] header with the [:DPoP:] scheme. This response [MUST NOT] include an [:error:] parameter.
+
+- If an [:Authorization:] header is present, but the scheme is set to anything other than [:DPoP:], the [=Agent Manager=] [MUST] respond with status code [S400], including a [:WWW-Authenticate:] header with the [:DPoP:] scheme and the [:error:] parameter set to `invalid_request`.
+
+- If an [:Authorization:] header is present, with the scheme set to [:DPoP:], but the included [=Identity Token=] is invalid, the [=Agent Manager=] [MUST] respond with status code [S401], including a [:WWW-Authenticate:] header with the [:DPoP:] scheme and the [:error:] parameter set to `invalid_token`.
+
+- If an [:Authorization:] header is present, with the scheme set to [:DPoP:], and the included [=Identity Token=] is valid, but the [=Agent=] authenticated by the token is not known to the [=Agent Manager=], the latter [MUST] respond with status code [S403], including a [:WWW-Authenticate:] header with the [:DPoP:] scheme and the [:error:] parameter set to `insufficient_scope`.
+
+

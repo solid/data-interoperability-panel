@@ -1,0 +1,39 @@
+
+# Agent Registry #  {#sec-agent-registry}
+
+In order to present [=Agents=] with their [=Agent-Specific Resources=], the
+[=Agent Manager=] keeps track of them in an <dfn>Agent Registry</dfn>, in which
+each [#sec-ar-requests|registered] [=Agent=] has an <dfn>Agent
+Registration</dfn>: an initial [=Agent-Specific Resource=], encoding an [=RDF
+Graph=] containing information about the [=Entity=] and the [=Agent=], and
+relating them to other [=Agent-Specific Resources=].
+
+    ISSUE: Should there be a level where the entity can keep information about 
+    the agent that is not accessible to the agent?
+
+An [=Agent Registry=] [MUST] contain at least an [=Agent Registration=] for the
+<dfn>Public Agent</dfn>, identified by `foaf:Agent`. By default, the [=Agent
+Registration=] of the [=Public Agent=] [SHOULD] be identical to the [=Identity
+Document=] of the [=Entity=].
+
+Each [=Agent Registration=] [MUST] include an [=RDF Triple=] linking the
+[=Agent=] to the [=Agent Registration=] itself with the
+`interop:hasAgentRegistration` predicate, and an [=RDF Triple=] linking the
+[=Entity=] to the [=Agent Manager=] 
+
+  <div class=example id=ex-arr-link>
+    
+    [[TURTLE]] representation of the [=RDF Triples=] of a minimal [=Agent Registration=]
+    
+    <pre highlight=turtle>
+      [L]https://cool.app/info#this[R] 
+        [L]http://www.w3.org/ns/solid/interop#hasAgentRegistration[R]
+          [L]https://my.id/agents/Q9kKfK[R] .
+    </pre>
+
+    [DISPLAY]
+    
+  </div>
+
+<pre class=include>path: ar-discovery.bs</pre>
+<pre class=include>path: ar-requests.bs</pre>

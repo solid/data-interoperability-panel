@@ -1,0 +1,45 @@
+
+## Registration Requests ## {#sec-ar-requests}
+
+This document does not specify the requirements an [=Agent=] has to comply with
+to get an [=Agent Registration=] in the [=Agent Registry=] of an [=Entity=], nor
+does it supply an exhaustive list of methods by which this **registration** is
+achieved (e.g. automatically via an API, interactively via a user interface).
+Both will differ between contexts; it is therefore left up to each
+implementation to decide on such a mechanism and its constraints. This document
+does, however, specify a framework in which such <span id=dfn-arr><dfn
+export>Agent Registration Requests</dfn> [SHOULD] take place. 
+
+[=Agent Managers=] supporting this feature [MUST] respond to valid but unknown
+[=Agents=] with status code [S403], including a
+[:WWW-Authenticate:] header with the [:DPoP:] scheme and the [:error:] parameter
+set to `insufficient_scope`, as well as a [:Link:] header with the URL of the
+[=Agent Manager=] as [=Link Context=] and the registration endpoint as [=Link
+Target=]. The [=Relation Type=] of the [:Link:] header [MUST] hold the semantics
+that indicate how to perform an [=Agent Registration Request=] at the [=Link
+Target=], e.g. as specified in an extension to this document.
+
+    EXAMPLE: One trivial implementation of an [=Agent Registration Request=] 
+    process could be to use an [OAUTH] server with [DCR], and signal that to 
+    the [=Agent=] with the [=Relation Type=] `oidc:registration_endpoint`.
+
+    <div class=example id=ex-ard-response-arr>
+        
+        Example response from an [=Agent Manager=] when no [=Agent-Specific 
+        Resource=] is found for the requesting [=Agent=].
+        
+        <pre highlight=http>
+            HTTP/1.1 403 Forbidden
+            Location: new-ar
+            Link: &lt;https://my.id/agent-manager/agents/&gt;; 
+              rel="http://www.w3.org/ns/solid/oidc#registration_endpoint"; 
+              anchor="https://my.id/agent-manager"
+        </pre>  
+
+        [DISPLAY]
+
+    </div>
+
+<pre class=include>path: arr-request.bs</pre>
+<pre class=include>path: arr-response.bs</pre>
+<pre class=include>path: arr-result.bs</pre>

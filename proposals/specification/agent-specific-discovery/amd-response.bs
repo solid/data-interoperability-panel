@@ -1,0 +1,55 @@
+
+### Discovery Response ### {#sec-amd-response}
+
+Upon reception of a request to the [=Identity Document=], its host [SHOULD]
+respond with a representation of the [=Identity Document=], and an [HTTP]
+[:Link:] header of [=Relation Type=] `interop:hasAgentManager` with the
+[=Entity's=] [=Identifier=] as [=Link Context=] and the URL of its [=Agent
+Manager=] as [=Link Target=].
+
+    <div class=example id=ex-amd-response-canon>
+
+        Canonical example response of an [=Entity's=] [=Identity Document=]
+        during Agent Manager Discovery.
+        
+        <pre highlight=http>
+            HTTP/1.1 200 OK
+            Link: [L]https://my.id/agent-manager[R]; 
+              rel="http://www.w3.org/ns/solid/interop#hasAgentManager";
+              anchor="https://my.id/profile#me"
+        </pre>
+
+        [DISPLAY]
+
+    </div>
+
+Alternatively, if the [=Identity Document=] is an [=RDF Document=] &mdash; the
+[=Identifier=] is [=RDF-Dereferenceable=] &mdash; the [:Link:] header [MAY] be
+omitted, in which case the [=Identity Document=] [SHOULD] contain an [=RDF
+Triple=] linking the [=Entity's=] [=Identifier=] to the URL of its [=Agent
+Manager=] with the predicate `interop:hasAgentManager`. The predicate [MAY] also
+be substituted by `rdfs:seeAlso` or `pim:preferencesFile`.
+
+    <div class=example id=ex-amd-response-alt>
+
+        Alternative example response of an [=Entity's=] [=Identity Document=]
+        during Agent Manager Discovery.
+        
+        <pre highlight=http>
+            HTTP/1.1 200 OK
+            &nbsp;
+            [L]https://my.id/profile#me[R] 
+                [L]https://www.w3.org/TR/rdf-schema/##seeAlso[R]
+                    [L]https://my.id/agent-manager[R] .
+        </pre>
+
+        [DISPLAY]
+
+    </div>
+
+A host of [=Identity Documents=] [MUST] implement any of the above in order to
+comply with this specification.
+
+    ADVISEMENT: Because of security concerns, it is advisable to implement the canonical version of this step in Agent Manager Discovery. Relying on an
+    [=RDF Triple=] in a writable [=Identity Document=] might lead to unwanted
+    changes to or loss of the link to the [=Agent Manager=].

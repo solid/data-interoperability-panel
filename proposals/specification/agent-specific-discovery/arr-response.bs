@@ -1,0 +1,29 @@
+
+### Registration Response ### {#sec-arr-response}
+
+The effect of a valid request to the registration endpoint [MUST] be that an [=Agent Registration=] is created for the requesting [=Agent=] at the [=Agent Manager=] of the [=Entity=]. The response on such a successful request [SHOULD] be either of the following.
+
+- A response with status code [S201], with the URL of the newly created [=Agent Registration=] in the [:Location:] header. 
+
+- A response with status code [S303], with a redirect URI of the [=Agent=] in the [:Location:] header, and the URL of the newly created [=Agent Registration=] in a query parameter of it. 
+
+    <div class=example id=ex-arr-response>
+
+        Example responses to an [=Agent Registration Request=].
+    
+        <pre highlight=http>
+            HTTP/1.1 201 Created
+            Location: https://my.id/agent-manager/agents/example-client
+        </pre>
+
+        <pre highlight=http>
+            HTTP/1.1 303 See Other
+            Location: https://cool.app/cb&registration_client_uri=
+                https%3A%2F%2Fmy.id%2Fagent-manager%2Fagents%2Fexample-client
+        </pre>  
+
+        [DISPLAY]
+    
+    </div>
+
+    NOTE: Responses in case of invalid or denied requests are entirely left to the implementation.

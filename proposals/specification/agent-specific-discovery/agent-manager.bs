@@ -1,0 +1,16 @@
+
+# Agent Manager # {#sec-agent-manager}
+
+[=Entities=] for which the managing [=Agent=] wants to tailor the presentation
+of information [=Resources=] to the [=Agent=] trying to discover them, can use
+an <dfn export>Agent Manager</dfn>: a [=Resource=] linked uniquely to the
+[=Entity=], at which each [=Agent=] can identify itself as in return for quick
+access to its [=Agent-Specific Resources=] (if it has any).
+
+Each [=Identity Document=] of an [=Entity=] [SHOULD] only have a single [=Agent
+Manager=] related to it. The URL of that [=Agent Manager=] [MUST] be unique to
+that [=Entity=]. In scenarios where an [=Agent Manager=] services [=Agents=] for
+multiple [=Entities=], this may be facilitated through a unique sub-domain or
+path.
+
+<pre class=include>path:am-discovery.bs</pre>

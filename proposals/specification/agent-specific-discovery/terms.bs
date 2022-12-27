@@ -1,0 +1,149 @@
+
+Terminology {#terms}
+=====================
+
+[NONORM]
+
+This document uses the following namespace prefixes for IRIs:
+
+<pre highlight=turtle>
+    PREFIX  interop:  http://www.w3.org/ns/solid/interop#
+    PREFIX  rdfs:     https://www.w3.org/TR/rdf-schema/#
+    PREFIX  owl:      https://www.w3.org/TR/owl2-syntax/#
+    PREFIX  foaf:     http://xmlns.com/foaf/0.1/
+    PREFIX  dc:       http://purl.org/dc/terms/
+    PREFIX  schema:   https://schema.org/
+    PREFIX  oidc:     http://www.w3.org/ns/solid/oidc#
+    PREFIX  pim:      http://www.w3.org/ns/pim/space#
+</pre>
+
+This document build on the concepts and definitions of [RDF]. [[WEBID]] and
+[[DID]] as used as examples. For conformance, terms from [HTTP] Semantics and
+[LINKS] are used. References to all these are linked throughout the text, and
+listed in [[#index-defined-elsewhere]]. In particular, this document uses the
+following terms as defined.
+
+: <dfn lt="Entity|Resource">Entity</dfn>
+:: Anything in the universe (domain of discourse). This is in line with how the
+    term is used in [RDFMT]. It is synonymous the **Resource**
+    ([=rdfs:Resource=]) and **Thing** ([=owl:Thing=]).
+
+: <dfn>Identity Document</dfn> 
+:: A document ([=foaf:Document=]) that represents an [=Entity=]. Examples of
+     [=Identity Documents=] are passports, visas, or [[WEBID|WebID Documents]].
+
+: <dfn>Identifier</dfn> 
+:: An unambiguous reference to an [=Entity=] within a given context, used a
+    **token** to represent that [=Entity=] in said context. This is in line with
+    their use as object value to [=dc:identifier=] and [=schema:identifier=].
+    <dfn>Dereferenceable Identifiers</dfn> can be dereferenced to an [=Identity
+    Document=]; <dfn>HTTP-Dereferenceable Identifiers</dfn> do this via [HTTP];
+    <dfn lt="RDF-Dereferenceable|RDF-Dereferenceable Identifier">RDF-Dereferenceable Identifiers</dfn> dereference to an [=RDF Document=].
+
+: <dfn>Agent</dfn> 
+:: An actor, i.e. an [=Entity=] that acts, does stuff, or has the power to. It
+    can do this on its own, or mediated by some other [=Agent=]. This
+    corresponds to the notions of [=dc:Agent=] and [=foaf:Agent=].
+
+<!---~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!-- ANCHORS FROM OTHER SPECS -->
+<!---~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<pre class=anchors>
+
+# HTML
+urlPrefix: https://httpwg.org/specs/rfc9110.html#; spec: HTTP-SEMANTICS;
+    type: dfn; 
+        text: content;
+        text: method; url: methods
+    type: http-header;
+        text: OPTIONS
+        text: HEAD
+        text: GET
+        text: PUT
+        text: POST
+        text: DELETE
+        text: Content-Location; url: field.content-location
+        text: WWW-Authenticate; url: field.www-authenticate
+        text: Authorization; url: field.authorization
+        text: Location; url: field.location
+        text: 200; url: status.200
+        text: 201; url: status.201
+        text: 303; url: status.303
+        text: 400; url: status.400
+        text: 401; url: status.401
+        text: 403; url: status.403
+
+# Web-Linking
+urlPrefix: https://datatracker.ietf.org/doc/html/rfc8288#; spec: WEB-LINKING; 
+    type: dfn; 
+        url: section-3.1; text: Link Target;
+        url: section-3.1; text: Link Context;
+        url: section-3.3; text: Relation Type;
+    type: http-header;
+        url: section-3;   text: Link;
+        url: section-3.2; text: anchor;
+        url: section-3.3; text: rel;
+
+# WebID
+urlPrefix: https://www.w3.org/2005/Incubator/webid/spec/identity/#dfn-; type: dfn; spec: WEBID; 
+    text: WebID
+    text: Profile Document
+
+# DID
+urlPrefix: https://www.w3.org/TR/did-core/#dfn-; type: dfn; spec: DID;
+    text: Decentralized Identifiers
+    text: DID Documents
+
+# RDF
+urlPrefix: https://www.w3.org/TR/rdf11-concepts/#dfn-; type: dfn; spec: RDF11-CONCEPTS
+    text: Resource
+    text: RDF Source
+    text: RDF Document
+    text: RDF Triple
+    text: RDF Graph
+
+# RDFS
+urlPrefix: https://www.w3.org/TR/rdf-schema/#; type: dfn; spec: RDF-SCHEMA
+    url: ch_resource; text: rdfs:Resource
+
+# OWL
+urlPrefix: https://www.w3.org/TR/owl2-syntax/#; type: dfn; spec: OWL2-SYNTAX
+    url: a_Thing; text: owl:Thing
+
+# FOAF
+urlPrefix: http://xmlns.com/foaf/0.1/; type: dfn; spec: FOAF
+    url: Agent;    text: foaf:Agent
+    url: Document; text: foaf:Document
+
+# DCTERMS
+urlPrefix: http://purl.org/dc/terms/; type: dfn; spec: DCTERMS
+    url: Agent;       text: dc:Agent
+    url: identifier;  text: dc:identifier
+    
+# SCHEMA
+urlPrefix: https://schema.org/; type: dfn; spec: SCHEMA-ORG
+    url: identifier; text: schema:identifier
+    
+# SPEC
+urlPrefix: http://www.w3.org/ns/spec#; type: dfn; spec: SCHEMA-ORG
+    text: spec:Client
+    text: spec:Server
+
+# JWT
+urlPrefix: https://www.rfc-editor.org/rfc/rfc7519#; type: dfn; spec: JWT
+    url: section-4; text: Claim
+
+# OIDC
+urlPrefix: https://openid.net/specs/openid-connect-core-1_0.html#; type: dfn; spec: OIDC
+    url: IDToken; text: Identity Token
+
+# DPOP
+urlPrefix: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-dpop#; type: http-header; spec: DPOP
+    url: name-the-dpop-http-header; text: DPoP
+
+# BEARER
+urlPrefix: https://www.rfc-editor.org/rfc/rfc6750.html#; type: http-header; spec: RFC6750
+    url: section-3.1; text: error
+
+</pre>

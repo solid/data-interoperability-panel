@@ -1,0 +1,44 @@
+
+### Discovery Result ### {#sec-ard-result}
+
+
+#### Successful Results #### {#sec-ard-result-success}
+
+In case the response of the [=Agent Manager=] had status code [S200], the
+response body is [=RDF Document=] representing the [=Agent Registration=], which
+the [=Agent=] [MAY] parse. The source URL of the [=Agent Registration=] is the
+value of the [:Content-Location:] header.
+
+In case the response of the [=Agent Manager=] had status code [S303], the [:Location:] header contains the source URL of the [=Agent
+Registration=], which the [=Agent=] [MAY] retrieve using a [:GET:] request.
+
+
+#### Error Results #### {#sec-ard-result-error}
+
+In case the response of the [=Agent Manager=] had status code 
+[S400] or [S401], the [=Agent=] [SHOULD] make 
+sure that its request includes an [:Authorization:] header, with the scheme set
+to [:DPoP:], and the value is a valid [[DPOP]]-bound [=Identity Token=] that
+authenticates the [=Agent=] itself. If it is able to construct such a request,
+the [=Agent=] [MAY] retry to get its [=Agent Registration=] from the [=Agent
+Manager=].
+
+In case the response of the [=Agent Manager=] had status code [S403], the [=Agent=] [SHOULD] take the [=Resources=] discoverable from
+the [=Entity's=] [=Identity Document=] to contain the only information 
+immediately available, i.e. the [=Agent=] [SHOULD] act as if it had received a
+response with status code [S303] with the [HTTP] [:Location:] 
+header set to the URL of the [=Entity's=] [=Identity Document=].
+
+    <div class=example id=ex-ard-result-public>
+
+        Example of the fictive response an [=Agent=] has to assume in absence
+        of other information.
+    
+        <pre highlight=http>
+            HTTP/1.1 303 See Other
+            Location: https://my.id/doc
+        </pre>  
+
+        [DISPLAY]
+
+    </div>
