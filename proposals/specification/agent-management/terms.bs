@@ -4,46 +4,56 @@ Terminology {#terms}
 
 [NONORM]
 
-This document uses the following namespace prefixes for IRIs:
+This document uses the following namespace prefixes for IRIs.
 
 <pre highlight=turtle>
-    PREFIX  interop:  http://www.w3.org/ns/solid/interop#
-    PREFIX  rdfs:     https://www.w3.org/TR/rdf-schema/#
-    PREFIX  owl:      https://www.w3.org/TR/owl2-syntax/#
-    PREFIX  foaf:     http://xmlns.com/foaf/0.1/
-    PREFIX  dc:       http://purl.org/dc/terms/
-    PREFIX  schema:   https://schema.org/
-    PREFIX  oidc:     http://www.w3.org/ns/solid/oidc#
-    PREFIX  pim:      http://www.w3.org/ns/pim/space#
+    PREFIX  interop:    [L]http://www.w3.org/ns/solid/interop#[R]
+    PREFIX  rdfs:       [L]https://www.w3.org/TR/rdf-schema/#[R]
+    PREFIX  owl:        [L]https://www.w3.org/TR/owl2-syntax/#[R]
+    PREFIX  foaf:       [L]http://xmlns.com/foaf/0.1/[R]
+    PREFIX  dc:         [L]http://purl.org/dc/terms/[R]
+    PREFIX  schema:     [L]https://schema.org/[R]
+    PREFIX  oidc:       [L]http://www.w3.org/ns/solid/oidc#[R]
+    PREFIX  pim:        [L]http://www.w3.org/ns/pim/space#[R]
 </pre>
 
-This document build on the concepts and definitions of [RDF]. [[WEBID]] and
-[[DID]] as used as examples. For conformance, terms from [HTTP] Semantics and
-[LINKS] are used. References to all these are linked throughout the text, and
-listed in [[#index-defined-elsewhere]]. In particular, this document uses the
-following terms as defined.
+It further employs the following prefixes in examples.
+
+<pre highlight="turtle">
+    PREFIX  alice:      [L]http://alice.example.domain[R]
+    PREFIX  jarvis:     [L]http://jarvis.example.domain[R]
+    PREFIX  projectron: [L]http://projectron.example.domain[R]
+</pre>
+
+This document builds on the concepts and definitions of [RDF]. 
+For conformance, terms from [[!RFC9110|HTTP Semantics]] and [LINKS] are used. 
+[[WEBID|WebID's]] and [[DID|Decentralized Identifiers]] are used as examples. 
+References to all these are linked throughout the text, 
+and listed in [[#index-defined-elsewhere]]. 
+In particular, this document uses the following terms as defined.
 
 : <dfn lt="Entity|Resource">Entity</dfn>
-:: Anything in the universe (domain of discourse). This is in line with how the
-    term is used in [RDFMT]. It is synonymous the **Resource**
-    ([=rdfs:Resource=]) and **Thing** ([=owl:Thing=]).
+:: Anything in the universe (domain of discourse). 
+    This is in line with how the term is used in [RDFMT]. 
+    It is synonymous **Resource** ([=rdfs:Resource=]) and **Thing** ([=owl:Thing=]).
 
 : <dfn>Identity Document</dfn> 
-:: A document ([=foaf:Document=]) that represents an [=Entity=]. Examples of
-     [=Identity Documents=] are passports, visas, or [[WEBID|WebID Documents]].
+:: A document ([=foaf:Document=]) that represents an [=Entity=]. 
+    Examples of [=Identity Documents=] are passports, visas, and [[WEBID|WebID Documents]].
 
 : <dfn>Identifier</dfn> 
-:: An unambiguous reference to an [=Entity=] within a given context, used a
-    **token** to represent that [=Entity=] in said context. This is in line with
-    their use as object value to [=dc:identifier=] and [=schema:identifier=].
-    <dfn>Dereferenceable Identifiers</dfn> can be dereferenced to an [=Identity
-    Document=]; <dfn>HTTP-Dereferenceable Identifiers</dfn> do this via [HTTP];
-    <dfn lt="RDF-Dereferenceable|RDF-Dereferenceable Identifier">RDF-Dereferenceable Identifiers</dfn> dereference to an [=RDF Document=].
+:: An unambiguous reference to an [=Entity=] within a given context, 
+    used as a **token** to represent that [=Entity=] in said context. 
+    This is in line with their use as object value to [=dc:identifier=] and [=schema:identifier=].
+    <dfn>Dereferenceable Identifiers</dfn> can be dereferenced to an [=Identity Document=]; 
+    <dfn>HTTP-Dereferenceable</dfn> [=Identifiers=] do this via [HTTP];
+    <dfn>RDF-Dereferenceable</dfn> [=Identifiers=] dereference to an [=RDF Document=].
 
 : <dfn>Agent</dfn> 
-:: An actor, i.e. an [=Entity=] that acts, does stuff, or has the power to. It
-    can do this on its own, or mediated by some other [=Agent=]. This
-    corresponds to the notions of [=dc:Agent=] and [=foaf:Agent=].
+:: An actor, i.e. an [=Entity=] that acts, does stuff, or has the power to. 
+    It can do this on its own, or mediated by some other [=Agent=]. 
+    This corresponds to the notions of [=dc:Agent=] and [=foaf:Agent=].
+    
 
 <!---~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <!-- ANCHORS FROM OTHER SPECS -->
@@ -69,6 +79,7 @@ urlPrefix: https://httpwg.org/specs/rfc9110.html#; spec: HTTP-SEMANTICS;
         text: Location; url: field.location
         text: 200; url: status.200
         text: 201; url: status.201
+        text: 204; url: status.204
         text: 303; url: status.303
         text: 400; url: status.400
         text: 401; url: status.401
@@ -106,6 +117,8 @@ urlPrefix: https://www.w3.org/TR/rdf11-concepts/#dfn-; type: dfn; spec: RDF11-CO
 # RDFS
 urlPrefix: https://www.w3.org/TR/rdf-schema/#; type: dfn; spec: RDF-SCHEMA
     url: ch_resource; text: rdfs:Resource
+    url: ch_class;    text: rdfs:Class
+    url: ch_class;    text: RDF Class
 
 # OWL
 urlPrefix: https://www.w3.org/TR/owl2-syntax/#; type: dfn; spec: OWL2-SYNTAX
@@ -125,10 +138,10 @@ urlPrefix: http://purl.org/dc/terms/; type: dfn; spec: DCTERMS
 urlPrefix: https://schema.org/; type: dfn; spec: SCHEMA-ORG
     url: identifier; text: schema:identifier
     
-# SPEC
-urlPrefix: http://www.w3.org/ns/spec#; type: dfn; spec: SCHEMA-ORG
-    text: spec:Client
-    text: spec:Server
+# LDP
+urlPrefix: https://www.w3.org/TR/ldp/#; type: dfn; spec: LDP
+    text: Container; url: dfn-linked-data-platform-container
+    text: contain; url: dfn-containment-triples
 
 # JWT
 urlPrefix: https://www.rfc-editor.org/rfc/rfc7519#; type: dfn; spec: JWT

@@ -177,6 +177,8 @@ Issue(138):
 An <dfn>Authorization Agent</dfn> is an [=Application=] designated by
 a [=Social Agent=] to be responsible for managing the access to data
 under their control, linked via their [=Registry Set=].
+It is an implementation of an **Agent Manager** as defined by the 
+[[sai-am|Agent Management]] specification.
 
 Any requests for access to the [=Social Agent=]
 are processed by the [=Authorization Agent=].
@@ -185,27 +187,16 @@ are processed by the [=Authorization Agent=].
 
 ### Authorization Agent Discovery ### {#authorization-agent-discovery}
 
+This document extends the [Agent Manager Discovery](https://solid.github.io/data-interoperability-panel/specification/agent-management/index.html#sec-am-discovery) of the [[sai-am|Agent Manager]] specification,
+by defining `interop:hasAuthorizationAgent` as subproperty of `interop:hasAccessManager`.
+the [=Authorization Agent=] for a given [=Social Agent=] can be discovered
+
 The [=Authorization Agent=] for a given [=Social Agent=] can be discovered
 by de-referencing the [=identity=] of that [=Social Agent=], and extracting
 the object value of the `interop:hasAuthorizationAgent` statement from the
-[=Social Agent=] graph in the returned [=identity profile document=].
+returned [=identity profile document=],
+or the corresponding `Link` header in the response.
 
-The extracted [=Authorization Agent=] IRI <em class="rfc2119">MUST</em> be
-unique to that [=Social Agent=]. In scenarios where the [=Authorization Agent=]
-services multiple [=Social Agents=], this may be facilitated through
-a unique sub-domain (see example below) or path.
-
-<figure>
-  <figcaption>[=Social Agent=] at https://alice.example/#id -
-  <a href="snippets/alice.example/alice.example.ttl">View</a>
-</figcaption>
-  <pre class=include-code>
-  path: snippets/alice.example/alice.example.ttl
-  highlight: turtle
-  show: 9-20
-  line-highlight: 14
-  </pre>
-</figure>
 
 Issue(171):
 
@@ -217,27 +208,18 @@ An [=Agent=] that needs to discover whether a target [=Social Agent=] has
 a corresponding [=Agent Registration=] for them can query the
 [=Authorization Agent=] for that target [=Social Agent=].
 
-To discover a corresponding [=Agent Regsitration=] the requesting [=Agent=]
+As described in the section on [Agent Registration Discovery](https://solid.github.io/data-interoperability-panel/specification/agent-management/index.html#sec-ar-discovery) of the [[sai-am|Agent Manager]] specification,
+To discover a corresponding [=Agent Registration=] the requesting [=Agent=]
 may perform an `HTTP HEAD` or `HTTP GET` request on the IRI of the
 [=Authorization Agent=] for the target [=Social Agent=].
 
-The response will include an `HTTP Link` header relating the [=Agent Registration=]
-to the [=Agent=] making the request via the
-`http://www.w3.org/ns/solid/interop#registeredAgent` link relation.
+The response will include an `HTTP Location`, 
+`HTTP Content-Location`, or `HTTP Link` header 
+with the `http://www.w3.org/ns/solid/interop#registeredAgent` link relation,
+relating the [=Agent Registration=]
+to the [=Agent=] making the request.
+Depending on the [=Agent Manager=], the response might immediately include
+the contents of the [=Agent Registration=] itself.
 
-<figure>
-  <figcaption>HEAD request to and response from Authorization Agent</figcaption>
-  <pre highlight=http>
-    HEAD / HTTP/1.1
-    Host: alice.jarvis.example
-    Authorization: DPoP ....
-  </pre>
-  <pre highlight=http line-highlight=3>
-    HTTP/1.1 200 OK
-    Link: &lt;https://projectron.example/#app&gt;;
-      anchor="https://alice.jarvis.example/bcf22534-0187-4ae4-b88f-fe0f9fa96659";
-      rel="http://www.w3.org/ns/solid/interop#registeredAgent"
-  </pre>
-</figure>
 
 Issue(252):

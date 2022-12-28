@@ -25,37 +25,9 @@ Boilerplate: style-darkmode off
 Markup Shorthands: markdown yes
 Inline Github Issues: title
 Max ToC Depth: 2
+Metadata Include: ! off
 
 Complain About: accidental-2119 yes, broken-links no, missing-example-ids yes, mixed-indents yes
-
-Text Macro: MUST <em class=rfc2119>MUST</em>
-Text Macro: SHOULD <em class=rfc2119>SHOULD</em>
-Text Macro: MAY <em class=rfc2119>MAY</em>
-
-Text Macro: NONORM *This section is non-normative.*
-Text Macro: DISPLAY *(Extra indentation and newlines are for display purposes only.)*
-
-Text Macro: L &lt;
-Text Macro: R &gt;
-
-Text Macro: HTTP    <l>[[!RFC9110|HTTP]]</l>
-Text Macro: LINKS   <l>[[!RFC8288|Web-Linking]]</l>
-Text Macro: RDF     <l>[[!RDF11-CONCEPTS|RDF 1.1]]</l>
-Text Macro: RDFMT   <l>[[!RDF11-MT|RDF 1.1 Semantics]]</l>
-Text Macro: RDFS    <l>[[RDF-SCHEMA|RDFS]]</l>
-Text Macro: OWL     <l>[[OWL2-SYNTAX|OWL]]</l>
-Text Macro: PROF    <l>[[PROF|Solid WebID Profile]]</l>
-Text Macro: TI      <l>[[TI|Type Indexes]]</l>
-Text Macro: JSON-LD <l>[[JSON-LD11|JSON-LD]]</l>
-Text Macro: OAUTH   <l>[[RFC6749|OAuth 2.0]]</l>
-Text Macro: DCR     <l>[[RFC7591|Dynamic Client Registration]]</l>
-
-Text Macro: S200    [:200:] <code>(OK)</code>
-Text Macro: S201    [:201:] <code>(Created)</code>
-Text Macro: S303    [:303:] <code>(See Other)</code>
-Text Macro: S400    [:400:] <code>(Bad Request)</code>
-Text Macro: S401    [:401:] <code>(Unauthenticated)</code>
-Text Macro: S403    [:403:] <code>(Forbidden)</code>
 
 Abstract: 
 
@@ -82,6 +54,8 @@ Status Text:
 
 </pre>
 
+<link rel="stylesheet" href="style.css" />
+
 <div boilerplate=copyright>
 MIT License Copyright 2019 - 2021 W3C Solid Community Group
 </div>
@@ -95,6 +69,7 @@ MIT License Copyright 2019 - 2021 W3C Solid Community Group
 <pre class=include>path: intro.bs</pre>
 <pre class=include>path: agent-manager.bs</pre>
 <pre class=include>path: agent-registry.bs</pre>
+<pre class=include>path: agent-registering.bs</pre>
 
 
 <!--~~~~~~~~~~~~-->
@@ -110,3 +85,55 @@ MIT License Copyright 2019 - 2021 W3C Solid Community Group
 <!--~~~~~~~~~~~~~~-->
 
 <pre class=include>path: biblio.bs</pre>
+
+
+<!--~~~~~~~~-->
+<!-- MACROS -->
+<!--~~~~~~~~-->
+
+<pre class=metadata>
+
+!!: RFC2119 conformance shorthands
+
+Text Macro: NONORM *This section is non-normative.*
+Text Macro: MUST <em class=rfc2119>MUST</em>
+Text Macro: SHOULD <em class=rfc2119>SHOULD</em>
+Text Macro: MAY <em class=rfc2119>MAY</em>
+
+!!: L- and R- angle brackets for links in <pre>
+
+Text Macro: L &lt;
+Text Macro: R &gt;
+
+!!: Running text mentions of sources
+
+Text Macro: DCR     <l>[[RFC7591|Dynamic Client Registration]]</l>
+Text Macro: DPOP    <l>[[DPOP|DPoP]]</l>
+Text Macro: HTTP    <l>[[!RFC9110|HTTP]]</l>
+Text Macro: JSON-LD <l>[[JSON-LD11|JSON-LD]]</l>
+Text Macro: LINKS   <l>[[!RFC8288|Web-Linking]]</l>
+Text Macro: OAUTH   <l>[[RFC6749|OAuth 2.0]]</l>
+Text Macro: OIDC    <l>[[OIDC|OpenID Connect]]</l>
+Text Macro: OWL     <l>[[OWL2-SYNTAX|OWL]]</l>
+Text Macro: RDF     <l>[[!RDF11-CONCEPTS|RDF 1.1]]</l>
+Text Macro: RDFMT   <l>[[!RDF11-MT|RDF 1.1 Semantics]]</l>
+Text Macro: RDFS    <l>[[RDF-SCHEMA|RDFS]]</l>
+Text Macro: LDP     <l>[[LDP|LDP]]</l>
+
+!!: HTTP status codes with name
+
+Text Macro: S200    [:200:] <code>(OK)</code>
+Text Macro: S201    [:201:] <code>(Created)</code>
+Text Macro: S204    [:204:] <code>(Created)</code>
+Text Macro: S303    [:303:] <code>(See Other)</code>
+Text Macro: S400    [:400:] <code>(Bad Request)</code>
+Text Macro: S401    [:401:] <code>(Unauthenticated)</code>
+Text Macro: S403    [:403:] <code>(Forbidden)</code>
+
+!!: Exported definitions
+
+Text Macro: AGENT-MANAGER       <dfn export lt="Agent Manager|interop:AgentManager">Agent Manager</dfn>
+Text Macro: AGENT-REGISTRY      <dfn export lt="Agent Registry|interop:AgentRegistry">Agent Registry</dfn>
+Text Macro: AGENT-REGISTRATION  <dfn export lt="Agent Registration|interop:AgentRegistration">Agent Registration</dfn>
+
+</pre>

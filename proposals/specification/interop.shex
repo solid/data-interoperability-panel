@@ -21,11 +21,20 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 }
 
 <#RegistrationShape> {
-  $<#CommonRegistrationProperties> (
+  $<#RegistrationProperties> (
     interop:registeredBy                    IRI // shex:reference <#AgentShape> ;
     interop:registeredWith                  IRI // shex:reference <#ApplicationShape> ;
     interop:registeredAt                    xsd:dateTime ;
-    interop:updatedAt                       xsd:dateTime ;
+    interop:updatedAt                       xsd:dateTime
+  )
+}
+
+<#AgentRegistrationShape> {
+  a [ interop:AgentRegistration ] ;
+  $<#AgentRegistrationProperties> (
+    &<#RegistrationProperties> ;
+    interop:registeredAgent                 IRI // shex:reference <#AgentShape> ;
+    interop:reciprocalRegistration          IRI? // shex:reference <#SocialAgentShape>
   )
 }
 
@@ -37,16 +46,13 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <#SocialAgentRegistrationShape> {
   a [ interop:SocialAgentRegistration ] ;
-  &<#CommonRegistrationProperties> ;
-  interop:registeredAgent                   IRI  // shex:reference <#AgentShape> ;
-  interop:hasAccessGrant                    IRI  // shex:reference <#AccessGrantShape> ;
-  interop:reciprocalRegistration            IRI? // shex:reference <#SocialAgentShape>
+  &<#AgentRegistrationProperties> ;
+  interop:hasAccessGrant                    IRI  // shex:reference <#AccessGrantShape>
 }
 
 <#ApplicationRegistrationShape> {
   a [ interop:ApplicationRegistration ] ;
-  &<#CommonRegistrationProperties> ;
-  interop:registeredAgent                   IRI  // shex:reference <#AgentShape> ;
+  &<#RegistrationProperties> ;
   interop:hasAccessGrant                    IRI  // shex:reference <#AccessGrantShape>
 }
 
@@ -57,7 +63,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 <#DataRegistrationShape> {
   a [ interop:DataRegistration ] ;
-  &<#CommonRegistrationProperties> ;
+  &<#RegistrationProperties> ;
   interop:registeredShapeTree               IRI  // shex:reference sts:ShapeTree;
 }
 

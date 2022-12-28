@@ -198,7 +198,7 @@ The reference to reciprocal registration can be created after receiving an [[#ac
 from another Social Agent and performing [[#agent-registration-discovery]]
 
 In the case of Social Agent Registration for ACME, created in Alice's Agent Registry. The reciprocal registration
-will be the Social Agent Reigstration for Alice, created in ACME's Agent Registry.
+will be the Social Agent Registration for Alice, created in ACME's Agent Registry.
 
 <img class="flowchart-diagram" src="diagrams/reciprocal-registration.flow.mmd.png" />
 
@@ -226,7 +226,7 @@ own Authorization Agent. The response will include a link to the Application reg
     Authorization: DPoP ....
   </pre>
   <pre highlight=http line-highlight=3>
-    HTTP/1.1 200 OK
+    HTTP/1.1 204 OK
     Link: &lt;https://projectron.example/#app&gt;;
       anchor="https://auth.alice.example/bcf22534-0187-4ae4-b88f-fe0f9fa96659";
       rel="http://www.w3.org/ns/solid/interop#registeredAgent"
@@ -244,7 +244,7 @@ another's social agent Authorization Agent. The response will include a link to 
     Authorization: DPoP ....
   </pre>
   <pre highlight=http line-highlight=3>
-    HTTP/1.1 200 OK
+    HTTP/1.1 204 OK
     Link: &lt;https://bob.example/#id&gt;;
       anchor="https://auth.alice.example/92868ad4-a9e6-42df-9cb0-883350c62769";
       rel="http://www.w3.org/ns/solid/interop#registeredAgent"

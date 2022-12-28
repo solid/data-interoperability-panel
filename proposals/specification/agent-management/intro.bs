@@ -4,24 +4,28 @@ Introduction {#sec-intro}
 
 [NONORM]
 
-When an [=Agents=] wish to *discover* information about an [=Entity=] (e.g. a
-person, document or API), they typically dereference a [=Dereferenceable
-Identifier=] of it to find a single [=Identity Document=], e.g. the [=Profile
-Document=] of a [=WebID=] or [=DID Document=] of a [=Decentralized Identifier=]. 
+When [=Agents=] wish to **discover** information about an [=Entity=] 
+(e.g. a person, document or API), 
+they typically dereference a [=Dereferenceable Identifier=] of it, 
+to find a single [=Identity Document=], 
+e.g. the [=Profile Document=] of a [=WebID=], 
+or [=DID Document=] of a [=Decentralized Identifier=]. 
 
 However, an [=Agent=] managing the [=Identity Document=] of the [=Entity=] 
-might want to expose *different* information about the [=Entity=], depending on
-the [=Agent=] trying to discover it. The managing [=Agent=] want this to
-restrict access for privacy or security concerns, or to provide information
-specific to particular [=Agents=]: tailored indexes, user preferences,
-application state etc.
+might want to expose *different* information about the [=Entity=], 
+depending on the [=Agent=] trying to discover it. 
+This <dfn>Managing Agent</dfn> might want this 
+to restrict access for privacy or security concerns,
+or to provide information specific to particular [=Agents=]: 
+tailored indexes, user preferences, application state etc.
 
-This document specifies a process by which [=Agents=] can discover this limited
-set of <dfn export>Agent-Specific Resources</dfn> &mdash; [=Resources=] that are
-accessible by and possibly relevant for a specific [=Agent=] &mdash; in a
-performant, secure, and privacy-minded manner, without having to bother with all
-other, irrelevant [=Resources=].
+This document specifies a process by which [=Agents=] can discover 
+this limited set of <dfn export>Agent-Specific Resources</dfn> &mdash; 
+[=Resources=] that are accessible by and possibly relevant for a specific [=Agent=] 
+&mdash; in a performant, secure, and privacy-minded manner, 
+without having to bother with all other, irrelevant [=Resources=].
 
-    NOTE: If the [=Entity=] is an [=Agent=] itself, it can of course manage 
-    its own [=Identity Document=], in which case there is no difference between
-    the [=Entity=] and its managing [=Agent=].
+    NOTE: If the [=Entity=] is an [=Agent=] itself, 
+    it can of course manage its own [=Identity Document=], 
+    in which case there is no difference 
+    between the [=Entity=] and its [=Managing Agent=].

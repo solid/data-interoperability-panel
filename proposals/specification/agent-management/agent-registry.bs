@@ -1,39 +1,101 @@
 
 # Agent Registry #  {#sec-agent-registry}
 
-In order to present [=Agents=] with their [=Agent-Specific Resources=], the
-[=Agent Manager=] keeps track of them in an <dfn>Agent Registry</dfn>, in which
-each [#sec-ar-requests|registered] [=Agent=] has an <dfn>Agent
-Registration</dfn>: an initial [=Agent-Specific Resource=], encoding an [=RDF
-Graph=] containing information about the [=Entity=] and the [=Agent=], and
-relating them to other [=Agent-Specific Resources=].
+In order to present [=Agents=] with their [=Agent-Specific Resources=], 
+the [=Agent Manager=] keeps track of them in an [AGENT-REGISTRY]
+([=RDF-SCHEMA|RDF Class=] `interop:AgentRegistry`):
+an [LDP] [=Container=] which [=contains=] an [=Agent Registration=]
+for each [#sec-ar-requests|registered] [=Agent=].
 
-    ISSUE: Should there be a level where the entity can keep information about 
-    the agent that is not accessible to the agent?
+    ISSUE: Should there be a level where the entity can keep 
+    information about the agent that is not accessible to the agent?
 
-An [=Agent Registry=] [MUST] contain at least an [=Agent Registration=] for the
-<dfn>Public Agent</dfn>, identified by `foaf:Agent`. By default, the [=Agent
-Registration=] of the [=Public Agent=] [SHOULD] be identical to the [=Identity
-Document=] of the [=Entity=].
 
-Each [=Agent Registration=] [MUST] include an [=RDF Triple=] linking the
-[=Agent=] to the [=Agent Registration=] itself with the
-`interop:hasAgentRegistration` predicate, and an [=RDF Triple=] linking the
-[=Entity=] to the [=Agent Manager=] 
+## Agent Registrations ## {#sec-agent-registrations}
 
-  <div class=example id=ex-arr-link>
+An [AGENT-REGISTRATION] ([=RDF-SCHEMA|RDF Classes=] `interop:AgentRegistration`) 
+for an [=Agent=] is the initial [=Agent-Specific Resource=]
+of that [=Agent=] in the context of the [=Entity=].
+It encodes an [=RDF Graph=] containing information 
+about the [=Entity=] and the [=Agent=], 
+and relates them to other[=Agent-Specific Resources=].
+
+There can be only one [=Agent Registration=] for any given [=Agent=] in an [=Agent Registry=].
+The URL for each [=Agent Registration=] [SHOULD] be unpredictable,
+in order to avoid giving away any information without authorization.
+The [=Agent=] [#sec-ar-requests|registered] in a given [=Agent Registration=] 
+[SHOULD] have authorization to [:GET:] its contents.
+
+Each [=Agent Registration=] [SHOULD] include the following metadata parameters,
+encoded as [=RDF Triples=], with the parameter names in the `interop:` namespace,
+and the [=Agent Registration=] itself as the subject.
+It [MUST] at least record the [=Agent=] in question with `interop:registeredAgent`.
+
+  <table class="params data" align="left" id="params-agent-registry">
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Range</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>registeredAgent</td>
+        <td>[=foaf:Agent=]</td>
+        <td>The [=Agent=] that was registered.</td>
+      </tr>
+      <tr>
+        <td>registeredBy</td>
+        <td>[=foaf:Agent=]</td>
+        <td>The managing [=Agent=] that registered the [=Agent Registration=].</td>
+      </tr>
+      <tr>
+        <td>registeredWith</td>
+        <td>[=interop:AgentManager=]</td>
+        <td>The [=Agent Manager=] used to create the [=Agent Registration=]. <br />
+            This can be used to record versioning info.</td>
+      </tr>
+      <tr>
+        <td>registeredAt</td>
+        <td>xsd:dateTime</td>
+        <td>Date and time the [=Agent Registration=] was created.</td>
+      </tr>
+      <tr>
+        <td>updatedAt</td>
+        <td>xsd:dateTime</td>
+        <td>Date and time the [=Agent Registration=] was last updated.</td>
+      </tr>
+      <tr>
+        <td>reciprocalRegistration</td>
+        <td>[=interop:AgentRegistration=]</td>
+        <td>`OPTIONAL` In case the [=Entity=] is an [=Agent=] itself, this points <br />
+            to the [=Agent Registration=] that the registered [=Agent=] maintains <br />
+            for the [=Entity=].</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class=example id=ex-agent-registry>
     
     [[TURTLE]] representation of the [=RDF Triples=] of a minimal [=Agent Registration=]
     
     <pre highlight=turtle>
-      [L]https://cool.app/info#this[R] 
-        [L]http://www.w3.org/ns/solid/interop#hasAgentRegistration[R]
-          [L]https://my.id/agents/Q9kKfK[R] .
+      alice:\/agents\/2f2f3628
+        a interop:AgentRegistration ;
+        interop:registeredAgent projectron:\#id ;
+        interop:registeredBy alice:\#id ;
+        interop:registeredWith jarvis:\#id ;
+        interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
+        interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
+        interop:reciprocalRegistration projectron:\/agents\/1e45be90 .
     </pre>
-
-    [DISPLAY]
     
   </div>
 
-<pre class=include>path: ar-discovery.bs</pre>
-<pre class=include>path: ar-requests.bs</pre>
+
+## Agent Registration Discovery ## {#sec-agent-registration-discovery}
+
+<pre class=include>path: ard-request.bs</pre>
+<pre class=include>path: ard-response.bs</pre>
+<pre class=include>path: ard-result.bs</pre>

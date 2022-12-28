@@ -1,0 +1,56 @@
+.note,
+.issue,
+.example,
+.assertion,
+.advisement {
+  font-size: 0.9em;
+}
+
+em.rfc2119 {
+  text-transform: lowercase;
+  font-variant: small-caps;
+  font-style: normal;
+  font-size: 18px;
+  color: #900;
+}
+
+pre {
+  font-size: .8em;
+}
+
+.display pre::after {
+  content: 'Extra indentation and newlines are for display purposes only.';
+  background-color: aliceblue;
+  color: darkgray;
+  margin: calc(-1em - 1px);
+  margin-top: 0.5em;
+  padding: 0.3em;
+  font-size: 0.9em;
+  font-style: italic;
+  text-align: right;
+  float: right;
+}
+
+table.params thead tr th[colspan] {
+  text-align: left;
+  font-size: 15px;
+}
+
+table.params thead tr th {
+  text-align: left;
+  font-size: 14px;
+}
+
+table.params tbody tr:nth-child(odd) {
+  background-color: lightgray;
+  font-size: 12px;
+}
+
+table.params tbody tr td {
+  font-size: 12px;
+}
+
+table.params tbody tr td:nth-child(2) a {
+  color: #339966;
+  border-bottom: 1px solid #339966;
+}

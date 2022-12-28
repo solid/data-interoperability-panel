@@ -8,16 +8,20 @@ Upon receiving a request for an [=Agent Registration=], the [=Agent Manager=] [M
 
 If an [:Authorization:] header is present, with the scheme set to [:DPoP:], and
 the included [=Identity Token=] is valid, and it authenticates an [=Agent=] known to
-the [=Agent Manager=], the latter [MUST] respond with either of the following.
+the [=Agent Manager=], the latter [MUST] respond with either of the following; and it 
+[MUST] do so consistently for all valid requests by known [=Agents=].
 
-  - Status code [S303], including an [HTTP] [:Location:] header with
-    the URL of the [=Agent Registration=] URL as value.
+  - It [MAY] respond with status code [S303], including an [:Location:] header 
+    with the URL of the [=Agent Registration=] URL as value.
 
-  - If the [=Agent=] sent a [:GET:] request, the [=Agent Manager=] [MAY] also
-    respond with status code [S200], including a [[JSON-LD11|JSON-LD]]
-    serialization of the [=Agent Registration=] in the body of the response, and a
-    [HTTP] [:Content-Location:] header with the URL of the [=Agent Registration=]
-    URL as value.
+  - It [MAY] respond with status code [S204], including an [:Link:] header of
+    [=Relation Type=] `interop:registeredAgent`, with the [=Agent Registration=] as 
+    [=Link Context=], and the [=Agent=] itself as [=Link Target=]. 
+    
+  - It [MAY] respond with status code [S200] including a [:Content-Location:] header 
+    with the URL of the [=Agent Registration=] URL as value. If the request method
+    was [:GET:], it [MUST] include a [[JSON-LD11|JSON-LD]] serialization of the 
+    [=Agent Registration=] in the body of the response.
 
     <div class=example id=ex-am-response-private>
 
@@ -29,13 +33,18 @@ the [=Agent Manager=], the latter [MUST] respond with either of the following.
         </pre>
 
         <pre highlight=http>
+            HTTP/1.1 204 No Content
+            Link: [L]https://my.id/agents/Q9kKfK[R]; 
+              rel="http://www.w3.org/ns/solid/interop#registeredAgent";
+              anchor="https://cool.app/info#this"
+        </pre>
+
+        <pre highlight=http>
             HTTP/1.1 200 OK
             Content-Location: https://my.id/agents/Q9kKfK
 
             # ... includes agent registration ...
         </pre>  
-
-        [DISPLAY]
     
     </div>
 
