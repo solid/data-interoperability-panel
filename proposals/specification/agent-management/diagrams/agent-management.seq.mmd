@@ -4,34 +4,34 @@ sequenceDiagram
     
     participant ID as Identity Document
     participant App as Client Application
-    participant RDH as Agent Manager
-    participant AR as Agent-Specific Resource
-    participant ART as Access Request Target
+    participant AM as Agent Manager
+    participant AR as Agent Registration
+    participant RE as Registration Endpoint
     
     Note over ID: <> foaf:primaryTopic <id> .
     
     App->>ID: GET <id>
     ID-->>App: 200 OK
 
-    break No RDH in Link header or body
+    break No Agent Manager <br/> in Link header or Body
         Note over ID,App: Rely on Identity Document only
     end
     
-    App->>RDH: HEAD <rdh> <br/> Authorization: ...
-    RDH-->>App: 200 OK
+    App->>AM: HEAD <agent-manager> <br/> Authorization: DPoP ...
+    AM-->>App: 200 OK
 
-    break No ASR or ART in Link header or body
+    break No Agent Registration <br/> or Registration Endpoint<br/>in Link header or Body
         Note over App: Rely on Identity Document only
     end
 
-    opt No ASR but ART in Link or body
-        App->>+ART: GET <art> <br/> Authorization: ... 
-        Note over AR,ART: Agent Registration is created
-        ART-->>-App: 201 Created <br/> Location: <asr>
+    opt No Agent Registration but Registration Endpoint in Link or Body
+        App->>+RE: POST <registration-endpoint> <br/> Authorization: DPoP ... 
+        Note over App,RE: Interactive sequence in which Agent Registration is created
+        RE-->>-App: 201 Created <br/> Location: <agent-registration>
     end
 
-    App->>AR: GET <asr> <br/> Authorization: ...
+    App->>AR: GET <agent-registration> <br/> Authorization: DPoP ...
     AR-->>App: 200 OK
-    Note over App: Rely on both Identity Document <br/> and Agent-Specific Resource
+    Note over App: Rely on both Identity Document <br/> and Agent Registration
 
 
