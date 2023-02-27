@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version 63e66730b, updated Tue Oct 25 12:35:05 2022 -0700" name="generator">
+  <meta content="Bikeshed version f043d3484, updated Fri Feb 17 10:53:48 2023 -0800" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="37640b0579257f2f32862943435d27c055964217" name="document-revision">
+  <meta content="e7f58643d0d57c1e9d35cf8b4d1fd2e0573f9e7e" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -140,7 +140,6 @@ em.rfc2119 {
 
 </style>
 <style>/* style-autolinks */
-
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
     font-size: inherit;
@@ -200,7 +199,8 @@ pre .property::before, pre .property::after {
 
 [data-link-type=biblio] {
     white-space: pre;
-}</style>
+}
+</style>
 <style>/* style-colors */
 
 /* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
@@ -309,9 +309,9 @@ pre .property::before, pre .property::after {
     --outdated-shadow: red;
 
     --editedrec-bg: darkorange;
-}</style>
+}
+</style>
 <style>/* style-counters */
-
 body {
     counter-reset: example figure issue;
 }
@@ -338,9 +338,9 @@ figcaption {
 }
 figcaption:not(.no-marker)::before {
     content: "Figure " counter(figure) " ";
-}</style>
+}
+</style>
 <style>/* style-dfn-panel */
-
 :root {
     --dfnpanel-bg: #ddd;
     --dfnpanel-text: var(--text);
@@ -348,10 +348,10 @@ figcaption:not(.no-marker)::before {
 .dfn-panel {
     position: absolute;
     z-index: 35;
-    height: auto;
-    width: -webkit-fit-content;
-    width: fit-content;
+    width: 20em;
+    min-width: min-content;
     max-width: 300px;
+    height: auto;
     max-height: 500px;
     overflow: auto;
     padding: 0.5em 0.75em;
@@ -359,6 +359,7 @@ figcaption:not(.no-marker)::before {
     background: var(--dfnpanel-bg);
     color: var(--dfnpanel-text);
     border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
 }
 .dfn-panel:not(.on) { display: none; }
 .dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
@@ -381,7 +382,6 @@ figcaption:not(.no-marker)::before {
 .dfn-paneled { cursor: pointer; }
 </style>
 <style>/* style-issues */
-
 a[href].issue-return {
     float: right;
     float: inline-end;
@@ -430,7 +430,6 @@ a[href].issue-return {
 }
 </style>
 <style>/* style-md-lists */
-
 /* This is a weird hack for me not yet following the commonmark spec
    regarding paragraph and lists. */
 [data-md] > :first-child {
@@ -438,7 +437,8 @@ a[href].issue-return {
 }
 [data-md] > :last-child {
     margin-bottom: 0;
-}</style>
+}
+</style>
 <style>/* style-selflinks */
 
 :root {
@@ -562,7 +562,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-12-07">7 December 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-02-27">27 February 2023</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -672,7 +672,7 @@ to its full potential. The fundamentals of Solid make this possible,
 but further definition of standard methods and mechanisms 
 must be established
 to make it practical, intuitive, and secure.</p>
-   <p class="note" role="note"><span>Note:</span> See <a data-link-type="biblio" href="#biblio-problems-and-goals">Problems and Goals for Interoperability in Solid</a> for an explanation of the problem space.</p>
+   <p class="note" role="note"><span class="marker">Note:</span> See <a data-link-type="biblio" href="#biblio-problems-and-goals" title="Problems and Goals for Interoperability, Collaboration, and Security in a Solid Pod">Problems and Goals for Interoperability in Solid</a> for an explanation of the problem space.</p>
    <p>This specification details how <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent">Social Agents</a> in the Solid ecosystem
 can read, write, and manage data stored in a Solid pod using
 disparate <a data-link-type="dfn" href="#application" id="ref-for-application">Applications</a>.</p>
@@ -1509,7 +1509,7 @@ one flow to another.</p>
        <td>Projectron receives a <code>401 Not Authorized</code>, because Alice / Projectron needs to authenticate first
       <tr>
        <td><b>6</b>
-       <td>Projectron initiates a <a data-link-type="biblio" href="#biblio-solid-oidc">[SOLID-OIDC]</a> flow with Alice’s Identity Provider and receives a DPOP-bound Access Token and Proof
+       <td>Projectron initiates a <a data-link-type="biblio" href="#biblio-solid-oidc" title="Solid-OIDC Specification">[SOLID-OIDC]</a> flow with Alice’s Identity Provider and receives a DPOP-bound Access Token and Proof
       <tr>
        <td><b>7</b>
        <td>Now authenticated, Projectron <a href="#agent-registration-discovery">asks</a> Alice’s <a data-link-type="dfn" href="#authorization-agent①" id="ref-for-authorization-agent①④">Authorization Agent</a> again for a Projectron <a data-link-type="dfn" href="#application-registration①" id="ref-for-application-registration①⑨">Application Registration</a>
@@ -2059,7 +2059,6 @@ and are appropriate to share with the grantee.</p>
     at https://alice.example/authorization/54a1b6a0 - <a href="snippets/alice.example/54a1b6a0.ttl">View</a> </figcaption>
 <pre class="include-code highlight"><c- nn>alice-authorization</c-><c- p>:</c-><c- f>54a1b6a0</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataAuthorization</c-> <c- p>;</c->
-  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c->
@@ -2307,7 +2306,7 @@ of that type is specified by the <dfn class="dfn-paneled" data-dfn-type="dfn" da
    <p class="issue" id="issue-a2fe1e29"><a class="self-link" href="#issue-a2fe1e29"></a> This specification uses some access modes in the <code>acl:</code> namespace that
 have not been adopted to demonstrate the most secure and accurate
 expression of a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑨⑤">Social Agent’s</a> authorization. <a href="https://github.com/solid/authorization-panel/issues/253">Discussions are underway</a> to add these modes.</p>
-   <p class="issue" id="issue-5157d1cb"><a class="self-link" href="#issue-5157d1cb"></a> <a data-link-type="biblio" href="#biblio-wac">[WAC]</a> does not have any mechanism to extend or modify
+   <p class="issue" id="issue-5157d1cb"><a class="self-link" href="#issue-5157d1cb"></a> <a data-link-type="biblio" href="#biblio-wac" title="Web Access Control">[WAC]</a> does not have any mechanism to extend or modify
 inherited permissions.</p>
    <table align="left" class="data tree">
     <colgroup>
@@ -2355,12 +2354,12 @@ owner, across all of the data owner’s registries.</p>
 data of type <code>pm-shapetrees:ProjectTree</code> with a scope of <code>interop:All</code>. Since
 Alice has two <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①①②">Data Registries</a> and Bob has shared projects with her, several <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②③">Data Grants</a> will be generated from this <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①③">Data Authorization</a> and shared
 with Projectron.</p>
-   <p class="note" role="note"><span>Note:</span> <code>interop:All</code> is only valid for a <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①④">Data Authorization</a>.
+   <p class="note" role="note"><span class="marker">Note:</span> <code>interop:All</code> is only valid for a <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①④">Data Authorization</a>.
 Generated <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②④">Data Grants</a> use the more specific <code>interop:AllFromRegistry</code> for each unique <a data-link-type="dfn" href="#data-registry①" id="ref-for-data-registry①①③">Data Registry</a>, including Bob’s.</p>
    <figure>
     <figcaption>Alice’s <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①⑤">Data Authorization</a> for Projectron to access Projects
     at https://alice.example/authorization/54a1b6a0 - <a href="snippets/alice.example/54a1b6a0.ttl">View</a> </figcaption>
-<pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-authorization</c-><c- p>:</c-><c- f>54a1b6a0</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataAuthorization</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="19"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfAuthorization</c-> <c- nn>interop</c-><c- p>:</c-><c- f>All</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>.</c-></span></pre>
+<pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-authorization</c-><c- p>:</c-><c- f>54a1b6a0</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataAuthorization</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfAuthorization</c-> <c- nn>interop</c-><c- p>:</c-><c- f>All</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="19"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>.</c-></span></pre>
    </figure>
    <figure>
     <figcaption>Alice’s <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①②⑤">Data Grant</a> for Projectron to access Projects in her
@@ -2387,7 +2386,7 @@ any access that she has been given to another <a data-link-type="dfn" href="#soc
    <p><b>Shapes:</b> <a href="interop.shex#DataAuthorizationAllFromAgentShape">DataAuthorizationAllFromAgentShape</a></p>
    <p>The following example illustrates <em>Alice’s</em> authorization to give Performchart access to
 data of type <code>pm-shapetrees:ProjectTree</code> with a scope of <code>interop:AllFromAgent</code> and an <code>interop:dataOwner</code> of <em>Bob</em>.</p>
-   <p class="note" role="note"><span>Note:</span> While Bob has granted Alice the ability to manipulate his project data,
+   <p class="note" role="note"><span class="marker">Note:</span> While Bob has granted Alice the ability to manipulate his project data,
 Alice grants Performchart a narrower scope of read-only access.</p>
    <figure>
     <figcaption>Alice’s <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①①⑥">Data Authorization</a> for Performchart to access Projects
@@ -2550,7 +2549,7 @@ for each distinct reference.</p>
    <figure>
     <figcaption>Alice’s <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①②④">Data Authorization</a> for Projectron to access Projects
     at https://alice.example/authorization/54a1b6a0 - <a href="snippets/alice.example/54a1b6a0.ttl">View</a> </figcaption>
-<pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-authorization</c-><c- p>:</c-><c- f>54a1b6a0</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataAuthorization</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- nn>alice</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="19"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfAuthorization</c-> <c- nn>interop</c-><c- p>:</c-><c- f>All</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>.</c-></span></pre>
+<pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>alice-authorization</c-><c- p>:</c-><c- f>54a1b6a0</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataAuthorization</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>grantee</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#id</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Create</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>creatorAccessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Update</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Delete</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>scopeOfAuthorization</c-> <c- nn>interop</c-><c- p>:</c-><c- f>All</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="19"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>satisfiesAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#ac54ff1e</c-> <c- p>.</c-></span></pre>
    </figure>
    <p>The <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②④">shape tree</a> <code>pm-shapetrees:ProjectTree</code> specifies one virtual hierarchy
 via <code>st:references</code>, indicating that a Project <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance③④">Data Instance</a> virtually
@@ -2868,7 +2867,7 @@ also act as autonomous <a data-link-type="dfn" href="#authenticated-agent" id="r
 as the <a data-link-type="dfn" href="#authenticated-agent" id="ref-for-authenticated-agent①">authenticated agent</a>. They include in-browser javascript
 applications, native desktop applications, and mobile applications.</p>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="authenticated-agent">authenticated agent</dfn> is an <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③③">agent</a> that has strongly
-authenticated their <a data-link-type="dfn" href="#identity" id="ref-for-identity⑨">identity</a> by proving control of the <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document①⓪">identity profile document</a> via an authentication protocol such as <a data-link-type="biblio" href="#biblio-solid-oidc">[SOLID-OIDC]</a>.</p>
+authenticated their <a data-link-type="dfn" href="#identity" id="ref-for-identity⑨">identity</a> by proving control of the <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document①⓪">identity profile document</a> via an authentication protocol such as <a data-link-type="biblio" href="#biblio-solid-oidc" title="Solid-OIDC Specification">[SOLID-OIDC]</a>.</p>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="identity">identity</dfn> is a unique URI that can be dereferenced
 to return an <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document①①">identity profile document</a>. Compatible
 identity systems include <a data-link-type="dfn" href="#webid" id="ref-for-webid②">WebID</a> and <a data-link-type="dfn" href="#did" id="ref-for-did">DID</a>.</p>
@@ -2876,16 +2875,16 @@ identity systems include <a data-link-type="dfn" href="#webid" id="ref-for-webid
 dereferencing the URI for a given <a data-link-type="dfn" href="#identity" id="ref-for-identity①⓪">identity</a>. It provides information that
 can be used to prove that a given <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③④">Agent</a> controls the document.</p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="webid">WebID</dfn> is a web resource at an HTTP URI which refers to an <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③⑤">agent</a>. An <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document①②">identity profile document</a> can be accessed by
-dereferencing the WebID. <a data-link-type="biblio" href="#biblio-webid">[WEBID]</a></p>
+dereferencing the WebID. <a data-link-type="biblio" href="#biblio-webid" title="WebID 1.0">[WEBID]</a></p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="did">DID</dfn> is a URI that associates a DID subject (e.g. an <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③⑥">agent</a>,
 thing, data model, abstract entity, etc.) with a DID document,
 equivalent to an <a data-link-type="dfn" href="#identity-profile-document" id="ref-for-identity-profile-document①③">identity profile document</a>, to allow trustable
-interactions with that subject. <a data-link-type="biblio" href="#biblio-did">[DID]</a></p>
+interactions with that subject. <a data-link-type="biblio" href="#biblio-did" title="Decentralized Identifiers (DIDs) v1.0">[DID]</a></p>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="application-identity">application identity</dfn> is a web resource at an HTTP URI
 that uniquely identifies a given <a data-link-type="dfn" href="#application" id="ref-for-application⑤⑦">Application</a>, and dereferences to an <a data-link-type="dfn" href="#application-profile-document" id="ref-for-application-profile-document">application profile document</a>.</p>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="application-profile-document">application profile document</dfn> is a linked data document
 obtained by dereferencing the URI for a given <a data-link-type="dfn" href="#application-identity" id="ref-for-application-identity">application identity</a>.</p>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="acl-resource">acl resource</dfn> as defined by <a data-link-type="biblio" href="#biblio-wac">[WAC]</a> may be directly
+   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="acl-resource">acl resource</dfn> as defined by <a data-link-type="biblio" href="#biblio-wac" title="Web Access Control">[WAC]</a> may be directly
 associated with a resource or indirectly associated with a resource
 through inheritance. It determines which <a data-link-type="dfn" href="#authorization-subject" id="ref-for-authorization-subject">authorization subjects</a> can
 access a resource, and the modes of access they have for it.</p>
@@ -2898,13 +2897,13 @@ a specific <a data-link-type="dfn" href="#agents①" id="ref-for-agents①③⑨
    <p>An <dfn data-dfn-type="dfn" data-noexport id="authorization-statement">authorization statement<a class="self-link" href="#authorization-statement"></a></dfn> is ...</p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="shape">shape</dfn> provides a schema that RDF data graphs must meet in order
 to be considered conformant. A shape associated with a given resource in a <a data-link-type="dfn" href="#pod" id="ref-for-pod①">pod</a> ensures that any data stored in that resource must conform to the
-associated shape. Shape languages include <a data-link-type="biblio" href="#biblio-shex">[SHEX]</a> and <a data-link-type="biblio" href="#biblio-shacl">[SHACL]</a>.</p>
+associated shape. Shape languages include <a data-link-type="biblio" href="#biblio-shex" title="Shape Expressions Language 2.1">[SHEX]</a> and <a data-link-type="biblio" href="#biblio-shacl" title="Shapes Constraint Language (SHACL)">[SHACL]</a>.</p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="shape-tree">Shape Tree</dfn> defines a prospective tree of related resources
 which can be read and written by applications. The shape tree associates
 each of these resources with a shape. This allows one to treat a set of
 related resources as a single grouping, and apply that to a range of
 operations including access control, data organization, data validation,
-and data migration. <a data-link-type="biblio" href="#biblio-shapetrees">[SHAPETREES]</a></p>
+and data migration. <a data-link-type="biblio" href="#biblio-shapetrees" title="Shape Trees">[SHAPETREES]</a></p>
    <p>A <dfn data-dfn-type="dfn" data-noexport id="shape-tree-decorator">Shape Tree Decorator<a class="self-link" href="#shape-tree-decorator"></a></dfn> provides additional human-readable
 description and context for a given <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree②⑥">shape tree</a>.</p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="shape-tree-reference">Shape Tree Reference</dfn> provides the necessary context to
@@ -3005,13 +3004,13 @@ associate instances of related shape trees via a ShapePath</p>
    <div class="issue"> This specification uses some access modes in the <code>acl:</code> namespace that
 have not been adopted to demonstrate the most secure and accurate
 expression of a <a data-link-type="dfn" href="#social-agent">Social Agent’s</a> authorization. <a href="https://github.com/solid/authorization-panel/issues/253">Discussions are underway</a> to add these modes. <a class="issue-return" href="#issue-a2fe1e29" title="Jump to section">↵</a></div>
-   <div class="issue"> <a data-link-type="biblio" href="#biblio-wac">[WAC]</a> does not have any mechanism to extend or modify
+   <div class="issue"> <a data-link-type="biblio" href="#biblio-wac" title="Web Access Control">[WAC]</a> does not have any mechanism to extend or modify
 inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jump to section">↵</a></div>
    <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/186" style="text-transform:none">solid/data-interoperability-panel/186</a><a href="https://github.com/solid/data-interoperability-panel/issues/186">Human readable labels for Data Instances, needed when selecting instances on consent screen. </a> <a class="issue-return" href="#issue-d41d8cd9①③" title="Jump to section">↵</a></div>
    <div class="issue no-marker"><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/174" style="text-transform:none">solid/data-interoperability-panel/174</a><a href="https://github.com/solid/data-interoperability-panel/issues/174">Determine how to dynamically authorize access to reference lists on inherited instances</a> <a class="issue-return" href="#issue-d41d8cd9①④" title="Jump to section">↵</a></div>
   </div>
-  <aside class="dfn-panel" data-for="agents①">
-   <b><a href="#agents①">#agents①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-agents①" class="dfn-panel" data-for="agents①" id="infopanel-for-agents①">
+   <span id="infopaneltitle-for-agents①" style="display:none">Info about the 'Agents' definition.</span><b><a href="#agents①">#agents①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-agents①">1. Introduction</a> <a href="#ref-for-agents①①">(2)</a>
     <li><a href="#ref-for-agents①②">2. Agents</a> <a href="#ref-for-agents①③">(2)</a> <a href="#ref-for-agents①④">(3)</a> <a href="#ref-for-agents①⑤">(4)</a> <a href="#ref-for-agents①⑥">(5)</a> <a href="#ref-for-agents①⑦">(6)</a> <a href="#ref-for-agents①⑧">(7)</a> <a href="#ref-for-agents①⑨">(8)</a>
@@ -3033,8 +3032,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-agents①③③">11. Definitions</a> <a href="#ref-for-agents①③④">(2)</a> <a href="#ref-for-agents①③⑤">(3)</a> <a href="#ref-for-agents①③⑥">(4)</a> <a href="#ref-for-agents①③⑦">(5)</a> <a href="#ref-for-agents①③⑧">(6)</a> <a href="#ref-for-agents①③⑨">(7)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="social-agent">
-   <b><a href="#social-agent">#social-agent</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-social-agent" class="dfn-panel" data-for="social-agent" id="infopanel-for-social-agent">
+   <span id="infopaneltitle-for-social-agent" style="display:none">Info about the 'Social Agent' definition.</span><b><a href="#social-agent">#social-agent</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-social-agent">1. Introduction</a> <a href="#ref-for-social-agent①">(2)</a> <a href="#ref-for-social-agent②">(3)</a> <a href="#ref-for-social-agent③">(4)</a> <a href="#ref-for-social-agent④">(5)</a> <a href="#ref-for-social-agent⑤">(6)</a> <a href="#ref-for-social-agent⑥">(7)</a>
     <li><a href="#ref-for-social-agent⑦">2. Agents</a>
@@ -3068,16 +3067,16 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-social-agent①⓪⑤">10.1. Application Authorization</a> <a href="#ref-for-social-agent①⓪⑥">(2)</a> <a href="#ref-for-social-agent①⓪⑦">(3)</a> <a href="#ref-for-social-agent①⓪⑧">(4)</a> <a href="#ref-for-social-agent①⓪⑨">(5)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="registry">
-   <b><a href="#registry">#registry</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-registry" class="dfn-panel" data-for="registry" id="infopanel-for-registry">
+   <span id="infopaneltitle-for-registry" style="display:none">Info about the 'Registry' definition.</span><b><a href="#registry">#registry</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-registry">3. Social Agents</a> <a href="#ref-for-registry①">(2)</a> <a href="#ref-for-registry②">(3)</a>
     <li><a href="#ref-for-registry③">3.1. Registry Set</a>
     <li><a href="#ref-for-registry④">5.1. Social Agent Registration</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="registry-set">
-   <b><a href="#registry-set">#registry-set</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-registry-set" class="dfn-panel" data-for="registry-set" id="infopanel-for-registry-set">
+   <span id="infopaneltitle-for-registry-set" style="display:none">Info about the 'Registry Set' definition.</span><b><a href="#registry-set">#registry-set</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-registry-set">3. Social Agents</a> <a href="#ref-for-registry-set①">(2)</a>
     <li><a href="#ref-for-registry-set②">3.1. Registry Set</a> <a href="#ref-for-registry-set③">(2)</a>
@@ -3088,8 +3087,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-registry-set⑧">9.8. Authorization Registry</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="application">
-   <b><a href="#application">#application</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-application" class="dfn-panel" data-for="application" id="infopanel-for-application">
+   <span id="infopaneltitle-for-application" style="display:none">Info about the 'Application' definition.</span><b><a href="#application">#application</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-application">1. Introduction</a> <a href="#ref-for-application①">(2)</a> <a href="#ref-for-application②">(3)</a>
     <li><a href="#ref-for-application③">2. Agents</a>
@@ -3114,24 +3113,24 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-application⑤⑥">11. Definitions</a> <a href="#ref-for-application⑤⑦">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="social-agent-registration①">
-   <b><a href="#social-agent-registration①">#social-agent-registration①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-social-agent-registration①" class="dfn-panel" data-for="social-agent-registration①" id="infopanel-for-social-agent-registration①">
+   <span id="infopaneltitle-for-social-agent-registration①" style="display:none">Info about the 'Social Agent Registration' definition.</span><b><a href="#social-agent-registration①">#social-agent-registration①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-social-agent-registration①">5.1. Social Agent Registration</a> <a href="#ref-for-social-agent-registration①①">(2)</a> <a href="#ref-for-social-agent-registration①②">(3)</a> <a href="#ref-for-social-agent-registration①③">(4)</a> <a href="#ref-for-social-agent-registration①④">(5)</a> <a href="#ref-for-social-agent-registration①⑤">(6)</a> <a href="#ref-for-social-agent-registration①⑥">(7)</a>
     <li><a href="#ref-for-social-agent-registration①⑦">5.3. Agent Registry</a> <a href="#ref-for-social-agent-registration①⑧">(2)</a>
     <li><a href="#ref-for-social-agent-registration①⑨">9.7. Access Receipt</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="application-registration①">
-   <b><a href="#application-registration①">#application-registration①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-application-registration①" class="dfn-panel" data-for="application-registration①" id="infopanel-for-application-registration①">
+   <span id="infopaneltitle-for-application-registration①" style="display:none">Info about the 'Application Registration' definition.</span><b><a href="#application-registration①">#application-registration①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-application-registration①">5.2. Application Registration</a> <a href="#ref-for-application-registration①①">(2)</a> <a href="#ref-for-application-registration①②">(3)</a> <a href="#ref-for-application-registration①③">(4)</a> <a href="#ref-for-application-registration①④">(5)</a> <a href="#ref-for-application-registration①⑤">(6)</a>
     <li><a href="#ref-for-application-registration①⑥">5.3. Agent Registry</a> <a href="#ref-for-application-registration①⑦">(2)</a>
     <li><a href="#ref-for-application-registration①⑧">7. Authorization Flows</a> <a href="#ref-for-application-registration①⑨">(2)</a> <a href="#ref-for-application-registration①①⓪">(3)</a> <a href="#ref-for-application-registration①①①">(4)</a> <a href="#ref-for-application-registration①①②">(5)</a> <a href="#ref-for-application-registration①①③">(6)</a> <a href="#ref-for-application-registration①①④">(7)</a> <a href="#ref-for-application-registration①①⑤">(8)</a> <a href="#ref-for-application-registration①①⑥">(9)</a> <a href="#ref-for-application-registration①①⑦">(10)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="agent-registry">
-   <b><a href="#agent-registry">#agent-registry</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-agent-registry" class="dfn-panel" data-for="agent-registry" id="infopanel-for-agent-registry">
+   <span id="infopaneltitle-for-agent-registry" style="display:none">Info about the 'Agent Registry' definition.</span><b><a href="#agent-registry">#agent-registry</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-agent-registry">3.1. Registry Set</a>
     <li><a href="#ref-for-agent-registry①">5. Agent Registrations</a>
@@ -3146,8 +3145,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-agent-registry①⑥">9.6.4. SelectedFromRegistry</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="agent-registrations">
-   <b><a href="#agent-registrations">#agent-registrations</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-agent-registrations" class="dfn-panel" data-for="agent-registrations" id="infopanel-for-agent-registrations">
+   <span id="infopaneltitle-for-agent-registrations" style="display:none">Info about the 'Agent Registrations' definition.</span><b><a href="#agent-registrations">#agent-registrations</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-agent-registrations">5. Agent Registrations</a>
     <li><a href="#ref-for-agent-registrations①">5.3.1. Resource Hierarchy</a> <a href="#ref-for-agent-registrations②">(2)</a> <a href="#ref-for-agent-registrations③">(3)</a>
@@ -3159,8 +3158,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-agent-registrations①①">9.6.4. SelectedFromRegistry</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="data-registration①">
-   <b><a href="#data-registration①">#data-registration①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-data-registration①" class="dfn-panel" data-for="data-registration①" id="infopanel-for-data-registration①">
+   <span id="infopaneltitle-for-data-registration①" style="display:none">Info about the 'Data Registration' definition.</span><b><a href="#data-registration①">#data-registration①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-data-registration①">6.1. Data Registration</a> <a href="#ref-for-data-registration①①">(2)</a> <a href="#ref-for-data-registration①②">(3)</a> <a href="#ref-for-data-registration①③">(4)</a> <a href="#ref-for-data-registration①④">(5)</a> <a href="#ref-for-data-registration①⑤">(6)</a> <a href="#ref-for-data-registration①⑥">(7)</a> <a href="#ref-for-data-registration①⑦">(8)</a>
     <li><a href="#ref-for-data-registration①⑧">6.2. Data Registry</a> <a href="#ref-for-data-registration①⑨">(2)</a> <a href="#ref-for-data-registration①①⓪">(3)</a>
@@ -3174,8 +3173,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-data-registration①③⑤">9.6.5. Inherited</a> <a href="#ref-for-data-registration①③⑥">(2)</a> <a href="#ref-for-data-registration①③⑦">(3)</a> <a href="#ref-for-data-registration①③⑧">(4)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="data-instance">
-   <b><a href="#data-instance">#data-instance</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-data-instance" class="dfn-panel" data-for="data-instance" id="infopanel-for-data-instance">
+   <span id="infopaneltitle-for-data-instance" style="display:none">Info about the 'Data Instance' definition.</span><b><a href="#data-instance">#data-instance</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-data-instance">6.1. Data Registration</a> <a href="#ref-for-data-instance①">(2)</a>
     <li><a href="#ref-for-data-instance②">6.2.1. Resource Hierarchy</a> <a href="#ref-for-data-instance③">(2)</a> <a href="#ref-for-data-instance④">(3)</a> <a href="#ref-for-data-instance⑤">(4)</a> <a href="#ref-for-data-instance⑥">(5)</a>
@@ -3188,8 +3187,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-data-instance③④">9.6.5. Inherited</a> <a href="#ref-for-data-instance③⑤">(2)</a> <a href="#ref-for-data-instance③⑥">(3)</a> <a href="#ref-for-data-instance③⑦">(4)</a> <a href="#ref-for-data-instance③⑧">(5)</a> <a href="#ref-for-data-instance③⑨">(6)</a> <a href="#ref-for-data-instance④⓪">(7)</a> <a href="#ref-for-data-instance④①">(8)</a> <a href="#ref-for-data-instance④②">(9)</a> <a href="#ref-for-data-instance④③">(10)</a> <a href="#ref-for-data-instance④④">(11)</a> <a href="#ref-for-data-instance④⑤">(12)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="data-registry①">
-   <b><a href="#data-registry①">#data-registry①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-data-registry①" class="dfn-panel" data-for="data-registry①" id="infopanel-for-data-registry①">
+   <span id="infopaneltitle-for-data-registry①" style="display:none">Info about the 'Data Registry' definition.</span><b><a href="#data-registry①">#data-registry①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-data-registry①">3.1. Registry Set</a>
     <li><a href="#ref-for-data-registry①①">6.1. Data Registration</a>
@@ -3205,8 +3204,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-data-registry①②③">9.6.5. Inherited</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="authorization-agent①">
-   <b><a href="#authorization-agent①">#authorization-agent①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-authorization-agent①" class="dfn-panel" data-for="authorization-agent①" id="infopanel-for-authorization-agent①">
+   <span id="infopaneltitle-for-authorization-agent①" style="display:none">Info about the 'Authorization Agent' definition.</span><b><a href="#authorization-agent①">#authorization-agent①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-authorization-agent①">7. Authorization Flows</a> <a href="#ref-for-authorization-agent①①">(2)</a> <a href="#ref-for-authorization-agent①②">(3)</a> <a href="#ref-for-authorization-agent①③">(4)</a> <a href="#ref-for-authorization-agent①④">(5)</a> <a href="#ref-for-authorization-agent①⑤">(6)</a> <a href="#ref-for-authorization-agent①⑥">(7)</a> <a href="#ref-for-authorization-agent①⑦">(8)</a> <a href="#ref-for-authorization-agent①⑧">(9)</a> <a href="#ref-for-authorization-agent①⑨">(10)</a> <a href="#ref-for-authorization-agent①①⓪">(11)</a> <a href="#ref-for-authorization-agent①①①">(12)</a> <a href="#ref-for-authorization-agent①①②">(13)</a> <a href="#ref-for-authorization-agent①①③">(14)</a>
     <li><a href="#ref-for-authorization-agent①①④">7.1. Authorization Agent</a> <a href="#ref-for-authorization-agent①①⑤">(2)</a>
@@ -3215,8 +3214,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-authorization-agent①②①">9.7. Access Receipt</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-need-group①">
-   <b><a href="#access-need-group①">#access-need-group①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-access-need-group①" class="dfn-panel" data-for="access-need-group①" id="infopanel-for-access-need-group①">
+   <span id="infopaneltitle-for-access-need-group①" style="display:none">Info about the 'Access Need Group' definition.</span><b><a href="#access-need-group①">#access-need-group①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-need-group①">4. Applications</a> <a href="#ref-for-access-need-group①①">(2)</a> <a href="#ref-for-access-need-group①②">(3)</a>
     <li><a href="#ref-for-access-need-group①③">7. Authorization Flows</a> <a href="#ref-for-access-need-group①④">(2)</a>
@@ -3229,8 +3228,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-access-need-group①①⑨">9.3. Access Grant</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-need">
-   <b><a href="#access-need">#access-need</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-access-need" class="dfn-panel" data-for="access-need" id="infopanel-for-access-need">
+   <span id="infopaneltitle-for-access-need" style="display:none">Info about the 'Access Need' definition.</span><b><a href="#access-need">#access-need</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-need">7. Authorization Flows</a> <a href="#ref-for-access-need①">(2)</a> <a href="#ref-for-access-need②">(3)</a> <a href="#ref-for-access-need③">(4)</a> <a href="#ref-for-access-need④">(5)</a>
     <li><a href="#ref-for-access-need⑤">8. Access Needs</a> <a href="#ref-for-access-need⑥">(2)</a>
@@ -3243,16 +3242,16 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-access-need②④">9.4. Data Grant</a> <a href="#ref-for-access-need②⑤">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-need-group-description①">
-   <b><a href="#access-need-group-description①">#access-need-group-description①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-access-need-group-description①" class="dfn-panel" data-for="access-need-group-description①" id="infopanel-for-access-need-group-description①">
+   <span id="infopaneltitle-for-access-need-group-description①" style="display:none">Info about the 'Access Need Group Description' definition.</span><b><a href="#access-need-group-description①">#access-need-group-description①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-need-group-description①">8.1. Access Need Group</a> <a href="#ref-for-access-need-group-description①①">(2)</a>
     <li><a href="#ref-for-access-need-group-description①②">8.3.1. Access Need Group Description</a>
     <li><a href="#ref-for-access-need-group-description①③">8.3.3. Access Description Set</a> <a href="#ref-for-access-need-group-description①④">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-need-description①">
-   <b><a href="#access-need-description①">#access-need-description①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-access-need-description①" class="dfn-panel" data-for="access-need-description①" id="infopanel-for-access-need-description①">
+   <span id="infopaneltitle-for-access-need-description①" style="display:none">Info about the 'Access Need Description' definition.</span><b><a href="#access-need-description①">#access-need-description①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-need-description①">8.1. Access Need Group</a>
     <li><a href="#ref-for-access-need-description①①">8.2. Access Need</a>
@@ -3260,8 +3259,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-access-need-description①③">8.3.3. Access Description Set</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-description-set①">
-   <b><a href="#access-description-set①">#access-description-set①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-access-description-set①" class="dfn-panel" data-for="access-description-set①" id="infopanel-for-access-description-set①">
+   <span id="infopaneltitle-for-access-description-set①" style="display:none">Info about the 'Access Description Set' definition.</span><b><a href="#access-description-set①">#access-description-set①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-description-set①">8.1. Access Need Group</a>
     <li><a href="#ref-for-access-description-set①①">8.3.1. Access Need Group Description</a>
@@ -3269,15 +3268,15 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-access-description-set①③">8.3.3. Access Description Set</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-request①">
-   <b><a href="#access-request①">#access-request①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-access-request①" class="dfn-panel" data-for="access-request①" id="infopanel-for-access-request①">
+   <span id="infopaneltitle-for-access-request①" style="display:none">Info about the 'Access Request' definition.</span><b><a href="#access-request①">#access-request①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-request①">7. Authorization Flows</a>
     <li><a href="#ref-for-access-request①①">8.4. Access Request</a> <a href="#ref-for-access-request①②">(2)</a> <a href="#ref-for-access-request①③">(3)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-authorization①">
-   <b><a href="#access-authorization①">#access-authorization①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-access-authorization①" class="dfn-panel" data-for="access-authorization①" id="infopanel-for-access-authorization①">
+   <span id="infopaneltitle-for-access-authorization①" style="display:none">Info about the 'Access Authorization' definition.</span><b><a href="#access-authorization①">#access-authorization①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-authorization①">5. Agent Registrations</a>
     <li><a href="#ref-for-access-authorization①①">7. Authorization Flows</a> <a href="#ref-for-access-authorization①②">(2)</a>
@@ -3289,8 +3288,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-access-authorization①②④">9.8. Authorization Registry</a> <a href="#ref-for-access-authorization①②⑤">(2)</a> <a href="#ref-for-access-authorization①②⑥">(3)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="data-authorization①">
-   <b><a href="#data-authorization①">#data-authorization①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-data-authorization①" class="dfn-panel" data-for="data-authorization①" id="infopanel-for-data-authorization①">
+   <span id="infopaneltitle-for-data-authorization①" style="display:none">Info about the 'Data Authorization' definition.</span><b><a href="#data-authorization①">#data-authorization①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-data-authorization①">9.2. Data Authorization</a> <a href="#ref-for-data-authorization①①">(2)</a> <a href="#ref-for-data-authorization①②">(3)</a> <a href="#ref-for-data-authorization①③">(4)</a> <a href="#ref-for-data-authorization①④">(5)</a> <a href="#ref-for-data-authorization①⑤">(6)</a> <a href="#ref-for-data-authorization①⑥">(7)</a> <a href="#ref-for-data-authorization①⑦">(8)</a> <a href="#ref-for-data-authorization①⑧">(9)</a> <a href="#ref-for-data-authorization①⑨">(10)</a> <a href="#ref-for-data-authorization①①⓪">(11)</a>
     <li><a href="#ref-for-data-authorization①①①">9.6. Data Access Scopes</a> <a href="#ref-for-data-authorization①①②">(2)</a>
@@ -3301,8 +3300,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-data-authorization①②①">9.6.5. Inherited</a> <a href="#ref-for-data-authorization①②②">(2)</a> <a href="#ref-for-data-authorization①②③">(3)</a> <a href="#ref-for-data-authorization①②④">(4)</a> <a href="#ref-for-data-authorization①②⑤">(5)</a> <a href="#ref-for-data-authorization①②⑥">(6)</a> <a href="#ref-for-data-authorization①②⑦">(7)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-grant①">
-   <b><a href="#access-grant①">#access-grant①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-access-grant①" class="dfn-panel" data-for="access-grant①" id="infopanel-for-access-grant①">
+   <span id="infopaneltitle-for-access-grant①" style="display:none">Info about the 'Access Grant' definition.</span><b><a href="#access-grant①">#access-grant①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-grant①">5. Agent Registrations</a>
     <li><a href="#ref-for-access-grant①①">5.1. Social Agent Registration</a>
@@ -3315,8 +3314,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-access-grant①①⑦">9.8.1. Resource Hierarchy</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="data-grant①">
-   <b><a href="#data-grant①">#data-grant①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-data-grant①" class="dfn-panel" data-for="data-grant①" id="infopanel-for-data-grant①">
+   <span id="infopaneltitle-for-data-grant①" style="display:none">Info about the 'Data Grant' definition.</span><b><a href="#data-grant①">#data-grant①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-data-grant①">7. Authorization Flows</a>
     <li><a href="#ref-for-data-grant①①">9.2. Data Authorization</a>
@@ -3331,8 +3330,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-data-grant①③⑤">9.6.5. Inherited</a> <a href="#ref-for-data-grant①③⑥">(2)</a> <a href="#ref-for-data-grant①③⑦">(3)</a> <a href="#ref-for-data-grant①③⑧">(4)</a> <a href="#ref-for-data-grant①③⑨">(5)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="delegated-data-grant①">
-   <b><a href="#delegated-data-grant①">#delegated-data-grant①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-delegated-data-grant①" class="dfn-panel" data-for="delegated-data-grant①" id="infopanel-for-delegated-data-grant①">
+   <span id="infopaneltitle-for-delegated-data-grant①" style="display:none">Info about the 'Delegated Data Grant' definition.</span><b><a href="#delegated-data-grant①">#delegated-data-grant①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-delegated-data-grant①">9.4. Data Grant</a>
     <li><a href="#ref-for-delegated-data-grant①①">9.5. Delegated Data Grant</a> <a href="#ref-for-delegated-data-grant①②">(2)</a> <a href="#ref-for-delegated-data-grant①③">(3)</a> <a href="#ref-for-delegated-data-grant①④">(4)</a>
@@ -3340,8 +3339,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-delegated-data-grant①⑥">9.6.2. AllFromAgent</a> <a href="#ref-for-delegated-data-grant①⑦">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-scope">
-   <b><a href="#access-scope">#access-scope</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-access-scope" class="dfn-panel" data-for="access-scope" id="infopanel-for-access-scope">
+   <span id="infopaneltitle-for-access-scope" style="display:none">Info about the 'Access Scope' definition.</span><b><a href="#access-scope">#access-scope</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-scope">9.2. Data Authorization</a>
     <li><a href="#ref-for-access-scope①">9.4. Data Grant</a>
@@ -3353,15 +3352,15 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-access-scope⑧">9.6.5. Inherited</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-receipt①">
-   <b><a href="#access-receipt①">#access-receipt①</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-access-receipt①" class="dfn-panel" data-for="access-receipt①" id="infopanel-for-access-receipt①">
+   <span id="infopaneltitle-for-access-receipt①" style="display:none">Info about the 'Access Receipt' definition.</span><b><a href="#access-receipt①">#access-receipt①</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-receipt①">7. Authorization Flows</a> <a href="#ref-for-access-receipt①①">(2)</a>
     <li><a href="#ref-for-access-receipt①②">9.7. Access Receipt</a> <a href="#ref-for-access-receipt①③">(2)</a> <a href="#ref-for-access-receipt①④">(3)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="authorization-registry">
-   <b><a href="#authorization-registry">#authorization-registry</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-authorization-registry" class="dfn-panel" data-for="authorization-registry" id="infopanel-for-authorization-registry">
+   <span id="infopaneltitle-for-authorization-registry" style="display:none">Info about the 'Authorization Registry' definition.</span><b><a href="#authorization-registry">#authorization-registry</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-authorization-registry">3.1. Registry Set</a>
     <li><a href="#ref-for-authorization-registry①">7. Authorization Flows</a>
@@ -3370,59 +3369,59 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-authorization-registry⑦">9.8.1. Resource Hierarchy</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="strongly-identifiable-applications">
-   <b><a href="#strongly-identifiable-applications">#strongly-identifiable-applications</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-strongly-identifiable-applications" class="dfn-panel" data-for="strongly-identifiable-applications" id="infopanel-for-strongly-identifiable-applications">
+   <span id="infopaneltitle-for-strongly-identifiable-applications" style="display:none">Info about the 'Strongly identifiable applications' definition.</span><b><a href="#strongly-identifiable-applications">#strongly-identifiable-applications</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-strongly-identifiable-applications">10.1. Application Authorization</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="weakly-identifiable-applications">
-   <b><a href="#weakly-identifiable-applications">#weakly-identifiable-applications</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-weakly-identifiable-applications" class="dfn-panel" data-for="weakly-identifiable-applications" id="infopanel-for-weakly-identifiable-applications">
+   <span id="infopaneltitle-for-weakly-identifiable-applications" style="display:none">Info about the 'Weakly identifiable applications' definition.</span><b><a href="#weakly-identifiable-applications">#weakly-identifiable-applications</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-weakly-identifiable-applications">10.1. Application Authorization</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="solid">
-   <b><a href="#solid">#solid</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-solid" class="dfn-panel" data-for="solid" id="infopanel-for-solid">
+   <span id="infopaneltitle-for-solid" style="display:none">Info about the 'Solid' definition.</span><b><a href="#solid">#solid</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-solid">11. Definitions</a> <a href="#ref-for-solid①">(2)</a> <a href="#ref-for-solid②">(3)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="pod">
-   <b><a href="#pod">#pod</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-pod" class="dfn-panel" data-for="pod" id="infopanel-for-pod">
+   <span id="infopaneltitle-for-pod" style="display:none">Info about the 'pod' definition.</span><b><a href="#pod">#pod</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-pod">11. Definitions</a> <a href="#ref-for-pod①">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="ecosystem">
-   <b><a href="#ecosystem">#ecosystem</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-ecosystem" class="dfn-panel" data-for="ecosystem" id="infopanel-for-ecosystem">
+   <span id="infopaneltitle-for-ecosystem" style="display:none">Info about the 'ecosystem' definition.</span><b><a href="#ecosystem">#ecosystem</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-ecosystem">2. Agents</a>
     <li><a href="#ref-for-ecosystem①">8. Access Needs</a>
     <li><a href="#ref-for-ecosystem②">11. Definitions</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="server-side-application">
-   <b><a href="#server-side-application">#server-side-application</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-server-side-application" class="dfn-panel" data-for="server-side-application" id="infopanel-for-server-side-application">
+   <span id="infopaneltitle-for-server-side-application" style="display:none">Info about the 'server-side application' definition.</span><b><a href="#server-side-application">#server-side-application</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-server-side-application">10.1. Application Authorization</a>
     <li><a href="#ref-for-server-side-application①">11. Definitions</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="user-piloted-application">
-   <b><a href="#user-piloted-application">#user-piloted-application</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-user-piloted-application" class="dfn-panel" data-for="user-piloted-application" id="infopanel-for-user-piloted-application">
+   <span id="infopaneltitle-for-user-piloted-application" style="display:none">Info about the 'user-piloted application' definition.</span><b><a href="#user-piloted-application">#user-piloted-application</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-user-piloted-application">11. Definitions</a> <a href="#ref-for-user-piloted-application①">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="authenticated-agent">
-   <b><a href="#authenticated-agent">#authenticated-agent</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-authenticated-agent" class="dfn-panel" data-for="authenticated-agent" id="infopanel-for-authenticated-agent">
+   <span id="infopaneltitle-for-authenticated-agent" style="display:none">Info about the 'authenticated agent' definition.</span><b><a href="#authenticated-agent">#authenticated-agent</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-authenticated-agent">11. Definitions</a> <a href="#ref-for-authenticated-agent①">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="identity">
-   <b><a href="#identity">#identity</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-identity" class="dfn-panel" data-for="identity" id="infopanel-for-identity">
+   <span id="infopaneltitle-for-identity" style="display:none">Info about the 'identity' definition.</span><b><a href="#identity">#identity</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-identity">2. Agents</a> <a href="#ref-for-identity①">(2)</a> <a href="#ref-for-identity②">(3)</a>
     <li><a href="#ref-for-identity③">7. Authorization Flows</a> <a href="#ref-for-identity④">(2)</a>
@@ -3431,8 +3430,8 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-identity⑨">11. Definitions</a> <a href="#ref-for-identity①⓪">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="identity-profile-document">
-   <b><a href="#identity-profile-document">#identity-profile-document</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-identity-profile-document" class="dfn-panel" data-for="identity-profile-document" id="infopanel-for-identity-profile-document">
+   <span id="infopaneltitle-for-identity-profile-document" style="display:none">Info about the 'identity profile document' definition.</span><b><a href="#identity-profile-document">#identity-profile-document</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-identity-profile-document">2. Agents</a> <a href="#ref-for-identity-profile-document①">(2)</a>
     <li><a href="#ref-for-identity-profile-document②">3. Social Agents</a> <a href="#ref-for-identity-profile-document③">(2)</a>
@@ -3443,39 +3442,39 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-identity-profile-document①⓪">11. Definitions</a> <a href="#ref-for-identity-profile-document①①">(2)</a> <a href="#ref-for-identity-profile-document①②">(3)</a> <a href="#ref-for-identity-profile-document①③">(4)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="webid">
-   <b><a href="#webid">#webid</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-webid" class="dfn-panel" data-for="webid" id="infopanel-for-webid">
+   <span id="infopaneltitle-for-webid" style="display:none">Info about the 'WebID' definition.</span><b><a href="#webid">#webid</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-webid">7. Authorization Flows</a> <a href="#ref-for-webid①">(2)</a>
     <li><a href="#ref-for-webid②">11. Definitions</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="did">
-   <b><a href="#did">#did</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-did" class="dfn-panel" data-for="did" id="infopanel-for-did">
+   <span id="infopaneltitle-for-did" style="display:none">Info about the 'DID' definition.</span><b><a href="#did">#did</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-did">11. Definitions</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="application-identity">
-   <b><a href="#application-identity">#application-identity</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-application-identity" class="dfn-panel" data-for="application-identity" id="infopanel-for-application-identity">
+   <span id="infopaneltitle-for-application-identity" style="display:none">Info about the 'application identity' definition.</span><b><a href="#application-identity">#application-identity</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-application-identity">11. Definitions</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="application-profile-document">
-   <b><a href="#application-profile-document">#application-profile-document</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-application-profile-document" class="dfn-panel" data-for="application-profile-document" id="infopanel-for-application-profile-document">
+   <span id="infopaneltitle-for-application-profile-document" style="display:none">Info about the 'application profile document' definition.</span><b><a href="#application-profile-document">#application-profile-document</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-application-profile-document">11. Definitions</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="acl-resource">
-   <b><a href="#acl-resource">#acl-resource</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-acl-resource" class="dfn-panel" data-for="acl-resource" id="infopanel-for-acl-resource">
+   <span id="infopaneltitle-for-acl-resource" style="display:none">Info about the 'acl resource' definition.</span><b><a href="#acl-resource">#acl-resource</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-acl-resource">11. Definitions</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="access-mode">
-   <b><a href="#access-mode">#access-mode</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-access-mode" class="dfn-panel" data-for="access-mode" id="infopanel-for-access-mode">
+   <span id="infopaneltitle-for-access-mode" style="display:none">Info about the 'access mode' definition.</span><b><a href="#access-mode">#access-mode</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-access-mode">9.6. Data Access Scopes</a>
     <li><a href="#ref-for-access-mode①">9.6.3. AllFromRegistry</a> <a href="#ref-for-access-mode②">(2)</a> <a href="#ref-for-access-mode③">(3)</a>
@@ -3483,20 +3482,20 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-access-mode⑦">9.6.5. Inherited</a> <a href="#ref-for-access-mode⑧">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="authorization-subject">
-   <b><a href="#authorization-subject">#authorization-subject</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-authorization-subject" class="dfn-panel" data-for="authorization-subject" id="infopanel-for-authorization-subject">
+   <span id="infopaneltitle-for-authorization-subject" style="display:none">Info about the 'authorization subject' definition.</span><b><a href="#authorization-subject">#authorization-subject</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-authorization-subject">11. Definitions</a> <a href="#ref-for-authorization-subject①">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="shape">
-   <b><a href="#shape">#shape</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-shape" class="dfn-panel" data-for="shape" id="infopanel-for-shape">
+   <span id="infopaneltitle-for-shape" style="display:none">Info about the 'shape' definition.</span><b><a href="#shape">#shape</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-shape">1. Introduction</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="shape-tree">
-   <b><a href="#shape-tree">#shape-tree</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-shape-tree" class="dfn-panel" data-for="shape-tree" id="infopanel-for-shape-tree">
+   <span id="infopaneltitle-for-shape-tree" style="display:none">Info about the 'Shape Tree' definition.</span><b><a href="#shape-tree">#shape-tree</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-shape-tree">1. Introduction</a>
     <li><a href="#ref-for-shape-tree①">6.1. Data Registration</a> <a href="#ref-for-shape-tree②">(2)</a>
@@ -3513,65 +3512,119 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-shape-tree②⑥">11. Definitions</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="shape-tree-reference">
-   <b><a href="#shape-tree-reference">#shape-tree-reference</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-shape-tree-reference" class="dfn-panel" data-for="shape-tree-reference" id="infopanel-for-shape-tree-reference">
+   <span id="infopaneltitle-for-shape-tree-reference" style="display:none">Info about the 'Shape Tree Reference' definition.</span><b><a href="#shape-tree-reference">#shape-tree-reference</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-shape-tree-reference">9.4. Data Grant</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
-
-document.body.addEventListener("click", function(e) {
-    var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
-    // Find the dfn element or panel, if any, that was clicked on.
-    var el = e.target;
-    var target;
-    var hitALink = false;
-    while(el.parentElement) {
-        if(el.tagName == "A") {
-            // Clicking on a link in a <dfn> shouldn't summon the panel
-            hitALink = true;
-        }
-        if(el.classList.contains("dfn-paneled")) {
-            target = "dfn";
-            break;
-        }
-        if(el.classList.contains("dfn-panel")) {
-            target = "dfn-panel";
-            break;
-        }
-        el = el.parentElement;
+"use strict";
+{
+    function queryAll(sel) {
+        return [].slice.call(document.querySelectorAll(sel));
     }
-    if(target != "dfn-panel") {
+
+    // Add popup behavior to all dfns to show the corresponding dfn-panel.
+    var dfns = document.querySelectorAll('.dfn-paneled');
+    for (let dfn of dfns) { insertDfnPopupAction(dfn); }
+
+    document.body.addEventListener("click", (e) => {
+        // If not handled already, just hide all dfn panels.
+        hideAllDfnPanels();
+    });
+
+    function hideAllDfnPanels() {
         // Turn off any currently "on" or "activated" panels.
-        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
-            el.classList.remove("on");
-            el.classList.remove("activated");
-        });
-    }
-    if(target == "dfn" && !hitALink) {
-        // open the panel
-        var dfnPanel = document.querySelector(".dfn-panel[data-for='" + el.id + "']");
-        if(dfnPanel) {
-            dfnPanel.classList.add("on");
-            var rect = el.getBoundingClientRect();
-            dfnPanel.style.left = window.scrollX + rect.right + 5 + "px";
-            dfnPanel.style.top = window.scrollY + rect.top + "px";
-            var panelRect = dfnPanel.getBoundingClientRect();
-            var panelWidth = panelRect.right - panelRect.left;
-            if(panelRect.right > document.body.scrollWidth && (rect.left - (panelWidth + 5)) > 0) {
-                // Reposition, because the panel is overflowing
-                dfnPanel.style.left = window.scrollX + rect.left - (panelWidth + 5) + "px";
-            }
-        } else {
-            console.log("Couldn't find .dfn-panel[data-for='" + el.id + "']");
-        }
-    } else if(target == "dfn-panel") {
-        // Switch it to "activated" state, which pins it.
-        el.classList.add("activated");
-        el.style.left = null;
-        el.style.top = null;
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
     }
 
-});
+    function showDfnPanel(dfnPanel, dfn) {
+        hideAllDfnPanels(); // Only display one at this time.
+        dfn.setAttribute("aria-expanded", "true");
+        dfnPanel.classList.add("on");
+        dfnPanel.style.left = "5px";
+        dfnPanel.style.top = "0px";
+        const panelRect = dfnPanel.getBoundingClientRect();
+        const panelWidth = panelRect.right - panelRect.left;
+        if (panelRect.right > document.body.scrollWidth) {
+            // Panel's overflowing the screen.
+            // Just drop it below the dfn and flip it rightward instead.
+            // This still wont' fix things if the screen is *really* wide,
+            // but fixing that's a lot harder without 'anchor()'.
+            dfnPanel.style.top = "1.5em";
+            dfnPanel.style.left = "auto";
+            dfnPanel.style.right = "0px";
+        }
+    }
+
+    function pinDfnPanel(dfnPanel) {
+        // Switch it to "activated" state, which pins it.
+        dfnPanel.classList.add("activated");
+        dfnPanel.style.left = null;
+        dfnPanel.style.top = null;
+    }
+
+    function hideDfnPanel(dfnPanel, dfn) {
+        if(!dfn) {
+            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
+        }
+        dfn.setAttribute("aria-expanded", "false")
+        dfnPanel.classList.remove("on");
+        dfnPanel.classList.remove("activated");
+    }
+
+    function toggleDfnPanel(dfnPanel, dfn) {
+        if(dfnPanel.classList.contains("on")) {
+            hideDfnPanel(dfnPanel, dfn);
+        } else {
+            showDfnPanel(dfnPanel, dfn);
+        }
+    }
+
+    function insertDfnPopupAction(dfn) {
+        // Find dfn panel
+        const dfnPanel = document.querySelector(`.dfn-panel[data-for='${dfn.id}']`);
+        if (dfnPanel) {
+            const panelWrapper = document.createElement('span');
+            panelWrapper.appendChild(dfnPanel);
+            panelWrapper.style.position = "relative";
+            panelWrapper.style.height = "0px";
+            dfn.insertAdjacentElement("afterend", panelWrapper);
+            dfn.setAttribute('role', 'button');
+            dfn.setAttribute('aria-expanded', 'false')
+            dfn.tabIndex = 0;
+            dfn.classList.add('has-dfn-panel');
+            dfn.addEventListener('click', (event) => {
+                showDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+            });
+            dfn.addEventListener('keypress', (event) => {
+                const kc = event.keyCode;
+                // 32->Space, 13->Enter
+                if(kc == 32 || kc == 13) {
+                    toggleDfnPanel(dfnPanel, dfn);
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+            });
+
+            dfnPanel.addEventListener('click', (event) => {
+                pinDfnPanel(dfnPanel);
+                event.stopPropagation();
+            });
+
+            dfnPanel.addEventListener('keydown', (event) => {
+                if(event.keyCode == 27) { // Escape key
+                    hideDfnPanel(dfnPanel, dfn);
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+            })
+
+        } else {
+            console.log("Couldn't find .dfn-panel[data-for='" + dfn.id + "']");
+        }
+    }
+}
 </script>
