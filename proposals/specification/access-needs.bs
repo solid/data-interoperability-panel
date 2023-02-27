@@ -25,6 +25,12 @@ when determining whether to grant access.
 An <dfn>Access Need Group</dfn> is a collection of [=Access Needs=]
 used to communicate an access request to [=Social Agents=].
 
+[=Access Need Groups=] are immutable. If an [=Access Need Group=] needs to change,
+it should be replaced.
+
+If an [=Access Need Group=] is replaced, history may be retained by linking
+to it from the replacement [=Access Need Group=] via `interop:replaces`.
+
 [=Access Need Groups=] are described using language-specific
 [=Access Need Group Descriptions=].
 
@@ -70,6 +76,11 @@ used to communicate an access request to [=Social Agents=].
       <td>[AccessNeed](#classAccessNeed)</td>
       <td>Link to an [=Access Need=]</td>
     </tr>
+    <tr>
+      <td>replaces</td>
+      <td>[AccessNeedGroup](#classAccessNeedGroup)</td>
+      <td>Previous [=Access Need Group=] replaced by current instance</td>
+    </tr>
   </tbody>
 </table>
 
@@ -96,6 +107,9 @@ path to request access to related types. Consequently,
 
 Specific [=Data Instances=] may be requested by explicitly
 associating them with the [=Access Need=].
+
+[=Access Needs=] are immutable. If an [=Access Need=]
+needs to change, it should be replaced.
 
 [=Access Needs=] are described using language-specific
 [=Access Need Descriptions=].
