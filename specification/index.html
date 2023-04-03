@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version d9bd89757, updated Thu Mar 23 10:06:53 2023 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/specification/" rel="canonical">
-  <meta content="1990f57f3f6996d2d1fd27422ba7b6f5683fcaa8" name="document-revision">
+  <meta content="f4d5e0d267d81c220eee02981abbcafc5e741b14" name="document-revision">
 <style>
 table.permissions thead tr {
   font-size: 12px;
@@ -1595,7 +1595,11 @@ identified by <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree�
 when determining whether to grant access.</p>
    <h3 class="heading settled" data-level="8.1" id="access-need-group"><span class="secno">8.1. </span><span class="content">Access Need Group</span><a class="self-link" href="#access-need-group"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-need-group①">Access Need Group</dfn> is a collection of <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑦">Access Needs</a> used to communicate an access request to <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦①">Social Agents</a>.</p>
-   <p><a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①⑧">Access Need Groups</a> are described using language-specific <a data-link-type="dfn" href="#access-need-group-description①" id="ref-for-access-need-group-description①">Access Need Group Descriptions</a>.</p>
+   <p><a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①⑧">Access Need Groups</a> are immutable. If an <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①⑨">Access Need Group</a> needs to change,
+it should be replaced.</p>
+   <p>If an <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⓪">Access Need Group</a> is replaced, history may be retained by linking
+to it from the replacement <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①①">Access Need Group</a> via <code>interop:replaces</code>.</p>
+   <p><a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①②">Access Need Groups</a> are described using language-specific <a data-link-type="dfn" href="#access-need-group-description①" id="ref-for-access-need-group-description①">Access Need Group Descriptions</a>.</p>
    <p><a href="interop.ttl#AccessNeedGroup">Class Definition</a> - <a href="interop.shex#AccessNeedGroupShape">Shape Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessNeedGroup">
     <colgroup>
@@ -1627,9 +1631,13 @@ when determining whether to grant access.</p>
       <td>hasAccessNeed
       <td><a href="#classAccessNeed">AccessNeed</a>
       <td>Link to an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑧">Access Need</a>
+     <tr>
+      <td>replaces
+      <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
+      <td>Previous <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①③">Access Need Group</a> replaced by current instance
    </table>
    <figure>
-    <figcaption>An example <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①⑨">Access Need Group</a> for Projectron - <a href="snippets/projectron.example/needs.ttl">View</a></figcaption>
+    <figcaption>An example <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①④">Access Need Group</a> for Projectron - <a href="snippets/projectron.example/needs.ttl">View</a></figcaption>
 <pre class="include-code highlight"><c- g>&lt;#need-group-pm></c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeedGroup</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c->
@@ -1662,12 +1670,13 @@ when determining whether to grant access.</p>
    </figure>
    <h3 class="heading settled" data-level="8.2" id="needs-access-need"><span class="secno">8.2. </span><span class="content">Access Need</span><a class="self-link" href="#needs-access-need"></a></h3>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-need">Access Need</dfn> represents the requirement of one specific type
-of data represented by a <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①⓪">shape tree</a>, as part of an <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⓪">Access Need Group</a>.</p>
+of data represented by a <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①⓪">shape tree</a>, as part of an <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑤">Access Need Group</a>.</p>
    <p>It is often the case that a <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①①">shape tree</a> associated with an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need⑨">Access Need</a> references other <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①②">shape trees</a>, providing a
 path to request access to related types. Consequently, <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⓪">Access Needs</a> can be specified that <em>inherit</em> from other <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①①">Access Needs</a> through a shape tree reference.</p>
    <p>Specific <a data-link-type="dfn" href="#data-instance" id="ref-for-data-instance⑦">Data Instances</a> may be requested by explicitly
 associating them with the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①②">Access Need</a>.</p>
-   <p><a data-link-type="dfn" href="#access-need" id="ref-for-access-need①③">Access Needs</a> are described using language-specific <a data-link-type="dfn" href="#access-need-description①" id="ref-for-access-need-description①①">Access Need Descriptions</a>.</p>
+   <p><a data-link-type="dfn" href="#access-need" id="ref-for-access-need①③">Access Needs</a> are immutable. If an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①④">Access Need</a> needs to change, it should be replaced.</p>
+   <p><a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑤">Access Needs</a> are described using language-specific <a data-link-type="dfn" href="#access-need-description①" id="ref-for-access-need-description①①">Access Need Descriptions</a>.</p>
    <p><a href="interop.ttl#AccessNeed">Class Definition</a> - <a href="interop.shex#AccessNeedGroup">Shape Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessNeed">
     <colgroup>
@@ -1682,11 +1691,11 @@ associating them with the <a data-link-type="dfn" href="#access-need" id="ref-fo
      <tr>
       <td>registeredShapeTree
       <td><code>st:ShapeTree</code>
-      <td>The <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①③">shape tree</a> requested by the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①④">Access Need</a>
+      <td>The <a data-link-type="dfn" href="#shape-tree" id="ref-for-shape-tree①③">shape tree</a> requested by the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑥">Access Need</a>
      <tr>
       <td>accessMode
       <td><code>acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append</code>
-      <td>Requested modes of access for the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑤">Access Need</a>
+      <td>Requested modes of access for the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑦">Access Need</a>
      <tr>
       <td>creatorAccessMode
       <td><code>acl:Read, acl:Write, acl:Update, acl:Create, acl:Delete, acl:Append</code>
@@ -1703,11 +1712,11 @@ associating them with the <a data-link-type="dfn" href="#access-need" id="ref-fo
      <tr>
       <td>inheritsFromNeed
       <td><a href="#classAccessNeed">AccessNeed</a>
-      <td>Links to another <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑥">Access Need</a> whose registeredShapeTree
-      references the shape tree associated with the current <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑦">Access Need</a>.
+      <td>Links to another <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑧">Access Need</a> whose registeredShapeTree
+      references the shape tree associated with the current <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑨">Access Need</a>.
    </table>
    <figure>
-    <figcaption><a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑧">Access Needs</a> for Projects and Tasks in an <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①①">Access Need Group</a> for Projectron - <a href="snippets/projectron.example/needs.ttl">View</a></figcaption>
+    <figcaption><a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⓪">Access Needs</a> for Projects and Tasks in an <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑥">Access Need Group</a> for Projectron - <a href="snippets/projectron.example/needs.ttl">View</a></figcaption>
 <pre class="include-code highlight"><c- g>&lt;#need-project></c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeed</c-> <c- p>;</c->
   <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>pm-shapetrees</c-><c- p>:</c-><c- f>ProjectTree</c-> <c- p>;</c->
@@ -1729,7 +1738,7 @@ associating them with the <a data-link-type="dfn" href="#access-need" id="ref-fo
    <h3 class="heading settled" data-level="8.3" id="access-descriptions"><span class="secno">8.3. </span><span class="content">Access Descriptions</span><a class="self-link" href="#access-descriptions"></a></h3>
    <h4 class="heading settled" data-level="8.3.1" id="access-need-group-description"><span class="secno">8.3.1. </span><span class="content">Access Need Group Description</span><a class="self-link" href="#access-need-group-description"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-need-group-description①">Access Need Group Description</dfn> provides a short label or
-title and a more in-depth description that explains why a given <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①②">Access Need Group</a> is being requested of a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦④">Social Agent</a>.</p>
+title and a more in-depth description that explains why a given <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑦">Access Need Group</a> is being requested of a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑦④">Social Agent</a>.</p>
    <p><a href="interop.ttl#AccessNeedGroupDescription">Class Definition</a> - <a href="interop.shex#AccessNeedGroupDescriptionShape">Shape Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessNeedGroupDescription">
     <colgroup>
@@ -1748,15 +1757,15 @@ title and a more in-depth description that explains why a given <a data-link-typ
      <tr>
       <td>hasAccessNeedGroup
       <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
-      <td><a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①③">Access Need Group</a> the description applies to
+      <td><a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑧">Access Need Group</a> the description applies to
      <tr>
       <td>skos:preflabel
       <td><code>xsd:string</code>
-      <td>Short label (title) for the <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①④">Access Need Group</a>
+      <td>Short label (title) for the <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑨">Access Need Group</a>
      <tr>
       <td>skos:definition
       <td><code>xsd:string</code>
-      <td>Description of why the <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑤">Access Need Group</a> requires the
+      <td>Description of why the <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①②⓪">Access Need Group</a> requires the
       access it is requesting.
    </table>
    <figure>
@@ -1772,7 +1781,7 @@ title and a more in-depth description that explains why a given <a data-link-typ
    <h4 class="heading settled" data-level="8.3.2" id="access-need-description"><span class="secno">8.3.2. </span><span class="content">Access Need Description</span><a class="self-link" href="#access-need-description"></a></h4>
    <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-need-description①">Access Need Description</dfn> provides a specific
 explanation of why that data type is being requested by
-a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①⑨">Access Need</a>.</p>
+a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②①">Access Need</a>.</p>
    <p><a href="interop.ttl#AccessNeedDescription">Class Definition</a> - <a href="interop.shex#AccessNeedDescriptionShape">Shape Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessNeedDescription">
     <colgroup>
@@ -1791,7 +1800,7 @@ a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①�
      <tr>
       <td>hasAccessNeed
       <td><a href="#classAccessNeed">AccessNeed</a>
-      <td><a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⓪">Access Need</a> the description applies to
+      <td><a data-link-type="dfn" href="#access-need" id="ref-for-access-need②②">Access Need</a> the description applies to
      <tr>
       <td>skos:prefLabel
       <td><code>xsd:string</code>
@@ -1822,7 +1831,7 @@ a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①�
      <tr>
       <td>usesLanguage
       <td><code>xsd:language</code>
-      <td>Language that the <a data-link-type="dfn" href="#access-need-group-description①" id="ref-for-access-need-group-description①④">Access Need Group Descriptions</a> and <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②①">Access Needs</a> in the Set use
+      <td>Language that the <a data-link-type="dfn" href="#access-need-group-description①" id="ref-for-access-need-group-description①④">Access Need Group Descriptions</a> and <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②③">Access Needs</a> in the Set use
    </table>
    <figure>
     <figcaption>English <a data-link-type="dfn" href="#access-description-set①" id="ref-for-access-description-set①③">Access Description Set</a> for Projectron - <a href="snippets/projectron.example/access-en.ttl">View</a></figcaption>
@@ -1851,7 +1860,7 @@ a given <a data-link-type="dfn" href="#access-need" id="ref-for-access-need①�
 </pre>
    </figure>
    <h3 class="heading settled" data-level="8.4" id="access-request"><span class="secno">8.4. </span><span class="content">Access Request</span><a class="self-link" href="#access-request"></a></h3>
-   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-request①">Access Request</dfn> is used to send <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑥">Access Need Groups</a> from
+   <p>An <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="access-request①">Access Request</dfn> is used to send <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①②①">Access Need Groups</a> from
 one <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②①">Agent</a> to another.</p>
    <p><a href="interop.ttl#AccessRequest">Class Definition</a> - <a href="interop.shex#AccessRequestShape">Shape Definition</a></p>
    <table align="left" class="classinfo data" id="classAccessRequest">
@@ -1875,7 +1884,7 @@ one <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②①">Agent
      <tr>
       <td>hasAccessNeedGroup
       <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
-      <td>One or more <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑦">Access Need Groups</a> detailing the access requested
+      <td>One or more <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①②②">Access Need Groups</a> detailing the access requested
    </table>
    <figure>
     <figcaption>An <a data-link-type="dfn" href="#access-request①" id="ref-for-access-request①③">Access Request</a> sent from one agent to another</figcaption>
@@ -1933,7 +1942,7 @@ to it from the replacement <a data-link-type="dfn" href="#access-authorization�
      <tr>
       <td>hasAccessNeedGroup
       <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
-      <td>An <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑧">Access Need Group</a> used to communicate the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②②">Access Needs</a> that the <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①①⑦">Access Authorization</a> is
+      <td>An <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①②③">Access Need Group</a> used to communicate the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②④">Access Needs</a> that the <a data-link-type="dfn" href="#access-authorization①" id="ref-for-access-authorization①①⑦">Access Authorization</a> is
       satisfying
      <tr>
       <td>hasDataAuthorization
@@ -2033,7 +2042,7 @@ and are appropriate to share with the grantee.</p>
      <tr>
       <td>satisfiesAccessNeed
       <td><a href="#classAccessNeed">AccessNeed</a>
-      <td>Links to the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②③">Access Need</a> satisfied by the <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①⑥">Data Authorization</a>
+      <td>Links to the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑤">Access Need</a> satisfied by the <a data-link-type="dfn" href="#data-authorization①" id="ref-for-data-authorization①⑥">Data Authorization</a>
      <tr>
       <td>inheritsFromAuthorization
       <td><a href="#classDataAuthorization">DataAuthorization</a>
@@ -2101,7 +2110,7 @@ represents access granted to a specific type of data.</p>
      <tr>
       <td>hasAccessNeedGroup
       <td><a href="#classAccessNeedGroup">AccessNeedGroup</a>
-      <td>Links to an <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①①⑨">Access Need Group</a> associated with the Access Grant.
+      <td>Links to an <a data-link-type="dfn" href="#access-need-group①" id="ref-for-access-need-group①②④">Access Need Group</a> associated with the Access Grant.
      <tr>
       <td>hasDataGrant
       <td><a href="#classDataGrant">DataGrant</a>
@@ -2132,7 +2141,7 @@ a single <a data-link-type="dfn" href="#access-grant①" id="ref-for-access-gran
 more <a data-link-type="dfn" href="#shape-tree-reference" id="ref-for-shape-tree-reference">Shape Tree References</a>.</p>
    <p>Each <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①⑧">Data Grant</a> has an assigned scope (<code>interop:scopeOfGrant</code>), which
 determines how permissions are assigned.</p>
-   <p>When creating a <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①⑨">Data Grant</a>, there should be an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②④">Access Need</a> linked
+   <p>When creating a <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①⑨">Data Grant</a>, there should be an <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑥">Access Need</a> linked
 via <code>interop:satisfiesAccessNeed</code> with the same <code>interop:registeredShapeTree</code>.</p>
    <p>When a <a data-link-type="dfn" href="#social-agent" id="ref-for-social-agent⑧⑧">Social Agent</a> grants another <a data-link-type="dfn" href="#agents①" id="ref-for-agents①②⑨">Agent</a> access to data that was shared
 with them, a <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for-delegated-data-grant①">Delegated Data Grant</a> is used instead.</p>
@@ -2182,7 +2191,7 @@ with them, a <a data-link-type="dfn" href="#delegated-data-grant①" id="ref-for
      <tr>
       <td>satisfiesAccessNeed
       <td><a href="#classAccessNeed">AccessNeed</a>
-      <td>Links to the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑤">Access Need</a> satisfied by the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①④">Data Grant</a>
+      <td>Links to the <a data-link-type="dfn" href="#access-need" id="ref-for-access-need②⑦">Access Need</a> satisfied by the <a data-link-type="dfn" href="#data-grant①" id="ref-for-data-grant①①④">Data Grant</a>
      <tr>
       <td>hasDataInstance
       <td>Instance of registeredShapeTree
@@ -3205,12 +3214,12 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-access-need-group①">4. Applications</a> <a href="#ref-for-access-need-group①①">(2)</a> <a href="#ref-for-access-need-group①②">(3)</a>
     <li><a href="#ref-for-access-need-group①③">7. Authorization Flows</a> <a href="#ref-for-access-need-group①④">(2)</a>
     <li><a href="#ref-for-access-need-group①⑤">8. Access Needs</a> <a href="#ref-for-access-need-group①⑥">(2)</a> <a href="#ref-for-access-need-group①⑦">(3)</a>
-    <li><a href="#ref-for-access-need-group①⑧">8.1. Access Need Group</a> <a href="#ref-for-access-need-group①⑨">(2)</a>
-    <li><a href="#ref-for-access-need-group①①⓪">8.2. Access Need</a> <a href="#ref-for-access-need-group①①①">(2)</a>
-    <li><a href="#ref-for-access-need-group①①②">8.3.1. Access Need Group Description</a> <a href="#ref-for-access-need-group①①③">(2)</a> <a href="#ref-for-access-need-group①①④">(3)</a> <a href="#ref-for-access-need-group①①⑤">(4)</a>
-    <li><a href="#ref-for-access-need-group①①⑥">8.4. Access Request</a> <a href="#ref-for-access-need-group①①⑦">(2)</a>
-    <li><a href="#ref-for-access-need-group①①⑧">9.1. Access Authorization</a>
-    <li><a href="#ref-for-access-need-group①①⑨">9.3. Access Grant</a>
+    <li><a href="#ref-for-access-need-group①⑧">8.1. Access Need Group</a> <a href="#ref-for-access-need-group①⑨">(2)</a> <a href="#ref-for-access-need-group①①⓪">(3)</a> <a href="#ref-for-access-need-group①①①">(4)</a> <a href="#ref-for-access-need-group①①②">(5)</a> <a href="#ref-for-access-need-group①①③">(6)</a> <a href="#ref-for-access-need-group①①④">(7)</a>
+    <li><a href="#ref-for-access-need-group①①⑤">8.2. Access Need</a> <a href="#ref-for-access-need-group①①⑥">(2)</a>
+    <li><a href="#ref-for-access-need-group①①⑦">8.3.1. Access Need Group Description</a> <a href="#ref-for-access-need-group①①⑧">(2)</a> <a href="#ref-for-access-need-group①①⑨">(3)</a> <a href="#ref-for-access-need-group①②⓪">(4)</a>
+    <li><a href="#ref-for-access-need-group①②①">8.4. Access Request</a> <a href="#ref-for-access-need-group①②②">(2)</a>
+    <li><a href="#ref-for-access-need-group①②③">9.1. Access Authorization</a>
+    <li><a href="#ref-for-access-need-group①②④">9.3. Access Grant</a>
    </ul>
   </aside>
   <aside aria-labelledby="infopaneltitle-for-access-need" class="dfn-panel" data-for="access-need" id="infopanel-for-access-need">
@@ -3219,12 +3228,12 @@ inherited permissions. <a class="issue-return" href="#issue-5157d1cb" title="Jum
     <li><a href="#ref-for-access-need">7. Authorization Flows</a> <a href="#ref-for-access-need①">(2)</a> <a href="#ref-for-access-need②">(3)</a> <a href="#ref-for-access-need③">(4)</a> <a href="#ref-for-access-need④">(5)</a>
     <li><a href="#ref-for-access-need⑤">8. Access Needs</a> <a href="#ref-for-access-need⑥">(2)</a>
     <li><a href="#ref-for-access-need⑦">8.1. Access Need Group</a> <a href="#ref-for-access-need⑧">(2)</a>
-    <li><a href="#ref-for-access-need⑨">8.2. Access Need</a> <a href="#ref-for-access-need①⓪">(2)</a> <a href="#ref-for-access-need①①">(3)</a> <a href="#ref-for-access-need①②">(4)</a> <a href="#ref-for-access-need①③">(5)</a> <a href="#ref-for-access-need①④">(6)</a> <a href="#ref-for-access-need①⑤">(7)</a> <a href="#ref-for-access-need①⑥">(8)</a> <a href="#ref-for-access-need①⑦">(9)</a> <a href="#ref-for-access-need①⑧">(10)</a>
-    <li><a href="#ref-for-access-need①⑨">8.3.2. Access Need Description</a> <a href="#ref-for-access-need②⓪">(2)</a>
-    <li><a href="#ref-for-access-need②①">8.3.3. Access Description Set</a>
-    <li><a href="#ref-for-access-need②②">9.1. Access Authorization</a>
-    <li><a href="#ref-for-access-need②③">9.2. Data Authorization</a>
-    <li><a href="#ref-for-access-need②④">9.4. Data Grant</a> <a href="#ref-for-access-need②⑤">(2)</a>
+    <li><a href="#ref-for-access-need⑨">8.2. Access Need</a> <a href="#ref-for-access-need①⓪">(2)</a> <a href="#ref-for-access-need①①">(3)</a> <a href="#ref-for-access-need①②">(4)</a> <a href="#ref-for-access-need①③">(5)</a> <a href="#ref-for-access-need①④">(6)</a> <a href="#ref-for-access-need①⑤">(7)</a> <a href="#ref-for-access-need①⑥">(8)</a> <a href="#ref-for-access-need①⑦">(9)</a> <a href="#ref-for-access-need①⑧">(10)</a> <a href="#ref-for-access-need①⑨">(11)</a> <a href="#ref-for-access-need②⓪">(12)</a>
+    <li><a href="#ref-for-access-need②①">8.3.2. Access Need Description</a> <a href="#ref-for-access-need②②">(2)</a>
+    <li><a href="#ref-for-access-need②③">8.3.3. Access Description Set</a>
+    <li><a href="#ref-for-access-need②④">9.1. Access Authorization</a>
+    <li><a href="#ref-for-access-need②⑤">9.2. Data Authorization</a>
+    <li><a href="#ref-for-access-need②⑥">9.4. Data Grant</a> <a href="#ref-for-access-need②⑦">(2)</a>
    </ul>
   </aside>
   <aside aria-labelledby="infopaneltitle-for-access-need-group-description①" class="dfn-panel" data-for="access-need-group-description①" id="infopanel-for-access-need-group-description①">
