@@ -20,12 +20,6 @@ The [=identity profile document=] <em class="rfc2119">MUST</em>
 be readable by the public. It <em class="rfc2119">MAY</em> 
 use any resource or subject names.
 
-Inboxes <em class="rfc2119">MUST</em> allow for other
-[=Social Agents=] or [=Applications=] to create resources. Inboxes
-<em class="rfc2119">SHOULD</em> limit the [=Social Agents=]
-with create privileges to prevent denial of service, spam, or other
-unwanted conditions.
-
 [Class Definition](interop.ttl#SocialAgent) -
 [Shape Definition](interop.shex#SocialAgentShape) -
 [Shape Tree Definition](interop.tree#SocialAgentTree)
@@ -51,16 +45,6 @@ unwanted conditions.
       <td>hasAuthorizationAgent</td>
       <td>[Application](#classApplication)</td>
       <td>The software used by the Agent to manage access to their data</td>
-    </tr>
-    <tr>
-      <td>hasInbox</td>
-      <td>ldp:inbox</td>
-      <td>A general inbox for messages sent to the [=Social Agent=]</td>
-    </tr>
-    <tr>
-      <td>hasAccessInbox</td>
-      <td>ldp:inbox</td>
-      <td>An inbox for access related messages sent to the [=Social Agent=]</td>
     </tr>
   </tbody>
 </table>
