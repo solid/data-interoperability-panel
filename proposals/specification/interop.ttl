@@ -248,10 +248,10 @@ rdfs:label "Terms for application interoperability in Solid"@en .
 
 :replaces
   a rdf:Property ;
-  rdfs:comment "Links to a previous Access Authorization that has been superseded"@en ;
+  rdfs:comment "Links to a previous immutable resource that has been superseded"@en ;
   rdfs:isDefinedBy <> ;
-  rdfs:domain :AccessAuthorization ;
-  rdfs:range :AccessAuthorization ;
+  rdfs:domain [ owl:unionOf ( :AccessAuthorization :AccessNeedGroup ) ] ;
+  rdfs:range [ owl:unionOf ( :AccessAuthorization :AccessNeedGroup) ] ;
   rdfs:label "Replaces"@en .
 
 :DataAuthorization
