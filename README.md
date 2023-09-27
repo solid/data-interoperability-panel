@@ -53,14 +53,14 @@ Read our stated [Problems and Goals](problems-and-goals.md) for an in-depth unde
 
 ## Meetings
 
-Solid Data Interoperability Panel meetings are held every other Monday at 12:00 UTC ([CG calendar](https://www.w3.org/groups/cg/solid/calendar)).
+The work items of the Solid Data Interoperability Panel are discussed during the following [Solid Community Group](https://github.com/solid/specification) meetings.
 
-This bi-weekly schedule started on April 10th 2023; the latest meeting date can be found via [the minutes label](https://github.com/solid/data-interoperability-panel/issues?q=is%3Aissue+label%3Ameeting) or the [CG calendar](https://www.w3.org/groups/cg/solid/calendar).
+- **General meetings**: every _Wednesday_ from _14:00_ to _15:00_ UTC
+- **Special topic meetings**: tentative on _Tuesdays_ from _14:00_ to _16:00_ UTC
 
-Every meeting is also announced on [Gitter/Matrix](https://gitter.im/solid/data-interoperability-panel), with a link to its agenda. 
+Both meetings take place in the [solid-cg](https://meet.jit.si/solid-cg) Jitsi room. 
 
-Conference call: https://meet.jit.si/solid-data-interoperability
-
+Please refer to the Solid Community Group [calendar](https://www.w3.org/groups/cg/solid/calendar) and the Special Topic Meetings [schedule]([url](https://github.com/solid/specification/discussions/555)) for more information. Every meeting is also announced on [Matrix](https://matrix.to/#/#solid_specification:gitter.im), with a link to its agenda. 
 
 ## Process
 
