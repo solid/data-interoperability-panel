@@ -64,114 +64,6 @@ Slight variations concerning where [=Access Needs=] are sourced from, and
 how notification of access is provided, are the only differences from
 one flow to another.
 
-<figure>
-    <table class="data tree" align="left">
-      <col>
-      <col>
-      <thead>
-        <tr>
-          <th>Step</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><b>1</b></td>
-          <td>Alice's finds an [=Application=] called Projectron that she'd like
-            to use to manage her Projects and Tasks.</td>
-        </tr>
-        <tr>
-          <td><b>2</b></td>
-          <td>Alice provides her [=WebID=] to Projectron</td>
-        </tr>
-        <tr>
-          <td><b>3</b></td>
-          <td>Projectron dereferences her [=WebID=] and retrieves her IdP and [=Authorization Agent=] from her [=Identity Profile Document=]</td>
-        </tr>
-        <tr>
-          <td><b>4</b></td>
-          <td>Projectron [[#agent-registration-discovery|asks]] Alice's [=Authorization Agent=] if Alice already has an [=Application Registration=] for Projectron</td>
-        </tr>
-        <tr>
-          <td><b>5</b></td>
-          <td>Projectron receives a `401 Not Authorized`, because Alice / Projectron needs to authenticate first</td>
-        </tr>
-        <tr>
-          <td><b>6</b></td>
-          <td>Projectron initiates a [[SOLID-OIDC]] flow with Alice's Identity Provider and receives a DPOP-bound Access Token and Proof</td>
-        </tr>
-        <tr>
-          <td><b>7</b></td>
-          <td>Now authenticated, Projectron [[#agent-registration-discovery|asks]] Alice's [=Authorization Agent=] again for a Projectron [=Application Registration=]</td>
-        </tr>
-        <tr>
-          <td><b>8</b></td>
-          <td>Alice's [=Authorization Agent=] checks the [=Agent Registry=] in Alice's Pod for a Projectron [=Application Registration=]</td>
-        </tr>
-        <tr>
-          <td><b>9</b></td>
-          <td>No [=Application Registration=] for Projectron is found.
-          Projectron now knows that Alice hasn't given it permission to access her data, so it must ask.</td>
-        </tr>
-        <tr>
-          <td><b>10</b></td>
-          <td>Projectron redirects Alice to her [=Authorization Agent=], supplying its [=identity=] for context</td>
-        </tr>
-        <tr>
-          <td><b>11</b></td>
-          <td>Alice's [=Authorization Agent=] dereferences the supplied Projectron [=identity=], retrieving Projection's
-          [=Application=] profile graph and corresponding [=Access Need Groups=] from the [=Identity Profile Document=],
-          as well as <code>redirect_uri</code></td>
-        </tr>
-        <tr>
-          <td><b>12</b></td>
-          <td>Alice's [=Authorization Agent=] presents the [=Access Need Groups=] from Projectron's [=Application=]
-          profile graph, so that Alice understands what kind of data is being requested, and why.</td>
-        </tr>
-        <tr>
-          <td><b>13</b></td>
-          <td>Alice's chooses the [[#access-scopes|scope of access]] that Projectron will receive to the data it has
-          asked for access to via the presented [=Access Needs=].</td>
-        </tr>
-        <tr>
-          <td><b>14-16</b></td>
-          <td>Alice's [=Authorization Agent=] records her decision as an [=Access Authorization=] in Alice's
-            [=Authorization Registry=]. An [=Application Registration=] is created for Projectron in
-            Alice's [=Agent Registry=]. An [=Access Grant=] and corresponding [=Data Grants=] are generated
-            from the [=Access Authorization=] and stored in the Projectron [=Application Registration=].
-        </tr>
-        <tr>
-          <td><b>17</b></td>
-          <td>Alice's [=Authorization Agent=] redirects her back to Projectron now that the appropriate access has been granted</td>
-        </tr>
-        <tr>
-          <td><b>18</b></td>
-          <td>Projectron [[#agent-registration-discovery|asks]] Alice's [=Authorization Agent=] again for a Projectron [=Application Registration=]</td>
-        </tr>
-        <tr>
-          <td><b>19</b></td>
-          <td>Alice's [=Authorization Agent=] finds the newly created Projectron [=Application Registration=] in the [=Agent Registry=] in Alice's Pod</td>
-        </tr>
-        <tr>
-          <td><b>20</b></td>
-          <td>Alice's [=Authorization Agent=] [[#agent-registration-discovery|provides]] the URI of the [=Application Registration=] to Projectron</td>
-        </tr>
-        <tr>
-          <td><b>21</b></td>
-          <td>Projectron learns what access it received through the [=Access Grant=] in Alice's Projectron [=Application Registration=]</td>
-        </tr>
-        <tr>
-          <td><b>22</b></td>
-          <td>Projectron may now function as intended, within the scope of authorization it was given by Alice.</td>
-        </tr>
-      </tbody>
-    </table>
-</figure>
-
-<img class="sequence-diagram" src="diagrams/application-requests-access-flow.seq.mmd.svg" />
-
-Issue(138):
-
 ## Authorization Agent ## {#authorization-agent}
 
 An <dfn>Authorization Agent</dfn> is an [=Application=] designated by
@@ -183,11 +75,92 @@ are processed by the [=Authorization Agent=].
 Similarly, any decisions by the [=Social Agent=] to share data with another [=Agent=]
 are processed by the [=Authorization Agent=].
 
+<table class="classinfo data" align="left" id="classAuthorizationAgent">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasAuthorizationRedirectEndpoint</td>
+      <td>IRI</td>
+      <td>URI used to redirect to the Authorization Agent
+      from an [=Application=] for authorization</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>[=Authorization Agent=] at https://auth.alice.example/ -
+  <a href="snippets/alice.jarvis.example/alice.jarvis.example.ttl">View</a>
+</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.jarvis.example/alice.jarvis.example.ttl
+  highlight: turtle
+  show: 6-20
+  </pre>
+</figure>
+
+### Authorization Redirect Endpoint ### {#authorization-redirect-endpoint}
+
+An [=Application=] capable of redirecting, should redirect the user to
+Authorization Redirect Endpoint advertised by the user's [=Authorization Agent=].
+
+The following query parameters are defined:
+
+
+<table class="classinfo data" align="left">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>client_id</td>
+      <td>Yes</td>
+      <td>URI used to identify the [=Application=]
+      requesting the authorization</td>
+    </tr>
+    <tr>
+      <td>resource</td>
+      <td>No</td>
+      <td>URI used to indicate the [=Data Instance=].
+      Used for [[#resource-indication]]</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>Example redirect</figcaption>
+  <pre highlight=http>
+    GET /redirect?client_id=https%3A%2F%2Fprojectron.example%2F%23id HTTP/1.1
+    Host: alice.jarvis.example
+  </pre>
+</figure>
+
+
+### Resource Indication ### {#resource-indication}
+
+When the <code>resource</code> query parameter is used, the Authorization Agent will use it
+as an indication that access to a specific data instance is intended to be shared. 
+
 ### Authorization Agent Discovery ### {#authorization-agent-discovery}
 
 The [=Authorization Agent=] for a given [=Social Agent=] can be discovered
 by de-referencing the [=identity=] of that [=Social Agent=], and extracting
-the object value of the `interop:hasAuthorizationAgent` statement from the
+the object value of the <code>interop:hasAuthorizationAgent</code> statement from the
 [=Social Agent=] graph in the returned [=identity profile document=].
 
 The extracted [=Authorization Agent=] IRI <em class="rfc2119">MUST</em> be
@@ -202,8 +175,8 @@ a unique sub-domain (see example below) or path.
   <pre class=include-code>
   path: snippets/alice.example/alice.example.ttl
   highlight: turtle
-  show: 9-20
-  line-highlight: 14
+  show: 8-20
+  line-highlight: 13
   </pre>
 </figure>
 
@@ -218,12 +191,12 @@ a corresponding [=Agent Registration=] for them can query the
 [=Authorization Agent=] for that target [=Social Agent=].
 
 To discover a corresponding [=Agent Regsitration=] the requesting [=Agent=]
-may perform an `HTTP HEAD` or `HTTP GET` request on the IRI of the
+may perform an HTTP <code>HEAD</code> or HTTP <code>GET</code> request on the IRI of the
 [=Authorization Agent=] for the target [=Social Agent=].
 
-The response will include an `HTTP Link` header relating the [=Agent Registration=]
+The response will include an <code>HTTP Link</code> header relating the [=Agent Registration=]
 to the [=Agent=] making the request via the
-`http://www.w3.org/ns/solid/interop#registeredAgent` link relation.
+<code>http://www.w3.org/ns/solid/interop#registeredAgent</code> link relation.
 
 <figure>
   <figcaption>HEAD request to and response from Authorization Agent</figcaption>
