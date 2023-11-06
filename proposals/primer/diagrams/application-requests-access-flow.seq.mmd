@@ -3,10 +3,10 @@ sequenceDiagram
     participant Projectron
     participant Authorization Agent
     participant Alice's Pod
-    participant Alice's Identity Document
+    participant Alice's WebID Document
     Note over Projectron: 1. 👩 Alice decides to use Projectron
     Note over Projectron: 2. 👩 Alice authenticates with her WebID
-    Note over Alice's Identity Document,Projectron: 3. Projectron discovers Alice's Authorization Agent in her WebID Document
+    Note over Alice's WebID Document,Projectron: 3. Projectron discovers Alice's Authorization Agent in her WebID Document
     Projectron->>Authorization Agent: 4. Check for Application Registration
     Note over Authorization Agent, Alice's Pod: 5. Searches for Application Registration
     Authorization Agent->>Projectron: 6. No Application Registration Found
