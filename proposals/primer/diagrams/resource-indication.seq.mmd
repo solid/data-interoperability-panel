@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant Projectron's ID Document
+    participant Projectron
+    participant Authorization Agent
+    participant Alice's Pod
+    Note over Projectron: 1. 👩 Alice is authenticated Projectron
+    Note over Projectron: 2. 👩 Alice has authorized Projectron
+    Note over Projectron, Alice's Pod: 3. Projectron has read its Access Grant and displayed projects
+    Note over Projectron: 4. 👩 Alice initiates sharing of a specific project
+    Projectron-->>Authorization Agent: 5. Redirect to Authorization Agent (indicating resource)
+    Note over Authorization Agent, Alice's Pod: 6. Fetch indicated project
+    Note over Authorization Agent, Alice's Pod: 7. Check who already has access to that project
+    Note over Authorization Agent, Alice's Pod: 8. Fetch list of all social agents
+    Note over Authorization Agent: 9. 👩 Alice chooses social agents and modes of access for each
+    Note over Authorization Agent, Alice's Pod: 10. Record new authorizations for selected agents
+    Note over Authorization Agent, Alice's Pod: 11. Regenerate access grants for selected agents
+    Note over Projectron's ID Document, Authorization Agent: 11. Discovers Projectron's Authorization Callback Endpoint
+    Authorization Agent-->>Projectron: 13. Redirect Alice back to Projectron
+    Note over Projectron: 14. 👩 Alice continues using Projectron

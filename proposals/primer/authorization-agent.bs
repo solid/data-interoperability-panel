@@ -52,7 +52,7 @@ The Registry Set can be discovered from a social agent's WebID Profile using `in
 While WebID Profile is readable to the public, Registry Set should only be readable by its owner
 and their Authorization Agent.
 
-<img class="flowchart-diagram" src="diagrams/registry-set.flow.mmd.png" />
+<img class="flowchart-diagram" src="diagrams/registry-set.flow.mmd.png">
 
 <figure>
   <pre class=include-code>
@@ -86,7 +86,7 @@ In a Data Registry, there can be at most one Data Registration for any given sha
 Data Registration is a container, which contains Data Instances. Each of those Data Instances conforms to one specific
 shape tree assigned to the Data Registration.
 
-<img class="flowchart-diagram" src="diagrams/pro.alice.example.flow.mmd.png" />
+<img class="flowchart-diagram" src="diagrams/pro.alice.example.flow.mmd.png">
 
 <figure>
   <pre class=include-code>
@@ -109,8 +109,6 @@ Data Instance is a resource representing something specific, for example, a proj
 An Authorization Agent is not responsible for modifying data instances. Sometimes it still needs to access them
 during [[#gathering-authorizations]] if the user wants to select specific data instances.
 
-
-Issue(186):
 
 # Authorization Registry # {#authorization-registry}
 
@@ -200,7 +198,7 @@ from another Social Agent and performing [[#agent-registration-discovery]]
 In the case of Social Agent Registration for ACME, created in Alice's Agent Registry. The reciprocal registration
 will be the Social Agent Reigstration for Alice, created in ACME's Agent Registry.
 
-<img class="flowchart-diagram" src="diagrams/reciprocal-registration.flow.mmd.png" />
+<img class="flowchart-diagram" src="diagrams/reciprocal-registration.flow.mmd.png">
 
 ## Application Registration
 
@@ -255,7 +253,7 @@ another's social agent Authorization Agent. The response will include a link to 
 
 ## Access Grant ## {#access-grant}
 
-An Access Grant grups together all the Data Grants provided for specific agent.
+An Access Grant groups together all the Data Grants provided for a specific agent.
 
 An Access Grant is immutable, it never gets updated, instead it can be only replaced with a newer Access Grant.
 
@@ -292,11 +290,17 @@ It should also assist the user in composing new Access Authorization, taking int
 * Data Registries with Data Registrations and Data Instances
 * [[#access-grant]] with [[#data-grant]] others issued to them (available via all the [[#reciprocal-registration]])
 
-<img src="images/authorization-screen.svg" width="100%" />
+<img src="images/authorization-screen.svg" width="100%">
 
-Issue(186):
+<pre class=include>path: app-authorization-flow.bs</pre>
 
-Issue(138):
+# Sharing resources indicated by the application # {#resource-indication}
+
+In cases where the application has already been registered, and the user wants to
+initiate sharing specific [[#data-instance]], an authorization flow with resource
+indication is available.
+
+<pre class=include>path: resource-indication-flow.bs</pre>
 
 # Generating Access Grant from Access Authorization # {#generating-grants-from-authorizations}
 
