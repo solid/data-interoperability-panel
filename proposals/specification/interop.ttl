@@ -43,6 +43,24 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:range :Application ;
   rdfs:label "Has authorization agent"@en .
 
+#############################################################################
+# Authorization Agent
+#############################################################################
+:AuthorizationAgent
+  a rdfs:Class ;
+  rdfs:subClassOf :Agent ;
+  rdfs:comment "Service used by end user to manage access"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:label "AuthorizationAgent"@en .
+
+:hasAuthorizationRedirectEndpoint
+  a rdf:Property ;
+  rdfs:comment "URI expected to be used for redirect to obtain authorization"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :AuthorizationAgent ;
+  rdfs:label "Has Authorization Redirect Endpoint"@en .
+
+
 # RegistrySet Class
 #############################################################################
 :RegistrySet
@@ -500,6 +518,13 @@ rdfs:label "Terms for application interoperability in Solid"@en .
   rdfs:isDefinedBy <> ;
   rdfs:range :AccessNeedGroup ;
   rdfs:label "Has Access Need Group"@en .
+
+:hasAuthorizationCallbackEndpoint
+  a rdf:Property ;
+  rdfs:comment "URI expected to be used for redirect after authorization"@en ;
+  rdfs:isDefinedBy <> ;
+  rdfs:domain :Application ;
+  rdfs:label "Has Authorization Callback Endoint"@en .
 
 #############################################################################
 # Access Needs

@@ -1,0 +1,66 @@
+<figure>
+    <table class="data tree" align="left">
+      <col>
+      <col>
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>1</b></td>
+          <td>Alice's is authenticated with Projectron.</td>
+        </tr>
+        <tr>
+          <td><b>2</b></td>
+          <td>Alice has already authorized Projectron.</td>
+        </tr>
+        <tr>
+          <td><b>3</b></td>
+          <td>Projectron has read its Access Grant and displayed projects.</td>
+        </tr>
+        <tr>
+          <td><b>4</b></td>
+          <td>Alice initiates sharing of a specific project.</td>
+        </tr>
+        <tr>
+          <td><b>5</b></td>
+          <td>Projectron redirects Alice to her Authorization Agent, indicating the selected project.</td>
+        </tr>
+        <tr>
+          <td><b>6-8</b></td>
+          <td>Alice's Authorization Agent fetches the indicated project and checks who already has access to it.
+          It also fetches list of all registered social agents to present it to Alice.</td>
+        </tr>
+        <tr>
+          <td><b>9</b></td>
+          <td>Alice chooses all the social agents with which she wants to share the selected project,
+          as well as modes of access for all selected agents. If the shape tree has references (e.g., tasks) she can
+          also select modes of access for each inherited shape tree.</td>
+        </tr>
+        <tr>
+          <td><b>10-11</b></td>
+          <td>Alice's Authorization Agent records new access authorizations for all the selected agents
+          and regenerates access grants provided in their agent registrations.</td>
+        </tr>
+        <tr>
+          <td><b>12</b></td>
+          <td>Alice's Authorization Agent dereferences the supplied Projectron WebID, retrieving Projection's
+          Application profile graph from the WebID Profile Document,
+          to discover the <code>hasAuthorizationCallbackEndpoint</code>.</td>
+        </tr>
+        <tr>
+          <td><b>13</b></td>
+          <td>Alice's Authorization Agent redirects her back to Projectron, now that the project has been shared.</td>
+        </tr>
+        <tr>
+          <td><b>14</b></td>
+          <td>Alice continues using Projectron.</td>
+        </tr>
+      </tbody>
+    </table>
+</figure>
+
+<img class="sequence-diagram" src="diagrams/resource-indication.seq.mmd.svg">
