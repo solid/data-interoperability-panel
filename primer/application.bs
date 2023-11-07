@@ -106,16 +106,24 @@ Details in <a href="https://solid.github.io/data-interoperability-panel/specific
 
 ## User Consent ## {#user-consent}
 
-In case where application haven't been registered yet it needs to initiate flow with Authorization Agent.
+In cases where an application hasn't been registered yet, it needs to initiate the flow with the Authorization Agent.
 
-Issue: Add details as soon as defined for Authorization Agent
+After successful flow, the application will be able to discover its registration.
 
-After successful flow aplication will be able to discover its registration.
+<pre class=include>path: app-authorization-flow.bs</pre>
+
+## Resource Indication ## {#resource-indication}
+
+When the application has already been registered, and the user wants to
+initiate a sharing-specific [[#data-instance]], an authorization flow with resource
+indication is available.
+
+<pre class=include>path: resource-indication-flow.bs</pre>
 
 # Application Registration # {#application-registration}
 
 Application Registration can be considered an entry point to all the data
-that user authorized it to access. Next step in discovery of that data
+that the user authorized it to access. The next step in the discovery of that data
 is the Access Grant linked via <code>interop:hasAccessGrant</code> predicate.
 
 <figure>
@@ -149,7 +157,7 @@ via <code>interop:hasDataGrant</code> predicate.
 
 # Data Registration # {#data-registration}
 
-<img class="flowchart-diagram" src="diagrams/pro.alice.example.flow.mmd.png" />
+<img class="flowchart-diagram" src="diagrams/pro.alice.example.flow.mmd.png">
 
 <figure>
   <pre class=include-code>
