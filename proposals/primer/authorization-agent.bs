@@ -200,6 +200,17 @@ will be the Social Agent Reigstration for Alice, created in ACME's Agent Registr
 
 <img class="flowchart-diagram" src="diagrams/reciprocal-registration.flow.mmd.png">
 
+## Social Agent Invitation
+
+Social Agent Invitation represents an invitation for a Social Agent. It takes advantage of an existing and secure
+communication channel between two agents to pass a secret link that allows accepting the invitation.
+This flow results in both agents establishing a pair of [[#reciprocal-registration|Reciprocal Registrations]].
+If the platform supports it, the Authorization Agent of the sender can use [[WEB-SHARE]] to pass the secret
+link to the user's messaging app. On the other side, the Authorization Agent of the recipient can use
+[[WEB-SHARE-TARGET]] to register with the platform and receive a secret link from the user's messaging app.
+Independent of the platform, Authorization Agents should always allow a simple copy of the link by the sender
+(e.g., `navigator.clipboard.writeText`) and paste it by the recipient.
+
 ## Application Registration
 
 Application Registrations are created by the End-user for applications they use.
