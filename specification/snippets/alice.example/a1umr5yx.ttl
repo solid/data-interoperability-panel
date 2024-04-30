@@ -1,0 +1,22 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX interop: <http://www.w3.org/ns/solid/interop#>
+PREFIX pm-shapetrees: <http://data.example/shapetrees/pm#>
+PREFIX alice: <https://alice.example/>
+PREFIX jarvis: <https://jarvis.example/>
+PREFIX bob: <https://bob.example>
+PREFIX alice-agents: <https://alice.example/agents/>
+PREFIX bob-agents: <https://bob.example/agents/>
+
+alice-agents:a1umr5yx\/
+  a interop:SocialAgentInvitation ;
+  interop:registeredBy alice:\#id ;
+  interop:registeredWith jarvis:\#id ;
+  interop:registeredAt "2020-04-04T20:15:47.000Z"^^xsd:dateTime ;
+  interop:updatedAt "2020-04-04T21:11:33.000Z"^^xsd:dateTime ;
+  interop:capabilityUrl jarvis:invitations\/z8tms2zzq3d9vfpo1a6yk5jkgn5y4aem ;
+  skos:prefLabel "Yori" ;
+  skos:note "A friend from my D&D club" .

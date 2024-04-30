@@ -8,82 +8,6 @@ When a given [=Agent=] is the subject of an [=Access Authorization=],
 an [=Access Grant=] is generated and [[#ar-hierarchy|stored]] 
 in the [=Agent Registration=] for that [=Agent=].
 
-## Social Agent Registration ## {#social-agent-registration}
-
-A <dfn>Social Agent Registration</dfn> provides the [=Social Agent=]
-with a place to track and manage other [=Social Agents=] they
-interact with.
-
-[=Social Agent Registrations=] are stored in an [=Agent Registry=].
-
-[Class Definition](interop.ttl#SocialAgentRegistration) -
-[Shape Definition](interop.shex#SocialAgentRegistrationShape) -
-[Shape Tree Definition](interop.tree#SocialAgentRegistrationTree)
-
-<table class="classinfo data" align="left" id="classSocialAgentRegistration">
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <colgroup></colgroup>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Range</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>registeredBy</td>
-      <td>[SocialAgent](#classSocialAgent)</td>
-      <td>[=Social Agent=] that registered the [=Social Agent Registration=]</td>
-    </tr>
-    <tr>
-      <td>registeredWith</td>
-      <td>[Application](#classApplication)</td>
-      <td>[=Application=] used to create the [=Social Agent Registration=]</td>
-    </tr>
-    <tr>
-      <td>registeredAt</td>
-      <td>xsd:dateTime</td>
-      <td>Date and time the [=Social Agent Registration=] was created</td>
-    </tr>
-    <tr>
-      <td>updatedAt</td>
-      <td>xsd:dateTime</td>
-      <td>Date and time the [=Social Agent Registration=] was updated</td>
-    </tr>
-    <tr>
-      <td>registeredAgent</td>
-      <td>[SocialAgent](#classSocialAgent)</td>
-      <td>The [=Social Agent=] that was registered</td>
-    </tr>
-    <tr>
-      <td>reciprocalRegistration</td>
-      <td>[SocialAgentRegistration](#classSocialAgentRegistration)</td>
-      <td>The [=Social Agent Registration=] that `registeredAgent` maintains
-      for the [=Social Agent=] that owns this [=Registry=]</td>
-    </tr>
-    <tr>
-      <td>hasAccessGrant</td>
-      <td>[AccessGrant](#classAccessGrant)</td>
-      <td>Links to an [=Access Grant=] describing the access that has been
-      granted to the `registeredAgent`</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-  <figcaption>Alice's [=Social Agent Registration=] for Bob at
-  https://alice.pod.example/agents/c4562da9/ -
-  <a href="snippets/alice.example/c4562da9.ttl">View</a>
-  </figcaption>
-  <pre class=include-code>
-  path: snippets/alice.example/c4562da9.ttl
-  highlight: turtle
-  show: 13-21
-  </pre>
-</figure>
-
 ## Application Registration ## {#application-registration}
 
 An <dfn>Application Registration</dfn> provides the [=Social Agent=]
@@ -153,6 +77,180 @@ have elected to use.
   show: 11-18
   </pre>
 </figure>
+
+
+## Social Agent Registration ## {#social-agent-registration}
+
+A <dfn>Social Agent Registration</dfn> provides the [=Social Agent=]
+with a place to track and manage other [=Social Agents=] they
+interact with.
+
+[=Social Agent Registrations=] are stored in an [=Agent Registry=].
+
+[Class Definition](interop.ttl#SocialAgentRegistration) -
+[Shape Definition](interop.shex#SocialAgentRegistrationShape) -
+[Shape Tree Definition](interop.tree#SocialAgentRegistrationTree)
+
+<table class="classinfo data" align="left" id="classSocialAgentRegistration">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that registered the [=Social Agent Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>[Application](#classApplication)</td>
+      <td>[=Application=] used to create the [=Social Agent Registration=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Social Agent Registration=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Social Agent Registration=] was updated</td>
+    </tr>
+    <tr>
+      <td>registeredAgent</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>The [=Social Agent=] that was registered</td>
+    </tr>
+    <tr>
+      <td>reciprocalRegistration</td>
+      <td>[SocialAgentRegistration](#classSocialAgentRegistration)</td>
+      <td>The [=Social Agent Registration=] that `registeredAgent` maintains
+      for the [=Social Agent=] that owns this [=Registry=]</td>
+    </tr>
+    <tr>
+      <td>hasAccessGrant</td>
+      <td>[AccessGrant](#classAccessGrant)</td>
+      <td>Links to an [=Access Grant=] describing the access that has been
+      granted to the `registeredAgent`</td>
+    </tr>
+    <tr>
+      <td>skos:prefLabel</td>
+      <td>xsd:string</td>
+      <td>Human readable label assigned by the user creating the registration</td>
+    </tr>
+    <tr>
+      <td>skos:note</td>
+      <td>xsd:string</td>
+      <td>Optional note which can further help with recognising the agent</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>Alice's [=Social Agent Registration=] for Bob at
+  https://alice.pod.example/agents/c4562da9/ -
+  <a href="snippets/alice.example/c4562da9.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/c4562da9.ttl
+  highlight: turtle
+  show: 13-21
+  </pre>
+</figure>
+
+## Social Agent Invitation ## {#social-agent-invitation}
+
+A <dfn>Social Agent Invitation</dfn> provides the [=Social Agent=]
+with a simple and secure way to establish data sharing with other [=Social Agents=].
+
+[=Social Agent Invitations=] are stored in an [=Agent Registry=].
+
+[Class Definition](interop.ttl#SocialAgentInvitation) -
+[Shape Definition](interop.shex#SocialAgentInvitationShape) -
+[Shape Tree Definition](interop.tree#SocialAgentInvitationTree)
+
+<table class="classinfo data" align="left" id="classSocialAgentInvitation">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>registeredBy</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] that registered the [=Social Agent Invitation=]</td>
+    </tr>
+    <tr>
+      <td>registeredWith</td>
+      <td>[Application](#classApplication)</td>
+      <td>[=Application=] used to create the [=Social Agent Invitation=]</td>
+    </tr>
+    <tr>
+      <td>registeredAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Social Agent Invitation=] was created</td>
+    </tr>
+    <tr>
+      <td>updatedAt</td>
+      <td>xsd:dateTime</td>
+      <td>Date and time the [=Social Agent Invitation=] was updated</td>
+    </tr>
+    <tr>
+      <td>capabilityUrl</td>
+      <td>[[!capability-urls|Capability URL]]</td>
+      <td>Secure link used to accept the invitation</td>
+    </tr>
+    <tr>
+      <td>skos:prefLabel</td>
+      <td>xsd:string</td>
+      <td>Human readable label assigned by the user creating the invitation</td>
+    </tr>
+    <tr>
+      <td>skos:note</td>
+      <td>xsd:string</td>
+      <td>Optional note which can further help with understanding who is being invited</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>Alice's [=Social Agent Invitation=] for Yori at
+  https://alice.pod.example/agents/a1umr5yx/ -
+  <a href="snippets/alice.example/a1umr5yx.ttl">View</a>
+  </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/a1umr5yx.ttl
+  highlight: turtle
+  show: 14-99
+  </pre>
+</figure>
+
+[=Authorization Agent=] accepting an authenticated request, targeting the `capabilityUrl`
+from a [=Social Agent Invitation=]
+* MUST respond with the [[!WEBID]] of the [=Social Agent=] who created the [=Social Agent Invitation=], using `Content-Type: text/plain`
+* MUST use the identity of the [=Social Agent=], from the incoming request,
+    as the `registeredAgent` for newly created [=Social Agent Registration=].
+* SHOULD use the `skos:prefLabel` from the [=Social Agent Invitation=] for the new [=Social Agent Registration=].
+* SHOULD use the `skos:note` from the [=Social Agent Invitation=] for the new [=Social Agent Registration=].
+* SHOULD schedule [[#agent-registration-discovery]] on the `registeredAgent` from the new  [=Social Agent Registration=].
+    After the successful discovery, add it as `reciprocalRegistration`
+
+Note: Commonly the [=Authorization Agent=], making the request on behalf of the [=Social Agent=] accepting the invitation,
+    will create corresponding [=Social Agent Registration=] after receiving the [[!WEBID]] in the response,
+    which means that it is not available before receiving the response.
 
 ## Agent Registry ## {#ar-registry}
 

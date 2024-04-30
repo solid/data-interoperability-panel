@@ -38,7 +38,17 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
   &<#CommonRegistrationProperties> ;
   interop:registeredAgent                   IRI  // shex:reference <#AgentShape> ;
   interop:hasAccessGrant                    IRI  // shex:reference <#AccessGrantShape> ;
-  interop:reciprocalRegistration            IRI? // shex:reference <#SocialAgentShape>
+  interop:reciprocalRegistration            IRI? // shex:reference <#SocialAgentShape> ;
+  skos:prefLabel                            xsd:string ;
+  skos:note                                 xsd:string?
+}
+
+<#SocialAgentInvitationShape> {
+  a [ interop:SocialAgentInvitation ] ;
+  &<#CommonRegistrationProperties
+  interop:capabilityUrl                     IRI ;
+  skos:prefLabel                            xsd:string ;
+  skos:note                                 xsd:string?
 }
 
 <#ApplicationRegistrationShape> {

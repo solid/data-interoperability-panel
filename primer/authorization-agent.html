@@ -8,7 +8,7 @@
   <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/primer/authorization-agent.html" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="22289b37364c78a67b971a525d3c8ca213b833ad" name="document-revision">
+  <meta content="022982860be951e70614adfa4ef3753200c2c1f5" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -582,7 +582,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solidproject.org/TR/solid.svg" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability - Authorization Agent Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2023-11-07">7 November 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2024-04-30">30 April 2024</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -597,7 +597,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </div>
    </details>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2023 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-software" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2024 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/policies/#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/policies/#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/copyright/software-license/" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
@@ -636,19 +636,20 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
        <ol class="toc">
         <li><a href="#reciprocal-registration"><span class="secno">6.2.1</span> <span class="content">Reciprocal Registration</span></a>
        </ol>
-      <li><a href="#application-registration"><span class="secno">6.3</span> <span class="content">Application Registration</span></a>
-      <li><a href="#agent-registration-discovery"><span class="secno">6.4</span> <span class="content">Agent Registration Discovery</span></a>
-      <li><a href="#access-grant"><span class="secno">6.5</span> <span class="content">Access Grant</span></a>
+      <li><a href="#social-agent-invitation"><span class="secno">6.3</span> <span class="content">Social Agent Invitation</span></a>
+      <li><a href="#application-registration"><span class="secno">6.4</span> <span class="content">Application Registration</span></a>
+      <li><a href="#agent-registration-discovery"><span class="secno">6.5</span> <span class="content">Agent Registration Discovery</span></a>
+      <li><a href="#access-grant"><span class="secno">6.6</span> <span class="content">Access Grant</span></a>
       <li>
-       <a href="#data-grant"><span class="secno">6.6</span> <span class="content">Data Grant</span></a>
+       <a href="#data-grant"><span class="secno">6.7</span> <span class="content">Data Grant</span></a>
        <ol class="toc">
-        <li><a href="#data-grant-scopes"><span class="secno">6.6.1</span> <span class="content">Scopes</span></a>
-        <li><a href="#data-grant-inheritance"><span class="secno">6.6.2</span> <span class="content">Inheritance</span></a>
-        <li><a href="#data-grant-delegation"><span class="secno">6.6.3</span> <span class="content">Delegation</span></a>
+        <li><a href="#data-grant-scopes"><span class="secno">6.7.1</span> <span class="content">Scopes</span></a>
+        <li><a href="#data-grant-inheritance"><span class="secno">6.7.2</span> <span class="content">Inheritance</span></a>
+        <li><a href="#data-grant-delegation"><span class="secno">6.7.3</span> <span class="content">Delegation</span></a>
        </ol>
-      <li><a href="#access-receipt"><span class="secno">6.7</span> <span class="content">Access Receipt</span></a>
-      <li><a href="#access-need-group"><span class="secno">6.8</span> <span class="content">Access Need Group</span></a>
-      <li><a href="#access-need"><span class="secno">6.9</span> <span class="content">Access Need</span></a>
+      <li><a href="#access-receipt"><span class="secno">6.8</span> <span class="content">Access Receipt</span></a>
+      <li><a href="#access-need-group"><span class="secno">6.9</span> <span class="content">Access Need Group</span></a>
+      <li><a href="#access-need"><span class="secno">6.10</span> <span class="content">Access Need</span></a>
      </ol>
     <li><a href="#gathering-authorizations"><span class="secno">7</span> <span class="content">Gathering Authorizations from the user</span></a>
     <li><a href="#resource-indication"><span class="secno">8</span> <span class="content">Sharing resources indicated by the application</span></a>
@@ -790,7 +791,7 @@ One of the primary responsibilities of the authorization agent is <a href="#gene
    <p>An Access Authorization is immutable, it never gets updated, instead it can be only replaced
 with a newer Access Authorization.</p>
    <h3 class="heading settled" data-level="5.2" id="data-authorization"><span class="secno">5.2. </span><span class="content">Data Authorization</span><a class="self-link" href="#data-authorization"></a></h3>
-   <p>Data Authorization, similar to <a href="#data-grant">§ 6.6 Data Grant</a>, represents access granted by a specific Social Agent.
+   <p>Data Authorization, similar to <a href="#data-grant">§ 6.7 Data Grant</a>, represents access granted by a specific Social Agent.
 It is always associated with a specific <a href="#shape-tree">§ 2 Shape Tree</a>. Depending on its scope it can apply to all the
 Data Instances in any number of Data Registrations. In that case, <code>interop:hasDataRegistration</code> will not be specified.</p>
    <figure>
@@ -839,19 +840,27 @@ This could be the End-user themselves or any other social agent who granted acce
    </figure>
    <h3 class="heading settled" data-level="6.1" id="agent-registration"><span class="secno">6.1. </span><span class="content">Agent Registration</span><a class="self-link" href="#agent-registration"></a></h3>
    <p>There can be only one Agent Registration for any given agent in Agent Registry.
-Its main purpose is to make <a href="#access-grant">§ 6.5 Access Grant</a> available to the registered agent.</p>
+Its main purpose is to make <a href="#access-grant">§ 6.6 Access Grant</a> available to the registered agent.</p>
    <h3 class="heading settled" data-level="6.2" id="social-agent-registration"><span class="secno">6.2. </span><span class="content">Social Agent Registration</span><a class="self-link" href="#social-agent-registration"></a></h3>
    <p>Social Agent Registration is created for a Social Agent. Besides [[##access-grant]]
 it can also reference a <a href="#reciprocal-registration">§ 6.2.1 Reciprocal Registration</a></p>
    <h4 class="heading settled" data-level="6.2.1" id="reciprocal-registration"><span class="secno">6.2.1. </span><span class="content">Reciprocal Registration</span><a class="self-link" href="#reciprocal-registration"></a></h4>
-   <p>The reference to reciprocal registration can be created after receiving an <a href="#access-receipt">§ 6.7 Access Receipt</a> from another Social Agent and performing <a href="#agent-registration-discovery">§ 6.4 Agent Registration Discovery</a></p>
+   <p>The reference to reciprocal registration can be created after receiving an <a href="#access-receipt">§ 6.8 Access Receipt</a> from another Social Agent and performing <a href="#agent-registration-discovery">§ 6.5 Agent Registration Discovery</a></p>
    <p>In the case of Social Agent Registration for ACME, created in Alice’s Agent Registry. The reciprocal registration
 will be the Social Agent Reigstration for Alice, created in ACME’s Agent Registry.</p>
    <p><img class="flowchart-diagram" src="diagrams/reciprocal-registration.flow.mmd.png"></p>
-   <h3 class="heading settled" data-level="6.3" id="application-registration"><span class="secno">6.3. </span><span class="content">Application Registration</span><a class="self-link" href="#application-registration"></a></h3>
+   <h3 class="heading settled" data-level="6.3" id="social-agent-invitation"><span class="secno">6.3. </span><span class="content">Social Agent Invitation</span><a class="self-link" href="#social-agent-invitation"></a></h3>
+   <p>Social Agent Invitation represents an invitation for a Social Agent. It takes advantage of an existing and secure
+communication channel between two agents to pass a secret link that allows accepting the invitation.
+This flow results in both agents establishing a pair of <a href="#reciprocal-registration">Reciprocal Registrations</a>.
+If the platform supports it, the Authorization Agent of the sender can use <a data-link-type="biblio" href="#biblio-web-share" title="Web Share API">[WEB-SHARE]</a> to pass the secret
+link to the user’s messaging app. On the other side, the Authorization Agent of the recipient can use <a data-link-type="biblio" href="#biblio-web-share-target" title="Web Share Target API">[WEB-SHARE-TARGET]</a> to register with the platform and receive a secret link from the user’s messaging app.
+Independent of the platform, Authorization Agents should always allow a simple copy of the link by the sender
+(e.g., <code>navigator.clipboard.writeText</code>) and paste it by the recipient.</p>
+   <h3 class="heading settled" data-level="6.4" id="application-registration"><span class="secno">6.4. </span><span class="content">Application Registration</span><a class="self-link" href="#application-registration"></a></h3>
    <p>Application Registrations are created by the End-user for applications they use.
 Since applications do not own or share data, they will never have a [#reciprocal-registration].</p>
-   <h3 class="heading settled" data-level="6.4" id="agent-registration-discovery"><span class="secno">6.4. </span><span class="content">Agent Registration Discovery</span><a class="self-link" href="#agent-registration-discovery"></a></h3>
+   <h3 class="heading settled" data-level="6.5" id="agent-registration-discovery"><span class="secno">6.5. </span><span class="content">Agent Registration Discovery</span><a class="self-link" href="#agent-registration-discovery"></a></h3>
    <p>Both Social Agent and Application can discover Agent Registration created for them,
 by performing <code>HEAD</code> or <code>GET</code> request on IRI denoting
 the Authorization Agent. Response will include HTTP Link header relating
@@ -876,10 +885,10 @@ another’s social agent Authorization Agent. The response will include a link t
 <pre class="highlight line-numbered"><span class="line-no"></span><span class="line"><c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c-> <c- m>200</c-> <c- ne>OK</c-></span><span class="line-no"></span><span class="line"><c- e>Link</c-><c- o>:</c-> <c- l>&lt;https://bob.example/#id>;</c-></span><span class="line-no highlight-line" data-line="3"></span><span class="line highlight-line">  <c- l>anchor="https://auth.alice.example/92868ad4-a9e6-42df-9cb0-883350c62769";</c-></span><span class="line-no"></span><span class="line">  <c- l>rel="http://www.w3.org/ns/solid/interop#registeredAgent"</c-></span></pre>
     <figcaption>HEAD request to and response from someone else’s Authorization Agent</figcaption>
    </figure>
-   <h3 class="heading settled" data-level="6.5" id="access-grant"><span class="secno">6.5. </span><span class="content">Access Grant</span><a class="self-link" href="#access-grant"></a></h3>
+   <h3 class="heading settled" data-level="6.6" id="access-grant"><span class="secno">6.6. </span><span class="content">Access Grant</span><a class="self-link" href="#access-grant"></a></h3>
    <p>An Access Grant groups together all the Data Grants provided for a specific agent.</p>
    <p>An Access Grant is immutable — it never gets updated; it can only be replaced, by a newer Access Grant.</p>
-   <h3 class="heading settled" data-level="6.6" id="data-grant"><span class="secno">6.6. </span><span class="content">Data Grant</span><a class="self-link" href="#data-grant"></a></h3>
+   <h3 class="heading settled" data-level="6.7" id="data-grant"><span class="secno">6.7. </span><span class="content">Data Grant</span><a class="self-link" href="#data-grant"></a></h3>
    <p>Each Data grant represents access granted by specific Social Agent, to all or selected
 Data Instances in specific Data Registration.</p>
    <figure>
@@ -920,18 +929,18 @@ with a newer Data Grant.</p>
      <p>List of access modes defining what application can do with the data</p>
     <dt data-md>scopeOfGrant
     <dd data-md>
-     <p>Defines which instances can be accessed (see <a href="#data-grant-scopes">§ 6.6.1 Scopes</a>)</p>
+     <p>Defines which instances can be accessed (see <a href="#data-grant-scopes">§ 6.7.1 Scopes</a>)</p>
     <dt data-md>inheritsFromGrant
     <dd data-md>
-     <p>If grant has <code>InheritInstances</code> scope, it will be the Data Grant for Data Registraion with parent Data Instances (see <a href="#data-grant-inheritance">§ 6.6.2 Inheritance</a>)</p>
+     <p>If grant has <code>InheritInstances</code> scope, it will be the Data Grant for Data Registraion with parent Data Instances (see <a href="#data-grant-inheritance">§ 6.7.2 Inheritance</a>)</p>
     <dt data-md>hasDataInstance
     <dd data-md>
      <p>If grant has <code>SelectedInstances</code> scope, it will be all the Data Instances that application can access in the Data Registration</p>
     <dt data-md>delegationOfGrant
     <dd data-md>
-     <p>If Data Grant is issued by Social Agent other than data owner, it will be the original Data Grant issued by the data owner (see <a href="#data-grant-delegation">§ 6.6.3 Delegation</a>)</p>
+     <p>If Data Grant is issued by Social Agent other than data owner, it will be the original Data Grant issued by the data owner (see <a href="#data-grant-delegation">§ 6.7.3 Delegation</a>)</p>
    </dl>
-   <h4 class="heading settled" data-level="6.6.1" id="data-grant-scopes"><span class="secno">6.6.1. </span><span class="content">Scopes</span><a class="self-link" href="#data-grant-scopes"></a></h4>
+   <h4 class="heading settled" data-level="6.7.1" id="data-grant-scopes"><span class="secno">6.7.1. </span><span class="content">Scopes</span><a class="self-link" href="#data-grant-scopes"></a></h4>
    <p>Data Grant can have one of three scopes:</p>
    <dl>
     <dt data-md>AllFromRegistry
@@ -942,9 +951,9 @@ with a newer Data Grant.</p>
      <p>Only specific Data Instances in the Data Registration. Application will not be able to access the Data Registration, so it will not see the list al all contained instances. Instad list of selected Data Instances is available via <code>hasDataInstance</code></p>
     <dt data-md>Inherited
     <dd data-md>
-     <p>Only those Data Instances in the Data Registration, which are related to parent kData Instances in Data Registration of the Data Grant referenced with <code>inheritsFromGrant</code> (see <a href="#data-grant-inheritance">§ 6.6.2 Inheritance</a>)</p>
+     <p>Only those Data Instances in the Data Registration, which are related to parent kData Instances in Data Registration of the Data Grant referenced with <code>inheritsFromGrant</code> (see <a href="#data-grant-inheritance">§ 6.7.2 Inheritance</a>)</p>
    </dl>
-   <h4 class="heading settled" data-level="6.6.2" id="data-grant-inheritance"><span class="secno">6.6.2. </span><span class="content">Inheritance</span><a class="self-link" href="#data-grant-inheritance"></a></h4>
+   <h4 class="heading settled" data-level="6.7.2" id="data-grant-inheritance"><span class="secno">6.7.2. </span><span class="content">Inheritance</span><a class="self-link" href="#data-grant-inheritance"></a></h4>
    <p><code>InheritInstances</code> Data Grant doesn’t provide access to the Data Registration, so
 application can’t get the list of all the Data Instances. Neither it provides a list of specific
 Data Instances in the Data Registration.</p>
@@ -955,34 +964,34 @@ child Data Instances.</p>
 Data Registration for specific shape tree can be created in any given Data Registry.
 All parent Data Instances are from one Data Registration and all child Data Instances are from
 one Data Registration.</p>
-   <h4 class="heading settled" data-level="6.6.3" id="data-grant-delegation"><span class="secno">6.6.3. </span><span class="content">Delegation</span><a class="self-link" href="#data-grant-delegation"></a></h4>
+   <h4 class="heading settled" data-level="6.7.3" id="data-grant-delegation"><span class="secno">6.7.3. </span><span class="content">Delegation</span><a class="self-link" href="#data-grant-delegation"></a></h4>
    <p>Application doesn’t need to handle delegated Data Grants in any special way.
 To know if Data Grant was issued by currently logged in user or someone else,
 application should rely on <code>dataOwner</code> information in the Data Grant.</p>
    <div class="issue no-marker" id="issue-d41d8cd9"><a class="self-link" href="#issue-d41d8cd9"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/222" style="text-transform:none">solid/data-interoperability-panel/222</a><a href="https://github.com/solid/data-interoperability-panel/issues/222">Support longer delegation chains</a></div>
-   <h3 class="heading settled" data-level="6.7" id="access-receipt"><span class="secno">6.7. </span><span class="content">Access Receipt</span><a class="self-link" href="#access-receipt"></a></h3>
+   <h3 class="heading settled" data-level="6.8" id="access-receipt"><span class="secno">6.8. </span><span class="content">Access Receipt</span><a class="self-link" href="#access-receipt"></a></h3>
    <p>Access Receipt helps to establish data sharing between two social agents. Once received the authorization agent
 should prompt the user to approve creating <a href="#social-agent-registration">§ 6.2 Social Agent Registration</a> for that data owner.
 If user approves <a href="#reciprocal-registration">§ 6.2.1 Reciprocal Registration</a> can be associated and subscription for notifications established
-to keep track on the latest <a href="#access-grant">§ 6.5 Access Grant</a>. Once reciprocal registration gets associated there is no
+to keep track on the latest <a href="#access-grant">§ 6.6 Access Grant</a>. Once reciprocal registration gets associated there is no
 further need for its data owner to send access receipts to the agent registered in that reciprocal registration.</p>
    <div class="issue no-marker" id="issue-d41d8cd9①"><a class="self-link" href="#issue-d41d8cd9①"></a><a class="marker" href="https://github.com/solid/data-interoperability-panel/issues/238" style="text-transform:none">solid/data-interoperability-panel/238</a><a href="https://github.com/solid/data-interoperability-panel/issues/238">Sharing access between social agents</a></div>
-   <h3 class="heading settled" data-level="6.8" id="access-need-group"><span class="secno">6.8. </span><span class="content">Access Need Group</span><a class="self-link" href="#access-need-group"></a></h3>
+   <h3 class="heading settled" data-level="6.9" id="access-need-group"><span class="secno">6.9. </span><span class="content">Access Need Group</span><a class="self-link" href="#access-need-group"></a></h3>
    <p>An Access Need Group is a collection of Access Needs used to communicate an access request to Social Agents.</p>
    <p>An Authorization Agent uses them during <a href="#gathering-authorizations">§ 7 Gathering Authorizations from the user</a>.</p>
-   <h3 class="heading settled" data-level="6.9" id="access-need"><span class="secno">6.9. </span><span class="content">Access Need</span><a class="self-link" href="#access-need"></a></h3>
+   <h3 class="heading settled" data-level="6.10" id="access-need"><span class="secno">6.10. </span><span class="content">Access Need</span><a class="self-link" href="#access-need"></a></h3>
    <p>An Access Need represents the requirement of one specific type of data represented by a shape tree,
 as part of an Access Need Group.</p>
    <p class="issue" id="issue-a0664d99"><a class="self-link" href="#issue-a0664d99"></a> Complete this section based on implementation of UI for Authorization Agent Service</p>
    <h2 class="heading settled" data-level="7" id="gathering-authorizations"><span class="secno">7. </span><span class="content">Gathering Authorizations from the user</span><a class="self-link" href="#gathering-authorizations"></a></h2>
-   <p>The most common case is authorizing an application based on its <a href="#access-need">§ 6.9 Access Need</a>.
+   <p>The most common case is authorizing an application based on its <a href="#access-need">§ 6.10 Access Need</a>.
 The authorization screen should combine those Access Needs with existing <a href="#access-authorization">§ 5.1 Access Authorization</a> if one exists.
 It should also assist the user in composing new Access Authorization, taking into account all their:</p>
    <ul>
     <li data-md>
      <p>Data Registries with Data Registrations and Data Instances</p>
     <li data-md>
-     <p><a href="#access-grant">§ 6.5 Access Grant</a> with <a href="#data-grant">§ 6.6 Data Grant</a> others issued to them (available via all the <a href="#reciprocal-registration">§ 6.2.1 Reciprocal Registration</a>)</p>
+     <p><a href="#access-grant">§ 6.6 Access Grant</a> with <a href="#data-grant">§ 6.7 Data Grant</a> others issued to them (available via all the <a href="#reciprocal-registration">§ 6.2.1 Reciprocal Registration</a>)</p>
    </ul>
    <p><img src="images/authorization-screen.svg" width="100%"></p>
    <figure>
@@ -1115,9 +1124,9 @@ indication is available.</p>
    </figure>
    <p><img class="sequence-diagram" src="diagrams/resource-indication.seq.mmd.svg"></p>
    <h2 class="heading settled" data-level="9" id="generating-grants-from-authorizations"><span class="secno">9. </span><span class="content">Generating Access Grant from Access Authorization</span><a class="self-link" href="#generating-grants-from-authorizations"></a></h2>
-   <p>Based on an <a href="#access-authorization">§ 5.1 Access Authorization</a>, authorization agent can generate an <a href="#access-grant">§ 6.5 Access Grant</a>.
+   <p>Based on an <a href="#access-authorization">§ 5.1 Access Authorization</a>, authorization agent can generate an <a href="#access-grant">§ 6.6 Access Grant</a>.
 For <a href="#data-authorization">§ 5.2 Data Authorization</a> using <code>AllFromRegistry</code>, <code>SelectedFromRegistry</code> scope,
-a single <a href="#data-grant">§ 6.6 Data Grant</a> gets generated. Similar for data authorization using <code>Inherited</code> scope and
+a single <a href="#data-grant">§ 6.7 Data Grant</a> gets generated. Similar for data authorization using <code>Inherited</code> scope and
 inheriting from data authorization with one of those two scopes. Here a data authorization gets directly
 translated into a data grant, only changing type and all authorization specific properties to grant specific properties.</p>
    <p>For data authorization using <code>All</code> or <code>AllFromAgent</code>, zero or more data grant gets generated.
@@ -1140,4 +1149,8 @@ will also have zero or more data grants if it is inheriting from data authorizat
    <dd>Justin Bingham; et al. <a href="https://shapetrees.org/TR/specification/"><cite>Shape Trees</cite></a>. URL: <a href="https://shapetrees.org/TR/specification/">https://shapetrees.org/TR/specification/</a>
    <dt id="biblio-shex">[SHEX]
    <dd>Eric Prud'hommeaux; et al. <a href="http://shex.io/shex-semantics/index.html"><cite>Shape Expressions Language 2.1</cite></a>. URL: <a href="http://shex.io/shex-semantics/index.html">http://shex.io/shex-semantics/index.html</a>
+   <dt id="biblio-web-share">[WEB-SHARE]
+   <dd>Matt Giuca; Eric Willigers; Marcos Caceres. <a href="https://w3c.github.io/web-share/"><cite>Web Share API</cite></a>. URL: <a href="https://w3c.github.io/web-share/">https://w3c.github.io/web-share/</a>
+   <dt id="biblio-web-share-target">[WEB-SHARE-TARGET]
+   <dd>Matt Giuca; Eric Willigers. <a href="https://w3c.github.io/web-share-target/"><cite>Web Share Target API</cite></a>. ED. URL: <a href="https://w3c.github.io/web-share-target/">https://w3c.github.io/web-share-target/</a>
   </dl>
