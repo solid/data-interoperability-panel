@@ -1,12 +1,10 @@
-# Workflow for processing and publishing bikeshed proposals to github pages
+# Workflow for verifying bikeshed documents processing
 
-name: publish proposals
+name: Verify processing
 on:
-  push:
-    # only concerned with changes in the main branch
+  # only concerned with gating PRs to the main branch
+  pull_request:
     branches: [ main ]
-    # only invoke when a bikeshed document is updated
-    # paths: [ '*.bs' ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,14 +17,11 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
-
-      - name: upgrade pip
-        run: python3 -m pip install --upgrade pip
+          python-version: '3.10'
 
       - name: install bikeshed
         run: |
-          python3 -m pip install --upgrade bikeshed
+          pipx install bikeshed
           bikeshed update
 
       - name: run bikeshed
@@ -40,10 +35,3 @@ jobs:
 
       - name: generate png
         run: for diagram in proposals/*/diagrams/*.flow.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram -o /data/$diagram.png; done
-
-
-      - name: deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          publish_dir: ./proposals
-          personal_token: ${{ secrets.GITHUB_TOKEN }}

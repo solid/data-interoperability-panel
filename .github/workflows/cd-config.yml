@@ -1,0 +1,46 @@
+# Workflow for processing and publishing bikeshed proposals to github pages
+
+name: publish proposals
+on:
+  push:
+    # only concerned with changes in the main branch
+    branches: [ main ]
+    # only invoke when a bikeshed document is updated
+    # paths: [ '*.bs' ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2.2.0
+
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: install bikeshed
+        run: |
+          pipx install bikeshed
+          bikeshed update
+
+      - name: run bikeshed
+        run: |
+          bikeshed spec proposals/specification/index.bs
+          bikeshed spec proposals/primer/application.bs
+          bikeshed spec proposals/primer/authorization-agent.bs
+
+      - name: generate svg
+        run: for diagram in proposals/*/diagrams/*.seq.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
+
+      - name: generate png
+        run: for diagram in proposals/*/diagrams/*.flow.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram -o /data/$diagram.png; done
+
+
+      - name: deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_dir: ./proposals
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
