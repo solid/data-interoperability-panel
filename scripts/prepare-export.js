@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2023 Justin Bingham <justin@bingham.id>
+// SPDX-FileCopyrightText: 2023 elf Pavlik <elf-pavlik@hackers4peace.net>
+//
+// SPDX-License-Identifier: MIT
+
 const fs = require('fs')
 const filePath = require('path')
 
