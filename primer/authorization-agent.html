@@ -5,9 +5,10 @@
   <title>Solid Application Interoperability - Authorization Agent Primer</title>
   <meta content="CG-DRAFT" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version a1dabb26c, updated Mon Jun 17 15:00:44 2024 -0700" name="generator">
+  <meta content="Bikeshed version b25686b9f, updated Fri Mar 14 14:15:20 2025 -0700" name="generator">
   <link href="https://solid.github.io/data-interoperability-panel/primer/authorization-agent.html" rel="canonical">
-  <meta content="dd62af0c405415bc34e84b66aa923e0d3b1fd326" name="revision">
+  <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
+  <meta content="b1aa5b6d33d362cab931e0fa7c3674b51f45950b" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -577,7 +578,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability - Authorization Agent Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2024-06-22">22 June 2024</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2025-05-23">23 May 2025</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -594,11 +595,9 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </div>
    </details>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright">
-    <p> Copyright © 2024 the Contributors to the Solid Application Interoperability - Authorization Agent Primer,
-  published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
-  A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available. </p>
-   </p>
+   <p class="copyright" data-fill-with="copyright">Copyright © 2025 the Contributors to the Solid Application Interoperability - Authorization Agent Primer,
+published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
+A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available. </p>
    <hr title="Separator for header">
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
@@ -852,8 +851,7 @@ This could be the End-user themselves or any other social agent who granted acce
    <p>There can be only one Agent Registration for any given agent in Agent Registry.
 Its main purpose is to make <a href="#access-grant">§ 6.6 Access Grant</a> available to the registered agent.</p>
    <h3 class="heading settled" data-level="6.2" id="social-agent-registration"><span class="secno">6.2. </span><span class="content">Social Agent Registration</span><a class="self-link" href="#social-agent-registration"></a></h3>
-   <p>Social Agent Registration is created for a Social Agent. Besides [[##access-grant]]
-it can also reference a <a href="#reciprocal-registration">§ 6.2.1 Reciprocal Registration</a></p>
+   <p>Social Agent Registration is created for a Social Agent. Besides <a href="#access-grant">§ 6.6 Access Grant</a> it can also reference a <a href="#reciprocal-registration">§ 6.2.1 Reciprocal Registration</a>.</p>
    <h4 class="heading settled" data-level="6.2.1" id="reciprocal-registration"><span class="secno">6.2.1. </span><span class="content">Reciprocal Registration</span><a class="self-link" href="#reciprocal-registration"></a></h4>
    <p>The reference to reciprocal registration can be created after receiving an <a href="#access-receipt">§ 6.8 Access Receipt</a> from another Social Agent and performing <a href="#agent-registration-discovery">§ 6.5 Agent Registration Discovery</a></p>
    <p>In the case of Social Agent Registration for ACME, created in Alice’s Agent Registry. The reciprocal registration
@@ -905,6 +903,7 @@ Data Instances in specific Data Registration.</p>
 <pre class="include-code highlight"><c- nn>alice-auth</c-><c- p>:</c-><c- f>cd247a67-0879-4301-abd0-828f63abb252</c->
   <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>DataGrant</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>dataOwner</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
+    <c- nn>interop</c-><c- p>:</c-><c- f>grantedBy</c-> <c- g>&lt;https://alice.example/#id></c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>hasDataRegistration</c-> <c- nn>alice-pro</c-><c- p>:</c-><c- f>773605f0-b5bf-4d46-878d-5c167eac8b5d</c-> <c- p>;</c->
     <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>Write</c-> <c- p>;</c->
@@ -928,6 +927,9 @@ with a newer Data Grant.</p>
     <dt data-md>dataOwner
     <dd data-md>
      <p>Social Agent who owns the data</p>
+    <dt data-md>grantedBy
+    <dd data-md>
+     <p>Social Agent who granted the access</p>
     <dt data-md>registeredShapeTree
     <dd data-md>
      <p>Shape Tree used by related Data Registration</p>
@@ -1160,7 +1162,7 @@ will also have zero or more data grants if it is inheriting from data authorizat
    <dt id="biblio-shex">[SHEX]
    <dd>Eric Prud'hommeaux; et al. <a href="http://shex.io/shex-semantics/index.html"><cite>Shape Expressions Language 2.1</cite></a>. URL: <a href="http://shex.io/shex-semantics/index.html">http://shex.io/shex-semantics/index.html</a>
    <dt id="biblio-web-share">[WEB-SHARE]
-   <dd>Matt Giuca; Eric Willigers; Marcos Caceres. <a href="https://w3c.github.io/web-share/"><cite>Web Share API</cite></a>. URL: <a href="https://w3c.github.io/web-share/">https://w3c.github.io/web-share/</a>
+   <dd>Marcos Caceres; Eric Willigers; Matt Giuca. <a href="https://w3c.github.io/web-share/"><cite>Web Share API</cite></a>. URL: <a href="https://w3c.github.io/web-share/">https://w3c.github.io/web-share/</a>
    <dt id="biblio-web-share-target">[WEB-SHARE-TARGET]
    <dd>Matt Giuca; Eric Willigers. <a href="https://w3c.github.io/web-share-target/"><cite>Web Share Target API</cite></a>. ED. URL: <a href="https://w3c.github.io/web-share-target/">https://w3c.github.io/web-share-target/</a>
   </dl>
