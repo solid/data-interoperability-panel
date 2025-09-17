@@ -5,7 +5,9 @@ Level: 1
 Max ToC Depth: 2
 Status: CG-DRAFT
 Group: solidcg
-URL: https://solid.github.io/data-interoperability-panel/specification/
+TR: https://solidproject.org/TR/sai
+ED: https://solidproject.org/TR/tag/sai-v0.1
+ED: https://solid.github.io/data-interoperability-panel/specification/
 Repository: https://github.com/solid/data-interoperability-panel
 Inline Github Issues: title
 Editor: Justin Bingham
@@ -19,6 +21,46 @@ Abstract:
   This specification details how Social Agents and Applications 
   can safely share and interoperate over data in Solid Pods.
 </pre>
+<script type="application/ld+json">
+{
+  "@context": {
+    "doap": "http://usefulinc.com/ns/doap#",
+    "spec": "http://www.w3.org/ns/spec#",
+    "schema": "http://schema.org/",
+    "sai": "https://solidproject.org/TR/sai#",
+    "name": "schema:name",
+    "author": { "@id": "schema:author", "@type": "@id" },
+    "editor": { "@id": "schema:editor", "@type": "@id" },
+    "definesConformanceFor": { "@id": "spec:definesConformanceFor", "@type": "@id" },
+    "ClassOfProduct": { "@id": "spec:ClassOfProduct", "@type": "@id" }
+  },
+  "@id": "https://solid.github.io/data-interoperability-panel/specification/",
+  "@type": "doap:Specification",
+  "name": "Solid Application Interoperability",
+  "author": [
+    "https://elf-pavlik.hackers4peace.net",
+    "urn:uuid:3b05c17c-f44a-470e-8031-408abee6e2ca",
+    "https://justin.inrupt.net/profile/card#me"
+  ],
+  "editor": [
+    "https://elf-pavlik.hackers4peace.net",
+    "urn:uuid:3b05c17c-f44a-470e-8031-408abee6e2ca",
+    "https://justin.inrupt.net/profile/card#me"
+  ],
+  "definesConformanceFor": [
+    { 
+      "@id": "sai:Application",
+      "@type": "ClassOfProduct",
+      "name": "SAI Application"
+    },
+    { 
+      "@id": "sai:AuthorizationAgent",
+      "@type": "ClassOfProduct",
+      "name": "SAI Authorization Agent"
+    }
+  ]
+}
+</script>
 
 <!-- For bikeshed style overrides -->
 <style>

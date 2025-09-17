@@ -5,10 +5,10 @@
   <title>Solid Application Interoperability - Authorization Agent Primer</title>
   <meta content="CG-DRAFT" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version b25686b9f, updated Fri Mar 14 14:15:20 2025 -0700" name="generator">
-  <link href="https://solid.github.io/data-interoperability-panel/primer/authorization-agent.html" rel="canonical">
+  <meta content="Bikeshed version 3f621ba99, updated Mon Jul 28 15:38:36 2025 -0700" name="generator">
+  <link href="https://solidproject.org/TR/sai-primer-authorization-agent" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="b1aa5b6d33d362cab931e0fa7c3674b51f45950b" name="revision">
+  <meta content="daf93b03ad15419ff6a10e50ff8ce0a7b6bb25b2" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -347,7 +347,7 @@ a[href].issue-return {
 .line-numbered {
     display: grid !important;
     grid-template-columns: min-content 1fr;
-    grid-auto-flow: rows;
+    grid-auto-flow: row;
 }
 .line-numbered > *,
 .line-numbered::before,
@@ -576,16 +576,22 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </style>
  <body class="h-entry">
   <div class="head">
-   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/">
+    <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
+</a>
+</p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability - Authorization Agent Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2025-05-23">23 May 2025</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
+    <time class="dt-updated" datetime="2025-09-17">17 September 2025</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
      <dl>
       <dt>This version:
       <dd><a class="u-url" href="https://solid.github.io/data-interoperability-panel/primer/authorization-agent.html">https://solid.github.io/data-interoperability-panel/primer/authorization-agent.html</a>
-      <dt>Issue Tracking:
+      <dt>Latest published version:
+      <dd><a href="https://solidproject.org/TR/sai-primer-authorization-agent">https://solidproject.org/TR/sai-primer-authorization-agent</a>
+      <dt>Feedback:
       <dd><a href="https://github.com/solid/data-interoperability-panel/issues/">GitHub</a>
       <dt class="editor">Editor:
       <dd class="editor p-author h-card vcard"><span class="p-name fn">elf Pavlik</span>
@@ -596,16 +602,21 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </details>
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright">Copyright © 2025 the Contributors to the Solid Application Interoperability - Authorization Agent Primer,
-published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
-A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available. </p>
+published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a>
+under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
+A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.
+</p>
    <hr title="Separator for header">
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
-   <p> This report was published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a>.
+   <p>
+  This report was published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a>.
   It is not a W3C Standard nor is it on the W3C Standards Track.
-  Please note that under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply.
-  Learn more about <a href="https://www.w3.org/community/">W3C Community and Business Groups</a>. </p>
+  Please note that under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>
+  there is a limited opt-out and other conditions apply.
+  Learn more about <a href="https://www.w3.org/community/">W3C Community and Business Groups</a>.
+</p>
    <p></p>
   </div>
   <div data-fill-with="at-risk"></div>
@@ -666,11 +677,32 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    </ol>
   </nav>
   <main>
+<script type="application/ld+json">
+{
+  "@context": {
+    "spec": "http://www.w3.org/ns/spec#",
+    "schema": "http://schema.org/",
+    "name": "schema:name",
+    "author": { "@id": "schema:author", "@type": "@id" },
+    "editor": { "@id": "schema:editor", "@type": "@id" }
+  },
+  "@id": "https://solid.github.io/data-interoperability-panel/primer/authorization-agent.html",
+  "@type": "spec:Primer",
+  "name": "SAI Authorization Agent Primer",
+  "author": [
+    "https://elf-pavlik.hackers4peace.net"
+  ],
+  "editor": [
+    "https://elf-pavlik.hackers4peace.net"
+  ]
+}
+</script>
    <h2 class="heading settled" data-level="1" id="introduction"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#introduction"></a></h2>
    <p>This primer is intended to accompany <a data-link-type="biblio" href="#biblio-sai" title="Solid Application Interoperability">[SAI]</a>.
 It is focused on providing a friendly introduction for developers of libraries intended
 for solid authorization agents.</p>
-   <p>This document was developed alongside the open-source TypeScript implementation <a data-link-type="biblio" href="#biblio-sai-js" title="Solid Application Interoperability - TypeScript implementation">[SAI-JS]</a> and open-source Java implementation <a data-link-type="biblio" href="#biblio-sai-java" title="Solid Application Interoperability - Java implementation">[SAI-JAVA]</a>.</p>
+   <p>This document was developed alongside the open-source TypeScript implementation <a data-link-type="biblio" href="#biblio-sai-js" title="Solid Application Interoperability - TypeScript implementation">[SAI-JS]</a>
+and open-source Java implementation <a data-link-type="biblio" href="#biblio-sai-java" title="Solid Application Interoperability - Java implementation">[SAI-JAVA]</a>.</p>
    <h2 class="heading settled" data-level="2" id="shape-tree"><span class="secno">2. </span><span class="content">Shape Tree</span><a class="self-link" href="#shape-tree"></a></h2>
    <p>Shape Trees <a data-link-type="biblio" href="#biblio-shapetrees" title="Shape Trees">[SHAPETREES]</a> allow  for the definition and validation of data hierarchies
 including which shapes <a data-link-type="biblio" href="#biblio-shex" title="Shape Expressions Language 2.1">[SHEX]</a> should be used to validate data.
@@ -851,9 +883,11 @@ This could be the End-user themselves or any other social agent who granted acce
    <p>There can be only one Agent Registration for any given agent in Agent Registry.
 Its main purpose is to make <a href="#access-grant">§ 6.6 Access Grant</a> available to the registered agent.</p>
    <h3 class="heading settled" data-level="6.2" id="social-agent-registration"><span class="secno">6.2. </span><span class="content">Social Agent Registration</span><a class="self-link" href="#social-agent-registration"></a></h3>
-   <p>Social Agent Registration is created for a Social Agent. Besides <a href="#access-grant">§ 6.6 Access Grant</a> it can also reference a <a href="#reciprocal-registration">§ 6.2.1 Reciprocal Registration</a>.</p>
+   <p>Social Agent Registration is created for a Social Agent. Besides <a href="#access-grant">§ 6.6 Access Grant</a>
+it can also reference a <a href="#reciprocal-registration">§ 6.2.1 Reciprocal Registration</a>.</p>
    <h4 class="heading settled" data-level="6.2.1" id="reciprocal-registration"><span class="secno">6.2.1. </span><span class="content">Reciprocal Registration</span><a class="self-link" href="#reciprocal-registration"></a></h4>
-   <p>The reference to reciprocal registration can be created after receiving an <a href="#access-receipt">§ 6.8 Access Receipt</a> from another Social Agent and performing <a href="#agent-registration-discovery">§ 6.5 Agent Registration Discovery</a></p>
+   <p>The reference to reciprocal registration can be created after receiving an <a href="#access-receipt">§ 6.8 Access Receipt</a>
+from another Social Agent and performing <a href="#agent-registration-discovery">§ 6.5 Agent Registration Discovery</a></p>
    <p>In the case of Social Agent Registration for ACME, created in Alice’s Agent Registry. The reciprocal registration
 will be the Social Agent Reigstration for Alice, created in ACME’s Agent Registry.</p>
    <p><img class="flowchart-diagram" src="diagrams/reciprocal-registration.flow.mmd.png"></p>
@@ -862,7 +896,8 @@ will be the Social Agent Reigstration for Alice, created in ACME’s Agent Regis
 communication channel between two agents to pass a secret link that allows accepting the invitation.
 This flow results in both agents establishing a pair of <a href="#reciprocal-registration">Reciprocal Registrations</a>.
 If the platform supports it, the Authorization Agent of the sender can use <a data-link-type="biblio" href="#biblio-web-share" title="Web Share API">[WEB-SHARE]</a> to pass the secret
-link to the user’s messaging app. On the other side, the Authorization Agent of the recipient can use <a data-link-type="biblio" href="#biblio-web-share-target" title="Web Share Target API">[WEB-SHARE-TARGET]</a> to register with the platform and receive a secret link from the user’s messaging app.
+link to the user’s messaging app. On the other side, the Authorization Agent of the recipient can use
+<a data-link-type="biblio" href="#biblio-web-share-target" title="Web Share Target API">[WEB-SHARE-TARGET]</a> to register with the platform and receive a secret link from the user’s messaging app.
 Independent of the platform, Authorization Agents should always allow a simple copy of the link by the sender
 (e.g., <code>navigator.clipboard.writeText</code>) and paste it by the recipient.</p>
    <h3 class="heading settled" data-level="6.4" id="application-registration"><span class="secno">6.4. </span><span class="content">Application Registration</span><a class="self-link" href="#application-registration"></a></h3>
@@ -872,7 +907,9 @@ Since applications do not own or share data, they will never have a [#reciprocal
    <p>Both Social Agent and Application can discover Agent Registration created for them,
 by performing <code>HEAD</code> or <code>GET</code> request on IRI denoting
 the Authorization Agent. Response will include HTTP Link header relating
-Agent Registration to the agent making the request using <code>http://www.w3.org/ns/solid/interop#registeredAgent</code> as link relation.</p>
+Agent Registration to the agent making the request using
+<code>http://www.w3.org/ns/solid/interop#registeredAgent</code>
+as link relation.</p>
    <p>In a case where End-user using an application performs the discovery on their
 own Authorization Agent. The response will include a link to the Application registration.</p>
    <figure>
@@ -970,7 +1007,8 @@ with a newer Data Grant.</p>
 application can’t get the list of all the Data Instances. Neither it provides a list of specific
 Data Instances in the Data Registration.</p>
    <p>To find Data Instances from that Data Registration, application first needs to access parent
-Data Instances from Data Registration which Data Grant referenced by <code>inheritsFromGrant</code> makes accessible. Based on shape tree definition, each parent Data Instance will reference all its
+Data Instances from Data Registration which Data Grant referenced by <code>inheritsFromGrant</code>
+makes accessible. Based on shape tree definition, each parent Data Instance will reference all its
 child Data Instances.</p>
    <p>Both parent and child Data Registrations have to be in the same Data Registry. Since only one
 Data Registration for specific shape tree can be created in any given Data Registry.
@@ -1057,7 +1095,8 @@ It should also assist the user in composing new Access Authorization, taking int
        <td>Alice’s Authorization Agent records her decision as an Access Authorization in Alice’s
             Authorization Registry. An Application Registration is created for Projectron in
             Alice’s Agent Registry. An Access Grant and corresponding Data Grants are generated
-            from the Access Authorization and stored in the Projectron Application Registration. 
+            from the Access Authorization and stored in the Projectron Application Registration.
+        
       <tr>
        <td><b>14</b>
        <td>Alice’s Authorization Agent redirects her back to Projectron, now that the appropriate access has been granted.

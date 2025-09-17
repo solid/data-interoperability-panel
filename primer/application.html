@@ -5,10 +5,10 @@
   <title>Solid Application Interoperability - Application Primer</title>
   <meta content="CG-DRAFT" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version b25686b9f, updated Fri Mar 14 14:15:20 2025 -0700" name="generator">
-  <link href="https://solid.github.io/data-interoperability-panel/primer/applications.html" rel="canonical">
+  <meta content="Bikeshed version 3f621ba99, updated Mon Jul 28 15:38:36 2025 -0700" name="generator">
+  <link href="https://solidproject.org/TR/sai-primer-application" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="b1aa5b6d33d362cab931e0fa7c3674b51f45950b" name="revision">
+  <meta content="daf93b03ad15419ff6a10e50ff8ce0a7b6bb25b2" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -347,7 +347,7 @@ a[href].issue-return {
 .line-numbered {
     display: grid !important;
     grid-template-columns: min-content 1fr;
-    grid-auto-flow: rows;
+    grid-auto-flow: row;
 }
 .line-numbered > *,
 .line-numbered::before,
@@ -576,16 +576,22 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </style>
  <body class="h-entry">
   <div class="head">
-   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/">
+    <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
+</a>
+</p>
    <h1 class="p-name no-ref" id="title">Solid Application Interoperability - Application Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2025-05-23">23 May 2025</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
+    <time class="dt-updated" datetime="2025-09-17">17 September 2025</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
      <dl>
       <dt>This version:
-      <dd><a class="u-url" href="https://solid.github.io/data-interoperability-panel/primer/applications.html">https://solid.github.io/data-interoperability-panel/primer/applications.html</a>
-      <dt>Issue Tracking:
+      <dd><a class="u-url" href="https://solid.github.io/data-interoperability-panel/primer/application.html">https://solid.github.io/data-interoperability-panel/primer/application.html</a>
+      <dt>Latest published version:
+      <dd><a href="https://solidproject.org/TR/sai-primer-application">https://solidproject.org/TR/sai-primer-application</a>
+      <dt>Feedback:
       <dd><a href="https://github.com/solid/data-interoperability-panel/issues/">GitHub</a>
       <dt class="editor">Editor:
       <dd class="editor p-author h-card vcard"><span class="p-name fn">elf Pavlik</span>
@@ -596,16 +602,21 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    </details>
    <div data-fill-with="warning"></div>
    <p class="copyright" data-fill-with="copyright">Copyright © 2025 the Contributors to the Solid Application Interoperability - Application Primer,
-published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
-A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available. </p>
+published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a>
+under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
+A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.
+</p>
    <hr title="Separator for header">
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
-   <p> This report was published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a>.
+   <p>
+  This report was published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a>.
   It is not a W3C Standard nor is it on the W3C Standards Track.
-  Please note that under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply.
-  Learn more about <a href="https://www.w3.org/community/">W3C Community and Business Groups</a>. </p>
+  Please note that under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>
+  there is a limited opt-out and other conditions apply.
+  Learn more about <a href="https://www.w3.org/community/">W3C Community and Business Groups</a>.
+</p>
    <p></p>
   </div>
   <div data-fill-with="at-risk"></div>
@@ -648,6 +659,26 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    </ol>
   </nav>
   <main>
+<script type="application/ld+json">
+{
+  "@context": {
+    "spec": "http://www.w3.org/ns/spec#",
+    "schema": "http://schema.org/",
+    "name": "schema:name",
+    "author": { "@id": "schema:author", "@type": "@id" },
+    "editor": { "@id": "schema:editor", "@type": "@id" }
+  },
+  "@id": "https://solid.github.io/data-interoperability-panel/primer/application.html",
+  "@type": "spec:Primer",
+  "name": "SAI Application Primer",
+  "author": [
+    "https://elf-pavlik.hackers4peace.net"
+  ],
+  "editor": [
+    "https://elf-pavlik.hackers4peace.net"
+  ]
+}
+</script>
    <h2 class="heading settled" data-level="1" id="introduction"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#introduction"></a></h2>
    <p>This primer is intended to accompany <a data-link-type="biblio" href="#biblio-sai" title="Solid Application Interoperability">[SAI]</a>.
 It is focused on providing a friendly introduction for developers of libraries intended
@@ -703,7 +734,8 @@ In our examples, we are going to use the following Shapes and Shape Trees.</p>
    <p class="issue" id="issue-f026f3dd"><a class="self-link" href="#issue-f026f3dd"></a> Reference shape path documentation</p>
    <h2 class="heading settled" data-level="3" id="appliction"><span class="secno">3. </span><span class="content">Application</span><a class="self-link" href="#appliction"></a></h2>
    <p>In this primer we will consider the use-case of a project management application
-identified by <code>https://projectron.example/#app</code> Every application has public WebID Document providing information about it.</p>
+identified by <code>https://projectron.example/#app</code>
+Every application has public WebID Document providing information about it.</p>
    <figure>
 <pre class="include-code highlight line-numbered"><span class="line-no"></span><span class="line"><c- nn>projectron</c-><c- p>:</c-><c- f>\#id</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Application</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>applicationName</c-> <c- s>"Projectron"</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>applicationDescription</c-> <c- s>"Manage projects with ease"</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>applicationAuthor</c-> <c- nn>acme</c-><c- p>:</c-><c- f>\#corp</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>applicationThumbnail</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>thumb.svg</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeedGroup</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#need-group-pm</c-> <c- p>.</c-></span><span class="line-no"></span><span class="line"><c- nn>projectron</c-><c- p>:</c-><c- f>\#need-group-pm</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessScenario</c-> <c- nn>interop</c-><c- p>:</c-><c- f>PersonalAccess</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>authenticatesAs</c-> <c- nn>interop</c-><c- p>:</c-><c- f>Pilot</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessDecoratorIndex</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>index</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>hasAccessNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#need-project</c-> <c- p>.</c-></span><span class="line-no"></span><span class="line"><c- nn>projectron</c-><c- p>:</c-><c- f>\#need-project</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeed</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="16"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Project</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="18"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>write</c-> <c- p>.</c-></span><span class="line-no"></span><span class="line"><c- nn>projectron</c-><c- p>:</c-><c- f>\#need-issue</c-></span><span class="line-no"></span><span class="line">  <c- b>a</c-> <c- nn>interop</c-><c- p>:</c-><c- f>AccessNeed</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="21"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>registeredShapeTree</c-> <c- nn>solidtrees</c-><c- p>:</c-><c- f>Issue</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessNecessity</c-> <c- nn>interop</c-><c- p>:</c-><c- f>accessRequired</c-> <c- p>;</c-></span><span class="line-no highlight-line" data-line="23"></span><span class="line highlight-line">  <c- nn>interop</c-><c- p>:</c-><c- f>accessMode</c-> <c- nn>acl</c-><c- p>:</c-><c- f>read</c-><c- p>,</c-> <c- nn>acl</c-><c- p>:</c-><c- f>write</c-> <c- p>;</c-></span><span class="line-no"></span><span class="line">  <c- nn>interop</c-><c- p>:</c-><c- f>inheritsFromNeed</c-> <c- nn>projectron</c-><c- p>:</c-><c- f>\#need-project</c-> <c- p>.</c-></span></pre>
     <figcaption>Projectron WebID document</figcaption>
@@ -728,7 +760,9 @@ their WebID Document via <code>interop:hasAuthorizationAgent</code> predicate.</
    <p>Application can discover Application Registration created for it by the user,
 by performing <code>HEAD</code> or <code>GET</code> request on IRI denoting
 user’s Authorization Agent. Response will include HTTP Link header relating
-Application Registration to the application making the request using <code>http://www.w3.org/ns/solid/interop#registeredAgent</code> as link relation.</p>
+Application Registration to the application making the request using
+<code>http://www.w3.org/ns/solid/interop#registeredAgent</code>
+as link relation.</p>
    <figure>
 <pre class="highlight"><c- nf>HEAD</c-> <c- nn>/</c-> <c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c->
 <c- e>Host</c-><c- o>:</c-> <c- l>auth.alice.example</c->
@@ -737,7 +771,8 @@ Application Registration to the application making the request using <code>http:
 <pre class="highlight line-numbered"><span class="line-no"></span><span class="line"><c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c-> <c- m>200</c-> <c- ne>OK</c-></span><span class="line-no"></span><span class="line"><c- e>Link</c-><c- o>:</c-> <c- l>&lt;https://projectron.example/#app>;</c-></span><span class="line-no highlight-line" data-line="3"></span><span class="line highlight-line">  <c- l>anchor="https://auth.alice.example/bcf22534-0187-4ae4-b88f-fe0f9fa96659";</c-></span><span class="line-no"></span><span class="line">  <c- l>rel="http://www.w3.org/ns/solid/interop#registeredAgent"</c-></span></pre>
     <figcaption>HEAD request to and response from Authorization Agent</figcaption>
    </figure>
-   <p>Details in <a href="https://solid.github.io/data-interoperability-panel/specification/#authorization">7. Data Authorization</a> (<a data-link-type="biblio" href="#biblio-sai" title="Solid Application Interoperability">[SAI]</a>)</p>
+   <p>Details in <a href="https://solid.github.io/data-interoperability-panel/specification/#authorization">7. Data Authorization</a>
+(<a data-link-type="biblio" href="#biblio-sai" title="Solid Application Interoperability">[SAI]</a>)</p>
    <h3 class="heading settled" data-level="4.3" id="user-consent"><span class="secno">4.3. </span><span class="content">User Consent</span><a class="self-link" href="#user-consent"></a></h3>
    <p>In cases where an application hasn’t been registered yet, it needs to initiate the flow with the Authorization Agent.</p>
    <p>After successful flow, the application will be able to discover its registration.</p>
@@ -792,7 +827,8 @@ Application Registration to the application making the request using <code>http:
        <td>Alice’s Authorization Agent records her decision as an Access Authorization in Alice’s
             Authorization Registry. An Application Registration is created for Projectron in
             Alice’s Agent Registry. An Access Grant and corresponding Data Grants are generated
-            from the Access Authorization and stored in the Projectron Application Registration. 
+            from the Access Authorization and stored in the Projectron Application Registration.
+        
       <tr>
        <td><b>14</b>
        <td>Alice’s Authorization Agent redirects her back to Projectron, now that the appropriate access has been granted.
@@ -959,7 +995,8 @@ with a newer Data Grant.</p>
 application can’t get the list of all the Data Instances. Neither it provides a list of specific
 Data Instances in the Data Registration.</p>
    <p>To find Data Instances from that Data Registration, application first needs to access parent
-Data Instances from Data Registration which Data Grant referenced by <code>inheritsFromGrant</code> makes accessible. Based on shape tree definition, each parent Data Instance will reference all its
+Data Instances from Data Registration which Data Grant referenced by <code>inheritsFromGrant</code>
+makes accessible. Based on shape tree definition, each parent Data Instance will reference all its
 child Data Instances.</p>
    <p>Both parent and child Data Registrations have to be in the same Data Registry. Since only one
 Data Registration for specific shape tree can be created in any given Data Registry.
@@ -1002,7 +1039,8 @@ links to child Task data instances.</p>
     <figcaption>Alice’s <strong>pro</strong> task 1</figcaption>
    </figure>
    <p>When creating or updating data instance with HTTP PUT method. Application should include
-link header linking Data Instance to Data Registration using link relation <code>http://www.w3.org/ns/solid/interop#targetDataRegistration</code></p>
+link header linking Data Instance to Data Registration using link relation
+<code>http://www.w3.org/ns/solid/interop#targetDataRegistration</code></p>
    <p>Update should include <code>If-Match</code> HTTP header with value of ETag from
 HTTP response when the representation was retreived.</p>
    <figure>
@@ -1016,7 +1054,8 @@ HTTP response when the representation was retreived.</p>
 </pre>
     <figcaption>Updating Data Instance with PUT</figcaption>
    </figure>
-   <p>When creating new data instance client should also include <code>If-None-Match: *</code> header in HTTP request.</p>
+   <p>When creating new data instance client should also include <code>If-None-Match: *</code>
+header in HTTP request.</p>
    <figure>
 <pre class="highlight"><c- nf>PUT</c-> <c- nn>/d046dd43-b619-46c8-91f6-a0713d967c0d</c-> <c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c->
 <c- e>Host</c-><c- o>:</c-> <c- l>pro.alice.example</c->
