@@ -16,8 +16,8 @@ which must be a separate resource from the [=identity profile document=]
 that the [=Social Agent=] graph resides in so that it can be given more
 restrictive (i.e. non-public) permissions.
 
-The [=identity profile document=] <em class="rfc2119">MUST</em> 
-be readable by the public. It <em class="rfc2119">MAY</em> 
+The [=identity profile document=] <em class="rfc2119">MUST</em>
+be readable by the public. It <em class="rfc2119">MAY</em>
 use any resource or subject names.
 
 [Class Definition](interop.ttl#SocialAgent) -
@@ -52,11 +52,11 @@ use any resource or subject names.
 <figure>
   <figcaption>[=Social Agent=] at https://alice.example/#id -
   <a href="snippets/alice.example/alice.example.ttl">View</a>
-</figcaption>  
+</figcaption>
   <pre class=include-code>
   path: snippets/alice.example/alice.example.ttl
   highlight: turtle
-  </pre> 
+  </pre>
 </figure>
 
 ## Registry Set ## {#datamodel-registry-set}
@@ -95,9 +95,19 @@ authorized [=Applications=].
       <td>[=Agent Registry=] for the [=Social Agent=]</td>
     </tr>
     <tr>
+      <td>hasRoleRegistry</td>
+      <td>[RoleRegistry](#classRoleRegistry)</td>
+      <td>[=Role Registry=] for the [=Social Agent=]</td>
+    </tr>
+    <tr>
       <td>hasAuthorizationRegistry</td>
       <td>[AuthorizationRegistry](#classAuthorizationRegistry)</td>
       <td>[=Authorization Registry=] for the [=Social Agent=]</td>
+    </tr>
+    <tr>
+      <td>hasGrantRegistry</td>
+      <td>[GrantRegistry](#classGrantRegistry)</td>
+      <td>[=Grant Registry=] for the [=Social Agent=]</td>
     </tr>
     <tr>
       <td>hasDataRegistry</td>
@@ -110,9 +120,9 @@ authorized [=Applications=].
 <figure>
   <figcaption>[=Registry Set=] at https://alice.example/registries -
   <a href="snippets/alice.example/registries.ttl">View</a>
-  </figcaption>  
+  </figcaption>
   <pre class=include-code>
   path: snippets/alice.example/registries.ttl
   highlight: turtle
-  </pre> 
+  </pre>
 </figure>

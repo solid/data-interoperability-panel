@@ -152,13 +152,13 @@ needs to change, it should be replaced.
     </tr>
     <tr>
       <td>dataOwner</td>
-      <td>[SocialAgent](#classSocialAgent)</td>
-      <td>[=Social Agent=] that owns the data being authorized</td>
+      <td>[SocialAgent](#classSocialAgent) | [Role](#classRole)</td>
+      <td>[=Social Agent=] or [=Role=] that owns the data being authorized</td>
     </tr>
     <tr>
       <td>grantee</td>
-      <td>[Agent](#classAgent)</td>
-      <td>The [=Social Agent=] or [=Application=] that has received
+      <td>[Agent](#classAgent) | [Role](#classRole)</td>
+      <td>The [=Agent=] or [=Role=] that has received
       authorization</td>
     </tr>
     <tr>
@@ -541,6 +541,12 @@ inherited permissions.
       <td>All of the owner's data of a specified type, and all data shared with the owner of that type, across the owner's registries</td>
     </tr>
     <tr>
+      <td><a href="#scope-fromrole"><b>`AllFromRole`</b></a></td>
+      <td>Yes</td>
+      <td><b>No</b></td>
+      <td>All data of a given type shared by a specified [=Role=] with the owner, across all that [=Role's=] member [=Social Agents'=] registries</td>
+    </tr>
+    <tr>
       <td><a href="#scope-fromagent"><b>`AllFromAgent`</b></a></td>
       <td>Yes</td>
       <td><b>No</b></td>
@@ -636,6 +642,39 @@ for each unique [=Data Registry=], including Bob's.
   highlight: turtle
   show: 13-26
   line-highlight: 22
+  </pre>
+</figure>
+
+### <code>AllFromRole</code> ### {#scope-fromrole}
+
+The `interop:AllFromRole` [=access scope=] includes all data of a given type
+owned and shared by all [=Social Agent=] member of a specified [=Role=], across all of their
+[=Data Registries=]. Essentially, Alice can use this scope to delegate
+any access that she has been given by another [=Social Agent's=]
+data (e.g. Bob) whose in that [=Role=], to another [=Agent=] of her choosing.
+
+The [=Role=] whose all [=Social Agent=] member access is being shared is identified via
+`interop:dataOwner`.
+
+<b>Shapes:</b> [DataAuthorizationAllFromRoleShape](interop.shex#DataAuthorizationAllFromRoleShape)
+
+The following example illustrates *Alice's* authorization to give Performchart access to
+data of type `pm-shapetrees:ProjectTree` with a scope of `interop:AllFromRole`
+and an `interop:dataOwner` of a *Role*.
+
+Note: While Bob, as a member of the Role, has granted Alice the ability to manipulate
+his project data, Alice grants Performchart a narrower scope of read-only access.
+
+<figure>
+  <figcaption>Alice's [=Data Authorization=] for Performchart to access Projects
+    shared by members of a [=Role=] at https://alice.example/authorization/a1b2c3d4 -
+    <a href="snippets/alice.example/a1b2c3d4.ttl">View</a>
+    </figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/a1b2c3d4.ttl
+  highlight: turtle
+  show: 14-25
+  line-highlight: 21
   </pre>
 </figure>
 
@@ -1315,3 +1354,33 @@ The [=Authorization Registry=] resources MAY use any resource or subject name.
 
 The resource names for [=Access Grants=] <em class="rfc2119">SHOULD</em>
 be unpredictable.
+
+## Grant Registry ## {#grant-registry}
+
+Issue(334):
+
+A <dfn>Grant Registry</dfn> is a collection of [=Data Grants=].
+
+The [=Grant Registry=] is linked to a [=Social Agent=] via their [=Registry Set=].
+
+A [=Grant Registry=] links to any number of registered [=Data Grants=].
+
+<table class="classinfo data" align="left" id="classGrantRegistry">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ldp:contains</td>
+      <td>[DataGrant](interop.ttl#DataGrant)</td>
+      <td>Link to associated [=Data Grants=]</td>
+    </tr>
+  </tbody>
+</table>

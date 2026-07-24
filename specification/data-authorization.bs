@@ -151,10 +151,27 @@ The following query parameters are defined:
 </figure>
 
 
-### Resource Indication ### {#resource-indication}
+#### Resource Indication #### {#resource-indication}
 
 When the <code>resource</code> query parameter is used, the Authorization Agent will use it
-as an indication that access to a specific data instance is intended to be shared. 
+as an indication that access to a specific data instance is intended to be shared.
+
+### Delegation Issuance Endpoint ### {#delegation-issuance-endpoint}
+
+Issue(338):
+
+[=Authorization Agent=] of a grantee, can request delegation of [=Data Grants=] using this endpoint.
+This endpoint expects HTTP `POST` with content type `application/json` including top level JSON object
+representing a [=Data Grant=] without an `id` and all inheriting data grants nested in `hasInheritingGrant`.
+
+[JSON Schema](schema.json#GrantData)
+
+[=Authorization Agent=] of a data owner
+
+* MUST either create all requested grants or return error.
+* MUST return `application/json` with an array including `id` for every created grant when responding with success.
+* MUST set Read access to the grantee agent for every created grant
+* MUST set Read and Delete access to the granted by agent for every created grant
 
 ### Authorization Agent Discovery ### {#authorization-agent-discovery}
 

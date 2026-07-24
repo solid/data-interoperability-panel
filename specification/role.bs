@@ -1,0 +1,81 @@
+Roles {#role}
+=====================
+
+A <dfn>Role</dfn> is a collection of [=Social Agents=],
+internal to the context of the [=Social Agent=] defining the Role.
+
+<table class="classinfo data" align="left" id="classRole">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hasMember</td>
+      <td>[SocialAgent](#classSocialAgent)</td>
+      <td>[=Social Agent=] assigned as a member to the [=Role=]</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>[=Role=] with member Bob at https://alice.example/roles/a7c349e2 -
+  <a href="snippets/alice.example/a7c349e2.ttl">View</a>
+</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/a7c349e2.ttl
+  highlight: turtle
+  </pre>
+</figure>
+
+When [=Authorization Agent=] generates [=Data Grants=] from a [=Data Authorization=] it
+* MUST generate a [=Data Grant=] for each member of that [=Role=] as `dataOwner` if a [=Role=] is used as `dataOwner`.
+* MUST generate a [=Data Grant=] for each member of that [=Role=] as `grantee` if a [=Role=] is used as `grantee`.
+* MUST generate a [=Data Grant=] for the cartesian product of the two [=Roles=], with each member as corresponding `dataOwner` or `grantee` if a [=Role=] is used as both `dataOwner` and `grantee`.
+
+When a [=Role=] is modified, [=Authorization Agent=] managing it
+* MUST generate corresponding [=Data Grants=], when a member is added to the [=Role=]
+* MUST revoke corresponding [=Data Grants=], when a member is removed from the [=Role=]
+* MUST revoke [=Data Authorizations=] where the role was used as a `dataOwner` or a `grantee`, when the [=Role=] is deleted.
+
+Note: When [=Data Authorization=] is revoked, [=Data Grants=] that are derrived because of it also must be revoked.
+
+## Role Registry ## {#datamodel-role-registry}
+
+A <dfn>Role Registry</dfn> contains all the [=Roles=] defined by the [=Social Agent=] who owns the [=Role Registry=]
+
+<table class="classinfo data" align="left" id="classRoleRegistry">
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <colgroup></colgroup>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ldp:contains</td>
+      <td>[Role](#classRole)</td>
+      <td>[=Role=] in the [=Role Registry=]</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+  <figcaption>[=Role Registry=] at https://alice.example/roles/ -
+  <a href="snippets/alice.example/roles-registry.ttl">View</a>
+</figcaption>
+  <pre class=include-code>
+  path: snippets/alice.example/roles-registry.ttl
+  highlight: turtle
+  </pre>
+</figure>

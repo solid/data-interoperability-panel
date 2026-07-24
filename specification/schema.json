@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "definitions": {
+    "GrantData": {
+      "title": "GrantData",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "grantee": {
+          "type": "string",
+          "format": "uri",
+          "qt-uri-protocols": ["https"]
+        },
+        "grantedBy": {
+          "type": "string",
+          "format": "uri",
+          "qt-uri-protocols": ["https"]
+        },
+        "dataOwner": {
+          "type": "string",
+          "format": "uri",
+          "qt-uri-protocols": ["https"]
+        },
+        "registeredShapeTree": {
+          "type": "string",
+          "format": "uri",
+          "qt-uri-protocols": ["https"]
+        },
+        "hasDataRegistration": {
+          "type": "string",
+          "format": "uri",
+          "qt-uri-protocols": ["https"]
+        },
+        "hasStorage": {
+          "type": "string",
+          "format": "uri",
+          "qt-uri-protocols": ["https"]
+        },
+        "scopeOfGrant": {
+          "type": "string",
+          "format": "uri",
+          "qt-uri-protocols": ["http"]
+        },
+        "accessMode": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri",
+            "qt-uri-protocols": ["http"]
+          }
+        },
+        "hasDataInstance": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri",
+            "qt-uri-protocols": ["https"]
+          }
+        },
+        "hasInheritingGrant": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GrantData"
+          }
+        }
+      },
+      "required": [
+        "accessMode",
+        "dataOwner",
+        "grantedBy",
+        "grantee",
+        "hasDataRegistration",
+        "hasStorage",
+        "registeredShapeTree",
+        "scopeOfGrant"
+      ]
+    }
+  }
+}
